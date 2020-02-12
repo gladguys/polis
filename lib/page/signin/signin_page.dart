@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:polis/bloc/blocs.dart';
-import 'package:polis/core/route_constants.dart';
-import 'package:polis/repository/concrete/firebase/firebase_signin_repository.dart';
 
+import '../../bloc/blocs.dart';
 import '../../bloc/signin/signin_bloc.dart';
 import '../../bloc/signin/signin_state.dart';
+import '../../core/route_constants.dart';
+import '../../repository/concrete/firebase/firebase_signin_repository.dart';
 
 class SigninPage extends StatefulWidget {
   @override
@@ -41,7 +41,7 @@ class _SigninPageState extends State<SigninPage> {
         child: BlocBuilder<SigninBloc, SigninState>(
           bloc: _signinBloc,
           builder: (_, state) {
-            if (state is InitialSigninState) {
+            if (state is InitialSignin) {
               return _signinForm();
             }
             return CircularProgressIndicator();
@@ -77,7 +77,7 @@ class _SigninPageState extends State<SigninPage> {
             SizedBox(height: 12),
             RaisedButton(
               child: Text('Login'),
-              onPressed: () => _signinBloc.add(SigninTriedEvent('', '')),
+              onPressed: () => _signinBloc.add(SigninTried('', '')),
             ),
             SizedBox(height: 12),
             RaisedButton(

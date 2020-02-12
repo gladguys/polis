@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:polis/repository/abstract/signin_repository.dart';
 
+import '../../message/message.dart';
+import '../../repository/abstract/signin_repository.dart';
 import 'bloc.dart';
 
 class SigninBloc extends Bloc<SigninEvent, SigninState> {
@@ -11,22 +12,23 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
   final SigninRepository repository;
 
   @override
-  SigninState get initialState => InitialSigninState();
+  SigninState get initialState => InitialSignin();
 
   @override
   Stream<SigninState> mapEventToState(SigninEvent event) async* {
-    if (event is SigninTriedEvent) {
+    if (event is SigninTried) {
+      yield SigninLoading();
       try {
         final user = await repository.signInWithEmailAndPassword(
             event.email, event.password);
 
         if (user != null) {
-          yield UserAuthenticatedState(user);
+          yield UserAuthenticated(user);
         } else {
-          yield UserAuthenticationFailedState('Error validating user');
+          yield UserAuthenticationFailed(ERROR_AUTENTICATING_USER);
         }
-      } catch (e) {
-        yield SigninFailedState(e.toString());
+      } on Exception catch (e) {
+        yield SigninFailed(e.toString());
       }
     }
   }

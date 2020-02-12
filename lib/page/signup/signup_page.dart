@@ -2,10 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:polis/bloc/blocs.dart';
-import 'package:polis/core/route_constants.dart';
-import 'package:polis/message/message.dart';
-import 'package:polis/repository/concrete/firebase/firebase_signup_repository.dart';
+
+import '../../bloc/blocs.dart';
+import '../../core/route_constants.dart';
+import '../../message/message.dart';
+import '../../repository/concrete/firebase/firebase_signup_repository.dart';
 
 class SignupPage extends StatefulWidget {
   @override
@@ -39,23 +40,23 @@ class _SignupPageState extends State<SignupPage> {
         child: BlocListener(
           bloc: _signupBloc,
           listener: (context, state) {
-            if (state is UserCreatedState) {
+            if (state is UserCreated) {
               Get.toNamed(SIGNIN_PAGE);
-              Get.snackbar(PARABENS, USUARIO_CRIADO_COM_SUCESSO);
-            } else if (state is UserCreationFailedState) {
-              Get.snackbar(FALHA, state.statusMessage);
-            } else if (state is SignupFailedState) {
-              Get.snackbar(FALHA, state.errorMessage);
+              Get.snackbar(CONGRATULATIONS, USER_CREATED_WITH_SUCCESS);
+            } else if (state is UserCreationFailed) {
+              Get.snackbar(FAIL, state.statusMessage);
+            } else if (state is SignupFailed) {
+              Get.snackbar(FAIL, state.errorMessage);
             }
           },
           child: BlocBuilder<SignupBloc, SignupState>(
             bloc: _signupBloc,
             builder: (_, state) {
-              if (state is InitialSignupState ||
-                  state is UserCreationFailedState ||
-                  state is SignupFailedState) {
+              if (state is InitialSignup ||
+                  state is UserCreationFailed ||
+                  state is SignupFailed) {
                 return _signupForm();
-              } else if (state is SignupLoadingState) {
+              } else if (state is SignupLoading) {
                 return Center(
                   child: CircularProgressIndicator(),
                 );
@@ -108,7 +109,7 @@ class _SignupPageState extends State<SignupPage> {
                 final formState = _formKey.currentState;
                 if (formState.validate()) {
                   formState.save();
-                  _signupBloc.add(SignupTriedEvent(
+                  _signupBloc.add(SignupTried(
                       _signupUserData['email'], _signupUserData['password']));
                 }
               },

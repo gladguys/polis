@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:polis/page/pages.dart';
-import 'package:polis/page/signup/signup_page.dart';
 
+import '../page/pages.dart';
+import '../page/signup/signup_page.dart';
 import 'route_constants.dart';
 
 class Router {

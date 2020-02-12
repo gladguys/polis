@@ -2,8 +2,8 @@ import 'package:equatable/equatable.dart';
 
 abstract class SignupEvent extends Equatable {}
 
-class SignupTriedEvent extends SignupEvent {
-  SignupTriedEvent(this.email, this.password);
+class SignupTried extends SignupEvent {
+  SignupTried(this.email, this.password);
 
   final String email;
   final String password;

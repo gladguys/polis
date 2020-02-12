@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:polis/core/exception/exceptions.dart';
-import 'package:polis/message/message.dart';
-import 'package:polis/repository/abstract/signup_repository.dart';
 
 import './bloc.dart';
+import '../../core/exception/exceptions.dart';
+import '../../message/message.dart';
+import '../../repository/abstract/signup_repository.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
   SignupBloc({this.repository});
@@ -13,22 +13,22 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   SignupRepository repository;
 
   @override
-  SignupState get initialState => InitialSignupState();
+  SignupState get initialState => InitialSignup();
 
   @override
   Stream<SignupState> mapEventToState(SignupEvent event) async* {
-    if (event is SignupTriedEvent) {
-      yield SignupLoadingState();
+    if (event is SignupTried) {
+      yield SignupLoading();
       try {
         final user = await repository.createUserWithEmailAndPassword(
             event.email, event.password);
-        yield UserCreatedState(user);
+        yield UserCreated(user);
       } on EmailAlreadyInUseException {
-        yield UserCreationFailedState(EMAIL_ALREADY_IN_USE);
+        yield UserCreationFailed(EMAIL_ALREADY_IN_USE);
       } on WeakPasswordException {
-        yield UserCreationFailedState(PASSWORD_IS_WEAK);
-      } catch (e) {
-        yield SignupFailedState(ERRO_CADASTRO_USUARIO);
+        yield UserCreationFailed(PASSWORD_IS_WEAK);
+      } on Exception catch (_) {
+        yield SignupFailed(ERROR_CREATING_USER);
       }
     }
   }

@@ -1,0 +1,8 @@
+include: package:effective_dart/analysis_options.yaml
+
+linter:
+  rules:
+    public_member_api_docs: false
+    constant_identifier_names: false
+    one_member_abstracts: false
+    directives_ordering: false

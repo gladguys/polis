@@ -1,15 +1,16 @@
 import 'package:equatable/equatable.dart';
-import 'package:polis/model/user_model.dart';
+
+import '../../model/user_model.dart';
 
 abstract class SignupState extends Equatable {}
 
-class InitialSignupState extends SignupState {
+class InitialSignup extends SignupState {
   @override
   List<Object> get props => [];
 }
 
-class UserCreatedState extends SignupState {
-  UserCreatedState(this.user);
+class UserCreated extends SignupState {
+  UserCreated(this.user);
 
   final UserModel user;
 
@@ -17,8 +18,8 @@ class UserCreatedState extends SignupState {
   List<Object> get props => [user];
 }
 
-class UserCreationFailedState extends SignupState {
-  UserCreationFailedState(this.statusMessage);
+class UserCreationFailed extends SignupState {
+  UserCreationFailed(this.statusMessage);
 
   final String statusMessage;
 
@@ -26,13 +27,13 @@ class UserCreationFailedState extends SignupState {
   List<Object> get props => [statusMessage];
 }
 
-class SignupLoadingState extends SignupState {
+class SignupLoading extends SignupState {
   @override
   List<Object> get props => [];
 }
 
-class SignupFailedState extends SignupState {
-  SignupFailedState(this.errorMessage);
+class SignupFailed extends SignupState {
+  SignupFailed(this.errorMessage);
 
   final String errorMessage;
 
