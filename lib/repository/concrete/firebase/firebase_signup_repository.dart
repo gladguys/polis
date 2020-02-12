@@ -7,20 +7,21 @@ import '../../abstract/signup_repository.dart';
 import 'constant.dart';
 
 class FirebaseSignupRepository extends SignupRepository {
-  FirebaseSignupRepository(this._firebaseAuth);
+  FirebaseSignupRepository({this.firebaseAuth, this.firestore});
 
-  final FirebaseAuth _firebaseAuth;
-  final CollectionReference userRef = Firestore.instance.collection('users');
+  final FirebaseAuth firebaseAuth;
+  final Firestore firestore;
+  CollectionReference get userRef => firestore.collection('users');
 
   @override
-  Future<UserModel> createUserWithEmailAndPassword(
+  Future<void> createUserWithEmailAndPassword(
       String email, String password) async {
     try {
-      final authResult = await _firebaseAuth.createUserWithEmailAndPassword(
+      final authResult = await firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
 
       if (authResult != null) {
-        return UserModel();
+        await createUserFromAuth(authResult.user);
       }
       return null;
     } on Exception catch (e) {
@@ -30,6 +31,17 @@ class FirebaseSignupRepository extends SignupRepository {
         throw WeakPasswordException();
       }
       rethrow;
+    }
+  }
+
+  @override
+  Future<UserModel> createUserFromAuth(FirebaseUser firebaseUser) async {
+    try {
+      final user = UserModel.userFromFirebase(firebaseUser);
+      await userRef.document(user.userId).setData(user.toJson());
+      return user;
+    } on Exception {
+      throw CreateUserFromGoogleException();
     }
   }
 }

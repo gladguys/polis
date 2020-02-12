@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,8 +22,10 @@ class _SignupPageState extends State<SignupPage> {
   @override
   void initState() {
     super.initState();
-    _signupBloc =
-        SignupBloc(repository: FirebaseSignupRepository(FirebaseAuth.instance));
+    _signupBloc = SignupBloc(
+      repository: FirebaseSignupRepository(
+          firebaseAuth: FirebaseAuth.instance, firestore: Firestore.instance),
+    );
     _formKey = GlobalKey<FormState>();
     _signupUserData = {};
   }

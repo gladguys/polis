@@ -49,7 +49,7 @@ void main() {
       expect: [
         InitialSignup(),
         SignupLoading(),
-        UserCreated(user),
+        UserCreated(),
       ],
     );
 

@@ -20,9 +20,9 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     if (event is SignupTried) {
       yield SignupLoading();
       try {
-        final user = await repository.createUserWithEmailAndPassword(
+        await repository.createUserWithEmailAndPassword(
             event.email, event.password);
-        yield UserCreated(user);
+        yield UserCreated();
       } on EmailAlreadyInUseException {
         yield UserCreationFailed(EMAIL_ALREADY_IN_USE);
       } on WeakPasswordException {
