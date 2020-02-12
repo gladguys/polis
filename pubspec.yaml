@@ -16,6 +16,7 @@ dependencies:
   get: ^1.8.1
   equatable: ^1.1.0
   cloud_firestore: ^0.13.2+1
+  google_sign_in: ^4.1.1
   firebase_auth: ^0.15.4
   json_serializable: ^3.2.5
 
@@ -25,6 +26,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner:
 
   # Tests
   test: ^1.9.4

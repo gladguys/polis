@@ -1,0 +1,1 @@
+class CreateUserFromGoogleException implements Exception {}

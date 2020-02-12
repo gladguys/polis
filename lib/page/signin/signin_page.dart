@@ -2,12 +2,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../bloc/blocs.dart';
 import '../../bloc/signin/signin_bloc.dart';
 import '../../bloc/signin/signin_state.dart';
 import '../../core/route_constants.dart';
 import '../../repository/concrete/firebase/firebase_signin_repository.dart';
+
+const GOOGLE_SIGNIN_SCOPE = 'email';
+const GOOGLE_SIGNIN_URL = 'https://www.googleapis.com/auth/contacts.readonly';
 
 class SigninPage extends StatefulWidget {
   @override
@@ -23,8 +27,14 @@ class _SigninPageState extends State<SigninPage> {
   @override
   void initState() {
     super.initState();
-    _signinBloc =
-        SigninBloc(repository: FirebaseSigninRepository(FirebaseAuth.instance));
+    _signinBloc = SigninBloc(
+      repository: FirebaseSigninRepository(
+        firebaseAuth: FirebaseAuth.instance,
+        googleSignIn: GoogleSignIn(
+          scopes: [GOOGLE_SIGNIN_SCOPE, GOOGLE_SIGNIN_URL],
+        ),
+      ),
+    );
     formKey = GlobalKey<FormState>();
   }
 
@@ -85,6 +95,11 @@ class _SigninPageState extends State<SigninPage> {
               onPressed: () {
                 Get.toNamed(SIGNUP_PAGE);
               },
+            ),
+            SizedBox(height: 12),
+            RaisedButton(
+              child: Text('Signin com Google'),
+              onPressed: () => _signinBloc.add(SigninWithGoogle()),
             )
           ],
         ),

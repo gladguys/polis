@@ -1,0 +1,1 @@
+class ComunicationException implements Exception {}

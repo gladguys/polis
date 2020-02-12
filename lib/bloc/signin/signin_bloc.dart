@@ -27,8 +27,22 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
         } else {
           yield UserAuthenticationFailed(ERROR_AUTENTICATING_USER);
         }
-      } on Exception catch (e) {
-        yield SigninFailed(e.toString());
+      } on Exception {
+        yield SigninFailed(ERROR_SIGNIN);
+      }
+    }
+    if (event is SigninWithGoogle) {
+      yield SigninLoading();
+      try {
+        final user = await repository.signInWithGoogle();
+
+        if (user != null) {
+          yield UserAuthenticated(user);
+        } else {
+          yield UserAuthenticationFailed(ERROR_INVALID_CREDENTIALS);
+        }
+      } on Exception {
+        yield SigninFailed(ERROR_GOOGLE_SIGNIN);
       }
     }
   }
