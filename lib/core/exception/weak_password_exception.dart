@@ -1,0 +1,1 @@
+class WeakPasswordException implements Exception {}

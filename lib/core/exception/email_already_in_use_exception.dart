@@ -1,0 +1,1 @@
+class EmailAlreadyInUseException implements Exception {}
