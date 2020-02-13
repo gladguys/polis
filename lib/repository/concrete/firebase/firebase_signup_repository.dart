@@ -14,16 +14,14 @@ class FirebaseSignupRepository extends SignupRepository {
   CollectionReference get userRef => firestore.collection('users');
 
   @override
-  Future<void> createUserWithEmailAndPassword(
-      String email, String password) async {
+  Future<void> createUserWithEmailAndPassword(UserModel user) async {
     try {
       final authResult = await firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
+          email: user.email, password: user.password);
 
       if (authResult != null) {
-        await createUserFromAuth(authResult.user);
+        await createFirestoreUser(authResult.user.uid, user);
       }
-      return null;
     } on Exception catch (e) {
       if (e.toString().contains(ERROR_EMAIL_ALREADY_IN_USE)) {
         throw EmailAlreadyInUseException();
@@ -35,13 +33,18 @@ class FirebaseSignupRepository extends SignupRepository {
   }
 
   @override
-  Future<UserModel> createUserFromAuth(FirebaseUser firebaseUser) async {
+  Future<UserModel> createFirestoreUser(String uid, UserModel user) async {
+    final userToSave = UserModel(
+        userId: uid,
+        name: user.name,
+        email: user.email,
+        photoUrl: user.photoUrl);
+
     try {
-      final user = UserModel.userFromFirebase(firebaseUser);
-      await userRef.document(user.userId).setData(user.toJson());
+      await userRef.document(userToSave.userId).setData(userToSave.toJson());
       return user;
     } on Exception {
-      throw CreateUserFromGoogleException();
+      throw ComunicationException();
     }
   }
 }

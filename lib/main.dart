@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'bloc/flutter_bloc_delegate.dart';
-import 'core/route_constants.dart';
-import 'core/router.dart';
-import 'core/routing/get_navigation_observer.dart';
+import 'page/pages.dart';
 
 void main() {
   BlocSupervisor.delegate = FlutterBlocDelegate();
@@ -23,11 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       navigatorKey: Get.key,
-      initialRoute: SIGNIN_PAGE,
-      onGenerateRoute: Router.generateRoute,
-      navigatorObservers: [
-        GetNavigationObserver(),
-      ],
+      home: SigninPage(),
     );
   }
 }

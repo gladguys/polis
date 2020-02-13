@@ -1,0 +1,9 @@
+const CONGRATULATIONS = 'Parabéns!!!';
+const FAIL = 'Falha';
+const NAME = 'Nome';
+const EMAIL = 'E-mail';
+const PASSWORD = 'Password';
+const PASSWORD_CONFIRMATION = 'Password Confirmation';
+const REQUIRED_FIELD = 'Campo Obrigatório';
+const SIGNUP = 'Cadastrar';
+const SIGNIN = 'Entrar';

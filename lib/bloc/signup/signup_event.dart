@@ -1,13 +1,14 @@
 import 'package:equatable/equatable.dart';
 
+import '../../model/user_model.dart';
+
 abstract class SignupEvent extends Equatable {}
 
-class SignupTried extends SignupEvent {
-  SignupTried(this.email, this.password);
+class Signup extends SignupEvent {
+  Signup(this.user);
 
-  final String email;
-  final String password;
+  final UserModel user;
 
   @override
-  List<Object> get props => [email, password];
+  List<Object> get props => [user];
 }

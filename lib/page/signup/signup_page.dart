@@ -5,9 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 import '../../bloc/blocs.dart';
-import '../../core/route_constants.dart';
-import '../../message/message.dart';
+import '../../i18n/i18n.dart';
+import '../../model/user_model.dart';
 import '../../repository/concrete/firebase/firebase_signup_repository.dart';
+import '../pages.dart';
 
 class SignupPage extends StatefulWidget {
   @override
@@ -17,17 +18,23 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
   SignupBloc _signupBloc;
   GlobalKey<FormState> _formKey;
-  Map<String, String> _signupUserData;
+  UserModel _signupUser;
+  String _name;
+  String _email;
+  String _password;
+  String _photoUrl;
 
   @override
   void initState() {
     super.initState();
     _signupBloc = SignupBloc(
       repository: FirebaseSignupRepository(
-          firebaseAuth: FirebaseAuth.instance, firestore: Firestore.instance),
+        firebaseAuth: FirebaseAuth.instance,
+        firestore: Firestore.instance,
+      ),
     );
     _formKey = GlobalKey<FormState>();
-    _signupUserData = {};
+    _signupUser = UserModel();
   }
 
   @override
@@ -44,7 +51,7 @@ class _SignupPageState extends State<SignupPage> {
           bloc: _signupBloc,
           listener: (context, state) {
             if (state is UserCreated) {
-              Get.toNamed(SIGNIN_PAGE);
+              Get.to(SigninPage());
               Get.snackbar(CONGRATULATIONS, USER_CREATED_WITH_SUCCESS);
             } else if (state is UserCreationFailed) {
               Get.snackbar(FAIL, state.statusMessage);
@@ -82,28 +89,38 @@ class _SignupPageState extends State<SignupPage> {
           children: <Widget>[
             TextFormField(
               decoration: InputDecoration(
-                hintText: 'Email',
+                hintText: NAME,
                 border: OutlineInputBorder(),
               ),
-              onSaved: (email) => _signupUserData['email'] = email,
-              validator: (email) => email.isEmpty ? 'Campo Obrigatório' : null,
+              onSaved: (name) => _name = name,
+              validator: (name) => name.isEmpty ? REQUIRED_FIELD : null,
             ),
             SizedBox(height: 12),
             TextFormField(
               decoration: InputDecoration(
-                hintText: 'Password',
+                hintText: EMAIL,
                 border: OutlineInputBorder(),
               ),
-              onSaved: (password) => _signupUserData['password'] = password,
-              validator: (password) =>
-                  password.isEmpty ? 'Campo Obrigatório' : null,
+              onSaved: (email) => _email = email,
+              validator: (email) => email.isEmpty ? REQUIRED_FIELD : null,
             ),
             SizedBox(height: 12),
             TextFormField(
               decoration: InputDecoration(
-                hintText: 'Password Confirmation',
+                hintText: PASSWORD,
                 border: OutlineInputBorder(),
               ),
+              onSaved: (password) => _password = password,
+              validator: (password) => password.isEmpty ? REQUIRED_FIELD : null,
+            ),
+            SizedBox(height: 12),
+            TextFormField(
+              decoration: InputDecoration(
+                hintText: PASSWORD_CONFIRMATION,
+                border: OutlineInputBorder(),
+              ),
+              validator: (passwordConfirmation) =>
+                  passwordConfirmation.isEmpty ? REQUIRED_FIELD : null,
             ),
             SizedBox(height: 12),
             RaisedButton(
@@ -112,15 +129,20 @@ class _SignupPageState extends State<SignupPage> {
                 final formState = _formKey.currentState;
                 if (formState.validate()) {
                   formState.save();
-                  _signupBloc.add(SignupTried(
-                      _signupUserData['email'], _signupUserData['password']));
+                  _signupUser = UserModel(
+                    name: _name,
+                    email: _email,
+                    password: _password,
+                    photoUrl: _photoUrl,
+                  );
+                  _signupBloc.add(Signup(_signupUser));
                 }
               },
             ),
             SizedBox(height: 12),
             RaisedButton(
-              child: Text('Signin'),
-              onPressed: () => Get.toNamed(SIGNIN_PAGE),
+              child: Text(SIGNUP),
+              onPressed: () => Get.to(SignupPage()),
             )
           ],
         ),
