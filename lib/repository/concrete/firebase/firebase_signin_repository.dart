@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import '../../../core/exception/exceptions.dart';
 import '../../../core/exception/invalid_credentials_exception.dart';
@@ -8,10 +9,14 @@ import '../../abstract/signin_repository.dart';
 import 'collection.dart';
 
 class FirebaseSigninRepository extends SigninRepository {
-  FirebaseSigninRepository({this.firebaseAuth});
+  FirebaseSigninRepository(
+      {@required this.firebaseAuth, @required this.firestore})
+      : assert(firebaseAuth != null),
+        assert(firestore != null);
 
   final FirebaseAuth firebaseAuth;
-  final CollectionReference userRef = Firestore.instance.collection(USERS);
+  final Firestore firestore;
+  CollectionReference get userRef => firestore.collection(USERS);
 
   @override
   Future<UserModel> signInWithEmailAndPassword(
@@ -20,13 +25,11 @@ class FirebaseSigninRepository extends SigninRepository {
       final authResult = await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
       if (authResult != null) {
-        final user = await getUserById(authResult.user.uid);
-        if (user == null) {
-          throw UserDeletedException();
-        }
-        return user;
+        return await getUserById(authResult.user.uid);
       }
       return null;
+    } on ComunicationException {
+      rethrow;
     } on Exception {
       throw InvalidCredentialsException();
     }

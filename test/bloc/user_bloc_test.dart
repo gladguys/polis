@@ -20,9 +20,10 @@ void main() {
     });
 
     test('test asserts', () {
-      expect(() => UserBloc(user: UserModel()), throwsAssertionError);
-      expect(
-          () => UserBloc(repository: mockUserRepository), throwsAssertionError);
+      expect(() => UserBloc(user: UserModel(), repository: null),
+          throwsAssertionError);
+      expect(() => UserBloc(repository: mockUserRepository, user: null),
+          throwsAssertionError);
     });
 
     blocTest(

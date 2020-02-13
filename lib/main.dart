@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'bloc/flutter_bloc_delegate.dart';
-import 'page/pages.dart';
+import 'page/signin/signin_page_connected.dart';
 
 void main() {
   BlocSupervisor.delegate = FlutterBlocDelegate();
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       navigatorKey: Get.key,
-      home: SigninPage(),
+      home: SigninPageConnected(),
     );
   }
 }

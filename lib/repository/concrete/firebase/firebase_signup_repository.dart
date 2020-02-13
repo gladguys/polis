@@ -1,26 +1,32 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import '../../../core/exception/exceptions.dart';
 import '../../../model/user_model.dart';
 import '../../abstract/signup_repository.dart';
+import 'collection.dart';
 import 'constant.dart';
 
 class FirebaseSignupRepository extends SignupRepository {
-  FirebaseSignupRepository({this.firebaseAuth, this.firestore});
+  FirebaseSignupRepository(
+      {@required this.firebaseAuth, @required this.firestore})
+      : assert(firebaseAuth != null),
+        assert(firestore != null);
 
   final FirebaseAuth firebaseAuth;
   final Firestore firestore;
-  CollectionReference get userRef => firestore.collection('users');
+  CollectionReference get userRef => firestore.collection(USERS);
 
   @override
   Future<void> createUserWithEmailAndPassword(UserModel user) async {
     try {
       final authResult = await firebaseAuth.createUserWithEmailAndPassword(
           email: user.email, password: user.password);
-
-      if (authResult != null) {
+      print(authResult);
+      if (authResult != null && !await userExists(authResult.user.uid)) {
         await createFirestoreUser(authResult.user.uid, user);
+        return;
       }
     } on Exception catch (e) {
       if (e.toString().contains(ERROR_EMAIL_ALREADY_IN_USE)) {
@@ -29,6 +35,16 @@ class FirebaseSignupRepository extends SignupRepository {
         throw WeakPasswordException();
       }
       rethrow;
+    }
+  }
+
+  @override
+  Future<bool> userExists(String uid) async {
+    try {
+      final doc = await userRef.document(uid).get();
+      return doc.exists;
+    } on Exception {
+      throw ComunicationException();
     }
   }
 
