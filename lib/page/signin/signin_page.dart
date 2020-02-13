@@ -7,10 +7,9 @@ import '../../bloc/blocs.dart';
 import '../../bloc/signin/signin_bloc.dart';
 import '../../bloc/signin/signin_state.dart';
 import '../../i18n/i18n.dart';
-import '../../repository/concrete/firebase/firebase_signin_repository.dart';
 import '../../repository/concrete/firebase/firebase_user_repository.dart';
 import '../home/home_page.dart';
-import '../signup/signup_page.dart';
+import '../signup/signup_page_connected.dart';
 
 class SigninPage extends StatefulWidget {
   @override
@@ -18,7 +17,6 @@ class SigninPage extends StatefulWidget {
 }
 
 class _SigninPageState extends State<SigninPage> {
-  SigninBloc _signinBloc;
   GlobalKey<FormState> _formKey;
   String _email;
   String _password;
@@ -26,16 +24,7 @@ class _SigninPageState extends State<SigninPage> {
   @override
   void initState() {
     super.initState();
-    _signinBloc = SigninBloc(
-      repository: FirebaseSigninRepository(firebaseAuth: FirebaseAuth.instance),
-    );
     _formKey = GlobalKey<FormState>();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _signinBloc.close();
   }
 
   @override
@@ -43,15 +32,15 @@ class _SigninPageState extends State<SigninPage> {
     return Scaffold(
       body: Center(
         child: BlocListener<SigninBloc, SigninState>(
-          bloc: _signinBloc,
           listener: (context, state) {
             if (state is UserAuthenticated) {
-              Get.to(
+              Get.off(
                 BlocProvider<UserBloc>(
                   create: (_) => UserBloc(
-                      user: state.user,
-                      repository:
-                          FirebaseUserRepository(FirebaseAuth.instance)),
+                    user: state.user,
+                    repository: FirebaseUserRepository(
+                        firebaseAuth: FirebaseAuth.instance),
+                  ),
                   child: HomePage(),
                 ),
               );
@@ -61,66 +50,67 @@ class _SigninPageState extends State<SigninPage> {
             }
           },
           child: BlocBuilder<SigninBloc, SigninState>(
-            bloc: _signinBloc,
             builder: (_, state) {
               if (state is InitialSignin) {
-                return _signinForm();
+                return Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        TextFormField(
+                          key: ValueKey('email-field'),
+                          decoration: InputDecoration(
+                            hintText: EMAIL,
+                            border: OutlineInputBorder(),
+                          ),
+                          onSaved: (email) => _email = email,
+                          validator: (email) =>
+                              email.isEmpty ? REQUIRED_FIELD : null,
+                        ),
+                        SizedBox(height: 12),
+                        TextFormField(
+                          key: ValueKey('password-field'),
+                          decoration: InputDecoration(
+                            hintText: PASSWORD,
+                            border: OutlineInputBorder(),
+                          ),
+                          onSaved: (password) => _password = password,
+                          validator: (password) =>
+                              password.isEmpty ? REQUIRED_FIELD : null,
+                        ),
+                        SizedBox(height: 12),
+                        RaisedButton(
+                          key: ValueKey('signin-btn'),
+                          child: Text(SIGNIN),
+                          onPressed: () {
+                            final formState = _formKey.currentState;
+                            if (formState.validate()) {
+                              formState.save();
+                              BlocProvider.of<SigninBloc>(context)
+                                  .add(Signin(_email, _password));
+                            }
+                          },
+                        ),
+                        SizedBox(height: 12),
+                        RaisedButton(
+                          child: Text(SIGNUP),
+                          onPressed: () => Get.to(SignupPageConnected()),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
               }
               if (state is SigninFailed) {
                 return Center(
                   child: Text(state.errorMessage),
                 );
               }
-              return CircularProgressIndicator();
+              return SizedBox.shrink();
             },
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _signinForm() {
-    return Form(
-      key: _formKey,
-      child: Padding(
-        padding: const EdgeInsets.all(14),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextFormField(
-              decoration: InputDecoration(
-                hintText: EMAIL,
-                border: OutlineInputBorder(),
-              ),
-              onSaved: (email) => _email = email,
-              validator: (email) => email.isEmpty ? REQUIRED_FIELD : null,
-            ),
-            SizedBox(height: 12),
-            TextFormField(
-              decoration: InputDecoration(
-                hintText: PASSWORD,
-                border: OutlineInputBorder(),
-              ),
-              onSaved: (password) => _password = password,
-              validator: (password) => password.isEmpty ? REQUIRED_FIELD : null,
-            ),
-            SizedBox(height: 12),
-            RaisedButton(
-              child: Text(SIGNIN),
-              onPressed: () {
-                final formState = _formKey.currentState;
-                if (formState.validate()) {
-                  formState.save();
-                  _signinBloc.add(Signin(_email, _password));
-                }
-              },
-            ),
-            SizedBox(height: 12),
-            RaisedButton(
-              child: Text(SIGNUP),
-              onPressed: () => Get.to(SignupPage()),
-            ),
-          ],
         ),
       ),
     );

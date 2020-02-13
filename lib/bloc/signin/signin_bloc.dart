@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:polis/i18n/message.dart';
 
 import '../../core/exception/invalid_credentials_exception.dart';
+import '../../i18n/message.dart';
 import '../../repository/abstract/signin_repository.dart';
 import 'bloc.dart';
 

@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:polis/i18n/message.dart';
 
 import './bloc.dart';
 import '../../core/exception/exceptions.dart';
+import '../../i18n/message.dart';
 import '../../repository/abstract/signup_repository.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {

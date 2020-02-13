@@ -9,7 +9,7 @@ import '../../model/user_model.dart';
 import '../../repository/abstract/user_repository.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
-  UserBloc({@required this.user, this.repository})
+  UserBloc({@required this.user, @required this.repository})
       : assert(user != null),
         assert(repository != null);
 

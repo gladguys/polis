@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -7,8 +5,7 @@ import 'package:get/get.dart';
 import '../../bloc/blocs.dart';
 import '../../i18n/i18n.dart';
 import '../../model/user_model.dart';
-import '../../repository/concrete/firebase/firebase_signup_repository.dart';
-import '../pages.dart';
+import '../signin/signin_page_connected.dart';
 
 class SignupPage extends StatefulWidget {
   @override
@@ -27,12 +24,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   void initState() {
     super.initState();
-    _signupBloc = SignupBloc(
-      repository: FirebaseSignupRepository(
-        firebaseAuth: FirebaseAuth.instance,
-        firestore: Firestore.instance,
-      ),
-    );
+    _signupBloc = BlocProvider.of<SignupBloc>(context);
     _formKey = GlobalKey<FormState>();
     _signupUser = UserModel();
   }
@@ -50,8 +42,9 @@ class _SignupPageState extends State<SignupPage> {
         child: BlocListener(
           bloc: _signupBloc,
           listener: (context, state) {
+            print(state);
             if (state is UserCreated) {
-              Get.to(SigninPage());
+              Get.off(SigninPageConnected());
               Get.snackbar(CONGRATULATIONS, USER_CREATED_WITH_SUCCESS);
             } else if (state is UserCreationFailed) {
               Get.snackbar(FAIL, state.statusMessage);
@@ -88,6 +81,7 @@ class _SignupPageState extends State<SignupPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextFormField(
+              key: ValueKey('name-field'),
               decoration: InputDecoration(
                 hintText: NAME,
                 border: OutlineInputBorder(),
@@ -97,6 +91,7 @@ class _SignupPageState extends State<SignupPage> {
             ),
             SizedBox(height: 12),
             TextFormField(
+              key: ValueKey('email-field'),
               decoration: InputDecoration(
                 hintText: EMAIL,
                 border: OutlineInputBorder(),
@@ -106,6 +101,7 @@ class _SignupPageState extends State<SignupPage> {
             ),
             SizedBox(height: 12),
             TextFormField(
+              key: ValueKey('password-field'),
               decoration: InputDecoration(
                 hintText: PASSWORD,
                 border: OutlineInputBorder(),
@@ -115,6 +111,7 @@ class _SignupPageState extends State<SignupPage> {
             ),
             SizedBox(height: 12),
             TextFormField(
+              key: ValueKey('confirm-password-field'),
               decoration: InputDecoration(
                 hintText: PASSWORD_CONFIRMATION,
                 border: OutlineInputBorder(),
@@ -124,7 +121,8 @@ class _SignupPageState extends State<SignupPage> {
             ),
             SizedBox(height: 12),
             RaisedButton(
-              child: Text('Signup'),
+              key: ValueKey('signup-btn'),
+              child: Text(SIGNUP),
               onPressed: () {
                 final formState = _formKey.currentState;
                 if (formState.validate()) {
@@ -141,8 +139,9 @@ class _SignupPageState extends State<SignupPage> {
             ),
             SizedBox(height: 12),
             RaisedButton(
-              child: Text(SIGNUP),
-              onPressed: () => Get.to(SignupPage()),
+              key: ValueKey('signin-btn'),
+              child: Text(SIGNIN),
+              onPressed: () => Get.to(SigninPageConnected()),
             )
           ],
         ),
