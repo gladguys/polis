@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:polis/i18n/message.dart';
 
 import './bloc.dart';
 import '../../core/exception/exceptions.dart';
-import '../../message/message.dart';
 import '../../repository/abstract/signup_repository.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
@@ -17,11 +17,10 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
 
   @override
   Stream<SignupState> mapEventToState(SignupEvent event) async* {
-    if (event is SignupTried) {
+    if (event is Signup) {
       yield SignupLoading();
       try {
-        await repository.createUserWithEmailAndPassword(
-            event.email, event.password);
+        await repository.createUserWithEmailAndPassword(event.user);
         yield UserCreated();
       } on EmailAlreadyInUseException {
         yield UserCreationFailed(EMAIL_ALREADY_IN_USE);

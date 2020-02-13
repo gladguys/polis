@@ -1,0 +1,1 @@
+class UserDeletedException implements Exception {}

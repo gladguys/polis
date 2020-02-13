@@ -2,16 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../bloc/blocs.dart';
 import '../../bloc/signin/signin_bloc.dart';
 import '../../bloc/signin/signin_state.dart';
-import '../../core/route_constants.dart';
+import '../../i18n/i18n.dart';
 import '../../repository/concrete/firebase/firebase_signin_repository.dart';
-
-const GOOGLE_SIGNIN_SCOPE = 'email';
-const GOOGLE_SIGNIN_URL = 'https://www.googleapis.com/auth/contacts.readonly';
+import '../../repository/concrete/firebase/firebase_user_repository.dart';
+import '../home/home_page.dart';
+import '../signup/signup_page.dart';
 
 class SigninPage extends StatefulWidget {
   @override
@@ -20,22 +19,17 @@ class SigninPage extends StatefulWidget {
 
 class _SigninPageState extends State<SigninPage> {
   SigninBloc _signinBloc;
-  GlobalKey<FormState> formKey;
-  TextEditingController email = TextEditingController();
-  TextEditingController senha = TextEditingController();
+  GlobalKey<FormState> _formKey;
+  String _email;
+  String _password;
 
   @override
   void initState() {
     super.initState();
     _signinBloc = SigninBloc(
-      repository: FirebaseSigninRepository(
-        firebaseAuth: FirebaseAuth.instance,
-        googleSignIn: GoogleSignIn(
-          scopes: [GOOGLE_SIGNIN_SCOPE, GOOGLE_SIGNIN_URL],
-        ),
-      ),
+      repository: FirebaseSigninRepository(firebaseAuth: FirebaseAuth.instance),
     );
-    formKey = GlobalKey<FormState>();
+    _formKey = GlobalKey<FormState>();
   }
 
   @override
@@ -48,14 +42,38 @@ class _SigninPageState extends State<SigninPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: BlocBuilder<SigninBloc, SigninState>(
+        child: BlocListener<SigninBloc, SigninState>(
           bloc: _signinBloc,
-          builder: (_, state) {
-            if (state is InitialSignin) {
-              return _signinForm();
+          listener: (context, state) {
+            if (state is UserAuthenticated) {
+              Get.to(
+                BlocProvider<UserBloc>(
+                  create: (_) => UserBloc(
+                      user: state.user,
+                      repository:
+                          FirebaseUserRepository(FirebaseAuth.instance)),
+                  child: HomePage(),
+                ),
+              );
             }
-            return CircularProgressIndicator();
+            if (state is SigninFailed) {
+              Get.snackbar('1qqq', state.errorMessage);
+            }
           },
+          child: BlocBuilder<SigninBloc, SigninState>(
+            bloc: _signinBloc,
+            builder: (_, state) {
+              if (state is InitialSignin) {
+                return _signinForm();
+              }
+              if (state is SigninFailed) {
+                return Center(
+                  child: Text(state.errorMessage),
+                );
+              }
+              return CircularProgressIndicator();
+            },
+          ),
         ),
       ),
     );
@@ -63,7 +81,7 @@ class _SigninPageState extends State<SigninPage> {
 
   Widget _signinForm() {
     return Form(
-      key: formKey,
+      key: _formKey,
       child: Padding(
         padding: const EdgeInsets.all(14),
         child: Column(
@@ -71,36 +89,37 @@ class _SigninPageState extends State<SigninPage> {
           children: <Widget>[
             TextFormField(
               decoration: InputDecoration(
-                hintText: 'Email',
+                hintText: EMAIL,
                 border: OutlineInputBorder(),
               ),
-              controller: email,
+              onSaved: (email) => _email = email,
+              validator: (email) => email.isEmpty ? REQUIRED_FIELD : null,
             ),
             SizedBox(height: 12),
             TextFormField(
               decoration: InputDecoration(
-                hintText: 'Password',
+                hintText: PASSWORD,
                 border: OutlineInputBorder(),
               ),
-              controller: senha,
+              onSaved: (password) => _password = password,
+              validator: (password) => password.isEmpty ? REQUIRED_FIELD : null,
             ),
             SizedBox(height: 12),
             RaisedButton(
-              child: Text('Login'),
-              onPressed: () => _signinBloc.add(SigninTried('', '')),
-            ),
-            SizedBox(height: 12),
-            RaisedButton(
-              child: Text('Signup'),
+              child: Text(SIGNIN),
               onPressed: () {
-                Get.toNamed(SIGNUP_PAGE);
+                final formState = _formKey.currentState;
+                if (formState.validate()) {
+                  formState.save();
+                  _signinBloc.add(Signin(_email, _password));
+                }
               },
             ),
             SizedBox(height: 12),
             RaisedButton(
-              child: Text('Signin com Google'),
-              onPressed: () => _signinBloc.add(SigninWithGoogle()),
-            )
+              child: Text(SIGNUP),
+              onPressed: () => Get.to(SignupPage()),
+            ),
           ],
         ),
       ),
