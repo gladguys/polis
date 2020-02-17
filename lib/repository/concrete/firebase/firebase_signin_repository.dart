@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../core/exception/exceptions.dart';
 import '../../../core/exception/invalid_credentials_exception.dart';
@@ -16,6 +17,12 @@ class FirebaseSigninRepository extends SigninRepository {
 
   final FirebaseAuth firebaseAuth;
   final Firestore firestore;
+  final _googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ],
+  );
   CollectionReference get userRef => firestore.collection(USERS);
 
   @override
@@ -43,5 +50,12 @@ class FirebaseSigninRepository extends SigninRepository {
     } on Exception {
       throw ComunicationException();
     }
+  }
+
+  @override
+  Future<UserModel> signInWithGoogle() async {
+    final googleSignInAccount = await _googleSignIn.signIn();
+    print(googleSignInAccount);
+    return UserModel();
   }
 }

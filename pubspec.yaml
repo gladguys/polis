@@ -17,6 +17,7 @@ dependencies:
   equatable: ^1.1.0
   cloud_firestore: ^0.13.2+1
   firebase_auth: ^0.15.4
+  google_sign_in: ^4.1.1
   json_serializable: ^3.2.5
 
   # UI

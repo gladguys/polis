@@ -34,5 +34,8 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
         yield SigninFailed(ERROR_SIGNIN);
       }
     }
+    if (event is SigninWithGoogle) {
+      await repository.signInWithGoogle();
+    }
   }
 }

@@ -95,6 +95,14 @@ class _SigninPageState extends State<SigninPage> {
                         ),
                         SizedBox(height: 12),
                         RaisedButton(
+                          child: Text('Google'),
+                          onPressed: () {
+                            BlocProvider.of<SigninBloc>(context)
+                                .add(SigninWithGoogle());
+                          },
+                        ),
+                        SizedBox(height: 12),
+                        RaisedButton(
                           child: Text(SIGNUP),
                           onPressed: () => Get.to(SignupPageConnected()),
                         ),
