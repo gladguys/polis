@@ -1,6 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/repository/abstract/signin_repository.dart';
@@ -27,6 +28,14 @@ class MockUserRepository extends Mock implements UserRepository {}
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
 
 class MockFirestore extends Mock implements Firestore {}
+
+class MockGoogleSignin extends Mock implements GoogleSignIn {}
+
+class MockGoogleSignInAccount extends Mock implements GoogleSignInAccount {}
+
+class MockQuery extends Mock implements Query {}
+
+class MockQuerySnapshot extends Mock implements QuerySnapshot {}
 
 class MockAuthResult extends Mock implements AuthResult {}
 

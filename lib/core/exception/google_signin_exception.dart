@@ -1,0 +1,1 @@
+class GoogleSigninException implements Exception {}

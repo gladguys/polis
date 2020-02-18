@@ -33,6 +33,25 @@ void main() {
       expect(find.byType(SignupPage), findsOneWidget);
     });
 
+    testWidgets('should add SigninWithGoogle event when click on btn',
+        (tester) async {
+      final mockSigninBloc = MockSigninBloc();
+      when(mockSigninBloc.state).thenReturn(InitialSignin());
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<SigninBloc>(
+            bloc: mockSigninBloc,
+            page: SigninPage(),
+          ),
+        ),
+      );
+      final signinWithGoogleBtn = find.byKey(ValueKey('google-signin-btn'));
+      expect(signinWithGoogleBtn, findsOneWidget);
+      await tester.tap(signinWithGoogleBtn);
+      await tester.pumpAndSettle();
+      verify(mockSigninBloc.add(SigninWithGoogle())).called(1);
+    });
+
     testWidgets('should show error snackbar when signin fails', (tester) async {
       final mockSigninBloc = MockSigninBloc();
       whenListen(
@@ -96,7 +115,9 @@ void main() {
       await tester.tap(signinBtn);
       await tester.pumpAndSettle();
       expect(formKey.currentState.validate(), isTrue);
-      verify(mockSigninBloc.add(Signin('test@gmail.com', 'secret'))).called(1);
+      verify(mockSigninBloc
+              .add(SigninWithEmailAndPassword('test@gmail.com', 'secret')))
+          .called(1);
     });
 
     testWidgets('should show error message when signin failed', (tester) async {

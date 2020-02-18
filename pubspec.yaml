@@ -19,6 +19,7 @@ dependencies:
   firebase_auth: ^0.15.4
   google_sign_in: ^4.1.1
   json_serializable: ^3.2.5
+  uuid: ^2.0.4
 
   # UI
   getflutter: ^1.0.7

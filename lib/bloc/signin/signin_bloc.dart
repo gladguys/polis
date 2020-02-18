@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 
 import '../../core/exception/invalid_credentials_exception.dart';
 import '../../i18n/message.dart';
+import '../../model/user_model.dart';
 import '../../repository/abstract/signin_repository.dart';
 import 'bloc.dart';
 
@@ -17,17 +18,13 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
 
   @override
   Stream<SigninState> mapEventToState(SigninEvent event) async* {
-    if (event is Signin) {
+    if (event is SigninWithEmailAndPassword) {
       yield SigninLoading();
       try {
         final user = await repository.signInWithEmailAndPassword(
             event.email, event.password);
 
-        if (user != null) {
-          yield UserAuthenticated(user);
-        } else {
-          yield UserAuthenticationFailed(ERROR_AUTENTICATING_USER);
-        }
+        yield* _tryToAuthUser(user);
       } on InvalidCredentialsException {
         yield SigninFailed(ERROR_INVALID_CREDENTIALS);
       } on Exception {
@@ -35,7 +32,24 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
       }
     }
     if (event is SigninWithGoogle) {
-      await repository.signInWithGoogle();
+      yield SigninLoading();
+      try {
+        final user = await repository.signInWithGoogle();
+
+        yield* _tryToAuthUser(user);
+      } on InvalidCredentialsException {
+        yield SigninFailed(ERROR_INVALID_CREDENTIALS);
+      } on Exception {
+        yield SigninFailed(ERROR_SIGNIN);
+      }
+    }
+  }
+
+  Stream<SigninState> _tryToAuthUser(UserModel user) async* {
+    if (user != null) {
+      yield UserAuthenticated(user);
+    } else {
+      yield UserAuthenticationFailed(ERROR_AUTENTICATING_USER);
     }
   }
 }
