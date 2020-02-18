@@ -5,7 +5,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../core/exception/exceptions.dart';
-import '../../../core/exception/google_signin_exception.dart';
 import '../../../core/exception/invalid_credentials_exception.dart';
 import '../../../model/user_model.dart';
 import '../../abstract/signin_repository.dart';

@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/core/exception/exceptions.dart';
+import 'package:polis/core/exception/google_signin_exception.dart';
 import 'package:polis/repository/concrete/firebase/collection.dart';
 import 'package:polis/repository/concrete/firebase/firebase_signin_repository.dart';
 
@@ -136,7 +137,6 @@ void main() {
 
         firebaseSigninRepository
             .signInWithEmailAndPassword('email', 'password')
-            .then((_) {})
             .catchError((e) {
           expect(e, isInstanceOf<ComunicationException>());
         });
@@ -160,6 +160,68 @@ void main() {
 
           final user = await firebaseSigninRepository.signInWithGoogle();
           expect(user.email, equals('test@gmail.com'));
+        });
+
+        test('should create a user on firestore when and user dont exists',
+            () async {
+          when(mockGoogleSignin.signIn())
+              .thenAnswer((_) => Future.value(mockGoogleSignInAccount));
+          when(mockGoogleSignInAccount.email).thenReturn('test@gmail.com');
+          when(mockFirestore.collection(USERS))
+              .thenReturn(mockCollectionReference);
+          when(mockCollectionReference.where('email',
+                  isEqualTo: 'test@gmail.com'))
+              .thenReturn(mockQuery);
+          when(mockQuery.getDocuments())
+              .thenAnswer((_) => Future.value(mockQuerySnapshot));
+          when(mockQuerySnapshot.documents).thenReturn([]);
+          when(mockCollectionReference.document(any))
+              .thenReturn(mockDocumentReference);
+          when(mockDocumentReference.setData(any))
+              .thenAnswer((_) => Future.value());
+          final user = await firebaseSigninRepository.signInWithGoogle();
+          expect(user != null, true);
+          verify(mockDocumentReference.setData(any)).called(1);
+        });
+
+        test('throw ComunicationException when getting user by email',
+            () async {
+          when(mockGoogleSignin.signIn())
+              .thenAnswer((_) => Future.value(mockGoogleSignInAccount));
+          when(mockGoogleSignInAccount.email).thenReturn('test@gmail.com');
+          when(mockFirestore.collection(USERS))
+              .thenReturn(mockCollectionReference);
+          when(mockCollectionReference.where('email',
+                  isEqualTo: 'test@gmail.com'))
+              .thenThrow(Exception());
+          firebaseSigninRepository.signInWithGoogle().catchError(
+              (e) => expect(e, isInstanceOf<ComunicationException>()));
+        });
+
+        test('throw ComunicationException when creating user on firestore fail',
+            () async {
+          when(mockGoogleSignin.signIn())
+              .thenAnswer((_) => Future.value(mockGoogleSignInAccount));
+          when(mockGoogleSignInAccount.email).thenReturn('test@gmail.com');
+          when(mockFirestore.collection(USERS))
+              .thenReturn(mockCollectionReference);
+          when(mockCollectionReference.where('email',
+                  isEqualTo: 'test@gmail.com'))
+              .thenReturn(mockQuery);
+          when(mockQuery.getDocuments())
+              .thenAnswer((_) => Future.value(mockQuerySnapshot));
+          when(mockQuerySnapshot.documents).thenReturn([]);
+          when(mockCollectionReference.document(any))
+              .thenReturn(mockDocumentReference);
+          when(mockDocumentReference.setData(any)).thenThrow(Exception());
+          firebaseSigninRepository.signInWithGoogle().catchError(
+              (e) => expect(e, isInstanceOf<ComunicationException>()));
+        });
+
+        test('throw GoogleSigninException when trying to login fail', () async {
+          when(mockGoogleSignin.signIn()).thenAnswer((_) => Future.value(null));
+          firebaseSigninRepository.signInWithGoogle().catchError(
+              (e) => expect(e, isInstanceOf<GoogleSigninException>()));
         });
       });
     });

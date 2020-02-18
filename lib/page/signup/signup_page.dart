@@ -141,7 +141,7 @@ class _SignupPageState extends State<SignupPage> {
             RaisedButton(
               key: ValueKey('signin-btn'),
               child: Text(SIGNIN),
-              onPressed: () => Get.to(SigninPageConnected()),
+              onPressed: () => Get.off(SigninPageConnected()),
             )
           ],
         ),

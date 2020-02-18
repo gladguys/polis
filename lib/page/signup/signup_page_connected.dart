@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../bloc/blocs.dart';
 import '../../repository/concrete/firebase/firebase_signup_repository.dart';
 import '../page_connected.dart';
-import 'signup_page.dart';
+import '../pages.dart';
 
 class SignupPageConnected extends StatelessWidget {
   @override
