@@ -10,7 +10,6 @@ void main() {
   runApp(MyApp());
 }
 
-/// Bootstrap of the App
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

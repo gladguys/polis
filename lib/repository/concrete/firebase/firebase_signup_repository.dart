@@ -6,7 +6,7 @@ import '../../../core/exception/exceptions.dart';
 import '../../../model/user_model.dart';
 import '../../abstract/signup_repository.dart';
 import 'collection.dart';
-import 'constant.dart';
+import 'firebase_error_constants.dart';
 
 class FirebaseSignupRepository extends SignupRepository {
   FirebaseSignupRepository(

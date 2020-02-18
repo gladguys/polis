@@ -32,14 +32,14 @@ void main() {
 
     blocTest(
       'Expects [InitialSignin, SigninLoading, UserAuthenticated]'
-      ' when Signin added',
+      ' when SigninWithEmailAndPassword added',
       build: () {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .thenAnswer((_) => Future.value(user));
         return signinBloc;
       },
       act: (signinBloc) {
-        signinBloc.add(Signin('', ''));
+        signinBloc.add(SigninWithEmailAndPassword('', ''));
         return;
       },
       verify: () async {
@@ -54,8 +54,30 @@ void main() {
     );
 
     blocTest(
+      'Expects [InitialSignin, SigninLoading, UserAuthenticated]'
+      ' when SigninWithGoogle added',
+      build: () {
+        when(mockSigninRepository.signInWithGoogle())
+            .thenAnswer((_) => Future.value(user));
+        return signinBloc;
+      },
+      act: (signinBloc) {
+        signinBloc.add(SigninWithGoogle());
+        return;
+      },
+      verify: () async {
+        verify(mockSigninRepository.signInWithGoogle()).called(1);
+      },
+      expect: [
+        InitialSignin(),
+        SigninLoading(),
+        UserAuthenticated(user),
+      ],
+    );
+
+    blocTest(
       '''Expects [InitialSignin, SigninLoading, SigninFailed] with 
-      ERROR_INVALID_CREDENTIALS when Signin added and theres an error with 
+      ERROR_INVALID_CREDENTIALS when SigninWithEmailAndPassword added and theres an error with 
       credentials''',
       build: () {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
@@ -63,7 +85,7 @@ void main() {
         return signinBloc;
       },
       act: (signinBloc) {
-        signinBloc.add(Signin('', ''));
+        signinBloc.add(SigninWithEmailAndPassword('', ''));
         return;
       },
       verify: () async {
@@ -79,14 +101,14 @@ void main() {
 
     blocTest(
       'Expects [InitialSignin, SigninLoading, SigninFailed] with '
-      'ERROR_SIGNIN when Signin added and theres an error',
+      'ERROR_SIGNIN when SigninWithEmailAndPassword added and theres an error',
       build: () {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .thenThrow(Exception(ERROR_SIGNIN));
         return signinBloc;
       },
       act: (signinBloc) {
-        signinBloc.add(Signin('', ''));
+        signinBloc.add(SigninWithEmailAndPassword('', ''));
         return;
       },
       verify: () async {
@@ -101,15 +123,38 @@ void main() {
     );
 
     blocTest(
-      'Expects [InitialSignin, SigninLoading, UserAuthenticated] when '
-      'Signin added',
+      '''Expects [InitialSignin, SigninLoading, SigninFailed] with 
+      ERROR_INVALID_CREDENTIALS when SigninWithGoogle added and theres an error with 
+      credentials''',
+      build: () {
+        when(mockSigninRepository.signInWithGoogle())
+            .thenThrow(InvalidCredentialsException());
+        return signinBloc;
+      },
+      act: (signinBloc) {
+        signinBloc.add(SigninWithGoogle());
+        return;
+      },
+      verify: () async {
+        verify(mockSigninRepository.signInWithGoogle()).called(1);
+      },
+      expect: [
+        InitialSignin(),
+        SigninLoading(),
+        SigninFailed(ERROR_INVALID_CREDENTIALS),
+      ],
+    );
+
+    blocTest(
+      '''Expects [InitialSignin, SigninLoading, UserAuthenticationFailed] with 
+      ERROR_AUTENTICATING_USER when SigninWithEmailAndPassword added and theres an error''',
       build: () {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .thenAnswer((_) => Future.value(null));
         return signinBloc;
       },
       act: (signinBloc) {
-        signinBloc.add(Signin('', ''));
+        signinBloc.add(SigninWithEmailAndPassword('', ''));
         return;
       },
       verify: () async {
@@ -120,6 +165,49 @@ void main() {
         InitialSignin(),
         SigninLoading(),
         UserAuthenticationFailed(ERROR_AUTENTICATING_USER),
+      ],
+    );
+
+    blocTest(
+      '''Expects [InitialSignin, SigninLoading, UserAuthenticationFailed] with 
+      ERROR_AUTENTICATING_USER when SigninWithGoogle added and theres an error''',
+      build: () {
+        when(mockSigninRepository.signInWithGoogle())
+            .thenAnswer((_) => Future.value(null));
+        return signinBloc;
+      },
+      act: (signinBloc) {
+        signinBloc.add(SigninWithGoogle());
+        return;
+      },
+      verify: () async {
+        verify(mockSigninRepository.signInWithGoogle()).called(1);
+      },
+      expect: [
+        InitialSignin(),
+        SigninLoading(),
+        UserAuthenticationFailed(ERROR_AUTENTICATING_USER),
+      ],
+    );
+
+    blocTest(
+      '''Expects [InitialSignin, SigninLoading, SigninFailed] with 
+      ERROR_SIGNIN when SigninWithGoogle added and theres an error''',
+      build: () {
+        when(mockSigninRepository.signInWithGoogle()).thenThrow(Exception());
+        return signinBloc;
+      },
+      act: (signinBloc) {
+        signinBloc.add(SigninWithGoogle());
+        return;
+      },
+      verify: () async {
+        verify(mockSigninRepository.signInWithGoogle()).called(1);
+      },
+      expect: [
+        InitialSignin(),
+        SigninLoading(),
+        SigninFailed(ERROR_SIGNIN),
       ],
     );
   });
