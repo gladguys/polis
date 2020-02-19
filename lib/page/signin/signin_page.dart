@@ -88,7 +88,7 @@ class _SigninPageState extends State<SigninPage> {
                             final formState = _formKey.currentState;
                             if (formState.validate()) {
                               formState.save();
-                              BlocProvider.of<SigninBloc>(context).add(
+                              context.bloc<SigninBloc>().add(
                                   SigninWithEmailAndPassword(
                                       _email, _password));
                             }
@@ -99,8 +99,7 @@ class _SigninPageState extends State<SigninPage> {
                           key: ValueKey('google-signin-btn'),
                           child: Text(GOOGLE),
                           onPressed: () {
-                            BlocProvider.of<SigninBloc>(context)
-                                .add(SigninWithGoogle());
+                            context.bloc<SigninBloc>().add(SigninWithGoogle());
                           },
                         ),
                         SizedBox(height: 12),

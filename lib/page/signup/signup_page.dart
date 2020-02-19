@@ -24,7 +24,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   void initState() {
     super.initState();
-    _signupBloc = BlocProvider.of<SignupBloc>(context);
+    _signupBloc = context.bloc<SignupBloc>();
     _formKey = GlobalKey<FormState>();
     _signupUser = UserModel();
   }

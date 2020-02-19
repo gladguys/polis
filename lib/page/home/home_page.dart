@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.exit_to_app),
             onPressed: () {
-              BlocProvider.of<UserBloc>(context).add(Logout());
+              context.bloc<UserBloc>().add(Logout());
             },
           )
         ],
