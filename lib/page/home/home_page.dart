@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
         listener: (_, state) {
           if (state is SignoutSucceded) {
             Get.snackbar('Logout', 'Logout');
-            Get.offAll(SigninPageConnected(), (_) => false);
+            Get.offAll(SigninPageConnected());
           }
           if (state is SignoutFailed) {
             Get.snackbar('Falha Logout', 'Falha Logout');

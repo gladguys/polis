@@ -26,18 +26,14 @@ void main() {
           throwsAssertionError);
     });
 
-    blocTest(
-      'Expects InitialUser to be the initial state',
-      build: () => userBloc,
-      expect: [
-        InitialUser(),
-      ],
-    );
+    test('Expects InitialUser to be the initial state', () {
+      expect(userBloc.state, equals(InitialUser()));
+    });
 
     blocTest(
-      'Expects [InitialUser, SignoutLoading, SignoutSucceded] when Logout'
+      'Expects [SignoutLoading, SignoutSucceded] when Logout'
       'added',
-      build: () {
+      build: () async {
         when(mockUserRepository.signOut()).thenAnswer((_) => Future.value());
         return userBloc;
       },
@@ -45,19 +41,18 @@ void main() {
         userBloc.add(Logout());
         return;
       },
-      verify: () async {
+      verify: (userBloc) async {
         verify(mockUserRepository.signOut()).called(1);
       },
       expect: [
-        InitialUser(),
         SignoutLoading(),
         SignoutSucceded(),
       ],
     );
 
     blocTest(
-      'Expects [InitialUser, SignoutLoading, SignoutFailed] when Logout fails',
-      build: () {
+      'Expects [SignoutLoading, SignoutFailed] when Logout fails',
+      build: () async {
         when(mockUserRepository.signOut()).thenThrow(SignOutException());
         return userBloc;
       },
@@ -65,11 +60,10 @@ void main() {
         userBloc.add(Logout());
         return;
       },
-      verify: () async {
+      verify: (userBloc) async {
         verify(mockUserRepository.signOut()).called(1);
       },
       expect: [
-        InitialUser(),
         SignoutLoading(),
         SignoutFailed(),
       ],
