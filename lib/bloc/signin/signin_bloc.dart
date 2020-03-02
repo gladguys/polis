@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 
 import '../../core/exception/invalid_credentials_exception.dart';
 import '../../core/service/analytics_service.dart';
@@ -22,7 +23,9 @@ String _getSigninMethod(SigninMethod signinMethod) {
 }
 
 class SigninBloc extends Bloc<SigninEvent, SigninState> {
-  SigninBloc({this.repository, this.analyticsService});
+  SigninBloc({@required this.repository, @required this.analyticsService})
+      : assert(repository != null),
+        assert(analyticsService != null);
 
   final SigninRepository repository;
   final AnalyticsService analyticsService;

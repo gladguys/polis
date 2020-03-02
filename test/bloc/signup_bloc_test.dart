@@ -26,6 +26,17 @@ void main() {
           analyticsService: mockAnalyticsService);
     });
 
+    test('asserts', () {
+      expect(
+          () => SignupBloc(
+              repository: mockSignupRepository, analyticsService: null),
+          throwsAssertionError);
+      expect(
+          () => SignupBloc(
+              repository: null, analyticsService: mockAnalyticsService),
+          throwsAssertionError);
+    });
+
     test('Expects InitialSignup to be the initial state', () {
       expect(signupBloc.state, equals(InitialSignup()));
     });

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 
 import './bloc.dart';
 import '../../core/exception/exceptions.dart';
@@ -9,7 +10,9 @@ import '../../i18n/message.dart';
 import '../../repository/abstract/signup_repository.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
-  SignupBloc({this.repository, this.analyticsService});
+  SignupBloc({@required this.repository, @required this.analyticsService})
+      : assert(repository != null),
+        assert(analyticsService != null);
 
   final SignupRepository repository;
   final AnalyticsService analyticsService;

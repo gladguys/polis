@@ -4,14 +4,22 @@ import 'package:polis/bloc/blocs.dart';
 import 'package:polis/bloc/flutter_bloc_delegate.dart';
 import 'package:polis/model/user_model.dart';
 
+import '../mock.dart';
+
 void main() {
   group('FlutterBlocDelegate tests', () {
     FlutterBlocDelegate delegate;
     SigninBloc signinBloc;
+    MockSigninRepository mockSigninRepository;
+    MockAnalyticsService mockAnalyticsService;
 
     setUp(() {
       delegate = FlutterBlocDelegate();
-      signinBloc = SigninBloc();
+      mockSigninRepository = MockSigninRepository();
+      mockAnalyticsService = MockAnalyticsService();
+      signinBloc = SigninBloc(
+          repository: mockSigninRepository,
+          analyticsService: mockAnalyticsService);
     });
 
     test('onEvent test', () {
