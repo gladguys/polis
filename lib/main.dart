@@ -10,9 +10,14 @@ import 'package:simple_router/simple_router.dart';
 
 import 'bloc/flutter_bloc_delegate.dart';
 import 'core/routing/polis_routing_observer.dart';
+import 'core/service/analytics_service.dart';
 import 'page/signin/signin_page_connected.dart';
 
 FirebaseAnalytics analytics = FirebaseAnalytics();
+
+// TODO(rodrigo): locator this
+AnalyticsService analyticsService =
+    AnalyticsService(firebaseAnalytics: analytics);
 
 void main() {
   Crashlytics.instance.enableInDevMode = true;

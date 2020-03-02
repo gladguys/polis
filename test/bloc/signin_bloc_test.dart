@@ -14,12 +14,16 @@ void main() {
   group('SigninBloc tests', () {
     SigninBloc signinBloc;
     MockSigninRepository mockSigninRepository;
+    MockAnalyticsService mockAnalyticsService;
     user =
         UserModel(name: 'polis', email: 'polis@gmail.com', password: 'random');
 
     setUp(() {
       mockSigninRepository = MockSigninRepository();
-      signinBloc = SigninBloc(repository: mockSigninRepository);
+      mockAnalyticsService = MockAnalyticsService();
+      signinBloc = SigninBloc(
+          repository: mockSigninRepository,
+          analyticsService: mockAnalyticsService);
     });
 
     test('Expects InitialSignin to be the initial state', () {
@@ -27,11 +31,13 @@ void main() {
     });
 
     blocTest(
-      'Expects [InitialSignin, SigninLoading, UserAuthenticated]'
+      'Expects [SigninLoading, UserAuthenticated]'
       ' when SigninWithEmailAndPassword added',
       build: () async {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .thenAnswer((_) => Future.value(user));
+        when(mockAnalyticsService.logSignin(method: anyNamed('method')))
+            .thenAnswer((_) => Future.value());
         return signinBloc;
       },
       act: (signinBloc) {
@@ -41,6 +47,8 @@ void main() {
       verify: (signinBloc) async {
         verify(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .called(1);
+        verify(mockAnalyticsService.logSignin(method: 'EMAIL_AND_PASSWORD'))
+            .called(1);
       },
       expect: [
         SigninLoading(),
@@ -49,11 +57,13 @@ void main() {
     );
 
     blocTest(
-      'Expects [InitialSignin, SigninLoading, UserAuthenticated]'
+      'Expects [SigninLoading, UserAuthenticated]'
       ' when SigninWithGoogle added',
       build: () async {
         when(mockSigninRepository.signInWithGoogle())
             .thenAnswer((_) => Future.value(user));
+        when(mockAnalyticsService.logSignin(method: anyNamed('method')))
+            .thenAnswer((_) => Future.value());
         return signinBloc;
       },
       act: (signinBloc) {
@@ -62,6 +72,7 @@ void main() {
       },
       verify: (signinBloc) async {
         verify(mockSigninRepository.signInWithGoogle()).called(1);
+        verify(mockAnalyticsService.logSignin(method: 'GOOGLE')).called(1);
       },
       expect: [
         SigninLoading(),
@@ -70,7 +81,7 @@ void main() {
     );
 
     blocTest(
-      '''Expects [InitialSignin, SigninLoading, SigninFailed] with 
+      '''Expects [SigninLoading, SigninFailed] with 
       ERROR_INVALID_CREDENTIALS when SigninWithEmailAndPassword added and theres an error with 
       credentials''',
       build: () async {
@@ -93,7 +104,7 @@ void main() {
     );
 
     blocTest(
-      'Expects [InitialSignin, SigninLoading, SigninFailed] with '
+      'Expects [SigninLoading, SigninFailed] with '
       'ERROR_SIGNIN when SigninWithEmailAndPassword added and theres an error',
       build: () async {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
@@ -115,7 +126,7 @@ void main() {
     );
 
     blocTest(
-      '''Expects [InitialSignin, SigninLoading, SigninFailed] with 
+      '''Expects [SigninLoading, SigninFailed] with 
       ERROR_INVALID_CREDENTIALS when SigninWithGoogle added and theres an error with 
       credentials''',
       build: () async {
@@ -137,7 +148,7 @@ void main() {
     );
 
     blocTest(
-      '''Expects [InitialSignin, SigninLoading, UserAuthenticationFailed] with 
+      '''Expects [SigninLoading, UserAuthenticationFailed] with 
       ERROR_AUTENTICATING_USER when SigninWithEmailAndPassword added and theres an error''',
       build: () async {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
@@ -159,7 +170,7 @@ void main() {
     );
 
     blocTest(
-      '''Expects [InitialSignin, SigninLoading, UserAuthenticationFailed] with 
+      '''Expects [SigninLoading, UserAuthenticationFailed] with 
       ERROR_AUTENTICATING_USER when SigninWithGoogle added and theres an error''',
       build: () async {
         when(mockSigninRepository.signInWithGoogle())
@@ -180,7 +191,7 @@ void main() {
     );
 
     blocTest(
-      '''Expects [InitialSignin, SigninLoading, SigninFailed] with 
+      '''Expects [SigninLoading, SigninFailed] with 
       ERROR_SIGNIN when SigninWithGoogle added and theres an error''',
       build: () async {
         when(mockSigninRepository.signInWithGoogle()).thenThrow(Exception());

@@ -14,12 +14,16 @@ void main() {
   group('SignupBloc tests', () {
     SignupBloc signupBloc;
     MockSignupRepository mockSignupRepository;
+    MockAnalyticsService mockAnalyticsService;
     user =
         UserModel(name: 'polis', email: 'polis@gmail.com', password: 'random');
 
     setUp(() {
       mockSignupRepository = MockSignupRepository();
-      signupBloc = SignupBloc(repository: mockSignupRepository);
+      mockAnalyticsService = MockAnalyticsService();
+      signupBloc = SignupBloc(
+          repository: mockSignupRepository,
+          analyticsService: mockAnalyticsService);
     });
 
     test('Expects InitialSignup to be the initial state', () {
@@ -32,6 +36,8 @@ void main() {
       build: () async {
         when(mockSignupRepository.createUserWithEmailAndPassword(any))
             .thenAnswer((_) => Future.value(user));
+        when(mockAnalyticsService.logSignup())
+            .thenAnswer((_) => Future.value());
         return signupBloc;
       },
       act: (signupBloc) {
@@ -41,6 +47,7 @@ void main() {
       verify: (signupBloc) async {
         verify(mockSignupRepository.createUserWithEmailAndPassword(any))
             .called(1);
+        verify(mockAnalyticsService.logSignup()).called(1);
       },
       expect: [
         SignupLoading(),
