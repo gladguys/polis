@@ -14,6 +14,6 @@ class AnalyticsService {
   }
 
   Future<void> logSignup() async {
-    await firebaseAnalytics.logSignUp(signUpMethod: 'EMAILANDPASSWORD');
+    await firebaseAnalytics.logSignUp(signUpMethod: 'EMAIL_AND_PASSWORD');
   }
 }
