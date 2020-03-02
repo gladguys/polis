@@ -14,6 +14,7 @@ dependencies:
   flutter_bloc: ^3.2.0
   bloc: ^3.0.0
   get: ^1.10.5
+  simple_router: ^0.0.3
   equatable: ^1.1.0
   cloud_firestore: ^0.13.4
   firebase_auth: ^0.15.5+2
@@ -23,7 +24,7 @@ dependencies:
   sailor: ^0.6.0
 
   # UI
-  getflutter: ^1.0.8
+  getflutter: ^1.0.9
   cupertino_icons: ^0.1.3
 
 dev_dependencies:

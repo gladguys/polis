@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
 import '../../bloc/signin/signin_bloc.dart';
@@ -34,7 +35,7 @@ class _SigninPageState extends State<SigninPage> {
         child: BlocListener<SigninBloc, SigninState>(
           listener: (context, state) {
             if (state is UserAuthenticated) {
-              Get.off(
+              SimpleRouter.forwardAndReplace(
                 BlocProvider<UserBloc>(
                   create: (_) => UserBloc(
                     user: state.user,
@@ -105,7 +106,8 @@ class _SigninPageState extends State<SigninPage> {
                         SizedBox(height: 12),
                         RaisedButton(
                           child: Text(SIGNUP),
-                          onPressed: () => Get.to(SignupPageConnected()),
+                          onPressed: () => SimpleRouter.forwardAndReplace(
+                              SignupPageConnected()),
                         ),
                       ],
                     ),

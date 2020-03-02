@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'bloc/flutter_bloc_delegate.dart';
+import 'core/routing/core.dart';
 import 'page/signin/signin_page_connected.dart';
 
 void main() {
   BlocSupervisor.delegate = FlutterBlocDelegate();
+  configRouting();
   runApp(MyApp());
 }
 

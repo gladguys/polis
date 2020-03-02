@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
 import '../../i18n/i18n.dart';
@@ -42,9 +43,8 @@ class _SignupPageState extends State<SignupPage> {
         child: BlocListener(
           bloc: _signupBloc,
           listener: (context, state) {
-            print(state);
             if (state is UserCreated) {
-              Get.off(SigninPageConnected());
+              SimpleRouter.forwardAndReplace(SigninPageConnected());
               Get.snackbar(CONGRATULATIONS, USER_CREATED_WITH_SUCCESS);
             } else if (state is UserCreationFailed) {
               Get.snackbar(FAIL, state.statusMessage);
@@ -141,7 +141,8 @@ class _SignupPageState extends State<SignupPage> {
             RaisedButton(
               key: ValueKey('signin-btn'),
               child: Text(SIGNIN),
-              onPressed: () => Get.off(SigninPageConnected()),
+              onPressed: () =>
+                  SimpleRouter.forwardAndReplace(SigninPageConnected()),
             )
           ],
         ),
