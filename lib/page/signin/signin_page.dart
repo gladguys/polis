@@ -7,6 +7,7 @@ import 'package:simple_router/simple_router.dart';
 import '../../bloc/blocs.dart';
 import '../../bloc/signin/signin_bloc.dart';
 import '../../bloc/signin/signin_state.dart';
+import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
 import '../../repository/concrete/firebase/firebase_user_repository.dart';
 import '../home/home_page.dart';
@@ -44,6 +45,7 @@ class _SigninPageState extends State<SigninPage> {
                   ),
                   child: HomePage(),
                 ),
+                name: HOME_PAGE,
               );
             }
             if (state is SigninFailed) {
@@ -107,7 +109,9 @@ class _SigninPageState extends State<SigninPage> {
                         RaisedButton(
                           child: Text(SIGNUP),
                           onPressed: () => SimpleRouter.forwardAndReplace(
-                              SignupPageConnected()),
+                            SignupPageConnected(),
+                            name: SIGNUP_PAGE,
+                          ),
                         ),
                       ],
                     ),

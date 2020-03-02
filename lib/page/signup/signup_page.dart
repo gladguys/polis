@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
+import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
 import '../../model/user_model.dart';
 import '../signin/signin_page_connected.dart';
@@ -44,7 +45,10 @@ class _SignupPageState extends State<SignupPage> {
           bloc: _signupBloc,
           listener: (context, state) {
             if (state is UserCreated) {
-              SimpleRouter.forwardAndReplace(SigninPageConnected());
+              SimpleRouter.forwardAndReplace(
+                SigninPageConnected(),
+                name: SIGNIN_PAGE,
+              );
               Get.snackbar(CONGRATULATIONS, USER_CREATED_WITH_SUCCESS);
             } else if (state is UserCreationFailed) {
               Get.snackbar(FAIL, state.statusMessage);
@@ -141,8 +145,10 @@ class _SignupPageState extends State<SignupPage> {
             RaisedButton(
               key: ValueKey('signin-btn'),
               child: Text(SIGNIN),
-              onPressed: () =>
-                  SimpleRouter.forwardAndReplace(SigninPageConnected()),
+              onPressed: () => SimpleRouter.forwardAndReplace(
+                SigninPageConnected(),
+                name: SIGNIN_PAGE,
+              ),
             )
           ],
         ),
