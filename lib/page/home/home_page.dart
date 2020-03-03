@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
 import '../../bloc/user/user_bloc.dart';
 import '../../bloc/user/user_event.dart';
 import '../../bloc/user/user_state.dart';
+import '../../core/routing/route_names.dart';
 import '../signin/signin_page_connected.dart';
 
 class HomePage extends StatelessWidget {
@@ -26,7 +28,10 @@ class HomePage extends StatelessWidget {
         listener: (_, state) {
           if (state is SignoutSucceded) {
             Get.snackbar('Logout', 'Logout');
-            Get.offAll(SigninPageConnected(), (_) => false);
+            SimpleRouter.forwardAndRemoveAll(
+              SigninPageConnected(),
+              name: SIGNIN_PAGE,
+            );
           }
           if (state is SignoutFailed) {
             Get.snackbar('Falha Logout', 'Falha Logout');

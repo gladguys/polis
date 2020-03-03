@@ -14,49 +14,62 @@ void main() {
   group('SignupBloc tests', () {
     SignupBloc signupBloc;
     MockSignupRepository mockSignupRepository;
+    MockAnalyticsService mockAnalyticsService;
     user =
         UserModel(name: 'polis', email: 'polis@gmail.com', password: 'random');
 
     setUp(() {
       mockSignupRepository = MockSignupRepository();
-      signupBloc = SignupBloc(repository: mockSignupRepository);
+      mockAnalyticsService = MockAnalyticsService();
+      signupBloc = SignupBloc(
+          repository: mockSignupRepository,
+          analyticsService: mockAnalyticsService);
+    });
+
+    test('asserts', () {
+      expect(
+          () => SignupBloc(
+              repository: mockSignupRepository, analyticsService: null),
+          throwsAssertionError);
+      expect(
+          () => SignupBloc(
+              repository: null, analyticsService: mockAnalyticsService),
+          throwsAssertionError);
+    });
+
+    test('Expects InitialSignup to be the initial state', () {
+      expect(signupBloc.state, equals(InitialSignup()));
     });
 
     blocTest(
-      'Expects InitialSignin to be the initial state',
-      build: () => signupBloc,
-      expect: [
-        InitialSignup(),
-      ],
-    );
-
-    blocTest(
-      'Expects [InitialSignup, SignupLoading, UserCreated] when '
+      'Expects [SignupLoading, UserCreated] when '
       'SignupTriedEvent added',
-      build: () {
+      build: () async {
         when(mockSignupRepository.createUserWithEmailAndPassword(any))
             .thenAnswer((_) => Future.value(user));
+        when(mockAnalyticsService.logSignup())
+            .thenAnswer((_) => Future.value());
         return signupBloc;
       },
       act: (signupBloc) {
         signupBloc.add(Signup(UserModel()));
         return;
       },
-      verify: () async {
+      verify: (signupBloc) async {
         verify(mockSignupRepository.createUserWithEmailAndPassword(any))
             .called(1);
+        verify(mockAnalyticsService.logSignup()).called(1);
       },
       expect: [
-        InitialSignup(),
         SignupLoading(),
         UserCreated(),
       ],
     );
 
     blocTest(
-      '''Expects [InitialSignup, SignupLoading, UserCreationFailed] with 
+      '''Expects [SignupLoading, UserCreationFailed] with 
       EMAIL_ALREADY_IN_USE message when SignupTried added and email already token''',
-      build: () {
+      build: () async {
         when(mockSignupRepository.createUserWithEmailAndPassword(any))
             .thenThrow(EmailAlreadyInUseException());
         return signupBloc;
@@ -65,21 +78,20 @@ void main() {
         signupBloc.add(Signup(UserModel()));
         return;
       },
-      verify: () async {
+      verify: (signupBloc) async {
         verify(mockSignupRepository.createUserWithEmailAndPassword(any))
             .called(1);
       },
       expect: [
-        InitialSignup(),
         SignupLoading(),
         UserCreationFailed(EMAIL_ALREADY_IN_USE),
       ],
     );
 
     blocTest(
-      '''Expects [InitialSignup, SignupLoading, UserCreationFailed] with 
+      '''Expects [SignupLoading, UserCreationFailed] with 
       PASSWORD_IS_WEAK message when SignupTried added and email already token''',
-      build: () {
+      build: () async {
         when(mockSignupRepository.createUserWithEmailAndPassword(any))
             .thenThrow(WeakPasswordException());
         return signupBloc;
@@ -88,21 +100,20 @@ void main() {
         signupBloc.add(Signup(UserModel()));
         return;
       },
-      verify: () async {
+      verify: (signupBloc) async {
         verify(mockSignupRepository.createUserWithEmailAndPassword(any))
             .called(1);
       },
       expect: [
-        InitialSignup(),
         SignupLoading(),
         UserCreationFailed(PASSWORD_IS_WEAK),
       ],
     );
 
     blocTest(
-      'Expects [InitialSignup, SignupLoading, SignupFailed] when signup '
+      'Expects [SignupLoading, SignupFailed] when signup '
       'failled somehow',
-      build: () {
+      build: () async {
         when(mockSignupRepository.createUserWithEmailAndPassword(any))
             .thenThrow(Exception());
         return signupBloc;
@@ -111,12 +122,11 @@ void main() {
         signupBloc.add(Signup(UserModel()));
         return;
       },
-      verify: () async {
+      verify: (signupBloc) async {
         verify(mockSignupRepository.createUserWithEmailAndPassword(any))
             .called(1);
       },
       expect: [
-        InitialSignup(),
         SignupLoading(),
         SignupFailed(ERROR_CREATING_USER),
       ],
