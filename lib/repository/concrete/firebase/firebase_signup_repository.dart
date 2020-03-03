@@ -23,7 +23,7 @@ class FirebaseSignupRepository extends SignupRepository {
     try {
       final authResult = await firebaseAuth.createUserWithEmailAndPassword(
           email: user.email, password: user.password);
-      print(authResult);
+
       if (authResult != null && !await userExists(authResult.user.uid)) {
         await createFirestoreUser(authResult.user.uid, user);
         return;

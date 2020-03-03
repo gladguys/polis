@@ -14,72 +14,88 @@ void main() {
   group('SigninBloc tests', () {
     SigninBloc signinBloc;
     MockSigninRepository mockSigninRepository;
+    MockAnalyticsService mockAnalyticsService;
     user =
         UserModel(name: 'polis', email: 'polis@gmail.com', password: 'random');
 
     setUp(() {
       mockSigninRepository = MockSigninRepository();
-      signinBloc = SigninBloc(repository: mockSigninRepository);
+      mockAnalyticsService = MockAnalyticsService();
+      signinBloc = SigninBloc(
+          repository: mockSigninRepository,
+          analyticsService: mockAnalyticsService);
+    });
+
+    test('asserts', () {
+      expect(
+          () => SigninBloc(
+              repository: mockSigninRepository, analyticsService: null),
+          throwsAssertionError);
+      expect(
+          () => SigninBloc(
+              repository: null, analyticsService: mockAnalyticsService),
+          throwsAssertionError);
+    });
+
+    test('Expects InitialSignin to be the initial state', () {
+      expect(signinBloc.state, equals(InitialSignin()));
     });
 
     blocTest(
-      'Expects InitialSignin to be the initial state',
-      build: () => signinBloc,
-      expect: [
-        InitialSignin(),
-      ],
-    );
-
-    blocTest(
-      'Expects [InitialSignin, SigninLoading, UserAuthenticated]'
+      'Expects [SigninLoading, UserAuthenticated]'
       ' when SigninWithEmailAndPassword added',
-      build: () {
+      build: () async {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .thenAnswer((_) => Future.value(user));
+        when(mockAnalyticsService.logSignin(method: anyNamed('method')))
+            .thenAnswer((_) => Future.value());
         return signinBloc;
       },
       act: (signinBloc) {
         signinBloc.add(SigninWithEmailAndPassword('', ''));
         return;
       },
-      verify: () async {
+      verify: (signinBloc) async {
         verify(mockSigninRepository.signInWithEmailAndPassword(any, any))
+            .called(1);
+        verify(mockAnalyticsService.logSignin(method: 'EMAIL_AND_PASSWORD'))
             .called(1);
       },
       expect: [
-        InitialSignin(),
         SigninLoading(),
         UserAuthenticated(user),
       ],
     );
 
     blocTest(
-      'Expects [InitialSignin, SigninLoading, UserAuthenticated]'
+      'Expects [SigninLoading, UserAuthenticated]'
       ' when SigninWithGoogle added',
-      build: () {
+      build: () async {
         when(mockSigninRepository.signInWithGoogle())
             .thenAnswer((_) => Future.value(user));
+        when(mockAnalyticsService.logSignin(method: anyNamed('method')))
+            .thenAnswer((_) => Future.value());
         return signinBloc;
       },
       act: (signinBloc) {
         signinBloc.add(SigninWithGoogle());
         return;
       },
-      verify: () async {
+      verify: (signinBloc) async {
         verify(mockSigninRepository.signInWithGoogle()).called(1);
+        verify(mockAnalyticsService.logSignin(method: 'GOOGLE')).called(1);
       },
       expect: [
-        InitialSignin(),
         SigninLoading(),
         UserAuthenticated(user),
       ],
     );
 
     blocTest(
-      '''Expects [InitialSignin, SigninLoading, SigninFailed] with 
+      '''Expects [SigninLoading, SigninFailed] with 
       ERROR_INVALID_CREDENTIALS when SigninWithEmailAndPassword added and theres an error with 
       credentials''',
-      build: () {
+      build: () async {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .thenThrow(InvalidCredentialsException());
         return signinBloc;
@@ -88,21 +104,20 @@ void main() {
         signinBloc.add(SigninWithEmailAndPassword('', ''));
         return;
       },
-      verify: () async {
+      verify: (signinBloc) async {
         verify(mockSigninRepository.signInWithEmailAndPassword('', ''))
             .called(1);
       },
       expect: [
-        InitialSignin(),
         SigninLoading(),
         SigninFailed(ERROR_INVALID_CREDENTIALS),
       ],
     );
 
     blocTest(
-      'Expects [InitialSignin, SigninLoading, SigninFailed] with '
+      'Expects [SigninLoading, SigninFailed] with '
       'ERROR_SIGNIN when SigninWithEmailAndPassword added and theres an error',
-      build: () {
+      build: () async {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .thenThrow(Exception(ERROR_SIGNIN));
         return signinBloc;
@@ -111,22 +126,21 @@ void main() {
         signinBloc.add(SigninWithEmailAndPassword('', ''));
         return;
       },
-      verify: () async {
+      verify: (signinBloc) async {
         verify(mockSigninRepository.signInWithEmailAndPassword('', ''))
             .called(1);
       },
       expect: [
-        InitialSignin(),
         SigninLoading(),
         SigninFailed(ERROR_SIGNIN),
       ],
     );
 
     blocTest(
-      '''Expects [InitialSignin, SigninLoading, SigninFailed] with 
+      '''Expects [SigninLoading, SigninFailed] with 
       ERROR_INVALID_CREDENTIALS when SigninWithGoogle added and theres an error with 
       credentials''',
-      build: () {
+      build: () async {
         when(mockSigninRepository.signInWithGoogle())
             .thenThrow(InvalidCredentialsException());
         return signinBloc;
@@ -135,20 +149,19 @@ void main() {
         signinBloc.add(SigninWithGoogle());
         return;
       },
-      verify: () async {
+      verify: (signinBloc) async {
         verify(mockSigninRepository.signInWithGoogle()).called(1);
       },
       expect: [
-        InitialSignin(),
         SigninLoading(),
         SigninFailed(ERROR_INVALID_CREDENTIALS),
       ],
     );
 
     blocTest(
-      '''Expects [InitialSignin, SigninLoading, UserAuthenticationFailed] with 
+      '''Expects [SigninLoading, UserAuthenticationFailed] with 
       ERROR_AUTENTICATING_USER when SigninWithEmailAndPassword added and theres an error''',
-      build: () {
+      build: () async {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .thenAnswer((_) => Future.value(null));
         return signinBloc;
@@ -157,21 +170,20 @@ void main() {
         signinBloc.add(SigninWithEmailAndPassword('', ''));
         return;
       },
-      verify: () async {
+      verify: (signinBloc) async {
         verify(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .called(1);
       },
       expect: [
-        InitialSignin(),
         SigninLoading(),
         UserAuthenticationFailed(ERROR_AUTENTICATING_USER),
       ],
     );
 
     blocTest(
-      '''Expects [InitialSignin, SigninLoading, UserAuthenticationFailed] with 
+      '''Expects [SigninLoading, UserAuthenticationFailed] with 
       ERROR_AUTENTICATING_USER when SigninWithGoogle added and theres an error''',
-      build: () {
+      build: () async {
         when(mockSigninRepository.signInWithGoogle())
             .thenAnswer((_) => Future.value(null));
         return signinBloc;
@@ -180,20 +192,19 @@ void main() {
         signinBloc.add(SigninWithGoogle());
         return;
       },
-      verify: () async {
+      verify: (signinBloc) async {
         verify(mockSigninRepository.signInWithGoogle()).called(1);
       },
       expect: [
-        InitialSignin(),
         SigninLoading(),
         UserAuthenticationFailed(ERROR_AUTENTICATING_USER),
       ],
     );
 
     blocTest(
-      '''Expects [InitialSignin, SigninLoading, SigninFailed] with 
+      '''Expects [SigninLoading, SigninFailed] with 
       ERROR_SIGNIN when SigninWithGoogle added and theres an error''',
-      build: () {
+      build: () async {
         when(mockSigninRepository.signInWithGoogle()).thenThrow(Exception());
         return signinBloc;
       },
@@ -201,11 +212,10 @@ void main() {
         signinBloc.add(SigninWithGoogle());
         return;
       },
-      verify: () async {
+      verify: (signinBloc) async {
         verify(mockSigninRepository.signInWithGoogle()).called(1);
       },
       expect: [
-        InitialSignin(),
         SigninLoading(),
         SigninFailed(ERROR_SIGNIN),
       ],
