@@ -13,7 +13,7 @@ void main() {
       userId: 'userId', name: 'name', email: 'email', photoUrl: 'photoUrl');
 
   group('UserModel tests', () {
-    test('UserModel props', () {
+    test('props', () {
       final user1 = UserModel(
         userId: '1',
         name: 'user1',
@@ -37,18 +37,18 @@ void main() {
       expect(user1 == user3, false);
     });
 
-    test('UserModel toString() works', () {
+    test('toString()', () {
       final modelToString = UserModel(userId: 'myId').toString();
       final result =
           '''UserModel{userId: myId, name: null, email: null, photoUrl: null, password: null}''';
       expect(modelToString == result, true);
     });
 
-    test('UserModel fromJson() works', () {
+    test('fromJson()', () {
       expect(UserModel.fromJson(jsonUser) == userModel, true);
     });
 
-    test('UserModel toJson() works', () {
+    test('toJson()', () {
       final userToJson = userModel.toJson();
       expect(userToJson['userId'] == jsonUser['userId'], true);
       expect(userToJson['name'] == jsonUser['name'], true);
