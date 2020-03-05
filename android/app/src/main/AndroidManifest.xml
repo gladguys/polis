@@ -9,6 +9,11 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="polis"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-5806526425473649~5721958482"/>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

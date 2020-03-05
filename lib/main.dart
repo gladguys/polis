@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -19,11 +20,55 @@ FirebaseAnalytics analytics = FirebaseAnalytics();
 AnalyticsService analyticsService =
     AnalyticsService(firebaseAnalytics: analytics);
 
+const ADMOB_APP_ID = 'ca-app-pub-5806526425473649~5721958482';
+
+MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+  keywords: <String>['flutterio', 'beautiful apps'],
+  contentUrl: 'https://flutter.io',
+  childDirected: false,
+  testDevices: <String>[],
+);
+
+BannerAd myBanner = BannerAd(
+  adUnitId: BannerAd.testAdUnitId,
+  size: AdSize.smartBanner,
+  targetingInfo: targetingInfo,
+  listener: (event) {
+    print("BannerAd event is $event");
+  },
+);
+
+InterstitialAd myInterstitial = InterstitialAd(
+  adUnitId: InterstitialAd.testAdUnitId,
+  targetingInfo: targetingInfo,
+  listener: (event) {
+    print("InterstitialAd event is $event");
+  },
+);
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  FirebaseAdMob.instance.initialize(appId: ADMOB_APP_ID);
   Crashlytics.instance.enableInDevMode = true;
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
   BlocSupervisor.delegate = FlutterBlocDelegate();
   SimpleRouter.setKey(Get.key);
+
+  myBanner
+    ..load()
+    ..show(
+      anchorOffset: 60.0,
+      horizontalCenterOffset: 10.0,
+      anchorType: AnchorType.bottom,
+    );
+
+  /*myInterstitial
+    ..load()
+    ..show(
+      anchorType: AnchorType.bottom,
+      anchorOffset: 0.0,
+      horizontalCenterOffset: 0.0,
+    );*/
 
   runZoned(() {
     runApp(MyApp());
