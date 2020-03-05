@@ -14,7 +14,7 @@ void main() {
     m.main();
     expect(Crashlytics.instance.enableInDevMode, true);
     expect(FlutterError.onError,
-        equals(G<CrashlyticsService>().recordFlutterError));
+        equals(G<CrashlyticsService>().crashlytics.recordFlutterError));
     expect(BlocSupervisor.delegate, isA<FlutterBlocDelegate>());
     expect(SimpleRouter.getKey(), equals(Get.key));
   });

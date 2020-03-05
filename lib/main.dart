@@ -18,13 +18,13 @@ void main() {
   initLocator();
   G<AdService>().initAds();
   G<CrashlyticsService>().initCrashlytics();
-  FlutterError.onError = G<CrashlyticsService>().recordFlutterError;
+  FlutterError.onError = G<CrashlyticsService>().crashlytics.recordFlutterError;
   BlocSupervisor.delegate = FlutterBlocDelegate();
   SimpleRouter.setKey(Get.key);
 
   runZoned(() {
     runApp(MyApp());
-  }, onError: G<CrashlyticsService>().recordError);
+  }, onError: G<CrashlyticsService>().crashlytics.recordError);
 }
 
 class MyApp extends StatelessWidget {

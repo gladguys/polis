@@ -1,29 +1,15 @@
 import 'package:firebase_admob/firebase_admob.dart';
+import 'package:flutter/cupertino.dart';
 
 const ADMOB_APP_ID = 'ca-app-pub-5806526425473649~5721958482';
 
 class AdService {
-  MobileAdTargetingInfo targetingInfo;
-  BannerAd bannerAd;
+  AdService({@required this.bannerAd}) : assert(bannerAd != null);
+
+  final BannerAd bannerAd;
 
   void initAds() {
     FirebaseAdMob.instance.initialize(appId: ADMOB_APP_ID);
-
-    targetingInfo = MobileAdTargetingInfo(
-      keywords: <String>['flutterio', 'beautiful apps'],
-      contentUrl: 'https://flutter.io',
-      childDirected: false,
-      testDevices: <String>[],
-    );
-
-    bannerAd = BannerAd(
-      adUnitId: BannerAd.testAdUnitId,
-      size: AdSize.smartBanner,
-      targetingInfo: targetingInfo,
-      listener: (event) {
-        print("BannerAd event is $event");
-      },
-    );
   }
 
   void showBanner() {
