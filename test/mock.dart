@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/service/ad_service.dart';
 import 'package:polis/core/service/analytics_service.dart';
 import 'package:polis/repository/abstract/signin_repository.dart';
 import 'package:polis/repository/abstract/signup_repository.dart';
@@ -53,3 +54,5 @@ class MockFirebaseAnalytics extends Mock implements FirebaseAnalytics {}
 
 // Service
 class MockAnalyticsService extends Mock implements AnalyticsService {}
+
+class MockAdService extends Mock implements AdService {}

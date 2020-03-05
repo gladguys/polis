@@ -1,19 +1,19 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 class AnalyticsService {
-  AnalyticsService({this.firebaseAnalytics});
+  AnalyticsService({this.analytics});
 
-  FirebaseAnalytics firebaseAnalytics;
+  FirebaseAnalytics analytics;
 
   Future<void> setUserProperties({String userId}) async {
-    await firebaseAnalytics.setUserId(userId);
+    await analytics.setUserId(userId);
   }
 
   Future<void> logSignin({String method}) async {
-    await firebaseAnalytics.logLogin(loginMethod: method);
+    await analytics.logLogin(loginMethod: method);
   }
 
   Future<void> logSignup() async {
-    await firebaseAnalytics.logSignUp(signUpMethod: 'EMAIL_AND_PASSWORD');
+    await analytics.logSignUp(signUpMethod: 'EMAIL_AND_PASSWORD');
   }
 }

@@ -19,6 +19,7 @@ dependencies:
   json_serializable: ^3.2.5
   uuid: ^2.0.4
   sailor: ^0.6.0
+  get_it: ^4.0.0
 
   ## Firebase
   cloud_firestore: ^0.13.4

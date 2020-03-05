@@ -8,9 +8,31 @@ import '../../bloc/user/user_bloc.dart';
 import '../../bloc/user/user_event.dart';
 import '../../bloc/user/user_state.dart';
 import '../../core/routing/route_names.dart';
+import '../../core/service/services.dart';
 import '../signin/signin_page_connected.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  HomePage(this.adService);
+
+  final AdService adService;
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    widget.adService.showBanner();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    widget.adService.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

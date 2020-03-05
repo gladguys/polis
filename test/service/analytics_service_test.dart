@@ -11,8 +11,7 @@ void main() {
 
     setUp(() {
       mockFirebaseAnalytics = MockFirebaseAnalytics();
-      analyticsService =
-          AnalyticsService(firebaseAnalytics: mockFirebaseAnalytics);
+      analyticsService = AnalyticsService(analytics: mockFirebaseAnalytics);
     });
 
     test('should call setUserId with the given userId', () async {
