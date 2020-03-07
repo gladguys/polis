@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/service/locator.dart';
 import 'package:polis/model/user_model.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
@@ -14,6 +15,8 @@ import '../utils.dart';
 
 void main() {
   group('SignupPage tests', () {
+    setUpAll(initLocator);
+
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(SignupPageConnected()),

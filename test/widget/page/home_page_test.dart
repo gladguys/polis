@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/service/locator.dart';
 import 'package:polis/model/user_model.dart';
 import 'package:polis/page/home/home_page.dart';
 import 'package:polis/page/page_connected.dart';
@@ -14,7 +15,20 @@ import '../../mock.dart';
 import '../utils.dart';
 
 void main() {
+  MockAdService mockAdService;
+
   group('HomePage tests', () {
+    setUpAll(() {
+      initLocator();
+      mockAdService = MockAdService();
+    });
+
+    setUp(() {
+      when(mockAdService.initAds()).thenReturn(() {});
+      when(mockAdService.showBanner()).thenReturn(() {});
+      when(mockAdService.dispose()).thenReturn(() {});
+    });
+
     testWidgets('should build withou explodinig', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
@@ -24,7 +38,7 @@ void main() {
               repository:
                   FirebaseUserRepository(firebaseAuth: FirebaseAuth.instance),
             ),
-            page: HomePage(),
+            page: HomePage(mockAdService),
           ),
         ),
       );
@@ -36,7 +50,7 @@ void main() {
         connectedWidget(
           PageConnected<UserBloc>(
             bloc: mockUserBloc,
-            page: HomePage(),
+            page: HomePage(mockAdService),
           ),
         ),
       );
@@ -55,7 +69,7 @@ void main() {
         connectedWidget(
           PageConnected<UserBloc>(
             bloc: mockUserBloc,
-            page: HomePage(),
+            page: HomePage(mockAdService),
           ),
         ),
       );
@@ -75,7 +89,7 @@ void main() {
         connectedWidget(
           PageConnected<UserBloc>(
             bloc: mockUserBloc,
-            page: HomePage(),
+            page: HomePage(mockAdService),
           ),
         ),
       );

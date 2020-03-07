@@ -14,12 +14,12 @@ void main() {
     test('didPush', () {
       polisRoutingObserver.didPush(
         MaterialPageRoute(
-          builder: (_) => HomePage(),
-          settings: RouteSettings(name: 'HomePage'),
-        ),
-        MaterialPageRoute(
           builder: (_) => SigninPageConnected(),
           settings: RouteSettings(name: 'SigninPage'),
+        ),
+        MaterialPageRoute(
+          builder: (_) => SignupPageConnected(),
+          settings: RouteSettings(name: 'SignupPage'),
         ),
       );
     });
@@ -27,12 +27,12 @@ void main() {
     test('didReplace', () {
       polisRoutingObserver.didReplace(
         newRoute: MaterialPageRoute(
-          builder: (_) => HomePage(),
-          settings: RouteSettings(name: 'HomePage'),
-        ),
-        oldRoute: MaterialPageRoute(
           builder: (_) => SigninPageConnected(),
           settings: RouteSettings(name: 'SigninPage'),
+        ),
+        oldRoute: MaterialPageRoute(
+          builder: (_) => SignupPageConnected(),
+          settings: RouteSettings(name: 'SignupPage'),
         ),
       );
     });
@@ -40,12 +40,12 @@ void main() {
     test('didPop', () {
       polisRoutingObserver.didPop(
         MaterialPageRoute(
-          builder: (_) => HomePage(),
-          settings: RouteSettings(name: 'HomePage'),
-        ),
-        MaterialPageRoute(
           builder: (_) => SigninPageConnected(),
           settings: RouteSettings(name: 'SigninPage'),
+        ),
+        MaterialPageRoute(
+          builder: (_) => SignupPageConnected(),
+          settings: RouteSettings(name: 'SignupPage'),
         ),
       );
     });

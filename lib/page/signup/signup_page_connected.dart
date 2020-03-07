@@ -3,7 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../bloc/blocs.dart';
-import '../../main.dart';
+import '../../core/service/locator.dart';
+import '../../core/service/services.dart';
 import '../../repository/concrete/firebase/firebase_signup_repository.dart';
 import '../page_connected.dart';
 import '../pages.dart';
@@ -15,7 +16,7 @@ class SignupPageConnected extends StatelessWidget {
       bloc: SignupBloc(
         repository: FirebaseSignupRepository(
             firebaseAuth: FirebaseAuth.instance, firestore: Firestore.instance),
-        analyticsService: analyticsService,
+        analyticsService: G<AnalyticsService>(),
       ),
       page: SignupPage(),
     );
