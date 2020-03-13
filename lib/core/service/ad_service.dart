@@ -17,8 +17,8 @@ class AdService {
       bannerAd
         ..load()
         ..show(
-          anchorOffset: 60.0,
-          horizontalCenterOffset: 10.0,
+          anchorOffset: 0,
+          horizontalCenterOffset: 0,
           anchorType: AnchorType.bottom,
         );
     }
