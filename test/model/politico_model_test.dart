@@ -17,7 +17,7 @@ void main() {
     'nomeEleitoral': 'Lula',
     'partido': 'PT',
     'ufNascimento': 'PE',
-    'urlPhoto': 'photo'
+    'urlFoto': 'photo'
   };
 
   final politicoModel = PoliticoModel(
@@ -34,7 +34,7 @@ void main() {
       nomeEleitoral: 'Lula',
       partido: 'PT',
       ufNascimento: 'PE',
-      urlPhoto: 'photo');
+      urlFoto: 'photo');
 
   group('PoliticoModel tests', () {
     test('props', () {
@@ -55,7 +55,7 @@ void main() {
     test('toString()', () {
       final modelToString = PoliticoModel(id: '1').toString();
       final result =
-          '''PoliticoModel{id: 1, nome: null, nomeEleitoral: null, email: null, emailGabinete: null, partido: null, urlPhoto: null, estado: null, situacao: null, sexo: null, dataNascimento: null, ufNascimento: null, municipioNascimento: null, escolaridade: null}''';
+          '''PoliticoModel{id: 1, nome: null, nomeEleitoral: null, email: null, emailGabinete: null, partido: null, urlFoto: null, estado: null, situacao: null, sexo: null, dataNascimento: null, ufNascimento: null, municipioNascimento: null, escolaridade: null}''';
       expect(modelToString == result, true);
     });
 
@@ -85,7 +85,7 @@ void main() {
       expect(politicoToJson['partido'] == jsonPolitico['partido'], true);
       expect(
           politicoToJson['ufNascimento'] == jsonPolitico['ufNascimento'], true);
-      expect(politicoToJson['urlPhoto'] == jsonPolitico['urlPhoto'], true);
+      expect(politicoToJson['urlFoto'] == jsonPolitico['urlFoto'], true);
     });
   });
 }
