@@ -5,6 +5,7 @@ import 'package:image_test_utils/image_test_utils.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/politic_suggestion/bloc.dart';
 import 'package:polis/core/service/locator.dart';
+import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/politico_model.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
@@ -122,7 +123,7 @@ void main() {
         expect(politicoCard, findsOneWidget);
         final followButton = find.byType(GFButton);
         expect(followButton, findsOneWidget);
-        expect(find.text('Deixar de seguir'), findsOneWidget);
+        expect(find.text(STOP_FOLLOWING), findsOneWidget);
         await tester.tap(followButton);
         await tester.pumpAndSettle();
         verify(
@@ -168,7 +169,7 @@ void main() {
         expect(politicoCard, findsOneWidget);
         final followButton = find.byType(GFButton);
         expect(followButton, findsOneWidget);
-        expect(find.text('Seguir'), findsOneWidget);
+        expect(find.text(FOLLOW), findsOneWidget);
         await tester.tap(followButton);
         await tester.pumpAndSettle();
         verify(
