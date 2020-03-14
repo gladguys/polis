@@ -10,26 +10,26 @@ void main() {
   group('FirebasePoliticSuggestionRepository tests', () {
     FirebasePoliticSuggestionRepository firebasePoliticSuggestionRepository;
     MockFirestore mockFirestore;
-    MockQuery mockQuery;
-    MockQuerySnapshot mockQuerySnapshot;
-    MockDocumentReference mockDocumentReference;
-    MockDocumentSnapshot mockDocumentSnapshot;
-    MockCollectionReference mockCollectionReference;
-    List<MockDocumentSnapshot> mockDocumentSnapshotList;
+    //MockQuery mockQuery;
+    //MockQuerySnapshot mockQuerySnapshot;
+    //MockDocumentReference mockDocumentReference;
+    //MockDocumentSnapshot mockDocumentSnapshot;
+    //MockCollectionReference mockCollectionReference;
+    //List<MockDocumentSnapshot> mockDocumentSnapshotList;
 
     setUp(() {
       mockFirestore = MockFirestore();
-      mockQuery = MockQuery();
-      mockQuerySnapshot = MockQuerySnapshot();
+      //mockQuery = MockQuery();
+      //mockQuerySnapshot = MockQuerySnapshot();
       firebasePoliticSuggestionRepository = FirebasePoliticSuggestionRepository(
         firestore: mockFirestore,
       );
-      mockDocumentReference = MockDocumentReference();
-      mockDocumentSnapshot = MockDocumentSnapshot();
-      mockCollectionReference = MockCollectionReference();
-      mockDocumentSnapshotList = [
-        mockDocumentSnapshot,
-      ];
+      //mockDocumentReference = MockDocumentReference();
+      //mockDocumentSnapshot = MockDocumentSnapshot();
+      //mockCollectionReference = MockCollectionReference();
+      //mockDocumentSnapshotList = [
+      //mockDocumentSnapshot,
+      //];
     });
 
     test('test asserts', () {
