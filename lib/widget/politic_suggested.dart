@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:getflutter/components/button/gf_button.dart';
 import 'package:getflutter/getflutter.dart';
 
+import '../i18n/i18n.dart';
 import '../model/politico_model.dart';
 
 class PoliticSuggested extends StatelessWidget {
@@ -41,7 +42,7 @@ class PoliticSuggested extends StatelessWidget {
             ),
             SizedBox(height: 3),
             Text(
-              'Dep. Federal',
+              POLITIC,
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.grey,
@@ -54,7 +55,7 @@ class PoliticSuggested extends StatelessWidget {
               color: Colors.grey,
               onPressed: onClickFollowButton,
               child: Text(
-                isFollowing ? 'Deixar de seguir' : 'Seguir',
+                isFollowing ? STOP_FOLLOWING : FOLLOW,
                 style: TextStyle(
                   color: isFollowing ? Colors.red : Colors.green,
                 ),

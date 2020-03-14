@@ -8,6 +8,7 @@ import '../bloc/blocs.dart';
 import '../core/routing/polis_routing_observer.dart';
 import '../core/service/locator.dart';
 import '../core/service/services.dart';
+import '../i18n/i18n.dart';
 import '../model/user_model.dart';
 import '../page/pages.dart';
 import '../repository/concrete/firebase/repositories.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       child: MaterialApp(
-        title: 'Polis',
+        title: POLIS,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,

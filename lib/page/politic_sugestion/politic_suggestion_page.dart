@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
 import '../../bloc/politic_suggestion/bloc.dart';
+import '../../i18n/i18n.dart';
 import 'widget/politics_suggested_grid.dart';
 
 class PoliticSuggestionPage extends StatelessWidget {
@@ -27,7 +28,7 @@ class PoliticSuggestionPage extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Text(
-                        'Bem vindo, ${context.bloc<UserBloc>().user.name}!',
+                        '$WELCOME, ${context.bloc<UserBloc>().user.name}!',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -35,7 +36,7 @@ class PoliticSuggestionPage extends StatelessWidget {
                       ),
                       SizedBox(height: 16),
                       Text(
-                        'Sugestões de políticos em sua região',
+                        POLITICS_SUGGESTION_ON_YOUR_AREA,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
