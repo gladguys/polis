@@ -11,7 +11,8 @@ import 'core/routing/polis_routing_observer.dart';
 import 'core/service/ad_service.dart';
 import 'core/service/locator.dart';
 import 'core/service/services.dart';
-import 'page/signin/signin_page_connected.dart';
+import 'page/initial/initial_page.dart';
+import 'page/theme/main_theme.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,11 +34,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Polis',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: theme,
       navigatorKey: Get.key,
-      home: SigninPageConnected(),
+      home: InitialPage(),
       navigatorObservers: [
         FirebaseAnalyticsObserver(analytics: G<AnalyticsService>().analytics),
         PolisRoutingObserver(),

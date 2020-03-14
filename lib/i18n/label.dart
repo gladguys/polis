@@ -1,6 +1,7 @@
 const CONGRATULATIONS = 'Parabéns!!!';
 const FAIL = 'Falha';
 const NAME = 'Nome';
+const POLIS = 'Pólis';
 const EMAIL = 'E-mail';
 const PASSWORD = 'Password';
 const PASSWORD_CONFIRMATION = 'Password Confirmation';
