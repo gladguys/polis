@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
 import '../../bloc/politic_suggestion/bloc.dart';
-import '../../core/constants.dart';
-import '../../widget/politic_suggested.dart';
+import 'widget/politics_suggested_grid.dart';
 
 class PoliticSuggestionPage extends StatelessWidget {
   @override
@@ -22,7 +21,6 @@ class PoliticSuggestionPage extends StatelessWidget {
               );
             } else if (state is FetchSuggestedPoliticsSuccess ||
                 state is ChangedPoliticsFollowingStatus) {
-              final politicos = _bloc.politics;
               return SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(14),
@@ -44,32 +42,7 @@ class PoliticSuggestionPage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 12),
-                      GridView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 1,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                        ),
-                        itemBuilder: (_, i) {
-                          final isPoliticBeenFollowed =
-                              _bloc.isPoliticBeenFollowed(politicos[i]);
-                          return PoliticSuggested(
-                            politico: politicos[i],
-                            isFollowing: isPoliticBeenFollowed,
-                            onClickFollowButton: () => _bloc.add(
-                              isPoliticBeenFollowed
-                                  ? RemovePoliticFromFollowedPolitics(
-                                      politicos[i],
-                                    )
-                                  : AddPoliticToFollowedPolitics(politicos[i]),
-                            ),
-                          );
-                        },
-                        itemCount: kMaxNumberSuggestedPolitics,
-                      )
+                      PoliticsSuggestedGrid(_bloc.politics),
                     ],
                   ),
                 ),
