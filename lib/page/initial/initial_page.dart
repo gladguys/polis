@@ -54,10 +54,10 @@ class InitialPage extends StatelessWidget {
                       width: 240,
                       child: RaisedButton(
                         child: Text(
-                          'Entrar com email',
+                          SIGNIN_WITH_EMAIL,
                           style: TextStyle(fontSize: 18),
                         ),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                         onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -75,17 +75,17 @@ class InitialPage extends StatelessWidget {
                             Image.asset(
                               'assets/images/google.png',
                               fit: BoxFit.contain,
-                              height: 24,
-                              width: 24,
+                              height: 20,
+                              width: 20,
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              'Entrar com Google',
+                              SIGNIN_WITH_GOOGLE,
                               style: TextStyle(fontSize: 18),
                             ),
                           ],
                         ),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                         color: Colors.white,
                         onPressed: () {},
                       ),
@@ -94,13 +94,13 @@ class InitialPage extends StatelessWidget {
                       width: 240,
                       child: OutlineButton(
                         child: Text(
-                          'Não tenho conta',
+                          NO_ACCOUNT,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.normal,
                           ),
                         ),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                         color: Colors.white,
                         textColor: Colors.white,
                         borderSide: BorderSide(color: Colors.white),
