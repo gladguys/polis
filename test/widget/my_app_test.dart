@@ -10,7 +10,7 @@ void main() {
 
   testWidgets('MyApp tests', (tester) async {
     await tester.pumpWidget(MyApp());
-    final context = tester.element(find.byType(SigninPage));
+    final context = tester.element(find.byType(InitialPage));
     expect(find.byType(MyApp), findsOneWidget);
     expect(context.bloc<UserBloc>(), isNotNull);
   });
