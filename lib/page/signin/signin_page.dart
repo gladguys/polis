@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -8,11 +7,10 @@ import '../../bloc/blocs.dart';
 import '../../bloc/signin/signin_bloc.dart';
 import '../../bloc/signin/signin_state.dart';
 import '../../core/routing/route_names.dart';
+import '../../core/service/ad_service.dart';
 import '../../core/service/locator.dart';
-import '../../core/service/services.dart';
 import '../../i18n/i18n.dart';
-import '../../repository/concrete/firebase/firebase_user_repository.dart';
-import '../home/home_page.dart';
+import '../pages.dart';
 import '../signup/signup_page_connected.dart';
 
 class SigninPage extends StatefulWidget {
@@ -38,15 +36,9 @@ class _SigninPageState extends State<SigninPage> {
         child: BlocListener<SigninBloc, SigninState>(
           listener: (context, state) {
             if (state is UserAuthenticated) {
+              context.bloc<UserBloc>().add(StoreUser(state.user));
               SimpleRouter.forwardAndReplace(
-                BlocProvider<UserBloc>(
-                  create: (_) => UserBloc(
-                    user: state.user,
-                    repository: FirebaseUserRepository(
-                        firebaseAuth: FirebaseAuth.instance),
-                  ),
-                  child: HomePage(G<AdService>()),
-                ),
+                HomePage(G<AdService>()),
                 name: HOME_PAGE,
               );
             }

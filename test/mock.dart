@@ -7,8 +7,10 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/politic_suggestion/bloc.dart';
 import 'package:polis/core/service/ad_service.dart';
 import 'package:polis/core/service/analytics_service.dart';
+import 'package:polis/repository/abstract/politic_suggestion_repository.dart';
 import 'package:polis/repository/abstract/signin_repository.dart';
 import 'package:polis/repository/abstract/signup_repository.dart';
 import 'package:polis/repository/abstract/user_repository.dart';
@@ -17,6 +19,10 @@ import 'package:polis/repository/abstract/user_repository.dart';
 class MockSigninBloc extends MockBloc<SigninEvent, SigninState>
     implements SigninBloc {}
 
+class MockPoliticSuggestionBloc
+    extends MockBloc<PoliticSuggestionEvent, PoliticSuggestionState>
+    implements PoliticSuggestionBloc {}
+
 class MockSignupBloc extends MockBloc<SignupEvent, SignupState>
     implements SignupBloc {}
 
@@ -24,6 +30,9 @@ class MockUserBloc extends MockBloc<UserEvent, UserState> implements UserBloc {}
 
 // Repository
 class MockSigninRepository extends Mock implements SigninRepository {}
+
+class MockPoliticSugestionRepository extends Mock
+    implements PoliticSuggestionRepository {}
 
 class MockSignupRepository extends Mock implements SignupRepository {}
 

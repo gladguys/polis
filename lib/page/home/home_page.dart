@@ -9,6 +9,7 @@ import '../../bloc/user/user_event.dart';
 import '../../bloc/user/user_state.dart';
 import '../../core/routing/route_names.dart';
 import '../../core/service/services.dart';
+import '../politic_sugestion/politic_suggestion_page_connected.dart';
 import '../signin/signin_page_connected.dart';
 
 class HomePage extends StatefulWidget {
@@ -61,6 +62,12 @@ class _HomePageState extends State<HomePage> {
         },
         child: Container(
           color: Colors.red,
+          child: Center(
+            child: RaisedButton(
+              onPressed: () =>
+                  SimpleRouter.forward(PoliticSuggestionPageConnected()),
+            ),
+          ),
         ),
       ),
     );

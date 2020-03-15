@@ -1,3 +1,4 @@
+const POLIS = 'Polis';
 const CONGRATULATIONS = 'Parabéns!!!';
 const FAIL = 'Falha';
 const NAME = 'Nome';
@@ -8,3 +9,4 @@ const REQUIRED_FIELD = 'Campo Obrigatório';
 const SIGNUP = 'Cadastrar';
 const SIGNIN = 'Entrar';
 const GOOGLE = 'Google';
+const POLITIC = 'Dep. Federal';

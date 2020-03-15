@@ -25,8 +25,8 @@ void main() {
       verify(mockBannerAd.load()).called(1);
       verify(
         mockBannerAd.show(
-          anchorOffset: 60.0,
-          horizontalCenterOffset: 10.0,
+          anchorOffset: 0,
+          horizontalCenterOffset: 0,
           anchorType: AnchorType.bottom,
         ),
       ).called(1);

@@ -59,6 +59,23 @@ void main() {
       verify(mockUserBloc.add(Logout())).called(1);
     });
 
+    // TODO(rodrigo): this is a temporary test, remove when not needed
+    testWidgets(
+        'should navigate to PoliticSuggestionPageConnected when click button',
+        (tester) async {
+      final mockUserBloc = MockUserBloc();
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<UserBloc>(
+            bloc: mockUserBloc,
+            page: HomePage(mockAdService),
+          ),
+        ),
+      );
+      final suggestionBtn = find.byType(RaisedButton);
+      await tester.tap(suggestionBtn);
+    });
+
     testWidgets('should logout when SignoutSucceded state', (tester) async {
       final mockUserBloc = MockUserBloc();
       whenListen(
