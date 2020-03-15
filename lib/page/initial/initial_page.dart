@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:simple_router/simple_router.dart';
 
+import '../../core/routing/route_names.dart';
 import '../../i18n/label.dart';
 import '../pages.dart';
 
@@ -55,12 +57,9 @@ class InitialPage extends StatelessWidget {
                         style: TextStyle(fontSize: 18),
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 12),
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SigninPageConnected(),
-                        ),
-                      ),
+                      onPressed: () => SimpleRouter.forwardAndReplace(
+                          SigninPageConnected(),
+                          name: SIGNIN_PAGE),
                     ),
                     SizedBox(height: 12),
                     RaisedButton(

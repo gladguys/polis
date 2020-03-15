@@ -23,5 +23,20 @@ void main() {
         expect(ev1 == ev3, false);
       });
     });
+
+    group('SavePoliticsToFollow tests', () {
+      test('props', () {
+        expect(() => SavePoliticsToFollow(userId: null), throwsAssertionError);
+      });
+
+      test('asserts', () {
+        final ev1 = SavePoliticsToFollow(userId: '1');
+        final ev2 = SavePoliticsToFollow(userId: '1');
+        final ev3 = SavePoliticsToFollow(userId: '2');
+
+        expect(ev1, ev2);
+        expect(ev1 == ev3, false);
+      });
+    });
   });
 }
