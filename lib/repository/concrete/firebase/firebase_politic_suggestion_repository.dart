@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -19,8 +21,8 @@ class FirebasePoliticSuggestionRepository
   Future<List<PoliticoModel>> getSuggestedPolitics() async {
     try {
       final querySnapshot = await politicosRef.getDocuments();
-      final documents =
-          querySnapshot.documents.sublist(0, kMaxNumberSuggestedPolitics);
+      final documents = querySnapshot.documents.sublist(
+          0, min(querySnapshot.documents.length, kMaxNumberSuggestedPolitics));
       return List.generate(
           documents.length, (i) => PoliticoModel.fromJson(documents[i].data));
     } on Exception {

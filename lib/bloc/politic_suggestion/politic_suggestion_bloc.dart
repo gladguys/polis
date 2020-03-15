@@ -40,8 +40,10 @@ class PoliticSuggestionBloc
       } else {
         followedPolitics.add(politico);
       }
-      yield ChangedPoliticsFollowingStatus(event.politico,
-          isFollowing: isFollowing);
+      yield ChangedPoliticsFollowingStatus(
+        event.politico,
+        isFollowing: !isFollowing,
+      );
     }
   }
 
