@@ -21,6 +21,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   @override
   Stream<UserState> mapEventToState(UserEvent event) async* {
+    if (event is StoreUser) {
+      user = event.user;
+    }
     if (event is Logout) {
       yield SignoutLoading();
 

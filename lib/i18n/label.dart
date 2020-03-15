@@ -12,3 +12,4 @@ const SIGNIN = 'Entrar';
 const SIGNIN_WITH_EMAIL = 'Entrar com email';
 const SIGNIN_WITH_GOOGLE = 'Entrar com Google';
 const SIGNUP = 'Cadastrar';
+const POLITIC = 'Dep. Federal';

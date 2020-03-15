@@ -6,35 +6,35 @@ void main() {
 
   final jsonPolitico = {
     'id': '1',
-    'situacao': 'Situacao',
-    'nome': 'Lula',
-    'email': 'lulete@gmail.com',
+    'nomeCivil': 'nomeCivil',
+    'siglaPartido': 'siglaPartido',
+    'siglaUf': 'siglaUf',
+    'urlFoto': 'urlFoto',
     'dataNascimento': now.toIso8601String(),
-    'emailGabinete': 'lulete@gmail.com',
-    'escolaridade': 'Nada',
-    'estado': 'PE',
-    'municipioNascimento': 'Alagados',
-    'nomeEleitoral': 'Lula',
-    'partido': 'PT',
-    'ufNascimento': 'PE',
-    'urlPhoto': 'photo'
+    'email': 'email',
+    'nomeEleitoral': 'nomeEleitoral',
+    'status': 'status',
+    'condicaoEleitoral': 'condicaoEleitoral',
+    'cpf': 'cpf',
+    'sexo': 'sexo',
+    'escolaridade': 'escolaridade',
   };
 
   final politicoModel = PoliticoModel(
-      id: '1',
-      situacao: 'Situacao',
-      nome: 'Lula',
-      email: 'lulete@gmail.com',
-      sexo: 'M',
-      dataNascimento: now,
-      emailGabinete: 'lulete@gmail.com',
-      escolaridade: 'Nada',
-      estado: 'PE',
-      municipioNascimento: 'Alagados',
-      nomeEleitoral: 'Lula',
-      partido: 'PT',
-      ufNascimento: 'PE',
-      urlPhoto: 'photo');
+    id: '1',
+    nomeCivil: 'nomeCivil',
+    siglaPartido: 'siglaPartido',
+    siglaUf: 'siglaUf',
+    urlFoto: 'urlFoto',
+    dataNascimento: now,
+    email: 'email',
+    nomeEleitoral: 'nomeEleitoral',
+    status: 'status',
+    condicaoEleitoral: 'condicaoEleitoral',
+    cpf: 'cpf',
+    sexo: 'sexo',
+    escolaridade: 'escolaridade',
+  );
 
   group('PoliticoModel tests', () {
     test('props', () {
@@ -55,7 +55,7 @@ void main() {
     test('toString()', () {
       final modelToString = PoliticoModel(id: '1').toString();
       final result =
-          '''PoliticoModel{id: 1, nome: null, nomeEleitoral: null, email: null, emailGabinete: null, partido: null, urlPhoto: null, estado: null, situacao: null, sexo: null, dataNascimento: null, ufNascimento: null, municipioNascimento: null, escolaridade: null}''';
+          '''PoliticoModel{id: 1, nomeCivil: null, siglaPartido: null, siglaUf: null, urlFoto: null, email: null, nomeEleitoral: null, status: null, condicaoEleitoral: null, cpf: null, sexo: null, dataNascimento: null, escolaridade: null}''';
       expect(modelToString == result, true);
     });
 
@@ -66,26 +66,25 @@ void main() {
     test('toJson()', () {
       final politicoToJson = politicoModel.toJson();
       expect(politicoToJson['id'] == jsonPolitico['id'], true);
-      expect(politicoToJson['situacao'] == jsonPolitico['situacao'], true);
-      expect(politicoToJson['nome'] == jsonPolitico['nome'], true);
-      expect(politicoToJson['email'] == jsonPolitico['email'], true);
+      expect(politicoToJson['nomeCivil'] == jsonPolitico['nomeCivil'], true);
+      expect(
+          politicoToJson['siglaPartido'] == jsonPolitico['siglaPartido'], true);
+      expect(politicoToJson['siglaUf'] == jsonPolitico['siglaUf'], true);
       expect(politicoToJson['dataNascimento'] == jsonPolitico['dataNascimento'],
           true);
-      expect(politicoToJson['emailGabinete'] == jsonPolitico['emailGabinete'],
-          true);
-      expect(
-          politicoToJson['escolaridade'] == jsonPolitico['escolaridade'], true);
-      expect(politicoToJson['estado'] == jsonPolitico['estado'], true);
-      expect(
-          politicoToJson['municipioNascimento'] ==
-              jsonPolitico['municipioNascimento'],
-          true);
+      expect(politicoToJson['urlFoto'] == jsonPolitico['urlFoto'], true);
+      expect(politicoToJson['email'] == jsonPolitico['email'], true);
       expect(politicoToJson['nomeEleitoral'] == jsonPolitico['nomeEleitoral'],
           true);
-      expect(politicoToJson['partido'] == jsonPolitico['partido'], true);
+      expect(politicoToJson['status'] == jsonPolitico['status'], true);
       expect(
-          politicoToJson['ufNascimento'] == jsonPolitico['ufNascimento'], true);
-      expect(politicoToJson['urlPhoto'] == jsonPolitico['urlPhoto'], true);
+          politicoToJson['condicaoEleitoral'] ==
+              jsonPolitico['condicaoEleitoral'],
+          true);
+      expect(politicoToJson['cpf'] == jsonPolitico['cpf'], true);
+      expect(politicoToJson['sexo'] == jsonPolitico['sexo'], true);
+      expect(
+          politicoToJson['escolaridade'] == jsonPolitico['escolaridade'], true);
     });
   });
 }

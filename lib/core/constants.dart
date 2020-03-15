@@ -1,0 +1,1 @@
+const kMaxNumberSuggestedPolitics = 50;

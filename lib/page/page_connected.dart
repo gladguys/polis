@@ -12,7 +12,9 @@ class PageConnected<T extends Bloc<dynamic, dynamic>> extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<T>(
       create: (_) => bloc,
-      child: page,
+      child: Builder(
+        builder: (__) => page,
+      ),
     );
   }
 }
