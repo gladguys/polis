@@ -1,8 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:polis/page/pages.dart';
+
 import '../../i18n/label.dart';
+import '../pages.dart';
 
 class InitialPage extends StatelessWidget {
   @override
