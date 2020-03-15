@@ -45,6 +45,17 @@ class PoliticSuggestionBloc
         isFollowing: !isFollowing,
       );
     }
+    if (event is SavePoliticsToFollow) {
+      yield LoadingSaveFollowPolitics();
+
+      try {
+        await repository.savePoliticsToFollow(
+            userId: event.userId, politics: followedPolitics);
+        yield SavedSuggestedPolitics();
+      } on Exception {
+        yield SaveSuggestedPoliticsFailed();
+      }
+    }
   }
 
   bool isPoliticBeenFollowed(PoliticoModel politico) {

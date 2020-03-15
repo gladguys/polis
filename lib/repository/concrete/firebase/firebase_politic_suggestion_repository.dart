@@ -16,6 +16,7 @@ class FirebasePoliticSuggestionRepository
 
   final Firestore firestore;
   CollectionReference get politicosRef => firestore.collection(POLITICOS);
+  CollectionReference get followingRef => firestore.collection(FOLLOWING);
 
   @override
   Future<List<PoliticoModel>> getSuggestedPolitics() async {
@@ -25,6 +26,25 @@ class FirebasePoliticSuggestionRepository
           0, min(querySnapshot.documents.length, kMaxNumberSuggestedPolitics));
       return List.generate(
           documents.length, (i) => PoliticoModel.fromJson(documents[i].data));
+    } on Exception {
+      throw ComunicationException();
+    }
+  }
+
+  @override
+  Future<void> savePoliticsToFollow(
+      {String userId, List<PoliticoModel> politics}) async {
+    try {
+      final listPoliticsToFollow =
+          List.generate(politics.length, (i) => politics[i].toJson());
+
+      for (var politic in listPoliticsToFollow) {
+        // TODO(rodrigo): does this to be syncronous?
+        await followingRef
+            .document(userId)
+            .collection(POLITICOS_FOLLOWING)
+            .add(politic);
+      }
     } on Exception {
       throw ComunicationException();
     }
