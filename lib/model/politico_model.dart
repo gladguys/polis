@@ -7,33 +7,31 @@ part 'politico_model.g.dart';
 class PoliticoModel extends Equatable {
   PoliticoModel(
       {this.id,
-      this.nome,
-      this.nomeEleitoral,
-      this.email,
-      this.emailGabinete,
-      this.partido,
+      this.nomeCivil,
+      this.siglaPartido,
+      this.siglaUf,
       this.urlFoto,
-      this.estado,
-      this.situacao,
+      this.email,
+      this.nomeEleitoral,
+      this.status,
+      this.condicaoEleitoral,
+      this.cpf,
       this.sexo,
       this.dataNascimento,
-      this.ufNascimento,
-      this.municipioNascimento,
       this.escolaridade});
 
   final String id;
-  final String nome;
-  final String nomeEleitoral;
-  final String email;
-  final String emailGabinete;
-  final String partido;
+  final String nomeCivil;
+  final String siglaPartido;
+  final String siglaUf;
   final String urlFoto;
-  final String estado;
-  final String situacao;
+  final String email;
+  final String nomeEleitoral;
+  final String status;
+  final String condicaoEleitoral;
+  final String cpf;
   final String sexo;
   final DateTime dataNascimento;
-  final String ufNascimento;
-  final String municipioNascimento;
   final String escolaridade;
 
   factory PoliticoModel.fromJson(Map<String, dynamic> json) =>
@@ -46,6 +44,6 @@ class PoliticoModel extends Equatable {
 
   @override
   String toString() {
-    return '''PoliticoModel{id: $id, nome: $nome, nomeEleitoral: $nomeEleitoral, email: $email, emailGabinete: $emailGabinete, partido: $partido, urlFoto: $urlFoto, estado: $estado, situacao: $situacao, sexo: $sexo, dataNascimento: $dataNascimento, ufNascimento: $ufNascimento, municipioNascimento: $municipioNascimento, escolaridade: $escolaridade}''';
+    return '''PoliticoModel{id: $id, nomeCivil: $nomeCivil, siglaPartido: $siglaPartido, siglaUf: $siglaUf, urlFoto: $urlFoto, email: $email, nomeEleitoral: $nomeEleitoral, status: $status, condicaoEleitoral: $condicaoEleitoral, cpf: $cpf, sexo: $sexo, dataNascimento: $dataNascimento, escolaridade: $escolaridade}''';
   }
 }

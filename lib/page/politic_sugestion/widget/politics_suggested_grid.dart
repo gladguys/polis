@@ -26,17 +26,11 @@ class PoliticsSuggestedGrid extends StatelessWidget {
         mainAxisSpacing: 10,
       ),
       itemBuilder: (_, i) {
-        final isPoliticBeenFollowed = _bloc.isPoliticBeenFollowed(politicos[i]);
         return PoliticSuggested(
           politico: politicos[i],
-          isFollowing: isPoliticBeenFollowed,
-          onClickFollowButton: () => _bloc.add(
-            isPoliticBeenFollowed
-                ? RemovePoliticFromFollowedPolitics(
-                    politicos[i],
-                  )
-                : AddPoliticToFollowedPolitics(politicos[i]),
-          ),
+          isFollowing: _bloc.isPoliticBeenFollowed(politicos[i]),
+          onClickFollowButton: () =>
+              _bloc.add(FollowOrUnfollowPolitic(politicos[i])),
         );
       },
       itemCount: min(kMaxNumberSuggestedPolitics, _bloc.politics.length),

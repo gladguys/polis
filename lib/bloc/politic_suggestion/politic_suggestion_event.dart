@@ -11,17 +11,8 @@ class FetchSuggestedPolitics extends PoliticSuggestionEvent {
   List<Object> get props => [];
 }
 
-class AddPoliticToFollowedPolitics extends PoliticSuggestionEvent {
-  AddPoliticToFollowedPolitics(this.politico);
-
-  final PoliticoModel politico;
-
-  @override
-  List<Object> get props => [politico];
-}
-
-class RemovePoliticFromFollowedPolitics extends PoliticSuggestionEvent {
-  RemovePoliticFromFollowedPolitics(this.politico);
+class FollowOrUnfollowPolitic extends PoliticSuggestionEvent {
+  FollowOrUnfollowPolitic(this.politico);
 
   final PoliticoModel politico;
 

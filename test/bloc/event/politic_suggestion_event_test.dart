@@ -13,22 +13,11 @@ void main() {
       });
     });
 
-    group('AddPoliticToFollowedPolitics tests', () {
+    group('FollowOrUnfollowPolitic tests', () {
       test('props', () {
-        final ev1 = AddPoliticToFollowedPolitics(PoliticoModel(id: '1'));
-        final ev2 = AddPoliticToFollowedPolitics(PoliticoModel(id: '1'));
-        final ev3 = AddPoliticToFollowedPolitics(PoliticoModel(id: '2'));
-
-        expect(ev1, ev2);
-        expect(ev1 == ev3, false);
-      });
-    });
-
-    group('RemovePoliticFromFollowedPolitics tests', () {
-      test('props', () {
-        final ev1 = RemovePoliticFromFollowedPolitics(PoliticoModel(id: '1'));
-        final ev2 = RemovePoliticFromFollowedPolitics(PoliticoModel(id: '1'));
-        final ev3 = RemovePoliticFromFollowedPolitics(PoliticoModel(id: '2'));
+        final ev1 = FollowOrUnfollowPolitic(PoliticoModel(id: '1'));
+        final ev2 = FollowOrUnfollowPolitic(PoliticoModel(id: '1'));
+        final ev3 = FollowOrUnfollowPolitic(PoliticoModel(id: '2'));
 
         expect(ev1, ev2);
         expect(ev1 == ev3, false);

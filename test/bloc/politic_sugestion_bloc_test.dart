@@ -89,7 +89,7 @@ void main() {
         build: () async => politicSuggestionBloc,
         act: (politicSuggestionBloc) {
           politicSuggestionBloc
-              .add(AddPoliticToFollowedPolitics(PoliticoModel(id: '1')));
+              .add(FollowOrUnfollowPolitic(PoliticoModel(id: '1')));
           return;
         },
         verify: (politicSuggestionBloc) async {
@@ -108,9 +108,9 @@ void main() {
         build: () async => politicSuggestionBloc,
         act: (politicSuggestionBloc) {
           politicSuggestionBloc
-              .add(AddPoliticToFollowedPolitics(PoliticoModel(id: '1')));
+              .add(FollowOrUnfollowPolitic(PoliticoModel(id: '1')));
           politicSuggestionBloc
-              .add(RemovePoliticFromFollowedPolitics(PoliticoModel(id: '1')));
+              .add(FollowOrUnfollowPolitic(PoliticoModel(id: '1')));
           return;
         },
         verify: (politicSuggestionBloc) async {

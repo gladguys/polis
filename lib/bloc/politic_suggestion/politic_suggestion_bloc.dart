@@ -32,13 +32,16 @@ class PoliticSuggestionBloc
         yield FetchSuggestedPoliticsFailed();
       }
     }
-    if (event is AddPoliticToFollowedPolitics) {
-      followedPolitics.add(event.politico);
-      yield ChangedPoliticsFollowingStatus(event.politico, isFollowing: true);
-    }
-    if (event is RemovePoliticFromFollowedPolitics) {
-      followedPolitics.remove(event.politico);
-      yield ChangedPoliticsFollowingStatus(event.politico, isFollowing: false);
+    if (event is FollowOrUnfollowPolitic) {
+      final politico = event.politico;
+      final isFollowing = isPoliticBeenFollowed(politico);
+      if (isFollowing) {
+        followedPolitics.remove(politico);
+      } else {
+        followedPolitics.add(politico);
+      }
+      yield ChangedPoliticsFollowingStatus(event.politico,
+          isFollowing: isFollowing);
     }
   }
 

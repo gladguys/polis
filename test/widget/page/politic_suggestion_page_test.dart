@@ -128,7 +128,7 @@ void main() {
         await tester.pumpAndSettle();
         verify(
           mockPoliticSuggestionBloc.add(
-            RemovePoliticFromFollowedPolitics(
+            FollowOrUnfollowPolitic(
               PoliticoModel(
                 id: '1',
                 nomeEleitoral: 'nome',
@@ -174,7 +174,7 @@ void main() {
         await tester.pumpAndSettle();
         verify(
           mockPoliticSuggestionBloc.add(
-            AddPoliticToFollowedPolitics(
+            FollowOrUnfollowPolitic(
               PoliticoModel(
                 id: '1',
                 nomeEleitoral: 'nome',
