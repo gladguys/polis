@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/core/exception/exceptions.dart';
+import 'package:polis/model/politico_model.dart';
 import 'package:polis/repository/concrete/firebase/collection.dart';
 import 'package:polis/repository/concrete/firebase/repositories.dart';
 
@@ -12,11 +13,13 @@ void main() {
     MockFirestore mockFirestore;
     MockQuerySnapshot mockQuerySnapshot;
     MockDocumentSnapshot mockDocumentSnapshot;
+    MockDocumentReference mockDocumentReference;
     MockCollectionReference mockCollectionReference;
     List<MockDocumentSnapshot> mockDocumentSnapshotList;
 
     setUp(() {
       mockFirestore = MockFirestore();
+      mockDocumentReference = MockDocumentReference();
       mockQuerySnapshot = MockQuerySnapshot();
       firebasePoliticSuggestionRepository = FirebasePoliticSuggestionRepository(
         firestore: mockFirestore,
@@ -59,6 +62,40 @@ void main() {
             .getSuggestedPolitics()
             .then((_) {})
             .catchError(
+                (e) => expect(e, isInstanceOf<ComunicationException>()));
+      });
+    });
+
+    group('savePoliticsToFollow tests', () {
+      test('save politics works', () async {
+        when(mockFirestore.collection(FOLLOWING))
+            .thenReturn(mockCollectionReference);
+        when(mockCollectionReference.document(any))
+            .thenReturn(mockDocumentReference);
+        when(mockDocumentReference.collection(POLITICOS_FOLLOWING))
+            .thenReturn(mockCollectionReference);
+        final politic = PoliticoModel(
+          id: '1',
+          nomeCivil: 'nome',
+        );
+        await firebasePoliticSuggestionRepository
+            .savePoliticsToFollow(userId: '1', politics: [politic]);
+        verify(mockCollectionReference.add(politic.toJson())).called(1);
+      });
+
+      test('should throw exception', () {
+        when(mockFirestore.collection(FOLLOWING))
+            .thenReturn(mockCollectionReference);
+        when(mockCollectionReference.document(any))
+            .thenReturn(mockDocumentReference);
+        when(mockDocumentReference.collection(POLITICOS_FOLLOWING))
+            .thenThrow(Exception());
+        final politic = PoliticoModel(
+          id: '1',
+          nomeCivil: 'nome',
+        );
+        firebasePoliticSuggestionRepository
+            .savePoliticsToFollow(userId: '1', politics: [politic]).catchError(
                 (e) => expect(e, isInstanceOf<ComunicationException>()));
       });
     });

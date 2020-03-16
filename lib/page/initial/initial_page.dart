@@ -58,8 +58,9 @@ class InitialPage extends StatelessWidget {
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       onPressed: () => SimpleRouter.forwardAndReplace(
-                          SigninPageConnected(),
-                          name: SIGNIN_PAGE),
+                        SigninPageConnected(),
+                        name: SIGNIN_PAGE,
+                      ),
                     ),
                     SizedBox(height: 12),
                     RaisedButton(
