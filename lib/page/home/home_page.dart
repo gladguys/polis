@@ -24,13 +24,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    widget.adService.showBanner();
+    //widget.adService.showBanner();
     super.initState();
   }
 
   @override
   void dispose() {
-    widget.adService.dispose();
+    //widget.adService.dispose();
     super.dispose();
   }
 
