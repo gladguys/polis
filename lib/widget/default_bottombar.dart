@@ -1,3 +1,4 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
@@ -70,8 +71,13 @@ class DefaultBottombar extends StatelessWidget {
                 UserProfilePageConnected(),
                 name: USER_PROFILE_PAGE,
               ),
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(user.photoUrl ?? ''),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(25),
+                child: FancyShimmerImage(
+                  imageUrl: user.photoUrl ?? '',
+                  width: 50,
+                  height: 50,
+                ),
               ),
             ),
             const SizedBox(width: 12),

@@ -1,3 +1,4 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:getflutter/getflutter.dart';
 
@@ -16,9 +17,13 @@ class PersonalUserInfo extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 18, 0, 10),
-          child: CircleAvatar(
-            backgroundImage: NetworkImage(user.photoUrl),
-            radius: 60,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(60),
+            child: FancyShimmerImage(
+              imageUrl: user.photoUrl,
+              width: 120,
+              height: 120,
+            ),
           ),
         ),
         Text(
