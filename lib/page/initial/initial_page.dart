@@ -52,9 +52,9 @@ class InitialPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     RaisedButton(
-                      child: Text(
+                      child: const Text(
                         SIGNIN_WITH_EMAIL,
-                        style: const TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 18),
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       onPressed: () => SimpleRouter.forwardAndReplace(
@@ -75,9 +75,9 @@ class InitialPage extends StatelessWidget {
                             width: 20,
                           ),
                           const SizedBox(width: 8),
-                          Text(
+                          const Text(
                             SIGNIN_WITH_GOOGLE,
-                            style: const TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 18),
                           ),
                         ],
                       ),
@@ -87,7 +87,7 @@ class InitialPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     OutlineButton(
-                      child: Text(
+                      child: const Text(
                         NO_ACCOUNT,
                         style: TextStyle(
                           fontSize: 18,

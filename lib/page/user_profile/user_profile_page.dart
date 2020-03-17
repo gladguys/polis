@@ -33,7 +33,7 @@ class UserProfilePage extends StatelessWidget {
           } else if (state is LoadingFetchUserInfo) {
             return CenteredLoading();
           } else {
-            return Center(
+            return const Center(
               child: Text(ERROR_FETCHING_USER_INFO),
             );
           }

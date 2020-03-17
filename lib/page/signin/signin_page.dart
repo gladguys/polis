@@ -58,9 +58,9 @@ class _SigninPageState extends State<SigninPage> {
                       children: <Widget>[
                         TextFormField(
                           key: const ValueKey('email-field'),
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: EMAIL,
-                            border: const OutlineInputBorder(),
+                            border: OutlineInputBorder(),
                           ),
                           onSaved: (email) => _email = email,
                           validator: (email) =>
@@ -69,9 +69,9 @@ class _SigninPageState extends State<SigninPage> {
                         const SizedBox(height: 12),
                         TextFormField(
                           key: const ValueKey('password-field'),
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: PASSWORD,
-                            border: const OutlineInputBorder(),
+                            border: OutlineInputBorder(),
                           ),
                           onSaved: (password) => _password = password,
                           validator: (password) =>
@@ -80,7 +80,7 @@ class _SigninPageState extends State<SigninPage> {
                         const SizedBox(height: 12),
                         RaisedButton(
                           key: const ValueKey('signin-btn'),
-                          child: Text(SIGNIN),
+                          child: const Text(SIGNIN),
                           onPressed: () {
                             final formState = _formKey.currentState;
                             if (formState.validate()) {
@@ -94,14 +94,14 @@ class _SigninPageState extends State<SigninPage> {
                         const SizedBox(height: 12),
                         RaisedButton(
                           key: const ValueKey('google-signin-btn'),
-                          child: Text(GOOGLE),
+                          child: const Text(GOOGLE),
                           onPressed: () {
                             context.bloc<SigninBloc>().add(SigninWithGoogle());
                           },
                         ),
                         const SizedBox(height: 12),
                         RaisedButton(
-                          child: Text(SIGNUP),
+                          child: const Text(SIGNUP),
                           onPressed: () => SimpleRouter.forwardAndReplace(
                             SignupPageConnected(),
                             name: SIGNUP_PAGE,
