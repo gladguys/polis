@@ -25,6 +25,16 @@ class FetchSuggestedPoliticsFailed extends PoliticSuggestionState {
   List<Object> get props => [];
 }
 
+class SavedSuggestedPolitics extends PoliticSuggestionState {
+  @override
+  List<Object> get props => [];
+}
+
+class SaveSuggestedPoliticsFailed extends PoliticSuggestionState {
+  @override
+  List<Object> get props => [];
+}
+
 class ChangedPoliticsFollowingStatus extends PoliticSuggestionState {
   ChangedPoliticsFollowingStatus(this.politico, {this.isFollowing});
 
@@ -36,6 +46,11 @@ class ChangedPoliticsFollowingStatus extends PoliticSuggestionState {
 }
 
 class LoadingFetch extends PoliticSuggestionState {
+  @override
+  List<Object> get props => [];
+}
+
+class LoadingSaveFollowPolitics extends PoliticSuggestionState {
   @override
   List<Object> get props => [];
 }

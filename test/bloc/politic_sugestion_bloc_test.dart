@@ -83,7 +83,7 @@ void main() {
       );
     });
 
-    group('AddPoliticToFollowedPolitics event', () {
+    group('FollowOrUnfollowPolitic event', () {
       blocTest(
         'Expects followedPolitics size to be 1 after adding 1',
         build: () async => politicSuggestionBloc,
@@ -100,11 +100,9 @@ void main() {
               isFollowing: true),
         ],
       );
-    });
 
-    group('AddPoliticToFollowedPolitics event', () {
       blocTest(
-        'Expects followedPolitics size to be 0 after removing 1',
+        'Expects followedPolitics size to be 0 after adding and removing',
         build: () async => politicSuggestionBloc,
         act: (politicSuggestionBloc) {
           politicSuggestionBloc
@@ -121,6 +119,47 @@ void main() {
               isFollowing: true),
           ChangedPoliticsFollowingStatus(PoliticoModel(id: '1'),
               isFollowing: false),
+        ],
+      );
+    });
+
+    group('SavePoliticsToFollow event', () {
+      blocTest(
+        '''Expects [LoadingSaveFollowPolitics, SavedSuggestedPolitics] when success''',
+        build: () async => politicSuggestionBloc,
+        act: (politicSuggestionBloc) {
+          politicSuggestionBloc.add(SavePoliticsToFollow(userId: '1'));
+          return;
+        },
+        verify: (politicSuggestionBloc) async {
+          verify(mockPoliticSugestionRepository
+              .savePoliticsToFollow(userId: '1', politics: [])).called(1);
+        },
+        expect: [
+          LoadingSaveFollowPolitics(),
+          SavedSuggestedPolitics(),
+        ],
+      );
+
+      blocTest(
+        '''Expects [LoadingSaveFollowPolitics, SaveSuggestedPoliticsFailed] when fails''',
+        build: () async {
+          when(mockPoliticSugestionRepository.savePoliticsToFollow(
+                  userId: anyNamed('userId'), politics: anyNamed('politics')))
+              .thenThrow(Exception());
+          return politicSuggestionBloc;
+        },
+        act: (politicSuggestionBloc) {
+          politicSuggestionBloc.add(SavePoliticsToFollow(userId: '1'));
+          return;
+        },
+        verify: (politicSuggestionBloc) async {
+          verify(mockPoliticSugestionRepository
+              .savePoliticsToFollow(userId: '1', politics: [])).called(1);
+        },
+        expect: [
+          LoadingSaveFollowPolitics(),
+          SaveSuggestedPoliticsFailed(),
         ],
       );
     });

@@ -1,5 +1,5 @@
 import 'package:firebase_admob/firebase_admob.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 const ADMOB_APP_ID = 'ca-app-pub-5806526425473649~5721958482';
 

@@ -10,6 +10,9 @@ void main() {
           FetchSuggestedPoliticsSuccess([]), FetchSuggestedPoliticsSuccess([]));
       expect(FetchSuggestedPoliticsFailed(), FetchSuggestedPoliticsFailed());
       expect(LoadingFetch(), LoadingFetch());
+      expect(LoadingSaveFollowPolitics(), LoadingSaveFollowPolitics());
+      expect(SavedSuggestedPolitics(), SavedSuggestedPolitics());
+      expect(SaveSuggestedPoliticsFailed(), SaveSuggestedPoliticsFailed());
       expect(ChangedPoliticsFollowingStatus(PoliticoModel()),
           ChangedPoliticsFollowingStatus(PoliticoModel()));
       expect(ChangedPoliticsFollowingStatus(PoliticoModel(), isFollowing: true),

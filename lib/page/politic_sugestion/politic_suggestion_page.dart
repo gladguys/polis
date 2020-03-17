@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 
-import '../../bloc/blocs.dart';
 import '../../bloc/politic_suggestion/bloc.dart';
-import '../../i18n/i18n.dart';
-import 'widget/politics_suggested_grid.dart';
+import 'widget/politics_sugestion.dart';
 
 class PoliticSuggestionPage extends StatelessWidget {
   @override
@@ -13,41 +12,21 @@ class PoliticSuggestionPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: BlocBuilder(
+        child: BlocConsumer(
           bloc: _bloc,
+          listener: (_, state) {
+            if (state is SavedSuggestedPolitics) {
+              Get.snackbar('Politicos Adicionados', 'Politicos Adicionados');
+            }
+          },
           builder: (_, state) {
-            if (state is LoadingFetch) {
+            if (state is LoadingFetch || state is LoadingSaveFollowPolitics) {
               return Center(
                 child: CircularProgressIndicator(),
               );
             } else if (state is FetchSuggestedPoliticsSuccess ||
                 state is ChangedPoliticsFollowingStatus) {
-              return SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        '$WELCOME, ${context.bloc<UserBloc>().user.name}!',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 16),
-                      Text(
-                        POLITICS_SUGGESTION_ON_YOUR_AREA,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 12),
-                      PoliticsSuggestedGrid(_bloc.politics),
-                    ],
-                  ),
-                ),
-              );
+              return PoliticsSuggestion();
             } else {
               return SizedBox.shrink();
             }

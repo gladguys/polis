@@ -18,7 +18,6 @@ class PoliticsSuggestedGrid extends StatelessWidget {
     final _bloc = context.bloc<PoliticSuggestionBloc>();
     return GridView.builder(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 1,
