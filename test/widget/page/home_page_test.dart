@@ -92,7 +92,7 @@ void main() {
       );
       final logoutBtn = find.byType(Icon);
       await tester.tap(logoutBtn);
-      await tester.pumpAndSettle(Duration(seconds: 10));
+      await tester.pumpAndSettle(const Duration(seconds: 10));
       expect(find.byType(SigninPage), findsOneWidget);
     });
 
@@ -110,7 +110,7 @@ void main() {
           ),
         ),
       );
-      await tester.pumpAndSettle(Duration(seconds: 10));
+      await tester.pumpAndSettle(const Duration(seconds: 10));
     });
   });
 }

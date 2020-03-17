@@ -48,7 +48,8 @@ void main() {
           ),
         ),
       );
-      final signinWithGoogleBtn = find.byKey(ValueKey('google-signin-btn'));
+      final signinWithGoogleBtn =
+          find.byKey(const ValueKey('google-signin-btn'));
       expect(signinWithGoogleBtn, findsOneWidget);
       await tester.tap(signinWithGoogleBtn);
       await tester.pumpAndSettle();
@@ -70,7 +71,7 @@ void main() {
           ),
         ),
       );
-      await tester.pumpAndSettle(Duration(seconds: 10));
+      await tester.pumpAndSettle(const Duration(seconds: 10));
       expect(find.text('fail'), findsOneWidget);
     });
 
@@ -89,7 +90,7 @@ void main() {
           ),
         ),
       );
-      await tester.pumpAndSettle(Duration(seconds: 10));
+      await tester.pumpAndSettle(const Duration(seconds: 10));
       expect(find.byType(HomePage), findsOneWidget);
     });
 
@@ -107,14 +108,14 @@ void main() {
       final form = tester.widget(find.byType(Form)) as Form;
       final formKey = form.key as GlobalKey<FormState>;
 
-      final emailField = find.byKey(ValueKey('email-field'));
-      final passwordField = find.byKey(ValueKey('password-field'));
+      final emailField = find.byKey(const ValueKey('email-field'));
+      final passwordField = find.byKey(const ValueKey('password-field'));
 
       await tester.enterText(emailField, 'test@gmail.com');
       await tester.enterText(passwordField, 'secret');
       await tester.pump();
 
-      final signinBtn = find.byKey(ValueKey('signin-btn'));
+      final signinBtn = find.byKey(const ValueKey('signin-btn'));
       await tester.tap(signinBtn);
       await tester.pumpAndSettle();
       expect(formKey.currentState.validate(), isTrue);

@@ -57,29 +57,29 @@ class _SigninPageState extends State<SigninPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         TextFormField(
-                          key: ValueKey('email-field'),
+                          key: const ValueKey('email-field'),
                           decoration: InputDecoration(
                             hintText: EMAIL,
-                            border: OutlineInputBorder(),
+                            border: const OutlineInputBorder(),
                           ),
                           onSaved: (email) => _email = email,
                           validator: (email) =>
                               email.isEmpty ? REQUIRED_FIELD : null,
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         TextFormField(
-                          key: ValueKey('password-field'),
+                          key: const ValueKey('password-field'),
                           decoration: InputDecoration(
                             hintText: PASSWORD,
-                            border: OutlineInputBorder(),
+                            border: const OutlineInputBorder(),
                           ),
                           onSaved: (password) => _password = password,
                           validator: (password) =>
                               password.isEmpty ? REQUIRED_FIELD : null,
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         RaisedButton(
-                          key: ValueKey('signin-btn'),
+                          key: const ValueKey('signin-btn'),
                           child: Text(SIGNIN),
                           onPressed: () {
                             final formState = _formKey.currentState;
@@ -91,15 +91,15 @@ class _SigninPageState extends State<SigninPage> {
                             }
                           },
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         RaisedButton(
-                          key: ValueKey('google-signin-btn'),
+                          key: const ValueKey('google-signin-btn'),
                           child: Text(GOOGLE),
                           onPressed: () {
                             context.bloc<SigninBloc>().add(SigninWithGoogle());
                           },
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         RaisedButton(
                           child: Text(SIGNUP),
                           onPressed: () => SimpleRouter.forwardAndReplace(
@@ -117,7 +117,7 @@ class _SigninPageState extends State<SigninPage> {
                   child: Text(state.errorMessage),
                 );
               }
-              return SizedBox.shrink();
+              return const SizedBox.shrink();
             },
           ),
         ),

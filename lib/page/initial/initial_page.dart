@@ -14,9 +14,9 @@ class InitialPage extends StatelessWidget {
       body: Container(
         width: double.maxFinite,
         height: double.maxFinite,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
-            image: const ExactAssetImage('assets/images/background.jpg'),
+            image: ExactAssetImage('assets/images/background.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -54,7 +54,7 @@ class InitialPage extends StatelessWidget {
                     RaisedButton(
                       child: Text(
                         SIGNIN_WITH_EMAIL,
-                        style: TextStyle(fontSize: 18),
+                        style: const TextStyle(fontSize: 18),
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       onPressed: () => SimpleRouter.forwardAndReplace(
@@ -62,7 +62,7 @@ class InitialPage extends StatelessWidget {
                         name: SIGNIN_PAGE,
                       ),
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     RaisedButton(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -77,7 +77,7 @@ class InitialPage extends StatelessWidget {
                           const SizedBox(width: 8),
                           Text(
                             SIGNIN_WITH_GOOGLE,
-                            style: TextStyle(fontSize: 18),
+                            style: const TextStyle(fontSize: 18),
                           ),
                         ],
                       ),
@@ -85,7 +85,7 @@ class InitialPage extends StatelessWidget {
                       color: Colors.white,
                       onPressed: () {},
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     OutlineButton(
                       child: Text(
                         NO_ACCOUNT,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:polis/core/routing/polis_routing_observer.dart';
+import 'package:polis/core/routing/route_names.dart';
 import 'package:polis/page/pages.dart';
 
 void main() {
@@ -15,11 +16,11 @@ void main() {
       polisRoutingObserver.didPush(
         MaterialPageRoute(
           builder: (_) => SigninPageConnected(),
-          settings: RouteSettings(name: 'SigninPage'),
+          settings: const RouteSettings(name: SIGNIN_PAGE),
         ),
         MaterialPageRoute(
           builder: (_) => SignupPageConnected(),
-          settings: RouteSettings(name: 'SignupPage'),
+          settings: const RouteSettings(name: SIGNUP_PAGE),
         ),
       );
     });
@@ -28,11 +29,11 @@ void main() {
       polisRoutingObserver.didReplace(
         newRoute: MaterialPageRoute(
           builder: (_) => SigninPageConnected(),
-          settings: RouteSettings(name: 'SigninPage'),
+          settings: const RouteSettings(name: SIGNIN_PAGE),
         ),
         oldRoute: MaterialPageRoute(
           builder: (_) => SignupPageConnected(),
-          settings: RouteSettings(name: 'SignupPage'),
+          settings: const RouteSettings(name: SIGNUP_PAGE),
         ),
       );
     });
@@ -41,11 +42,11 @@ void main() {
       polisRoutingObserver.didPop(
         MaterialPageRoute(
           builder: (_) => SigninPageConnected(),
-          settings: RouteSettings(name: 'SigninPage'),
+          settings: const RouteSettings(name: SIGNIN_PAGE),
         ),
         MaterialPageRoute(
           builder: (_) => SignupPageConnected(),
-          settings: RouteSettings(name: 'SignupPage'),
+          settings: const RouteSettings(name: SIGNUP_PAGE),
         ),
       );
     });

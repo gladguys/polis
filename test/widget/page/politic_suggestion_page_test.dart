@@ -4,7 +4,6 @@ import 'package:getflutter/components/button/gf_button.dart';
 import 'package:image_test_utils/image_test_utils.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
-import 'package:polis/bloc/politic_suggestion/bloc.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/politico_model.dart';

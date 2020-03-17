@@ -6,3 +6,4 @@ linter:
     constant_identifier_names: false
     one_member_abstracts: false
     directives_ordering: false
+    prefer_const_constructors: true

@@ -7,6 +7,7 @@ import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
 import '../../model/user_model.dart';
+import '../../widget/centered_loading.dart';
 import '../signin/signin_page_connected.dart';
 
 class SignupPage extends StatefulWidget {
@@ -64,11 +65,9 @@ class _SignupPageState extends State<SignupPage> {
                   state is SignupFailed) {
                 return _signupForm();
               } else if (state is SignupLoading) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
+                return CenteredLoading();
               }
-              return CircularProgressIndicator();
+              return CenteredLoading();
             },
           ),
         ),
@@ -85,47 +84,47 @@ class _SignupPageState extends State<SignupPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextFormField(
-              key: ValueKey('name-field'),
+              key: const ValueKey('name-field'),
               decoration: InputDecoration(
                 hintText: NAME,
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
               ),
               onSaved: (name) => _name = name,
               validator: (name) => name.isEmpty ? REQUIRED_FIELD : null,
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             TextFormField(
-              key: ValueKey('email-field'),
+              key: const ValueKey('email-field'),
               decoration: InputDecoration(
                 hintText: EMAIL,
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
               ),
               onSaved: (email) => _email = email,
               validator: (email) => email.isEmpty ? REQUIRED_FIELD : null,
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             TextFormField(
-              key: ValueKey('password-field'),
+              key: const ValueKey('password-field'),
               decoration: InputDecoration(
                 hintText: PASSWORD,
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
               ),
               onSaved: (password) => _password = password,
               validator: (password) => password.isEmpty ? REQUIRED_FIELD : null,
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             TextFormField(
-              key: ValueKey('confirm-password-field'),
+              key: const ValueKey('confirm-password-field'),
               decoration: InputDecoration(
                 hintText: PASSWORD_CONFIRMATION,
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
               ),
               validator: (passwordConfirmation) =>
                   passwordConfirmation.isEmpty ? REQUIRED_FIELD : null,
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             RaisedButton(
-              key: ValueKey('signup-btn'),
+              key: const ValueKey('signup-btn'),
               child: Text(SIGNUP),
               onPressed: () {
                 final formState = _formKey.currentState;
@@ -141,9 +140,9 @@ class _SignupPageState extends State<SignupPage> {
                 }
               },
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             RaisedButton(
-              key: ValueKey('signin-btn'),
+              key: const ValueKey('signin-btn'),
               child: Text(SIGNIN),
               onPressed: () => SimpleRouter.forwardAndReplace(
                 SigninPageConnected(),

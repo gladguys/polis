@@ -13,7 +13,7 @@ void initLocator() {
       bannerAd: BannerAd(
         adUnitId: BannerAd.testAdUnitId,
         size: AdSize.smartBanner,
-        targetingInfo: MobileAdTargetingInfo(
+        targetingInfo: const MobileAdTargetingInfo(
           keywords: <String>['flutterio', 'beautiful apps'],
           contentUrl: 'https://flutter.io',
           childDirected: false,
