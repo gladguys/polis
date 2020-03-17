@@ -20,7 +20,7 @@ class UserActivities extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 18),
-        Text(NO_RECENT_ACTIVITY),
+        const Text(NO_RECENT_ACTIVITY),
       ],
     );
   }

@@ -51,7 +51,7 @@ class PoliticsSuggestion extends StatelessWidget {
                           userId: context.bloc<UserBloc>().user.userId,
                         ),
                       ),
-                  child: Text(READY),
+                  child: const Text(READY),
                 ),
               ),
               const SizedBox(height: 14),
