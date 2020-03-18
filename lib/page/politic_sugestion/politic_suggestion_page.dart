@@ -21,14 +21,14 @@ class PoliticSuggestionPage extends StatelessWidget {
           },
           builder: (_, state) {
             if (state is LoadingFetch || state is LoadingSaveFollowPolitics) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             } else if (state is FetchSuggestedPoliticsSuccess ||
                 state is ChangedPoliticsFollowingStatus) {
               return PoliticsSuggestion();
             } else {
-              return SizedBox.shrink();
+              return const SizedBox.shrink();
             }
           },
         ),

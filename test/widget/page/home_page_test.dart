@@ -86,14 +86,16 @@ void main() {
         connectedWidget(
           PageConnected<UserBloc>(
             bloc: mockUserBloc,
-            page: HomePage(mockAdService),
+            page: Scaffold(
+              body: HomePage(mockAdService),
+            ),
           ),
         ),
       );
       final logoutBtn = find.byType(Icon);
       await tester.tap(logoutBtn);
-      await tester.pumpAndSettle(Duration(seconds: 10));
-      expect(find.byType(SigninPage), findsOneWidget);
+      await tester.pumpAndSettle(const Duration(seconds: 10));
+      expect(find.byType(InitialPage), findsOneWidget);
     });
 
     testWidgets('should should snackbar when logout fails', (tester) async {
@@ -110,7 +112,7 @@ void main() {
           ),
         ),
       );
-      await tester.pumpAndSettle(Duration(seconds: 10));
+      await tester.pumpAndSettle(const Duration(seconds: 10));
     });
   });
 }

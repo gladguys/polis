@@ -32,7 +32,7 @@ class PoliticSuggested extends StatelessWidget {
                 backgroundImage: NetworkImage(politico.urlFoto),
               ),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             Text(
               politico.nomeEleitoral,
               style: TextStyle(
@@ -40,7 +40,7 @@ class PoliticSuggested extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 3),
+            const SizedBox(height: 3),
             Text(
               POLITIC,
               style: TextStyle(
@@ -48,7 +48,7 @@ class PoliticSuggested extends StatelessWidget {
                 color: Colors.grey,
               ),
             ),
-            SizedBox(height: 6),
+            const SizedBox(height: 6),
             GFButton(
               type: GFButtonType.outline,
               shape: GFButtonShape.pills,

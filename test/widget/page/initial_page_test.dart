@@ -23,7 +23,7 @@ void main() {
     });
 
     testWidgets('shuld do something when signin with google', (tester) async {
-      await tester.pumpWidget(connectedWidget(InitialPage()));
+      await tester.pumpWidget(connectedWidget(InitialPageConnected()));
       final signinWithGoogle = find.text(SIGNIN_WITH_GOOGLE);
       await tester.tap(signinWithGoogle);
       await tester.pumpAndSettle();
