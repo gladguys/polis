@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: theme,
           navigatorKey: Get.key,
-          home: InitialPage(),
+          home: InitialPageConnected(),
           navigatorObservers: [
             FirebaseAnalyticsObserver(
                 analytics: G<AnalyticsService>().analytics),

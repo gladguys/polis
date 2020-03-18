@@ -11,11 +11,10 @@ import 'widget/politics_sugestion.dart';
 class PoliticSuggestionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final _bloc = context.bloc<PoliticSuggestionBloc>();
     return Scaffold(
       body: SafeArea(
         child: BlocConsumer(
-          bloc: _bloc,
+          bloc: context.bloc<PoliticSuggestionBloc>(),
           listener: (_, state) {
             if (state is SavedSuggestedPolitics) {
               SimpleRouter.forwardAndReplace(

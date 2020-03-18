@@ -19,18 +19,12 @@ void main() {
 
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
-        connectedWidget(SignupPageConnected()),
+        connectedWidget(
+          Scaffold(
+            body: SignupPageConnected(),
+          ),
+        ),
       );
-    });
-
-    testWidgets('should build without exploding', (tester) async {
-      await tester.pumpWidget(
-        connectedWidget(SignupPageConnected()),
-      );
-      final signinBtn = find.byKey(const ValueKey('signin-btn'));
-      await tester.tap(signinBtn);
-      await tester.pumpAndSettle();
-      expect(find.byType(SigninPage), findsOneWidget);
     });
 
     testWidgets('should validate and save the form', (tester) async {
@@ -40,7 +34,9 @@ void main() {
         connectedWidget(
           PageConnected<SignupBloc>(
             bloc: mockSignupBloc,
-            page: SignupPage(),
+            page: Scaffold(
+              body: SignupPage(),
+            ),
           ),
         ),
       );
@@ -71,7 +67,7 @@ void main() {
       verify(mockSignupBloc.add(Signup(signupUser))).called(1);
     });
 
-    testWidgets('should go to SigninPage when user created', (tester) async {
+    testWidgets('should go to InitialPage when user created', (tester) async {
       final mockSignupBloc = MockSignupBloc();
       whenListen(
         mockSignupBloc,
@@ -81,12 +77,14 @@ void main() {
         connectedWidget(
           PageConnected<SignupBloc>(
             bloc: mockSignupBloc,
-            page: SignupPage(),
+            page: Scaffold(
+              body: SignupPage(),
+            ),
           ),
         ),
       );
       await tester.pumpAndSettle(const Duration(seconds: 10));
-      expect(find.byType(SigninPage), findsOneWidget);
+      expect(find.byType(InitialPage), findsOneWidget);
     });
 
     testWidgets('should show loading indicator', (tester) async {
@@ -96,7 +94,9 @@ void main() {
         connectedWidget(
           PageConnected<SignupBloc>(
             bloc: mockSignupBloc,
-            page: SignupPage(),
+            page: Scaffold(
+              body: SignupPage(),
+            ),
           ),
         ),
       );
@@ -114,7 +114,9 @@ void main() {
         connectedWidget(
           PageConnected<SignupBloc>(
             bloc: mockSignupBloc,
-            page: SignupPage(),
+            page: Scaffold(
+              body: SignupPage(),
+            ),
           ),
         ),
       );
@@ -132,7 +134,9 @@ void main() {
         connectedWidget(
           PageConnected<SignupBloc>(
             bloc: mockSignupBloc,
-            page: SignupPage(),
+            page: Scaffold(
+              body: SignupPage(),
+            ),
           ),
         ),
       );

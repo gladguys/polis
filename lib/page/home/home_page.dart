@@ -9,8 +9,8 @@ import '../../bloc/user/user_event.dart';
 import '../../bloc/user/user_state.dart';
 import '../../core/routing/route_names.dart';
 import '../../core/service/services.dart';
+import '../pages.dart';
 import '../politic_sugestion/politic_suggestion_page_connected.dart';
-import '../signin/signin_page_connected.dart';
 
 class HomePage extends StatefulWidget {
   HomePage(this.adService);
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
           if (state is SignoutSucceded) {
             Get.snackbar('Logout', 'Logout');
             SimpleRouter.forwardAndRemoveAll(
-              SigninPageConnected(),
+              InitialPageConnected(),
               name: SIGNIN_PAGE,
             );
           }

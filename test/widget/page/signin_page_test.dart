@@ -10,7 +10,6 @@ import 'package:polis/page/home/home_page.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
 import 'package:polis/page/signin/signin_page_connected.dart';
-import 'package:polis/page/signup/signup_page.dart';
 
 import '../../mock.dart';
 import '../utils.dart';
@@ -21,39 +20,12 @@ void main() {
   group('SigninPage tests', () {
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
-        connectedWidget(SigninPageConnected()),
-      );
-    });
-
-    testWidgets('should go to SignupPage when clicked on btn', (tester) async {
-      await tester.pumpWidget(
-        connectedWidget(SigninPageConnected()),
-      );
-      final signoutBtn = find.text(SIGNUP);
-      expect(signoutBtn, findsOneWidget);
-      await tester.tap(signoutBtn);
-      await tester.pumpAndSettle();
-      expect(find.byType(SignupPage), findsOneWidget);
-    });
-
-    testWidgets('should add SigninWithGoogle event when click on btn',
-        (tester) async {
-      final mockSigninBloc = MockSigninBloc();
-      when(mockSigninBloc.state).thenReturn(InitialSignin());
-      await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SigninBloc>(
-            bloc: mockSigninBloc,
-            page: SigninPage(),
+          Scaffold(
+            body: SigninPageConnected(),
           ),
         ),
       );
-      final signinWithGoogleBtn =
-          find.byKey(const ValueKey('google-signin-btn'));
-      expect(signinWithGoogleBtn, findsOneWidget);
-      await tester.tap(signinWithGoogleBtn);
-      await tester.pumpAndSettle();
-      verify(mockSigninBloc.add(SigninWithGoogle())).called(1);
     });
 
     testWidgets('should show error snackbar when signin fails', (tester) async {
@@ -67,7 +39,9 @@ void main() {
         connectedWidget(
           PageConnected<SigninBloc>(
             bloc: mockSigninBloc,
-            page: SigninPage(),
+            page: Scaffold(
+              body: SigninPage(),
+            ),
           ),
         ),
       );
@@ -86,7 +60,9 @@ void main() {
         connectedWidget(
           PageConnected<SigninBloc>(
             bloc: mockSigninBloc,
-            page: SigninPage(),
+            page: Scaffold(
+              body: SigninPage(),
+            ),
           ),
         ),
       );
@@ -101,7 +77,9 @@ void main() {
         connectedWidget(
           PageConnected<SigninBloc>(
             bloc: mockSigninBloc,
-            page: SigninPage(),
+            page: Scaffold(
+              body: SigninPage(),
+            ),
           ),
         ),
       );
@@ -131,11 +109,33 @@ void main() {
         connectedWidget(
           PageConnected<SigninBloc>(
             bloc: mockSigninBloc,
-            page: SigninPage(),
+            page: Scaffold(
+              body: SigninPage(),
+            ),
           ),
         ),
       );
       expect(find.text('fail'), findsOneWidget);
+    });
+
+    testWidgets('should do something when recover password is clicked',
+        (tester) async {
+      final mockSigninBloc = MockSigninBloc();
+      when(mockSigninBloc.state).thenReturn(InitialSignin());
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<SigninBloc>(
+            bloc: mockSigninBloc,
+            page: Scaffold(
+              body: SigninPage(),
+            ),
+          ),
+        ),
+      );
+      final recoverPasswordButton = find.text(RECOVERY_PASSWORD);
+      expect(recoverPasswordButton, findsOneWidget);
+      await tester.tap(recoverPasswordButton);
+      await tester.pumpAndSettle();
     });
   });
 }

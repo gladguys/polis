@@ -28,40 +28,53 @@ final ThemeData theme = ThemeData(
   ),
   fontFamily: 'Ubuntu',
   inputDecorationTheme: InputDecorationTheme(
-    labelStyle: TextStyle(color: Colors.amber[800]),
+    labelStyle: TextStyle(color: Colors.black),
+    isDense: true,
     filled: true,
-    fillColor: Colors.grey[200],
-    border: UnderlineInputBorder(
+    fillColor: Colors.white,
+    border: OutlineInputBorder(
+      gapPadding: 2,
       borderSide: BorderSide(
-        color: Colors.amber[600],
+        color: Colors.grey[850],
       ),
+      borderRadius: BorderRadius.circular(10),
     ),
-    enabledBorder: UnderlineInputBorder(
+    enabledBorder: OutlineInputBorder(
+      gapPadding: 2,
       borderSide: BorderSide(
-        color: Colors.amber[600],
+        color: Colors.grey[850],
       ),
+      borderRadius: BorderRadius.circular(10),
     ),
-    disabledBorder: UnderlineInputBorder(
+    disabledBorder: OutlineInputBorder(
+      gapPadding: 2,
       borderSide: BorderSide(
         color: Colors.grey[300],
       ),
+      borderRadius: BorderRadius.circular(10),
     ),
-    focusedBorder: UnderlineInputBorder(
+    focusedBorder: OutlineInputBorder(
+      gapPadding: 2,
       borderSide: BorderSide(
         width: 2,
-        color: Colors.amber[600],
+        color: Colors.black,
       ),
+      borderRadius: BorderRadius.circular(10),
     ),
-    errorBorder: UnderlineInputBorder(
+    errorBorder: OutlineInputBorder(
+      gapPadding: 2,
       borderSide: BorderSide(
         color: Colors.red[600],
       ),
+      borderRadius: BorderRadius.circular(10),
     ),
-    focusedErrorBorder: UnderlineInputBorder(
+    focusedErrorBorder: OutlineInputBorder(
+      gapPadding: 2,
       borderSide: BorderSide(
         width: 2,
         color: Colors.red[600],
       ),
+      borderRadius: BorderRadius.circular(10),
     ),
   ),
 );

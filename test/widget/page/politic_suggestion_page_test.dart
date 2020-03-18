@@ -1,3 +1,4 @@
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:getflutter/components/button/gf_button.dart';
@@ -111,12 +112,12 @@ void main() {
           PoliticoModel(
             id: '1',
             nomeEleitoral: 'nome',
-            urlFoto: '',
+            urlFoto: 'aa',
           ),
           PoliticoModel(
             id: '2',
             nomeEleitoral: 'nome2',
-            urlFoto: '',
+            urlFoto: 'bb',
           ),
         ];
         final mockPoliticSuggestionBloc = MockPoliticSuggestionBloc();
@@ -133,7 +134,6 @@ void main() {
             ),
           ),
         );
-        await tester.pumpAndSettle();
         expect(find.byType(PoliticsSuggestedGrid), findsOneWidget);
         expect(find.byType(PoliticSuggested), findsNWidgets(2));
       });
@@ -163,14 +163,12 @@ void main() {
             ),
           ),
         );
-        await tester.pumpAndSettle();
         final politicoCard = find.byType(PoliticSuggested);
         expect(politicoCard, findsOneWidget);
         final followButton = find.byType(GFButton);
         expect(followButton, findsOneWidget);
         expect(find.text(STOP_FOLLOWING), findsOneWidget);
         await tester.tap(followButton);
-        await tester.pumpAndSettle();
         verify(
           mockPoliticSuggestionBloc.add(
             FollowOrUnfollowPolitic(
@@ -183,6 +181,31 @@ void main() {
           ),
         ).called(1);
       });
+    });
+
+    testWidgets('should go to timeline when SavedSuggestedPolitics state',
+        (tester) async {
+      final mockPoliticSuggestionBloc = MockPoliticSuggestionBloc();
+      whenListen(
+        mockPoliticSuggestionBloc,
+        Stream.fromIterable(
+          [
+            InitialPoliticSuggestionState(),
+            SavedSuggestedPolitics(),
+          ],
+        ),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<UserBloc>(
+            bloc: MockUserBloc(),
+            page: PageConnected<PoliticSuggestionBloc>(
+              bloc: mockPoliticSuggestionBloc,
+              page: PoliticSuggestionPage(),
+            ),
+          ),
+        ),
+      );
     });
 
     testWidgets('should call follow event when click on follow button',
@@ -209,14 +232,12 @@ void main() {
             ),
           ),
         );
-        await tester.pumpAndSettle();
         final politicoCard = find.byType(PoliticSuggested);
         expect(politicoCard, findsOneWidget);
         final followButton = find.byType(GFButton);
         expect(followButton, findsOneWidget);
         expect(find.text(FOLLOW), findsOneWidget);
         await tester.tap(followButton);
-        await tester.pumpAndSettle();
         verify(
           mockPoliticSuggestionBloc.add(
             FollowOrUnfollowPolitic(
