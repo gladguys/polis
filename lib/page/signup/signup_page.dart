@@ -91,7 +91,7 @@ class _SignupPageState extends State<SignupPage> {
             const SizedBox(height: 16),
             TextFormField(
               key: const ValueKey('name-field'),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: NAME,
               ),
               onSaved: (name) => _name = name,
@@ -100,7 +100,7 @@ class _SignupPageState extends State<SignupPage> {
             const SizedBox(height: 16),
             TextFormField(
               key: const ValueKey('email-field'),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: EMAIL,
               ),
               onSaved: (email) => _email = email,
@@ -110,7 +110,7 @@ class _SignupPageState extends State<SignupPage> {
             TextFormField(
               key: const ValueKey('password-field'),
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: PASSWORD,
               ),
               onSaved: (password) => _password = password,
@@ -120,7 +120,7 @@ class _SignupPageState extends State<SignupPage> {
             TextFormField(
               key: const ValueKey('confirm-password-field'),
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: PASSWORD_CONFIRMATION,
               ),
               validator: (passwordConfirmation) =>
@@ -132,9 +132,9 @@ class _SignupPageState extends State<SignupPage> {
               child: RaisedButton(
                 key: const ValueKey('signup-btn'),
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Text(
+                child: const Text(
                   SIGNUP,
-                  style: const TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 18),
                 ),
                 onPressed: () {
                   final formState = _formKey.currentState;

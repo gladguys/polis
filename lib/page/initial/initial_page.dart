@@ -123,9 +123,9 @@ class _InitialPageState extends State<InitialPage> {
                           width: 20,
                         ),
                         const SizedBox(width: 8),
-                        Text(
+                        const Text(
                           SIGNIN_WITH_GOOGLE,
-                          style: const TextStyle(fontSize: 18),
+                          style: TextStyle(fontSize: 18),
                         ),
                       ],
                     ),
