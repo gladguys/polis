@@ -2,12 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_router/simple_router.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../pages.dart';
 import '../theme/main_theme.dart';
-import '../../core/routing/route_names.dart';
 import '../../bloc/signin/signin_bloc.dart';
 import '../../bloc/signin/signin_event.dart';
 import '../../i18n/label.dart';

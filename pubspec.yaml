@@ -33,6 +33,8 @@ dependencies:
   getflutter: ^1.0.10
   cupertino_icons: ^0.1.3
   fancy_shimmer_image: ^1.0.1
+  font_awesome_flutter: ^8.7.0
+  sliding_up_panel: ^1.0.0
 
 dev_dependencies:
   flutter_test:
