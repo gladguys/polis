@@ -50,7 +50,7 @@ class _SigninPageState extends State<SigninPage> {
             return _form();
           }
           if (state is SigninLoading) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           if (state is SigninFailed) {
             return Center(
@@ -72,7 +72,7 @@ class _SigninPageState extends State<SigninPage> {
           children: <Widget>[
             const SizedBox(height: 16),
             TextFormField(
-              key: ValueKey('email-field'),
+              key: const ValueKey('email-field'),
               decoration: InputDecoration(
                 hintText: EMAIL,
                 prefixIcon: Center(
@@ -88,7 +88,7 @@ class _SigninPageState extends State<SigninPage> {
             ),
             const SizedBox(height: 16),
             TextFormField(
-              key: ValueKey('password-field'),
+              key: const ValueKey('password-field'),
               obscureText: true,
               decoration: InputDecoration(
                 hintText: PASSWORD,
@@ -108,8 +108,8 @@ class _SigninPageState extends State<SigninPage> {
               width: 160,
               child: RaisedButton(
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                key: ValueKey('signin-btn'),
-                child: Text(
+                key: const ValueKey('signin-btn'),
+                child: const Text(
                   SIGNIN,
                   style: TextStyle(fontSize: 18),
                 ),
@@ -128,7 +128,7 @@ class _SigninPageState extends State<SigninPage> {
             Container(
               width: 160,
               child: OutlineButton(
-                child: Text(
+                child: const Text(
                   RECOVERY_PASSWORD,
                   style: TextStyle(fontSize: 16),
                 ),

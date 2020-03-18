@@ -19,18 +19,12 @@ void main() {
 
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
-        connectedWidget(SignupPageConnected()),
+        connectedWidget(
+          Scaffold(
+            body: SignupPageConnected(),
+          ),
+        ),
       );
-    });
-
-    testWidgets('should build without exploding', (tester) async {
-      await tester.pumpWidget(
-        connectedWidget(SignupPageConnected()),
-      );
-      final signinBtn = find.byKey(ValueKey('signin-btn'));
-      await tester.tap(signinBtn);
-      await tester.pumpAndSettle();
-      expect(find.byType(SigninPage), findsOneWidget);
     });
 
     testWidgets('should validate and save the form', (tester) async {
@@ -40,18 +34,20 @@ void main() {
         connectedWidget(
           PageConnected<SignupBloc>(
             bloc: mockSignupBloc,
-            page: SignupPage(),
+            page: Scaffold(
+              body: SignupPage(),
+            ),
           ),
         ),
       );
       final form = tester.widget(find.byType(Form)) as Form;
       final formKey = form.key as GlobalKey<FormState>;
 
-      final nameField = find.byKey(ValueKey('name-field'));
-      final emailField = find.byKey(ValueKey('email-field'));
-      final passwordField = find.byKey(ValueKey('password-field'));
+      final nameField = find.byKey(const ValueKey('name-field'));
+      final emailField = find.byKey(const ValueKey('email-field'));
+      final passwordField = find.byKey(const ValueKey('password-field'));
       final confirmPasswordField =
-          find.byKey(ValueKey('confirm-password-field'));
+          find.byKey(const ValueKey('confirm-password-field'));
 
       final signupUser = UserModel(
         name: 'test',
@@ -64,14 +60,14 @@ void main() {
       await tester.enterText(confirmPasswordField, 'secret');
       await tester.pump();
 
-      final signupBtn = find.byKey(ValueKey('signup-btn'));
+      final signupBtn = find.byKey(const ValueKey('signup-btn'));
       await tester.tap(signupBtn);
       await tester.pumpAndSettle();
       expect(formKey.currentState.validate(), isTrue);
       verify(mockSignupBloc.add(Signup(signupUser))).called(1);
     });
 
-    testWidgets('should go to SigninPage when user created', (tester) async {
+    testWidgets('should go to InitialPage when user created', (tester) async {
       final mockSignupBloc = MockSignupBloc();
       whenListen(
         mockSignupBloc,
@@ -81,12 +77,14 @@ void main() {
         connectedWidget(
           PageConnected<SignupBloc>(
             bloc: mockSignupBloc,
-            page: SignupPage(),
+            page: Scaffold(
+              body: SignupPage(),
+            ),
           ),
         ),
       );
-      await tester.pumpAndSettle(Duration(seconds: 10));
-      expect(find.byType(SigninPage), findsOneWidget);
+      await tester.pumpAndSettle(const Duration(seconds: 10));
+      expect(find.byType(InitialPage), findsOneWidget);
     });
 
     testWidgets('should show loading indicator', (tester) async {
@@ -96,7 +94,9 @@ void main() {
         connectedWidget(
           PageConnected<SignupBloc>(
             bloc: mockSignupBloc,
-            page: SignupPage(),
+            page: Scaffold(
+              body: SignupPage(),
+            ),
           ),
         ),
       );
@@ -114,11 +114,13 @@ void main() {
         connectedWidget(
           PageConnected<SignupBloc>(
             bloc: mockSignupBloc,
-            page: SignupPage(),
+            page: Scaffold(
+              body: SignupPage(),
+            ),
           ),
         ),
       );
-      await tester.pumpAndSettle(Duration(seconds: 10));
+      await tester.pumpAndSettle(const Duration(seconds: 10));
     });
 
     testWidgets('should show error when signin failed', (tester) async {
@@ -132,11 +134,13 @@ void main() {
         connectedWidget(
           PageConnected<SignupBloc>(
             bloc: mockSignupBloc,
-            page: SignupPage(),
+            page: Scaffold(
+              body: SignupPage(),
+            ),
           ),
         ),
       );
-      await tester.pumpAndSettle(Duration(seconds: 10));
+      await tester.pumpAndSettle(const Duration(seconds: 10));
     });
   });
 }

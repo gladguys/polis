@@ -14,7 +14,7 @@ dependencies:
   flutter_bloc: ^3.2.0
   bloc: ^3.0.0
   get: ^1.11.1
-  simple_router: ^0.0.3+2
+  simple_router: ^0.1.0
   equatable: ^1.1.1
   json_serializable: ^3.2.5
   uuid: ^2.0.4

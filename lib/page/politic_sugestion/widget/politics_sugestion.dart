@@ -29,7 +29,7 @@ class PoliticsSuggestion extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Text(
                 POLITICS_SUGGESTION_ON_YOUR_AREA,
                 style: TextStyle(
@@ -37,13 +37,13 @@ class PoliticsSuggestion extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               Expanded(
                 flex: 8,
                 child: PoliticsSuggestedGrid(
                     context.bloc<PoliticSuggestionBloc>().politics),
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               Expanded(
                 flex: 1,
                 child: RaisedButton(
@@ -55,7 +55,7 @@ class PoliticsSuggestion extends StatelessWidget {
                   child: Text(READY),
                 ),
               ),
-              SizedBox(height: 14),
+              const SizedBox(height: 14),
             ],
           ),
         ),

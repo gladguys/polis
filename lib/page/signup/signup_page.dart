@@ -4,12 +4,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../signin/signin_page_connected.dart';
-import '../theme/main_theme.dart';
 import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
 import '../../model/user_model.dart';
+import '../initial/initial_page_connected.dart';
+import '../theme/main_theme.dart';
 
 class SignupPage extends StatefulWidget {
   @override
@@ -46,8 +46,8 @@ class _SignupPageState extends State<SignupPage> {
       listener: (context, state) {
         if (state is UserCreated) {
           SimpleRouter.forwardAndReplace(
-            SigninPageConnected(),
-            name: SIGNIN_PAGE,
+            InitialPageConnected(),
+            name: INITIAL_PAGE,
           );
           Get.snackbar(CONGRATULATIONS, USER_CREATED_WITH_SUCCESS);
         } else if (state is UserCreationFailed) {
@@ -64,11 +64,11 @@ class _SignupPageState extends State<SignupPage> {
               state is SignupFailed) {
             return _signupForm();
           } else if (state is SignupLoading) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         },
       ),
     );
@@ -90,25 +90,25 @@ class _SignupPageState extends State<SignupPage> {
             ),
             const SizedBox(height: 16),
             TextFormField(
-              key: ValueKey('name-field'),
+              key: const ValueKey('name-field'),
               decoration: InputDecoration(
                 labelText: NAME,
               ),
               onSaved: (name) => _name = name,
               validator: (name) => name.isEmpty ? REQUIRED_FIELD : null,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextFormField(
-              key: ValueKey('email-field'),
+              key: const ValueKey('email-field'),
               decoration: InputDecoration(
                 labelText: EMAIL,
               ),
               onSaved: (email) => _email = email,
               validator: (email) => email.isEmpty ? REQUIRED_FIELD : null,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextFormField(
-              key: ValueKey('password-field'),
+              key: const ValueKey('password-field'),
               obscureText: true,
               decoration: InputDecoration(
                 labelText: PASSWORD,
@@ -116,9 +116,9 @@ class _SignupPageState extends State<SignupPage> {
               onSaved: (password) => _password = password,
               validator: (password) => password.isEmpty ? REQUIRED_FIELD : null,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextFormField(
-              key: ValueKey('confirm-password-field'),
+              key: const ValueKey('confirm-password-field'),
               obscureText: true,
               decoration: InputDecoration(
                 labelText: PASSWORD_CONFIRMATION,
@@ -126,15 +126,15 @@ class _SignupPageState extends State<SignupPage> {
               validator: (passwordConfirmation) =>
                   passwordConfirmation.isEmpty ? REQUIRED_FIELD : null,
             ),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
             Container(
               width: 160,
               child: RaisedButton(
-                key: ValueKey('signup-btn'),
+                key: const ValueKey('signup-btn'),
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Text(
                   SIGNUP,
-                  style: TextStyle(fontSize: 18),
+                  style: const TextStyle(fontSize: 18),
                 ),
                 onPressed: () {
                   final formState = _formKey.currentState;
