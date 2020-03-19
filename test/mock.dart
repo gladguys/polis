@@ -28,6 +28,9 @@ class MockSignupBloc extends MockBloc<SignupEvent, SignupState>
 
 class MockUserBloc extends MockBloc<UserEvent, UserState> implements UserBloc {}
 
+class MockUserProfileBloc extends MockBloc<UserProfileEvent, UserProfileState>
+    implements UserProfileBloc {}
+
 // Repository
 class MockSigninRepository extends Mock implements SigninRepository {}
 
