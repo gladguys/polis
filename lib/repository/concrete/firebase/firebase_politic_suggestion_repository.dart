@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../../core/constants.dart';
 import '../../../core/exception/exceptions.dart';
 import '../../../model/politico_model.dart';
+import '../../../model/user_model.dart';
 import '../../abstract/politic_suggestion_repository.dart';
 import 'collection.dart';
 
@@ -16,7 +17,10 @@ class FirebasePoliticSuggestionRepository
 
   final Firestore firestore;
   CollectionReference get politicosRef => firestore.collection(POLITICOS);
-  CollectionReference get followingRef => firestore.collection(FOLLOWING);
+  CollectionReference get politicosSeguidosRef =>
+      firestore.collection(POLITICOS_SEGUIDOS);
+  CollectionReference get usuariosSeguindoRef =>
+      firestore.collection(USUARIOS_SEGUINDO);
 
   @override
   Future<List<PoliticoModel>> getSuggestedPolitics() async {
@@ -39,14 +43,26 @@ class FirebasePoliticSuggestionRepository
           List.generate(politics.length, (i) => politics[i].toJson());
 
       for (var politic in listPoliticsToFollow) {
-        // TODO(rodrigo): does this to be syncronous?
-        await followingRef
+        await politicosSeguidosRef
             .document(userId)
-            .collection(POLITICOS_FOLLOWING)
-            .add(politic);
+            .collection(POLITICOS_SEGUIDOS_COLLECTION)
+            .document(politic['id'])
+            .setData(politic);
       }
     } on Exception {
       throw ComunicationException();
+    }
+  }
+
+  @override
+  Future<void> saveFollowerToPolitics(
+      {UserModel user, List<PoliticoModel> politics}) async {
+    for (var politic in politics) {
+      await usuariosSeguindoRef
+          .document(politic.id)
+          .collection(USUARIOS_SEGUINDO_COLLECTIONS)
+          .document(user.userId)
+          .setData(user.toJson());
     }
   }
 }

@@ -68,11 +68,11 @@ void main() {
 
     group('savePoliticsToFollow tests', () {
       test('save politics works', () async {
-        when(mockFirestore.collection(FOLLOWING))
+        when(mockFirestore.collection(POLITICOS_SEGUIDOS))
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.document(any))
             .thenReturn(mockDocumentReference);
-        when(mockDocumentReference.collection(POLITICOS_FOLLOWING))
+        when(mockDocumentReference.collection(POLITICOS_SEGUIDOS_COLLECTION))
             .thenReturn(mockCollectionReference);
         final politic = PoliticoModel(
           id: '1',
@@ -84,11 +84,11 @@ void main() {
       });
 
       test('should throw exception', () {
-        when(mockFirestore.collection(FOLLOWING))
+        when(mockFirestore.collection(POLITICOS_SEGUIDOS))
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.document(any))
             .thenReturn(mockDocumentReference);
-        when(mockDocumentReference.collection(POLITICOS_FOLLOWING))
+        when(mockDocumentReference.collection(POLITICOS_SEGUIDOS_COLLECTION))
             .thenThrow(Exception());
         final politic = PoliticoModel(
           id: '1',

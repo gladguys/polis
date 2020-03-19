@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/politico_model.dart';
+import '../../model/user_model.dart';
 
 abstract class PoliticSuggestionEvent extends Equatable {
   const PoliticSuggestionEvent();
@@ -22,10 +23,10 @@ class FollowOrUnfollowPolitic extends PoliticSuggestionEvent {
 }
 
 class SavePoliticsToFollow extends PoliticSuggestionEvent {
-  SavePoliticsToFollow({@required this.userId}) : assert(userId != null);
+  SavePoliticsToFollow({@required this.user}) : assert(user != null);
 
-  final String userId;
+  final UserModel user;
 
   @override
-  List<Object> get props => [userId];
+  List<Object> get props => [user];
 }

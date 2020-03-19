@@ -11,13 +11,15 @@ class FirebaseUserProfileRepository implements UserProfileRepository {
       : assert(firestore != null);
 
   final Firestore firestore;
-  CollectionReference get followingRef => firestore.collection(FOLLOWING);
+  CollectionReference get politicosSeguidosRef =>
+      firestore.collection(POLITICOS_SEGUIDOS);
 
   @override
   Future<List<PoliticoModel>> getPoliticsFollowing(String userId) async {
     try {
-      final collectionRef =
-          await followingRef.document(userId).collection(POLITICOS_FOLLOWING);
+      final collectionRef = await politicosSeguidosRef
+          .document(userId)
+          .collection(POLITICOS_SEGUIDOS_COLLECTION);
       final querySnapshot = await collectionRef.getDocuments();
       final documents = querySnapshot.documents;
       return List.generate(

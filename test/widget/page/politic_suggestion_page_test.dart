@@ -81,8 +81,13 @@ void main() {
         final readyButton = find.text(READY);
         expect(readyButton, findsOneWidget);
         await tester.tap(readyButton);
-        verify(mockPoliticSuggestionBloc.add(SavePoliticsToFollow(userId: '1')))
-            .called(1);
+        verify(
+          mockPoliticSuggestionBloc.add(
+            SavePoliticsToFollow(
+              user: UserModel(userId: '1'),
+            ),
+          ),
+        ).called(1);
       });
     });
 

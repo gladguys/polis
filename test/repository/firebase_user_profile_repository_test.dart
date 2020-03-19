@@ -10,11 +10,9 @@ void main() {
     FirebaseUserProfileRepository firebaseUserProfileRepository;
     MockFirestore mockFirestore;
     MockQuerySnapshot mockQuerySnapshot;
-    MockDocumentSnapshot mockDocumentSnapshot;
     MockDocumentReference mockDocumentReference;
     MockCollectionReference mockCollectionReference;
     MockCollectionReference mockPoliticsFollowingCollectionReference;
-    List<MockDocumentSnapshot> mockDocumentSnapshotList;
 
     setUp(() {
       mockFirestore = MockFirestore();
@@ -23,11 +21,7 @@ void main() {
       firebaseUserProfileRepository = FirebaseUserProfileRepository(
         firestore: mockFirestore,
       );
-      mockDocumentSnapshot = MockDocumentSnapshot();
       mockCollectionReference = MockCollectionReference();
-      mockDocumentSnapshotList = [
-        mockDocumentSnapshot,
-      ];
     });
 
     test('test asserts', () {
@@ -40,17 +34,16 @@ void main() {
 
     group('getPoliticsFollowing tests', () {
       test('return [PoliticoModel] with list of following politics', () async {
-        when(mockFirestore.collection(FOLLOWING))
+        when(mockFirestore.collection(POLITICOS_SEGUIDOS))
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.document('1'))
             .thenReturn(mockDocumentReference);
-        when(mockDocumentReference.collection(POLITICOS_FOLLOWING))
+        when(mockDocumentReference.collection(POLITICOS_SEGUIDOS_COLLECTION))
             .thenReturn(mockPoliticsFollowingCollectionReference);
         when(mockPoliticsFollowingCollectionReference.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
         when(mockQuerySnapshot.documents).thenReturn([]);
-        final politicsFollowing =
-            await firebaseUserProfileRepository.getPoliticsFollowing('1');
+        await firebaseUserProfileRepository.getPoliticsFollowing('1');
       });
     });
   });

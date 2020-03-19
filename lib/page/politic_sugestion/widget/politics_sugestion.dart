@@ -48,7 +48,7 @@ class PoliticsSuggestion extends StatelessWidget {
                 child: RaisedButton(
                   onPressed: () => context.bloc<PoliticSuggestionBloc>().add(
                         SavePoliticsToFollow(
-                          userId: context.bloc<UserBloc>().user.userId,
+                          user: context.bloc<UserBloc>().user,
                         ),
                       ),
                   child: const Text(READY),
