@@ -15,7 +15,9 @@ import '../utils.dart';
 
 void main() {
   group('SignupPage tests', () {
-    setUpAll(initLocator);
+    setUpAll(() {
+      initLocator(MockSharedPreferences());
+    });
 
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(

@@ -11,7 +11,7 @@ import '../mock.dart';
 import 'utils.dart';
 
 void main() {
-  initLocator();
+  initLocator(MockSharedPreferences());
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('DefaultBottombar tests', () {

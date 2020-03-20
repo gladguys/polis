@@ -15,6 +15,7 @@ import 'package:polis/repository/abstract/signin_repository.dart';
 import 'package:polis/repository/abstract/signup_repository.dart';
 import 'package:polis/repository/abstract/user_profile_repository.dart';
 import 'package:polis/repository/abstract/user_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Bloc
 class MockSigninBloc extends MockBloc<SigninEvent, SigninState>
@@ -81,3 +82,5 @@ class MockSharedPreferencesService extends Mock
 
 // Other
 class MockBannerAd extends Mock implements BannerAd {}
+
+class MockSharedPreferences extends Mock implements SharedPreferences {}

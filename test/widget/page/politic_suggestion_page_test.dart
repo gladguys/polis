@@ -19,7 +19,9 @@ import '../../mock.dart';
 import '../utils.dart';
 
 void main() {
-  setUpAll(initLocator);
+  setUpAll(() {
+    initLocator(MockSharedPreferences());
+  });
 
   group('PoliticSuggestionPage tests', () {
     testWidgets('should build without exploding', (tester) async {
