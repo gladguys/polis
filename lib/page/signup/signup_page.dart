@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
@@ -24,6 +27,7 @@ class _SignupPageState extends State<SignupPage> {
   String _email;
   String _password;
   String _photoUrl;
+  File _profilePhoto;
 
   @override
   void initState() {
@@ -81,12 +85,25 @@ class _SignupPageState extends State<SignupPage> {
         padding: const EdgeInsets.symmetric(horizontal: 40),
         child: Column(
           children: <Widget>[
-            Center(
-              child: FaIcon(
-                FontAwesomeIcons.solidUserCircle,
-                color: theme.accentColor.withOpacity(.6),
-                size: 120,
+            GestureDetector(
+              child: Center(
+                child: _profilePhoto != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(40),
+                        child: Image.file(
+                          _profilePhoto,
+                          height: 120,
+                          width: 120,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : FaIcon(
+                        FontAwesomeIcons.solidUserCircle,
+                        color: theme.accentColor.withOpacity(.6),
+                        size: 120,
+                      ),
               ),
+              onTap: getImage,
             ),
             const SizedBox(height: 16),
             TextFormField(
@@ -146,7 +163,10 @@ class _SignupPageState extends State<SignupPage> {
                       password: _password,
                       photoUrl: _photoUrl,
                     );
-                    _signupBloc.add(Signup(_signupUser));
+                    _signupBloc.add(Signup(
+                      user: _signupUser,
+                      profilePhoto: _profilePhoto,
+                    ));
                   }
                 },
               ),
@@ -155,5 +175,10 @@ class _SignupPageState extends State<SignupPage> {
         ),
       ),
     );
+  }
+
+  Future<void> getImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    setState(() => _profilePhoto = image);
   }
 }

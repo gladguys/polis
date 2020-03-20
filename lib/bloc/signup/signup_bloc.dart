@@ -25,7 +25,8 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     if (event is Signup) {
       yield SignupLoading();
       try {
-        await repository.createUserWithEmailAndPassword(event.user);
+        await repository.createUserWithEmailAndPassword(
+            event.user, event.profilePhoto);
         await analyticsService.logSignup();
         yield UserCreated();
       } on EmailAlreadyInUseException {

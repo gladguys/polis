@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/exception/exceptions.dart';
@@ -10,22 +13,44 @@ import 'firebase_error_constants.dart';
 
 class FirebaseSignupRepository extends SignupRepository {
   FirebaseSignupRepository(
-      {@required this.firebaseAuth, @required this.firestore})
+      {@required this.firebaseAuth,
+      @required this.firestore,
+      @required this.storage})
       : assert(firebaseAuth != null),
-        assert(firestore != null);
+        assert(firestore != null),
+        assert(storage != null);
 
   final FirebaseAuth firebaseAuth;
   final Firestore firestore;
+  final FirebaseStorage storage;
   CollectionReference get userRef => firestore.collection(USERS);
 
   @override
-  Future<void> createUserWithEmailAndPassword(UserModel user) async {
+  Future<void> createUserWithEmailAndPassword(
+      UserModel user, File profileImage) async {
     try {
       final authResult = await firebaseAuth.createUserWithEmailAndPassword(
           email: user.email, password: user.password);
 
       if (authResult != null && !await userExists(authResult.user.uid)) {
-        await createFirestoreUser(authResult.user.uid, user);
+        String imageUrl;
+        if (profileImage != null) {
+          try {
+            final storageReference =
+                storage.ref().child(USERS).child(authResult.user.uid);
+            await storageReference.putFile(profileImage).onComplete;
+            imageUrl = await storageReference.getDownloadURL();
+          } on Exception {
+            throw UploadFileException();
+          }
+        }
+
+        await createFirestoreUser(
+          authResult.user.uid,
+          user.copyWith(
+            photoUrl: imageUrl,
+          ),
+        );
         return;
       }
     } on Exception catch (e) {
