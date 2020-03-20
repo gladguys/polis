@@ -9,5 +9,7 @@ export 'signin/signin_page_connected.dart';
 export 'signup/signup_page.dart';
 export 'signup/signup_page_connected.dart';
 export 'timeline/timeline_page.dart';
+export 'user_following_politics/user_following_politics_page.dart';
+export 'user_following_politics/user_following_politics_page_connected.dart';
 export 'user_profile/user_profile_page.dart';
 export 'user_profile/user_profile_page_connected.dart';
