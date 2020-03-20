@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/abstract/polis_image_picker.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/model/user_model.dart';
 import 'package:polis/page/page_connected.dart';
@@ -37,7 +40,9 @@ void main() {
           PageConnected<SignupBloc>(
             bloc: mockSignupBloc,
             page: Scaffold(
-              body: SignupPage(),
+              body: SignupPage(
+                imagePicker: PolisImagePicker(),
+              ),
             ),
           ),
         ),
@@ -66,7 +71,8 @@ void main() {
       await tester.tap(signupBtn);
       await tester.pumpAndSettle();
       expect(formKey.currentState.validate(), isTrue);
-      verify(mockSignupBloc.add(Signup(signupUser))).called(1);
+      verify(mockSignupBloc.add(Signup(user: signupUser, profilePhoto: null)))
+          .called(1);
     });
 
     testWidgets('should go to InitialPage when user created', (tester) async {
@@ -80,7 +86,9 @@ void main() {
           PageConnected<SignupBloc>(
             bloc: mockSignupBloc,
             page: Scaffold(
-              body: SignupPage(),
+              body: SignupPage(
+                imagePicker: PolisImagePicker(),
+              ),
             ),
           ),
         ),
@@ -97,7 +105,9 @@ void main() {
           PageConnected<SignupBloc>(
             bloc: mockSignupBloc,
             page: Scaffold(
-              body: SignupPage(),
+              body: SignupPage(
+                imagePicker: PolisImagePicker(),
+              ),
             ),
           ),
         ),
@@ -117,7 +127,9 @@ void main() {
           PageConnected<SignupBloc>(
             bloc: mockSignupBloc,
             page: Scaffold(
-              body: SignupPage(),
+              body: SignupPage(
+                imagePicker: PolisImagePicker(),
+              ),
             ),
           ),
         ),
@@ -137,12 +149,39 @@ void main() {
           PageConnected<SignupBloc>(
             bloc: mockSignupBloc,
             page: Scaffold(
-              body: SignupPage(),
+              body: SignupPage(
+                imagePicker: PolisImagePicker(),
+              ),
             ),
           ),
         ),
       );
       await tester.pumpAndSettle(const Duration(seconds: 10));
+    });
+
+    testWidgets('should change image when camera called', (tester) async {
+      final mockSignupBloc = MockSignupBloc();
+      when(mockSignupBloc.state).thenReturn(InitialSignup());
+      final mockPolisImagePicker = MockPolisImagePicker();
+      when(mockPolisImagePicker.getImage())
+          .thenAnswer((_) => Future.value(File('assets/images/google.png')));
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<SignupBloc>(
+            bloc: mockSignupBloc,
+            page: Scaffold(
+              body: SignupPage(
+                imagePicker: mockPolisImagePicker,
+              ),
+            ),
+          ),
+        ),
+      );
+      final profile = find.byKey(const ValueKey('profile-container'));
+      expect(profile, findsOneWidget);
+      await tester.tap(profile);
+      await tester.pumpAndSettle();
+      expect(find.byType(ClipRRect), findsOneWidget);
     });
   });
 }

@@ -4,9 +4,11 @@ import 'package:firebase_admob/firebase_admob.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/abstract/polis_image_picker.dart';
 import 'package:polis/core/service/ad_service.dart';
 import 'package:polis/core/service/analytics_service.dart';
 import 'package:polis/core/service/services.dart';
@@ -50,6 +52,8 @@ class MockFirebaseAuth extends Mock implements FirebaseAuth {}
 
 class MockFirestore extends Mock implements Firestore {}
 
+class MockFirebaseStorage extends Mock implements FirebaseStorage {}
+
 class MockGoogleSignin extends Mock implements GoogleSignIn {}
 
 class MockGoogleSignInAccount extends Mock implements GoogleSignInAccount {}
@@ -63,6 +67,12 @@ class MockAuthResult extends Mock implements AuthResult {}
 class MockFirebaseUser extends Mock implements FirebaseUser {}
 
 class MockCollectionReference extends Mock implements CollectionReference {}
+
+class MockStorageReference extends Mock implements StorageReference {}
+
+class MockStorageUploadTask extends Mock implements StorageUploadTask {}
+
+class MockStorageTaskSnapshot extends Mock implements StorageTaskSnapshot {}
 
 class MockDocumentReference extends Mock implements DocumentReference {}
 
@@ -84,3 +94,5 @@ class MockSharedPreferencesService extends Mock
 class MockBannerAd extends Mock implements BannerAd {}
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
+
+class MockPolisImagePicker extends Mock implements PolisImagePicker {}

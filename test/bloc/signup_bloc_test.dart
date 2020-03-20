@@ -45,18 +45,18 @@ void main() {
       'Expects [SignupLoading, UserCreated] when '
       'SignupTriedEvent added',
       build: () async {
-        when(mockSignupRepository.createUserWithEmailAndPassword(any))
+        when(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .thenAnswer((_) => Future.value(user));
         when(mockAnalyticsService.logSignup())
             .thenAnswer((_) => Future.value());
         return signupBloc;
       },
       act: (signupBloc) {
-        signupBloc.add(Signup(UserModel()));
+        signupBloc.add(Signup(user: UserModel(), profilePhoto: null));
         return;
       },
       verify: (signupBloc) async {
-        verify(mockSignupRepository.createUserWithEmailAndPassword(any))
+        verify(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .called(1);
         verify(mockAnalyticsService.logSignup()).called(1);
       },
@@ -70,16 +70,16 @@ void main() {
       '''Expects [SignupLoading, UserCreationFailed] with 
       EMAIL_ALREADY_IN_USE message when SignupTried added and email already token''',
       build: () async {
-        when(mockSignupRepository.createUserWithEmailAndPassword(any))
+        when(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .thenThrow(EmailAlreadyInUseException());
         return signupBloc;
       },
       act: (signupBloc) {
-        signupBloc.add(Signup(UserModel()));
+        signupBloc.add(Signup(user: UserModel(), profilePhoto: null));
         return;
       },
       verify: (signupBloc) async {
-        verify(mockSignupRepository.createUserWithEmailAndPassword(any))
+        verify(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .called(1);
       },
       expect: [
@@ -92,16 +92,16 @@ void main() {
       '''Expects [SignupLoading, UserCreationFailed] with 
       PASSWORD_IS_WEAK message when SignupTried added and email already token''',
       build: () async {
-        when(mockSignupRepository.createUserWithEmailAndPassword(any))
+        when(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .thenThrow(WeakPasswordException());
         return signupBloc;
       },
       act: (signupBloc) {
-        signupBloc.add(Signup(UserModel()));
+        signupBloc.add(Signup(user: UserModel(), profilePhoto: null));
         return;
       },
       verify: (signupBloc) async {
-        verify(mockSignupRepository.createUserWithEmailAndPassword(any))
+        verify(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .called(1);
       },
       expect: [
@@ -114,16 +114,16 @@ void main() {
       'Expects [SignupLoading, SignupFailed] when signup '
       'failled somehow',
       build: () async {
-        when(mockSignupRepository.createUserWithEmailAndPassword(any))
+        when(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .thenThrow(Exception());
         return signupBloc;
       },
       act: (signupBloc) {
-        signupBloc.add(Signup(UserModel()));
+        signupBloc.add(Signup(user: UserModel(), profilePhoto: null));
         return;
       },
       verify: (signupBloc) async {
-        verify(mockSignupRepository.createUserWithEmailAndPassword(any))
+        verify(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .called(1);
       },
       expect: [

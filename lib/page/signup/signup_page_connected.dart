@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import '../../bloc/blocs.dart';
+import '../../core/abstract/polis_image_picker.dart';
 import '../../core/service/locator.dart';
 import '../../core/service/services.dart';
 import '../../repository/concrete/firebase/firebase_signup_repository.dart';
@@ -22,7 +23,9 @@ class SignupPageConnected extends StatelessWidget {
         ),
         analyticsService: G<AnalyticsService>(),
       ),
-      page: SignupPage(),
+      page: SignupPage(
+        imagePicker: PolisImagePicker(),
+      ),
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -13,17 +15,28 @@ void main() {
     FirebaseSignupRepository firebaseSignupRepository;
     MockFirebaseAuth mockFirebaseAuth;
     MockFirestore mockFirestore;
+    MockFirebaseStorage mockFirebaseStorage;
     MockAuthResult mockAuthResult;
     MockFirebaseUser mockFirebaseUser;
     MockDocumentReference mockDocumentReference;
     MockDocumentSnapshot mockDocumentSnapshot;
     MockCollectionReference mockCollectionReference;
+    MockStorageReference mockStorageReference;
+    MockStorageUploadTask mockStorageUploadTask;
+    MockStorageTaskSnapshot mockStorageTaskSnapshot;
 
     setUp(() {
       mockFirebaseAuth = MockFirebaseAuth();
+      mockStorageReference = MockStorageReference();
+      mockStorageUploadTask = MockStorageUploadTask();
+      mockStorageTaskSnapshot = MockStorageTaskSnapshot();
       mockFirestore = MockFirestore();
+      mockFirebaseStorage = MockFirebaseStorage();
       firebaseSignupRepository = FirebaseSignupRepository(
-          firebaseAuth: mockFirebaseAuth, firestore: mockFirestore);
+        firebaseAuth: mockFirebaseAuth,
+        firestore: mockFirestore,
+        storage: mockFirebaseStorage,
+      );
       mockAuthResult = MockAuthResult();
       mockFirebaseUser = MockFirebaseUser();
       mockDocumentReference = MockDocumentReference();
@@ -36,19 +49,28 @@ void main() {
           () => FirebaseSignupRepository(
                 firebaseAuth: null,
                 firestore: mockFirestore,
+                storage: mockFirebaseStorage,
               ),
           throwsAssertionError);
       expect(
           () => FirebaseSignupRepository(
                 firebaseAuth: mockFirebaseAuth,
                 firestore: null,
+                storage: mockFirebaseStorage,
+              ),
+          throwsAssertionError);
+      expect(
+          () => FirebaseSignupRepository(
+                firebaseAuth: mockFirebaseAuth,
+                firestore: mockFirestore,
+                storage: null,
               ),
           throwsAssertionError);
     });
 
     test(
-        'createUserWithEmailAndPassword creates firestore user if not created'
-        'yet', () async {
+        '''createUserWithEmailAndPassword creates firestore user if not created yet''',
+        () async {
       final user = UserModel(userId: '1', email: 'email', password: 'password');
       when(mockFirebaseAuth.createUserWithEmailAndPassword(
               email: 'email', password: 'password'))
@@ -62,8 +84,65 @@ void main() {
           .thenAnswer((_) => Future.value(mockDocumentSnapshot));
       when(mockDocumentSnapshot.exists).thenReturn(false);
 
-      await firebaseSignupRepository.createUserWithEmailAndPassword(user);
+      await firebaseSignupRepository.createUserWithEmailAndPassword(user, null);
       verify(mockDocumentReference.setData(any)).called(1);
+    });
+
+    test(
+        '''createUserWithEmailAndPassword uploads profilePhoto to FirebaseStorage''',
+        () async {
+      final userStorageRef = MockStorageReference();
+      final imageRef = MockStorageReference();
+      final user = UserModel(userId: '1', email: 'email', password: 'password');
+      when(mockFirebaseAuth.createUserWithEmailAndPassword(
+              email: 'email', password: 'password'))
+          .thenAnswer((_) => Future.value(mockAuthResult));
+      when(mockAuthResult.user).thenReturn(mockFirebaseUser);
+      when(mockFirebaseUser.uid).thenReturn('1');
+      when(mockFirestore.collection(USERS)).thenReturn(mockCollectionReference);
+      when(mockCollectionReference.document('1'))
+          .thenReturn(mockDocumentReference);
+      when(mockDocumentReference.get())
+          .thenAnswer((_) => Future.value(mockDocumentSnapshot));
+      when(mockDocumentSnapshot.exists).thenReturn(false);
+      when(mockFirebaseStorage.ref()).thenReturn(mockStorageReference);
+      when(mockStorageReference.child(USERS)).thenReturn(userStorageRef);
+      when(userStorageRef.child(any)).thenReturn(imageRef);
+      when(imageRef.putFile(any)).thenReturn(mockStorageUploadTask);
+      when(mockStorageUploadTask.onComplete)
+          .thenAnswer((_) => Future.value(mockStorageTaskSnapshot));
+      when(imageRef.getDownloadURL())
+          .thenAnswer((_) => Future.value('my-photo-url'));
+      await firebaseSignupRepository.createUserWithEmailAndPassword(
+          user, File('file'));
+      verify(mockDocumentReference.setData(UserModel(
+        userId: '1',
+        name: null,
+        photoUrl: 'my-photo-url',
+        email: 'email',
+        password: null,
+      ).toJson()))
+          .called(1);
+    });
+
+    test('''should throw UploadFileException exception when upload fails''',
+        () async {
+      final user = UserModel(userId: '1', email: 'email', password: 'password');
+      when(mockFirebaseAuth.createUserWithEmailAndPassword(
+              email: 'email', password: 'password'))
+          .thenAnswer((_) => Future.value(mockAuthResult));
+      when(mockAuthResult.user).thenReturn(mockFirebaseUser);
+      when(mockFirebaseUser.uid).thenReturn('1');
+      when(mockFirestore.collection(USERS)).thenReturn(mockCollectionReference);
+      when(mockCollectionReference.document('1'))
+          .thenReturn(mockDocumentReference);
+      when(mockDocumentReference.get())
+          .thenAnswer((_) => Future.value(mockDocumentSnapshot));
+      when(mockDocumentSnapshot.exists).thenReturn(false);
+      when(mockFirebaseStorage.ref()).thenThrow(Exception());
+      await firebaseSignupRepository
+          .createUserWithEmailAndPassword(user, File('file'))
+          .catchError((e) => expect(e, isA<UploadFileException>()));
     });
 
     test('should throw EmailAlreadyInUseException exception', () async {
@@ -73,7 +152,7 @@ void main() {
           .thenThrow(PlatformException(
               code: '1', message: 'ERROR_EMAIL_ALREADY_IN_USE'));
       firebaseSignupRepository
-          .createUserWithEmailAndPassword(user)
+          .createUserWithEmailAndPassword(user, null)
           .then((_) {})
           .catchError(
               (e) => expect(e, isInstanceOf<EmailAlreadyInUseException>()));
@@ -86,7 +165,7 @@ void main() {
           .thenThrow(
               PlatformException(code: '1', message: 'ERROR_WEAK_PASSWORD'));
       firebaseSignupRepository
-          .createUserWithEmailAndPassword(user)
+          .createUserWithEmailAndPassword(user, null)
           .then((_) {})
           .catchError((e) => expect(e, isInstanceOf<WeakPasswordException>()));
     });

@@ -2,7 +2,9 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mockito/mockito.dart';
+import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/model/user_model.dart';
 import 'package:polis/page/pages.dart';
@@ -28,14 +30,16 @@ void main() {
       );
     });
 
-    testWidgets('shoud build icons on bottombar and profile photo',
-        (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(UserModel());
+    testWidgets('shoud build icons on bottombar', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
           BlocProvider(
-            create: (_) => mockUserBloc,
+            create: (_) => UserBloc(
+              repository: MockUserRepository(),
+              user: UserModel(
+                photoUrl: 'photo',
+              ),
+            ),
             child: TimelinePage(),
           ),
         ),
@@ -47,8 +51,39 @@ void main() {
       final bookmarkIcon =
           find.widgetWithIcon(IconButton, Icons.bookmark_border);
       expect(bookmarkIcon, findsOneWidget);
-      final profilePhoto = find.byType(FancyShimmerImage);
-      expect(profilePhoto, findsOneWidget);
+    });
+
+    testWidgets('shoud show profile image when user has one', (tester) async {
+      await tester.pumpWidget(
+        connectedWidget(
+          BlocProvider(
+            create: (_) => UserBloc(
+              repository: MockUserRepository(),
+              user: UserModel(
+                photoUrl: 'photo',
+              ),
+            ),
+            child: TimelinePage(),
+          ),
+        ),
+      );
+      expect(find.byType(FancyShimmerImage), findsOneWidget);
+    });
+
+    testWidgets('shoud show default icon when user has no photo',
+        (tester) async {
+      await tester.pumpWidget(
+        connectedWidget(
+          BlocProvider(
+            create: (_) => UserBloc(
+              repository: MockUserRepository(),
+              user: UserModel(),
+            ),
+            child: TimelinePage(),
+          ),
+        ),
+      );
+      expect(find.byType(FaIcon), findsOneWidget);
     });
 
     testWidgets('shoud go to TimelinePage when clicking home icon',
