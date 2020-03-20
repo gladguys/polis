@@ -4,9 +4,14 @@ import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/pages.dart';
 import 'package:polis/widget/my_app.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  initLocator();
+void main() async {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences.setMockInitialValues({
+    'USER': null,
+  });
+  initLocator(await SharedPreferences.getInstance());
 
   testWidgets('MyApp tests', (tester) async {
     await tester.pumpWidget(MyApp());

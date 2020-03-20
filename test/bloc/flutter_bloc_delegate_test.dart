@@ -12,14 +12,18 @@ void main() {
     SigninBloc signinBloc;
     MockSigninRepository mockSigninRepository;
     MockAnalyticsService mockAnalyticsService;
+    MockSharedPreferencesService mockSharedPreferencesService;
 
     setUp(() {
       delegate = FlutterBlocDelegate();
       mockSigninRepository = MockSigninRepository();
       mockAnalyticsService = MockAnalyticsService();
+      mockSharedPreferencesService = MockSharedPreferencesService();
       signinBloc = SigninBloc(
-          repository: mockSigninRepository,
-          analyticsService: mockAnalyticsService);
+        repository: mockSigninRepository,
+        analyticsService: mockAnalyticsService,
+        sharedPreferencesService: mockSharedPreferencesService,
+      );
     });
 
     test('onEvent test', () {

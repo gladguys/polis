@@ -9,6 +9,7 @@ import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/service/ad_service.dart';
 import 'package:polis/core/service/analytics_service.dart';
+import 'package:polis/core/service/services.dart';
 import 'package:polis/repository/abstract/politic_suggestion_repository.dart';
 import 'package:polis/repository/abstract/signin_repository.dart';
 import 'package:polis/repository/abstract/signup_repository.dart';
@@ -74,6 +75,9 @@ class MockCrashlytics extends Mock implements Crashlytics {}
 class MockAnalyticsService extends Mock implements AnalyticsService {}
 
 class MockAdService extends Mock implements AdService {}
+
+class MockSharedPreferencesService extends Mock
+    implements SharedPreferencesService {}
 
 // Other
 class MockBannerAd extends Mock implements BannerAd {}
