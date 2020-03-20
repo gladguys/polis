@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:simple_router/simple_router.dart';
 
+import '../../../core/routing/route_names.dart';
 import '../../../i18n/i18n.dart';
 import '../../../model/politico_model.dart';
+import '../../pages.dart';
 
 class PoliticsFollowingQuantity extends StatelessWidget {
   PoliticsFollowingQuantity({this.politics});
@@ -18,12 +21,18 @@ class PoliticsFollowingQuantity extends StatelessWidget {
             color: Colors.grey,
           ),
         ),
-        Text(
-          politics.length.toString(),
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 26,
+        GestureDetector(
+          child: Text(
+            politics.length.toString(),
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 26,
+            ),
+          ),
+          onTap: () => SimpleRouter.forward(
+            UserFollowingPoliticsPageConnected(),
+            name: USER_FOLLOWING_POLITICS_PAGE,
           ),
         ),
         Text(
