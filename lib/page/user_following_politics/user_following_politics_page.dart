@@ -21,6 +21,8 @@ class UserFollowingPoliticsPage extends StatelessWidget {
               return FollowingPoliticsSearch(state.politics);
             } else if (state is PoliticsFilteredByTerm) {
               return FollowingPoliticsSearch(state.filteredPolitics);
+            } else if (state is FollowedPoliticsUpdated) {
+              return FollowingPoliticsSearch(state.followedPolitics);
             } else {
               return const CenteredLoading();
             }

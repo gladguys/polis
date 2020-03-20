@@ -1,4 +1,8 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+
+import '../../model/politico_model.dart';
+import '../../model/user_model.dart';
 
 abstract class UserFollowingPoliticsEvent extends Equatable {
   const UserFollowingPoliticsEvent();
@@ -20,4 +24,16 @@ class SearchPoliticsByTerm extends UserFollowingPoliticsEvent {
 
   @override
   List<Object> get props => [term];
+}
+
+class UnfollowPolitic extends UserFollowingPoliticsEvent {
+  UnfollowPolitic({@required this.user, @required this.politico})
+      : assert(user != null),
+        assert(politico != null);
+
+  final UserModel user;
+  final PoliticoModel politico;
+
+  @override
+  List<Object> get props => [user, politico];
 }

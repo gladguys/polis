@@ -25,6 +25,15 @@ class LoadingPolitics extends UserFollowingPoliticsState {
   List<Object> get props => [];
 }
 
+class FollowedPoliticsUpdated extends UserFollowingPoliticsState {
+  FollowedPoliticsUpdated({this.followedPolitics});
+
+  final List<PoliticoModel> followedPolitics;
+
+  @override
+  List<Object> get props => [followedPolitics];
+}
+
 class PoliticsFilteredByTerm extends UserFollowingPoliticsState {
   PoliticsFilteredByTerm({this.filteredPolitics});
 
