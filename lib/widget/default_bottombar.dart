@@ -9,17 +9,20 @@ import '../i18n/i18n.dart';
 import '../page/pages.dart';
 
 class DefaultBottombar extends StatelessWidget {
+  DefaultBottombar(this.routeName);
+
+  final String routeName;
+
   @override
   Widget build(BuildContext context) {
     final user = context.bloc<UserBloc>().user;
-    final route = ModalRoute.of(context).settings.name;
     return BottomAppBar(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12),
         child: Row(
           children: <Widget>[
             const SizedBox(width: 12),
-            route == TIMELINE_PAGE
+            routeName == TIMELINE_PAGE
                 ? Text(
                     POLIS,
                     style: TextStyle(
