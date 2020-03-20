@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/exception/invalid_credentials_exception.dart';
 import '../../core/service/analytics_service.dart';
+import '../../core/service/services.dart';
 import '../../i18n/message.dart';
 import '../../model/user_model.dart';
 import '../../repository/abstract/signin_repository.dart';
@@ -23,12 +24,17 @@ String _getSigninMethod(SigninMethod signinMethod) {
 }
 
 class SigninBloc extends Bloc<SigninEvent, SigninState> {
-  SigninBloc({@required this.repository, @required this.analyticsService})
+  SigninBloc(
+      {@required this.repository,
+      @required this.analyticsService,
+      @required this.sharedPreferencesService})
       : assert(repository != null),
-        assert(analyticsService != null);
+        assert(analyticsService != null),
+        assert(sharedPreferencesService != null);
 
   final SigninRepository repository;
   final AnalyticsService analyticsService;
+  final SharedPreferencesService sharedPreferencesService;
 
   @override
   SigninState get initialState => InitialSignin();
@@ -67,6 +73,7 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
     if (user != null) {
       await analyticsService.setUserProperties(userId: user.userId);
       await analyticsService.logSignin(method: _getSigninMethod(method));
+      await sharedPreferencesService.setUser(user);
       yield UserAuthenticated(user);
     } else {
       yield UserAuthenticationFailed(ERROR_AUTENTICATING_USER);

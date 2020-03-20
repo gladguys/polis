@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_router/simple_router.dart';
 
 import 'bloc/flutter_bloc_delegate.dart';
@@ -12,9 +13,9 @@ import 'core/service/locator.dart';
 import 'core/service/services.dart';
 import 'widget/my_app.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  initLocator();
+  initLocator(await SharedPreferences.getInstance());
   G<AdService>().initAds();
   G<CrashlyticsService>().initCrashlytics();
   FlutterError.onError = G<CrashlyticsService>().crashlytics.recordFlutterError;
@@ -22,6 +23,8 @@ void main() {
   SimpleRouter.setKey(Get.key);
 
   runZoned(() {
-    runApp(MyApp());
+    runApp(
+      MyApp(),
+    );
   }, onError: G<CrashlyticsService>().crashlytics.recordError);
 }
