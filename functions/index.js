@@ -8,34 +8,34 @@ exports.onCreateFollower = functions.firestore
         const politicoId = context.params.politicoId;
         const followerId = context.params.followerId;
 
-        const followedPoliticActivitiesRef = admin
+        const despesasPoliticoRef = admin
             .firestore()
             .collection('atividades')
             .doc(politicoId)
             .collection('despesasPolitico');
 
-        const timelineActivitiesRef = admin
+        const timelineRef = admin
             .firestore()
             .collection('timeline')
             .doc(followerId)
             .collection('atividadesTimeline');
 
 
-        const querySnapshot = await followedPoliticActivitiesRef.get();
+        const querySnapshot = await despesasPoliticoRef.get();
 
         querySnapshot.forEach(doc => {
             if (doc.exists) {
                 const activityId = doc.id;
                 const activityData = doc.data();
-                timelineActivitiesRef.doc(activityId).set(activityData)
+                timelineRef.doc(activityId).set(activityData)
             }
         });
     });
 
-    exports.onDeleteFollower = functions.firestore
+exports.onDeleteFollower = functions.firestore
     .document("/usuarios_seguindo/{politicoId}/usuariosSeguindo/{followerId}")
     .onDelete(async (snapshot, context) => {
-        
+
         const politicoId = context.params.politicoId;
         const followerId = context.params.followerId;
 
@@ -46,7 +46,6 @@ exports.onCreateFollower = functions.firestore
             .collection('atividadesTimeline')
             .where("idPolitico", "==", politicoId)
 
-
         const querySnapshot = await timelineActivitiesRef.get();
 
         querySnapshot.forEach(doc => {
@@ -54,4 +53,19 @@ exports.onCreateFollower = functions.firestore
                 doc.ref.delete();
             }
         });
+
+        const usuariosSeguindoPoliticoRef = admin
+            .firestore()
+            .collection('usuarios_seguindo')
+            .doc(politicoId)
+            .collection('usuariosSeguindo')
+            .where("userId", "==", followerId);
+
+        const querySnapshotUsuariosSeguindoPolitico = await usuariosSeguindoPoliticoRef.get();
+
+        querySnapshotUsuariosSeguindoPolitico.forEach(doc => {
+            if (doc.exists) {
+                doc.ref.delete();
+            }
+        })
     });
