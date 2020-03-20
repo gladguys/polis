@@ -19,6 +19,11 @@ void main() {
       expect(() => AdService(bannerAd: null), throwsAssertionError);
     });
 
+    test('calling dispose should dispose the banner', () {
+      adService.dispose();
+      expect(adService.bannerAd.isLoaded(), isNull);
+    });
+
     test('load and shows banner with desired configs when calls showBanner',
         () {
       adService.showBanner();

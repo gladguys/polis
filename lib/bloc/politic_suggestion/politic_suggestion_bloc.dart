@@ -50,7 +50,13 @@ class PoliticSuggestionBloc
 
       try {
         await repository.savePoliticsToFollow(
-            userId: event.userId, politics: followedPolitics);
+          userId: event.user.userId,
+          politics: followedPolitics,
+        );
+        await repository.saveFollowerToPolitics(
+          user: event.user,
+          politics: followedPolitics,
+        );
         yield SavedSuggestedPolitics();
       } on Exception {
         yield SaveSuggestedPoliticsFailed();

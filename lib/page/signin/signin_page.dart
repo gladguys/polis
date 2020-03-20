@@ -8,8 +8,6 @@ import '../../bloc/blocs.dart';
 import '../../bloc/signin/signin_bloc.dart';
 import '../../bloc/signin/signin_state.dart';
 import '../../core/routing/route_names.dart';
-import '../../core/service/ad_service.dart';
-import '../../core/service/locator.dart';
 import '../../i18n/i18n.dart';
 import '../pages.dart';
 
@@ -36,8 +34,8 @@ class _SigninPageState extends State<SigninPage> {
         if (state is UserAuthenticated) {
           context.bloc<UserBloc>().add(StoreUser(state.user));
           SimpleRouter.forwardAndReplace(
-            HomePage(G<AdService>()),
-            name: HOME_PAGE,
+            PoliticSuggestionPageConnected(),
+            name: POLITIC_SUGGESTION_PAGE,
           );
         }
         if (state is SigninFailed) {

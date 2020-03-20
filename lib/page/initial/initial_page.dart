@@ -16,13 +16,14 @@ class InitialPage extends StatefulWidget {
 }
 
 class _InitialPageState extends State<InitialPage> {
-  final PanelController _panelController = PanelController();
+  PanelController _panelController;
   bool _isSigninPanel;
 
   @override
   void initState() {
-    super.initState();
+    _panelController = PanelController();
     _isSigninPanel = true;
+    super.initState();
   }
 
   @override

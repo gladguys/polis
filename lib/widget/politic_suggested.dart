@@ -1,3 +1,4 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:getflutter/components/button/gf_button.dart';
 import 'package:getflutter/getflutter.dart';
@@ -27,9 +28,13 @@ class PoliticSuggested extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: CircleAvatar(
-                radius: 32,
-                backgroundImage: NetworkImage(politico.urlFoto),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(40),
+                child: FancyShimmerImage(
+                  imageUrl: politico.urlFoto,
+                  width: 80,
+                  height: 80,
+                ),
               ),
             ),
             const SizedBox(height: 12),

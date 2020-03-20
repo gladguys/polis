@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/blocs.dart';
-import '../../../bloc/politic_suggestion/bloc.dart';
 import '../../../i18n/i18n.dart';
 import 'politics_suggested_grid.dart';
 
@@ -49,7 +48,7 @@ class PoliticsSuggestion extends StatelessWidget {
                 child: RaisedButton(
                   onPressed: () => context.bloc<PoliticSuggestionBloc>().add(
                         SavePoliticsToFollow(
-                          userId: context.bloc<UserBloc>().user.userId,
+                          user: context.bloc<UserBloc>().user,
                         ),
                       ),
                   child: const Text(READY),

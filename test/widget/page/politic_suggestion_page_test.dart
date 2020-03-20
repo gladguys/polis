@@ -1,10 +1,10 @@
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:getflutter/components/button/gf_button.dart';
 import 'package:image_test_utils/image_test_utils.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
-import 'package:polis/bloc/politic_suggestion/bloc.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/politico_model.dart';
@@ -81,8 +81,13 @@ void main() {
         final readyButton = find.text(READY);
         expect(readyButton, findsOneWidget);
         await tester.tap(readyButton);
-        verify(mockPoliticSuggestionBloc.add(SavePoliticsToFollow(userId: '1')))
-            .called(1);
+        verify(
+          mockPoliticSuggestionBloc.add(
+            SavePoliticsToFollow(
+              user: UserModel(userId: '1'),
+            ),
+          ),
+        ).called(1);
       });
     });
 
@@ -112,12 +117,12 @@ void main() {
           PoliticoModel(
             id: '1',
             nomeEleitoral: 'nome',
-            urlFoto: '',
+            urlFoto: 'aa',
           ),
           PoliticoModel(
             id: '2',
             nomeEleitoral: 'nome2',
-            urlFoto: '',
+            urlFoto: 'bb',
           ),
         ];
         final mockPoliticSuggestionBloc = MockPoliticSuggestionBloc();
@@ -134,7 +139,6 @@ void main() {
             ),
           ),
         );
-        await tester.pumpAndSettle();
         expect(find.byType(PoliticsSuggestedGrid), findsOneWidget);
         expect(find.byType(PoliticSuggested), findsNWidgets(2));
       });
@@ -164,14 +168,12 @@ void main() {
             ),
           ),
         );
-        await tester.pumpAndSettle();
         final politicoCard = find.byType(PoliticSuggested);
         expect(politicoCard, findsOneWidget);
         final followButton = find.byType(GFButton);
         expect(followButton, findsOneWidget);
         expect(find.text(STOP_FOLLOWING), findsOneWidget);
         await tester.tap(followButton);
-        await tester.pumpAndSettle();
         verify(
           mockPoliticSuggestionBloc.add(
             FollowOrUnfollowPolitic(
@@ -184,6 +186,31 @@ void main() {
           ),
         ).called(1);
       });
+    });
+
+    testWidgets('should go to timeline when SavedSuggestedPolitics state',
+        (tester) async {
+      final mockPoliticSuggestionBloc = MockPoliticSuggestionBloc();
+      whenListen(
+        mockPoliticSuggestionBloc,
+        Stream.fromIterable(
+          [
+            InitialPoliticSuggestionState(),
+            SavedSuggestedPolitics(),
+          ],
+        ),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<UserBloc>(
+            bloc: MockUserBloc(),
+            page: PageConnected<PoliticSuggestionBloc>(
+              bloc: mockPoliticSuggestionBloc,
+              page: PoliticSuggestionPage(),
+            ),
+          ),
+        ),
+      );
     });
 
     testWidgets('should call follow event when click on follow button',
@@ -210,14 +237,12 @@ void main() {
             ),
           ),
         );
-        await tester.pumpAndSettle();
         final politicoCard = find.byType(PoliticSuggested);
         expect(politicoCard, findsOneWidget);
         final followButton = find.byType(GFButton);
         expect(followButton, findsOneWidget);
         expect(find.text(FOLLOW), findsOneWidget);
         await tester.tap(followButton);
-        await tester.pumpAndSettle();
         verify(
           mockPoliticSuggestionBloc.add(
             FollowOrUnfollowPolitic(

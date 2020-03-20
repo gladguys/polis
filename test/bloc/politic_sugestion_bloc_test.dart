@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/politic_suggestion/bloc.dart';
 import 'package:polis/model/politico_model.dart';
+import 'package:polis/model/user_model.dart';
 
 import '../mock.dart';
 
@@ -128,12 +129,20 @@ void main() {
         '''Expects [LoadingSaveFollowPolitics, SavedSuggestedPolitics] when success''',
         build: () async => politicSuggestionBloc,
         act: (politicSuggestionBloc) {
-          politicSuggestionBloc.add(SavePoliticsToFollow(userId: '1'));
+          politicSuggestionBloc.add(
+            SavePoliticsToFollow(
+              user: UserModel(
+                userId: '1',
+              ),
+            ),
+          );
           return;
         },
         verify: (politicSuggestionBloc) async {
           verify(mockPoliticSugestionRepository
               .savePoliticsToFollow(userId: '1', politics: [])).called(1);
+          verify(mockPoliticSugestionRepository.saveFollowerToPolitics(
+              user: UserModel(userId: '1'), politics: [])).called(1);
         },
         expect: [
           LoadingSaveFollowPolitics(),
@@ -150,7 +159,13 @@ void main() {
           return politicSuggestionBloc;
         },
         act: (politicSuggestionBloc) {
-          politicSuggestionBloc.add(SavePoliticsToFollow(userId: '1'));
+          politicSuggestionBloc.add(
+            SavePoliticsToFollow(
+              user: UserModel(
+                userId: '1',
+              ),
+            ),
+          );
           return;
         },
         verify: (politicSuggestionBloc) async {

@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
+import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/politic_suggestion/bloc.dart';
+import '../../core/routing/route_names.dart';
+import '../../widget/centered_loading.dart';
+import '../timeline/timeline_page.dart';
 import 'widget/politics_sugestion.dart';
 
 class PoliticSuggestionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final _bloc = context.bloc<PoliticSuggestionBloc>();
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: BlocConsumer(
-          bloc: _bloc,
+          bloc: context.bloc<PoliticSuggestionBloc>(),
           listener: (_, state) {
             if (state is SavedSuggestedPolitics) {
-              Get.snackbar('Politicos Adicionados', 'Politicos Adicionados');
+              SimpleRouter.forwardAndReplace(
+                TimelinePage(),
+                name: TIMELINE_PAGE,
+              );
             }
           },
           builder: (_, state) {
             if (state is LoadingFetch || state is LoadingSaveFollowPolitics) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return CenteredLoading();
             } else if (state is FetchSuggestedPoliticsSuccess ||
                 state is ChangedPoliticsFollowingStatus) {
               return PoliticsSuggestion();
