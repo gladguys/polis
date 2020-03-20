@@ -57,12 +57,16 @@ class FirebasePoliticSuggestionRepository
   @override
   Future<void> saveFollowerToPolitics(
       {UserModel user, List<PoliticoModel> politics}) async {
-    for (var politic in politics) {
-      await usuariosSeguindoRef
-          .document(politic.id)
-          .collection(USUARIOS_SEGUINDO_COLLECTIONS)
-          .document(user.userId)
-          .setData(user.toJson());
+    try {
+      for (var politic in politics) {
+        await usuariosSeguindoRef
+            .document(politic.id)
+            .collection(USUARIOS_SEGUINDO_COLLECTIONS)
+            .document(user.userId)
+            .setData(user.toJson());
+      }
+    } on Exception {
+      throw ComunicationException();
     }
   }
 }

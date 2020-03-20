@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:polis/core/exception/exceptions.dart';
 import 'package:polis/repository/concrete/firebase/collection.dart';
 import 'package:polis/repository/concrete/firebase/firebase_user_profile_repository.dart';
 
@@ -22,6 +23,7 @@ void main() {
         firestore: mockFirestore,
       );
       mockCollectionReference = MockCollectionReference();
+      mockPoliticsFollowingCollectionReference = MockCollectionReference();
     });
 
     test('test asserts', () {
@@ -44,6 +46,22 @@ void main() {
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
         when(mockQuerySnapshot.documents).thenReturn([]);
         await firebaseUserProfileRepository.getPoliticsFollowing('1');
+      });
+
+      test('throw ComunicationException when something is wrong', () async {
+        when(mockFirestore.collection(POLITICOS_SEGUIDOS))
+            .thenThrow(Exception());
+        firebaseUserProfileRepository
+            .getPoliticsFollowing('1')
+            .catchError((e) => expect(e, isA<ComunicationException>()));
+      });
+    });
+
+    group('getUserActivities tests', () {
+      test('returns [] for now', () async {
+        final activities =
+            await firebaseUserProfileRepository.getUserActivities('1');
+        expect(activities, isEmpty);
       });
     });
   });

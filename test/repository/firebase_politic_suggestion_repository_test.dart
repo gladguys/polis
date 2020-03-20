@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/core/exception/exceptions.dart';
 import 'package:polis/model/politico_model.dart';
+import 'package:polis/model/user_model.dart';
 import 'package:polis/repository/concrete/firebase/collection.dart';
 import 'package:polis/repository/concrete/firebase/repositories.dart';
 
@@ -74,16 +75,18 @@ void main() {
             .thenReturn(mockDocumentReference);
         when(mockDocumentReference.collection(POLITICOS_SEGUIDOS_COLLECTION))
             .thenReturn(mockCollectionReference);
+        when(mockCollectionReference.document(any))
+            .thenReturn(mockDocumentReference);
         final politic = PoliticoModel(
           id: '1',
           nomeCivil: 'nome',
         );
         await firebasePoliticSuggestionRepository
             .savePoliticsToFollow(userId: '1', politics: [politic]);
-        verify(mockCollectionReference.add(politic.toJson())).called(1);
+        verify(mockDocumentReference.setData(politic.toJson())).called(1);
       });
 
-      test('should throw exception', () {
+      test('throw ComunicationException', () {
         when(mockFirestore.collection(POLITICOS_SEGUIDOS))
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.document(any))
@@ -97,6 +100,46 @@ void main() {
         firebasePoliticSuggestionRepository
             .savePoliticsToFollow(userId: '1', politics: [politic]).catchError(
                 (e) => expect(e, isInstanceOf<ComunicationException>()));
+      });
+    });
+
+    group('saveFollowerToPolitics tests', () {
+      test('works', () async {
+        when(mockFirestore.collection(USUARIOS_SEGUINDO))
+            .thenReturn(mockCollectionReference);
+        when(mockCollectionReference.document(any))
+            .thenReturn(mockDocumentReference);
+        when(mockDocumentReference.collection(USUARIOS_SEGUINDO_COLLECTIONS))
+            .thenReturn(mockCollectionReference);
+        when(mockCollectionReference.document(any))
+            .thenReturn(mockDocumentReference);
+        final user = UserModel(
+          userId: '1',
+        );
+        final politic = PoliticoModel(
+          id: '1',
+          nomeCivil: 'nome',
+        );
+        await firebasePoliticSuggestionRepository
+            .saveFollowerToPolitics(user: user, politics: [politic]);
+        verify(mockDocumentReference.setData(user.toJson())).called(1);
+      });
+
+      test('throw ComunicationException', () {
+        when(mockFirestore.collection(USUARIOS_SEGUINDO))
+            .thenReturn(mockCollectionReference);
+        when(mockCollectionReference.document(any))
+            .thenReturn(mockDocumentReference);
+        when(mockDocumentReference.collection(USUARIOS_SEGUINDO_COLLECTIONS))
+            .thenThrow(Exception());
+        final politic = PoliticoModel(
+          id: '1',
+          nomeCivil: 'nome',
+        );
+        firebasePoliticSuggestionRepository
+            .saveFollowerToPolitics(user: UserModel(), politics: [
+          politic
+        ]).catchError((e) => expect(e, isInstanceOf<ComunicationException>()));
       });
     });
   });

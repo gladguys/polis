@@ -1,5 +1,4 @@
 export 'favorite_posts/favorite_posts_page.dart';
-export 'home/home_page.dart';
 export 'initial/initial_page.dart';
 export 'initial/initial_page_connected.dart';
 export 'politic_sugestion/politic_suggestion_page.dart';
