@@ -74,13 +74,15 @@ void main() {
             .thenReturn(mockDocumentReference);
         when(mockDocumentReference.collection(POLITICOS_SEGUIDOS_COLLECTION))
             .thenReturn(mockCollectionReference);
+        when(mockCollectionReference.document(any))
+            .thenReturn(mockDocumentReference);
         final politic = PoliticoModel(
           id: '1',
           nomeCivil: 'nome',
         );
         await firebasePoliticSuggestionRepository
             .savePoliticsToFollow(userId: '1', politics: [politic]);
-        verify(mockCollectionReference.add(politic.toJson())).called(1);
+        verify(mockDocumentReference.setData(politic.toJson())).called(1);
       });
 
       test('should throw exception', () {

@@ -22,6 +22,7 @@ void main() {
         firestore: mockFirestore,
       );
       mockCollectionReference = MockCollectionReference();
+      mockPoliticsFollowingCollectionReference = MockCollectionReference();
     });
 
     test('test asserts', () {
