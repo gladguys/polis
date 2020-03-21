@@ -8,6 +8,8 @@ void main() {
       expect(InitialUserFollowingPoliticsState(),
           InitialUserFollowingPoliticsState());
       expect(FetchPoliticsSuccess([]), FetchPoliticsSuccess([]));
+      expect(FetchPoliticsFailed(), FetchPoliticsFailed());
+      expect(FollowUnfollowFailed(), FollowUnfollowFailed());
       expect(LoadingPolitics(), LoadingPolitics());
 
       expect(

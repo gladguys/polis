@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
 import './bloc.dart';
-import '../../core/exception/exceptions.dart';
 import '../../model/politico_model.dart';
 import '../../repository/abstract/follow_repository.dart';
 import '../../repository/abstract/user_following_politics_repository.dart';
@@ -13,7 +12,9 @@ class UserFollowingPoliticsBloc
     extends Bloc<UserFollowingPoliticsEvent, UserFollowingPoliticsState> {
   UserFollowingPoliticsBloc(
       {@required this.userFollowingPoliticsRepository,
-      @required this.followRepository});
+      @required this.followRepository})
+      : assert(userFollowingPoliticsRepository != null),
+        assert(followRepository != null);
 
   final UserFollowingPoliticsRepository userFollowingPoliticsRepository;
   final FollowRepository followRepository;
@@ -39,7 +40,7 @@ class UserFollowingPoliticsBloc
 
         yield FetchPoliticsSuccess(politicsFollowing);
       } on Exception {
-        rethrow;
+        yield FetchPoliticsFailed();
       }
     }
     if (event is SearchPoliticsByTerm) {
@@ -76,7 +77,7 @@ class UserFollowingPoliticsBloc
           isFollowing: isBeingFollowed,
         );
       } on Exception {
-        throw ComunicationException();
+        yield FollowUnfollowFailed();
       }
     }
   }

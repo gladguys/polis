@@ -21,6 +21,16 @@ class FetchPoliticsSuccess extends UserFollowingPoliticsState {
   List<Object> get props => [politics];
 }
 
+class FetchPoliticsFailed extends UserFollowingPoliticsState {
+  @override
+  List<Object> get props => [];
+}
+
+class FollowUnfollowFailed extends UserFollowingPoliticsState {
+  @override
+  List<Object> get props => [];
+}
+
 class LoadingPolitics extends UserFollowingPoliticsState {
   @override
   List<Object> get props => [];

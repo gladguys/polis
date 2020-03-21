@@ -25,7 +25,7 @@ class PoliticSuggestionPage extends StatelessWidget {
           },
           builder: (_, state) {
             if (state is LoadingFetch || state is LoadingSaveFollowPolitics) {
-              return const CenteredLoading();
+              return CenteredLoading();
             } else if (state is FetchSuggestedPoliticsSuccess ||
                 state is ChangedPoliticsFollowingStatus) {
               return PoliticsSuggestion();

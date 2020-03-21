@@ -10,8 +10,7 @@ import '../i18n/i18n.dart';
 import '../page/pages.dart';
 
 class DefaultBottombar extends StatelessWidget {
-  DefaultBottombar(this.routeName, {this.onPopCallback = SimpleRouter.back})
-      : assert(onPopCallback != null);
+  DefaultBottombar(this.routeName, {this.onPopCallback = SimpleRouter.back});
 
   final String routeName;
   final VoidCallback onPopCallback;
