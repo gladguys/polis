@@ -1,9 +1,6 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/constants.dart';
 import '../../../core/exception/exceptions.dart';
 import '../../../model/politico_model.dart';
 import '../../../model/user_model.dart';
