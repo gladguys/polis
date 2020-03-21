@@ -25,9 +25,11 @@ class FirebasePoliticSuggestionRepository
   @override
   Future<List<PoliticoModel>> getSuggestedPolitics() async {
     try {
-      final querySnapshot = await politicosRef.getDocuments();
-      final documents = querySnapshot.documents.sublist(
-          0, min(querySnapshot.documents.length, kMaxNumberSuggestedPolitics));
+      final querySnapshot = 
+        await politicosRef.where("siglaUf", isEqualTo: "CE").getDocuments();
+
+      final documents = querySnapshot.documents;
+      
       return List.generate(
           documents.length, (i) => PoliticoModel.fromJson(documents[i].data));
     } on Exception {
