@@ -1,9 +1,6 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/constants.dart';
 import '../../../core/exception/exceptions.dart';
 import '../../../model/politico_model.dart';
 import '../../../model/user_model.dart';
@@ -25,9 +22,11 @@ class FirebasePoliticSuggestionRepository
   @override
   Future<List<PoliticoModel>> getSuggestedPolitics() async {
     try {
-      final querySnapshot = await politicosRef.getDocuments();
-      final documents = querySnapshot.documents.sublist(
-          0, min(querySnapshot.documents.length, kMaxNumberSuggestedPolitics));
+      final querySnapshot = 
+        await politicosRef.where("siglaUf", isEqualTo: "CE").getDocuments();
+
+      final documents = querySnapshot.documents;
+      
       return List.generate(
           documents.length, (i) => PoliticoModel.fromJson(documents[i].data));
     } on Exception {
