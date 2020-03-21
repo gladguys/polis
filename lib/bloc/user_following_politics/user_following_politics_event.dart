@@ -26,8 +26,8 @@ class SearchPoliticsByTerm extends UserFollowingPoliticsEvent {
   List<Object> get props => [term];
 }
 
-class UnfollowPolitic extends UserFollowingPoliticsEvent {
-  UnfollowPolitic({@required this.user, @required this.politico})
+class FollowUnfollowPolitic extends UserFollowingPoliticsEvent {
+  FollowUnfollowPolitic({@required this.user, @required this.politico})
       : assert(user != null),
         assert(politico != null);
 
