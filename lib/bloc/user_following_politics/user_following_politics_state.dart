@@ -44,7 +44,8 @@ class FollowedPoliticsUpdated extends UserFollowingPoliticsState {
 }
 
 class PoliticsFilteredByTerm extends UserFollowingPoliticsState {
-  PoliticsFilteredByTerm({this.filteredPolitics});
+  PoliticsFilteredByTerm({@required this.filteredPolitics})
+      : assert(filteredPolitics != null);
 
   final List<PoliticoModel> filteredPolitics;
 

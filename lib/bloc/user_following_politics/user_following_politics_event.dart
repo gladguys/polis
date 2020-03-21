@@ -9,7 +9,7 @@ abstract class UserFollowingPoliticsEvent extends Equatable {
 }
 
 class FetchFollowingPolitics extends UserFollowingPoliticsEvent {
-  FetchFollowingPolitics({this.userId});
+  FetchFollowingPolitics({@required this.userId}) : assert(userId != null);
 
   final String userId;
 
