@@ -17,7 +17,9 @@ class UserFollowingPoliticsBloc
 
   final UserFollowingPoliticsRepository userFollowingPoliticsRepository;
   final FollowRepository followRepository;
+
   List<PoliticoModel> politicsFollowing = [];
+  Map<String, bool> isPoliticFollowed = {};
   String searchTerm = '';
 
   @override
@@ -33,6 +35,8 @@ class UserFollowingPoliticsBloc
       try {
         politicsFollowing = await userFollowingPoliticsRepository
             .getFollowingPolitics(event.userId);
+        _initPoliticBeingFollowed();
+
         yield FetchPoliticsSuccess(politicsFollowing);
       } on Exception {
         rethrow;
@@ -52,15 +56,38 @@ class UserFollowingPoliticsBloc
         yield PoliticsFilteredByTerm(filteredPolitics: politicsMatched);
       }
     }
-    if (event is UnfollowPolitic) {
+    if (event is FollowUnfollowPolitic) {
       try {
-        await followRepository.unfollowPolitic(
-            user: event.user, politico: event.politico);
-        politicsFollowing.remove(event.politico);
-        yield FollowedPoliticsUpdated(followedPolitics: [...politicsFollowing]);
+        final user = event.user;
+        final politico = event.politico;
+        final isBeingFollowed = isPoliticBeingFollowed(politico);
+
+        if (isBeingFollowed) {
+          await followRepository.unfollowPolitic(
+              user: user, politico: politico);
+        } else {
+          await followRepository.followPolitic(user: user, politico: politico);
+        }
+        isPoliticFollowed[politico.id] = !isBeingFollowed;
+
+        yield FollowedPoliticsUpdated(
+          followedPolitics: [...politicsFollowing],
+          politicoUpdated: politico,
+          isFollowing: isBeingFollowed,
+        );
       } on Exception {
         throw ComunicationException();
       }
+    }
+  }
+
+  bool isPoliticBeingFollowed(PoliticoModel politico) {
+    return isPoliticFollowed[politico.id];
+  }
+
+  void _initPoliticBeingFollowed() {
+    for (var politic in politicsFollowing) {
+      isPoliticFollowed[politic.id] = true;
     }
   }
 }

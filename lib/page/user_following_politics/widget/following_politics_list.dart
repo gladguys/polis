@@ -13,6 +13,7 @@ class FollowingPoliticsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.bloc<UserFollowingPoliticsBloc>();
     return politicos.isNotEmpty
         ? ListView.separated(
             itemBuilder: (_, i) => ListTile(
@@ -45,18 +46,25 @@ class FollowingPoliticsList extends StatelessWidget {
                 ),
               ),
               trailing: OutlineButton(
-                child: const Text(
-                  'Deixar de seguir',
-                  style: TextStyle(fontSize: 10),
+                child: Text(
+                  bloc.isPoliticBeingFollowed(politicos[i])
+                      ? 'Deixar de seguir'
+                      : 'Seguir',
+                  style: const TextStyle(fontSize: 10),
                 ),
-                textColor: Colors.red,
-                borderSide: BorderSide(color: Colors.red),
-                onPressed: () => context.bloc<UserFollowingPoliticsBloc>().add(
-                      UnfollowPolitic(
-                        user: context.bloc<UserBloc>().user,
-                        politico: politicos[i],
-                      ),
-                    ),
+                textColor: bloc.isPoliticBeingFollowed(politicos[i])
+                    ? Colors.red
+                    : Colors.green,
+                borderSide: BorderSide(
+                    color: bloc.isPoliticBeingFollowed(politicos[i])
+                        ? Colors.red
+                        : Colors.green),
+                onPressed: () => bloc.add(
+                  FollowUnfollowPolitic(
+                    user: context.bloc<UserBloc>().user,
+                    politico: politicos[i],
+                  ),
+                ),
               ),
             ),
             separatorBuilder: (_, i) => const Divider(),

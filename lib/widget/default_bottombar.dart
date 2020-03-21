@@ -10,9 +10,11 @@ import '../i18n/i18n.dart';
 import '../page/pages.dart';
 
 class DefaultBottombar extends StatelessWidget {
-  DefaultBottombar(this.routeName);
+  DefaultBottombar(this.routeName, {this.onPopCallback = SimpleRouter.back})
+      : assert(onPopCallback != null);
 
   final String routeName;
+  final VoidCallback onPopCallback;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class DefaultBottombar extends StatelessWidget {
                   )
                 : IconButton(
                     icon: Icon(Icons.arrow_back),
-                    onPressed: SimpleRouter.back,
+                    onPressed: onPopCallback,
                   ),
             Expanded(
               child: Row(
