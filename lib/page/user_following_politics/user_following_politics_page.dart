@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/user_following_politics/bloc.dart';
 import '../../core/routing/route_names.dart';
 import '../../widget/centered_loading.dart';
 import '../../widget/default_bottombar.dart';
+import '../pages.dart';
 import 'widget/following_politics_search.dart';
 
 class UserFollowingPoliticsPage extends StatelessWidget {
@@ -12,7 +14,11 @@ class UserFollowingPoliticsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        bottomNavigationBar: DefaultBottombar(USER_FOLLOWING_POLITICS_PAGE),
+        bottomNavigationBar: DefaultBottombar(
+          USER_FOLLOWING_POLITICS_PAGE,
+          onPopCallback: () =>
+              SimpleRouter.forwardAndReplace(UserProfilePageConnected()),
+        ),
         body:
             BlocConsumer<UserFollowingPoliticsBloc, UserFollowingPoliticsState>(
           listener: (_, state) {},
