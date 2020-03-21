@@ -30,7 +30,7 @@ class PoliticsFollowingQuantity extends StatelessWidget {
               fontSize: 26,
             ),
           ),
-          onTap: () => SimpleRouter.forward(
+          onTap: () => SimpleRouter.forwardAndReplace(
             UserFollowingPoliticsPageConnected(),
             name: USER_FOLLOWING_POLITICS_PAGE,
           ),

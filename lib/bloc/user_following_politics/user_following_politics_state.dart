@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 import '../../model/politico_model.dart';
 
@@ -26,16 +27,25 @@ class LoadingPolitics extends UserFollowingPoliticsState {
 }
 
 class FollowedPoliticsUpdated extends UserFollowingPoliticsState {
-  FollowedPoliticsUpdated({this.followedPolitics});
+  FollowedPoliticsUpdated(
+      {@required this.followedPolitics,
+      @required this.politicoUpdated,
+      @required this.isFollowing})
+      : assert(followedPolitics != null),
+        assert(politicoUpdated != null),
+        assert(isFollowing != null);
 
   final List<PoliticoModel> followedPolitics;
+  final PoliticoModel politicoUpdated;
+  final bool isFollowing;
 
   @override
-  List<Object> get props => [followedPolitics];
+  List<Object> get props => [followedPolitics, politicoUpdated, isFollowing];
 }
 
 class PoliticsFilteredByTerm extends UserFollowingPoliticsState {
-  PoliticsFilteredByTerm({this.filteredPolitics});
+  PoliticsFilteredByTerm({@required this.filteredPolitics})
+      : assert(filteredPolitics != null);
 
   final List<PoliticoModel> filteredPolitics;
 
