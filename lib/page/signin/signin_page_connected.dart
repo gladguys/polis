@@ -29,6 +29,7 @@ class SigninPageConnected extends StatelessWidget {
           ),
         ),
         analyticsService: G<AnalyticsService>(),
+        sharedPreferencesService: G<SharedPreferencesService>(),
       ),
       page: SigninPage(),
     );

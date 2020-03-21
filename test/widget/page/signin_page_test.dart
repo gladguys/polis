@@ -14,7 +14,9 @@ import '../../mock.dart';
 import '../utils.dart';
 
 void main() {
-  setUpAll(initLocator);
+  setUpAll(() {
+    initLocator(MockSharedPreferences());
+  });
 
   group('SigninPage tests', () {
     testWidgets('should build without exploding', (tester) async {

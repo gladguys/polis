@@ -1,6 +1,7 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../bloc/blocs.dart';
@@ -9,17 +10,20 @@ import '../i18n/i18n.dart';
 import '../page/pages.dart';
 
 class DefaultBottombar extends StatelessWidget {
+  DefaultBottombar(this.routeName);
+
+  final String routeName;
+
   @override
   Widget build(BuildContext context) {
     final user = context.bloc<UserBloc>().user;
-    final route = ModalRoute.of(context).settings.name;
     return BottomAppBar(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12),
         child: Row(
           children: <Widget>[
             const SizedBox(width: 12),
-            route == TIMELINE_PAGE
+            routeName == TIMELINE_PAGE
                 ? Text(
                     POLIS,
                     style: TextStyle(
@@ -73,11 +77,17 @@ class DefaultBottombar extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(25),
-                child: FancyShimmerImage(
-                  imageUrl: user.photoUrl ?? '',
-                  width: 50,
-                  height: 50,
-                ),
+                child: user.photoUrl != null
+                    ? FancyShimmerImage(
+                        imageUrl: user.photoUrl,
+                        width: 50,
+                        height: 50,
+                      )
+                    : FaIcon(
+                        FontAwesomeIcons.solidUserCircle,
+                        color: Theme.of(context).accentColor.withOpacity(.6),
+                        size: 50,
+                      ),
               ),
             ),
             const SizedBox(width: 12),

@@ -3,10 +3,11 @@ import 'package:polis/core/service/locator.dart';
 import 'package:polis/i18n/i18n.dart';
 import 'package:polis/page/pages.dart';
 
+import '../../mock.dart';
 import '../utils.dart';
 
 void main() {
-  initLocator();
+  initLocator(MockSharedPreferences());
 
   group('InitialPage tests', () {
     testWidgets('should build without exploding', (tester) async {

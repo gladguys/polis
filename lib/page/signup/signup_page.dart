@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -5,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
+import '../../core/abstract/polis_image_picker.dart';
 import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
 import '../../model/user_model.dart';
@@ -12,6 +15,10 @@ import '../initial/initial_page_connected.dart';
 import '../theme/main_theme.dart';
 
 class SignupPage extends StatefulWidget {
+  SignupPage({@required this.imagePicker}) : assert(imagePicker != null);
+
+  final PolisImagePicker imagePicker;
+
   @override
   _SignupPageState createState() => _SignupPageState();
 }
@@ -24,6 +31,7 @@ class _SignupPageState extends State<SignupPage> {
   String _email;
   String _password;
   String _photoUrl;
+  File _profilePhoto;
 
   @override
   void initState() {
@@ -81,12 +89,26 @@ class _SignupPageState extends State<SignupPage> {
         padding: const EdgeInsets.symmetric(horizontal: 40),
         child: Column(
           children: <Widget>[
-            Center(
-              child: FaIcon(
-                FontAwesomeIcons.solidUserCircle,
-                color: theme.accentColor.withOpacity(.6),
-                size: 120,
+            GestureDetector(
+              child: Center(
+                key: const ValueKey('profile-container'),
+                child: _profilePhoto != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(40),
+                        child: Image.file(
+                          _profilePhoto,
+                          height: 120,
+                          width: 120,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : FaIcon(
+                        FontAwesomeIcons.solidUserCircle,
+                        color: theme.accentColor.withOpacity(.6),
+                        size: 120,
+                      ),
               ),
+              onTap: getImage,
             ),
             const SizedBox(height: 16),
             TextFormField(
@@ -146,7 +168,10 @@ class _SignupPageState extends State<SignupPage> {
                       password: _password,
                       photoUrl: _photoUrl,
                     );
-                    _signupBloc.add(Signup(_signupUser));
+                    _signupBloc.add(Signup(
+                      user: _signupUser,
+                      profilePhoto: _profilePhoto,
+                    ));
                   }
                 },
               ),
@@ -155,5 +180,10 @@ class _SignupPageState extends State<SignupPage> {
         ),
       ),
     );
+  }
+
+  Future<void> getImage() async {
+    var image = await widget.imagePicker.getImage();
+    setState(() => _profilePhoto = image);
   }
 }

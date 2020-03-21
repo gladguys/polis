@@ -14,26 +14,44 @@ import '../page/pages.dart';
 import '../page/theme/main_theme.dart';
 import '../repository/concrete/firebase/repositories.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   @override
-  Widget build(BuildContext context) => BlocProvider<UserBloc>(
-        create: (_) => UserBloc(
-          user: UserModel(),
-          repository: FirebaseUserRepository(
-            firebaseAuth: FirebaseAuth.instance,
-          ),
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  UserModel user;
+  bool isUserLogged;
+  SharedPreferencesService sharedPreferencesService;
+
+  @override
+  void initState() {
+    sharedPreferencesService = G<SharedPreferencesService>();
+    user = sharedPreferencesService.getUser();
+    isUserLogged = sharedPreferencesService.isUserLogged();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<UserBloc>(
+      create: (_) => UserBloc(
+        user: user ?? UserModel(),
+        repository: FirebaseUserRepository(
+          firebaseAuth: FirebaseAuth.instance,
         ),
-        child: MaterialApp(
-          title: POLIS,
-          debugShowCheckedModeBanner: false,
-          theme: theme,
-          navigatorKey: Get.key,
-          home: InitialPageConnected(),
-          navigatorObservers: [
-            FirebaseAnalyticsObserver(
-                analytics: G<AnalyticsService>().analytics),
-            PolisRoutingObserver(),
-          ],
-        ),
-      );
+      ),
+      child: MaterialApp(
+        title: POLIS,
+        debugShowCheckedModeBanner: false,
+        theme: theme,
+        navigatorKey: Get.key,
+        home: isUserLogged ? TimelinePage() : InitialPageConnected(),
+        navigatorObservers: [
+          FirebaseAnalyticsObserver(analytics: G<AnalyticsService>().analytics),
+          PolisRoutingObserver(),
+        ],
+      ),
+    );
+  }
 }

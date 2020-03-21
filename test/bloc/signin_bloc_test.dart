@@ -15,25 +15,42 @@ void main() {
     SigninBloc signinBloc;
     MockSigninRepository mockSigninRepository;
     MockAnalyticsService mockAnalyticsService;
+    MockSharedPreferencesService mockSharedPreferencesService;
     user =
         UserModel(name: 'polis', email: 'polis@gmail.com', password: 'random');
 
     setUp(() {
       mockSigninRepository = MockSigninRepository();
       mockAnalyticsService = MockAnalyticsService();
+      mockSharedPreferencesService = MockSharedPreferencesService();
       signinBloc = SigninBloc(
-          repository: mockSigninRepository,
-          analyticsService: mockAnalyticsService);
+        repository: mockSigninRepository,
+        analyticsService: mockAnalyticsService,
+        sharedPreferencesService: mockSharedPreferencesService,
+      );
     });
 
     test('asserts', () {
       expect(
           () => SigninBloc(
-              repository: mockSigninRepository, analyticsService: null),
+                repository: mockSigninRepository,
+                analyticsService: null,
+                sharedPreferencesService: null,
+              ),
           throwsAssertionError);
       expect(
           () => SigninBloc(
-              repository: null, analyticsService: mockAnalyticsService),
+                repository: null,
+                analyticsService: mockAnalyticsService,
+                sharedPreferencesService: null,
+              ),
+          throwsAssertionError);
+      expect(
+          () => SigninBloc(
+                repository: mockSigninRepository,
+                analyticsService: mockAnalyticsService,
+                sharedPreferencesService: null,
+              ),
           throwsAssertionError);
     });
 
@@ -60,6 +77,7 @@ void main() {
             .called(1);
         verify(mockAnalyticsService.logSignin(method: 'EMAIL_AND_PASSWORD'))
             .called(1);
+        verify(mockSharedPreferencesService.setUser(user)).called(1);
       },
       expect: [
         SigninLoading(),
@@ -84,6 +102,7 @@ void main() {
       verify: (signinBloc) async {
         verify(mockSigninRepository.signInWithGoogle()).called(1);
         verify(mockAnalyticsService.logSignin(method: 'GOOGLE')).called(1);
+        verify(mockSharedPreferencesService.setUser(user)).called(1);
       },
       expect: [
         SigninLoading(),

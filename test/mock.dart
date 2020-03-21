@@ -4,16 +4,20 @@ import 'package:firebase_admob/firebase_admob.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/abstract/polis_image_picker.dart';
 import 'package:polis/core/service/ad_service.dart';
 import 'package:polis/core/service/analytics_service.dart';
+import 'package:polis/core/service/services.dart';
 import 'package:polis/repository/abstract/politic_suggestion_repository.dart';
 import 'package:polis/repository/abstract/signin_repository.dart';
 import 'package:polis/repository/abstract/signup_repository.dart';
 import 'package:polis/repository/abstract/user_profile_repository.dart';
 import 'package:polis/repository/abstract/user_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Bloc
 class MockSigninBloc extends MockBloc<SigninEvent, SigninState>
@@ -48,6 +52,8 @@ class MockFirebaseAuth extends Mock implements FirebaseAuth {}
 
 class MockFirestore extends Mock implements Firestore {}
 
+class MockFirebaseStorage extends Mock implements FirebaseStorage {}
+
 class MockGoogleSignin extends Mock implements GoogleSignIn {}
 
 class MockGoogleSignInAccount extends Mock implements GoogleSignInAccount {}
@@ -62,6 +68,12 @@ class MockFirebaseUser extends Mock implements FirebaseUser {}
 
 class MockCollectionReference extends Mock implements CollectionReference {}
 
+class MockStorageReference extends Mock implements StorageReference {}
+
+class MockStorageUploadTask extends Mock implements StorageUploadTask {}
+
+class MockStorageTaskSnapshot extends Mock implements StorageTaskSnapshot {}
+
 class MockDocumentReference extends Mock implements DocumentReference {}
 
 class MockDocumentSnapshot extends Mock implements DocumentSnapshot {}
@@ -75,5 +87,12 @@ class MockAnalyticsService extends Mock implements AnalyticsService {}
 
 class MockAdService extends Mock implements AdService {}
 
+class MockSharedPreferencesService extends Mock
+    implements SharedPreferencesService {}
+
 // Other
 class MockBannerAd extends Mock implements BannerAd {}
+
+class MockSharedPreferences extends Mock implements SharedPreferences {}
+
+class MockPolisImagePicker extends Mock implements PolisImagePicker {}

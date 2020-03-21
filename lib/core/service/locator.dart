@@ -2,12 +2,13 @@ import 'package:firebase_admob/firebase_admob.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'services.dart';
 
 final GetIt G = GetIt.instance;
 
-void initLocator() {
+void initLocator([SharedPreferences sharedPreferences]) {
   G.registerSingleton(
     AdService(
       bannerAd: BannerAd(
@@ -22,6 +23,13 @@ void initLocator() {
       ),
     ),
   );
-  G.registerSingleton(AnalyticsService(analytics: FirebaseAnalytics()));
-  G.registerSingleton(CrashlyticsService(crashlytics: Crashlytics.instance));
+  G.registerSingleton(
+    AnalyticsService(analytics: FirebaseAnalytics()),
+  );
+  G.registerSingleton(
+    CrashlyticsService(crashlytics: Crashlytics.instance),
+  );
+  G.registerSingleton(
+    SharedPreferencesService(sharedPreferences: sharedPreferences),
+  );
 }

@@ -26,6 +26,7 @@ class InitialPageConnected extends StatelessWidget {
           ),
         ),
         analyticsService: G<AnalyticsService>(),
+        sharedPreferencesService: G<SharedPreferencesService>(),
       ),
       page: InitialPage(),
     );

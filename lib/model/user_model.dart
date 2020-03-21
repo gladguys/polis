@@ -20,6 +20,22 @@ class UserModel extends Equatable {
 
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
 
+  UserModel copyWith({
+    String userId,
+    String name,
+    String email,
+    String photoUrl,
+    String password,
+  }) {
+    return UserModel(
+      userId: userId ?? this.userId,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      photoUrl: photoUrl ?? this.photoUrl,
+      password: password ?? this.password,
+    );
+  }
+
   @override
   List<Object> get props => [userId];
 
