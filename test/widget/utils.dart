@@ -11,7 +11,9 @@ Widget connectedWidget(Widget widget) {
   SimpleRouter.setKey(Get.key);
   return BlocProvider<UserBloc>(
     create: (_) => UserBloc(
-      user: UserModel(),
+      user: UserModel(
+        userId: '1',
+      ),
       repository: MockUserRepository(),
     ),
     child: MaterialApp(

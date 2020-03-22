@@ -12,9 +12,11 @@ import 'package:polis/core/abstract/polis_image_picker.dart';
 import 'package:polis/core/service/ad_service.dart';
 import 'package:polis/core/service/analytics_service.dart';
 import 'package:polis/core/service/services.dart';
+import 'package:polis/repository/abstract/follow_repository.dart';
 import 'package:polis/repository/abstract/politic_suggestion_repository.dart';
 import 'package:polis/repository/abstract/signin_repository.dart';
 import 'package:polis/repository/abstract/signup_repository.dart';
+import 'package:polis/repository/abstract/user_following_politics_repository.dart';
 import 'package:polis/repository/abstract/user_profile_repository.dart';
 import 'package:polis/repository/abstract/user_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,6 +24,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 // Bloc
 class MockSigninBloc extends MockBloc<SigninEvent, SigninState>
     implements SigninBloc {}
+
+class MockUserFollowingPoliticsBloc
+    extends MockBloc<UserFollowingPoliticsEvent, UserFollowingPoliticsState>
+    implements UserFollowingPoliticsBloc {}
 
 class MockPoliticSuggestionBloc
     extends MockBloc<PoliticSuggestionEvent, PoliticSuggestionState>
@@ -46,6 +52,11 @@ class MockUserProfileRepository extends Mock implements UserProfileRepository {}
 class MockSignupRepository extends Mock implements SignupRepository {}
 
 class MockUserRepository extends Mock implements UserRepository {}
+
+class MockUserFollowingPoliticsRepository extends Mock
+    implements UserFollowingPoliticsRepository {}
+
+class MockFollowRepository extends Mock implements FollowRepository {}
 
 // Firebase
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
