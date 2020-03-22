@@ -16,6 +16,7 @@ void main() {
     MockDocumentSnapshot mockDocumentSnapshot;
     MockDocumentReference mockDocumentReference;
     MockCollectionReference mockCollectionReference;
+    MockQuery refFiltered;
     List<MockDocumentSnapshot> mockDocumentSnapshotList;
 
     setUp(() {
@@ -25,6 +26,7 @@ void main() {
       firebasePoliticSuggestionRepository = FirebasePoliticSuggestionRepository(
         firestore: mockFirestore,
       );
+      refFiltered = MockQuery();
       mockDocumentSnapshot = MockDocumentSnapshot();
       mockCollectionReference = MockCollectionReference();
       mockDocumentSnapshotList = [
@@ -44,7 +46,10 @@ void main() {
       test('return [PoliticoModel] when there are suggestions', () async {
         when(mockFirestore.collection(POLITICOS))
             .thenReturn(mockCollectionReference);
-        when(mockCollectionReference.getDocuments())
+        when(mockCollectionReference
+                .where("siglaUf", isEqualTo: "CE"))
+                .thenReturn(refFiltered);
+        when(refFiltered.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
         final politicoJson = {
           'id': '1',
