@@ -29,27 +29,6 @@ void main() {
       );
     });
 
-    testWidgets('should show error snackbar when signin fails', (tester) async {
-      final mockSigninBloc = MockSigninBloc();
-      whenListen(
-        mockSigninBloc,
-        Stream<SigninState>.fromIterable(
-            [InitialSignin(), SigninFailed('fail')]),
-      );
-      await tester.pumpWidget(
-        connectedWidget(
-          PageConnected<SigninBloc>(
-            bloc: mockSigninBloc,
-            page: Scaffold(
-              body: SigninPage(),
-            ),
-          ),
-        ),
-      );
-      await tester.pumpAndSettle(const Duration(seconds: 10));
-      expect(find.text('fail'), findsOneWidget);
-    });
-
     testWidgets('should navigate to PoliticSugestionPage when user auths',
         (tester) async {
       final mockSigninBloc = MockSigninBloc();
@@ -102,9 +81,10 @@ void main() {
           .called(1);
     });
 
-    testWidgets('should show error message when signin failed', (tester) async {
+    testWidgets('''should validate and save the form when clicking keyboard''',
+        (tester) async {
       final mockSigninBloc = MockSigninBloc();
-      when(mockSigninBloc.state).thenReturn(SigninFailed('fail'));
+      when(mockSigninBloc.state).thenReturn(InitialSignin());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<SigninBloc>(
@@ -115,7 +95,43 @@ void main() {
           ),
         ),
       );
-      expect(find.text('fail'), findsOneWidget);
+      final form = tester.widget(find.byType(Form)) as Form;
+      final formKey = form.key as GlobalKey<FormState>;
+
+      final emailField = find.byKey(const ValueKey('email-field'));
+      final passwordField = find.byKey(const ValueKey('password-field'));
+
+      await tester.enterText(emailField, 'test@gmail.com');
+      await tester.testTextInput.receiveAction(TextInputAction.next);
+      await tester.enterText(passwordField, 'secret');
+      await tester.testTextInput.receiveAction(TextInputAction.done);
+      await tester.pump();
+
+      expect(formKey.currentState.validate(), isTrue);
+      verify(mockSigninBloc
+              .add(SigninWithEmailAndPassword('test@gmail.com', 'secret')))
+          .called(1);
+    });
+
+    testWidgets('should show error message when signin failed', (tester) async {
+      final mockSigninBloc = MockSigninBloc();
+      whenListen(
+        mockSigninBloc,
+        Stream<SigninState>.fromIterable(
+            [InitialSignin(), SigninFailed('fail')]),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<SigninBloc>(
+            bloc: mockSigninBloc,
+            page: Scaffold(
+              body: SigninPage(),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      expect(find.text(SIGNIN_FAILED), findsOneWidget);
     });
 
     testWidgets('should do something when recover password is clicked',

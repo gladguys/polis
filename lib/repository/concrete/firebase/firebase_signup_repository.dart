@@ -58,6 +58,8 @@ class FirebaseSignupRepository extends SignupRepository {
         throw EmailAlreadyInUseException();
       } else if (e.toString().contains(ERROR_WEAK_PASSWORD)) {
         throw WeakPasswordException();
+      } else if (e.toString().contains(ERROR_INVALID_EMAIL)) {
+        throw InvalidEmailException();
       }
       rethrow;
     }
