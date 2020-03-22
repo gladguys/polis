@@ -11,8 +11,7 @@ const PASSWORD = 'Senha';
 const PASSWORD_CONFIRMATION = 'Confirme a senha';
 const RECOVERY_PASSWORD = 'Recuperar senha';
 const REQUIRED_FIELD = 'Campo Obrigatório';
-const PASSWORD_AND_CONFIRMATION_DONT_MATCH =
-    'A confirmação da senha tem que ser idêntica a senha';
+const PASSWORD_AND_CONFIRMATION_DONT_MATCH = 'Senhas diferentes';
 const SIGNIN = 'Entrar';
 const SIGNIN_WITH_EMAIL = 'Entrar com email';
 const SIGNIN_WITH_GOOGLE = 'Entrar com Google';
