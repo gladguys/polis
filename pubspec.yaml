@@ -37,6 +37,7 @@ dependencies:
   fancy_shimmer_image: ^1.0.1
   font_awesome_flutter: ^8.7.0
   sliding_up_panel: ^1.0.0
+  flutter_grid_delegate_ext: ^0.0.2
 
 dev_dependencies:
   flutter_test:

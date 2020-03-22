@@ -6,7 +6,8 @@ const USER_CREATED_WITH_SUCCESS = 'Usuário criado com sucesso';
 const FOLLOW = 'Seguir';
 const WELCOME = 'Bem vindo';
 const STOP_FOLLOWING = 'Deixar de seguir';
-const POLITICS_SUGGESTION_ON_YOUR_AREA = 'Sugestões de políticos em sua região';
+const POLITICS_SUGGESTION_ON_YOUR_AREA =
+    'Sugestões de políticos em sua região:';
 const NO_RECENT_ACTIVITY = 'Nenhuma atividade recente!';
 const SIGNIN_FAILED = 'Falha no login';
 const SIGNUP_FAILED = 'Falha no cadastro do usuário';

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_grid_delegate_ext/rendering/grid_delegate.dart';
 
 import '../../../bloc/politic_suggestion/bloc.dart';
 import '../../../core/constants.dart';
@@ -18,11 +19,12 @@ class PoliticsSuggestedGrid extends StatelessWidget {
     final _bloc = context.bloc<PoliticSuggestionBloc>();
     return GridView.builder(
       shrinkWrap: true,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: XSliverGridDelegate(
         crossAxisCount: 2,
-        childAspectRatio: 1,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
+        crossAxisSpacing: 6,
+        mainAxisSpacing: 6,
+        smallCellExtent: 205,
+        bigCellExtent: 205,
       ),
       itemBuilder: (_, i) {
         return PoliticSuggested(
