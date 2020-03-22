@@ -47,7 +47,7 @@ class _SigninPageState extends State<SigninPage> {
         }
         if (state is SigninFailed) {
           Scaffold.of(context).showSnackBar(
-            SnackBar(content: Text(SIGNIN_FAILED)),
+            const SnackBar(content: Text(SIGNIN_FAILED)),
           );
         }
       },

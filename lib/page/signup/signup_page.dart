@@ -67,7 +67,7 @@ class _SignupPageState extends State<SignupPage> {
             name: INITIAL_PAGE,
           );
           Scaffold.of(context).showSnackBar(
-            SnackBar(content: Text(USER_CREATED_WITH_SUCCESS)),
+            const SnackBar(content: Text(USER_CREATED_WITH_SUCCESS)),
           );
         } else if (state is UserCreationFailed) {
           Scaffold.of(context).showSnackBar(
