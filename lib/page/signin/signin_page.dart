@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
@@ -20,11 +19,19 @@ class _SigninPageState extends State<SigninPage> {
   GlobalKey<FormState> _formKey;
   String _email;
   String _password;
+  FocusNode _passwordFN;
 
   @override
   void initState() {
     super.initState();
     _formKey = GlobalKey<FormState>();
+    _passwordFN = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _passwordFN.dispose();
+    super.dispose();
   }
 
   @override
@@ -39,7 +46,9 @@ class _SigninPageState extends State<SigninPage> {
           );
         }
         if (state is SigninFailed) {
-          Get.snackbar('1qqq', state.errorMessage);
+          Scaffold.of(context).showSnackBar(
+            SnackBar(content: Text(SIGNIN_FAILED)),
+          );
         }
       },
       child: BlocBuilder<SigninBloc, SigninState>(
@@ -51,9 +60,7 @@ class _SigninPageState extends State<SigninPage> {
             return const Center(child: CircularProgressIndicator());
           }
           if (state is SigninFailed) {
-            return Center(
-              child: Text(state.errorMessage),
-            );
+            return _form();
           }
           return const SizedBox.shrink();
         },
@@ -62,6 +69,16 @@ class _SigninPageState extends State<SigninPage> {
   }
 
   Widget _form() {
+    void _validateAndSendForm() {
+      final formState = _formKey.currentState;
+      if (formState.validate()) {
+        formState.save();
+        context
+            .bloc<SigninBloc>()
+            .add(SigninWithEmailAndPassword(_email, _password));
+      }
+    }
+
     return Form(
       key: _formKey,
       child: Padding(
@@ -81,13 +98,18 @@ class _SigninPageState extends State<SigninPage> {
                   ),
                 ),
               ),
+              textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.emailAddress,
+              onEditingComplete: () => _passwordFN.requestFocus(),
               onSaved: (email) => _email = email,
               validator: (email) => email.isEmpty ? REQUIRED_FIELD : null,
             ),
             const SizedBox(height: 16),
             TextFormField(
               key: const ValueKey('password-field'),
+              focusNode: _passwordFN,
               obscureText: true,
+              onEditingComplete: _validateAndSendForm,
               decoration: InputDecoration(
                 hintText: PASSWORD,
                 prefixIcon: Center(
@@ -111,15 +133,7 @@ class _SigninPageState extends State<SigninPage> {
                   SIGNIN,
                   style: TextStyle(fontSize: 18),
                 ),
-                onPressed: () {
-                  final formState = _formKey.currentState;
-                  if (formState.validate()) {
-                    formState.save();
-                    context
-                        .bloc<SigninBloc>()
-                        .add(SigninWithEmailAndPassword(_email, _password));
-                  }
-                },
+                onPressed: _validateAndSendForm,
               ),
             ),
             const SizedBox(height: 8),

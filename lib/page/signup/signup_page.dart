@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
@@ -33,18 +32,28 @@ class _SignupPageState extends State<SignupPage> {
   String _photoUrl;
   File _profilePhoto;
 
+  FocusNode _emailFN;
+  FocusNode _passwordFN;
+  FocusNode _confirmPasswordFN;
+
   @override
   void initState() {
     super.initState();
     _signupBloc = context.bloc<SignupBloc>();
     _formKey = GlobalKey<FormState>();
     _signupUser = UserModel();
+    _emailFN = FocusNode();
+    _passwordFN = FocusNode();
+    _confirmPasswordFN = FocusNode();
   }
 
   @override
   void dispose() {
-    super.dispose();
     _signupBloc.close();
+    _emailFN.dispose();
+    _passwordFN.dispose();
+    _confirmPasswordFN.dispose();
+    super.dispose();
   }
 
   @override
@@ -57,11 +66,17 @@ class _SignupPageState extends State<SignupPage> {
             InitialPageConnected(),
             name: INITIAL_PAGE,
           );
-          Get.snackbar(CONGRATULATIONS, USER_CREATED_WITH_SUCCESS);
+          Scaffold.of(context).showSnackBar(
+            SnackBar(content: Text(USER_CREATED_WITH_SUCCESS)),
+          );
         } else if (state is UserCreationFailed) {
-          Get.snackbar(FAIL, state.statusMessage);
+          Scaffold.of(context).showSnackBar(
+            SnackBar(content: Text(state.statusMessage)),
+          );
         } else if (state is SignupFailed) {
-          Get.snackbar(FAIL, state.errorMessage);
+          Scaffold.of(context).showSnackBar(
+            SnackBar(content: Text(state.errorMessage)),
+          );
         }
       },
       child: BlocBuilder<SignupBloc, SignupState>(
@@ -71,18 +86,34 @@ class _SignupPageState extends State<SignupPage> {
               state is UserCreationFailed ||
               state is SignupFailed) {
             return _signupForm();
-          } else if (state is SignupLoading) {
+          } else {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
-          return const CircularProgressIndicator();
         },
       ),
     );
   }
 
   Widget _signupForm() {
+    void _validateAndSendForm() {
+      final formState = _formKey.currentState;
+      if (formState.validate()) {
+        formState.save();
+        _signupUser = UserModel(
+          name: _name,
+          email: _email,
+          password: _password,
+          photoUrl: _photoUrl,
+        );
+        _signupBloc.add(Signup(
+          user: _signupUser,
+          profilePhoto: _profilePhoto,
+        ));
+      }
+    }
+
     return Form(
       key: _formKey,
       child: Padding(
@@ -116,37 +147,55 @@ class _SignupPageState extends State<SignupPage> {
               decoration: const InputDecoration(
                 labelText: NAME,
               ),
+              textInputAction: TextInputAction.next,
+              onEditingComplete: () => _emailFN.requestFocus(),
               onSaved: (name) => _name = name,
               validator: (name) => name.isEmpty ? REQUIRED_FIELD : null,
             ),
             const SizedBox(height: 16),
             TextFormField(
               key: const ValueKey('email-field'),
+              focusNode: _emailFN,
               decoration: const InputDecoration(
                 labelText: EMAIL,
               ),
+              textInputAction: TextInputAction.next,
+              onEditingComplete: () => _passwordFN.requestFocus(),
+              keyboardType: TextInputType.emailAddress,
               onSaved: (email) => _email = email,
               validator: (email) => email.isEmpty ? REQUIRED_FIELD : null,
             ),
             const SizedBox(height: 16),
             TextFormField(
               key: const ValueKey('password-field'),
+              focusNode: _passwordFN,
               obscureText: true,
               decoration: const InputDecoration(
                 labelText: PASSWORD,
               ),
+              textInputAction: TextInputAction.next,
+              onEditingComplete: () => _confirmPasswordFN.requestFocus(),
               onSaved: (password) => _password = password,
+              onChanged: (password) => _password = password,
               validator: (password) => password.isEmpty ? REQUIRED_FIELD : null,
             ),
             const SizedBox(height: 16),
             TextFormField(
               key: const ValueKey('confirm-password-field'),
+              focusNode: _confirmPasswordFN,
               obscureText: true,
               decoration: const InputDecoration(
                 labelText: PASSWORD_CONFIRMATION,
               ),
-              validator: (passwordConfirmation) =>
-                  passwordConfirmation.isEmpty ? REQUIRED_FIELD : null,
+              onEditingComplete: _validateAndSendForm,
+              validator: (passwordConfirmation) {
+                if (passwordConfirmation.isEmpty) {
+                  return REQUIRED_FIELD;
+                }
+                return _password != passwordConfirmation
+                    ? PASSWORD_AND_CONFIRMATION_DONT_MATCH
+                    : null;
+              },
             ),
             const SizedBox(height: 32),
             Container(
@@ -158,22 +207,7 @@ class _SignupPageState extends State<SignupPage> {
                   SIGNUP,
                   style: TextStyle(fontSize: 18),
                 ),
-                onPressed: () {
-                  final formState = _formKey.currentState;
-                  if (formState.validate()) {
-                    formState.save();
-                    _signupUser = UserModel(
-                      name: _name,
-                      email: _email,
-                      password: _password,
-                      photoUrl: _photoUrl,
-                    );
-                    _signupBloc.add(Signup(
-                      user: _signupUser,
-                      profilePhoto: _profilePhoto,
-                    ));
-                  }
-                },
+                onPressed: _validateAndSendForm,
               ),
             ),
           ],

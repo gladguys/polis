@@ -158,6 +158,18 @@ void main() {
               (e) => expect(e, isInstanceOf<EmailAlreadyInUseException>()));
     });
 
+    test('should throw InvalidEmailException exception', () async {
+      final user = UserModel(userId: '1', email: 'email', password: 'password');
+      when(mockFirebaseAuth.createUserWithEmailAndPassword(
+              email: 'email', password: 'password'))
+          .thenThrow(
+              PlatformException(code: '1', message: 'ERROR_INVALID_EMAIL'));
+      firebaseSignupRepository
+          .createUserWithEmailAndPassword(user, null)
+          .then((_) {})
+          .catchError((e) => expect(e, isInstanceOf<InvalidEmailException>()));
+    });
+
     test('should throw WeakPasswordException exception', () async {
       final user = UserModel(userId: '1', email: 'email', password: 'password');
       when(mockFirebaseAuth.createUserWithEmailAndPassword(

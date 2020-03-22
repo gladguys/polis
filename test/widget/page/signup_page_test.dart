@@ -62,13 +62,60 @@ void main() {
         password: 'secret',
       );
       await tester.enterText(nameField, 'test');
+      await tester.testTextInput.receiveAction(TextInputAction.next);
       await tester.enterText(emailField, 'test@gmail.com');
+      await tester.testTextInput.receiveAction(TextInputAction.next);
       await tester.enterText(passwordField, 'secret');
+      await tester.testTextInput.receiveAction(TextInputAction.next);
       await tester.enterText(confirmPasswordField, 'secret');
       await tester.pump();
 
       final signupBtn = find.byKey(const ValueKey('signup-btn'));
       await tester.tap(signupBtn);
+      await tester.pumpAndSettle();
+      expect(formKey.currentState.validate(), isTrue);
+      verify(mockSignupBloc.add(Signup(user: signupUser, profilePhoto: null)))
+          .called(1);
+    });
+
+    testWidgets('''should validate and save the form whn click on keyboard''',
+        (tester) async {
+      final mockSignupBloc = MockSignupBloc();
+      when(mockSignupBloc.state).thenReturn(InitialSignup());
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<SignupBloc>(
+            bloc: mockSignupBloc,
+            page: Scaffold(
+              body: SignupPage(
+                imagePicker: PolisImagePicker(),
+              ),
+            ),
+          ),
+        ),
+      );
+      final form = tester.widget(find.byType(Form)) as Form;
+      final formKey = form.key as GlobalKey<FormState>;
+
+      final nameField = find.byKey(const ValueKey('name-field'));
+      final emailField = find.byKey(const ValueKey('email-field'));
+      final passwordField = find.byKey(const ValueKey('password-field'));
+      final confirmPasswordField =
+          find.byKey(const ValueKey('confirm-password-field'));
+
+      final signupUser = UserModel(
+        name: 'test',
+        email: 'test@gmail.com',
+        password: 'secret',
+      );
+      await tester.enterText(nameField, 'test');
+      await tester.enterText(emailField, 'test@gmail.com');
+      await tester.enterText(passwordField, 'secret');
+
+      await tester.enterText(confirmPasswordField, 'secret');
+      await tester.pump();
+
+      await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pumpAndSettle();
       expect(formKey.currentState.validate(), isTrue);
       verify(mockSignupBloc.add(Signup(user: signupUser, profilePhoto: null)))
@@ -115,29 +162,7 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
-    testWidgets('should show error when signin fail', (tester) async {
-      final mockSignupBloc = MockSignupBloc();
-      whenListen(
-        mockSignupBloc,
-        Stream<SignupState>.fromIterable(
-            [InitialSignup(), UserCreationFailed('fail')]),
-      );
-      await tester.pumpWidget(
-        connectedWidget(
-          PageConnected<SignupBloc>(
-            bloc: mockSignupBloc,
-            page: Scaffold(
-              body: SignupPage(
-                imagePicker: PolisImagePicker(),
-              ),
-            ),
-          ),
-        ),
-      );
-      await tester.pumpAndSettle(const Duration(seconds: 10));
-    });
-
-    testWidgets('should show error when signin failed', (tester) async {
+    testWidgets('should show error when signup failed', (tester) async {
       final mockSignupBloc = MockSignupBloc();
       whenListen(
         mockSignupBloc,
@@ -156,7 +181,31 @@ void main() {
           ),
         ),
       );
-      await tester.pumpAndSettle(const Duration(seconds: 10));
+      await tester.pump();
+      expect(find.text('fail'), findsOneWidget);
+    });
+
+    testWidgets('should show error when user creation failed', (tester) async {
+      final mockSignupBloc = MockSignupBloc();
+      whenListen(
+        mockSignupBloc,
+        Stream<SignupState>.fromIterable(
+            [InitialSignup(), UserCreationFailed('fail create')]),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<SignupBloc>(
+            bloc: mockSignupBloc,
+            page: Scaffold(
+              body: SignupPage(
+                imagePicker: PolisImagePicker(),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      expect(find.text('fail create'), findsOneWidget);
     });
 
     testWidgets('should change image when camera called', (tester) async {

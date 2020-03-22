@@ -111,6 +111,28 @@ void main() {
     );
 
     blocTest(
+      '''Expects [SignupLoading, UserCreationFailed] with 
+      EMAIL_IS_INVALID message when SignupTried added and email with invalid format''',
+      build: () async {
+        when(mockSignupRepository.createUserWithEmailAndPassword(any, any))
+            .thenThrow(InvalidEmailException());
+        return signupBloc;
+      },
+      act: (signupBloc) {
+        signupBloc.add(Signup(user: UserModel(), profilePhoto: null));
+        return;
+      },
+      verify: (signupBloc) async {
+        verify(mockSignupRepository.createUserWithEmailAndPassword(any, any))
+            .called(1);
+      },
+      expect: [
+        SignupLoading(),
+        UserCreationFailed(EMAIL_IS_INVALID),
+      ],
+    );
+
+    blocTest(
       'Expects [SignupLoading, SignupFailed] when signup '
       'failled somehow',
       build: () async {

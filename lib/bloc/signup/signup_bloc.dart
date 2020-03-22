@@ -33,7 +33,10 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
         yield UserCreationFailed(EMAIL_ALREADY_IN_USE);
       } on WeakPasswordException {
         yield UserCreationFailed(PASSWORD_IS_WEAK);
+      } on InvalidEmailException {
+        yield UserCreationFailed(EMAIL_IS_INVALID);
       } on Exception catch (_) {
+        print(_);
         yield SignupFailed(ERROR_CREATING_USER);
       }
     }

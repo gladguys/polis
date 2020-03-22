@@ -2,7 +2,7 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
+import 'package:simple_router/simple_router.dart';
 
 import '../bloc/blocs.dart';
 import '../core/routing/polis_routing_observer.dart';
@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
         title: POLIS,
         debugShowCheckedModeBanner: false,
         theme: theme,
-        navigatorKey: Get.key,
+        navigatorKey: SimpleRouter.getKey(),
         home: isUserLogged ? TimelinePage() : InitialPageConnected(),
         navigatorObservers: [
           FirebaseAnalyticsObserver(analytics: G<AnalyticsService>().analytics),
