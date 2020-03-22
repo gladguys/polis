@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/exception/exceptions.dart';
 import '../../../model/politico_model.dart';
 import '../../../model/user_model.dart';
 import '../../abstract/follow_repository.dart';
@@ -11,7 +12,6 @@ class FirebaseFollowRepository implements FollowRepository {
       : assert(firestore != null);
 
   final Firestore firestore;
-  CollectionReference get politicosRef => firestore.collection(POLITICOS);
   CollectionReference get politicosSeguidosRef =>
       firestore.collection(POLITICOS_SEGUIDOS);
   CollectionReference get usuariosSeguindoRef =>
@@ -19,31 +19,39 @@ class FirebaseFollowRepository implements FollowRepository {
 
   @override
   Future<void> followPolitic({UserModel user, PoliticoModel politico}) async {
-    politicosSeguidosRef
-        .document(user.userId)
-        .collection(POLITICOS_SEGUIDOS_COLLECTION)
-        .document(politico.id)
-        .setData(politico.toJson());
+    try {
+      politicosSeguidosRef
+          .document(user.userId)
+          .collection(POLITICOS_SEGUIDOS_COLLECTION)
+          .document(politico.id)
+          .setData(politico.toJson());
 
-    usuariosSeguindoRef
-        .document(politico.id)
-        .collection(USUARIOS_SEGUINDO_COLLECTIONS)
-        .document(user.userId)
-        .setData(user.toJson());
+      usuariosSeguindoRef
+          .document(politico.id)
+          .collection(USUARIOS_SEGUINDO_COLLECTION)
+          .document(user.userId)
+          .setData(user.toJson());
+    } on Exception {
+      throw ComunicationException();
+    }
   }
 
   @override
   Future<void> unfollowPolitic({UserModel user, PoliticoModel politico}) async {
-    politicosSeguidosRef
-        .document(user.userId)
-        .collection(POLITICOS_SEGUIDOS_COLLECTION)
-        .document(politico.id)
-        .delete();
+    try {
+      politicosSeguidosRef
+          .document(user.userId)
+          .collection(POLITICOS_SEGUIDOS_COLLECTION)
+          .document(politico.id)
+          .delete();
 
-    usuariosSeguindoRef
-        .document(politico.id)
-        .collection(USUARIOS_SEGUINDO_COLLECTIONS)
-        .document(user.userId)
-        .delete();
+      usuariosSeguindoRef
+          .document(politico.id)
+          .collection(USUARIOS_SEGUINDO_COLLECTION)
+          .document(user.userId)
+          .delete();
+    } on Exception {
+      throw ComunicationException();
+    }
   }
 }

@@ -83,7 +83,7 @@ class UserFollowingPoliticsBloc
   }
 
   bool isPoliticBeingFollowed(PoliticoModel politico) {
-    return isPoliticFollowed[politico.id];
+    return isPoliticFollowed[politico.id] ?? false;
   }
 
   void _initPoliticBeingFollowed() {

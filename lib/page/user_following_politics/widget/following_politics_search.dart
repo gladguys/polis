@@ -26,6 +26,7 @@ class FollowingPoliticsSearch extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: TextField(
+              key: const ValueKey('search-textfield'),
               decoration: InputDecoration(
                 prefixIcon: Icon(
                   Icons.search,

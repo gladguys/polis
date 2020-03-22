@@ -50,6 +50,7 @@ class FollowingPoliticsList extends StatelessWidget {
                   bloc.isPoliticBeingFollowed(politicos[i])
                       ? 'Deixar de seguir'
                       : 'Seguir',
+                  key: const ValueKey('follow-unfollow-btn'),
                   style: const TextStyle(fontSize: 10),
                 ),
                 textColor: bloc.isPoliticBeingFollowed(politicos[i])

@@ -22,11 +22,11 @@ class FirebasePoliticSuggestionRepository
   @override
   Future<List<PoliticoModel>> getSuggestedPolitics() async {
     try {
-      final querySnapshot = 
-        await politicosRef.where("siglaUf", isEqualTo: "CE").getDocuments();
+      final querySnapshot =
+          await politicosRef.where("siglaUf", isEqualTo: "CE").getDocuments();
 
       final documents = querySnapshot.documents;
-      
+
       return List.generate(
           documents.length, (i) => PoliticoModel.fromJson(documents[i].data));
     } on Exception {
@@ -60,7 +60,7 @@ class FirebasePoliticSuggestionRepository
       for (var politic in politics) {
         await usuariosSeguindoRef
             .document(politic.id)
-            .collection(USUARIOS_SEGUINDO_COLLECTIONS)
+            .collection(USUARIOS_SEGUINDO_COLLECTION)
             .document(user.userId)
             .setData(user.toJson());
       }

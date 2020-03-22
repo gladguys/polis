@@ -35,6 +35,7 @@ class DefaultBottombar extends StatelessWidget {
                     ),
                   )
                 : IconButton(
+                    key: const ValueKey('arrow-back-btn'),
                     icon: Icon(Icons.arrow_back),
                     onPressed: onPopCallback,
                   ),

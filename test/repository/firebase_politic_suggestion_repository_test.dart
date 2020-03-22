@@ -46,9 +46,8 @@ void main() {
       test('return [PoliticoModel] when there are suggestions', () async {
         when(mockFirestore.collection(POLITICOS))
             .thenReturn(mockCollectionReference);
-        when(mockCollectionReference
-                .where("siglaUf", isEqualTo: "CE"))
-                .thenReturn(refFiltered);
+        when(mockCollectionReference.where("siglaUf", isEqualTo: "CE"))
+            .thenReturn(refFiltered);
         when(refFiltered.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
         final politicoJson = {
@@ -114,7 +113,7 @@ void main() {
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.document(any))
             .thenReturn(mockDocumentReference);
-        when(mockDocumentReference.collection(USUARIOS_SEGUINDO_COLLECTIONS))
+        when(mockDocumentReference.collection(USUARIOS_SEGUINDO_COLLECTION))
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.document(any))
             .thenReturn(mockDocumentReference);
@@ -135,7 +134,7 @@ void main() {
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.document(any))
             .thenReturn(mockDocumentReference);
-        when(mockDocumentReference.collection(USUARIOS_SEGUINDO_COLLECTIONS))
+        when(mockDocumentReference.collection(USUARIOS_SEGUINDO_COLLECTION))
             .thenThrow(Exception());
         final politic = PoliticoModel(
           id: '1',

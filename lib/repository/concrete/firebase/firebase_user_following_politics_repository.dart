@@ -8,7 +8,8 @@ import 'collection.dart';
 
 class FirebaseUserFollowingPoliticsRepository
     implements UserFollowingPoliticsRepository {
-  FirebaseUserFollowingPoliticsRepository({@required this.firestore});
+  FirebaseUserFollowingPoliticsRepository({@required this.firestore})
+      : assert(firestore != null);
 
   final Firestore firestore;
   CollectionReference get politicosSeguindoRef =>
