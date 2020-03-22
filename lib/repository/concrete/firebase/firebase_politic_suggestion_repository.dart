@@ -23,7 +23,7 @@ class FirebasePoliticSuggestionRepository
   Future<List<PoliticoModel>> getSuggestedPolitics() async {
     try {
       final querySnapshot =
-          await politicosRef.where("siglaUf", isEqualTo: "CE").getDocuments();
+          await politicosRef.where('siglaUf', isEqualTo: 'CE').getDocuments();
 
       final documents = querySnapshot.documents;
 
