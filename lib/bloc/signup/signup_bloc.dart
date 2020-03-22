@@ -36,7 +36,6 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
       } on InvalidEmailException {
         yield UserCreationFailed(EMAIL_IS_INVALID);
       } on Exception catch (_) {
-        print(_);
         yield SignupFailed(ERROR_CREATING_USER);
       }
     }
