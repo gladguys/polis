@@ -1,6 +1,7 @@
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
@@ -29,6 +30,12 @@ class _MyAppState extends State<MyApp> {
     sharedPreferencesService = G<SharedPreferencesService>();
     user = sharedPreferencesService.getUser();
     isUserLogged = sharedPreferencesService.isUserLogged();
+
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        systemNavigationBarColor: isUserLogged ? Colors.white : Colors.black,
+      ),
+    );
     super.initState();
   }
 
