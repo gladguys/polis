@@ -5,6 +5,7 @@ final ThemeData theme = ThemeData(
   primaryColorLight: Colors.amber[200],
   primaryColorDark: Colors.amber[800],
   accentColor: Colors.grey[850],
+  errorColor: Colors.red[900],
   cursorColor: Colors.amber[600],
   scaffoldBackgroundColor: Colors.grey[50],
   textSelectionColor: Colors.amber[300],
@@ -74,6 +75,13 @@ final ThemeData theme = ThemeData(
         width: 2,
         color: Colors.red[600],
       ),
+      borderRadius: BorderRadius.circular(10),
+    ),
+  ),
+  snackBarTheme: SnackBarThemeData(
+    behavior: SnackBarBehavior.floating,
+    backgroundColor: Colors.grey[850],
+    shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10),
     ),
   ),
