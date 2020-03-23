@@ -5,12 +5,19 @@ part 'user_model.g.dart';
 
 @JsonSerializable()
 class UserModel extends Equatable {
-  UserModel({this.userId, this.name, this.email, this.photoUrl, this.password});
+  UserModel(
+      {this.userId,
+      this.name,
+      this.email,
+      this.photoUrl,
+      this.password,
+      this.isFirstLoginDone});
 
   final String userId;
   final String name;
   final String email;
   final String photoUrl;
+  final bool isFirstLoginDone;
 
   @JsonKey(ignore: true)
   final String password;
@@ -26,6 +33,7 @@ class UserModel extends Equatable {
     String email,
     String photoUrl,
     String password,
+    bool isFirstLoginDone,
   }) {
     return UserModel(
       userId: userId ?? this.userId,
@@ -33,6 +41,7 @@ class UserModel extends Equatable {
       email: email ?? this.email,
       photoUrl: photoUrl ?? this.photoUrl,
       password: password ?? this.password,
+      isFirstLoginDone: isFirstLoginDone ?? this.isFirstLoginDone,
     );
   }
 
@@ -41,7 +50,6 @@ class UserModel extends Equatable {
 
   @override
   String toString() {
-    return 'UserModel{userId: $userId, name: $name, email: $email, '
-        'photoUrl: $photoUrl, password: $password}';
+    return '''UserModel{userId: $userId, name: $name, email: $email, photoUrl: $photoUrl, isFirstLoginDone: $isFirstLoginDone, password: $password}''';
   }
 }
