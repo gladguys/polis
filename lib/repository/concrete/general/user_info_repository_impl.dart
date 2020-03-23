@@ -25,12 +25,16 @@ class UserInfoRepositoryImpl implements UserInfoRepository {
       if (addresses.isNotEmpty) {
         final firstResult = addresses.first;
         final splitInfo = firstResult.addressLine.split(',');
-        final isBrazil = splitInfo[5].trim() == 'Brazil';
-        final cityStatePart = splitInfo[3].split('-');
-        return UserPositionInfo(
-          isBrazil: isBrazil,
-          stateId: isBrazil ? cityStatePart[1].trim() : cityStatePart[0].trim(),
-        );
+        if (splitInfo.length >= 5) {
+          final isBrazil = splitInfo[5].trim() == 'Brazil';
+          final cityStatePart = splitInfo[3].split('-');
+          return UserPositionInfo(
+            isBrazil: isBrazil,
+            stateId:
+                isBrazil ? cityStatePart[1].trim() : cityStatePart[0].trim(),
+          );
+        }
+        return null;
       }
       return null;
     } on Exception {
