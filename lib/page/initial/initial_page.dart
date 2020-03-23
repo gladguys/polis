@@ -110,13 +110,12 @@ class _InitialPageState extends State<InitialPage> {
                       _panelController.open();
                     },
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 12),
                   RaisedButton(
                     key: const ValueKey('google-signin-btn'),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        const SizedBox(width: 24),
                         Image.asset(
                           'assets/images/google.png',
                           fit: BoxFit.contain,
@@ -136,7 +135,7 @@ class _InitialPageState extends State<InitialPage> {
                       context.bloc<SigninBloc>().add(SigninWithGoogle());
                     },
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 12),
                   OutlineButton(
                     child: Text(
                       NO_ACCOUNT,

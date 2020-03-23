@@ -8,6 +8,7 @@ import '../../bloc/signin/signin_bloc.dart';
 import '../../bloc/signin/signin_state.dart';
 import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
+import '../../widget/snackbar.dart';
 import '../pages.dart';
 
 class SigninPage extends StatefulWidget {
@@ -46,9 +47,7 @@ class _SigninPageState extends State<SigninPage> {
           );
         }
         if (state is SigninFailed) {
-          Scaffold.of(context).showSnackBar(
-            const SnackBar(content: Text(SIGNIN_FAILED)),
-          );
+          Snackbar.error(context, SIGNIN_FAILED);
         }
       },
       child: BlocBuilder<SigninBloc, SigninState>(
@@ -57,7 +56,12 @@ class _SigninPageState extends State<SigninPage> {
             return _form();
           }
           if (state is SigninLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: Padding(
+                padding: EdgeInsets.only(top: 72),
+                child: CircularProgressIndicator(),
+              ),
+            );
           }
           if (state is SigninFailed) {
             return _form();
@@ -152,6 +156,7 @@ class _SigninPageState extends State<SigninPage> {
                 onPressed: () {},
               ),
             ),
+            const SizedBox(height: 16),
           ],
         ),
       ),

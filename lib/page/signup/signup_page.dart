@@ -10,6 +10,7 @@ import '../../core/abstract/polis_image_picker.dart';
 import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
 import '../../model/user_model.dart';
+import '../../widget/snackbar.dart';
 import '../initial/initial_page_connected.dart';
 import '../theme/main_theme.dart';
 
@@ -66,17 +67,11 @@ class _SignupPageState extends State<SignupPage> {
             InitialPageConnected(),
             name: INITIAL_PAGE,
           );
-          Scaffold.of(context).showSnackBar(
-            const SnackBar(content: Text(USER_CREATED_WITH_SUCCESS)),
-          );
+          Snackbar.success(context, USER_CREATED_WITH_SUCCESS);
         } else if (state is UserCreationFailed) {
-          Scaffold.of(context).showSnackBar(
-            SnackBar(content: Text(state.statusMessage)),
-          );
+          Snackbar.error(context, state.statusMessage);
         } else if (state is SignupFailed) {
-          Scaffold.of(context).showSnackBar(
-            SnackBar(content: Text(state.errorMessage)),
-          );
+          Snackbar.error(context, state.errorMessage);
         }
       },
       child: BlocBuilder<SignupBloc, SignupState>(
@@ -88,7 +83,10 @@ class _SignupPageState extends State<SignupPage> {
             return _signupForm();
           } else {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: Padding(
+                padding: EdgeInsets.only(top: 72),
+                child: CircularProgressIndicator(),
+              ),
             );
           }
         },
@@ -210,6 +208,7 @@ class _SignupPageState extends State<SignupPage> {
                 onPressed: _validateAndSendForm,
               ),
             ),
+            const SizedBox(height: 16),
           ],
         ),
       ),
