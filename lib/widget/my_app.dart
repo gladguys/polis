@@ -33,7 +33,8 @@ class _MyAppState extends State<MyApp> {
 
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        systemNavigationBarColor: isUserLogged ? Colors.white : Colors.black,
+        systemNavigationBarColor:
+            isUserLogged ? theme.scaffoldBackgroundColor : Colors.black,
       ),
     );
     super.initState();
