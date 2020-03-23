@@ -17,8 +17,10 @@ dependencies:
   equatable: ^1.1.1
   json_serializable: ^3.2.5
   uuid: ^2.0.4
-  sailor: ^0.6.0
+  sailor: ^0.6.0 #TODO(rodrigo): i guess this is not necessary
   get_it: ^4.0.1
+  geocoder: ^0.2.1
+  geolocator: ^5.3.0
   shared_preferences: ^0.5.6+3
   image_picker: ^0.6.3+4
 
