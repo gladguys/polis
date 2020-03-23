@@ -27,23 +27,18 @@ class FirebasePoliticSuggestionRepository
   @override
   Future<List<PoliticoModel>> getSuggestedPolitics() async {
     try {
-      print('aaaa');
       final userInfo = await userInfoRepository.getUserPositionInfo();
-      print(userInfo);
-      print('*');
       final querySnapshot = (userInfo != null && userInfo.isBrazil)
           ? await politicosRef
+              // TODO(rodrigo): tirar esse siglaUf
               .where('siglaUf', isEqualTo: userInfo.stateId)
               .getDocuments()
           : await politicosRef.getDocuments();
 
-      print('**');
       final documents = querySnapshot.documents;
-      print('***');
       return List.generate(
           documents.length, (i) => PoliticoModel.fromJson(documents[i].data));
-    } on Exception catch (e) {
-      print(e);
+    } on Exception {
       throw ComunicationException();
     }
   }

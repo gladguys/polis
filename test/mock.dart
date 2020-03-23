@@ -5,6 +5,8 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:geocoder/services/base.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
@@ -110,3 +112,7 @@ class MockBannerAd extends Mock implements BannerAd {}
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 
 class MockPolisImagePicker extends Mock implements PolisImagePicker {}
+
+class MockGeolocator extends Mock implements Geolocator {}
+
+class MockGeocoding extends Mock implements Geocoding {}
