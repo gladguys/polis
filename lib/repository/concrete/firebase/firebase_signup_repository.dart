@@ -49,6 +49,7 @@ class FirebaseSignupRepository extends SignupRepository {
           authResult.user.uid,
           user.copyWith(
             photoUrl: imageUrl,
+            isFirstLoginDone: false,
           ),
         );
         return;

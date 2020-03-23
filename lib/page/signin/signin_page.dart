@@ -40,11 +40,20 @@ class _SigninPageState extends State<SigninPage> {
     return BlocListener<SigninBloc, SigninState>(
       listener: (context, state) {
         if (state is UserAuthenticated) {
-          context.bloc<UserBloc>().add(StoreUser(state.user));
-          SimpleRouter.forwardAndReplace(
-            PoliticSuggestionPageConnected(),
-            name: POLITIC_SUGGESTION_PAGE,
-          );
+          final user = state.user;
+          context.bloc<UserBloc>().add(StoreUser(user));
+
+          if (user.isFirstLoginDone) {
+            SimpleRouter.forwardAndReplace(
+              TimelinePage(),
+              name: TIMELINE_PAGE,
+            );
+          } else {
+            SimpleRouter.forwardAndReplace(
+              PoliticSuggestionPageConnected(),
+              name: POLITIC_SUGGESTION_PAGE,
+            );
+          }
         }
         if (state is SigninFailed) {
           Snackbar.error(context, SIGNIN_FAILED);

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoder/geocoder.dart';
@@ -22,12 +23,16 @@ class PoliticSuggestionPageConnected extends StatelessWidget {
 
     return PageConnected<PoliticSuggestionBloc>(
       bloc: PoliticSuggestionBloc(
-        repository: FirebasePoliticSuggestionRepository(
+        politicSuggestionRepository: FirebasePoliticSuggestionRepository(
           firestore: Firestore.instance,
           userInfoRepository: UserInfoRepositoryImpl(
             geolocator: Geolocator(),
             geocoding: Geocoder.local,
           ),
+        ),
+        userRepository: FirebaseUserRepository(
+          firebaseAuth: FirebaseAuth.instance,
+          firestore: Firestore.instance,
         ),
       )..add(FetchSuggestedPolitics()),
       page: PoliticSuggestionPage(),

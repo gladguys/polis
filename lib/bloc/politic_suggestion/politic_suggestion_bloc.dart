@@ -6,13 +6,19 @@ import 'package:flutter/material.dart';
 import './bloc.dart';
 import '../../model/politico_model.dart';
 import '../../repository/abstract/politic_suggestion_repository.dart';
+import '../../repository/abstract/user_repository.dart';
 
 class PoliticSuggestionBloc
     extends Bloc<PoliticSuggestionEvent, PoliticSuggestionState> {
-  PoliticSuggestionBloc({@required this.repository})
-      : assert(repository != null);
+  PoliticSuggestionBloc(
+      {@required this.politicSuggestionRepository,
+      @required this.userRepository})
+      : assert(politicSuggestionRepository != null),
+        assert(userRepository != null);
 
-  final PoliticSuggestionRepository repository;
+  final PoliticSuggestionRepository politicSuggestionRepository;
+  final UserRepository userRepository;
+
   List<PoliticoModel> politics;
   List<PoliticoModel> followedPolitics = [];
 
@@ -26,7 +32,7 @@ class PoliticSuggestionBloc
       yield LoadingFetch();
 
       try {
-        politics = await repository.getSuggestedPolitics();
+        politics = await politicSuggestionRepository.getSuggestedPolitics();
         yield FetchSuggestedPoliticsSuccess(politics);
       } on Exception {
         yield FetchSuggestedPoliticsFailed();
@@ -49,14 +55,16 @@ class PoliticSuggestionBloc
       yield LoadingSaveFollowPolitics();
 
       try {
-        await repository.savePoliticsToFollow(
+        await politicSuggestionRepository.savePoliticsToFollow(
           userId: event.user.userId,
           politics: followedPolitics,
         );
-        await repository.saveFollowerToPolitics(
+        await politicSuggestionRepository.saveFollowerToPolitics(
           user: event.user,
           politics: followedPolitics,
         );
+        await userRepository.setFirstLoginDone(event.user);
+
         yield SavedSuggestedPolitics();
       } on Exception {
         yield SaveSuggestedPoliticsFailed();

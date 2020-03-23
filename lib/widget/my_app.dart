@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,7 @@ class _MyAppState extends State<MyApp> {
         user: user ?? UserModel(),
         repository: FirebaseUserRepository(
           firebaseAuth: FirebaseAuth.instance,
+          firestore: Firestore.instance,
         ),
       ),
       child: MaterialApp(
