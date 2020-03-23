@@ -144,7 +144,8 @@ void main() {
       expect(find.byType(ListTile), findsNWidgets(2));
     });
 
-    testWidgets('should call bloc when clicked follow button', (tester) async {
+    testWidgets('''should call bloc when clicked follow button''',
+        (tester) async {
       when(mockUserFollowingPoliticsBloc.isPoliticBeingFollowed(any))
           .thenReturn(true);
       when(mockUserFollowingPoliticsBloc.state).thenReturn(

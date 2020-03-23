@@ -241,7 +241,7 @@ void main() {
         );
         final politicoCard = find.byType(PoliticSuggested);
         expect(politicoCard, findsOneWidget);
-        final followButton = find.byType(GFButton);
+        final followButton = find.byType(OutlineButton);
         expect(followButton, findsOneWidget);
         expect(find.text(FOLLOW), findsOneWidget);
         await tester.tap(followButton);
