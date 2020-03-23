@@ -1,7 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:getflutter/components/button/gf_button.dart';
 import 'package:image_test_utils/image_test_utils.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
@@ -172,7 +171,7 @@ void main() {
         );
         final politicoCard = find.byType(PoliticSuggested);
         expect(politicoCard, findsOneWidget);
-        final followButton = find.byType(GFButton);
+        final followButton = find.byType(OutlineButton);
         expect(followButton, findsOneWidget);
         expect(find.text(STOP_FOLLOWING), findsOneWidget);
         await tester.tap(followButton);
