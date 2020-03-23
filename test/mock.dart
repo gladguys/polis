@@ -17,6 +17,7 @@ import 'package:polis/repository/abstract/politic_suggestion_repository.dart';
 import 'package:polis/repository/abstract/signin_repository.dart';
 import 'package:polis/repository/abstract/signup_repository.dart';
 import 'package:polis/repository/abstract/user_following_politics_repository.dart';
+import 'package:polis/repository/abstract/user_info_repository.dart';
 import 'package:polis/repository/abstract/user_profile_repository.dart';
 import 'package:polis/repository/abstract/user_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -57,6 +58,8 @@ class MockUserFollowingPoliticsRepository extends Mock
     implements UserFollowingPoliticsRepository {}
 
 class MockFollowRepository extends Mock implements FollowRepository {}
+
+class MockUserInfoRepository extends Mock implements UserInfoRepository {}
 
 // Firebase
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}

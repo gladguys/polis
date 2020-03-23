@@ -25,6 +25,7 @@ void main() {
       mockQuerySnapshot = MockQuerySnapshot();
       firebasePoliticSuggestionRepository = FirebasePoliticSuggestionRepository(
         firestore: mockFirestore,
+        userInfoRepository: MockUserInfoRepository(),
       );
       refFiltered = MockQuery();
       mockDocumentSnapshot = MockDocumentSnapshot();
@@ -38,6 +39,13 @@ void main() {
       expect(
           () => FirebasePoliticSuggestionRepository(
                 firestore: null,
+                userInfoRepository: MockUserInfoRepository(),
+              ),
+          throwsAssertionError);
+      expect(
+          () => FirebasePoliticSuggestionRepository(
+                firestore: MockFirestore(),
+                userInfoRepository: null,
               ),
           throwsAssertionError);
     });
