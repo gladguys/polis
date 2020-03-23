@@ -21,9 +21,9 @@ class PoliticsSuggestion extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          Text(
+          const Text(
             POLITICS_SUGGESTION_ON_YOUR_AREA,
-            style: const TextStyle(fontSize: 14),
+            style: TextStyle(fontSize: 14),
           ),
           const SizedBox(height: 16),
           Expanded(
