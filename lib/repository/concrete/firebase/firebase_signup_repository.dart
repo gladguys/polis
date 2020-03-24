@@ -28,8 +28,9 @@ class FirebaseSignupRepository extends SignupRepository {
   @override
   Future<void> createUserWithEmailAndPassword(
       UserModel user, File profileImage) async {
+    AuthResult authResult;
     try {
-      final authResult = await firebaseAuth.createUserWithEmailAndPassword(
+      authResult = await firebaseAuth.createUserWithEmailAndPassword(
           email: user.email, password: user.password);
 
       if (authResult != null && !await userExists(authResult.user.uid)) {
@@ -52,6 +53,7 @@ class FirebaseSignupRepository extends SignupRepository {
         return;
       }
     } on Exception catch (e) {
+      await authResult?.user?.delete();
       if (e.toString().contains(ERROR_EMAIL_ALREADY_IN_USE)) {
         throw EmailAlreadyInUseException();
       } else if (e.toString().contains(ERROR_WEAK_PASSWORD)) {
