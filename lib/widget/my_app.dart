@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/observer.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +12,7 @@ import '../i18n/i18n.dart';
 import '../model/user_model.dart';
 import '../page/pages.dart';
 import '../page/theme/main_theme.dart';
-import '../repository/concrete/firebase/repositories.dart';
+import '../repository/concrete/repositories.dart';
 
 class MyApp extends StatefulWidget {
   @override
@@ -46,10 +44,7 @@ class _MyAppState extends State<MyApp> {
     return BlocProvider<UserBloc>(
       create: (_) => UserBloc(
         user: user ?? UserModel(),
-        repository: FirebaseUserRepository(
-          firebaseAuth: FirebaseAuth.instance,
-          firestore: Firestore.instance,
-        ),
+        repository: context.repository<FirebaseUserRepository>(),
       ),
       child: MaterialApp(
         title: POLIS,

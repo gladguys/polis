@@ -704,13 +704,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.23.1"
-  sailor:
-    dependency: "direct main"
-    description:
-      name: sailor
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.6.0"
   shared_preferences:
     dependency: "direct main"
     description:

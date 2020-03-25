@@ -3,7 +3,7 @@ import 'package:mockito/mockito.dart';
 import 'package:polis/core/exception/comunication_exception.dart';
 import 'package:polis/model/politico_model.dart';
 import 'package:polis/repository/concrete/firebase/collection.dart';
-import 'package:polis/repository/concrete/firebase/repositories.dart';
+import 'package:polis/repository/concrete/repositories.dart';
 
 import '../mock.dart';
 

@@ -34,7 +34,8 @@ class FirebaseSigninRepository extends SigninRepository {
         return await getUserById(authResult.user.uid);
       }
       return null;
-    } on ComunicationException {
+    } on ComunicationException catch (e) {
+      print(e);
       rethrow;
     } on Exception {
       throw InvalidCredentialsException();
