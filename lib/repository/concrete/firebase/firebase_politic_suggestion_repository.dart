@@ -5,14 +5,19 @@ import '../../../core/exception/exceptions.dart';
 import '../../../model/politico_model.dart';
 import '../../../model/user_model.dart';
 import '../../abstract/politic_suggestion_repository.dart';
+import '../../abstract/user_info_repository.dart';
 import 'collection.dart';
 
 class FirebasePoliticSuggestionRepository
     implements PoliticSuggestionRepository {
-  FirebasePoliticSuggestionRepository({@required this.firestore})
-      : assert(firestore != null);
+  FirebasePoliticSuggestionRepository(
+      {@required this.firestore, @required this.userInfoRepository})
+      : assert(firestore != null),
+        assert(userInfoRepository != null);
 
   final Firestore firestore;
+  final UserInfoRepository userInfoRepository;
+
   CollectionReference get politicosRef => firestore.collection(POLITICOS);
   CollectionReference get politicosSeguidosRef =>
       firestore.collection(POLITICOS_SEGUIDOS);
@@ -22,11 +27,15 @@ class FirebasePoliticSuggestionRepository
   @override
   Future<List<PoliticoModel>> getSuggestedPolitics() async {
     try {
-      final querySnapshot =
-          await politicosRef.where('siglaUf', isEqualTo: 'CE').getDocuments();
+      final userInfo = await userInfoRepository.getUserPositionInfo();
+      final querySnapshot = (userInfo != null && userInfo.isBrazil)
+          ? await politicosRef
+              // TODO(rodrigo): tirar esse siglaUf
+              .where('siglaUf', isEqualTo: userInfo.stateId)
+              .getDocuments()
+          : await politicosRef.getDocuments();
 
       final documents = querySnapshot.documents;
-
       return List.generate(
           documents.length, (i) => PoliticoModel.fromJson(documents[i].data));
     } on Exception {
