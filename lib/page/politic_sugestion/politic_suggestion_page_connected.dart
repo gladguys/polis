@@ -1,13 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:geocoder/geocoder.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/politic_suggestion/bloc.dart';
-import '../../repository/concrete/firebase/repositories.dart';
-import '../../repository/concrete/general/user_info_repository_impl.dart';
+import '../../repository/concrete/repositories.dart';
 import '../page_connected.dart';
 import '../pages.dart';
 import '../theme/main_theme.dart';
@@ -23,17 +19,9 @@ class PoliticSuggestionPageConnected extends StatelessWidget {
 
     return PageConnected<PoliticSuggestionBloc>(
       bloc: PoliticSuggestionBloc(
-        politicSuggestionRepository: FirebasePoliticSuggestionRepository(
-          firestore: Firestore.instance,
-          userInfoRepository: UserInfoRepositoryImpl(
-            geolocator: Geolocator(),
-            geocoding: Geocoder.local,
-          ),
-        ),
-        userRepository: FirebaseUserRepository(
-          firebaseAuth: FirebaseAuth.instance,
-          firestore: Firestore.instance,
-        ),
+        politicSuggestionRepository:
+            context.repository<FirebasePoliticSuggestionRepository>(),
+        userRepository: context.repository<FirebaseUserRepository>(),
       )..add(FetchSuggestedPolitics()),
       page: PoliticSuggestionPage(),
     );

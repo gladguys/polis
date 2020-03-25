@@ -5,7 +5,7 @@ import 'package:polis/model/politico_model.dart';
 import 'package:polis/model/user_model.dart';
 import 'package:polis/model/user_position_info.dart';
 import 'package:polis/repository/concrete/firebase/collection.dart';
-import 'package:polis/repository/concrete/firebase/repositories.dart';
+import 'package:polis/repository/concrete/repositories.dart';
 
 import '../mock.dart';
 

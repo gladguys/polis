@@ -1,7 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/abstract/polis_image_picker.dart';
@@ -16,11 +14,7 @@ class SignupPageConnected extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageConnected<SignupBloc>(
       bloc: SignupBloc(
-        repository: FirebaseSignupRepository(
-          firebaseAuth: FirebaseAuth.instance,
-          firestore: Firestore.instance,
-          storage: FirebaseStorage.instance,
-        ),
+        repository: context.repository<FirebaseSignupRepository>(),
         analyticsService: G<AnalyticsService>(),
       ),
       page: SignupPage(
