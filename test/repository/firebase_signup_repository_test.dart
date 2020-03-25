@@ -121,6 +121,7 @@ void main() {
         photoUrl: 'my-photo-url',
         email: 'email',
         password: null,
+        isFirstLoginDone: false,
       ).toJson()))
           .called(1);
     });

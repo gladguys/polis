@@ -11,16 +11,31 @@ void main() {
   group('PoliticSuggestionBloc tests', () {
     PoliticSuggestionBloc politicSuggestionBloc;
     MockPoliticSugestionRepository mockPoliticSugestionRepository;
+    MockUserRepository mockUserRepository;
 
     setUp(() {
       mockPoliticSugestionRepository = MockPoliticSugestionRepository();
-      politicSuggestionBloc =
-          PoliticSuggestionBloc(repository: mockPoliticSugestionRepository);
+      mockUserRepository = MockUserRepository();
+      politicSuggestionBloc = PoliticSuggestionBloc(
+        politicSuggestionRepository: mockPoliticSugestionRepository,
+        userRepository: mockUserRepository,
+      );
     });
 
     test('asserts', () {
       expect(
-          () => PoliticSuggestionBloc(repository: null), throwsAssertionError);
+          () => PoliticSuggestionBloc(
+                politicSuggestionRepository: null,
+                userRepository: mockUserRepository,
+              ),
+          throwsAssertionError);
+
+      expect(
+          () => PoliticSuggestionBloc(
+                politicSuggestionRepository: mockPoliticSugestionRepository,
+                userRepository: null,
+              ),
+          throwsAssertionError);
     });
 
     test('Expects InitialSignin to be the initial state', () {
@@ -143,6 +158,8 @@ void main() {
               .savePoliticsToFollow(userId: '1', politics: [])).called(1);
           verify(mockPoliticSugestionRepository.saveFollowerToPolitics(
               user: UserModel(userId: '1'), politics: [])).called(1);
+          verify(mockUserRepository.setFirstLoginDone(UserModel(userId: '1')))
+              .called(1);
         },
         expect: [
           LoadingSaveFollowPolitics(),

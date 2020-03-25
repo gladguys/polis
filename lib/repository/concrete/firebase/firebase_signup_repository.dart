@@ -47,9 +47,7 @@ class FirebaseSignupRepository extends SignupRepository {
 
         await createFirestoreUser(
           authResult.user.uid,
-          user.copyWith(
-            photoUrl: imageUrl,
-          ),
+          user.copyWith(photoUrl: imageUrl),
         );
         return;
       }
@@ -78,10 +76,12 @@ class FirebaseSignupRepository extends SignupRepository {
   @override
   Future<UserModel> createFirestoreUser(String uid, UserModel user) async {
     final userToSave = UserModel(
-        userId: uid,
-        name: user.name,
-        email: user.email,
-        photoUrl: user.photoUrl);
+      userId: uid,
+      name: user.name,
+      email: user.email,
+      photoUrl: user.photoUrl,
+      isFirstLoginDone: false,
+    );
 
     try {
       await userRef.document(userToSave.userId).setData(userToSave.toJson());

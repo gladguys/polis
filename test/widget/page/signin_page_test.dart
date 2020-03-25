@@ -29,13 +29,46 @@ void main() {
       );
     });
 
-    testWidgets('should navigate to PoliticSugestionPage when user auths',
+    testWidgets(
+        '''should navigate to PoliticSugestionPage when user auths and has not yet done signin''',
         (tester) async {
       final mockSigninBloc = MockSigninBloc();
       whenListen(
         mockSigninBloc,
-        Stream<SigninState>.fromIterable(
-            [InitialSignin(), UserAuthenticated(UserModel(userId: '1'))]),
+        Stream<SigninState>.fromIterable([
+          InitialSignin(),
+          UserAuthenticated(
+            UserModel(userId: '1', isFirstLoginDone: false),
+          ),
+        ]),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<SigninBloc>(
+            bloc: mockSigninBloc,
+            page: Scaffold(
+              body: SigninPage(),
+            ),
+          ),
+        ),
+      );
+    });
+
+    testWidgets(
+        'should navigate to Timeline when user auths and has yet done signin',
+        (tester) async {
+      final mockSigninBloc = MockSigninBloc();
+      whenListen(
+        mockSigninBloc,
+        Stream<SigninState>.fromIterable([
+          InitialSignin(),
+          UserAuthenticated(
+            UserModel(
+              userId: '1',
+              isFirstLoginDone: true,
+            ),
+          )
+        ]),
       );
       await tester.pumpWidget(
         connectedWidget(

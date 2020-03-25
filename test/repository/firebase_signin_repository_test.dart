@@ -85,6 +85,7 @@ void main() {
           'name': 'name',
           'email': 'email',
           'photoUrl': 'photourl',
+          'isFirstLoginDone': true,
         };
         when(mockDocumentSnapshot.data).thenReturn(userJson);
 
