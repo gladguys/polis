@@ -27,6 +27,9 @@ final ThemeData theme = ThemeData(
       ),
     ),
   ),
+  bottomAppBarTheme: BottomAppBarTheme(
+    color: Colors.grey[50],
+  ),
   fontFamily: 'Ubuntu',
   inputDecorationTheme: InputDecorationTheme(
     labelStyle: TextStyle(color: Colors.black),

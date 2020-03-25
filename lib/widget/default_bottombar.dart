@@ -19,82 +19,103 @@ class DefaultBottombar extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = context.bloc<UserBloc>().user;
     return BottomAppBar(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        child: Row(
-          children: <Widget>[
-            const SizedBox(width: 12),
-            routeName == TIMELINE_PAGE
-                ? Text(
-                    POLIS,
-                    style: TextStyle(
-                      fontFamily: 'Philosopher',
-                      fontSize: 36,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+      child: Row(
+        children: <Widget>[
+          Container(
+            width: 72,
+            height: 40,
+            alignment: Alignment.centerLeft,
+            child: routeName == TIMELINE_PAGE
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Text(
+                      POLIS,
+                      style: TextStyle(
+                        fontFamily: 'Philosopher',
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   )
-                : IconButton(
+                : _buildButtonBottomAppBar(
                     key: const ValueKey('arrow-back-btn'),
-                    icon: Icon(Icons.arrow_back),
+                    icon: FontAwesomeIcons.chevronLeft,
                     onPressed: onPopCallback,
                   ),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.home),
-                    iconSize: 36,
-                    onPressed: () => SimpleRouter.forward(
-                      TimelinePage(),
-                      name: TIMELINE_PAGE,
-                    ),
+          ),
+          Expanded(
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 8,
+              children: <Widget>[
+                _buildButtonBottomAppBar(
+                  icon: FontAwesomeIcons.home,
+                  onPressed: () => SimpleRouter.forward(
+                    TimelinePage(),
+                    name: TIMELINE_PAGE,
                   ),
-                  const SizedBox(width: 8),
-                  IconButton(
-                    icon: Icon(Icons.search),
-                    iconSize: 36,
-                    onPressed: () => SimpleRouter.forward(
-                      SearchPoliticPage(),
-                      name: SEARCH_POLITIC_PAGE,
-                    ),
+                ),
+                _buildButtonBottomAppBar(
+                  icon: FontAwesomeIcons.search,
+                  onPressed: () => SimpleRouter.forward(
+                    SearchPoliticPage(),
+                    name: SEARCH_POLITIC_PAGE,
                   ),
-                  const SizedBox(width: 8),
-                  IconButton(
-                    icon: Icon(Icons.bookmark_border),
-                    iconSize: 36,
-                    onPressed: () => SimpleRouter.forward(
-                      FavoritePostsPage(),
-                      name: FAVORITE_POSTS_PAGE,
-                    ),
+                ),
+                _buildButtonBottomAppBar(
+                  icon: FontAwesomeIcons.solidBookmark,
+                  onPressed: () => SimpleRouter.forward(
+                    FavoritePostsPage(),
+                    name: FAVORITE_POSTS_PAGE,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            GestureDetector(
+          ),
+          Container(
+            width: 72,
+            height: 40,
+            alignment: Alignment.centerRight,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(15),
               onTap: () => SimpleRouter.forward(
                 UserProfilePageConnected(),
                 name: USER_PROFILE_PAGE,
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(25),
                 child: user.photoUrl != null
                     ? FancyShimmerImage(
                         imageUrl: user.photoUrl,
-                        width: 50,
-                        height: 50,
+                        width: 30,
+                        height: 30,
                       )
                     : FaIcon(
                         FontAwesomeIcons.solidUserCircle,
-                        color: Theme.of(context).accentColor.withOpacity(.6),
-                        size: 50,
+                        size: 30,
                       ),
               ),
             ),
-            const SizedBox(width: 12),
-          ],
-        ),
+          ),
+          const SizedBox(width: 8),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildButtonBottomAppBar({
+    IconData icon,
+    Function onPressed,
+    Key key,
+  }) {
+    return Container(
+      width: 40,
+      height: 40,
+      child: FlatButton(
+        key: key,
+        child: Icon(icon),
+        padding: EdgeInsets.zero,
+        onPressed: onPressed,
       ),
     );
   }
