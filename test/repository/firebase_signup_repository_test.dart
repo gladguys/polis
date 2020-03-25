@@ -126,7 +126,8 @@ void main() {
           .called(1);
     });
 
-    test('''should throw UploadFileException exception when upload fails''',
+    test(
+        '''should throw UploadFileException exception when upload fails and should delete auth user''',
         () async {
       final user = UserModel(userId: '1', email: 'email', password: 'password');
       when(mockFirebaseAuth.createUserWithEmailAndPassword(
@@ -144,6 +145,7 @@ void main() {
       await firebaseSignupRepository
           .createUserWithEmailAndPassword(user, File('file'))
           .catchError((e) => expect(e, isA<UploadFileException>()));
+      verify(mockFirebaseUser.delete()).called(1);
     });
 
     test('should throw EmailAlreadyInUseException exception', () async {
