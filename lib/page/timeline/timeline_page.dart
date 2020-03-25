@@ -9,7 +9,7 @@ class TimelinePage extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: DefaultBottombar(TIMELINE_PAGE),
       body: Container(
-        color: Colors.green,
+        color: Colors.grey[50],
       ),
     );
   }
