@@ -25,7 +25,7 @@ void main() {
   group('PoliticSuggestionPage tests', () {
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
-        connectedWidget(PoliticSuggestionPageConnected()),
+        connectedWidget(PoliticSuggestionPageConnected('T')),
       );
     });
 

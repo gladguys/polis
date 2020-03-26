@@ -7,8 +7,8 @@ void main() {
   group('PoliticSuggestionEvent tests', () {
     group('FetchSuggestedPolitics tests', () {
       test('props', () {
-        final ev1 = FetchSuggestedPolitics();
-        final ev2 = FetchSuggestedPolitics();
+        final ev1 = FetchSuggestedPolitics('T');
+        final ev2 = FetchSuggestedPolitics('T');
 
         expect(ev1, ev2);
       });
