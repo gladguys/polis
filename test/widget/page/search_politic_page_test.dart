@@ -6,7 +6,7 @@ import '../utils.dart';
 void main() {
   group('SearchPoliticPage tests', () {
     testWidgets('shoud build without exploding', (tester) async {
-      await tester.pumpWidget(connectedWidget(SearchPoliticPage()));
+      await tester.pumpWidget(connectedWidget(SearchPoliticPageConnected()));
     });
   });
 }
