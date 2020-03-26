@@ -5,6 +5,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
@@ -102,6 +103,8 @@ class MockSharedPreferencesService extends Mock
     implements SharedPreferencesService {}
 
 // Other
+class MockNavigatorObserver extends Mock implements NavigatorObserver {}
+
 class MockBannerAd extends Mock implements BannerAd {}
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}

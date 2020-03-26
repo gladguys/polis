@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 import 'package:polis/page/pages.dart';
 import 'package:smart_select/smart_select.dart';
 
@@ -23,6 +24,9 @@ void main() {
       await tester.pumpWidget(connectedWidget(IntroPage()));
       final doneButton = find.byKey(const ValueKey('done-btn'));
       expect(doneButton, doneButton);
+      await tester.tap(doneButton);
+      await tester.pump();
+      verify(mockObserver.didPush(any, any));
     });
   });
 }

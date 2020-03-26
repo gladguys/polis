@@ -212,6 +212,7 @@ void main() {
           ),
         ),
       );
+      verify(mockObserver.didPush(any, any));
     });
 
     testWidgets('should call follow event when click on follow button',

@@ -7,6 +7,8 @@ import 'package:simple_router/simple_router.dart';
 
 import '../mock.dart';
 
+final MockNavigatorObserver mockObserver = MockNavigatorObserver();
+
 Widget connectedWidget(Widget widget) {
   SimpleRouter.setKey(GlobalKey<NavigatorState>());
   return MyAppInjections(
@@ -18,6 +20,9 @@ Widget connectedWidget(Widget widget) {
         repository: MockUserRepository(),
       ),
       child: MaterialApp(
+        navigatorObservers: [
+          mockObserver,
+        ],
         navigatorKey: SimpleRouter.getKey(),
         home: widget,
       ),
