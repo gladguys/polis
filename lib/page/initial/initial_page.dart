@@ -28,18 +28,21 @@ class _InitialPageState extends State<InitialPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SlidingUpPanel(
-        minHeight: 0,
-        maxHeight: _isSigninPanel ? 360 : 580,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
+    return WillPopScope(
+      onWillPop: () => _panelController.close(),
+      child: Scaffold(
+        body: SlidingUpPanel(
+          minHeight: 0,
+          maxHeight: _isSigninPanel ? 360 : 580,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(24),
+            topRight: Radius.circular(24),
+          ),
+          color: Colors.white.withOpacity(.95),
+          controller: _panelController,
+          panel: _panel(),
+          body: _body(context),
         ),
-        color: Colors.white.withOpacity(.95),
-        controller: _panelController,
-        panel: _panel(),
-        body: _body(context),
       ),
     );
   }
