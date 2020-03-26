@@ -59,16 +59,16 @@ void main() {
       blocTest(
         'Expects [LoadingFetch, FetchSuggestedPoliticsSuccess] when success',
         build: () async {
-          when(mockPoliticSugestionRepository.getSuggestedPolitics())
+          when(mockPoliticSugestionRepository.getSuggestedPolitics(any))
               .thenAnswer((_) => Future.value([]));
           return politicSuggestionBloc;
         },
         act: (politicSuggestionBloc) {
-          politicSuggestionBloc.add(FetchSuggestedPolitics());
+          politicSuggestionBloc.add(FetchSuggestedPolitics('T'));
           return;
         },
         verify: (politicSuggestionBloc) async {
-          verify(mockPoliticSugestionRepository.getSuggestedPolitics())
+          verify(mockPoliticSugestionRepository.getSuggestedPolitics('T'))
               .called(1);
         },
         expect: [
@@ -80,16 +80,16 @@ void main() {
       blocTest(
         'Expects [LoadingFetch, FetchSuggestedPoliticsFailed] when fails',
         build: () async {
-          when(mockPoliticSugestionRepository.getSuggestedPolitics())
+          when(mockPoliticSugestionRepository.getSuggestedPolitics(any))
               .thenThrow(Exception());
           return politicSuggestionBloc;
         },
         act: (politicSuggestionBloc) {
-          politicSuggestionBloc.add(FetchSuggestedPolitics());
+          politicSuggestionBloc.add(FetchSuggestedPolitics('T'));
           return;
         },
         verify: (politicSuggestionBloc) async {
-          verify(mockPoliticSugestionRepository.getSuggestedPolitics())
+          verify(mockPoliticSugestionRepository.getSuggestedPolitics('T'))
               .called(1);
         },
         expect: [

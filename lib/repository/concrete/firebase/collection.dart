@@ -1,5 +1,7 @@
 const USERS = 'users';
+
 const POLITICOS = 'politicos';
+const SIGLA_UF_FIELD = 'siglaUf';
 
 const POLITICOS_SEGUIDOS = 'politicos_seguidos';
 const POLITICOS_SEGUIDOS_COLLECTION = 'politicosSeguidos';

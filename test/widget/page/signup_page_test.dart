@@ -142,6 +142,7 @@ void main() {
       );
       await tester.pumpAndSettle(const Duration(seconds: 10));
       expect(find.byType(InitialPage), findsOneWidget);
+      verify(mockObserver.didPush(any, any));
     });
 
     testWidgets('should show loading indicator', (tester) async {

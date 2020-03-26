@@ -3,7 +3,6 @@ import 'package:mockito/mockito.dart';
 import 'package:polis/core/exception/exceptions.dart';
 import 'package:polis/model/politico_model.dart';
 import 'package:polis/model/user_model.dart';
-import 'package:polis/model/user_position_info.dart';
 import 'package:polis/repository/concrete/firebase/collection.dart';
 import 'package:polis/repository/concrete/repositories.dart';
 
@@ -17,18 +16,15 @@ void main() {
     MockDocumentSnapshot mockDocumentSnapshot;
     MockDocumentReference mockDocumentReference;
     MockCollectionReference mockCollectionReference;
-    MockUserInfoRepository mockUserInfoRepository;
-    MockQuery refFiltered;
     List<MockDocumentSnapshot> mockDocumentSnapshotList;
+    MockQuery refFiltered;
 
     setUp(() {
       mockFirestore = MockFirestore();
       mockDocumentReference = MockDocumentReference();
       mockQuerySnapshot = MockQuerySnapshot();
-      mockUserInfoRepository = MockUserInfoRepository();
       firebasePoliticSuggestionRepository = FirebasePoliticSuggestionRepository(
         firestore: mockFirestore,
-        userInfoRepository: mockUserInfoRepository,
       );
       refFiltered = MockQuery();
       mockDocumentSnapshot = MockDocumentSnapshot();
@@ -42,27 +38,16 @@ void main() {
       expect(
           () => FirebasePoliticSuggestionRepository(
                 firestore: null,
-                userInfoRepository: MockUserInfoRepository(),
-              ),
-          throwsAssertionError);
-      expect(
-          () => FirebasePoliticSuggestionRepository(
-                firestore: MockFirestore(),
-                userInfoRepository: null,
               ),
           throwsAssertionError);
     });
 
     group('getSuggestedPolitics tests', () {
       test(
-          '''return [PoliticoModel] when there are suggestions and user dont have state''',
+          '''return [PoliticoModel] when there are suggestions and user select all states''',
           () async {
-        when(mockUserInfoRepository.getUserPositionInfo())
-            .thenAnswer((_) => Future.value(null));
         when(mockFirestore.collection(POLITICOS))
             .thenReturn(mockCollectionReference);
-        //when(mockCollectionReference.where('siglaUf', isEqualTo: 'CE'))
-        //  .thenReturn(refFiltered);
         when(mockCollectionReference.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
         final politicoJson = {
@@ -71,36 +56,28 @@ void main() {
         when(mockQuerySnapshot.documents).thenReturn(mockDocumentSnapshotList);
         when(mockDocumentSnapshot.data).thenReturn(politicoJson);
         final suggestedPolitics =
-            await firebasePoliticSuggestionRepository.getSuggestedPolitics();
+            await firebasePoliticSuggestionRepository.getSuggestedPolitics('T');
         expect(suggestedPolitics.length, 1);
         expect(suggestedPolitics[0].id, politicoJson['id']);
         verify(mockCollectionReference.getDocuments()).called(1);
       });
 
       test(
-          '''return [PoliticoModel] filtered by user state when there are suggestions and user have state''',
+          '''return [PoliticoModel] when there are suggestions and user select a single state''',
           () async {
-        when(mockUserInfoRepository.getUserPositionInfo()).thenAnswer(
-          (_) => Future.value(
-            UserPositionInfo(
-              isBrazil: true,
-              stateId: 'CE',
-            ),
-          ),
-        );
         when(mockFirestore.collection(POLITICOS))
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.where('siglaUf', isEqualTo: 'CE'))
             .thenReturn(refFiltered);
-        when(refFiltered.getDocuments())
-            .thenAnswer((_) => Future.value(mockQuerySnapshot));
         final politicoJson = {
           'id': '1',
         };
+        when(refFiltered.getDocuments())
+            .thenAnswer((_) => Future.value(mockQuerySnapshot));
         when(mockQuerySnapshot.documents).thenReturn(mockDocumentSnapshotList);
         when(mockDocumentSnapshot.data).thenReturn(politicoJson);
-        final suggestedPolitics =
-            await firebasePoliticSuggestionRepository.getSuggestedPolitics();
+        final suggestedPolitics = await firebasePoliticSuggestionRepository
+            .getSuggestedPolitics('CE');
         expect(suggestedPolitics.length, 1);
         expect(suggestedPolitics[0].id, politicoJson['id']);
         verify(mockCollectionReference.where('siglaUf', isEqualTo: 'CE'))
@@ -110,7 +87,7 @@ void main() {
       test('should throw exception', () {
         when(mockFirestore.collection(POLITICOS)).thenThrow(Exception());
         firebasePoliticSuggestionRepository
-            .getSuggestedPolitics()
+            .getSuggestedPolitics('T')
             .then((_) {})
             .catchError(
                 (e) => expect(e, isInstanceOf<ComunicationException>()));

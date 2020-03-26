@@ -50,8 +50,8 @@ class _SigninPageState extends State<SigninPage> {
             );
           } else {
             SimpleRouter.forwardAndReplace(
-              PoliticSuggestionPageConnected(),
-              name: POLITIC_SUGGESTION_PAGE,
+              IntroPage(),
+              name: INTRO_PAGE,
             );
           }
         }
