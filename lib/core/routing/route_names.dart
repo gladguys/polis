@@ -1,5 +1,6 @@
 const SIGNIN_PAGE = 'SigninPage';
 const SIGNUP_PAGE = 'SignupPage';
+const INTRO_PAGE = 'IntroPage';
 const TIMELINE_PAGE = 'TimelinePage';
 const SEARCH_POLITIC_PAGE = 'SearchPoliticPage';
 const FAVORITE_POSTS_PAGE = 'FavoritePostsPage';
