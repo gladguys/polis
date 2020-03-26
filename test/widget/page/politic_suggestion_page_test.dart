@@ -25,7 +25,7 @@ void main() {
   group('PoliticSuggestionPage tests', () {
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
-        connectedWidget(PoliticSuggestionPageConnected()),
+        connectedWidget(PoliticSuggestionPageConnected('T')),
       );
     });
 
@@ -212,6 +212,7 @@ void main() {
           ),
         ),
       );
+      verify(mockObserver.didPush(any, any));
     });
 
     testWidgets('should call follow event when click on follow button',

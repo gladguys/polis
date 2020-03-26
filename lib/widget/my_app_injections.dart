@@ -3,8 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geocoder/geocoder.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../repository/concrete/firebase/firebase_follow_repository.dart';
@@ -64,15 +62,8 @@ class MyAppInjections extends StatelessWidget {
           ),
         ),
         RepositoryProvider(
-          create: (_) => UserInfoRepositoryImpl(
-            geolocator: Geolocator(),
-            geocoding: Geocoder.local,
-          ),
-        ),
-        RepositoryProvider(
           create: (_) => FirebasePoliticSuggestionRepository(
             firestore: Firestore.instance,
-            userInfoRepository: _.repository<UserInfoRepositoryImpl>(),
           ),
         ),
       ],

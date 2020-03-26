@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/user_model.dart';
 import 'package:polis/page/user_profile/widget/personal_user_info.dart';
@@ -23,6 +24,7 @@ void main() {
       final editButton = find.text(EDIT_PROFILE);
       expect(editButton, findsOneWidget);
       await tester.tap(editButton);
+      verify(mockObserver.didPush(any, any));
     });
 
     testWidgets('should go to favorite posts when click button',
@@ -42,6 +44,7 @@ void main() {
       final favoritePostsButton = find.text(FAVORITE_POSTS);
       expect(favoritePostsButton, findsOneWidget);
       await tester.tap(favoritePostsButton);
+      verify(mockObserver.didPush(any, any));
     });
   });
 }

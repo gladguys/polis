@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/model/user_model.dart';
 import 'package:polis/page/user_profile/widget/politics_following_quantity.dart';
@@ -29,6 +30,7 @@ void main() {
       final qtdButton = find.byType(GestureDetector);
       expect(qtdButton, findsOneWidget);
       await tester.tap(qtdButton);
+      verify(mockObserver.didPush(any, any));
     });
   });
 }

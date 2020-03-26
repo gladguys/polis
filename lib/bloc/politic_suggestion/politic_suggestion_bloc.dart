@@ -32,7 +32,8 @@ class PoliticSuggestionBloc
       yield LoadingFetch();
 
       try {
-        politics = await politicSuggestionRepository.getSuggestedPolitics();
+        politics = await politicSuggestionRepository
+            .getSuggestedPolitics(event.stateOption);
         yield FetchSuggestedPoliticsSuccess(politics);
       } on Exception {
         yield FetchSuggestedPoliticsFailed();
