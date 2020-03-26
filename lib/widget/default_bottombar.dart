@@ -59,7 +59,7 @@ class DefaultBottombar extends StatelessWidget {
                 _buildButtonBottomAppBar(
                   icon: FontAwesomeIcons.search,
                   onPressed: () => SimpleRouter.forward(
-                    SearchPoliticPage(),
+                    SearchPoliticPageConnected(),
                     name: SEARCH_POLITIC_PAGE,
                   ),
                 ),
