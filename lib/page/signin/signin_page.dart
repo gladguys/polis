@@ -58,6 +58,9 @@ class _SigninPageState extends State<SigninPage> {
         if (state is SigninFailed) {
           Snackbar.error(context, SIGNIN_FAILED);
         }
+        if (state is UserAuthenticationFailed) {
+          Snackbar.error(context, ERROR_AUTENTICATING_USER);
+        }
       },
       child: BlocBuilder<SigninBloc, SigninState>(
         builder: (_, state) {
@@ -73,6 +76,9 @@ class _SigninPageState extends State<SigninPage> {
             );
           }
           if (state is SigninFailed) {
+            return _form();
+          }
+          if (state is UserAuthenticationFailed) {
             return _form();
           }
           return const SizedBox.shrink();
