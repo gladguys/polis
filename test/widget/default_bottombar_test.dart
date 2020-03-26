@@ -44,12 +44,26 @@ void main() {
           ),
         ),
       );
-      final homeIcon = find.widgetWithIcon(IconButton, Icons.home);
+      final homeIcon = find.byWidgetPredicate((widget) {
+        if (widget is FlatButton && widget.child is Icon) {
+          return (widget.child as Icon).icon == FontAwesomeIcons.home;
+        }
+        return false;
+      });
       expect(homeIcon, findsOneWidget);
-      final searchIcon = find.widgetWithIcon(IconButton, Icons.search);
+      final searchIcon = find.byWidgetPredicate((widget) {
+        if (widget is FlatButton && widget.child is Icon) {
+          return (widget.child as Icon).icon == FontAwesomeIcons.search;
+        }
+        return false;
+      });
       expect(searchIcon, findsOneWidget);
-      final bookmarkIcon =
-          find.widgetWithIcon(IconButton, Icons.bookmark_border);
+      final bookmarkIcon = find.byWidgetPredicate((widget) {
+        if (widget is FlatButton && widget.child is Icon) {
+          return (widget.child as Icon).icon == FontAwesomeIcons.solidBookmark;
+        }
+        return false;
+      });
       expect(bookmarkIcon, findsOneWidget);
     });
 
@@ -98,7 +112,12 @@ void main() {
           ),
         ),
       );
-      final homeIcon = find.widgetWithIcon(IconButton, Icons.home);
+      final homeIcon = find.byWidgetPredicate((widget) {
+        if (widget is FlatButton && widget.child is Icon) {
+          return (widget.child as Icon).icon == FontAwesomeIcons.home;
+        }
+        return false;
+      });
       expect(homeIcon, findsOneWidget);
       await tester.tap(homeIcon);
     });
@@ -115,7 +134,12 @@ void main() {
           ),
         ),
       );
-      final searchIcon = find.widgetWithIcon(IconButton, Icons.search);
+      final searchIcon = find.byWidgetPredicate((widget) {
+        if (widget is FlatButton && widget.child is Icon) {
+          return (widget.child as Icon).icon == FontAwesomeIcons.search;
+        }
+        return false;
+      });
       expect(searchIcon, findsOneWidget);
       await tester.tap(searchIcon);
     });
@@ -132,8 +156,12 @@ void main() {
           ),
         ),
       );
-      final bookmarkIcon =
-          find.widgetWithIcon(IconButton, Icons.bookmark_border);
+      final bookmarkIcon = find.byWidgetPredicate((widget) {
+        if (widget is FlatButton && widget.child is Icon) {
+          return (widget.child as Icon).icon == FontAwesomeIcons.solidBookmark;
+        }
+        return false;
+      });
       expect(bookmarkIcon, findsOneWidget);
       await tester.tap(bookmarkIcon);
     });

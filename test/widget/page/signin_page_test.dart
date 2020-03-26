@@ -167,6 +167,28 @@ void main() {
       expect(find.text(SIGNIN_FAILED), findsOneWidget);
     });
 
+    testWidgets('should show error message when signin auth failed',
+        (tester) async {
+      final mockSigninBloc = MockSigninBloc();
+      whenListen(
+        mockSigninBloc,
+        Stream<SigninState>.fromIterable(
+            [InitialSignin(), UserAuthenticationFailed('fail')]),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<SigninBloc>(
+            bloc: mockSigninBloc,
+            page: Scaffold(
+              body: SigninPage(),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      expect(find.text(ERROR_AUTENTICATING_USER), findsOneWidget);
+    });
+
     testWidgets('should do something when recover password is clicked',
         (tester) async {
       final mockSigninBloc = MockSigninBloc();
