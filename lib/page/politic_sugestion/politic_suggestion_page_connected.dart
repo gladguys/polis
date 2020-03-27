@@ -9,6 +9,10 @@ import '../pages.dart';
 import '../theme/main_theme.dart';
 
 class PoliticSuggestionPageConnected extends StatelessWidget {
+  PoliticSuggestionPageConnected(this.stateOption);
+
+  final String stateOption;
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -22,7 +26,7 @@ class PoliticSuggestionPageConnected extends StatelessWidget {
         politicSuggestionRepository:
             context.repository<FirebasePoliticSuggestionRepository>(),
         userRepository: context.repository<FirebaseUserRepository>(),
-      )..add(FetchSuggestedPolitics()),
+      )..add(FetchSuggestedPolitics(stateOption)),
       page: PoliticSuggestionPage(),
     );
   }

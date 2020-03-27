@@ -9,8 +9,13 @@ abstract class PoliticSuggestionEvent extends Equatable {
 }
 
 class FetchSuggestedPolitics extends PoliticSuggestionEvent {
+  FetchSuggestedPolitics(this.stateOption)
+      : assert(stateOption != null && stateOption != '');
+
+  final String stateOption;
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [stateOption];
 }
 
 class FollowOrUnfollowPolitic extends PoliticSuggestionEvent {
