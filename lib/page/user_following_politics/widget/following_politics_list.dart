@@ -57,9 +57,10 @@ class FollowingPoliticsList extends StatelessWidget {
                     ? Colors.red
                     : Colors.green,
                 borderSide: BorderSide(
-                    color: bloc.isPoliticBeingFollowed(politicos[i])
-                        ? Colors.red
-                        : Colors.green),
+                  color: bloc.isPoliticBeingFollowed(politicos[i])
+                      ? Colors.red
+                      : Colors.green,
+                ),
                 onPressed: () => bloc.add(
                   FollowUnfollowPolitic(
                     user: context.bloc<UserBloc>().user,

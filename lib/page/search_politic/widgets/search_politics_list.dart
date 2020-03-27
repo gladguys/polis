@@ -1,7 +1,9 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../bloc/blocs.dart';
 import '../../../model/politico_model.dart';
 
 class SearchPoliticsList extends StatelessWidget {
@@ -11,6 +13,7 @@ class SearchPoliticsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.bloc<SearchPoliticBloc>();
     return politicos.isNotEmpty
         ? ListView.separated(
             itemBuilder: (_, i) => ListTile(
@@ -43,14 +46,27 @@ class SearchPoliticsList extends StatelessWidget {
                 ),
               ),
               trailing: OutlineButton(
-                child: const Text(
-                  'Seguir',
-                  key: ValueKey('follow-unfollow-btn'),
-                  style: TextStyle(fontSize: 10),
+                child: Text(
+                  bloc.isPoliticBeingFollowed(politicos[i])
+                      ? 'Deixar de seguir'
+                      : 'Seguir',
+                  key: const ValueKey('follow-unfollow-btn'),
+                  style: const TextStyle(fontSize: 10),
                 ),
-                textColor: Colors.green,
-                borderSide: BorderSide(color: Colors.green),
-                onPressed: () => {},
+                textColor: bloc.isPoliticBeingFollowed(politicos[i])
+                    ? Colors.red
+                    : Colors.green,
+                borderSide: BorderSide(
+                  color: bloc.isPoliticBeingFollowed(politicos[i])
+                      ? Colors.red
+                      : Colors.green,
+                ),
+                onPressed: () => bloc.add(
+                  FollowUnfollowSearchPolitic(
+                    user: context.bloc<UserBloc>().user,
+                    politico: politicos[i],
+                  ),
+                ),
               ),
             ),
             separatorBuilder: (_, i) => const Divider(),

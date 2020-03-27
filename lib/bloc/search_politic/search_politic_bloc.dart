@@ -5,17 +5,30 @@ import 'package:flutter/material.dart';
 
 import './bloc.dart';
 import '../../model/politico_model.dart';
+import '../../repository/abstract/follow_repository.dart';
 import '../../repository/abstract/search_politic_repository.dart';
+import '../../repository/abstract/user_following_politics_repository.dart';
 
 class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
-  SearchPoliticBloc({@required this.repository}) : assert(repository != null);
+  SearchPoliticBloc({
+    @required this.searchPoliticRepository,
+    @required this.userFollowingPoliticsRepository,
+    @required this.followRepository,
+  })  : assert(searchPoliticRepository != null),
+        assert(userFollowingPoliticsRepository != null),
+        assert(followRepository != null);
 
-  final SearchPoliticRepository repository;
+  final SearchPoliticRepository searchPoliticRepository;
+  final UserFollowingPoliticsRepository userFollowingPoliticsRepository;
+  final FollowRepository followRepository;
+
   List<PoliticoModel> allPolitics;
+  List<PoliticoModel> followedPolitics;
   List<PoliticoModel> politics;
   String statePicked = 'T';
   String partidoPicked = 'T';
   String searchTerm = '';
+  Map<String, bool> isPoliticFollowed = {};
 
   @override
   SearchPoliticState get initialState => InitialSearchPoliticState();
@@ -26,7 +39,11 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
       yield LoadingFetchPolitics();
 
       try {
-        allPolitics = politics = await repository.getPoliticsByFilter();
+        allPolitics = politics = await searchPoliticRepository.getAllPolitics();
+        followedPolitics = await userFollowingPoliticsRepository
+            .getFollowingPolitics(event.userId);
+        _initPoliticBeingFollowed();
+
         yield FetchSearchPoliticsSuccess(politics);
       } on Exception {
         yield FetchSearchPoliticsFailed();
@@ -59,6 +76,38 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
 
       politics = [...politicsFilteredByPartido];
       yield SearchPoliticFilterChanged(politics);
+    }
+    if (event is FollowUnfollowSearchPolitic) {
+      try {
+        final user = event.user;
+        final politico = event.politico;
+        final isBeingFollowed = isPoliticBeingFollowed(politico);
+
+        if (isBeingFollowed) {
+          await followRepository.unfollowPolitic(
+              user: user, politico: politico);
+        } else {
+          await followRepository.followPolitic(user: user, politico: politico);
+        }
+        isPoliticFollowed[politico.id] = !isBeingFollowed;
+
+        yield FollowedSearchPoliticsUpdated(
+          followedPolitics: [...politics],
+          politicoUpdated: politico,
+          isFollowing: isBeingFollowed,
+        );
+      } on Exception {
+        yield FollowUnfollowPoliticsFailed();
+      }
+    }
+  }
+
+  bool isPoliticBeingFollowed(PoliticoModel politico) =>
+      isPoliticFollowed[politico.id] ?? false;
+
+  void _initPoliticBeingFollowed() {
+    for (var politic in followedPolitics) {
+      isPoliticFollowed[politic.id] = true;
     }
   }
 }

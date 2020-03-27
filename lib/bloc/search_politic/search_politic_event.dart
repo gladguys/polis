@@ -1,12 +1,20 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+
+import '../../model/politico_model.dart';
+import '../../model/user_model.dart';
 
 abstract class SearchPoliticEvent extends Equatable {
   const SearchPoliticEvent();
 }
 
 class FetchPolitics extends SearchPoliticEvent {
+  FetchPolitics(this.userId);
+
+  final String userId;
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [userId];
 }
 
 class ChangeSearchPoliticFilter extends SearchPoliticEvent {
@@ -18,4 +26,16 @@ class ChangeSearchPoliticFilter extends SearchPoliticEvent {
 
   @override
   List<Object> get props => [estado, partido, term];
+}
+
+class FollowUnfollowSearchPolitic extends SearchPoliticEvent {
+  FollowUnfollowSearchPolitic({@required this.user, @required this.politico})
+      : assert(user != null),
+        assert(politico != null);
+
+  final UserModel user;
+  final PoliticoModel politico;
+
+  @override
+  List<Object> get props => [user, politico];
 }

@@ -19,6 +19,8 @@ class SearchPoliticPage extends StatelessWidget {
             return SearchPolitics(politics: state.politics);
           } else if (state is SearchPoliticFilterChanged) {
             return SearchPolitics(politics: state.politics);
+          } else if (state is FollowedSearchPoliticsUpdated) {
+            return SearchPolitics(politics: state.followedPolitics);
           } else if (state is InitialSearchPoliticState ||
               state is LoadingFetchPolitics) {
             return CenteredLoading();

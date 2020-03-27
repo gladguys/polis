@@ -11,8 +11,12 @@ class SearchPoliticPageConnected extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageConnected<SearchPoliticBloc>(
       bloc: SearchPoliticBloc(
-        repository: context.repository<FirebaseSearchPoliticRepository>(),
-      )..add(FetchPolitics()),
+        searchPoliticRepository:
+            context.repository<FirebaseSearchPoliticRepository>(),
+        userFollowingPoliticsRepository:
+            context.repository<FirebaseUserFollowingPoliticsRepository>(),
+        followRepository: context.repository<FirebaseFollowRepository>(),
+      )..add(FetchPolitics(context.bloc<UserBloc>().user.userId)),
       page: SearchPoliticPage(),
     );
   }

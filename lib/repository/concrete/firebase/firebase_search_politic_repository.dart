@@ -13,11 +13,28 @@ class FirebaseSearchPoliticRepository implements SearchPoliticRepository {
   final Firestore firestore;
 
   CollectionReference get politicosRef => firestore.collection(POLITICOS);
+  CollectionReference get politicosSeguidosRef =>
+      firestore.collection(POLITICOS_SEGUIDOS);
 
   @override
-  Future<List<PoliticoModel>> getPoliticsByFilter() async {
+  Future<List<PoliticoModel>> getAllPolitics() async {
     try {
       final querySnapshot = await politicosRef.getDocuments();
+      final documents = querySnapshot.documents;
+      return List.generate(
+          documents.length, (i) => PoliticoModel.fromJson(documents[i].data));
+    } on Exception {
+      throw ComunicationException();
+    }
+  }
+
+  @override
+  Future<List<PoliticoModel>> getPoliticsFollowing(String userId) async {
+    try {
+      final collectionRef = await politicosSeguidosRef
+          .document(userId)
+          .collection(POLITICOS_SEGUIDOS_COLLECTION);
+      final querySnapshot = await collectionRef.getDocuments();
       final documents = querySnapshot.documents;
       return List.generate(
           documents.length, (i) => PoliticoModel.fromJson(documents[i].data));
