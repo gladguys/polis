@@ -90,7 +90,7 @@ class DefaultBottombar extends StatelessWidget {
                         width: 30,
                         height: 30,
                       )
-                    : FaIcon(
+                    : const FaIcon(
                         FontAwesomeIcons.solidUserCircle,
                         size: 30,
                       ),
