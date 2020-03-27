@@ -26,7 +26,7 @@ class PersonalUserInfo extends StatelessWidget {
                     width: 120,
                     height: 120,
                   )
-                : FaIcon(
+                : const FaIcon(
                     FontAwesomeIcons.solidUserCircle,
                     size: 120,
                   ),
