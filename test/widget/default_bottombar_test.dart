@@ -24,7 +24,7 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePage(),
+            child: TimelinePageConnected(),
           ),
         ),
       );
@@ -40,7 +40,7 @@ void main() {
                 photoUrl: 'photo',
               ),
             ),
-            child: TimelinePage(),
+            child: TimelinePageConnected(),
           ),
         ),
       );
@@ -77,7 +77,7 @@ void main() {
                 photoUrl: 'photo',
               ),
             ),
-            child: TimelinePage(),
+            child: TimelinePageConnected(),
           ),
         ),
       );
@@ -93,7 +93,7 @@ void main() {
               repository: MockUserRepository(),
               user: UserModel(),
             ),
-            child: TimelinePage(),
+            child: TimelinePageConnected(),
           ),
         ),
       );
@@ -108,7 +108,7 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePage(),
+            child: TimelinePageConnected(),
           ),
         ),
       );
@@ -130,7 +130,7 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePage(),
+            child: TimelinePageConnected(),
           ),
         ),
       );
@@ -144,7 +144,7 @@ void main() {
       await tester.tap(searchIcon);
     });
 
-    testWidgets('shoud go to TimelinePage when clicking bookmark icon',
+    testWidgets('shoud go to FavoritePostsPage when clicking bookmark icon',
         (tester) async {
       final mockUserBloc = MockUserBloc();
       when(mockUserBloc.user).thenReturn(UserModel());
@@ -152,7 +152,7 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePage(),
+            child: TimelinePageConnected(),
           ),
         ),
       );
@@ -174,7 +174,7 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePage(),
+            child: TimelinePageConnected(),
           ),
         ),
       );

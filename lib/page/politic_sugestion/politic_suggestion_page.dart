@@ -5,7 +5,7 @@ import 'package:simple_router/simple_router.dart';
 import '../../bloc/politic_suggestion/bloc.dart';
 import '../../core/routing/route_names.dart';
 import '../../widget/centered_loading.dart';
-import '../timeline/timeline_page.dart';
+import '../pages.dart';
 import 'widget/politics_sugestion.dart';
 
 class PoliticSuggestionPage extends StatelessWidget {
@@ -18,7 +18,7 @@ class PoliticSuggestionPage extends StatelessWidget {
           listener: (_, state) {
             if (state is SavedSuggestedPolitics) {
               SimpleRouter.forwardAndReplace(
-                TimelinePage(),
+                TimelinePageConnected(),
                 name: TIMELINE_PAGE,
               );
             }

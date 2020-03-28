@@ -52,7 +52,7 @@ class DefaultBottombar extends StatelessWidget {
                 _buildButtonBottomAppBar(
                   icon: FontAwesomeIcons.home,
                   onPressed: () => SimpleRouter.forward(
-                    TimelinePage(),
+                    TimelinePageConnected(),
                     name: TIMELINE_PAGE,
                   ),
                 ),
