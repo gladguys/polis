@@ -40,7 +40,7 @@ class SearchPoliticsList extends StatelessWidget {
                 ),
               ),
               subtitle: Text(
-                'Dep. Federal',
+                'Dep. Federal - ${politicos[i].siglaPartido}',
                 style: TextStyle(
                   color: Colors.grey[500],
                 ),
