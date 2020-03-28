@@ -1,5 +1,6 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getflutter/getflutter.dart';
 
 import '../../../i18n/i18n.dart';
@@ -19,11 +20,16 @@ class PersonalUserInfo extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(0, 18, 0, 10),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(60),
-            child: FancyShimmerImage(
-              imageUrl: user.photoUrl,
-              width: 120,
-              height: 120,
-            ),
+            child: user.photoUrl != null
+                ? FancyShimmerImage(
+                    imageUrl: user.photoUrl,
+                    width: 120,
+                    height: 120,
+                  )
+                : const FaIcon(
+                    FontAwesomeIcons.solidUserCircle,
+                    size: 120,
+                  ),
           ),
         ),
         Text(
