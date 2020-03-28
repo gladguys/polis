@@ -6,14 +6,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../bloc/blocs.dart';
 import '../../../model/politico_model.dart';
 
-class FollowingPoliticsList extends StatelessWidget {
-  FollowingPoliticsList(this.politicos);
+class SearchPoliticsList extends StatelessWidget {
+  SearchPoliticsList(this.politicos);
 
   final List<PoliticoModel> politicos;
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.bloc<UserFollowingPoliticsBloc>();
+    final bloc = context.bloc<SearchPoliticBloc>();
     return politicos.isNotEmpty
         ? ListView.separated(
             itemBuilder: (_, i) => ListTile(
@@ -40,7 +40,7 @@ class FollowingPoliticsList extends StatelessWidget {
                 ),
               ),
               subtitle: Text(
-                'Dep. Federal',
+                'Dep. Federal - ${politicos[i].siglaPartido}',
                 style: TextStyle(
                   color: Colors.grey[500],
                 ),
@@ -62,7 +62,7 @@ class FollowingPoliticsList extends StatelessWidget {
                       : Colors.green,
                 ),
                 onPressed: () => bloc.add(
-                  FollowUnfollowPolitic(
+                  FollowUnfollowSearchPolitic(
                     user: context.bloc<UserBloc>().user,
                     politico: politicos[i],
                   ),
@@ -73,7 +73,7 @@ class FollowingPoliticsList extends StatelessWidget {
             itemCount: politicos.length,
           )
         : const Center(
-            child: Text('Você ainda não segue nenhum politico!'),
+            child: Text('Nenhum político encontrado com os filtros escolhidos'),
           );
   }
 }

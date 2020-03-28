@@ -15,7 +15,7 @@ class PoliticsFollowingQuantity extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(
+        const Text(
           FOLLOWING,
           style: TextStyle(
             color: Colors.grey,

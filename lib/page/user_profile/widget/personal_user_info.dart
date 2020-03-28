@@ -42,7 +42,7 @@ class PersonalUserInfo extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           user.email,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 14,
             color: Colors.grey,
           ),
