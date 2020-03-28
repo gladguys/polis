@@ -97,7 +97,13 @@ void main() {
           ),
         ),
       );
-      expect(find.byType(FaIcon), findsOneWidget);
+      expect(find.byWidgetPredicate((widget) {
+        if (widget is FlatButton && widget.child is Icon) {
+          final icon = widget.child as Icon;
+          return icon.icon == FontAwesomeIcons.solidUserCircle;
+        }
+        return false;
+      }), findsOneWidget);
     });
 
     testWidgets('shoud go to TimelinePage when clicking home icon',
@@ -178,7 +184,13 @@ void main() {
           ),
         ),
       );
-      final profile = find.byType(ClipRRect);
+      final profile = find.byWidgetPredicate((widget) {
+        if (widget is FlatButton && widget.child is Icon) {
+          final icon = widget.child as Icon;
+          return icon.icon == FontAwesomeIcons.solidUserCircle;
+        }
+        return false;
+      });
       expect(profile, findsOneWidget);
       await tester.tap(profile);
     });

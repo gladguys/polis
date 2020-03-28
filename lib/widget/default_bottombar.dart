@@ -17,12 +17,11 @@ class DefaultBottombar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.bloc<UserBloc>().user;
     return BottomAppBar(
       child: Row(
         children: <Widget>[
           Container(
-            width: 72,
+            width: 80,
             height: 40,
             alignment: Alignment.centerLeft,
             child: routeName == TIMELINE_PAGE
@@ -41,6 +40,7 @@ class DefaultBottombar extends StatelessWidget {
                 : _buildButtonBottomAppBar(
                     key: const ValueKey('arrow-back-btn'),
                     icon: FontAwesomeIcons.chevronLeft,
+                    padding: const EdgeInsets.only(right: 3),
                     onPressed: onPopCallback,
                   ),
           ),
@@ -51,6 +51,7 @@ class DefaultBottombar extends StatelessWidget {
               children: <Widget>[
                 _buildButtonBottomAppBar(
                   icon: FontAwesomeIcons.home,
+                  padding: const EdgeInsets.only(right: 3),
                   onPressed: () => SimpleRouter.forward(
                     TimelinePage(),
                     name: TIMELINE_PAGE,
@@ -74,37 +75,51 @@ class DefaultBottombar extends StatelessWidget {
             ),
           ),
           Container(
-            width: 72,
+            width: 80,
             height: 40,
             alignment: Alignment.centerRight,
-            child: InkWell(
-              borderRadius: BorderRadius.circular(15),
-              onTap: () => SimpleRouter.forward(
-                UserProfilePageConnected(),
-                name: USER_PROFILE_PAGE,
-              ),
-              child: ClipRRect(
-                child: user.photoUrl != null
-                    ? FancyShimmerImage(
-                        imageUrl: user.photoUrl,
-                        width: 30,
-                        height: 30,
-                      )
-                    : const FaIcon(
-                        FontAwesomeIcons.solidUserCircle,
-                        size: 30,
-                      ),
-              ),
-            ),
+            child: _buildUserButton(context),
           ),
-          const SizedBox(width: 8),
         ],
       ),
     );
   }
 
+  Widget _buildUserButton(BuildContext context) {
+    final user = context.bloc<UserBloc>().user;
+    return user.photoUrl != null
+        ? _buildButtonBottomAppBar(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: FancyShimmerImage(
+                imageUrl: user.photoUrl,
+                width: 30,
+                height: 30,
+                boxFit: BoxFit.cover,
+              ),
+            ),
+            onPressed: _onPressedUserButton,
+          )
+        : _buildButtonBottomAppBar(
+            icon: FontAwesomeIcons.solidUserCircle,
+            iconSize: 28,
+            padding: const EdgeInsets.only(left: 1, bottom: 3),
+            onPressed: _onPressedUserButton,
+          );
+  }
+
+  void _onPressedUserButton() {
+    SimpleRouter.forward(
+      UserProfilePageConnected(),
+      name: USER_PROFILE_PAGE,
+    );
+  }
+
   Widget _buildButtonBottomAppBar({
+    Widget child,
     IconData icon,
+    double iconSize,
+    EdgeInsets padding = EdgeInsets.zero,
     Function onPressed,
     Key key,
   }) {
@@ -113,8 +128,8 @@ class DefaultBottombar extends StatelessWidget {
       height: 40,
       child: FlatButton(
         key: key,
-        child: Icon(icon),
-        padding: EdgeInsets.zero,
+        child: icon != null ? Icon(icon, size: iconSize) : child,
+        padding: padding,
         onPressed: onPressed,
       ),
     );
