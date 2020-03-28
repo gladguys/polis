@@ -47,7 +47,7 @@ class DefaultBottombar extends StatelessWidget {
           Expanded(
             child: Wrap(
               alignment: WrapAlignment.center,
-              spacing: 8,
+              spacing: 16,
               children: <Widget>[
                 _buildButtonBottomAppBar(
                   icon: FontAwesomeIcons.home,
@@ -87,31 +87,102 @@ class DefaultBottombar extends StatelessWidget {
 
   Widget _buildUserButton(BuildContext context) {
     final user = context.bloc<UserBloc>().user;
-    return user.photoUrl != null
-        ? _buildButtonBottomAppBar(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: FancyShimmerImage(
-                imageUrl: user.photoUrl,
-                width: 30,
-                height: 30,
-                boxFit: BoxFit.cover,
-              ),
-            ),
-            onPressed: _onPressedUserButton,
-          )
-        : _buildButtonBottomAppBar(
-            icon: FontAwesomeIcons.solidUserCircle,
-            iconSize: 28,
-            padding: const EdgeInsets.only(left: 1, bottom: 3),
-            onPressed: _onPressedUserButton,
-          );
-  }
 
-  void _onPressedUserButton() {
-    SimpleRouter.forward(
-      UserProfilePageConnected(),
-      name: USER_PROFILE_PAGE,
+    Widget buildButtonContent() {
+      return user.photoUrl != null
+          ? Padding(
+              padding: const EdgeInsets.all(5),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: FancyShimmerImage(
+                  imageUrl: user.photoUrl,
+                  width: 30,
+                  height: 30,
+                  boxFit: BoxFit.cover,
+                ),
+              ),
+            )
+          : Icon(
+              FontAwesomeIcons.solidUserCircle,
+              size: 28,
+            );
+    }
+
+    return Material(
+      borderRadius: BorderRadius.circular(20),
+      clipBehavior: Clip.antiAlias,
+      child: Container(
+        width: 40,
+        height: 40,
+        child: PopupMenuButton(
+          offset: const Offset(0, -95),
+          tooltip: '',
+          child: buildButtonContent(),
+          onSelected: (selectedValue) {
+            if (selectedValue == 1) {
+              SimpleRouter.forward(
+                UserProfilePageConnected(),
+                name: USER_PROFILE_PAGE,
+              );
+            } else {
+              SimpleRouter.forward(
+                InitialPage(),
+                name: INITIAL_PAGE,
+              );
+            }
+          },
+          itemBuilder: (context) {
+            return <PopupMenuEntry>[
+              PopupMenuItem(
+                height: 40,
+                value: 1,
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 2, bottom: 2),
+                      child: Icon(
+                        FontAwesomeIcons.userAlt,
+                        size: 16,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      PROFILE,
+                      style: const TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                height: 40,
+                value: 2,
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(right: 2, bottom: 1),
+                      child: Icon(
+                        FontAwesomeIcons.signOutAlt,
+                        size: 19,
+                        color: Colors.red[400],
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      LOGOUT,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.red[600],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ];
+          },
+        ),
+      ),
     );
   }
 

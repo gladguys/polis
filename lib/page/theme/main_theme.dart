@@ -88,4 +88,10 @@ final ThemeData theme = ThemeData(
       borderRadius: BorderRadius.circular(10),
     ),
   ),
+  popupMenuTheme: PopupMenuThemeData(
+    elevation: 2,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
+  ),
 );
