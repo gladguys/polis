@@ -60,7 +60,7 @@ class DefaultBottombar extends StatelessWidget {
                   icon: FontAwesomeIcons.home,
                   padding: const EdgeInsets.only(right: 3),
                   onPressed: () => SimpleRouter.forward(
-                    TimelinePage(),
+                    TimelinePageConnected(),
                     name: TIMELINE_PAGE,
                   ),
                 ),

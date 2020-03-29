@@ -18,6 +18,7 @@ import 'package:polis/repository/abstract/politic_suggestion_repository.dart';
 import 'package:polis/repository/abstract/search_politic_repository.dart';
 import 'package:polis/repository/abstract/signin_repository.dart';
 import 'package:polis/repository/abstract/signup_repository.dart';
+import 'package:polis/repository/abstract/timeline_repository.dart';
 import 'package:polis/repository/abstract/user_following_politics_repository.dart';
 import 'package:polis/repository/abstract/user_profile_repository.dart';
 import 'package:polis/repository/abstract/user_repository.dart';
@@ -40,6 +41,9 @@ class MockSignupBloc extends MockBloc<SignupEvent, SignupState>
 
 class MockUserBloc extends MockBloc<UserEvent, UserState> implements UserBloc {}
 
+class MockTimelineBloc extends MockBloc<TimelineEvent, TimelineState>
+    implements TimelineBloc {}
+
 class MockUserProfileBloc extends MockBloc<UserProfileEvent, UserProfileState>
     implements UserProfileBloc {}
 
@@ -56,6 +60,8 @@ class MockPoliticSugestionRepository extends Mock
 class MockUserProfileRepository extends Mock implements UserProfileRepository {}
 
 class MockSignupRepository extends Mock implements SignupRepository {}
+
+class MockTimelineRepository extends Mock implements TimelineRepository {}
 
 class MockUserRepository extends Mock implements UserRepository {}
 

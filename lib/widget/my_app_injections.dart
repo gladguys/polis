@@ -79,6 +79,11 @@ class MyAppInjections extends StatelessWidget {
         RepositoryProvider(
           create: (_) => HivePartidoRepository(),
         ),
+        RepositoryProvider(
+          create: (_) => FirebaseTimelineRepository(
+            firestore: Firestore.instance,
+          ),
+        ),
       ],
       child: child,
     );
