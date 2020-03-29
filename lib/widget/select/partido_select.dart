@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:smart_select/smart_select.dart';
 
-class PartidoSelect extends StatefulWidget {
-  PartidoSelect({this.initialValue, @required this.onChange})
-      : assert(onChange != null);
+import '../../model/partido_model.dart';
 
+class PartidoSelect extends StatefulWidget {
+  PartidoSelect(
+      {@required this.partidos, this.initialValue, @required this.onChange})
+      : assert(partidos != null),
+        assert(onChange != null);
+
+  final List<PartidoModel> partidos;
   final String initialValue;
   final SmartSelectOnChange<String> onChange;
 
@@ -23,12 +28,17 @@ class _PartidoSelectState extends State<PartidoSelect> {
       modalType: SmartSelectModalType.popupDialog,
     );
   }
-}
 
-List<SmartSelectOption<String>> _getOptions() {
-  return [
-    SmartSelectOption<String>(value: 'T', title: 'Todos'),
-    SmartSelectOption<String>(value: 'PT', title: 'PT'),
-    SmartSelectOption<String>(value: 'PMDB', title: 'PMDB'),
-  ];
+  List<SmartSelectOption<String>> _getOptions() {
+    final partidosSelect = [
+      SmartSelectOption<String>(value: 'T', title: 'Todos'),
+    ];
+    return partidosSelect
+      ..addAll(
+        widget.partidos.map(
+          (partido) => SmartSelectOption<String>(
+              value: partido.sigla, title: partido.nome),
+        ),
+      );
+  }
 }

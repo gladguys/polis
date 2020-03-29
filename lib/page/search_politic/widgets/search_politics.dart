@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/search_politic/bloc.dart';
+import '../../../model/partido_model.dart';
 import '../../../model/politico_model.dart';
 import '../../../widget/select/selects.dart';
 import 'search_politics_list.dart';
 
 class SearchPolitics extends StatelessWidget {
-  SearchPolitics({@required this.politics}) : assert(politics != null);
+  SearchPolitics({@required this.politics, @required this.partidos})
+      : assert(politics != null),
+        assert(partidos != null);
 
   final List<PoliticoModel> politics;
+  final List<PartidoModel> partidos;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +40,7 @@ class SearchPolitics extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: PartidoSelect(
+              partidos: partidos,
               initialValue: context.bloc<SearchPoliticBloc>().partidoPicked,
               onChange: (partido) => context
                   .bloc<SearchPoliticBloc>()
