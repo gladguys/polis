@@ -110,6 +110,8 @@ class MockAdService extends Mock implements AdService {}
 class MockSharedPreferencesService extends Mock
     implements SharedPreferencesService {}
 
+class MockPartidoService extends Mock implements PartidoService {}
+
 // Other
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 

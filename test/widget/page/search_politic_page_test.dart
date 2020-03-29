@@ -29,6 +29,7 @@ void main() {
       final mockSearchPoliticBloc = MockSearchPoliticBloc();
       when(mockSearchPoliticBloc.state)
           .thenReturn(FetchSearchPoliticsSuccess([]));
+      when(mockSearchPoliticBloc.allPartidos).thenReturn([]);
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<SearchPoliticBloc>(
@@ -45,6 +46,7 @@ void main() {
         (tester) async {
       final mockSearchPoliticBloc = MockSearchPoliticBloc();
       when(mockSearchPoliticBloc.isPoliticBeingFollowed(any)).thenReturn(true);
+      when(mockSearchPoliticBloc.allPartidos).thenReturn([]);
       when(mockSearchPoliticBloc.state).thenReturn(
         FetchSearchPoliticsSuccess(
           [
@@ -69,6 +71,7 @@ void main() {
     testWidgets('picking a state should thrigger bloc event', (tester) async {
       final mockSearchPoliticBloc = MockSearchPoliticBloc();
       when(mockSearchPoliticBloc.isPoliticBeingFollowed(any)).thenReturn(true);
+      when(mockSearchPoliticBloc.allPartidos).thenReturn([]);
       when(mockSearchPoliticBloc.state).thenReturn(
         FetchSearchPoliticsSuccess(
           [
@@ -102,6 +105,7 @@ void main() {
     testWidgets('picking a partido should thrigger bloc event', (tester) async {
       final mockSearchPoliticBloc = MockSearchPoliticBloc();
       when(mockSearchPoliticBloc.isPoliticBeingFollowed(any)).thenReturn(true);
+      when(mockSearchPoliticBloc.allPartidos).thenReturn([]);
       when(mockSearchPoliticBloc.state).thenReturn(
         FetchSearchPoliticsSuccess(
           [
@@ -135,6 +139,7 @@ void main() {
     testWidgets('typing on textfield thriggers bloc event', (tester) async {
       final mockSearchPoliticBloc = MockSearchPoliticBloc();
       when(mockSearchPoliticBloc.isPoliticBeingFollowed(any)).thenReturn(true);
+      when(mockSearchPoliticBloc.allPartidos).thenReturn([]);
       when(mockSearchPoliticBloc.state).thenReturn(
         FetchSearchPoliticsSuccess(
           [
@@ -168,6 +173,7 @@ void main() {
       final mockSearchPoliticBloc = MockSearchPoliticBloc();
       when(mockUserBloc.user).thenReturn(UserModel(userId: '1'));
       when(mockSearchPoliticBloc.isPoliticBeingFollowed(any)).thenReturn(true);
+      when(mockSearchPoliticBloc.allPartidos).thenReturn([]);
       when(mockSearchPoliticBloc.state).thenReturn(
         FetchSearchPoliticsSuccess(
           [
@@ -209,6 +215,7 @@ void main() {
         (tester) async {
       final mockSearchPoliticBloc = MockSearchPoliticBloc();
       when(mockSearchPoliticBloc.isPoliticBeingFollowed(any)).thenReturn(false);
+      when(mockSearchPoliticBloc.allPartidos).thenReturn([]);
       when(mockSearchPoliticBloc.state).thenReturn(
         FetchSearchPoliticsSuccess(
           [
@@ -239,6 +246,7 @@ void main() {
       final mockSearchPoliticBloc = MockSearchPoliticBloc();
       when(mockSearchPoliticBloc.state)
           .thenReturn(SearchPoliticFilterChanged([]));
+      when(mockSearchPoliticBloc.allPartidos).thenReturn([]);
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<SearchPoliticBloc>(
@@ -254,6 +262,7 @@ void main() {
         'shoud show SearchPolitics when filter politic followed or unfollowed',
         (tester) async {
       final mockSearchPoliticBloc = MockSearchPoliticBloc();
+      when(mockSearchPoliticBloc.allPartidos).thenReturn([]);
       when(mockSearchPoliticBloc.state).thenReturn(
           FollowedSearchPoliticsUpdated(
               followedPolitics: [],
