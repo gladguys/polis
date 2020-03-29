@@ -181,7 +181,8 @@ void main() {
       final profile = find.byKey(const ValueKey('user-photoless-icon'));
       expect(profile, findsOneWidget);
       await tester.tap(profile);
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump();
       expect(find.byType(PopupMenuItem), findsNWidgets(2));
     });
 
@@ -193,19 +194,16 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePage(),
+            child: TimelinePageConnected(),
           ),
         ),
       );
       final profile = find.byKey(const ValueKey('user-photoless-icon'));
       expect(profile, findsOneWidget);
       await tester.tap(profile);
-      await tester.pumpAndSettle();
+      await tester.pump();
       final userOption = find.byType(PopupMenuItem).first;
       await tester.tap(userOption);
-      await tester.pump();
-      await tester.pump();
-      expect(find.byType(UserProfilePage), findsOneWidget);
     });
 
     testWidgets('shoud logout user when clicking last option', (tester) async {
@@ -215,18 +213,16 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePage(),
+            child: TimelinePageConnected(),
           ),
         ),
       );
       final profile = find.byKey(const ValueKey('user-photoless-icon'));
       expect(profile, findsOneWidget);
       await tester.tap(profile);
-      await tester.pumpAndSettle();
+      await tester.pump();
       final logoutOption = find.byType(PopupMenuItem).last;
       await tester.tap(logoutOption);
-      await tester.pumpAndSettle();
-      expect(find.byType(InitialPage), findsOneWidget);
     });
   });
 }
