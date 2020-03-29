@@ -6,11 +6,18 @@ import 'package:simple_router/simple_router.dart';
 
 import '../bloc/blocs.dart';
 import '../core/routing/route_names.dart';
+import '../core/service/locator.dart';
+import '../core/service/services.dart';
 import '../i18n/i18n.dart';
 import '../page/pages.dart';
 
+enum DropDownOption { profile, logout }
+
 class DefaultBottombar extends StatelessWidget {
-  DefaultBottombar(this.routeName, {this.onPopCallback = SimpleRouter.back});
+  DefaultBottombar(
+    this.routeName, {
+    this.onPopCallback = SimpleRouter.back,
+  });
 
   final String routeName;
   final VoidCallback onPopCallback;
@@ -47,7 +54,7 @@ class DefaultBottombar extends StatelessWidget {
           Expanded(
             child: Wrap(
               alignment: WrapAlignment.center,
-              spacing: 8,
+              spacing: 16,
               children: <Widget>[
                 _buildButtonBottomAppBar(
                   icon: FontAwesomeIcons.home,
@@ -87,31 +94,105 @@ class DefaultBottombar extends StatelessWidget {
 
   Widget _buildUserButton(BuildContext context) {
     final user = context.bloc<UserBloc>().user;
-    return user.photoUrl != null
-        ? _buildButtonBottomAppBar(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: FancyShimmerImage(
-                imageUrl: user.photoUrl,
-                width: 30,
-                height: 30,
-                boxFit: BoxFit.cover,
-              ),
-            ),
-            onPressed: _onPressedUserButton,
-          )
-        : _buildButtonBottomAppBar(
-            icon: FontAwesomeIcons.solidUserCircle,
-            iconSize: 28,
-            padding: const EdgeInsets.only(left: 1, bottom: 3),
-            onPressed: _onPressedUserButton,
-          );
-  }
 
-  void _onPressedUserButton() {
-    SimpleRouter.forward(
-      UserProfilePageConnected(),
-      name: USER_PROFILE_PAGE,
+    Widget buildButtonContent() {
+      return user.photoUrl != null
+          ? Padding(
+              padding: const EdgeInsets.all(5),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: FancyShimmerImage(
+                  imageUrl: user.photoUrl,
+                  width: 30,
+                  height: 30,
+                  boxFit: BoxFit.cover,
+                ),
+              ),
+            )
+          : const Icon(
+              FontAwesomeIcons.solidUserCircle,
+              size: 28,
+              key: ValueKey('user-photoless-icon'),
+            );
+    }
+
+    return Material(
+      borderRadius: BorderRadius.circular(20),
+      clipBehavior: Clip.antiAlias,
+      child: Container(
+        width: 40,
+        height: 40,
+        child: PopupMenuButton(
+          offset: const Offset(0, -95),
+          tooltip: '',
+          child: buildButtonContent(),
+          onSelected: (selectedValue) {
+            if (selectedValue == DropDownOption.profile) {
+              SimpleRouter.forward(
+                UserProfilePageConnected(),
+                name: USER_PROFILE_PAGE,
+              );
+            } else {
+              G<AnalyticsService>().logLogout(user.name);
+              G<SharedPreferencesService>().setUser(null);
+              SimpleRouter.forwardAndRemoveAll(
+                InitialPage(),
+                name: INITIAL_PAGE,
+              );
+            }
+          },
+          itemBuilder: (context) {
+            return <PopupMenuEntry>[
+              PopupMenuItem(
+                height: 40,
+                value: DropDownOption.profile,
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 2, bottom: 2),
+                      child: Icon(
+                        FontAwesomeIcons.userAlt,
+                        size: 16,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    const Text(
+                      PROFILE,
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                height: 40,
+                value: DropDownOption.logout,
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(right: 2, bottom: 1),
+                      child: Icon(
+                        FontAwesomeIcons.signOutAlt,
+                        size: 19,
+                        color: Colors.red[400],
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      LOGOUT,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.red[600],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ];
+          },
+        ),
+      ),
     );
   }
 

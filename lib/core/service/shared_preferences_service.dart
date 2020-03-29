@@ -14,7 +14,11 @@ class SharedPreferencesService {
   final SharedPreferences sharedPreferences;
 
   Future<void> setUser(UserModel user) async {
-    await sharedPreferences.setString(USER_PREF, jsonEncode(user.toJson()));
+    if (user != null) {
+      await sharedPreferences.setString(USER_PREF, jsonEncode(user.toJson()));
+    } else {
+      await sharedPreferences.setString(USER_PREF, null);
+    }
   }
 
   UserModel getUser() {
