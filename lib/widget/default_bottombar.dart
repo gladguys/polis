@@ -109,10 +109,10 @@ class DefaultBottombar extends StatelessWidget {
                 ),
               ),
             )
-          : Icon(
+          : const Icon(
               FontAwesomeIcons.solidUserCircle,
               size: 28,
-              key: const ValueKey('user-photoless-icon'),
+              key: ValueKey('user-photoless-icon'),
             );
     }
 
