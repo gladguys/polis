@@ -6,11 +6,18 @@ import 'package:simple_router/simple_router.dart';
 
 import '../bloc/blocs.dart';
 import '../core/routing/route_names.dart';
+import '../core/service/locator.dart';
+import '../core/service/services.dart';
 import '../i18n/i18n.dart';
 import '../page/pages.dart';
 
+enum DropDownOption { profile, logout }
+
 class DefaultBottombar extends StatelessWidget {
-  DefaultBottombar(this.routeName, {this.onPopCallback = SimpleRouter.back});
+  DefaultBottombar(
+    this.routeName, {
+    this.onPopCallback = SimpleRouter.back,
+  });
 
   final String routeName;
   final VoidCallback onPopCallback;
@@ -105,6 +112,7 @@ class DefaultBottombar extends StatelessWidget {
           : Icon(
               FontAwesomeIcons.solidUserCircle,
               size: 28,
+              key: const ValueKey('user-photoless-icon'),
             );
     }
 
@@ -119,13 +127,15 @@ class DefaultBottombar extends StatelessWidget {
           tooltip: '',
           child: buildButtonContent(),
           onSelected: (selectedValue) {
-            if (selectedValue == 1) {
+            if (selectedValue == DropDownOption.profile) {
               SimpleRouter.forward(
                 UserProfilePageConnected(),
                 name: USER_PROFILE_PAGE,
               );
             } else {
-              SimpleRouter.forward(
+              G<AnalyticsService>().logLogout(user.name);
+              G<SharedPreferencesService>().setUser(null);
+              SimpleRouter.forwardAndRemoveAll(
                 InitialPage(),
                 name: INITIAL_PAGE,
               );
@@ -135,7 +145,7 @@ class DefaultBottombar extends StatelessWidget {
             return <PopupMenuEntry>[
               PopupMenuItem(
                 height: 40,
-                value: 1,
+                value: DropDownOption.profile,
                 child: Row(
                   children: <Widget>[
                     Padding(
@@ -146,9 +156,9 @@ class DefaultBottombar extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    Text(
+                    const Text(
                       PROFILE,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
                       ),
                     ),
@@ -157,7 +167,7 @@ class DefaultBottombar extends StatelessWidget {
               ),
               PopupMenuItem(
                 height: 40,
-                value: 2,
+                value: DropDownOption.logout,
                 child: Row(
                   children: <Widget>[
                     Padding(
