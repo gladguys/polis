@@ -16,4 +16,13 @@ class AnalyticsService {
   Future<void> logSignup() async {
     await analytics.logSignUp(signUpMethod: 'EMAIL_AND_PASSWORD');
   }
+
+  Future<void> logLogout(String username) async {
+    await analytics.logEvent(
+      name: 'LOGOUT',
+      parameters: {
+        'username': username,
+      },
+    );
+  }
 }
