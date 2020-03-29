@@ -45,7 +45,7 @@ class _SigninPageState extends State<SigninPage> {
 
           if (user.isFirstLoginDone) {
             SimpleRouter.forwardAndReplace(
-              TimelinePage(),
+              TimelinePageConnected(),
               name: TIMELINE_PAGE,
             );
           } else {

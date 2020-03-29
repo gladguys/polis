@@ -8,25 +8,51 @@ part of 'despesa_model.dart';
 
 DespesaModel _$DespesaModelFromJson(Map<String, dynamic> json) {
   return DespesaModel(
-    id: json['id'] as String,
+    ano: json['ano'] as String,
+    mes: json['mes'] as String,
+    cnpjCpfFornecedor: json['cnpjCpfFornecedor'] as String,
+    codDocumento: json['codDocumento'] as String,
+    codLote: json['codLote'] as String,
+    codTipoDocumento: json['codTipoDocumento'] as String,
+    dataDocumento: json['dataDocumento'] as String,
+    idPolitico: json['idPolitico'] as String,
+    nomeFornecedor: json['nomeFornecedor'] as String,
+    nomePolitico: json['nomePolitico'] as String,
+    numDocumento: json['numDocumento'] as String,
+    numRessarcimento: json['numRessarcimento'] as String,
+    parcela: json['parcela'] as String,
+    siglaPartido: json['siglaPartido'] as String,
+    tipoAtividade: json['tipoAtividade'] as String,
     tipoDespesa: json['tipoDespesa'] as String,
     tipoDocumento: json['tipoDocumento'] as String,
-    dataDocumento: json['dataDocumento'] == null
-        ? null
-        : DateTime.parse(json['dataDocumento'] as String),
-    valorDocumento: (json['valorDocumento'] as num)?.toDouble(),
-    nomeFornecedor: json['nomeFornecedor'] as String,
-    cnpjCpfFornecedor: json['cnpjCpfFornecedor'] as String,
+    urlDocumento: json['urlDocumento'] as String,
+    valorDocumento: json['valorDocumento'] as String,
+    valorGlosa: json['valorGlosa'] as String,
+    valorLiquido: json['valorLiquido'] as String,
   );
 }
 
 Map<String, dynamic> _$DespesaModelToJson(DespesaModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'ano': instance.ano,
+      'mes': instance.mes,
+      'cnpjCpfFornecedor': instance.cnpjCpfFornecedor,
+      'codDocumento': instance.codDocumento,
+      'codLote': instance.codLote,
+      'codTipoDocumento': instance.codTipoDocumento,
+      'dataDocumento': instance.dataDocumento,
+      'idPolitico': instance.idPolitico,
+      'nomeFornecedor': instance.nomeFornecedor,
+      'nomePolitico': instance.nomePolitico,
+      'numDocumento': instance.numDocumento,
+      'numRessarcimento': instance.numRessarcimento,
+      'parcela': instance.parcela,
+      'siglaPartido': instance.siglaPartido,
+      'tipoAtividade': instance.tipoAtividade,
       'tipoDespesa': instance.tipoDespesa,
       'tipoDocumento': instance.tipoDocumento,
-      'dataDocumento': instance.dataDocumento?.toIso8601String(),
+      'urlDocumento': instance.urlDocumento,
       'valorDocumento': instance.valorDocumento,
-      'nomeFornecedor': instance.nomeFornecedor,
-      'cnpjCpfFornecedor': instance.cnpjCpfFornecedor,
+      'valorGlosa': instance.valorGlosa,
+      'valorLiquido': instance.valorLiquido,
     };
