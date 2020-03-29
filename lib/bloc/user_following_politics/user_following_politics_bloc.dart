@@ -82,9 +82,8 @@ class UserFollowingPoliticsBloc
     }
   }
 
-  bool isPoliticBeingFollowed(PoliticoModel politico) {
-    return isPoliticFollowed[politico.id] ?? false;
-  }
+  bool isPoliticBeingFollowed(PoliticoModel politico) =>
+      isPoliticFollowed[politico.id] ?? false;
 
   void _initPoliticBeingFollowed() {
     for (var politic in politicsFollowing) {

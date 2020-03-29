@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/page/pages.dart';
-import 'package:smart_select/smart_select.dart';
+import 'package:polis/widget/select/selects.dart';
 
 import '../utils.dart';
 
@@ -12,10 +12,15 @@ void main() {
       await tester.pumpWidget(connectedWidget(IntroPage()));
     });
 
-    testWidgets('should choose an option from select', (tester) async {
+    testWidgets('should choose an option from state select', (tester) async {
       await tester.pumpWidget(connectedWidget(IntroPage()));
-      final select = find.byType(SmartSelectTile);
-      expect(select, findsOneWidget);
+      final estadoSelect = find.byType(EstadoSelect);
+      expect(estadoSelect, findsOneWidget);
+      await tester.tap(estadoSelect);
+      await tester.pumpAndSettle();
+      final opcaoTodos = find.text('Ceará');
+      expect(opcaoTodos, findsOneWidget);
+      await tester.tap(opcaoTodos);
       await tester.pumpAndSettle();
     });
 

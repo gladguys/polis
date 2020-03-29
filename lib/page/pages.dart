@@ -5,6 +5,8 @@ export 'intro/intro_page.dart';
 export 'politic_sugestion/politic_suggestion_page.dart';
 export 'politic_sugestion/politic_suggestion_page_connected.dart';
 export 'search_politic/search_politic_page.dart';
+export 'search_politic/search_politic_page.dart';
+export 'search_politic/search_politic_page_connected.dart';
 export 'signin/signin_page.dart';
 export 'signin/signin_page_connected.dart';
 export 'signup/signup_page.dart';
