@@ -1,10 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/core/exception/comunication_exception.dart';
-import 'package:polis/model/politico_model.dart';
-import 'package:polis/model/user_model.dart';
+import 'package:polis/core/exception/exceptions.dart';
+import 'package:polis/model/models.dart';
 import 'package:polis/repository/concrete/firebase/collection.dart';
-import 'package:polis/repository/concrete/firebase/firebase_follow_repository.dart';
+import 'package:polis/repository/concrete/repositories.dart';
 
 import '../mock.dart';
 
@@ -44,22 +43,22 @@ void main() {
       test(
           '''when follow politic add document in POLITICOS_SEGUIDOS and USUARIOS_SEGUINDO collections''',
           () async {
-        when(mockFirestore.collection(POLITICOS_SEGUIDOS))
+        when(mockFirestore.collection(POLITICOS_SEGUIDOS_COLLECTION))
             .thenReturn(mockPoliticosSeguidosCollectionReference);
         when(mockPoliticosSeguidosCollectionReference.document('1'))
             .thenReturn(mockUserDocumentReference);
         when(mockUserDocumentReference
-                .collection(POLITICOS_SEGUIDOS_COLLECTION))
+                .collection(POLITICOS_SEGUIDOS_SUBCOLLECTION))
             .thenReturn(mockPoliticosSeguidosInnerCollectionReference);
         when(mockPoliticosSeguidosInnerCollectionReference.document('2'))
             .thenReturn(mockPoliticoDocumentReference);
 
-        when(mockFirestore.collection(USUARIOS_SEGUINDO))
+        when(mockFirestore.collection(USUARIOS_SEGUINDO_COLLECTION))
             .thenReturn(mockUsuariosSeguindoCollectionReference);
         when(mockUsuariosSeguindoCollectionReference.document('2'))
             .thenReturn(mockPoliticoDocumentReference);
         when(mockPoliticoDocumentReference
-                .collection(USUARIOS_SEGUINDO_COLLECTION))
+                .collection(USUARIOS_SEGUINDO_SUBCOLLECTION))
             .thenReturn(mockUsuariosSeguindoInnerCollectionReference);
         when(mockUsuariosSeguindoInnerCollectionReference.document('1'))
             .thenReturn(mockUserDocumentReference);
@@ -80,7 +79,7 @@ void main() {
       });
 
       test('throws exception', () {
-        when(mockFirestore.collection(POLITICOS_SEGUIDOS))
+        when(mockFirestore.collection(POLITICOS_SEGUIDOS_COLLECTION))
             .thenThrow(Exception());
         final user = UserModel(
           userId: '1',
@@ -101,22 +100,22 @@ void main() {
       test(
           '''when unfollowPolitic politic delete document in POLITICOS_SEGUIDOS and USUARIOS_SEGUINDO collections''',
           () async {
-        when(mockFirestore.collection(POLITICOS_SEGUIDOS))
+        when(mockFirestore.collection(POLITICOS_SEGUIDOS_COLLECTION))
             .thenReturn(mockPoliticosSeguidosCollectionReference);
         when(mockPoliticosSeguidosCollectionReference.document('1'))
             .thenReturn(mockUserDocumentReference);
         when(mockUserDocumentReference
-                .collection(POLITICOS_SEGUIDOS_COLLECTION))
+                .collection(POLITICOS_SEGUIDOS_SUBCOLLECTION))
             .thenReturn(mockPoliticosSeguidosInnerCollectionReference);
         when(mockPoliticosSeguidosInnerCollectionReference.document('2'))
             .thenReturn(mockPoliticoDocumentReference);
 
-        when(mockFirestore.collection(USUARIOS_SEGUINDO))
+        when(mockFirestore.collection(USUARIOS_SEGUINDO_COLLECTION))
             .thenReturn(mockUsuariosSeguindoCollectionReference);
         when(mockUsuariosSeguindoCollectionReference.document('2'))
             .thenReturn(mockPoliticoDocumentReference);
         when(mockPoliticoDocumentReference
-                .collection(USUARIOS_SEGUINDO_COLLECTION))
+                .collection(USUARIOS_SEGUINDO_SUBCOLLECTION))
             .thenReturn(mockUsuariosSeguindoInnerCollectionReference);
         when(mockUsuariosSeguindoInnerCollectionReference.document('1'))
             .thenReturn(mockUserDocumentReference);
@@ -136,7 +135,7 @@ void main() {
       });
 
       test('throws exception', () {
-        when(mockFirestore.collection(POLITICOS_SEGUIDOS))
+        when(mockFirestore.collection(POLITICOS_SEGUIDOS_COLLECTION))
             .thenThrow(Exception());
         final user = UserModel(
           userId: '1',

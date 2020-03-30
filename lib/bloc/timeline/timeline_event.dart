@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../model/despesa_model.dart';
-import '../../model/proposta_model.dart';
+import '../../model/models.dart';
 
 abstract class TimelineEvent extends Equatable {
   const TimelineEvent();

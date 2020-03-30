@@ -9,9 +9,9 @@ import '../../bloc/blocs.dart';
 import '../../core/abstract/polis_image_picker.dart';
 import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
-import '../../model/user_model.dart';
+import '../../model/models.dart';
 import '../../widget/snackbar.dart';
-import '../initial/initial_page_connected.dart';
+import '../pages.dart';
 import '../theme/main_theme.dart';
 
 class SignupPage extends StatefulWidget {

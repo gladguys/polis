@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_select/smart_select.dart';
 
-import '../../model/partido_model.dart';
+import '../../model/models.dart';
 
 class PartidoSelect extends StatefulWidget {
   PartidoSelect(

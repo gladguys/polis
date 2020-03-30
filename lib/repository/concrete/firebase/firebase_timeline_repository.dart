@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 
 import '../../../core/exception/exceptions.dart';
-import '../../../model/despesa_model.dart';
-import '../../../model/proposta_model.dart';
+import '../../../model/models.dart';
 import '../../abstract/timeline_repository.dart';
 import 'collection.dart';
 
@@ -14,7 +13,8 @@ class FirebaseTimelineRepository implements TimelineRepository {
 
   final Firestore firestore;
 
-  CollectionReference get timelineRef => firestore.collection(TIMELINE);
+  CollectionReference get timelineRef =>
+      firestore.collection(TIMELINE_COLLECTION);
 
   @override
   Stream<Tuple2<List<DespesaModel>, List<PropostaModel>>> getUserTimeline(
@@ -22,7 +22,7 @@ class FirebaseTimelineRepository implements TimelineRepository {
     try {
       return timelineRef
           .document(userId)
-          .collection(ATIVIDADES_TIMELINE_COLLECTION)
+          .collection(ATIVIDADES_TIMELINE_SUBCOLLECTION)
           .snapshots()
           .map((snapshot) {
         final despesas = snapshot.documents

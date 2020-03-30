@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/bloc/flutter_bloc_delegate.dart';
-import 'package:polis/model/user_model.dart';
+import 'package:polis/model/models.dart';
 
 import '../mock.dart';
 

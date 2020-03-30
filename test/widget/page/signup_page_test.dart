@@ -7,11 +7,9 @@ import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/abstract/polis_image_picker.dart';
 import 'package:polis/core/service/locator.dart';
-import 'package:polis/model/user_model.dart';
+import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
-import 'package:polis/page/signup/signup_page.dart';
-import 'package:polis/page/signup/signup_page_connected.dart';
 
 import '../../mock.dart';
 import '../utils.dart';

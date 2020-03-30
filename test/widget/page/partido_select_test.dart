@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:polis/model/partido_model.dart';
+import 'package:polis/model/models.dart';
 import 'package:polis/widget/select/selects.dart';
 
 import '../utils.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../model/despesa_model.dart';
+import '../../../model/models.dart';
 
 class DespesaTile extends StatelessWidget {
   DespesaTile(this.despesa);

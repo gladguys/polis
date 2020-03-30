@@ -5,8 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../core/exception/exceptions.dart';
-import '../../../core/exception/invalid_credentials_exception.dart';
-import '../../../model/user_model.dart';
+import '../../../model/models.dart';
 import '../../abstract/signin_repository.dart';
 import 'collection.dart';
 
@@ -22,7 +21,7 @@ class FirebaseSigninRepository extends SigninRepository {
   final FirebaseAuth firebaseAuth;
   final Firestore firestore;
   final GoogleSignIn googleSignin;
-  CollectionReference get userRef => firestore.collection(USERS);
+  CollectionReference get userRef => firestore.collection(USERS_COLLECTION);
 
   @override
   Future<UserModel> signInWithEmailAndPassword(

@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getflutter/getflutter.dart';
 
 import '../../../i18n/i18n.dart';
-import '../../../model/user_model.dart';
+import '../../../model/models.dart';
 
 class PersonalUserInfo extends StatelessWidget {
   PersonalUserInfo({this.user});

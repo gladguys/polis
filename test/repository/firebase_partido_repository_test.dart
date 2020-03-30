@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/core/exception/comunication_exception.dart';
+import 'package:polis/core/exception/exceptions.dart';
 import 'package:polis/repository/concrete/firebase/collection.dart';
 import 'package:polis/repository/concrete/repositories.dart';
 
@@ -34,7 +34,7 @@ void main() {
 
     group('getAllPartidos', () {
       test('get all the partidos', () async {
-        when(mockFirestore.collection(PARTIDOS))
+        when(mockFirestore.collection(PARTIDOS_COLLECTION))
             .thenReturn(mockPartidosCollectionReference);
         when(mockPartidosCollectionReference.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
@@ -46,7 +46,8 @@ void main() {
       });
 
       test('throws exception', () {
-        when(mockFirestore.collection(PARTIDOS)).thenThrow(Exception());
+        when(mockFirestore.collection(PARTIDOS_COLLECTION))
+            .thenThrow(Exception());
         firebasePartidoRepository
             .getAllPartidos()
             .catchError((e) => expect(e, isA<ComunicationException>()));

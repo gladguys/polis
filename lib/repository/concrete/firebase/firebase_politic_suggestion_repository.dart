@@ -2,8 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/exception/exceptions.dart';
-import '../../../model/politico_model.dart';
-import '../../../model/user_model.dart';
+import '../../../model/models.dart';
 import '../../abstract/politic_suggestion_repository.dart';
 import 'collection.dart';
 
@@ -14,11 +13,12 @@ class FirebasePoliticSuggestionRepository
 
   final Firestore firestore;
 
-  CollectionReference get politicosRef => firestore.collection(POLITICOS);
+  CollectionReference get politicosRef =>
+      firestore.collection(POLITICOS_COLLECTION);
   CollectionReference get politicosSeguidosRef =>
-      firestore.collection(POLITICOS_SEGUIDOS);
+      firestore.collection(POLITICOS_SEGUIDOS_COLLECTION);
   CollectionReference get usuariosSeguindoRef =>
-      firestore.collection(USUARIOS_SEGUINDO);
+      firestore.collection(USUARIOS_SEGUINDO_COLLECTION);
 
   @override
   Future<List<PoliticoModel>> getSuggestedPolitics(String stateOption) async {
@@ -47,7 +47,7 @@ class FirebasePoliticSuggestionRepository
       for (var politic in listPoliticsToFollow) {
         await politicosSeguidosRef
             .document(userId)
-            .collection(POLITICOS_SEGUIDOS_COLLECTION)
+            .collection(POLITICOS_SEGUIDOS_SUBCOLLECTION)
             .document(politic['id'])
             .setData(politic);
       }
@@ -63,7 +63,7 @@ class FirebasePoliticSuggestionRepository
       for (var politic in politics) {
         await usuariosSeguindoRef
             .document(politic.id)
-            .collection(USUARIOS_SEGUINDO_COLLECTION)
+            .collection(USUARIOS_SEGUINDO_SUBCOLLECTION)
             .document(user.userId)
             .setData(user.toJson());
       }

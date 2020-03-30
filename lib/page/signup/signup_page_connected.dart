@@ -5,7 +5,7 @@ import '../../bloc/blocs.dart';
 import '../../core/abstract/polis_image_picker.dart';
 import '../../core/service/locator.dart';
 import '../../core/service/services.dart';
-import '../../repository/concrete/firebase/firebase_signup_repository.dart';
+import '../../repository/concrete/repositories.dart';
 import '../page_connected.dart';
 import '../pages.dart';
 

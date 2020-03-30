@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:polis/model/user_position_info.dart';
+import 'package:polis/model/models.dart';
 
 void main() {
   group('UserPositionInfo tests', () {

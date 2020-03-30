@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/model/partido_model.dart';
+import 'package:polis/model/models.dart';
 import 'package:polis/repository/concrete/hive/box.dart';
 import 'package:polis/repository/concrete/repositories.dart';
 

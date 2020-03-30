@@ -2,8 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
-import 'package:polis/model/despesa_model.dart';
-import 'package:polis/model/proposta_model.dart';
+import 'package:polis/model/models.dart';
 import 'package:tuple/tuple.dart';
 
 import '../mock.dart';

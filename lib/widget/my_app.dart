@@ -9,7 +9,7 @@ import '../core/routing/polis_routing_observer.dart';
 import '../core/service/locator.dart';
 import '../core/service/services.dart';
 import '../i18n/i18n.dart';
-import '../model/user_model.dart';
+import '../model/models.dart';
 import '../page/pages.dart';
 import '../page/theme/main_theme.dart';
 import '../repository/concrete/repositories.dart';

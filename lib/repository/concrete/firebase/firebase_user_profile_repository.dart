@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/exception/comunication_exception.dart';
-import '../../../model/politico_model.dart';
+import '../../../core/exception/exceptions.dart';
+import '../../../model/models.dart';
 import '../../abstract/user_profile_repository.dart';
 import 'collection.dart';
 
@@ -12,14 +12,14 @@ class FirebaseUserProfileRepository implements UserProfileRepository {
 
   final Firestore firestore;
   CollectionReference get politicosSeguidosRef =>
-      firestore.collection(POLITICOS_SEGUIDOS);
+      firestore.collection(POLITICOS_SEGUIDOS_COLLECTION);
 
   @override
   Future<List<PoliticoModel>> getPoliticsFollowing(String userId) async {
     try {
       final collectionRef = await politicosSeguidosRef
           .document(userId)
-          .collection(POLITICOS_SEGUIDOS_COLLECTION);
+          .collection(POLITICOS_SEGUIDOS_SUBCOLLECTION);
       final querySnapshot = await collectionRef.getDocuments();
       final documents = querySnapshot.documents;
       return List.generate(

@@ -1,4 +1,4 @@
-import '../../model/partido_model.dart';
+import '../../model/models.dart';
 
 abstract class PartidoRepository {
   Future<List<PartidoModel>> getAllPartidos();

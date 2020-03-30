@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/core/exception/comunication_exception.dart';
-import 'package:polis/model/politico_model.dart';
+import 'package:polis/core/exception/exceptions.dart';
+import 'package:polis/model/models.dart';
 import 'package:polis/repository/concrete/firebase/collection.dart';
 import 'package:polis/repository/concrete/repositories.dart';
 
@@ -41,7 +41,7 @@ void main() {
 
     group('getAllPolitics', () {
       test('returns list of all politics', () async {
-        when(mockFirestore.collection(POLITICOS))
+        when(mockFirestore.collection(POLITICOS_COLLECTION))
             .thenReturn(mockPoliticosCollectionReference);
         when(mockPoliticosCollectionReference.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
@@ -56,7 +56,8 @@ void main() {
       });
 
       test('throws ComunicationException', () {
-        when(mockFirestore.collection(POLITICOS)).thenThrow(Exception());
+        when(mockFirestore.collection(POLITICOS_COLLECTION))
+            .thenThrow(Exception());
         firebaseSearchPoliticRepository
             .getAllPolitics()
             .catchError((e) => expect(e, isA<ComunicationException>()));
@@ -65,12 +66,12 @@ void main() {
 
     group('getPoliticsFollowing', () {
       test('return list of followed politics', () async {
-        when(mockFirestore.collection(POLITICOS_SEGUIDOS))
+        when(mockFirestore.collection(POLITICOS_SEGUIDOS_COLLECTION))
             .thenReturn(mockPoliticosSeguindoCollectionReference);
         when(mockPoliticosSeguindoCollectionReference.document('1'))
             .thenReturn(mocPoliticDocumentReference);
         when(mocPoliticDocumentReference
-                .collection(POLITICOS_SEGUIDOS_COLLECTION))
+                .collection(POLITICOS_SEGUIDOS_SUBCOLLECTION))
             .thenReturn(mockPoliticosSeguindoInnerCollectionReference);
         when(mockPoliticosSeguindoInnerCollectionReference.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
@@ -79,7 +80,7 @@ void main() {
       });
 
       test('throw ComunicationException', () async {
-        when(mockFirestore.collection(POLITICOS_SEGUIDOS))
+        when(mockFirestore.collection(POLITICOS_SEGUIDOS_COLLECTION))
             .thenThrow(Exception());
         firebaseSearchPoliticRepository
             .getPoliticsFollowing('1')

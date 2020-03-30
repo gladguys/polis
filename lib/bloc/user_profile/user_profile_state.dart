@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import '../../model/politico_model.dart';
+import '../../model/models.dart';
 
 abstract class UserProfileState extends Equatable {
   const UserProfileState();

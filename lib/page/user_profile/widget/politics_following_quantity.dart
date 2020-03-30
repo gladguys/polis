@@ -3,7 +3,7 @@ import 'package:simple_router/simple_router.dart';
 
 import '../../../core/routing/route_names.dart';
 import '../../../i18n/i18n.dart';
-import '../../../model/politico_model.dart';
+import '../../../model/models.dart';
 import '../../pages.dart';
 
 class PoliticsFollowingQuantity extends StatelessWidget {

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/exception/exceptions.dart';
-import '../../../model/partido_model.dart';
+import '../../../model/models.dart';
 import '../../abstract/partido_repository.dart';
 import 'collection.dart';
 
@@ -12,7 +12,8 @@ class FirebasePartidoRepository implements PartidoRepository {
 
   final Firestore firestore;
 
-  CollectionReference get partidosRef => firestore.collection(PARTIDOS);
+  CollectionReference get partidosRef =>
+      firestore.collection(PARTIDOS_COLLECTION);
 
   @override
   Future<List<PartidoModel>> getAllPartidos() async {

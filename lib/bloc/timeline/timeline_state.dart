@@ -1,8 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../model/despesa_model.dart';
-import '../../model/proposta_model.dart';
+import '../../model/models.dart';
 
 abstract class TimelineState extends Equatable {
   const TimelineState();

@@ -1,7 +1,7 @@
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/core/service/ad_service.dart';
+import 'package:polis/core/service/services.dart';
 
 import '../mock.dart';
 

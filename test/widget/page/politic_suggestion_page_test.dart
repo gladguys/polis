@@ -6,11 +6,9 @@ import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/i18n/i18n.dart';
-import 'package:polis/model/politico_model.dart';
-import 'package:polis/model/user_model.dart';
+import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
-import 'package:polis/page/politic_sugestion/politic_suggestion_page_connected.dart';
 import 'package:polis/page/politic_sugestion/widget/politics_suggested_grid.dart';
 import 'package:polis/widget/politic_suggested.dart';
 

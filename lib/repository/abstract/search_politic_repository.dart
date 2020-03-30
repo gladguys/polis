@@ -1,4 +1,4 @@
-import '../../model/politico_model.dart';
+import '../../model/models.dart';
 
 abstract class SearchPoliticRepository {
   Future<List<PoliticoModel>> getAllPolitics();

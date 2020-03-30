@@ -1,4 +1,4 @@
-import '../../model/user_model.dart';
+import '../../model/models.dart';
 
 abstract class UserRepository {
   Future<void> signOut();

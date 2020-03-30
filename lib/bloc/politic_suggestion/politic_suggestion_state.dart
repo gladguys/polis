@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../model/politico_model.dart';
+import '../../model/models.dart';
 
 abstract class PoliticSuggestionState extends Equatable {
   const PoliticSuggestionState();

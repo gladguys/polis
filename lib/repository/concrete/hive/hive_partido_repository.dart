@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-import '../../../model/partido_model.dart';
+import '../../../model/models.dart';
 import '../../abstract/partido_repository.dart';
 import 'box.dart';
 

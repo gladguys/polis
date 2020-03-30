@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../model/despesa_model.dart';
-import '../../../model/proposta_model.dart';
+import '../../../model/models.dart';
 import 'despesa_tile.dart';
 
 class Timeline extends StatelessWidget {

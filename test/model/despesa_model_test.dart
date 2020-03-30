@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:polis/model/despesa_model.dart';
+import 'package:polis/model/models.dart';
 
 void main() {
   final jsonDespesa = {

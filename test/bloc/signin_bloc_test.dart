@@ -2,9 +2,9 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
-import 'package:polis/core/exception/invalid_credentials_exception.dart';
-import 'package:polis/i18n/message.dart';
-import 'package:polis/model/user_model.dart';
+import 'package:polis/core/exception/exceptions.dart';
+import 'package:polis/i18n/i18n.dart';
+import 'package:polis/model/models.dart';
 
 import '../mock.dart';
 

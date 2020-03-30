@@ -1,7 +1,6 @@
 import 'package:tuple/tuple.dart';
 
-import '../../model/despesa_model.dart';
-import '../../model/proposta_model.dart';
+import '../../model/models.dart';
 
 abstract class TimelineRepository {
   Stream<Tuple2<List<DespesaModel>, List<PropostaModel>>> getUserTimeline(

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/search_politic/bloc.dart';
-import '../../../model/partido_model.dart';
-import '../../../model/politico_model.dart';
+import '../../../model/models.dart';
 import '../../../widget/select/selects.dart';
 import 'search_politics_list.dart';
 

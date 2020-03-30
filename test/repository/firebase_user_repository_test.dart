@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/core/exception/exceptions.dart';
-import 'package:polis/model/user_model.dart';
+import 'package:polis/model/models.dart';
 import 'package:polis/repository/concrete/firebase/collection.dart';
-import 'package:polis/repository/concrete/firebase/firebase_user_repository.dart';
+import 'package:polis/repository/concrete/repositories.dart';
 
 import '../mock.dart';
 
@@ -60,7 +60,8 @@ void main() {
           userId: '1',
           isFirstLoginDone: false,
         );
-        when(mockFirestore.collection(USERS)).thenReturn(mockUserCollectionRef);
+        when(mockFirestore.collection(USERS_COLLECTION))
+            .thenReturn(mockUserCollectionRef);
         when(mockUserCollectionRef.document('1'))
             .thenReturn(mockUserDocumentRef);
         final userWithFirstLogin = user.copyWith(isFirstLoginDone: true);
@@ -73,7 +74,8 @@ void main() {
           userId: '1',
           isFirstLoginDone: false,
         );
-        when(mockFirestore.collection(USERS)).thenReturn(mockUserCollectionRef);
+        when(mockFirestore.collection(USERS_COLLECTION))
+            .thenReturn(mockUserCollectionRef);
         when(mockUserCollectionRef.document('1')).thenThrow(Exception());
         firebaseUserRepository
             .setFirstLoginDone(user)

@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/exception/exceptions.dart';
-import 'package:polis/model/user_model.dart';
+import 'package:polis/model/models.dart';
 
 import '../mock.dart';
 

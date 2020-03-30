@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 
 import './bloc.dart';
 import '../../core/service/services.dart';
-import '../../model/partido_model.dart';
-import '../../model/politico_model.dart';
+import '../../model/models.dart';
 import '../../repository/abstract/follow_repository.dart';
 import '../../repository/abstract/search_politic_repository.dart';
 import '../../repository/abstract/user_following_politics_repository.dart';
