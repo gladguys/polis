@@ -47,7 +47,6 @@ void main() {
 
     test('toString()', () {
       final modelToString = PartidoModel(id: '1').toString();
-      print(modelToString);
       final result = '''PartidoModel{id: 1, sigla: null, nome: null}''';
       expect(modelToString == result, true);
     });
