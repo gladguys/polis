@@ -14,6 +14,12 @@ exports.onCreateFollower = functions.firestore
             .doc(politicoId)
             .collection('despesasPolitico');
 
+        const proposicoesPoliticoRef = admin
+            .firestore()
+            .collection('atividades')
+            .doc(politicoId)
+            .collection('proposicoesPolitico');
+
         const timelineRef = admin
             .firestore()
             .collection('timeline')
@@ -21,9 +27,18 @@ exports.onCreateFollower = functions.firestore
             .collection('atividadesTimeline');
 
 
-        const querySnapshot = await despesasPoliticoRef.get();
+        const querySnapshotDespesa = await despesasPoliticoRef.get();
+        const querySnapshotProposicao = await proposicoesPoliticoRef.get();
 
-        querySnapshot.forEach(doc => {
+        querySnapshotDespesa.forEach(doc => {
+            if (doc.exists) {
+                const activityId = doc.id;
+                const activityData = doc.data();
+                timelineRef.doc(activityId).set(activityData)
+            }
+        });
+        
+        querySnapshotProposicao.forEach(doc => {
             if (doc.exists) {
                 const activityId = doc.id;
                 const activityData = doc.data();
