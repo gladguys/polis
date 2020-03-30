@@ -37,7 +37,7 @@ class _PartidoSelectState extends State<PartidoSelect> {
       ..addAll(
         widget.partidos.map(
           (partido) => SmartSelectOption<String>(
-              value: partido.sigla, title: partido.nome),
+              value: partido.sigla, title: partido.sigla),
         ),
       );
   }
