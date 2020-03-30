@@ -4,6 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
 import './bloc.dart';
+import '../../core/service/services.dart';
+import '../../model/partido_model.dart';
 import '../../model/politico_model.dart';
 import '../../repository/abstract/follow_repository.dart';
 import '../../repository/abstract/search_politic_repository.dart';
@@ -14,14 +16,18 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
     @required this.searchPoliticRepository,
     @required this.userFollowingPoliticsRepository,
     @required this.followRepository,
+    @required this.partidoService,
   })  : assert(searchPoliticRepository != null),
         assert(userFollowingPoliticsRepository != null),
-        assert(followRepository != null);
+        assert(followRepository != null),
+        assert(partidoService != null);
 
   final SearchPoliticRepository searchPoliticRepository;
   final UserFollowingPoliticsRepository userFollowingPoliticsRepository;
   final FollowRepository followRepository;
+  final PartidoService partidoService;
 
+  List<PartidoModel> allPartidos;
   List<PoliticoModel> allPolitics;
   List<PoliticoModel> followedPolitics;
   List<PoliticoModel> politics;
@@ -39,6 +45,7 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
       yield LoadingFetchPolitics();
 
       try {
+        allPartidos = await partidoService.getAllPartidos();
         allPolitics = politics = await searchPoliticRepository.getAllPolitics();
         followedPolitics = await userFollowingPoliticsRepository
             .getFollowingPolitics(event.userId);

@@ -13,16 +13,19 @@ void main() {
     MockSearchPoliticRepository mockSearchPoliticRepository;
     MockUserFollowingPoliticsRepository mockUserFollowingPoliticsRepository;
     MockFollowRepository mockFollowRepository;
+    MockPartidoService mockPartidoService;
 
     setUp(() {
       mockSearchPoliticRepository = MockSearchPoliticRepository();
       mockUserFollowingPoliticsRepository =
           MockUserFollowingPoliticsRepository();
       mockFollowRepository = MockFollowRepository();
+      mockPartidoService = MockPartidoService();
       searchPoliticBloc = SearchPoliticBloc(
         searchPoliticRepository: mockSearchPoliticRepository,
         userFollowingPoliticsRepository: mockUserFollowingPoliticsRepository,
         followRepository: mockFollowRepository,
+        partidoService: mockPartidoService,
       );
     });
 
@@ -33,6 +36,7 @@ void main() {
                     mockUserFollowingPoliticsRepository,
                 followRepository: null,
                 searchPoliticRepository: mockSearchPoliticRepository,
+                partidoService: mockPartidoService,
               ),
           throwsAssertionError);
       expect(
@@ -40,6 +44,7 @@ void main() {
                 userFollowingPoliticsRepository: null,
                 followRepository: mockFollowRepository,
                 searchPoliticRepository: mockSearchPoliticRepository,
+                partidoService: mockPartidoService,
               ),
           throwsAssertionError);
       expect(
@@ -48,6 +53,16 @@ void main() {
                     mockUserFollowingPoliticsRepository,
                 followRepository: mockFollowRepository,
                 searchPoliticRepository: null,
+                partidoService: mockPartidoService,
+              ),
+          throwsAssertionError);
+      expect(
+          () => SearchPoliticBloc(
+                userFollowingPoliticsRepository:
+                    mockUserFollowingPoliticsRepository,
+                followRepository: mockFollowRepository,
+                searchPoliticRepository: mockSearchPoliticRepository,
+                partidoService: null,
               ),
           throwsAssertionError);
     });

@@ -3,17 +3,22 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bloc/flutter_bloc_delegate.dart';
 import 'core/service/ad_service.dart';
 import 'core/service/locator.dart';
 import 'core/service/services.dart';
+import 'model/partido_model.dart';
 import 'widget/my_app.dart';
 import 'widget/my_app_injections.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(PartidoModelAdapter());
   initLocator(await SharedPreferences.getInstance());
   G<AdService>().initAds();
   G<CrashlyticsService>().initCrashlytics();

@@ -5,21 +5,13 @@ void main() {
   final jsonPartido = {
     'id': '1',
     'nome': 'Teste',
-    'lider': 'Lula',
     'sigla': 'PT',
-    'situacao': 'Situacao',
-    'totalMembros': 1,
-    'totalPosse': 0,
   };
 
   final partidoModel = PartidoModel(
     id: '1',
     nome: 'Teste',
-    lider: 'Lula',
     sigla: 'PT',
-    situacao: 'Situacao',
-    totalMembros: 1,
-    totalPosse: 0,
   );
 
   group('PartidoModel tests', () {
@@ -38,10 +30,24 @@ void main() {
       expect(partido1 == partido2, false);
     });
 
+    test('hashCode', () {
+      final partido1 = PartidoModel(
+        id: '1',
+      );
+      final partido11 = PartidoModel(
+        id: '1',
+      );
+      final partido2 = PartidoModel(
+        id: '2',
+      );
+
+      expect(partido1.hashCode, partido11.hashCode);
+      expect(partido1.hashCode == partido2.hashCode, false);
+    });
+
     test('toString()', () {
       final modelToString = PartidoModel(id: '1').toString();
-      final result =
-          '''PartidoModel{id: 1, sigla: null, nome: null, situacao: null, totalPosse: null, totalMembros: null, lider: null}''';
+      final result = '''PartidoModel{id: 1, sigla: null, nome: null}''';
       expect(modelToString == result, true);
     });
 
@@ -53,12 +59,7 @@ void main() {
       final partidoToJson = partidoModel.toJson();
       expect(partidoToJson['id'] == jsonPartido['id'], true);
       expect(partidoToJson['nome'] == jsonPartido['nome'], true);
-      expect(partidoToJson['lider'] == jsonPartido['lider'], true);
       expect(partidoToJson['sigla'] == jsonPartido['sigla'], true);
-      expect(partidoToJson['situacao'] == jsonPartido['situacao'], true);
-      expect(
-          partidoToJson['totalMembros'] == jsonPartido['totalMembros'], true);
-      expect(partidoToJson['totalPosse'] == jsonPartido['totalPosse'], true);
     });
   });
 }

@@ -1,5 +1,7 @@
 const USERS = 'users';
 
+const PARTIDOS = 'partidos';
+
 const POLITICOS = 'politicos';
 const SIGLA_UF_FIELD = 'siglaUf';
 

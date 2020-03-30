@@ -16,11 +16,20 @@ class SearchPoliticPage extends StatelessWidget {
       body: BlocBuilder<SearchPoliticBloc, SearchPoliticState>(
         builder: (_, state) {
           if (state is FetchSearchPoliticsSuccess) {
-            return SearchPolitics(politics: state.politics);
+            return SearchPolitics(
+              politics: state.politics,
+              partidos: context.bloc<SearchPoliticBloc>().allPartidos,
+            );
           } else if (state is SearchPoliticFilterChanged) {
-            return SearchPolitics(politics: state.politics);
+            return SearchPolitics(
+              politics: state.politics,
+              partidos: context.bloc<SearchPoliticBloc>().allPartidos,
+            );
           } else if (state is FollowedSearchPoliticsUpdated) {
-            return SearchPolitics(politics: state.followedPolitics);
+            return SearchPolitics(
+              politics: state.followedPolitics,
+              partidos: context.bloc<SearchPoliticBloc>().allPartidos,
+            );
           } else if (state is InitialSearchPoliticState ||
               state is LoadingFetchPolitics) {
             return CenteredLoading();

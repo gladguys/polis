@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hive/hive.dart';
 
 import '../repository/concrete/firebase/firebase_follow_repository.dart';
 import '../repository/concrete/firebase/firebase_user_profile_repository.dart';
@@ -69,6 +70,16 @@ class MyAppInjections extends StatelessWidget {
         RepositoryProvider(
           create: (_) => FirebaseSearchPoliticRepository(
             firestore: Firestore.instance,
+          ),
+        ),
+        RepositoryProvider(
+          create: (_) => FirebasePartidoRepository(
+            firestore: Firestore.instance,
+          ),
+        ),
+        RepositoryProvider(
+          create: (_) => HivePartidoRepository(
+            hive: Hive,
           ),
         ),
         RepositoryProvider(
