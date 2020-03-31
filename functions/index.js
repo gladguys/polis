@@ -3,25 +3,26 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 exports.onCreateFollower = functions.firestore
-    .document(`/${USUARIOS_SEGUINDO_COLLECTION}/{politicoId}/${USUARIOS_SEGUINDO_SUBCOLLECTION}/{followerId}`)
+    .document('/usuarios_seguindo/{politicoId}/usuariosSeguindo/{followerId}')
     .onCreate(async (snapshot, context) => {
         const politicoId = context.params.politicoId;
         const followerId = context.params.followerId;
 
         const politicoDocumentRef = await admin.firestore()
-            .collection(POLITICOS_COLLECTION)
+            .collection('politicos')
             .doc(politicoId);
 
-        const despesasPoliticoRef = politicoDocumentRef.collection(DESPESAS_POLITICO_SUBCOLLECTION);
+        const despesasPoliticoRef = politicoDocumentRef.collection('despesasPolitico');
 
         await admin.firestore().runTransaction((transaction) => {
-            const politicoDocument = transaction.get(politicoDocumentRef);
-            if (!politicoDocument.exists) {
-                throw 'Document does not exist';
-            }
-            const quantidadeSeguidoresAtualizada = politicoDocument.data().quantidadeSeguidores + 1;
-            transaction.update(politicoDocumentRef, { quantidadeSeguidores: quantidadeSeguidoresAtualizada });
-            return transaction;
+            return transaction.get(politicoDocumentRef).then((politicoDocument) => {
+                if (!politicoDocument.exists) {
+                    throw 'Document does not exist';
+                }
+                const quantidadeSeguidoresAtual = politicoDocument.data().quantidadeSeguidores || 0;
+                const quantidadeSeguidoresAtualizada = quantidadeSeguidoresAtual + 1;
+                transaction.update(politicoDocumentRef, { quantidadeSeguidores: quantidadeSeguidoresAtualizada });
+            });
         });
 
         const proposicoesPoliticoRef = admin
@@ -32,9 +33,9 @@ exports.onCreateFollower = functions.firestore
 
         const timelineRef = admin
             .firestore()
-            .collection(TIMELINE_COLLECTION)
+            .collection('timeline')
             .doc(followerId)
-            .collection(ATIVIDADES_TIMELINE_SUBCOLLECTION);
+            .collection('atividadesTimeline');
 
         const querySnapshotDespesa = await despesasPoliticoRef.get();
         const querySnapshotProposicao = await proposicoesPoliticoRef.get();
@@ -57,32 +58,32 @@ exports.onCreateFollower = functions.firestore
     });
 
 exports.onDeleteFollower = functions.firestore
-    .document(`/${USUARIOS_SEGUINDO_COLLECTION}/{politicoId}/${USUARIOS_SEGUINDO_SUBCOLLECTION}/{followerId}`)
+    .document('/usuarios_seguindo/{politicoId}/usuariosSeguindo/{followerId}')
     .onDelete(async (snapshot, context) => {
         const politicoId = context.params.politicoId;
         const followerId = context.params.followerId;
 
         const politicoDocumentRef = await admin.firestore()
-            .collection(POLITICOS_COLLECTION)
+            .collection('politicos')
             .doc(politicoId);
 
         await admin.firestore().runTransaction((transaction) => {
-            const politicoDocument = transaction.get(politicoDocumentRef);
-            if (!politicoDocument.exists) {
-                throw 'Document does not exist';
-            }
-            const quantidadeSeguidoresAtual = politicoDocument.data().quantidadeSeguidores;
-            const quantidadeSeguidoresAtualizada = quantidadeSeguidoresAtual === 0 ? 0 : quantidadeSeguidoresAtual - 1;
-            transaction.update(politicoDocumentRef, { quantidadeSeguidores: quantidadeSeguidoresAtualizada });
-            return transaction;
+            return transaction.get(politicoDocumentRef).then((politicoDocument) => {
+                if (!politicoDocument.exists) {
+                    throw 'Document does not exist';
+                }
+                const quantidadeSeguidoresAtual = politicoDocument.data().quantidadeSeguidores || 0;
+                const quantidadeSeguidoresAtualizada = quantidadeSeguidoresAtual === 0 ? 0 : quantidadeSeguidoresAtual - 1;
+                transaction.update(politicoDocumentRef, { quantidadeSeguidores: quantidadeSeguidoresAtualizada });
+            });
         });
 
         const timelineActivitiesRef = admin
             .firestore()
-            .collection(TIMELINE_COLLECTION)
+            .collection('timeline')
             .doc(followerId)
-            .collection(ATIVIDADES_TIMELINE_SUBCOLLECTION)
-            .where(ID_POLITICO_FIELD, '==', politicoId);
+            .collection('atividadesTimeline')
+            .where('idPolitico', '==', politicoId);
 
         const querySnapshot = await timelineActivitiesRef.get();
 
@@ -94,10 +95,10 @@ exports.onDeleteFollower = functions.firestore
 
         const usuariosSeguindoPoliticoRef = admin
             .firestore()
-            .collection(USUARIOS_SEGUINDO_COLLECTION)
+            .collection('usuarios_seguindo')
             .doc(politicoId)
-            .collection(USUARIOS_SEGUINDO_SUBCOLLECTION)
-            .where(USER_ID_FIELD, '==', followerId);
+            .collection('usuariosSeguindo')
+            .where('userId', '==', followerId);
 
         const querySnapshotUsuariosSeguindoPolitico = await usuariosSeguindoPoliticoRef.get();
 
