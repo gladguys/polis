@@ -13,7 +13,7 @@ class Timeline extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       itemBuilder: (_, i) => DespesaTile(despesas[i]),
-      separatorBuilder: (_, i) => const Divider(),
+      separatorBuilder: (_, i) => const Divider(height: 1),
       itemCount: despesas.length,
     );
   }
