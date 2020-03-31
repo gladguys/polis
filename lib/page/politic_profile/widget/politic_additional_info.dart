@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import '../../../model/models.dart';
 
 class PoliticAdditionalInfo extends StatelessWidget {
-  PoliticAdditionalInfo(this.usersFollowing);
+  PoliticAdditionalInfo(this.politic);
 
-  final List<UsuarioSeguindoPolitico> usersFollowing;
+  final PoliticoModel politic;
+
+  int get quantidadeSeguidores => (politic.quantidadeSeguidores ?? 0).toInt();
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
         Column(
           children: <Widget>[
             Text(
-              usersFollowing.length.toString(),
+              quantidadeSeguidores.toString(),
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 22,

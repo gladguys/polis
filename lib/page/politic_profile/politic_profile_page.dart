@@ -19,7 +19,6 @@ class PoliticProfilePage extends StatelessWidget {
         builder: (_, state) {
           if (state is GetPoliticInfoSuccess) {
             final politic = state.politic;
-            final usersFollowing = state.usersFollowing;
             return SafeArea(
               child: Container(
                 width: double.infinity,
@@ -30,7 +29,7 @@ class PoliticProfilePage extends StatelessWidget {
                     const SizedBox(height: 14),
                     PoliticActionButtons(),
                     const SizedBox(height: 16),
-                    PoliticAdditionalInfo(usersFollowing),
+                    PoliticAdditionalInfo(politic),
                     const SizedBox(height: 26),
                     const Divider(),
                     PoliticActivities(),

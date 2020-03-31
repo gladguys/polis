@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 import '../../model/models.dart';
-import '../../model/usuario_seguindo_politico_model.dart';
 
 abstract class PoliticProfileState extends Equatable {
   const PoliticProfileState();
@@ -13,13 +12,12 @@ class InitialPoliticProfileState extends PoliticProfileState {
 }
 
 class GetPoliticInfoSuccess extends PoliticProfileState {
-  GetPoliticInfoSuccess({this.politic, this.usersFollowing});
+  GetPoliticInfoSuccess({this.politic});
 
   final PoliticoModel politic;
-  final List<UsuarioSeguindoPolitico> usersFollowing;
 
   @override
-  List<Object> get props => [politic, usersFollowing];
+  List<Object> get props => [politic];
 }
 
 class GetPoliticInfoFailed extends PoliticProfileState {
