@@ -90,6 +90,11 @@ class MyAppInjections extends StatelessWidget {
             firestore: Firestore.instance,
           ),
         ),
+        RepositoryProvider(
+          create: (_) => FirebasePoliticFollowersRepository(
+            firestore: Firestore.instance,
+          ),
+        ),
       ],
       child: child,
     );

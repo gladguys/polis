@@ -14,8 +14,6 @@ class FirebasePoliticProfileRepository implements PoliticProfileRepository {
 
   CollectionReference get politicoRef =>
       firestore.collection(POLITICOS_COLLECTION);
-  CollectionReference get usuariosSeguindoRef =>
-      firestore.collection(USUARIOS_SEGUINDO_COLLECTION);
 
   @override
   Future<PoliticoModel> getInfoPolitic(String politicId) async {
@@ -23,22 +21,6 @@ class FirebasePoliticProfileRepository implements PoliticProfileRepository {
       final documentReference = politicoRef.document(politicId);
       final documentSnapshot = await documentReference.get();
       return PoliticoModel.fromJson(documentSnapshot.data);
-    } on Exception {
-      throw ComunicationException();
-    }
-  }
-
-  @override
-  Future<List<UsuarioSeguindoPolitico>> getUsersFollowingPolitic(
-      String politicId) async {
-    try {
-      final usuariosSeguindoCollectionRef = usuariosSeguindoRef
-          .document(politicId)
-          .collection(USUARIOS_SEGUINDO_SUBCOLLECTION);
-      final querySnapshot = await usuariosSeguindoCollectionRef.getDocuments();
-      final documents = querySnapshot.documents;
-      return List.generate(documents.length,
-          (i) => UsuarioSeguindoPolitico.fromJson(documents[i].data));
     } on Exception {
       throw ComunicationException();
     }

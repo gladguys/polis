@@ -1,5 +1,6 @@
 export 'firebase/firebase_follow_repository.dart';
 export 'firebase/firebase_partido_repository.dart';
+export 'firebase/firebase_politic_followers_repository.dart';
 export 'firebase/firebase_politic_profile_repository.dart';
 export 'firebase/firebase_politic_suggestion_repository.dart';
 export 'firebase/firebase_search_politic_repository.dart';

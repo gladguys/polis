@@ -2,6 +2,8 @@ export 'favorite_posts/favorite_posts_page.dart';
 export 'initial/initial_page.dart';
 export 'initial/initial_page_connected.dart';
 export 'intro/intro_page.dart';
+export 'politic_followers/politic_followers_page.dart';
+export 'politic_followers/politic_followers_page_connected.dart';
 export 'politic_profile/politic_profile_page.dart';
 export 'politic_profile/politic_profile_page.dart';
 export 'politic_profile/politic_profile_page_connected.dart';
