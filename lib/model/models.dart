@@ -4,3 +4,4 @@ export 'politico_model.dart';
 export 'proposta_model.dart';
 export 'user_model.dart';
 export 'user_position_info.dart';
+export 'usuario_seguindo_politico_model.dart';
