@@ -3,11 +3,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/exception/invalid_credentials_exception.dart';
-import '../../core/service/analytics_service.dart';
+import '../../core/exception/exceptions.dart';
 import '../../core/service/services.dart';
-import '../../i18n/message.dart';
-import '../../model/user_model.dart';
+import '../../i18n/i18n.dart';
+import '../../model/models.dart';
 import '../../repository/abstract/signin_repository.dart';
 import 'bloc.dart';
 

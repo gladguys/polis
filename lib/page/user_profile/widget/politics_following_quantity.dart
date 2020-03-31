@@ -3,7 +3,7 @@ import 'package:simple_router/simple_router.dart';
 
 import '../../../core/routing/route_names.dart';
 import '../../../i18n/i18n.dart';
-import '../../../model/politico_model.dart';
+import '../../../model/models.dart';
 import '../../pages.dart';
 
 class PoliticsFollowingQuantity extends StatelessWidget {
@@ -15,7 +15,7 @@ class PoliticsFollowingQuantity extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(
+        const Text(
           FOLLOWING,
           style: TextStyle(
             color: Colors.grey,

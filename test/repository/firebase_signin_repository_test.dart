@@ -2,9 +2,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/core/exception/exceptions.dart';
-import 'package:polis/core/exception/google_signin_exception.dart';
 import 'package:polis/repository/concrete/firebase/collection.dart';
-import 'package:polis/repository/concrete/firebase/firebase_signin_repository.dart';
+import 'package:polis/repository/concrete/repositories.dart';
 
 import '../mock.dart';
 
@@ -73,7 +72,7 @@ void main() {
             .thenAnswer((_) => Future.value(mockAuthResult));
         when(mockAuthResult.user).thenReturn(mockFirebaseUser);
         when(mockFirebaseUser.uid).thenReturn('1');
-        when(mockFirestore.collection(USERS))
+        when(mockFirestore.collection(USERS_COLLECTION))
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.document('1'))
             .thenReturn(mockDocumentReference);
@@ -100,7 +99,7 @@ void main() {
             .thenAnswer((_) => Future.value(mockAuthResult));
         when(mockAuthResult.user).thenReturn(mockFirebaseUser);
         when(mockFirebaseUser.uid).thenReturn('1');
-        when(mockFirestore.collection(USERS))
+        when(mockFirestore.collection(USERS_COLLECTION))
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.document('1'))
             .thenReturn(mockDocumentReference);
@@ -132,7 +131,7 @@ void main() {
             .thenAnswer((_) => Future.value(mockAuthResult));
         when(mockAuthResult.user).thenReturn(mockFirebaseUser);
         when(mockFirebaseUser.uid).thenReturn('1');
-        when(mockFirestore.collection(USERS))
+        when(mockFirestore.collection(USERS_COLLECTION))
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.document('1')).thenThrow(Exception());
 
@@ -148,7 +147,7 @@ void main() {
           when(mockGoogleSignin.signIn())
               .thenAnswer((_) => Future.value(mockGoogleSignInAccount));
           when(mockGoogleSignInAccount.email).thenReturn('test@gmail.com');
-          when(mockFirestore.collection(USERS))
+          when(mockFirestore.collection(USERS_COLLECTION))
               .thenReturn(mockCollectionReference);
           when(mockCollectionReference.where('email',
                   isEqualTo: 'test@gmail.com'))
@@ -168,7 +167,7 @@ void main() {
           when(mockGoogleSignin.signIn())
               .thenAnswer((_) => Future.value(mockGoogleSignInAccount));
           when(mockGoogleSignInAccount.email).thenReturn('test@gmail.com');
-          when(mockFirestore.collection(USERS))
+          when(mockFirestore.collection(USERS_COLLECTION))
               .thenReturn(mockCollectionReference);
           when(mockCollectionReference.where('email',
                   isEqualTo: 'test@gmail.com'))
@@ -190,7 +189,7 @@ void main() {
           when(mockGoogleSignin.signIn())
               .thenAnswer((_) => Future.value(mockGoogleSignInAccount));
           when(mockGoogleSignInAccount.email).thenReturn('test@gmail.com');
-          when(mockFirestore.collection(USERS))
+          when(mockFirestore.collection(USERS_COLLECTION))
               .thenReturn(mockCollectionReference);
           when(mockCollectionReference.where('email',
                   isEqualTo: 'test@gmail.com'))
@@ -204,7 +203,7 @@ void main() {
           when(mockGoogleSignin.signIn())
               .thenAnswer((_) => Future.value(mockGoogleSignInAccount));
           when(mockGoogleSignInAccount.email).thenReturn('test@gmail.com');
-          when(mockFirestore.collection(USERS))
+          when(mockFirestore.collection(USERS_COLLECTION))
               .thenReturn(mockCollectionReference);
           when(mockCollectionReference.where('email',
                   isEqualTo: 'test@gmail.com'))

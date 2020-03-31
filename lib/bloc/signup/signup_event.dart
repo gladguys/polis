@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import '../../model/user_model.dart';
+import '../../model/models.dart';
 
 abstract class SignupEvent extends Equatable {}
 

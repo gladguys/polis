@@ -6,7 +6,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../bloc/signin/signin_bloc.dart';
 import '../../bloc/signin/signin_event.dart';
-import '../../i18n/label.dart';
+import '../../i18n/i18n.dart';
 import '../pages.dart';
 import '../theme/main_theme.dart';
 

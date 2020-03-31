@@ -1,5 +1,4 @@
-import '../../model/politico_model.dart';
-import '../../model/user_model.dart';
+import '../../model/models.dart';
 
 abstract class PoliticSuggestionRepository {
   Future<List<PoliticoModel>> getSuggestedPolitics(String stateOption);

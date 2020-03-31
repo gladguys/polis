@@ -6,7 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/exception/exceptions.dart';
-import '../../../model/user_model.dart';
+import '../../../model/models.dart';
 import '../../abstract/signup_repository.dart';
 import 'collection.dart';
 import 'firebase_error_constants.dart';
@@ -23,7 +23,7 @@ class FirebaseSignupRepository extends SignupRepository {
   final FirebaseAuth firebaseAuth;
   final Firestore firestore;
   final FirebaseStorage storage;
-  CollectionReference get userRef => firestore.collection(USERS);
+  CollectionReference get userRef => firestore.collection(USERS_COLLECTION);
 
   @override
   Future<void> createUserWithEmailAndPassword(
@@ -37,8 +37,10 @@ class FirebaseSignupRepository extends SignupRepository {
         String imageUrl;
         if (profileImage != null) {
           try {
-            final storageReference =
-                storage.ref().child(USERS).child(authResult.user.uid);
+            final storageReference = storage
+                .ref()
+                .child(USERS_COLLECTION)
+                .child(authResult.user.uid);
             await storageReference.putFile(profileImage).onComplete;
             imageUrl = await storageReference.getDownloadURL();
           } on Exception {

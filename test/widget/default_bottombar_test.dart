@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/service/locator.dart';
-import 'package:polis/model/user_model.dart';
+import 'package:polis/model/models.dart';
 import 'package:polis/page/pages.dart';
 
 import '../mock.dart';
@@ -24,7 +24,7 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePage(),
+            child: TimelinePageConnected(),
           ),
         ),
       );
@@ -40,7 +40,7 @@ void main() {
                 photoUrl: 'photo',
               ),
             ),
-            child: TimelinePage(),
+            child: TimelinePageConnected(),
           ),
         ),
       );
@@ -77,7 +77,7 @@ void main() {
                 photoUrl: 'photo',
               ),
             ),
-            child: TimelinePage(),
+            child: TimelinePageConnected(),
           ),
         ),
       );
@@ -93,11 +93,11 @@ void main() {
               repository: MockUserRepository(),
               user: UserModel(),
             ),
-            child: TimelinePage(),
+            child: TimelinePageConnected(),
           ),
         ),
       );
-      expect(find.byType(FaIcon), findsOneWidget);
+      expect(find.byKey(const ValueKey('user-photoless-icon')), findsOneWidget);
     });
 
     testWidgets('shoud go to TimelinePage when clicking home icon',
@@ -108,7 +108,7 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePage(),
+            child: TimelinePageConnected(),
           ),
         ),
       );
@@ -130,7 +130,7 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePage(),
+            child: TimelinePageConnected(),
           ),
         ),
       );
@@ -144,7 +144,7 @@ void main() {
       await tester.tap(searchIcon);
     });
 
-    testWidgets('shoud go to TimelinePage when clicking bookmark icon',
+    testWidgets('shoud go to FavoritePostsPage when clicking bookmark icon',
         (tester) async {
       final mockUserBloc = MockUserBloc();
       when(mockUserBloc.user).thenReturn(UserModel());
@@ -152,7 +152,7 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePage(),
+            child: TimelinePageConnected(),
           ),
         ),
       );
@@ -166,7 +166,7 @@ void main() {
       await tester.tap(bookmarkIcon);
     });
 
-    testWidgets('shoud go to UserProfilePage when clicking on photo',
+    testWidgets('shoud open PopupMenuButton when clicking on photo',
         (tester) async {
       final mockUserBloc = MockUserBloc();
       when(mockUserBloc.user).thenReturn(UserModel());
@@ -174,13 +174,55 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePage(),
+            child: TimelinePageConnected(),
           ),
         ),
       );
-      final profile = find.byType(ClipRRect);
+      final profile = find.byKey(const ValueKey('user-photoless-icon'));
       expect(profile, findsOneWidget);
       await tester.tap(profile);
+      await tester.pump();
+      await tester.pump();
+      expect(find.byType(PopupMenuItem), findsNWidgets(2));
+    });
+
+    testWidgets('shoud go to UserProfilePage when clicking first option',
+        (tester) async {
+      final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.user).thenReturn(UserModel());
+      await tester.pumpWidget(
+        connectedWidget(
+          BlocProvider(
+            create: (_) => mockUserBloc,
+            child: TimelinePageConnected(),
+          ),
+        ),
+      );
+      final profile = find.byKey(const ValueKey('user-photoless-icon'));
+      expect(profile, findsOneWidget);
+      await tester.tap(profile);
+      await tester.pump();
+      final userOption = find.byType(PopupMenuItem).first;
+      await tester.tap(userOption);
+    });
+
+    testWidgets('shoud logout user when clicking last option', (tester) async {
+      final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.user).thenReturn(UserModel());
+      await tester.pumpWidget(
+        connectedWidget(
+          BlocProvider(
+            create: (_) => mockUserBloc,
+            child: TimelinePageConnected(),
+          ),
+        ),
+      );
+      final profile = find.byKey(const ValueKey('user-photoless-icon'));
+      expect(profile, findsOneWidget);
+      await tester.tap(profile);
+      await tester.pump();
+      final logoutOption = find.byType(PopupMenuItem).last;
+      await tester.tap(logoutOption);
     });
   });
 }

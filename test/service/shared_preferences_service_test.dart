@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/core/service/services.dart';
-import 'package:polis/model/user_model.dart';
+import 'package:polis/model/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../mock.dart';
@@ -16,7 +16,7 @@ void main() async {
   MockSharedPreferences mockSharedPreferences;
   SharedPreferencesService sharedPreferencesService;
 
-  group('CrashlyticsService tests', () {
+  group('SharedPreferencesService tests', () {
     setUp(() {
       mockSharedPreferences = MockSharedPreferences();
       sharedPreferencesService =
@@ -29,6 +29,7 @@ void main() async {
     });
 
     test('setUser', () {
+      sharedPreferencesService.setUser(null);
       expect(sharedPreferencesService.getUser(), isNull);
       sharedPreferencesService.setUser(UserModel());
     });

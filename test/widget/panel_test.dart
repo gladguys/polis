@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:polis/page/initial/initial_page.dart';
+import 'package:polis/page/pages.dart';
 
 void main() {
   group('Panel tests', () {

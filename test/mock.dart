@@ -7,19 +7,22 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hive/hive.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/abstract/polis_image_picker.dart';
-import 'package:polis/core/service/ad_service.dart';
-import 'package:polis/core/service/analytics_service.dart';
 import 'package:polis/core/service/services.dart';
+import 'package:polis/model/models.dart';
 import 'package:polis/repository/abstract/follow_repository.dart';
 import 'package:polis/repository/abstract/politic_suggestion_repository.dart';
+import 'package:polis/repository/abstract/search_politic_repository.dart';
 import 'package:polis/repository/abstract/signin_repository.dart';
 import 'package:polis/repository/abstract/signup_repository.dart';
+import 'package:polis/repository/abstract/timeline_repository.dart';
 import 'package:polis/repository/abstract/user_following_politics_repository.dart';
 import 'package:polis/repository/abstract/user_profile_repository.dart';
 import 'package:polis/repository/abstract/user_repository.dart';
+import 'package:polis/repository/concrete/repositories.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Bloc
@@ -39,8 +42,15 @@ class MockSignupBloc extends MockBloc<SignupEvent, SignupState>
 
 class MockUserBloc extends MockBloc<UserEvent, UserState> implements UserBloc {}
 
+class MockTimelineBloc extends MockBloc<TimelineEvent, TimelineState>
+    implements TimelineBloc {}
+
 class MockUserProfileBloc extends MockBloc<UserProfileEvent, UserProfileState>
     implements UserProfileBloc {}
+
+class MockSearchPoliticBloc
+    extends MockBloc<SearchPoliticEvent, SearchPoliticState>
+    implements SearchPoliticBloc {}
 
 // Repository
 class MockSigninRepository extends Mock implements SigninRepository {}
@@ -52,12 +62,22 @@ class MockUserProfileRepository extends Mock implements UserProfileRepository {}
 
 class MockSignupRepository extends Mock implements SignupRepository {}
 
+class MockTimelineRepository extends Mock implements TimelineRepository {}
+
 class MockUserRepository extends Mock implements UserRepository {}
 
 class MockUserFollowingPoliticsRepository extends Mock
     implements UserFollowingPoliticsRepository {}
 
+class MockSearchPoliticRepository extends Mock
+    implements SearchPoliticRepository {}
+
 class MockFollowRepository extends Mock implements FollowRepository {}
+
+class MockFirebasePartidoRepository extends Mock
+    implements FirebasePartidoRepository {}
+
+class MockHivePartidoRepository extends Mock implements HivePartidoRepository {}
 
 // Firebase
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
@@ -94,6 +114,11 @@ class MockFirebaseAnalytics extends Mock implements FirebaseAnalytics {}
 
 class MockCrashlytics extends Mock implements Crashlytics {}
 
+// Hive
+class MockHive extends Mock implements HiveInterface {}
+
+class MockPartidoBox extends Mock implements Box<PartidoModel> {}
+
 // Service
 class MockAnalyticsService extends Mock implements AnalyticsService {}
 
@@ -101,6 +126,8 @@ class MockAdService extends Mock implements AdService {}
 
 class MockSharedPreferencesService extends Mock
     implements SharedPreferencesService {}
+
+class MockPartidoService extends Mock implements PartidoService {}
 
 // Other
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}

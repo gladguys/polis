@@ -24,15 +24,30 @@ exports.onCreateFollower = functions.firestore
             return transaction;
         });
 
+        const proposicoesPoliticoRef = admin
+            .firestore()
+            .collection('atividades')
+            .doc(politicoId)
+            .collection('proposicoesPolitico');
+
         const timelineRef = admin
             .firestore()
             .collection(TIMELINE_COLLECTION)
             .doc(followerId)
             .collection(ATIVIDADES_TIMELINE_SUBCOLLECTION);
 
-        const querySnapshot = await despesasPoliticoRef.get();
+        const querySnapshotDespesa = await despesasPoliticoRef.get();
+        const querySnapshotProposicao = await proposicoesPoliticoRef.get();
 
-        querySnapshot.forEach(doc => {
+        querySnapshotDespesa.forEach(doc => {
+            if (doc.exists) {
+                const activityId = doc.id;
+                const activityData = doc.data();
+                timelineRef.doc(activityId).set(activityData)
+            }
+        });
+        
+        querySnapshotProposicao.forEach(doc => {
             if (doc.exists) {
                 const activityId = doc.id;
                 const activityData = doc.data();

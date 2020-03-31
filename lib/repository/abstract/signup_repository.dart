@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import '../../model/user_model.dart';
+import '../../model/models.dart';
 
 abstract class SignupRepository {
   Future<void> createUserWithEmailAndPassword(

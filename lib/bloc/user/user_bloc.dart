@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import './bloc.dart';
 import '../../core/exception/exceptions.dart';
-import '../../model/user_model.dart';
+import '../../model/models.dart';
 import '../../repository/abstract/user_repository.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {

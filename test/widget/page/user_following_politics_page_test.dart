@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
-import 'package:polis/model/politico_model.dart';
-import 'package:polis/model/user_model.dart';
+import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
 

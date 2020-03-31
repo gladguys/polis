@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:polis/page/favorite_posts/favorite_posts_page.dart';
+import 'package:polis/page/pages.dart';
 
 import '../utils.dart';
 

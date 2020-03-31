@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/user_following_politics/bloc.dart';
-import '../../../model/politico_model.dart';
+import '../../../model/models.dart';
 import 'following_politics_list.dart';
 
 class FollowingPoliticsSearch extends StatelessWidget {

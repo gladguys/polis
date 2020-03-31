@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
 import './bloc.dart';
-import '../../model/politico_model.dart';
+import '../../model/models.dart';
 import '../../repository/abstract/user_profile_repository.dart';
 
 class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {

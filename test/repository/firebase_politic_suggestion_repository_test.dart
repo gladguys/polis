@@ -1,8 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/core/exception/exceptions.dart';
-import 'package:polis/model/politico_model.dart';
-import 'package:polis/model/user_model.dart';
+import 'package:polis/model/models.dart';
 import 'package:polis/repository/concrete/firebase/collection.dart';
 import 'package:polis/repository/concrete/repositories.dart';
 
@@ -46,7 +45,7 @@ void main() {
       test(
           '''return [PoliticoModel] when there are suggestions and user select all states''',
           () async {
-        when(mockFirestore.collection(POLITICOS))
+        when(mockFirestore.collection(POLITICOS_COLLECTION))
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
@@ -65,7 +64,7 @@ void main() {
       test(
           '''return [PoliticoModel] when there are suggestions and user select a single state''',
           () async {
-        when(mockFirestore.collection(POLITICOS))
+        when(mockFirestore.collection(POLITICOS_COLLECTION))
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.where('siglaUf', isEqualTo: 'CE'))
             .thenReturn(refFiltered);
@@ -85,7 +84,8 @@ void main() {
       });
 
       test('should throw exception', () {
-        when(mockFirestore.collection(POLITICOS)).thenThrow(Exception());
+        when(mockFirestore.collection(POLITICOS_COLLECTION))
+            .thenThrow(Exception());
         firebasePoliticSuggestionRepository
             .getSuggestedPolitics('T')
             .then((_) {})
@@ -96,11 +96,11 @@ void main() {
 
     group('savePoliticsToFollow tests', () {
       test('save politics works', () async {
-        when(mockFirestore.collection(POLITICOS_SEGUIDOS))
+        when(mockFirestore.collection(POLITICOS_SEGUIDOS_COLLECTION))
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.document(any))
             .thenReturn(mockDocumentReference);
-        when(mockDocumentReference.collection(POLITICOS_SEGUIDOS_COLLECTION))
+        when(mockDocumentReference.collection(POLITICOS_SEGUIDOS_SUBCOLLECTION))
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.document(any))
             .thenReturn(mockDocumentReference);
@@ -114,11 +114,11 @@ void main() {
       });
 
       test('throw ComunicationException', () {
-        when(mockFirestore.collection(POLITICOS_SEGUIDOS))
+        when(mockFirestore.collection(POLITICOS_SEGUIDOS_COLLECTION))
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.document(any))
             .thenReturn(mockDocumentReference);
-        when(mockDocumentReference.collection(POLITICOS_SEGUIDOS_COLLECTION))
+        when(mockDocumentReference.collection(POLITICOS_SEGUIDOS_SUBCOLLECTION))
             .thenThrow(Exception());
         final politic = PoliticoModel(
           id: '1',
@@ -132,11 +132,11 @@ void main() {
 
     group('saveFollowerToPolitics tests', () {
       test('works', () async {
-        when(mockFirestore.collection(USUARIOS_SEGUINDO))
+        when(mockFirestore.collection(USUARIOS_SEGUINDO_COLLECTION))
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.document(any))
             .thenReturn(mockDocumentReference);
-        when(mockDocumentReference.collection(USUARIOS_SEGUINDO_COLLECTION))
+        when(mockDocumentReference.collection(USUARIOS_SEGUINDO_SUBCOLLECTION))
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.document(any))
             .thenReturn(mockDocumentReference);
@@ -153,11 +153,11 @@ void main() {
       });
 
       test('throw ComunicationException', () {
-        when(mockFirestore.collection(USUARIOS_SEGUINDO))
+        when(mockFirestore.collection(USUARIOS_SEGUINDO_COLLECTION))
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.document(any))
             .thenReturn(mockDocumentReference);
-        when(mockDocumentReference.collection(USUARIOS_SEGUINDO_COLLECTION))
+        when(mockDocumentReference.collection(USUARIOS_SEGUINDO_SUBCOLLECTION))
             .thenThrow(Exception());
         final politic = PoliticoModel(
           id: '1',

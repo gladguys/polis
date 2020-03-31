@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:polis/bloc/blocs.dart';
-import 'package:polis/model/user_model.dart';
+import 'package:polis/model/models.dart';
 import 'package:polis/widget/my_app_injections.dart';
 import 'package:simple_router/simple_router.dart';
 

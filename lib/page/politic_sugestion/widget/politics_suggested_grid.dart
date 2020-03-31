@@ -6,7 +6,7 @@ import 'package:flutter_grid_delegate_ext/rendering/grid_delegate.dart';
 
 import '../../../bloc/politic_suggestion/bloc.dart';
 import '../../../core/constants.dart';
-import '../../../model/politico_model.dart';
+import '../../../model/models.dart';
 import '../../../widget/politic_suggested.dart';
 
 class PoliticsSuggestedGrid extends StatelessWidget {

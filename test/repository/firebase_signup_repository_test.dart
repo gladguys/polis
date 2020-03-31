@@ -4,9 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/core/exception/exceptions.dart';
-import 'package:polis/model/user_model.dart';
+import 'package:polis/model/models.dart';
 import 'package:polis/repository/concrete/firebase/collection.dart';
-import 'package:polis/repository/concrete/firebase/firebase_signup_repository.dart';
+import 'package:polis/repository/concrete/repositories.dart';
 
 import '../mock.dart';
 
@@ -77,7 +77,8 @@ void main() {
           .thenAnswer((_) => Future.value(mockAuthResult));
       when(mockAuthResult.user).thenReturn(mockFirebaseUser);
       when(mockFirebaseUser.uid).thenReturn('1');
-      when(mockFirestore.collection(USERS)).thenReturn(mockCollectionReference);
+      when(mockFirestore.collection(USERS_COLLECTION))
+          .thenReturn(mockCollectionReference);
       when(mockCollectionReference.document('1'))
           .thenReturn(mockDocumentReference);
       when(mockDocumentReference.get())
@@ -99,14 +100,16 @@ void main() {
           .thenAnswer((_) => Future.value(mockAuthResult));
       when(mockAuthResult.user).thenReturn(mockFirebaseUser);
       when(mockFirebaseUser.uid).thenReturn('1');
-      when(mockFirestore.collection(USERS)).thenReturn(mockCollectionReference);
+      when(mockFirestore.collection(USERS_COLLECTION))
+          .thenReturn(mockCollectionReference);
       when(mockCollectionReference.document('1'))
           .thenReturn(mockDocumentReference);
       when(mockDocumentReference.get())
           .thenAnswer((_) => Future.value(mockDocumentSnapshot));
       when(mockDocumentSnapshot.exists).thenReturn(false);
       when(mockFirebaseStorage.ref()).thenReturn(mockStorageReference);
-      when(mockStorageReference.child(USERS)).thenReturn(userStorageRef);
+      when(mockStorageReference.child(USERS_COLLECTION))
+          .thenReturn(userStorageRef);
       when(userStorageRef.child(any)).thenReturn(imageRef);
       when(imageRef.putFile(any)).thenReturn(mockStorageUploadTask);
       when(mockStorageUploadTask.onComplete)
@@ -135,7 +138,8 @@ void main() {
           .thenAnswer((_) => Future.value(mockAuthResult));
       when(mockAuthResult.user).thenReturn(mockFirebaseUser);
       when(mockFirebaseUser.uid).thenReturn('1');
-      when(mockFirestore.collection(USERS)).thenReturn(mockCollectionReference);
+      when(mockFirestore.collection(USERS_COLLECTION))
+          .thenReturn(mockCollectionReference);
       when(mockCollectionReference.document('1'))
           .thenReturn(mockDocumentReference);
       when(mockDocumentReference.get())
@@ -191,7 +195,8 @@ void main() {
           .thenAnswer((_) => Future.value(mockAuthResult));
       when(mockAuthResult.user).thenReturn(mockFirebaseUser);
       when(mockFirebaseUser.uid).thenReturn('1');
-      when(mockFirestore.collection(USERS)).thenReturn(mockCollectionReference);
+      when(mockFirestore.collection(USERS_COLLECTION))
+          .thenReturn(mockCollectionReference);
       when(mockCollectionReference.document('1')).thenThrow(Exception());
       when(mockDocumentReference.get())
           .thenAnswer((_) => Future.value(mockDocumentSnapshot));
@@ -211,7 +216,8 @@ void main() {
           .thenAnswer((_) => Future.value(mockAuthResult));
       when(mockAuthResult.user).thenReturn(mockFirebaseUser);
       when(mockFirebaseUser.uid).thenReturn('1');
-      when(mockFirestore.collection(USERS)).thenReturn(mockCollectionReference);
+      when(mockFirestore.collection(USERS_COLLECTION))
+          .thenReturn(mockCollectionReference);
       when(mockCollectionReference.document('1')).thenThrow(Exception());
       when(mockDocumentReference.get())
           .thenAnswer((_) => Future.value(mockDocumentSnapshot));

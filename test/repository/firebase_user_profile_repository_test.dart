@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/core/exception/exceptions.dart';
 import 'package:polis/repository/concrete/firebase/collection.dart';
-import 'package:polis/repository/concrete/firebase/firebase_user_profile_repository.dart';
+import 'package:polis/repository/concrete/repositories.dart';
 
 import '../mock.dart';
 
@@ -36,11 +36,11 @@ void main() {
 
     group('getPoliticsFollowing tests', () {
       test('return [PoliticoModel] with list of following politics', () async {
-        when(mockFirestore.collection(POLITICOS_SEGUIDOS))
+        when(mockFirestore.collection(POLITICOS_SEGUIDOS_COLLECTION))
             .thenReturn(mockCollectionReference);
         when(mockCollectionReference.document('1'))
             .thenReturn(mockDocumentReference);
-        when(mockDocumentReference.collection(POLITICOS_SEGUIDOS_COLLECTION))
+        when(mockDocumentReference.collection(POLITICOS_SEGUIDOS_SUBCOLLECTION))
             .thenReturn(mockPoliticsFollowingCollectionReference);
         when(mockPoliticsFollowingCollectionReference.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
@@ -49,7 +49,7 @@ void main() {
       });
 
       test('throw ComunicationException when something is wrong', () async {
-        when(mockFirestore.collection(POLITICOS_SEGUIDOS))
+        when(mockFirestore.collection(POLITICOS_SEGUIDOS_COLLECTION))
             .thenThrow(Exception());
         firebaseUserProfileRepository
             .getPoliticsFollowing('1')

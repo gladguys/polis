@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/blocs.dart';
-import '../../../model/politico_model.dart';
+import '../../../model/models.dart';
 
 class FollowingPoliticsList extends StatelessWidget {
   FollowingPoliticsList(this.politicos);
@@ -57,9 +57,10 @@ class FollowingPoliticsList extends StatelessWidget {
                     ? Colors.red
                     : Colors.green,
                 borderSide: BorderSide(
-                    color: bloc.isPoliticBeingFollowed(politicos[i])
-                        ? Colors.red
-                        : Colors.green),
+                  color: bloc.isPoliticBeingFollowed(politicos[i])
+                      ? Colors.red
+                      : Colors.green,
+                ),
                 onPressed: () => bloc.add(
                   FollowUnfollowPolitic(
                     user: context.bloc<UserBloc>().user,

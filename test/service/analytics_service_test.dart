@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/core/service/analytics_service.dart';
+import 'package:polis/core/service/services.dart';
 
 import '../mock.dart';
 
@@ -29,6 +29,18 @@ void main() {
       verify(mockFirebaseAnalytics.logSignUp(
               signUpMethod: 'EMAIL_AND_PASSWORD'))
           .called(1);
+    });
+
+    test('should call logLogout with the given method', () async {
+      await analyticsService.logLogout('bala');
+      verify(
+        mockFirebaseAnalytics.logEvent(
+          name: 'LOGOUT',
+          parameters: {
+            'username': 'bala',
+          },
+        ),
+      ).called(1);
     });
   });
 }
