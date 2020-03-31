@@ -3,23 +3,32 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 exports.onCreateFollower = functions.firestore
-    .document("/usuarios_seguindo/{politicoId}/usuariosSeguindo/{followerId}")
+    .document(`/${USUARIOS_SEGUINDO_COLLECTION}/{politicoId}/${USUARIOS_SEGUINDO_SUBCOLLECTION}/{followerId}`)
     .onCreate(async (snapshot, context) => {
         const politicoId = context.params.politicoId;
         const followerId = context.params.followerId;
 
-        const despesasPoliticoRef = admin
-            .firestore()
-            .collection('atividades')
-            .doc(politicoId)
-            .collection('despesasPolitico');
+        const politicoDocumentRef = await admin.firestore()
+            .collection(POLITICOS_COLLECTION)
+            .doc(politicoId);
+
+        const despesasPoliticoRef = politicoDocumentRef.collection(DESPESAS_POLITICO_SUBCOLLECTION);
+
+        await admin.firestore().runTransaction((transaction) => {
+            const politicoDocument = transaction.get(politicoDocumentRef);
+            if (!politicoDocument.exists) {
+                throw 'Document does not exist';
+            }
+            const quantidadeSeguidoresAtualizada = politicoDocument.data().quantidadeSeguidores + 1;
+            transaction.update(politicoDocumentRef, { quantidadeSeguidores: quantidadeSeguidoresAtualizada });
+            return transaction;
+        });
 
         const timelineRef = admin
             .firestore()
-            .collection('timeline')
+            .collection(TIMELINE_COLLECTION)
             .doc(followerId)
-            .collection('atividadesTimeline');
-
+            .collection(ATIVIDADES_TIMELINE_SUBCOLLECTION);
 
         const querySnapshot = await despesasPoliticoRef.get();
 
@@ -33,18 +42,32 @@ exports.onCreateFollower = functions.firestore
     });
 
 exports.onDeleteFollower = functions.firestore
-    .document("/usuarios_seguindo/{politicoId}/usuariosSeguindo/{followerId}")
+    .document(`/${USUARIOS_SEGUINDO_COLLECTION}/{politicoId}/${USUARIOS_SEGUINDO_SUBCOLLECTION}/{followerId}`)
     .onDelete(async (snapshot, context) => {
-
         const politicoId = context.params.politicoId;
         const followerId = context.params.followerId;
 
+        const politicoDocumentRef = await admin.firestore()
+            .collection(POLITICOS_COLLECTION)
+            .doc(politicoId);
+
+        await admin.firestore().runTransaction((transaction) => {
+            const politicoDocument = transaction.get(politicoDocumentRef);
+            if (!politicoDocument.exists) {
+                throw 'Document does not exist';
+            }
+            const quantidadeSeguidoresAtual = politicoDocument.data().quantidadeSeguidores;
+            const quantidadeSeguidoresAtualizada = quantidadeSeguidoresAtual === 0 ? 0 : quantidadeSeguidoresAtual - 1;
+            transaction.update(politicoDocumentRef, { quantidadeSeguidores: quantidadeSeguidoresAtualizada });
+            return transaction;
+        });
+
         const timelineActivitiesRef = admin
             .firestore()
-            .collection('timeline')
+            .collection(TIMELINE_COLLECTION)
             .doc(followerId)
-            .collection('atividadesTimeline')
-            .where("idPolitico", "==", politicoId)
+            .collection(ATIVIDADES_TIMELINE_SUBCOLLECTION)
+            .where(ID_POLITICO_FIELD, '==', politicoId);
 
         const querySnapshot = await timelineActivitiesRef.get();
 
@@ -56,10 +79,10 @@ exports.onDeleteFollower = functions.firestore
 
         const usuariosSeguindoPoliticoRef = admin
             .firestore()
-            .collection('usuarios_seguindo')
+            .collection(USUARIOS_SEGUINDO_COLLECTION)
             .doc(politicoId)
-            .collection('usuariosSeguindo')
-            .where("userId", "==", followerId);
+            .collection(USUARIOS_SEGUINDO_SUBCOLLECTION)
+            .where(USER_ID_FIELD, '==', followerId);
 
         const querySnapshotUsuariosSeguindoPolitico = await usuariosSeguindoPoliticoRef.get();
 
