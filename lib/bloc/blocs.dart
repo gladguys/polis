@@ -1,3 +1,4 @@
+export 'politic_profile/bloc.dart';
 export 'politic_suggestion/bloc.dart';
 export 'search_politic/bloc.dart';
 export 'signin/bloc.dart';
