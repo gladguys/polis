@@ -8,19 +8,13 @@ extension StringExtension on String {
 
 extension NumberExtension on String {
   String formatCurrency() {
-    return NumberFormat
-      .currency(
-        locale: 'pt_BR',
-        symbol: 'R\$',
-        decimalDigits: 2
-      )
-      .format(double.parse(this));
+    return NumberFormat.currency(
+            locale: 'pt_BR', symbol: 'R\$', decimalDigits: 2)
+        .format(double.parse(this));
   }
 }
 
 extension DateExtension on String {
-  String formatDate() {
-    return DateFormat('d MMM y', 'pt_br')
+  String formatDate() => DateFormat('d MMM y', 'pt_br')
       .format(DateFormat('yyyy-MM-dd').parse(this));
-  }
 }

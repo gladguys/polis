@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../extension/formatters.dart';
-import '../../../model/models.dart';
 import '../../../i18n/i18n.dart';
 import '../../../model/despesa_model.dart';
+import '../../../model/models.dart';
 
 class DespesaTile extends StatelessWidget {
   DespesaTile(this.despesa);
