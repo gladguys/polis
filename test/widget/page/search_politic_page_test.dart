@@ -67,6 +67,37 @@ void main() {
       expect(find.byType(SearchPolitics), findsOneWidget);
     });
 
+    testWidgets('shoud go to PoliticProfilePage when click on a politic',
+        (tester) async {
+      final mockSearchPoliticBloc = MockSearchPoliticBloc();
+      when(mockSearchPoliticBloc.isPoliticBeingFollowed(any)).thenReturn(true);
+      when(mockSearchPoliticBloc.allPartidos).thenReturn([]);
+      when(mockSearchPoliticBloc.state).thenReturn(
+        FetchSearchPoliticsSuccess(
+          [
+            PoliticoModel(
+              id: '1',
+              nomeEleitoral: 'nome',
+            ),
+          ],
+        ),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<SearchPoliticBloc>(
+            bloc: mockSearchPoliticBloc,
+            page: SearchPoliticPage(),
+          ),
+        ),
+      );
+      final politicoTile = find.byKey(const ValueKey('1'));
+      expect(politicoTile, findsOneWidget);
+      await tester.tap(politicoTile);
+      await tester.pump();
+      await tester.pump();
+      expect(find.byType(PoliticProfilePageConnected), findsOneWidget);
+    });
+
     testWidgets('picking a state should thrigger bloc event', (tester) async {
       final mockSearchPoliticBloc = MockSearchPoliticBloc();
       when(mockSearchPoliticBloc.isPoliticBeingFollowed(any)).thenReturn(true);

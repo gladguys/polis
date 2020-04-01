@@ -18,6 +18,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
         GestureDetector(
+          key: const ValueKey('followers-count-btn'),
           onTap: () => SimpleRouter.forward(
             PoliticFollowersPageConnected(politic.id),
             name: POLITIC_FOLLOWERS_PAGE,

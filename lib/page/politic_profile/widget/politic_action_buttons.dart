@@ -13,6 +13,7 @@ class PoliticActionButtons extends StatelessWidget {
           width: 140,
           color: Colors.green,
           child: OutlineButton(
+            key: const ValueKey('follow-politic-profile'),
             onPressed: () {},
             padding: const EdgeInsets.symmetric(horizontal: 16),
             color: Colors.green,
@@ -30,6 +31,7 @@ class PoliticActionButtons extends StatelessWidget {
           height: 28,
           width: 140,
           child: OutlineButton(
+            key: const ValueKey('send-email-btn'),
             onPressed: () {},
             padding: const EdgeInsets.symmetric(horizontal: 16),
             color: Colors.grey[350],

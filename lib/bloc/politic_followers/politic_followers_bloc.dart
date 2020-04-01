@@ -4,14 +4,14 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
 import './bloc.dart';
-import '../../repository/concrete/firebase/firebase_politic_followers_repository.dart';
+import '../../repository/abstract/politic_followers_repository.dart';
 
 class PoliticFollowersBloc
     extends Bloc<PoliticFollowersEvent, PoliticFollowersState> {
   PoliticFollowersBloc({@required this.repository})
       : assert(repository != null);
 
-  final FirebasePoliticFollowersRepository repository;
+  final PoliticFollowersRepository repository;
 
   @override
   PoliticFollowersState get initialState => InitialPoliticFollowersState();

@@ -21,3 +21,4 @@ const ERROR_INVALID_CREDENTIALS = 'Usuário ou senha inválidos';
 const ERROR_SIGNIN = 'Ocorreu um erro de comunicação ao logar';
 const ERROR_COMUNICATION = 'Ocorreu um erro de comunicação';
 const ERROR_FETCHING_USER_INFO = 'Erro ao buscar informações do usuário';
+const ERROR_FETCHING_POLITIC_INFO = 'Erro ao buscar informações do político';

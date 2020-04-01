@@ -4,13 +4,13 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
 import './bloc.dart';
-import '../../repository/concrete/repositories.dart';
+import '../../repository/abstract/politic_profile_repository.dart';
 
 class PoliticProfileBloc
     extends Bloc<PoliticProfileEvent, PoliticProfileState> {
   PoliticProfileBloc({@required this.repository}) : assert(repository != null);
 
-  final FirebasePoliticProfileRepository repository;
+  final PoliticProfileRepository repository;
 
   @override
   PoliticProfileState get initialState => InitialPoliticProfileState();
