@@ -30,5 +30,17 @@ void main() {
               signUpMethod: 'EMAIL_AND_PASSWORD'))
           .called(1);
     });
+
+    test('should call logLogout with the given method', () async {
+      await analyticsService.logLogout('bala');
+      verify(
+        mockFirebaseAnalytics.logEvent(
+          name: 'LOGOUT',
+          parameters: {
+            'username': 'bala',
+          },
+        ),
+      ).called(1);
+    });
   });
 }

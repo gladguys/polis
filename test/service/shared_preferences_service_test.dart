@@ -16,7 +16,7 @@ void main() async {
   MockSharedPreferences mockSharedPreferences;
   SharedPreferencesService sharedPreferencesService;
 
-  group('CrashlyticsService tests', () {
+  group('SharedPreferencesService tests', () {
     setUp(() {
       mockSharedPreferences = MockSharedPreferences();
       sharedPreferencesService =
@@ -29,6 +29,7 @@ void main() async {
     });
 
     test('setUser', () {
+      sharedPreferencesService.setUser(null);
       expect(sharedPreferencesService.getUser(), isNull);
       sharedPreferencesService.setUser(UserModel());
     });
