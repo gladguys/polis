@@ -12,7 +12,7 @@ exports.onCreateFollower = functions.firestore
             .collection('politicos')
             .doc(politicoId);
 
-        const despesasPoliticoRef = politicoDocumentRef.collection('despesasPolitico');
+        const despesasPoliticoRef = politicoDocumentRef.collection('atividadesPolitico');
 
         await admin.firestore().runTransaction((transaction) => {
             return transaction.get(politicoDocumentRef).then((politicoDocument) => {
@@ -29,7 +29,7 @@ exports.onCreateFollower = functions.firestore
             .firestore()
             .collection('atividades')
             .doc(politicoId)
-            .collection('proposicoesPolitico');
+            .collection('atividadesPolitico');
 
         const timelineRef = admin
             .firestore()
