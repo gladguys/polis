@@ -19,7 +19,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
       children: <Widget>[
         GestureDetector(
           onTap: () => SimpleRouter.forward(
-            PoliticFollowersConnected(politic.id),
+            PoliticFollowersPageConnected(politic.id),
             name: POLITIC_FOLLOWERS_PAGE,
           ),
           child: Column(
