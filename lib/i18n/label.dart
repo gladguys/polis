@@ -27,3 +27,5 @@ const FAVORITE_POSTS = 'Post salvos';
 const MY_ACTIVITIES = 'Minhas atividades:';
 const ACTIVITIES = 'Atividades';
 const FEDERAL_DEPUTY = 'Dep. Federal';
+const WITH = 'com';
+const IN_THE_AMOUNT_OF = 'no valor de';

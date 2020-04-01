@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/model/models.dart';
@@ -10,6 +11,9 @@ import '../../mock.dart';
 import '../utils.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  initializeDateFormatting('pt_BR', null);
+
   group('TimelinePage tests', () {
     testWidgets('shoud build without exploding', (tester) async {
       await tester.pumpWidget(connectedWidget(TimelinePageConnected()));
@@ -23,10 +27,18 @@ void main() {
             DespesaModel(
               nomePolitico: 'politico 1',
               nomeFornecedor: 'fornecedor 1',
+              tipoAtividade: 'tipoAtividade1',
+              tipoDespesa: 'tipoDespesa1',
+              valorLiquido: '10.00',
+              dataDocumento: '2020-01-10',
             ),
             DespesaModel(
               nomePolitico: 'politico 2',
               nomeFornecedor: 'fornecedor 2',
+              tipoAtividade: 'tipoAtividade2',
+              tipoDespesa: 'tipoDespesa2',
+              valorLiquido: '20.00',
+              dataDocumento: '2020-01-20',
             ),
           ],
           propostas: [],

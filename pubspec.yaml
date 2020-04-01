@@ -4,13 +4,14 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.3.0 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
   # Core
+  intl: ^0.15.6
   flutter_bloc: ^3.2.0
   bloc: ^3.0.0
   simple_router: ^0.1.0
@@ -42,6 +43,7 @@ dependencies:
   introduction_screen: ^1.0.8
   smart_select: ^3.0.3
   flutter_grid_delegate_ext: ^0.0.2
+  sliding_panel: ^1.0.3
 
 dev_dependencies:
   flutter_test:
