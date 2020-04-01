@@ -55,7 +55,7 @@ void main() {
     test('toString()', () {
       final modelToString = PoliticoModel(id: '1').toString();
       final result =
-          '''PoliticoModel{id: 1, nomeCivil: null, siglaPartido: null, siglaUf: null, urlFoto: null, email: null, nomeEleitoral: null, status: null, condicaoEleitoral: null, cpf: null, sexo: null, dataNascimento: null, escolaridade: null}''';
+          '''PoliticoModel{id: 1, nomeCivil: null, siglaPartido: null, siglaUf: null, urlFoto: null, email: null, nomeEleitoral: null, status: null, condicaoEleitoral: null, cpf: null, sexo: null, quantidadeSeguidores: null, dataNascimento: null, escolaridade: null}''';
       expect(modelToString == result, true);
     });
 

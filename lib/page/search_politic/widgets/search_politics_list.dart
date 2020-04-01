@@ -42,7 +42,7 @@ class SearchPoliticsList extends StatelessWidget {
               dense: true,
               title: Text(
                 politicos[i].nomeEleitoral,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),

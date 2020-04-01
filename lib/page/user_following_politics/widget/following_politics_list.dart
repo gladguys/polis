@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/blocs.dart';
+import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
 
 class FollowingPoliticsList extends StatelessWidget {
@@ -35,12 +36,12 @@ class FollowingPoliticsList extends StatelessWidget {
               dense: true,
               title: Text(
                 politicos[i].nomeEleitoral,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               subtitle: Text(
-                'Dep. Federal',
+                FEDERAL_DEPUTY,
                 style: TextStyle(
                   color: Colors.grey[500],
                 ),
@@ -48,8 +49,8 @@ class FollowingPoliticsList extends StatelessWidget {
               trailing: OutlineButton(
                 child: Text(
                   bloc.isPoliticBeingFollowed(politicos[i])
-                      ? 'Deixar de seguir'
-                      : 'Seguir',
+                      ? STOP_FOLLOW
+                      : FOLLOW,
                   key: const ValueKey('follow-unfollow-btn'),
                   style: const TextStyle(fontSize: 10),
                 ),
@@ -73,7 +74,7 @@ class FollowingPoliticsList extends StatelessWidget {
             itemCount: politicos.length,
           )
         : const Center(
-            child: Text('Você ainda não segue nenhum politico!'),
+            child: Text(YOU_DONT_FOLLOW_ANYONE_YET),
           );
   }
 }

@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 
+import '../../../i18n/i18n.dart';
+
 class PoliticActivities extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(
-          'Atividades',
+        const Text(
+          ACTIVITIES,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,
           ),
         ),
         const Center(
-          child: Text('Nenhuma atividade para o político!'),
+          child: Text(NO_ACTIVITY_FOR_POLITIC),
         )
       ],
     );

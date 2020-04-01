@@ -14,7 +14,7 @@ class UserActivities extends StatelessWidget {
       children: <Widget>[
         Text(
           MY_ACTIVITIES,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 14,
           ),
