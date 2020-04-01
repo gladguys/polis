@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:sliding_panel/sliding_panel.dart';
 
 import '../../bloc/signin/signin_bloc.dart';
 import '../../bloc/signin/signin_event.dart';
@@ -17,52 +17,65 @@ class InitialPage extends StatefulWidget {
 
 class _InitialPageState extends State<InitialPage> {
   PanelController _panelController;
-  bool _isSigninPanel;
+  bool _isSigninPanel = false;
+  double _expandedHeight = 0.55;
 
   @override
   void initState() {
     _panelController = PanelController();
-    _isSigninPanel = true;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () => _panelController.close(),
-      child: Scaffold(
-        body: SlidingUpPanel(
-          minHeight: 0,
-          maxHeight: _isSigninPanel ? 360 : 580,
+    return Scaffold(
+      body: SlidingPanel(
+        panelController: _panelController,
+        backPressBehavior: BackPressBehavior.CLOSE_PERSIST,
+        snapping: PanelSnapping.enabled,
+        decoration: PanelDecoration(
+          backgroundColor: Colors.white.withOpacity(.95),
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(24),
             topRight: Radius.circular(24),
           ),
-          color: Colors.white.withOpacity(.95),
-          controller: _panelController,
-          panel: _panel(),
-          body: _body(context),
         ),
+        size: PanelSize(
+          closedHeight: 0,
+          collapsedHeight: 0,
+          expandedHeight: _expandedHeight,
+        ),
+        content: PanelContent(
+          panelContent: _panel(),
+          bodyContent: _body(context),
+        ),
+        onPanelStateChanged: (panelState) {
+          if (panelState == PanelState.animating) {
+            setState(() {
+              _expandedHeight = _isSigninPanel ? 0.55 : 0.85;
+            });
+          }
+        },
       ),
     );
   }
 
-  Widget _panel() {
-    return _isSigninPanel
-        ? Panel(
-            title: INSERT_YOUR_DATA,
-            page: SigninPageConnected(),
-          )
-        : Panel(
-            title: CREATE_ACCOUNT,
-            page: SignupPageConnected(),
-          );
+  List<Widget> _panel() {
+    return <Widget>[
+      _isSigninPanel
+          ? Panel(
+              title: INSERT_YOUR_DATA,
+              page: SigninPageConnected(),
+            )
+          : Panel(
+              title: CREATE_ACCOUNT,
+              page: SignupPageConnected(),
+            ),
+    ];
   }
 
   Widget _body(BuildContext context) {
     return Container(
-      width: double.maxFinite,
-      height: double.maxFinite,
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: ExactAssetImage('assets/images/background.jpg'),
@@ -107,10 +120,8 @@ class _InitialPageState extends State<InitialPage> {
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     onPressed: () {
-                      setState(() {
-                        _isSigninPanel = true;
-                      });
-                      _panelController.open();
+                      setState(() => _isSigninPanel = true);
+                      _panelController.expand();
                     },
                   ),
                   const SizedBox(height: 12),
@@ -154,7 +165,7 @@ class _InitialPageState extends State<InitialPage> {
                     highlightedBorderColor: Colors.white,
                     onPressed: () {
                       setState(() => _isSigninPanel = false);
-                      _panelController.open();
+                      _panelController.expand();
                     },
                   ),
                 ],
@@ -171,7 +182,8 @@ class Panel extends StatelessWidget {
   const Panel({
     @required this.title,
     @required this.page,
-  }) : assert(title != null && page != null);
+  })  : assert(title != null),
+        assert(page != null);
 
   final String title;
   final Widget page;
@@ -179,6 +191,7 @@ class Panel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         const SizedBox(height: 6),
         Container(
@@ -198,10 +211,9 @@ class Panel extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        Expanded(
-          child: SingleChildScrollView(
-            child: page,
-          ),
+        Flexible(
+          fit: FlexFit.loose,
+          child: page,
         ),
       ],
     );
