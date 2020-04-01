@@ -25,3 +25,5 @@ const FOLLOWING = 'Seguindo';
 const EDIT_PROFILE = 'Editar perfil';
 const FAVORITE_POSTS = 'Post salvos';
 const MY_ACTIVITIES = 'Minhas atividades:';
+const WITH = 'com';
+const IN_THE_AMOUNT_OF = 'no valor de';

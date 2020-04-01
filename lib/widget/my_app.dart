@@ -30,6 +30,11 @@ class _MyAppState extends State<MyApp> {
     user = sharedPreferencesService.getUser();
     isUserLogged = sharedPreferencesService.isUserLogged();
 
+    SystemChrome.setPreferredOrientations(<DeviceOrientation>[
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         systemNavigationBarColor:

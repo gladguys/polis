@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bloc/flutter_bloc_delegate.dart';
@@ -23,6 +24,7 @@ void main() async {
   G<CrashlyticsService>().initCrashlytics();
   FlutterError.onError = G<CrashlyticsService>().crashlytics.recordFlutterError;
   BlocSupervisor.delegate = FlutterBlocDelegate();
+  initializeDateFormatting('pt_BR', null);
 
   runZoned(() {
     runApp(

@@ -11,12 +11,10 @@ PropostaModel _$PropostaModelFromJson(Map<String, dynamic> json) {
     id: json['id'] as String,
     siglaTipo: json['siglaTipo'] as String,
     descricaoTipo: json['descricaoTipo'] as String,
-    numero: json['numero'] as int,
-    ano: (json['ano'] as num)?.toDouble(),
+    numero: json['numero'] as String,
+    ano: json['ano'] as String,
     ementa: json['ementa'] as String,
-    dataApresentacao: json['dataApresentacao'] == null
-        ? null
-        : DateTime.parse(json['dataApresentacao'] as String),
+    dataApresentacao: json['dataApresentacao'] as String,
     status: json['status'] as String,
   );
 }
@@ -29,6 +27,6 @@ Map<String, dynamic> _$PropostaModelToJson(PropostaModel instance) =>
       'numero': instance.numero,
       'ano': instance.ano,
       'ementa': instance.ementa,
-      'dataApresentacao': instance.dataApresentacao?.toIso8601String(),
+      'dataApresentacao': instance.dataApresentacao,
       'status': instance.status,
     };

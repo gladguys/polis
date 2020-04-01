@@ -18,10 +18,10 @@ class PropostaModel extends Equatable {
   final String id;
   final String siglaTipo;
   final String descricaoTipo;
-  final int numero;
-  final double ano;
+  final String numero;
+  final String ano;
   final String ementa;
-  final DateTime dataApresentacao;
+  final String dataApresentacao;
   final String status;
 
   factory PropostaModel.fromJson(Map<String, dynamic> json) =>
