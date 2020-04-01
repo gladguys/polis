@@ -43,6 +43,7 @@ dependencies:
   introduction_screen: ^1.0.8
   smart_select: ^3.0.3
   flutter_grid_delegate_ext: ^0.0.2
+  sliding_panel: ^1.0.3
 
 dev_dependencies:
   flutter_test:
