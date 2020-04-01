@@ -19,7 +19,7 @@ final ThemeData theme = ThemeData(
   appBarTheme: AppBarTheme(
     elevation: 0,
     color: Colors.grey[50],
-    textTheme: TextTheme(
+    textTheme: const TextTheme(
       title: TextStyle(
         fontFamily: 'Philosopher',
         fontSize: 30,
@@ -32,7 +32,7 @@ final ThemeData theme = ThemeData(
   ),
   fontFamily: 'Ubuntu',
   inputDecorationTheme: InputDecorationTheme(
-    labelStyle: TextStyle(color: Colors.black),
+    labelStyle: const TextStyle(color: Colors.black),
     isDense: true,
     filled: true,
     fillColor: Colors.white,
@@ -59,7 +59,7 @@ final ThemeData theme = ThemeData(
     ),
     focusedBorder: OutlineInputBorder(
       gapPadding: 2,
-      borderSide: BorderSide(
+      borderSide: const BorderSide(
         width: 2,
         color: Colors.black,
       ),
