@@ -2,28 +2,26 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:polis/model/models.dart';
 
 void main() {
-  final now = DateTime.now();
-
   final jsonProposta = {
     'id': '1',
     'status': 'Pendente',
-    'ano': 1912,
-    'dataApresentacao': now.toIso8601String(),
+    'ano': '1912',
+    'dataApresentacao': 'data',
     'descricaoTipo': 'Tipo',
     'siglaTipo': 'T',
     'ementa': 'lalalala',
-    'numero': 12,
+    'numero': '12',
   };
 
   final propostaModel = PropostaModel(
     id: '1',
     status: 'Pendente',
-    ano: 1912,
-    dataApresentacao: now,
+    ano: '1912',
+    dataApresentacao: 'data',
     descricaoTipo: 'Tipo',
     siglaTipo: 'T',
     ementa: 'lalalala',
-    numero: 12,
+    numero: '12',
   );
 
   group('PropostaModel tests', () {
