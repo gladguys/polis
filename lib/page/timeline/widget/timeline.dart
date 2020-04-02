@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:polis/widget/tile/proposta_tile.dart';
 
 import '../../../model/models.dart';
 import '../../../widget/tile/despesa_tile.dart';
+import '../../../widget/tile/proposta_tile.dart';
 
 class Timeline extends StatelessWidget {
   Timeline({this.activities});
