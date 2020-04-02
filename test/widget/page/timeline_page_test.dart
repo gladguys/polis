@@ -25,6 +25,7 @@ void main() {
         TimelineUpdated(
           despesas: [
             DespesaModel(
+              fotoPolitico: 'foto',
               nomePolitico: 'politico 1',
               nomeFornecedor: 'fornecedor 1',
               tipoAtividade: 'tipoAtividade1',
@@ -33,6 +34,7 @@ void main() {
               dataDocumento: '2020-01-10',
             ),
             DespesaModel(
+              fotoPolitico: 'foto',
               nomePolitico: 'politico 2',
               nomeFornecedor: 'fornecedor 2',
               tipoAtividade: 'tipoAtividade2',

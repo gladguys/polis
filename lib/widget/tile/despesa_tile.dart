@@ -1,3 +1,4 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -19,26 +20,20 @@ class DespesaTile extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: Icon(
-              FontAwesomeIcons.solidUserCircle,
-              size: 48,
-              color: Colors.grey,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(24),
+              child: Container(
+                color: Colors.white,
+                child: FancyShimmerImage(
+                  imageUrl: despesa.fotoPolitico,
+                  width: 48,
+                  height: 48,
+                  boxFit: BoxFit.contain,
+                ),
+              ),
             ),
-            // TODO: foto do deputado
-            // ClipRRect(
-            //   borderRadius: BorderRadius.circular(24),
-            //   child: Container(
-            //     color: Colors.white,
-            //     child: FancyShimmerImage(
-            //       imageUrl: despesa.urlFoto,
-            //       width: 48,
-            //       height: 48,
-            //       boxFit: BoxFit.contain,
-            //     ),
-            //   ),
-            // ),
           ),
           Expanded(
             child: Column(

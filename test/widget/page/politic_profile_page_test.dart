@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/i18n/i18n.dart';
@@ -14,6 +15,9 @@ import '../../mock.dart';
 import '../utils.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  initializeDateFormatting('pt_BR', null);
+
   MockPoliticProfileBloc mockPoliticProfileBloc;
 
   group('PoliticProfilePage tests', () {
@@ -55,8 +59,13 @@ void main() {
                 ementa: 'ementa',
               ),
               DespesaModel(
+                fotoPolitico: 'foto',
                 nomePolitico: 'nome',
                 nomeFornecedor: 'fornecedor',
+                tipoAtividade: 'ativi',
+                tipoDespesa: 'despesa',
+                valorLiquido: '3.51',
+                dataDocumento: '10-01-2020',
               ),
             ]),
       );
