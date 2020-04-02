@@ -29,3 +29,4 @@ const ACTIVITIES = 'Atividades';
 const FEDERAL_DEPUTY = 'Dep. Federal';
 const WITH = 'com';
 const IN_THE_AMOUNT_OF = 'no valor de';
+const CHOICE_PHOTO = 'Escolha sua foto';
