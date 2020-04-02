@@ -122,6 +122,29 @@ void main() {
       await tester.tap(homeIcon);
     });
 
+    testWidgets(
+        '''shoud go to TimelinePage when clicking home icon and not on TimelinePage yet''',
+        (tester) async {
+      final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.user).thenReturn(UserModel());
+      await tester.pumpWidget(
+        connectedWidget(
+          BlocProvider(
+            create: (_) => mockUserBloc,
+            child: FavoritePostsPage(),
+          ),
+        ),
+      );
+      final homeIcon = find.byWidgetPredicate((widget) {
+        if (widget is FlatButton && widget.child is Icon) {
+          return (widget.child as Icon).icon == FontAwesomeIcons.home;
+        }
+        return false;
+      });
+      expect(homeIcon, findsOneWidget);
+      await tester.tap(homeIcon);
+    });
+
     testWidgets('shoud go to SearchPoliticPage when clicking search icon',
         (tester) async {
       final mockUserBloc = MockUserBloc();
