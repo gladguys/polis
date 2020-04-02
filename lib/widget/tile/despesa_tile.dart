@@ -2,6 +2,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../text_rich.dart';
 import '../../extension/formatters.dart';
 import '../../i18n/i18n.dart';
 import '../../model/despesa_model.dart';
@@ -62,26 +63,19 @@ class DespesaTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     const SizedBox(height: 4),
-                    RichText(
-                      text: TextSpan(
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'Ubuntu',
-                        ),
-                        children: [
-                          TextSpan(
+                    TextRich(
+                      children: [
+                        TextSpan(
                             text:
-                            '${despesa.tipoAtividade.capitalizeUpperCase()}'
-                            ' $WITH '
-                            '${despesa.tipoDespesa.toLowerCase()}'
-                            ' $IN_THE_AMOUNT_OF '
-                          ),
-                          TextSpan(
-                            text: '${despesa.valorLiquido.formatCurrency()}.',
-                            style: TextStyle(fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
+                                '${despesa.tipoAtividade.capitalizeUpperCase()}'
+                                ' $WITH '
+                                '${despesa.tipoDespesa.toLowerCase()}'
+                                ' $IN_THE_AMOUNT_OF '),
+                        TextSpan(
+                          text: '${despesa.valorLiquido.formatCurrency()}.',
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 4),
                     Text(

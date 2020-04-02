@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:polis/widget/tile/proposta_tile.dart';
 
 import '../../../model/models.dart';
 import '../../../widget/tile/despesa_tile.dart';
@@ -16,10 +17,7 @@ class Timeline extends StatelessWidget {
         if (activities[i] is DespesaModel) {
           return DespesaTile(activities[i]);
         } else {
-          final proposta = activities[i] as PropostaModel;
-          return ListTile(
-            title: Text(proposta.ementa),
-          );
+          return PropostaTile(activities[i]);
         }
       },
       separatorBuilder: (_, i) => const Divider(
