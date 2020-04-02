@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sliding_panel/sliding_panel.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/abstract/polis_image_picker.dart';
@@ -10,6 +11,12 @@ import '../page_connected.dart';
 import '../pages.dart';
 
 class SignupPageConnected extends StatelessWidget {
+  const SignupPageConnected({
+    @required this.panelController,
+  }) : assert(panelController != null);
+
+  final PanelController panelController;
+
   @override
   Widget build(BuildContext context) {
     return PageConnected<SignupBloc>(
@@ -19,6 +26,7 @@ class SignupPageConnected extends StatelessWidget {
       ),
       page: SignupPage(
         imagePicker: PolisImagePicker(),
+        panelController: panelController,
       ),
     );
   }
