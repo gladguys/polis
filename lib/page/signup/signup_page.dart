@@ -118,26 +118,50 @@ class _SignupPageState extends State<SignupPage> {
         padding: const EdgeInsets.symmetric(horizontal: 40),
         child: Column(
           children: <Widget>[
-            GestureDetector(
-              child: Center(
-                key: const ValueKey('profile-container'),
-                child: _profilePhoto != null
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(40),
-                        child: Image.file(
-                          _profilePhoto,
-                          height: 120,
-                          width: 120,
-                          fit: BoxFit.cover,
-                        ),
-                      )
-                    : FaIcon(
-                        FontAwesomeIcons.solidUserCircle,
-                        color: theme.accentColor.withOpacity(.6),
-                        size: 120,
-                      ),
+            Container(
+              height: 120,
+              width: 120,
+              child: Material(
+                borderRadius: BorderRadius.circular(60),
+                elevation: 1,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(60),
+                  child: Center(
+                    key: const ValueKey('profile-container'),
+                    child: _profilePhoto != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(60),
+                            child: Image.file(
+                              _profilePhoto,
+                              height: 120,
+                              width: 120,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              FaIcon(
+                                FontAwesomeIcons.camera,
+                                color: theme.accentColor,
+                                size: 40,
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                CHOICE_PHOTO,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: theme.accentColor,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                            ],
+                          ),
+                  ),
+                  onTap: getImage,
+                ),
               ),
-              onTap: getImage,
             ),
             const SizedBox(height: 16),
             TextFormField(
