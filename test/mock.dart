@@ -26,6 +26,7 @@ import 'package:polis/repository/abstract/user_profile_repository.dart';
 import 'package:polis/repository/abstract/user_repository.dart';
 import 'package:polis/repository/concrete/repositories.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sliding_panel/sliding_panel.dart';
 
 // Bloc
 class MockSigninBloc extends MockBloc<SigninEvent, SigninState>
@@ -153,3 +154,5 @@ class MockBannerAd extends Mock implements BannerAd {}
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 
 class MockPolisImagePicker extends Mock implements PolisImagePicker {}
+
+class MockPanelController extends Mock implements PanelController {}

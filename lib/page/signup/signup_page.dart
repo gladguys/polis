@@ -3,21 +3,24 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:simple_router/simple_router.dart';
+import 'package:sliding_panel/sliding_panel.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/abstract/polis_image_picker.dart';
-import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
 import '../../model/models.dart';
 import '../../widget/snackbar.dart';
-import '../pages.dart';
 import '../theme/main_theme.dart';
 
 class SignupPage extends StatefulWidget {
-  SignupPage({@required this.imagePicker}) : assert(imagePicker != null);
+  SignupPage({
+    @required this.imagePicker,
+    @required this.panelController,
+  })  : assert(imagePicker != null),
+        assert(panelController != null);
 
   final PolisImagePicker imagePicker;
+  final PanelController panelController;
 
   @override
   _SignupPageState createState() => _SignupPageState();
@@ -63,11 +66,9 @@ class _SignupPageState extends State<SignupPage> {
       bloc: _signupBloc,
       listener: (context, state) {
         if (state is UserCreated) {
-          SimpleRouter.forwardAndReplace(
-            InitialPageConnected(),
-            name: INITIAL_PAGE,
-          );
           Snackbar.success(context, USER_CREATED_WITH_SUCCESS);
+          Future.delayed(const Duration(seconds: 1))
+              .then((value) => widget.panelController.close());
         } else if (state is UserCreationFailed) {
           Snackbar.error(context, state.statusMessage);
         } else if (state is SignupFailed) {
@@ -79,7 +80,8 @@ class _SignupPageState extends State<SignupPage> {
         builder: (_, state) {
           if (state is InitialSignup ||
               state is UserCreationFailed ||
-              state is SignupFailed) {
+              state is SignupFailed ||
+              state is UserCreated) {
             return _signupForm();
           } else {
             return const Center(
