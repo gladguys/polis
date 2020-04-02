@@ -166,7 +166,7 @@ class _SigninPageState extends State<SigninPage> {
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 color: Colors.black,
                 textColor: Colors.black,
-                borderSide: BorderSide(color: Colors.black),
+                borderSide: const BorderSide(color: Colors.black),
                 highlightedBorderColor: Colors.black,
                 onPressed: () {},
               ),

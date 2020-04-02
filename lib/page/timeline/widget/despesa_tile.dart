@@ -119,7 +119,6 @@ class DespesaTile extends StatelessWidget {
   Widget _buildButtonActions({
     IconData icon,
     EdgeInsets paddingIcon = EdgeInsets.zero,
-    String text,
     Function onPressed,
   }) {
     return ConstrainedBox(
@@ -136,14 +135,6 @@ class DespesaTile extends StatelessWidget {
                 padding: paddingIcon,
                 child: Icon(icon, size: 16),
               ),
-              if (text != null)
-                Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey[600],
-                  ),
-                ),
             ],
           ),
         ),
