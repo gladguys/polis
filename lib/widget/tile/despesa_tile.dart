@@ -62,19 +62,33 @@ class DespesaTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     const SizedBox(height: 4),
-                    Text(
-                      '${despesa.tipoAtividade.capitalizeUpperCase()}'
-                      ' $WITH '
-                      '${despesa.tipoDespesa.toLowerCase()}'
-                      ' $IN_THE_AMOUNT_OF '
-                      '${despesa.valorLiquido.formatCurrency()}.',
+                    RichText(
+                      text: TextSpan(
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Ubuntu',
+                        ),
+                        children: [
+                          TextSpan(
+                            text:
+                            '${despesa.tipoAtividade.capitalizeUpperCase()}'
+                            ' $WITH '
+                            '${despesa.tipoDespesa.toLowerCase()}'
+                            ' $IN_THE_AMOUNT_OF '
+                          ),
+                          TextSpan(
+                            text: '${despesa.valorLiquido.formatCurrency()}.',
+                            style: TextStyle(fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       '${despesa.dataDocumento.formatDate()}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
-                        color: Colors.grey,
+                        color: Colors.grey[600],
                       ),
                     ),
                     const SizedBox(height: 4),
