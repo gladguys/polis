@@ -59,24 +59,30 @@ class DefaultBottombar extends StatelessWidget {
                 _buildButtonBottomAppBar(
                   icon: FontAwesomeIcons.home,
                   padding: const EdgeInsets.only(right: 3),
-                  onPressed: () => SimpleRouter.forward(
-                    TimelinePageConnected(),
-                    name: TIMELINE_PAGE,
-                  ),
+                  onPressed: () => routeName != TIMELINE_PAGE
+                      ? SimpleRouter.forward(
+                          TimelinePageConnected(),
+                          name: TIMELINE_PAGE,
+                        )
+                      : VoidCallback,
                 ),
                 _buildButtonBottomAppBar(
                   icon: FontAwesomeIcons.search,
-                  onPressed: () => SimpleRouter.forward(
-                    SearchPoliticPageConnected(),
-                    name: SEARCH_POLITIC_PAGE,
-                  ),
+                  onPressed: () => routeName != SEARCH_POLITIC_PAGE
+                      ? SimpleRouter.forward(
+                          SearchPoliticPageConnected(),
+                          name: SEARCH_POLITIC_PAGE,
+                        )
+                      : VoidCallback,
                 ),
                 _buildButtonBottomAppBar(
                   icon: FontAwesomeIcons.solidBookmark,
-                  onPressed: () => SimpleRouter.forward(
-                    FavoritePostsPage(),
-                    name: FAVORITE_POSTS_PAGE,
-                  ),
+                  onPressed: () => routeName != FAVORITE_POSTS_PAGE
+                      ? SimpleRouter.forward(
+                          FavoritePostsPage(),
+                          name: FAVORITE_POSTS_PAGE,
+                        )
+                      : VoidCallback,
                 ),
               ],
             ),
