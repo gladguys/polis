@@ -118,56 +118,50 @@ class _SignupPageState extends State<SignupPage> {
         padding: const EdgeInsets.symmetric(horizontal: 40),
         child: Column(
           children: <Widget>[
-            GestureDetector(
-              child: Center(
-                key: const ValueKey('profile-container'),
-                child: _profilePhoto != null
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(60),
-                        child: Image.file(
-                          _profilePhoto,
-                          height: 120,
-                          width: 120,
-                          fit: BoxFit.cover,
-                        ),
-                      )
-                    : Container(
-                        height: 120,
-                        width: 120,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(0, 1),
-                              blurRadius: 1,
-                              color: Colors.grey[350],
+            Container(
+              height: 120,
+              width: 120,
+              child: Material(
+                borderRadius: BorderRadius.circular(60),
+                elevation: 1,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(60),
+                  child: Center(
+                    key: const ValueKey('profile-container'),
+                    child: _profilePhoto != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(60),
+                            child: Image.file(
+                              _profilePhoto,
+                              height: 120,
+                              width: 120,
+                              fit: BoxFit.cover,
                             ),
-                          ],
-                          borderRadius: BorderRadius.circular(60),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            FaIcon(
-                              FontAwesomeIcons.camera,
-                              color: theme.accentColor,
-                              size: 40,
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              CHOICE_PHOTO,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 12,
+                          )
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              FaIcon(
+                                FontAwesomeIcons.camera,
                                 color: theme.accentColor,
+                                size: 40,
                               ),
-                            ),
-                            const SizedBox(height: 4),
-                          ],
-                        ),
-                      ),
+                              const SizedBox(height: 4),
+                              Text(
+                                CHOICE_PHOTO,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: theme.accentColor,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                            ],
+                          ),
+                  ),
+                  onTap: getImage,
+                ),
               ),
-              onTap: getImage,
             ),
             const SizedBox(height: 16),
             TextFormField(
