@@ -69,7 +69,7 @@ class _InitialPageState extends State<InitialPage> {
             )
           : Panel(
               title: CREATE_ACCOUNT,
-              page: SignupPageConnected(),
+              page: SignupPageConnected(panelController: _panelController),
             ),
     ];
   }

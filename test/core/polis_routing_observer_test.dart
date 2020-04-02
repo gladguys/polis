@@ -4,6 +4,8 @@ import 'package:polis/core/routing/polis_routing_observer.dart';
 import 'package:polis/core/routing/route_names.dart';
 import 'package:polis/page/pages.dart';
 
+import '../mock.dart';
+
 void main() {
   group('PolisRoutingObserver tests', () {
     PolisRoutingObserver polisRoutingObserver;
@@ -19,7 +21,9 @@ void main() {
           settings: const RouteSettings(name: SIGNIN_PAGE),
         ),
         MaterialPageRoute(
-          builder: (_) => SignupPageConnected(),
+          builder: (_) => SignupPageConnected(
+            panelController: MockPanelController(),
+          ),
           settings: const RouteSettings(name: SIGNUP_PAGE),
         ),
       );
@@ -32,7 +36,9 @@ void main() {
           settings: const RouteSettings(name: SIGNIN_PAGE),
         ),
         oldRoute: MaterialPageRoute(
-          builder: (_) => SignupPageConnected(),
+          builder: (_) => SignupPageConnected(
+            panelController: MockPanelController(),
+          ),
           settings: const RouteSettings(name: SIGNUP_PAGE),
         ),
       );
@@ -45,7 +51,9 @@ void main() {
           settings: const RouteSettings(name: SIGNIN_PAGE),
         ),
         MaterialPageRoute(
-          builder: (_) => SignupPageConnected(),
+          builder: (_) => SignupPageConnected(
+            panelController: MockPanelController(),
+          ),
           settings: const RouteSettings(name: SIGNUP_PAGE),
         ),
       );
