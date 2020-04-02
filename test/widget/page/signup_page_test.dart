@@ -15,16 +15,44 @@ import '../../mock.dart';
 import '../utils.dart';
 
 void main() {
+  MockPanelController mockPanelController;
+
   group('SignupPage tests', () {
     setUpAll(() {
       initLocator(MockSharedPreferences());
+    });
+
+    setUp(() {
+      mockPanelController = MockPanelController();
+    });
+
+    test('asserts', () {
+      expect(
+          () => SignupPageConnected(
+                panelController: null,
+              ),
+          throwsAssertionError);
+
+      expect(
+          () => SignupPage(
+                imagePicker: null,
+                panelController: mockPanelController,
+              ),
+          throwsAssertionError);
+
+      expect(
+          () => SignupPage(
+                imagePicker: MockPolisImagePicker(),
+                panelController: null,
+              ),
+          throwsAssertionError);
     });
 
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
           Scaffold(
-            body: SignupPageConnected(),
+            body: SignupPageConnected(panelController: mockPanelController),
           ),
         ),
       );
@@ -39,6 +67,7 @@ void main() {
             bloc: mockSignupBloc,
             page: Scaffold(
               body: SignupPage(
+                panelController: mockPanelController,
                 imagePicker: PolisImagePicker(),
               ),
             ),
@@ -86,6 +115,7 @@ void main() {
             bloc: mockSignupBloc,
             page: Scaffold(
               body: SignupPage(
+                panelController: mockPanelController,
                 imagePicker: PolisImagePicker(),
               ),
             ),
@@ -132,15 +162,17 @@ void main() {
             bloc: mockSignupBloc,
             page: Scaffold(
               body: SignupPage(
+                panelController: mockPanelController,
                 imagePicker: PolisImagePicker(),
               ),
             ),
           ),
         ),
       );
+      await tester.pump();
       await tester.pumpAndSettle(const Duration(seconds: 10));
-      expect(find.byType(InitialPage), findsOneWidget);
       verify(mockObserver.didPush(any, any));
+      verify(mockPanelController.close()).called(1);
     });
 
     testWidgets('should show loading indicator', (tester) async {
@@ -152,6 +184,7 @@ void main() {
             bloc: mockSignupBloc,
             page: Scaffold(
               body: SignupPage(
+                panelController: mockPanelController,
                 imagePicker: PolisImagePicker(),
               ),
             ),
@@ -174,6 +207,7 @@ void main() {
             bloc: mockSignupBloc,
             page: Scaffold(
               body: SignupPage(
+                panelController: mockPanelController,
                 imagePicker: PolisImagePicker(),
               ),
             ),
@@ -197,6 +231,7 @@ void main() {
             bloc: mockSignupBloc,
             page: Scaffold(
               body: SignupPage(
+                panelController: mockPanelController,
                 imagePicker: PolisImagePicker(),
               ),
             ),
@@ -219,6 +254,7 @@ void main() {
             bloc: mockSignupBloc,
             page: Scaffold(
               body: SignupPage(
+                panelController: mockPanelController,
                 imagePicker: mockPolisImagePicker,
               ),
             ),
