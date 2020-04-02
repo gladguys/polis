@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../extension/formatters.dart';
-import '../../../i18n/i18n.dart';
-import '../../../model/despesa_model.dart';
-import '../../../model/models.dart';
+import '../../extension/formatters.dart';
+import '../../i18n/i18n.dart';
+import '../../model/despesa_model.dart';
+import '../../model/models.dart';
 
 class DespesaTile extends StatelessWidget {
   DespesaTile(this.despesa);
@@ -19,8 +19,8 @@ class DespesaTile extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8),
             child: Icon(
               FontAwesomeIcons.solidUserCircle,
               size: 48,
@@ -49,7 +49,7 @@ class DespesaTile extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       despesa.nomePolitico,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -77,7 +77,7 @@ class DespesaTile extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       '${despesa.dataDocumento.formatDate()}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
                         color: Colors.grey,
                       ),

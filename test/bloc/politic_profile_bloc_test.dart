@@ -41,6 +41,15 @@ void main() {
               ),
             ),
           );
+          when(mockPoliticProfileRepository.getLastActivities(
+                  politicId: '1', count: 5))
+              .thenAnswer(
+            (_) => Future.value([
+              DespesaModel(
+                codDocumento: '123',
+              )
+            ]),
+          );
           return politicProfileBloc;
         },
         act: (politicProfileBloc) {
@@ -49,6 +58,9 @@ void main() {
         },
         verify: (politicProfileBloc) async {
           verify(mockPoliticProfileRepository.getInfoPolitic('1')).called(1);
+          verify(mockPoliticProfileRepository.getLastActivities(
+                  politicId: '1', count: 5))
+              .called(1);
         },
         expect: [
           LoadingPoliticInfo(),
@@ -56,6 +68,11 @@ void main() {
             politic: PoliticoModel(
               id: '1',
             ),
+            lastActivities: [
+              DespesaModel(
+                codDocumento: '123',
+              )
+            ],
           ),
         ],
       );

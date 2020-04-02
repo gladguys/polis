@@ -4,10 +4,34 @@ import 'package:polis/model/models.dart';
 
 void main() {
   group('PoliticProfileState tests', () {
+    test('asserts', () {
+      expect(
+          () => GetPoliticInfoSuccess(
+                politic: null,
+                lastActivities: [],
+              ),
+          throwsAssertionError);
+
+      expect(
+          () => GetPoliticInfoSuccess(
+                politic: PoliticoModel(),
+                lastActivities: null,
+              ),
+          throwsAssertionError);
+    });
+
     test('states', () {
       expect(InitialPoliticProfileState(), InitialPoliticProfileState());
-      expect(GetPoliticInfoSuccess(politic: PoliticoModel()),
-          GetPoliticInfoSuccess(politic: PoliticoModel()));
+      expect(
+        GetPoliticInfoSuccess(
+          politic: PoliticoModel(),
+          lastActivities: [],
+        ),
+        GetPoliticInfoSuccess(
+          politic: PoliticoModel(),
+          lastActivities: [],
+        ),
+      );
       expect(GetPoliticInfoFailed(), GetPoliticInfoFailed());
       expect(LoadingPoliticInfo(), LoadingPoliticInfo());
     });

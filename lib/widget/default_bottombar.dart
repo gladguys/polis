@@ -32,8 +32,8 @@ class DefaultBottombar extends StatelessWidget {
             height: 40,
             alignment: Alignment.centerLeft,
             child: routeName == TIMELINE_PAGE
-                ? Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                ? const Padding(
+                    padding: EdgeInsets.only(left: 8),
                     child: Text(
                       POLIS,
                       style: TextStyle(

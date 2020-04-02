@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 import '../../model/models.dart';
 
@@ -12,9 +13,12 @@ class InitialPoliticProfileState extends PoliticProfileState {
 }
 
 class GetPoliticInfoSuccess extends PoliticProfileState {
-  GetPoliticInfoSuccess({this.politic});
+  GetPoliticInfoSuccess({@required this.politic, @required this.lastActivities})
+      : assert(politic != null),
+        assert(lastActivities != null);
 
   final PoliticoModel politic;
+  final List<dynamic> lastActivities;
 
   @override
   List<Object> get props => [politic];

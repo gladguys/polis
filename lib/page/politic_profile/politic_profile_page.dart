@@ -20,9 +20,9 @@ class PoliticProfilePage extends StatelessWidget {
         builder: (_, state) {
           if (state is GetPoliticInfoSuccess) {
             final politic = state.politic;
+            final lastActivities = state.lastActivities;
             return SafeArea(
               child: Container(
-                width: double.infinity,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
@@ -33,7 +33,11 @@ class PoliticProfilePage extends StatelessWidget {
                     PoliticAdditionalInfo(politic),
                     const SizedBox(height: 26),
                     const Divider(),
-                    PoliticActivities(),
+                    Container(
+                      child: Expanded(
+                        child: PoliticActivities(lastActivities),
+                      ),
+                    ),
                   ],
                 ),
               ),

@@ -22,8 +22,14 @@ class PoliticProfileBloc
       try {
         yield LoadingPoliticInfo();
 
-        final politic = await repository.getInfoPolitic(event.politicId);
-        yield GetPoliticInfoSuccess(politic: politic);
+        final politicId = event.politicId;
+        final politic = await repository.getInfoPolitic(politicId);
+        final lastActivities =
+            await repository.getLastActivities(politicId: politicId, count: 5);
+        yield GetPoliticInfoSuccess(
+          politic: politic,
+          lastActivities: lastActivities,
+        );
       } on Exception {
         yield GetPoliticInfoFailed();
       }

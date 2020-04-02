@@ -43,14 +43,22 @@ void main() {
     testWidgets('should bring info when success', (tester) async {
       when(mockPoliticProfileBloc.state).thenReturn(
         GetPoliticInfoSuccess(
-          politic: PoliticoModel(
-            id: '1',
-            siglaPartido: 'PT',
-            urlFoto: 'foto',
-            nomeEleitoral: 'nomeE',
-            siglaUf: 'CE',
-          ),
-        ),
+            politic: PoliticoModel(
+              id: '1',
+              siglaPartido: 'PT',
+              urlFoto: 'foto',
+              nomeEleitoral: 'nomeE',
+              siglaUf: 'CE',
+            ),
+            lastActivities: [
+              PropostaModel(
+                ementa: 'ementa',
+              ),
+              DespesaModel(
+                nomePolitico: 'nome',
+                nomeFornecedor: 'fornecedor',
+              ),
+            ]),
       );
       await tester.pumpWidget(
         connectedWidget(

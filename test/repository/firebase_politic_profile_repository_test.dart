@@ -12,8 +12,13 @@ void main() {
     MockFirestore mockFirestore;
     FirebasePoliticProfileRepository firebasePoliticProfileRepository;
     MockCollectionReference mockPoliticosCollectionReference;
+    MockCollectionReference mockAtividadesCollectionReference;
+    MockCollectionReference mockAtividadesSubcollectionReference;
     MockDocumentReference mockDocumentReference;
     MockDocumentSnapshot mockDocumentSnapshot;
+    MockDocumentSnapshot mockDocumentPropostaSnapshot;
+    MockQuery mockQuery;
+    MockQuerySnapshot mockQuerySnapshot;
 
     setUp(() {
       mockFirestore = MockFirestore();
@@ -21,8 +26,13 @@ void main() {
         firestore: mockFirestore,
       );
       mockPoliticosCollectionReference = MockCollectionReference();
+      mockAtividadesCollectionReference = MockCollectionReference();
+      mockAtividadesSubcollectionReference = MockCollectionReference();
       mockDocumentReference = MockDocumentReference();
       mockDocumentSnapshot = MockDocumentSnapshot();
+      mockDocumentPropostaSnapshot = MockDocumentSnapshot();
+      mockQuery = MockQuery();
+      mockQuerySnapshot = MockQuerySnapshot();
     });
 
     test('asserts', () {
@@ -61,6 +71,58 @@ void main() {
             .thenThrow(Exception());
         firebasePoliticProfileRepository
             .getInfoPolitic('1')
+            .catchError((e) => expect(e, isA<ComunicationException>()));
+      });
+    });
+
+    group('getLastActivities', () {
+      test('returns Politic last activities', () async {
+        when(mockFirestore.collection(ATIVIDADES_COLLECTION))
+            .thenReturn(mockAtividadesCollectionReference);
+        when(mockAtividadesCollectionReference.document('1'))
+            .thenReturn(mockDocumentReference);
+        when(mockDocumentReference
+                .collection(ATIVIDADES_POLITICO_SUBCOLLECTION))
+            .thenReturn(mockAtividadesSubcollectionReference);
+        when(mockAtividadesSubcollectionReference.orderBy(DATA_DOCUMENTO_FIELD))
+            .thenReturn(mockQuery);
+        when(mockQuery.limit(any)).thenReturn(mockQuery);
+        when(mockQuery.getDocuments())
+            .thenAnswer((_) => Future.value(mockQuerySnapshot));
+        when(mockQuerySnapshot.documents)
+            .thenReturn([mockDocumentSnapshot, mockDocumentPropostaSnapshot]);
+
+        when(mockDocumentSnapshot.data).thenReturn({
+          'codDocumento': '1',
+          'tipoAtividade': 'DESPESA',
+        });
+        when(mockDocumentPropostaSnapshot.data).thenReturn({
+          'id': '1',
+          'tipoAtividade': 'PROPOSICAO',
+        });
+        final lastActivities = await firebasePoliticProfileRepository
+            .getLastActivities(politicId: '1', count: 5);
+        expect(lastActivities, isNotNull);
+        expect(lastActivities, isNotEmpty);
+        expect(
+          lastActivities[0],
+          DespesaModel(
+            codDocumento: '1',
+          ),
+        );
+        expect(
+          lastActivities[1],
+          PropostaModel(
+            id: '1',
+          ),
+        );
+      });
+
+      test('throws ComunicationException', () {
+        when(mockFirestore.collection(ATIVIDADES_COLLECTION))
+            .thenThrow(Exception());
+        firebasePoliticProfileRepository
+            .getLastActivities(politicId: '1', count: 5)
             .catchError((e) => expect(e, isA<ComunicationException>()));
       });
     });

@@ -5,7 +5,7 @@ import 'package:polis/bloc/blocs.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
-import 'package:polis/page/timeline/widget/despesa_tile.dart';
+import 'package:polis/widget/tile/despesa_tile.dart';
 
 import '../../mock.dart';
 import '../utils.dart';
