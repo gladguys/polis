@@ -35,7 +35,7 @@ class PoliticActionButtons extends StatelessWidget {
             onPressed: () {},
             padding: const EdgeInsets.symmetric(horizontal: 16),
             color: Colors.grey[350],
-            child: Text(
+            child: const Text(
               'Enviar e-mail',
               style: TextStyle(
                 fontSize: 12,

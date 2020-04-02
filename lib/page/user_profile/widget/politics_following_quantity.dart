@@ -24,7 +24,7 @@ class PoliticsFollowingQuantity extends StatelessWidget {
         GestureDetector(
           child: Text(
             politics.length.toString(),
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
               fontSize: 26,
@@ -35,7 +35,7 @@ class PoliticsFollowingQuantity extends StatelessWidget {
             name: USER_FOLLOWING_POLITICS_PAGE,
           ),
         ),
-        Text(
+        const Text(
           POLITICS,
           style: TextStyle(
             color: Colors.black,
