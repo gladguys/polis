@@ -123,7 +123,7 @@ class _SignupPageState extends State<SignupPage> {
                 key: const ValueKey('profile-container'),
                 child: _profilePhoto != null
                     ? ClipRRect(
-                        borderRadius: BorderRadius.circular(40),
+                        borderRadius: BorderRadius.circular(60),
                         child: Image.file(
                           _profilePhoto,
                           height: 120,
@@ -131,10 +131,40 @@ class _SignupPageState extends State<SignupPage> {
                           fit: BoxFit.cover,
                         ),
                       )
-                    : FaIcon(
-                        FontAwesomeIcons.solidUserCircle,
-                        color: theme.accentColor.withOpacity(.6),
-                        size: 120,
+                    : Container(
+                        height: 120,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 1),
+                              blurRadius: 1,
+                              color: Colors.grey[350],
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(60),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FaIcon(
+                              FontAwesomeIcons.camera,
+                              color: theme.accentColor,
+                              size: 40,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              CHOICE_PHOTO,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: theme.accentColor,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                          ],
+                        ),
                       ),
               ),
               onTap: getImage,
