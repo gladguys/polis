@@ -1,7 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-import '../../model/models.dart';
-
 abstract class TimelineEvent extends Equatable {
   const TimelineEvent();
 }
@@ -16,11 +14,10 @@ class FetchUserTimeline extends TimelineEvent {
 }
 
 class UpdateTimeline extends TimelineEvent {
-  UpdateTimeline({this.despesas, this.propostas});
+  UpdateTimeline({this.activities});
 
-  final List<DespesaModel> despesas;
-  final List<PropostaModel> propostas;
+  final List<dynamic> activities;
 
   @override
-  List<Object> get props => [despesas, propostas];
+  List<Object> get props => [activities];
 }

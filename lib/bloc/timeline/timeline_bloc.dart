@@ -21,22 +21,14 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
       _timelineSubscription?.cancel();
       try {
         _timelineSubscription = repository.getUserTimeline(event.userId).listen(
-              (timelineData) => add(
-                UpdateTimeline(
-                  despesas: timelineData.item1,
-                  propostas: timelineData.item2,
-                ),
-              ),
+              (timelineData) => add(UpdateTimeline(activities: timelineData)),
             );
       } on Exception {
         yield FetchTimelineFailed();
       }
     }
     if (event is UpdateTimeline) {
-      yield TimelineUpdated(
-        despesas: event.despesas,
-        propostas: event.propostas,
-      );
+      yield TimelineUpdated(activities: event.activities);
     }
   }
 

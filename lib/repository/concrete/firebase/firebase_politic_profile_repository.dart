@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../core/exception/exceptions.dart';
 import '../../../model/models.dart';
 import '../../abstract/politic_profile_repository.dart';
+import '../../utils.dart';
 import 'collection.dart';
 
 class FirebasePoliticProfileRepository implements PoliticProfileRepository {
@@ -42,7 +43,7 @@ class FirebasePoliticProfileRepository implements PoliticProfileRepository {
       final querySnapshot = await query.getDocuments();
       final documents = querySnapshot.documents;
       for (var document in documents) {
-        if (document.data['tipoAtividade'] == 'DESPESA') {
+        if (isDocumentDespesa(document.data)) {
           activities.add(DespesaModel.fromJson(document.data));
         } else {
           activities.add(PropostaModel.fromJson(document.data));

@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../model/models.dart';
-
 abstract class TimelineState extends Equatable {
   const TimelineState();
 }
@@ -13,15 +11,12 @@ class InitialTimelineState extends TimelineState {
 }
 
 class TimelineUpdated extends TimelineState {
-  TimelineUpdated({@required this.despesas, @required this.propostas})
-      : assert(despesas != null),
-        assert(propostas != null);
+  TimelineUpdated({@required this.activities}) : assert(activities != null);
 
-  final List<DespesaModel> despesas;
-  final List<PropostaModel> propostas;
+  final List<dynamic> activities;
 
   @override
-  List<Object> get props => [despesas, propostas];
+  List<Object> get props => [activities];
 }
 
 class FetchTimelineFailed extends TimelineState {

@@ -13,6 +13,8 @@ class PropostaModel extends Equatable {
       this.ano,
       this.ementa,
       this.dataApresentacao,
+      this.dataDocumento,
+      this.tipoDocumento,
       this.status});
 
   final String id;
@@ -21,6 +23,8 @@ class PropostaModel extends Equatable {
   final String numero;
   final String ano;
   final String ementa;
+  final String dataDocumento;
+  final String tipoDocumento;
   final String dataApresentacao;
   final String status;
 
