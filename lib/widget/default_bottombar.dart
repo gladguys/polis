@@ -54,10 +54,11 @@ class DefaultBottombar extends StatelessWidget {
           Expanded(
             child: Wrap(
               alignment: WrapAlignment.center,
-              spacing: 16,
+              spacing: 8,
               children: <Widget>[
                 _buildButtonBottomAppBar(
                   icon: FontAwesomeIcons.home,
+                  isSelected: routeName == TIMELINE_PAGE,
                   padding: const EdgeInsets.only(right: 3),
                   onPressed: () => routeName != TIMELINE_PAGE
                       ? SimpleRouter.forward(
@@ -68,6 +69,7 @@ class DefaultBottombar extends StatelessWidget {
                 ),
                 _buildButtonBottomAppBar(
                   icon: FontAwesomeIcons.search,
+                  isSelected: routeName == SEARCH_POLITIC_PAGE,
                   onPressed: () => routeName != SEARCH_POLITIC_PAGE
                       ? SimpleRouter.forward(
                           SearchPoliticPageConnected(),
@@ -77,6 +79,7 @@ class DefaultBottombar extends StatelessWidget {
                 ),
                 _buildButtonBottomAppBar(
                   icon: FontAwesomeIcons.solidBookmark,
+                  isSelected: routeName == FAVORITE_POSTS_PAGE,
                   onPressed: () => routeName != FAVORITE_POSTS_PAGE
                       ? SimpleRouter.forward(
                           FavoritePostsPage(),
@@ -205,16 +208,18 @@ class DefaultBottombar extends StatelessWidget {
   Widget _buildButtonBottomAppBar({
     Widget child,
     IconData icon,
-    double iconSize,
+    double iconSize = 20,
+    bool isSelected = false,
     EdgeInsets padding = EdgeInsets.zero,
     Function onPressed,
     Key key,
   }) {
     return Container(
-      width: 40,
-      height: 40,
+      width: 48,
+      height: 32,
       child: FlatButton(
         key: key,
+        color: isSelected ? Colors.grey[300] : null,
         child: icon != null ? Icon(icon, size: iconSize) : child,
         padding: padding,
         onPressed: onPressed,
