@@ -17,10 +17,12 @@ class DefaultBottombar extends StatelessWidget {
   DefaultBottombar(
     this.routeName, {
     this.onPopCallback = SimpleRouter.back,
+    this.withBack = false,
   });
 
   final String routeName;
   final VoidCallback onPopCallback;
+  final bool withBack;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class DefaultBottombar extends StatelessWidget {
             width: 80,
             height: 40,
             alignment: Alignment.centerLeft,
-            child: routeName == TIMELINE_PAGE
+            child: routeName == TIMELINE_PAGE && !withBack
                 ? const Padding(
                     padding: EdgeInsets.only(left: 8),
                     child: Text(

@@ -8,11 +8,11 @@ import '../page_connected.dart';
 import '../pages.dart';
 
 class PostPageConnected extends StatelessWidget {
-  PostPageConnected({@required this.id, @required this.postType})
-      : assert(id != null),
+  PostPageConnected({@required this.post, @required this.postType})
+      : assert(post != null),
         assert(postType != null);
 
-  final String id;
+  final dynamic post;
   final PostType postType;
 
   @override
@@ -20,10 +20,8 @@ class PostPageConnected extends StatelessWidget {
     return PageConnected<PostBloc>(
       bloc: PostBloc(
         repository: context.repository<FirebasePostRepository>(),
-      )..add(
-          FetchPost(id: id, postType: postType),
-        ),
-      page: PostPage(),
+      ),
+      page: PostPage(post: post, postType: postType),
     );
   }
 }

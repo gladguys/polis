@@ -19,14 +19,14 @@ class Timeline extends StatelessWidget {
         if (activities[i] is DespesaModel) {
           final despesa = activities[i] as DespesaModel;
           return GoToPostGestureDetector(
-            id: despesa.numDocumento,
+            post: despesa,
             postType: PostType.DESPESA,
             tile: DespesaTile(despesa),
           );
         } else {
           final proposta = activities[i] as PropostaModel;
           return GoToPostGestureDetector(
-            id: proposta.id,
+            post: proposta,
             postType: PostType.PROPOSICAO,
             tile: PropostaTile(proposta),
           );

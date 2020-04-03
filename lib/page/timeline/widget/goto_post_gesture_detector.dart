@@ -7,12 +7,12 @@ import '../../pages.dart';
 
 class GoToPostGestureDetector extends StatelessWidget {
   GoToPostGestureDetector(
-      {@required this.id, @required this.postType, @required this.tile})
-      : assert(id != null),
+      {@required this.post, @required this.postType, @required this.tile})
+      : assert(post != null),
         assert(postType != null),
         assert(tile != null);
 
-  final String id;
+  final dynamic post;
   final PostType postType;
   final Widget tile;
 
@@ -22,7 +22,7 @@ class GoToPostGestureDetector extends StatelessWidget {
       child: tile,
       onTap: () => SimpleRouter.forward(
         PostPageConnected(
-          id: id,
+          post: post,
           postType: postType,
         ),
         name: POST_PAGE,

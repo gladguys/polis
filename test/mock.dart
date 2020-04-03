@@ -17,6 +17,7 @@ import 'package:polis/repository/abstract/follow_repository.dart';
 import 'package:polis/repository/abstract/politic_followers_repository.dart';
 import 'package:polis/repository/abstract/politic_profile_repository.dart';
 import 'package:polis/repository/abstract/politic_suggestion_repository.dart';
+import 'package:polis/repository/abstract/post_repository.dart';
 import 'package:polis/repository/abstract/search_politic_repository.dart';
 import 'package:polis/repository/abstract/signin_repository.dart';
 import 'package:polis/repository/abstract/signup_repository.dart';
@@ -88,6 +89,8 @@ class MockUserFollowingPoliticsRepository extends Mock
 
 class MockSearchPoliticRepository extends Mock
     implements SearchPoliticRepository {}
+
+class MockPostRepository extends Mock implements PostRepository {}
 
 class MockFollowRepository extends Mock implements FollowRepository {}
 

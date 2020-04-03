@@ -15,22 +15,5 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   PostState get initialState => InitialPostState();
 
   @override
-  Stream<PostState> mapEventToState(PostEvent event) async* {
-    if (event is FetchPost) {
-      yield LoadingPost();
-
-      try {
-        final post = await repository.getPost(
-          id: event.id,
-          postType: event.postType,
-        );
-        yield FetchPostSuccess(
-          post: post,
-          postType: event.postType,
-        );
-      } on Exception {
-        yield FetchPostFailed();
-      }
-    }
-  }
+  Stream<PostState> mapEventToState(PostEvent event) async* {}
 }

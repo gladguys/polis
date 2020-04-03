@@ -2,11 +2,11 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../text_rich.dart';
 import '../../extension/formatters.dart';
 import '../../i18n/i18n.dart';
 import '../../model/despesa_model.dart';
 import '../../model/models.dart';
+import '../text_rich.dart';
 
 class DespesaTile extends StatelessWidget {
   DespesaTile(this.despesa);
@@ -23,15 +23,18 @@ class DespesaTile extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(24),
-              child: Container(
-                color: Colors.white,
-                child: FancyShimmerImage(
-                  imageUrl: despesa.fotoPolitico,
-                  width: 48,
-                  height: 48,
-                  boxFit: BoxFit.contain,
+            child: Hero(
+              tag: '${despesa.numDocumento}${despesa.nomePolitico}',
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: Container(
+                  color: Colors.white,
+                  child: FancyShimmerImage(
+                    imageUrl: despesa.fotoPolitico,
+                    width: 48,
+                    height: 48,
+                    boxFit: BoxFit.contain,
+                  ),
                 ),
               ),
             ),
