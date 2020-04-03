@@ -23,3 +23,8 @@ class FetchTimelineFailed extends TimelineState {
   @override
   List<Object> get props => [];
 }
+
+class LoadingTimeline extends TimelineState {
+  @override
+  List<Object> get props => [];
+}

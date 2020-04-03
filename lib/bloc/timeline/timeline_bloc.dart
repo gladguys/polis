@@ -18,10 +18,14 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
   @override
   Stream<TimelineState> mapEventToState(TimelineEvent event) async* {
     if (event is FetchUserTimeline) {
+      yield LoadingTimeline();
+
       _timelineSubscription?.cancel();
       try {
         _timelineSubscription = repository.getUserTimeline(event.userId).listen(
-              (timelineData) => add(UpdateTimeline(activities: timelineData)),
+              (timelineData) => add(
+                UpdateTimeline(activities: timelineData),
+              ),
             );
       } on Exception {
         yield FetchTimelineFailed();
