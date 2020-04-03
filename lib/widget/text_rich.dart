@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class TextRich extends StatelessWidget {
-  const TextRich({
+  TextRich({
     @required this.children,
     this.maxLines,
     this.fontSize = 14,
     this.color = Colors.black,
-  }) : assert(children != null);
+  })  : assert(children != null),
+        assert(children.isNotEmpty);
 
   final List<InlineSpan> children;
   final int maxLines;

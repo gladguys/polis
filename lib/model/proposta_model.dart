@@ -12,6 +12,11 @@ class PropostaModel extends Equatable {
       this.numero,
       this.ano,
       this.ementa,
+      this.fotoPolitico,
+      this.nomePolitico,
+      this.siglaPartido,
+      this.descricaoSituacao,
+      this.descricaoTramitacao,
       this.dataApresentacao,
       this.dataDocumento,
       this.tipoDocumento,
@@ -23,8 +28,13 @@ class PropostaModel extends Equatable {
   final String numero;
   final String ano;
   final String ementa;
+  final String nomePolitico;
+  final String fotoPolitico;
+  final String siglaPartido;
   final String dataDocumento;
   final String tipoDocumento;
+  final String descricaoSituacao;
+  final String descricaoTramitacao;
   final String dataApresentacao;
   final String status;
 
@@ -38,6 +48,6 @@ class PropostaModel extends Equatable {
 
   @override
   String toString() {
-    return '''PropostaModel{id: $id, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, dataApresentacao: $dataApresentacao, status: $status}''';
+    return '''PropostaModel{id: $id, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, nomePolitico: $nomePolitico, fotoPolitico: $fotoPolitico, siglaPartido: $siglaPartido, dataDocumento: $dataDocumento, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataApresentacao: $dataApresentacao, status: $status}''';
   }
 }

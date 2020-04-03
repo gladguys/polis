@@ -18,6 +18,7 @@ void main() {
     MockQuerySnapshot mockQuerySnapshot;
     MockDocumentSnapshot mockDocumentSnapshot;
     Stream<QuerySnapshot> snapshotStream;
+    MockQuery mockQuery;
 
     setUp(() {
       mockFirestore = MockFirestore();
@@ -30,6 +31,7 @@ void main() {
       mockQuerySnapshot = MockQuerySnapshot();
       mockDocumentSnapshot = MockDocumentSnapshot();
       snapshotStream = Stream.value(mockQuerySnapshot);
+      mockQuery = MockQuery();
     });
 
     test('asserts', () {
@@ -49,17 +51,18 @@ void main() {
         when(userTimelineDocumentReference
                 .collection(ATIVIDADES_TIMELINE_SUBCOLLECTION))
             .thenReturn(mockAtividadesTimelineCollectionReference);
+        when(mockAtividadesTimelineCollectionReference
+                .orderBy(DATA_DOCUMENTO_FIELD, descending: true))
+            .thenReturn(mockQuery);
+        when(mockQuery.snapshots()).thenAnswer((_) => snapshotStream);
         when(mockDocumentSnapshot.data)
             .thenReturn({TIPO_ATIVIDADE_FIELD: 'DESPESA'});
         when(mockQuerySnapshot.documents).thenReturn([
           mockDocumentSnapshot,
         ]);
-        when(mockAtividadesTimelineCollectionReference.snapshots())
-            .thenAnswer((_) => snapshotStream);
 
         firebaseTimelineRepository.getUserTimeline('1').listen((data) {
-          expect(data.item1, [DespesaModel()]);
-          expect(data.item2, []);
+          expect(data, [DespesaModel()]);
         });
       });
 

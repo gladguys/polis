@@ -23,7 +23,7 @@ void main() {
       final mockTimelineBloc = MockTimelineBloc();
       when(mockTimelineBloc.state).thenReturn(
         TimelineUpdated(
-          despesas: [
+          activities: [
             DespesaModel(
               fotoPolitico: 'foto',
               nomePolitico: 'politico 1',
@@ -31,7 +31,7 @@ void main() {
               tipoAtividade: 'tipoAtividade1',
               tipoDespesa: 'tipoDespesa1',
               valorLiquido: '10.00',
-              dataDocumento: '2020-01-10',
+              dataDocumento: '10/01/2020',
             ),
             DespesaModel(
               fotoPolitico: 'foto',
@@ -40,10 +40,14 @@ void main() {
               tipoAtividade: 'tipoAtividade2',
               tipoDespesa: 'tipoDespesa2',
               valorLiquido: '20.00',
-              dataDocumento: '2020-01-20',
+              dataDocumento: '20/01/2020',
             ),
+            PropostaModel(
+              dataDocumento: '20/01/2020',
+              nomePolitico: 'nome',
+              fotoPolitico: 'foto',
+            )
           ],
-          propostas: [],
         ),
       );
       await tester.pumpWidget(

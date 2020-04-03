@@ -65,7 +65,7 @@ void main() {
                 tipoAtividade: 'ativi',
                 tipoDespesa: 'despesa',
                 valorLiquido: '3.51',
-                dataDocumento: '10-01-2020',
+                dataDocumento: '10/01/2020',
               ),
             ]),
       );
