@@ -1,145 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:skeleton_text/skeleton_text.dart';
+import 'package:flutter/widgets.dart';
+
+import '../../../widget/skeleton.dart';
 
 class TimelineSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.vertical,
+    return ListView.separated(
       physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.only(top: 32),
+      separatorBuilder: (context, index) => const SizedBox(height: 16),
       itemCount: 10,
       itemBuilder: (context, i) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              color: Colors.grey[50],
-            ),
-            child: Container(
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const SizedBox(width: 8),
+            const Skeleton(width: 48, height: 48),
+            const SizedBox(width: 8),
+            Expanded(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  const SizedBox(height: 4),
+                  const Skeleton(width: 180, height: 14),
+                  const SizedBox(height: 4),
+                  const Skeleton(width: 240, height: 24),
+                  const SizedBox(height: 4),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      SkeletonAnimation(
-                        child: Container(
-                          width: 70.0,
-                          height: 70.0,
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(50.0),
-                            ),
-                            color: Colors.grey[300],
-                          ),
-                        ),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(left: 15.0, bottom: 5.0),
-                            child: SkeletonAnimation(
-                              child: Container(
-                                height: 15,
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  color: Colors.grey[300],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15.0),
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 5.0),
-                              child: SkeletonAnimation(
-                                child: Container(
-                                  width: 60,
-                                  height: 13,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    color: Colors.grey[300],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      const Skeleton(width: 20, height: 20),
+                      const SizedBox(width: 16),
+                      const Skeleton(width: 20, height: 20),
+                      const SizedBox(width: 16),
+                      const Skeleton(width: 20, height: 20),
+                      const Spacer(flex: 1),
+                      const Skeleton(width: 20, height: 20),
+                      const SizedBox(width: 8),
                     ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 80),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 3,
-                          child: SkeletonAnimation(
-                            child: Container(
-                              height: 15,
-                              width: 15,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.0),
-                                color: Colors.grey[300],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: SkeletonAnimation(
-                            child: Container(
-                              height: 15,
-                              width: 15,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.0),
-                                color: Colors.grey[300],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: SkeletonAnimation(
-                            child: Container(
-                              height: 15,
-                              width: 15,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.0),
-                                color: Colors.grey[300],
-                              ),
-                            ),
-                          ),
-                        ),
-                        const Spacer(flex: 3),
-                        Expanded(
-                          flex: 1,
-                          child: SkeletonAnimation(
-                            child: Container(
-                              height: 15,
-                              width: 15,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.0),
-                                color: Colors.grey[300],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
                 ],
               ),
             ),
-          ),
+          ],
         );
       },
     );
