@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
 class Skeleton extends StatelessWidget {
-  const Skeleton({this.width, this.height})
+  const Skeleton({@required this.width, @required this.height})
       : assert(width != null),
         assert(height != null);
 
