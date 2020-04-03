@@ -66,6 +66,7 @@ class PropostaTile extends StatelessWidget {
                   children: <Widget>[
                     const SizedBox(height: 4),
                     TextRich(
+                      maxLines: 4,
                       children: [
                         TextSpan(
                           text: '${proposta.descricaoTipo}: ',
