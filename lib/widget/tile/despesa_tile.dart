@@ -18,103 +18,113 @@ class DespesaTile extends StatelessWidget {
     return Card(
       color: Colors.transparent,
       elevation: 0,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: ClipRRect(
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const SizedBox(width: 8),
+            ClipRRect(
               borderRadius: BorderRadius.circular(24),
-              child: Container(
-                color: Colors.white,
-                child: FancyShimmerImage(
-                  imageUrl: despesa.fotoPolitico,
-                  width: 48,
-                  height: 48,
-                  boxFit: BoxFit.contain,
-                ),
+              child: despesa.fotoPolitico != null
+                  ? Container(
+                      color: Colors.white,
+                      child: FancyShimmerImage(
+                        imageUrl: despesa.fotoPolitico,
+                        width: 48,
+                        height: 48,
+                        boxFit: BoxFit.contain,
+                      ),
+                    )
+                  : FaIcon(
+                      FontAwesomeIcons.solidUserCircle,
+                      color: Colors.grey[400],
+                      size: 48,
+                    ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.end,
+                    children: <Widget>[
+                      Text(
+                        despesa.nomePolitico,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        // TODO: trazer siglauf
+                        ' · $POLITIC · ${despesa.siglaPartido} · ',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      const SizedBox(height: 4),
+                      TextRich(
+                        children: [
+                          TextSpan(
+                              text:
+                                  '${despesa.tipoAtividade.capitalizeUpperCase()}'
+                                  ' $WITH '
+                                  '${despesa.tipoDespesa.toLowerCase()}'
+                                  ' $IN_THE_AMOUNT_OF '),
+                          TextSpan(
+                            text: '${despesa.valorLiquido.formatCurrency()}.',
+                            style: TextStyle(fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '${despesa.dataDocumento.formatDate()}',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      _buildButtonActions(
+                        icon: FontAwesomeIcons.thumbsUp,
+                        paddingIcon: const EdgeInsets.only(bottom: 3),
+                      ),
+                      const SizedBox(width: 16),
+                      _buildButtonActions(
+                        icon: FontAwesomeIcons.thumbsDown,
+                      ),
+                      const SizedBox(width: 16),
+                      _buildButtonActions(
+                        icon: FontAwesomeIcons.comment,
+                        paddingIcon: const EdgeInsets.only(bottom: 2),
+                      ),
+                      const Spacer(flex: 1),
+                      _buildButtonActions(
+                        icon: FontAwesomeIcons.bookmark,
+                        paddingIcon: const EdgeInsets.symmetric(horizontal: 16),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.end,
-                  children: <Widget>[
-                    Text(
-                      despesa.nomePolitico,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      ' · ${despesa.siglaPartido} · $POLITIC',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const SizedBox(height: 4),
-                    TextRich(
-                      children: [
-                        TextSpan(
-                            text:
-                                '${despesa.tipoAtividade.capitalizeUpperCase()}'
-                                ' $WITH '
-                                '${despesa.tipoDespesa.toLowerCase()}'
-                                ' $IN_THE_AMOUNT_OF '),
-                        TextSpan(
-                          text: '${despesa.valorLiquido.formatCurrency()}.',
-                          style: TextStyle(fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '${despesa.dataDocumento.formatDate()}',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    _buildButtonActions(
-                      icon: FontAwesomeIcons.thumbsUp,
-                      paddingIcon: const EdgeInsets.only(bottom: 3),
-                    ),
-                    const SizedBox(width: 16),
-                    _buildButtonActions(
-                      icon: FontAwesomeIcons.thumbsDown,
-                    ),
-                    const SizedBox(width: 16),
-                    _buildButtonActions(
-                      icon: FontAwesomeIcons.comment,
-                      paddingIcon: const EdgeInsets.only(bottom: 2),
-                    ),
-                    const Spacer(flex: 1),
-                    _buildButtonActions(
-                      icon: FontAwesomeIcons.bookmark,
-                      paddingIcon: const EdgeInsets.symmetric(horizontal: 16),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

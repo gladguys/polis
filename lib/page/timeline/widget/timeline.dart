@@ -21,10 +21,9 @@ class Timeline extends StatelessWidget {
         }
       },
       separatorBuilder: (_, i) => const Divider(
-        color: Colors.grey,
-        height: 8,
-        indent: 16,
-        endIndent: 16,
+        height: 1,
+        indent: 8,
+        endIndent: 8,
       ),
       itemCount: activities.length,
     );
