@@ -17,6 +17,7 @@ void main() {
     MockDocumentReference userTimelineDocumentReference;
     MockQuerySnapshot mockQuerySnapshot;
     MockDocumentSnapshot mockDocumentSnapshot;
+    MockDocumentSnapshot mockDocument2Snapshot;
     Stream<QuerySnapshot> snapshotStream;
     MockQuery mockQuery;
 
@@ -30,6 +31,7 @@ void main() {
       userTimelineDocumentReference = MockDocumentReference();
       mockQuerySnapshot = MockQuerySnapshot();
       mockDocumentSnapshot = MockDocumentSnapshot();
+      mockDocument2Snapshot = MockDocumentSnapshot();
       snapshotStream = Stream.value(mockQuerySnapshot);
       mockQuery = MockQuery();
     });
@@ -57,12 +59,15 @@ void main() {
         when(mockQuery.snapshots()).thenAnswer((_) => snapshotStream);
         when(mockDocumentSnapshot.data)
             .thenReturn({TIPO_ATIVIDADE_FIELD: 'DESPESA'});
+        when(mockDocument2Snapshot.data)
+            .thenReturn({TIPO_ATIVIDADE_FIELD: 'PROPOSTA'});
         when(mockQuerySnapshot.documents).thenReturn([
           mockDocumentSnapshot,
+          mockDocument2Snapshot,
         ]);
 
         firebaseTimelineRepository.getUserTimeline('1').listen((data) {
-          expect(data, [DespesaModel()]);
+          expect(data, [DespesaModel(), PropostaModel()]);
         });
       });
 
