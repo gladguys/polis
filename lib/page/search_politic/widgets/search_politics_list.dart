@@ -2,9 +2,12 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:simple_router/simple_router.dart';
 
 import '../../../bloc/blocs.dart';
+import '../../../core/routing/route_names.dart';
 import '../../../model/models.dart';
+import '../../pages.dart';
 
 class SearchPoliticsList extends StatelessWidget {
   SearchPoliticsList(this.politicos);
@@ -17,6 +20,10 @@ class SearchPoliticsList extends StatelessWidget {
     return politicos.isNotEmpty
         ? ListView.separated(
             itemBuilder: (_, i) => ListTile(
+              onTap: () => SimpleRouter.forward(
+                PoliticProfilePageConnected(politicos[i].id),
+                name: POLITIC_PROFILE_PAGE,
+              ),
               key: ValueKey(politicos[i].id),
               leading: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
@@ -35,7 +42,7 @@ class SearchPoliticsList extends StatelessWidget {
               dense: true,
               title: Text(
                 politicos[i].nomeEleitoral,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),

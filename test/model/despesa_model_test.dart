@@ -13,6 +13,7 @@ void main() {
     'idPolitico': '2214',
     'nomeFornecedor': 'fornecedor',
     'nomePolitico': 'politico',
+    'fotoPolitico': 'foto',
     'numDocumento': '1',
     'numRessarcimento': '0',
     'parcela': '1',
@@ -35,6 +36,7 @@ void main() {
     codTipoDocumento: '1',
     dataDocumento: '2020-06-18',
     idPolitico: '2214',
+    fotoPolitico: 'foto',
     nomeFornecedor: 'fornecedor',
     nomePolitico: 'politico',
     numDocumento: '1',
@@ -69,7 +71,7 @@ void main() {
     test('toString()', () {
       final modelToString = DespesaModel(codDocumento: '1').toString();
       final result =
-          '''DespesaModel{ano: null, mes: null, cnpjCpfFornecedor: null, codDocumento: 1, codLote: null, codTipoDocumento: null, dataDocumento: null, idPolitico: null, nomeFornecedor: null, nomePolitico: null, numDocumento: null, numRessarcimento: null, parcela: null, siglaPartido: null, tipoAtividade: null, tipoDespesa: null, tipoDocumento: null, urlDocumento: null, valorDocumento: null, valorGlosa: null, valorLiquido: null}''';
+          '''DespesaModel{ano: null, mes: null, cnpjCpfFornecedor: null, codDocumento: 1, codLote: null, codTipoDocumento: null, fotoPolitico: null, dataDocumento: null, idPolitico: null, nomeFornecedor: null, nomePolitico: null, numDocumento: null, numRessarcimento: null, parcela: null, siglaPartido: null, tipoAtividade: null, tipoDespesa: null, tipoDocumento: null, urlDocumento: null, valorDocumento: null, valorGlosa: null, valorLiquido: null}''';
       expect(modelToString == result, true);
     });
 
@@ -81,6 +83,7 @@ void main() {
       final despesaToJson = despesaModel.toJson();
       expect(despesaToJson['ano'] == jsonDespesa['ano'], true);
       expect(despesaToJson['mes'] == jsonDespesa['mes'], true);
+      expect(despesaToJson['foto'] == jsonDespesa['foto'], true);
       expect(
           despesaToJson['cnpjCpfFornecedor'] ==
               jsonDespesa['cnpjCpfFornecedor'],

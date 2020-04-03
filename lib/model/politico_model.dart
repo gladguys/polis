@@ -17,6 +17,7 @@ class PoliticoModel extends Equatable {
       this.condicaoEleitoral,
       this.cpf,
       this.sexo,
+      this.quantidadeSeguidores,
       this.dataNascimento,
       this.escolaridade});
 
@@ -31,6 +32,7 @@ class PoliticoModel extends Equatable {
   final String condicaoEleitoral;
   final String cpf;
   final String sexo;
+  final double quantidadeSeguidores;
   final DateTime dataNascimento;
   final String escolaridade;
 
@@ -44,6 +46,6 @@ class PoliticoModel extends Equatable {
 
   @override
   String toString() {
-    return '''PoliticoModel{id: $id, nomeCivil: $nomeCivil, siglaPartido: $siglaPartido, siglaUf: $siglaUf, urlFoto: $urlFoto, email: $email, nomeEleitoral: $nomeEleitoral, status: $status, condicaoEleitoral: $condicaoEleitoral, cpf: $cpf, sexo: $sexo, dataNascimento: $dataNascimento, escolaridade: $escolaridade}''';
+    return '''PoliticoModel{id: $id, nomeCivil: $nomeCivil, siglaPartido: $siglaPartido, siglaUf: $siglaUf, urlFoto: $urlFoto, email: $email, nomeEleitoral: $nomeEleitoral, status: $status, condicaoEleitoral: $condicaoEleitoral, cpf: $cpf, sexo: $sexo, quantidadeSeguidores: $quantidadeSeguidores, dataNascimento: $dataNascimento, escolaridade: $escolaridade}''';
   }
 }

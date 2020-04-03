@@ -17,11 +17,11 @@ void main() {
 
     group('UpdateTimeline', () {
       test('props', () {
-        final ev1 = UpdateTimeline(despesas: [], propostas: []);
-        final ev2 = UpdateTimeline(despesas: [], propostas: []);
-        final ev3 = UpdateTimeline(despesas: [
+        final ev1 = UpdateTimeline(activities: []);
+        final ev2 = UpdateTimeline(activities: []);
+        final ev3 = UpdateTimeline(activities: [
           DespesaModel(),
-        ], propostas: []);
+        ]);
 
         expect(ev1, ev2);
         expect(ev1 == ev3, false);

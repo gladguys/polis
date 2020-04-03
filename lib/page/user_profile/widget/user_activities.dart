@@ -12,7 +12,7 @@ class UserActivities extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Text(
+        const Text(
           MY_ACTIVITIES,
           style: TextStyle(
             fontWeight: FontWeight.bold,

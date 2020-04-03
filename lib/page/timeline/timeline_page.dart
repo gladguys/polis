@@ -16,10 +16,7 @@ class TimelinePage extends StatelessWidget {
       body: BlocBuilder<TimelineBloc, TimelineState>(
         builder: (_, state) {
           if (state is TimelineUpdated) {
-            return Timeline(
-              despesas: state.despesas,
-              propostas: state.propostas,
-            );
+            return Timeline(activities: state.activities);
           } else {
             return CenteredLoading();
           }

@@ -17,6 +17,7 @@ class DespesaModel extends Equatable {
       this.nomeFornecedor,
       this.nomePolitico,
       this.numDocumento,
+      this.fotoPolitico,
       this.numRessarcimento,
       this.parcela,
       this.siglaPartido,
@@ -34,6 +35,7 @@ class DespesaModel extends Equatable {
   final String codDocumento;
   final String codLote;
   final String codTipoDocumento;
+  final String fotoPolitico;
   final String dataDocumento;
   final String idPolitico;
   final String nomeFornecedor;
@@ -60,6 +62,6 @@ class DespesaModel extends Equatable {
 
   @override
   String toString() {
-    return '''DespesaModel{ano: $ano, mes: $mes, cnpjCpfFornecedor: $cnpjCpfFornecedor, codDocumento: $codDocumento, codLote: $codLote, codTipoDocumento: $codTipoDocumento, dataDocumento: $dataDocumento, idPolitico: $idPolitico, nomeFornecedor: $nomeFornecedor, nomePolitico: $nomePolitico, numDocumento: $numDocumento, numRessarcimento: $numRessarcimento, parcela: $parcela, siglaPartido: $siglaPartido, tipoAtividade: $tipoAtividade, tipoDespesa: $tipoDespesa, tipoDocumento: $tipoDocumento, urlDocumento: $urlDocumento, valorDocumento: $valorDocumento, valorGlosa: $valorGlosa, valorLiquido: $valorLiquido}''';
+    return '''DespesaModel{ano: $ano, mes: $mes, cnpjCpfFornecedor: $cnpjCpfFornecedor, codDocumento: $codDocumento, codLote: $codLote, codTipoDocumento: $codTipoDocumento, fotoPolitico: $fotoPolitico, dataDocumento: $dataDocumento, idPolitico: $idPolitico, nomeFornecedor: $nomeFornecedor, nomePolitico: $nomePolitico, numDocumento: $numDocumento, numRessarcimento: $numRessarcimento, parcela: $parcela, siglaPartido: $siglaPartido, tipoAtividade: $tipoAtividade, tipoDespesa: $tipoDespesa, tipoDocumento: $tipoDocumento, urlDocumento: $urlDocumento, valorDocumento: $valorDocumento, valorGlosa: $valorGlosa, valorLiquido: $valorLiquido}''';
   }
 }

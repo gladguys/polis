@@ -19,6 +19,7 @@ PoliticoModel _$PoliticoModelFromJson(Map<String, dynamic> json) {
     condicaoEleitoral: json['condicaoEleitoral'] as String,
     cpf: json['cpf'] as String,
     sexo: json['sexo'] as String,
+    quantidadeSeguidores: (json['quantidadeSeguidores'] as num)?.toDouble(),
     dataNascimento: json['dataNascimento'] == null
         ? null
         : DateTime.parse(json['dataNascimento'] as String),
@@ -39,6 +40,7 @@ Map<String, dynamic> _$PoliticoModelToJson(PoliticoModel instance) =>
       'condicaoEleitoral': instance.condicaoEleitoral,
       'cpf': instance.cpf,
       'sexo': instance.sexo,
+      'quantidadeSeguidores': instance.quantidadeSeguidores,
       'dataNascimento': instance.dataNascimento?.toIso8601String(),
       'escolaridade': instance.escolaridade,
     };

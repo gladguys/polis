@@ -14,6 +14,8 @@ import 'package:polis/core/abstract/polis_image_picker.dart';
 import 'package:polis/core/service/services.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/repository/abstract/follow_repository.dart';
+import 'package:polis/repository/abstract/politic_followers_repository.dart';
+import 'package:polis/repository/abstract/politic_profile_repository.dart';
 import 'package:polis/repository/abstract/politic_suggestion_repository.dart';
 import 'package:polis/repository/abstract/search_politic_repository.dart';
 import 'package:polis/repository/abstract/signin_repository.dart';
@@ -49,6 +51,14 @@ class MockTimelineBloc extends MockBloc<TimelineEvent, TimelineState>
 class MockUserProfileBloc extends MockBloc<UserProfileEvent, UserProfileState>
     implements UserProfileBloc {}
 
+class MockPoliticProfileBloc
+    extends MockBloc<PoliticProfileEvent, PoliticProfileState>
+    implements PoliticProfileBloc {}
+
+class MockPoliticFollowersBloc
+    extends MockBloc<PoliticFollowersEvent, PoliticFollowersState>
+    implements PoliticFollowersBloc {}
+
 class MockSearchPoliticBloc
     extends MockBloc<SearchPoliticEvent, SearchPoliticState>
     implements SearchPoliticBloc {}
@@ -58,6 +68,12 @@ class MockSigninRepository extends Mock implements SigninRepository {}
 
 class MockPoliticSugestionRepository extends Mock
     implements PoliticSuggestionRepository {}
+
+class MockPoliticProfileRepository extends Mock
+    implements PoliticProfileRepository {}
+
+class MockPoliticFollowersRepository extends Mock
+    implements PoliticFollowersRepository {}
 
 class MockUserProfileRepository extends Mock implements UserProfileRepository {}
 

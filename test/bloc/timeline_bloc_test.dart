@@ -2,8 +2,6 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
-import 'package:polis/model/models.dart';
-import 'package:tuple/tuple.dart';
 
 import '../mock.dart';
 
@@ -11,16 +9,14 @@ void main() {
   group('TimelineBloc tests', () {
     TimelineBloc timelineBloc;
     MockTimelineRepository mockTimelineRepository;
-    Stream<Tuple2<List<DespesaModel>, List<PropostaModel>>> timelineStream;
+    Stream<List<dynamic>> timelineStream;
 
     setUp(() {
       mockTimelineRepository = MockTimelineRepository();
       timelineBloc = TimelineBloc(
         repository: mockTimelineRepository,
       );
-      timelineStream = Stream.value(
-        const Tuple2(<DespesaModel>[], <PropostaModel>[]),
-      );
+      timelineStream = Stream.value([]);
     });
 
     test('asserts', () {
@@ -46,10 +42,7 @@ void main() {
       act: (timelineBloc) {
         timelineBloc.add(FetchUserTimeline('1'));
         timelineBloc.add(
-          UpdateTimeline(
-            despesas: [],
-            propostas: [],
-          ),
+          UpdateTimeline(activities: []),
         );
         return;
       },
@@ -57,10 +50,7 @@ void main() {
         verify(mockTimelineRepository.getUserTimeline('1')).called(1);
       },
       expect: [
-        TimelineUpdated(
-          despesas: [],
-          propostas: [],
-        ),
+        TimelineUpdated(activities: []),
       ],
     );
 

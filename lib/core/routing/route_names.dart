@@ -7,4 +7,6 @@ const FAVORITE_POSTS_PAGE = 'FavoritePostsPage';
 const USER_PROFILE_PAGE = 'UserProfilePage';
 const INITIAL_PAGE = 'InitialPage';
 const POLITIC_SUGGESTION_PAGE = 'PoliticSuggestionPage';
+const POLITIC_PROFILE_PAGE = 'PoliticProfilePage';
+const POLITIC_FOLLOWERS_PAGE = 'PoliticFollowersPage';
 const USER_FOLLOWING_POLITICS_PAGE = 'UserFollowingPoliticsPage';

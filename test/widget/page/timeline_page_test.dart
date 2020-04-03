@@ -5,7 +5,7 @@ import 'package:polis/bloc/blocs.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
-import 'package:polis/page/timeline/widget/despesa_tile.dart';
+import 'package:polis/widget/tile/despesa_tile.dart';
 
 import '../../mock.dart';
 import '../utils.dart';
@@ -23,25 +23,31 @@ void main() {
       final mockTimelineBloc = MockTimelineBloc();
       when(mockTimelineBloc.state).thenReturn(
         TimelineUpdated(
-          despesas: [
+          activities: [
             DespesaModel(
+              fotoPolitico: 'foto',
               nomePolitico: 'politico 1',
               nomeFornecedor: 'fornecedor 1',
               tipoAtividade: 'tipoAtividade1',
               tipoDespesa: 'tipoDespesa1',
               valorLiquido: '10.00',
-              dataDocumento: '2020-01-10',
+              dataDocumento: '10/01/2020',
             ),
             DespesaModel(
+              fotoPolitico: 'foto',
               nomePolitico: 'politico 2',
               nomeFornecedor: 'fornecedor 2',
               tipoAtividade: 'tipoAtividade2',
               tipoDespesa: 'tipoDespesa2',
               valorLiquido: '20.00',
-              dataDocumento: '2020-01-20',
+              dataDocumento: '20/01/2020',
             ),
+            PropostaModel(
+              dataDocumento: '20/01/2020',
+              nomePolitico: 'nome',
+              fotoPolitico: 'foto',
+            )
           ],
-          propostas: [],
         ),
       );
       await tester.pumpWidget(

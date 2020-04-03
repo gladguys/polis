@@ -34,7 +34,7 @@ class PersonalUserInfo extends StatelessWidget {
         ),
         Text(
           user.name,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
@@ -56,7 +56,7 @@ class PersonalUserInfo extends StatelessWidget {
               type: GFButtonType.solid,
               shape: GFButtonShape.pills,
               size: 46,
-              child: Text(
+              child: const Text(
                 EDIT_PROFILE,
                 style: TextStyle(
                   fontSize: 16,
@@ -72,7 +72,7 @@ class PersonalUserInfo extends StatelessWidget {
               shape: GFButtonShape.pills,
               size: 46,
               color: Colors.grey,
-              child: Text(
+              child: const Text(
                 FAVORITE_POSTS,
                 style: TextStyle(
                   fontSize: 16,

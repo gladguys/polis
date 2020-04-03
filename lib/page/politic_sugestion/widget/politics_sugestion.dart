@@ -15,7 +15,7 @@ class PoliticsSuggestion extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             '$WELCOME, ${context.bloc<UserBloc>().user.name}!',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
