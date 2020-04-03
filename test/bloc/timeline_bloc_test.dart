@@ -32,7 +32,7 @@ void main() {
     });
 
     blocTest(
-      '''Expects [UpdateTimeline]''',
+      '''Expects [LoadingTimeline, UpdateTimeline]''',
       build: () async {
         when(mockTimelineRepository.getUserTimeline('1')).thenAnswer(
           (_) => timelineStream,
@@ -50,6 +50,7 @@ void main() {
         verify(mockTimelineRepository.getUserTimeline('1')).called(1);
       },
       expect: [
+        LoadingTimeline(),
         TimelineUpdated(activities: []),
       ],
     );
@@ -69,6 +70,7 @@ void main() {
         verify(mockTimelineRepository.getUserTimeline('1')).called(1);
       },
       expect: [
+        LoadingTimeline(),
         FetchTimelineFailed(),
       ],
     );

@@ -7,8 +7,8 @@ import 'package:polis/core/service/locator.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
+import 'package:polis/page/search_politic/widgets/search_politic_skeleton.dart';
 import 'package:polis/page/search_politic/widgets/search_politics.dart';
-import 'package:polis/widget/centered_loading.dart';
 import 'package:polis/widget/select/selects.dart';
 
 import '../../mock.dart';
@@ -309,8 +309,7 @@ void main() {
       expect(find.byType(SearchPolitics), findsOneWidget);
     });
 
-    testWidgets(
-        'shoud show SearchPolitics when filter politic followed or unfollowed',
+    testWidgets('shoud show skeleton loading when loading state',
         (tester) async {
       final mockSearchPoliticBloc = MockSearchPoliticBloc();
       when(mockSearchPoliticBloc.state).thenReturn(LoadingFetchPolitics());
@@ -322,7 +321,7 @@ void main() {
           ),
         ),
       );
-      expect(find.byType(CenteredLoading), findsOneWidget);
+      expect(find.byType(SearchPoliticSkeleton), findsOneWidget);
     });
   });
 }

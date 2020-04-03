@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/timeline/timeline_bloc.dart';
 import '../../bloc/timeline/timeline_state.dart';
 import '../../core/routing/route_names.dart';
-import '../../widget/centered_loading.dart';
 import '../../widget/default_bottombar.dart';
 import 'widget/timeline.dart';
+import 'widget/timeline_skeleton.dart';
 
 class TimelinePage extends StatelessWidget {
   @override
@@ -18,7 +18,7 @@ class TimelinePage extends StatelessWidget {
           if (state is TimelineUpdated) {
             return Timeline(activities: state.activities);
           } else {
-            return CenteredLoading();
+            return TimelineSkeleton();
           }
         },
       ),
