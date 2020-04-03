@@ -44,6 +44,7 @@ dependencies:
   smart_select: ^3.0.3
   flutter_grid_delegate_ext: ^0.0.2
   sliding_panel: ^1.0.3
+  skeleton_text: ^1.0.0
 
 dev_dependencies:
   flutter_test:
