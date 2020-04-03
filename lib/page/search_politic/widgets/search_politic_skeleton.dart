@@ -21,9 +21,9 @@ class SearchPoliticSkeleton extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   const SizedBox(height: 4),
-                  const Skeleton(width: 180, height: 14),
+                  const Skeleton(width: 140, height: 14),
                   const SizedBox(height: 4),
-                  const Skeleton(width: 80, height: 14),
+                  const Skeleton(width: 100, height: 14),
                   const SizedBox(height: 4),
                 ],
               ),
