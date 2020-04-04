@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
@@ -51,11 +52,11 @@ void main() {
           ),
         ),
       );
-      final followersCountButton =
-          find.byKey(const ValueKey('followers-count-btn'));
+      final followersCountButton = find.text('Seguidores');
       expect(followersCountButton, findsOneWidget);
+      await tester.ensureVisible(followersCountButton);
       await tester.tap(followersCountButton);
-      await tester.pumpAndSettle();
+      verify(mockObserver.didPush(any, any));
     });
   });
 }

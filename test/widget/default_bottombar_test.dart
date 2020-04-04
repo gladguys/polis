@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/service/locator.dart';
+import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/pages.dart';
 
@@ -223,9 +224,12 @@ void main() {
       );
       final profile = find.byKey(const ValueKey('user-photoless-icon'));
       expect(profile, findsOneWidget);
+      await tester.ensureVisible(profile);
       await tester.tap(profile);
       await tester.pump();
-      final userOption = find.byType(PopupMenuItem).first;
+      final userOption = find.text(PROFILE);
+      expect(userOption, findsOneWidget);
+      await tester.ensureVisible(userOption);
       await tester.tap(userOption);
     });
 

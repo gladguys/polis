@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/enum/post_type.dart';
 import 'package:polis/model/despesa_model.dart';
@@ -8,6 +9,9 @@ import 'package:polis/page/timeline/widget/goto_post_gesture_detector.dart';
 import 'utils.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  initializeDateFormatting('pt_BR', null);
+
   group('GoToPostGestureDetector', () {
     test('assert', () {
       expect(
@@ -38,19 +42,26 @@ void main() {
         connectedWidget(
           Scaffold(
             body: GoToPostGestureDetector(
-              tile: Container(
-                key: const ValueKey('child'),
-              ),
+              tile: const Text('Tap me'),
               postType: PostType.DESPESA,
-              post: DespesaModel(),
+              post: DespesaModel(
+                tipoAtividade: 'T',
+                tipoDespesa: 'D',
+                nomePolitico: 'pol',
+                nomeFornecedor: 'forn',
+                dataDocumento: '20/10/2020',
+                valorLiquido: '2.33',
+                numDocumento: '1',
+                fotoPolitico: 'foto',
+              ),
             ),
           ),
         ),
       );
-      final child = find.byKey(const ValueKey('child'));
+      final child = find.text('Tap me');
       expect(child, findsOneWidget);
       await tester.tap(child);
-      await tester.pumpAndSettle();
+      await tester.pump();
       verify(mockObserver.didPush(any, any));
     });
   });

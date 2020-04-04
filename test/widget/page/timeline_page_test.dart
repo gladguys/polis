@@ -25,6 +25,7 @@ void main() {
         TimelineUpdated(
           activities: [
             DespesaModel(
+              numDocumento: '1',
               fotoPolitico: 'foto',
               nomePolitico: 'politico 1',
               nomeFornecedor: 'fornecedor 1',
@@ -34,6 +35,7 @@ void main() {
               dataDocumento: '10/01/2020',
             ),
             DespesaModel(
+              numDocumento: '2',
               fotoPolitico: 'foto',
               nomePolitico: 'politico 2',
               nomeFornecedor: 'fornecedor 2',
@@ -43,6 +45,7 @@ void main() {
               dataDocumento: '20/01/2020',
             ),
             PropostaModel(
+              id: '1',
               dataDocumento: '20/01/2020',
               nomePolitico: 'nome',
               fotoPolitico: 'foto',
