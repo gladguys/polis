@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/bloc/flutter_bloc_delegate.dart';
 import 'package:polis/model/models.dart';
@@ -15,15 +16,22 @@ void main() {
     MockSharedPreferencesService mockSharedPreferencesService;
 
     setUp(() {
-      delegate = FlutterBlocDelegate();
-      mockSigninRepository = MockSigninRepository();
       mockAnalyticsService = MockAnalyticsService();
+      delegate = FlutterBlocDelegate(
+        analyticsService: mockAnalyticsService,
+      );
+      mockSigninRepository = MockSigninRepository();
       mockSharedPreferencesService = MockSharedPreferencesService();
       signinBloc = SigninBloc(
         repository: mockSigninRepository,
         analyticsService: mockAnalyticsService,
         sharedPreferencesService: mockSharedPreferencesService,
       );
+    });
+
+    test('assert', () {
+      expect(() => FlutterBlocDelegate(analyticsService: null),
+          throwsAssertionError);
     });
 
     test('onEvent test', () {
@@ -37,6 +45,13 @@ void main() {
           currentState: InitialSignin(),
           event: SigninWithEmailAndPassword('email', 'pass'),
           nextState: UserAuthenticated(UserModel()),
+        ),
+      );
+      verify(
+        mockAnalyticsService.logBloc(
+          event: 'SigninWithEmailAndPassword',
+          currentState: 'InitialSignin',
+          nextState: 'UserAuthenticated',
         ),
       );
     });
