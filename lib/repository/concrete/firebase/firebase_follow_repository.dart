@@ -53,4 +53,19 @@ class FirebaseFollowRepository implements FollowRepository {
       throw ComunicationException();
     }
   }
+
+  @override
+  Future<bool> isPoliticBeingFollowed(
+      {UserModel user, String politicId}) async {
+    try {
+      final documentRef = usuariosSeguindoRef
+          .document(politicId)
+          .collection(USUARIOS_SEGUINDO_SUBCOLLECTION)
+          .document(user.userId);
+      final documentSnapshot = await documentRef.get();
+      return documentSnapshot.exists;
+    } on Exception {
+      throw ComunicationException();
+    }
+  }
 }
