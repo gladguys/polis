@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../bloc/blocs.dart';
 import '../../../i18n/i18n.dart';
 
 class PoliticActionButtons extends StatelessWidget {
+  PoliticActionButtons({this.isBeingFollowedByUser});
+
+  final bool isBeingFollowedByUser;
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -11,14 +17,17 @@ class PoliticActionButtons extends StatelessWidget {
         Container(
           height: 28,
           width: 140,
-          color: Colors.green,
+          color: isBeingFollowedByUser ? Colors.red : Colors.green,
           child: OutlineButton(
             key: const ValueKey('follow-politic-profile'),
-            onPressed: () {},
+            onPressed: () => context.bloc<PoliticProfileBloc>().add(
+                  FollowUnfollowProfilePolitic(
+                      isFollowing: isBeingFollowedByUser),
+                ),
             padding: const EdgeInsets.symmetric(horizontal: 16),
             color: Colors.green,
             child: Text(
-              FOLLOW,
+              isBeingFollowedByUser ? STOP_FOLLOW : FOLLOW,
               style: TextStyle(
                 fontSize: 12,
                 color: Colors.white,

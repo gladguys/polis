@@ -18,19 +18,26 @@ class PoliticProfilePage extends StatelessWidget {
       bottomNavigationBar: DefaultBottombar(SEARCH_POLITIC_PAGE),
       body: BlocBuilder<PoliticProfileBloc, PoliticProfileState>(
         builder: (_, state) {
-          if (state is GetPoliticInfoSuccess) {
-            final politic = state.politic;
-            final lastActivities = state.lastActivities;
+          if (state is GetPoliticInfoSuccess ||
+              state is UserFollowingPoliticChanged) {
+            final bloc = context.bloc<PoliticProfileBloc>();
+            final politico = bloc.politico;
+            final lastActivities = bloc.lastActivities;
+            final isPoliticBeingFollowedByUser =
+                state is UserFollowingPoliticChanged
+                    ? state.isUserFollowingPolitic
+                    : bloc.isPoliticBeingFollowedByUser;
             return SafeArea(
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    PoliticPersonalInfo(politic),
+                    PoliticPersonalInfo(politico),
                     const SizedBox(height: 14),
-                    PoliticActionButtons(),
+                    PoliticActionButtons(
+                        isBeingFollowedByUser: isPoliticBeingFollowedByUser),
                     const SizedBox(height: 16),
-                    PoliticAdditionalInfo(politic),
+                    PoliticAdditionalInfo(politico),
                     const SizedBox(height: 26),
                     const Divider(),
                     Container(
