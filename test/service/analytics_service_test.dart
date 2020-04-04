@@ -31,6 +31,19 @@ void main() {
           .called(1);
     });
 
+    test('should call logBloc with the given method', () async {
+      await analyticsService.logBloc(
+        event: 'event',
+        currentState: 'currentState',
+        nextState: 'nextState',
+      );
+      verify(mockFirebaseAnalytics.logEvent(name: 'BLOC_EVENT', parameters: {
+        'EVENT': 'event',
+        'CURRENT_STATE': 'currentState',
+        'NEXT_STATE': 'nextState',
+      })).called(1);
+    });
+
     test('should call logLogout with the given method', () async {
       await analyticsService.logLogout('bala');
       verify(
