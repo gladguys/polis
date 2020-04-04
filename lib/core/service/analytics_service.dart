@@ -25,4 +25,13 @@ class AnalyticsService {
       },
     );
   }
+
+  Future<void> logBloc(
+      {String event, String currentState, String nextState}) async {
+    await analytics.logEvent(name: 'BLOC_EVENT', parameters: {
+      'EVENT': event,
+      'CURRENT_STATE': currentState,
+      'NEXT_STATE': nextState,
+    });
+  }
 }
