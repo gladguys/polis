@@ -12,3 +12,12 @@ class GetPoliticInfo extends PoliticProfileEvent {
   @override
   List<Object> get props => [politicId];
 }
+
+class FollowUnfollowProfilePolitic extends PoliticProfileEvent {
+  FollowUnfollowProfilePolitic({this.isFollowing});
+
+  final bool isFollowing;
+
+  @override
+  List<Object> get props => [isFollowing];
+}

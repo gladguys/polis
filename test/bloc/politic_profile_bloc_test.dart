@@ -10,18 +10,38 @@ void main() {
   group('PoliticProfileBloc tests', () {
     PoliticProfileBloc politicProfileBloc;
     MockPoliticProfileRepository mockPoliticProfileRepository;
+    MockFollowRepository mockFollowRepository;
 
     setUp(() {
       mockPoliticProfileRepository = MockPoliticProfileRepository();
+      mockFollowRepository = MockFollowRepository();
       politicProfileBloc = PoliticProfileBloc(
-        repository: mockPoliticProfileRepository,
+        user: UserModel(),
+        politicProfileRepository: mockPoliticProfileRepository,
+        followRepository: mockFollowRepository,
       );
     });
 
     test('asserts', () {
       expect(
           () => PoliticProfileBloc(
-                repository: null,
+                user: null,
+                politicProfileRepository: mockPoliticProfileRepository,
+                followRepository: mockFollowRepository,
+              ),
+          throwsAssertionError);
+      expect(
+          () => PoliticProfileBloc(
+                user: UserModel(),
+                politicProfileRepository: null,
+                followRepository: mockFollowRepository,
+              ),
+          throwsAssertionError);
+      expect(
+          () => PoliticProfileBloc(
+                user: UserModel(),
+                politicProfileRepository: mockPoliticProfileRepository,
+                followRepository: null,
               ),
           throwsAssertionError);
     });
