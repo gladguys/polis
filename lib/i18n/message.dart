@@ -14,6 +14,7 @@ const NO_RECENT_ACTIVITY = 'Nenhuma atividade recente!';
 const SIGNIN_FAILED = 'Falha no login';
 const SIGNUP_FAILED = 'Falha no cadastro do usuário';
 const NO_ACTIVITY_FOR_POLITIC = 'Nenhuma atividade para o político!';
+const NO_RESULTS_FROM_SEARCH = 'Político não encontrado.';
 
 const ERROR_CREATING_USER = 'Ocorreu um erro no cadastro do usuário';
 const ERROR_AUTENTICATING_USER = 'Ocorreu um erro ao autenticar o usuário';
