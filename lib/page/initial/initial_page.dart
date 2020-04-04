@@ -205,7 +205,7 @@ class Panel extends StatelessWidget {
         const SizedBox(height: 12),
         Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w500,
           ),
