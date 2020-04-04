@@ -67,7 +67,7 @@ class DespesaTile extends StatelessWidget {
                     ' $IN_THE_AMOUNT_OF '),
             TextSpan(
               text: '${despesa.valorLiquido.formatCurrency()}.',
-              style: TextStyle(fontWeight: FontWeight.w500),
+              style: const TextStyle(fontWeight: FontWeight.w500),
             ),
           ],
         ),

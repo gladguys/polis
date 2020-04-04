@@ -63,7 +63,7 @@ class PropostaTile extends StatelessWidget {
           children: [
             TextSpan(
               text: '${proposta.descricaoTipo}: ',
-              style: TextStyle(fontWeight: FontWeight.w500),
+              style: const TextStyle(fontWeight: FontWeight.w500),
             ),
             TextSpan(text: '${proposta.ementa}'),
           ],

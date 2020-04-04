@@ -28,6 +28,7 @@ class SearchPoliticsList extends StatelessWidget {
 
   Widget _buildList(BuildContext context) {
     return ListView.separated(
+      key: const ValueKey('politics-list'),
       separatorBuilder: (_, i) => const Divider(
         height: 1,
         indent: 8,
