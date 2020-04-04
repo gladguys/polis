@@ -28,7 +28,7 @@ class SearchPoliticSkeleton extends StatelessWidget {
                 ],
               ),
             ),
-            const Skeleton(width: 80, height: 24),
+            const Skeleton(width: 110, height: 22),
             const SizedBox(width: 8),
           ],
         );

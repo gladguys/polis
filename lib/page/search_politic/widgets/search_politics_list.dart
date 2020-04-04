@@ -1,12 +1,15 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../core/routing/route_names.dart';
+import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
+import '../../../widget/button_follow_unfollow.dart';
+import '../../../widget/card_base.dart';
+import '../../../widget/photo_politic.dart';
 import '../../pages.dart';
 
 class SearchPoliticsList extends StatelessWidget {
@@ -16,71 +19,71 @@ class SearchPoliticsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.bloc<SearchPoliticBloc>();
     return politicos.isNotEmpty
-        ? ListView.separated(
-            itemBuilder: (_, i) => ListTile(
-              onTap: () => SimpleRouter.forward(
-                PoliticProfilePageConnected(politicos[i].id),
-                name: POLITIC_PROFILE_PAGE,
-              ),
-              key: ValueKey(politicos[i].id),
-              leading: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: politicos[i].urlFoto != null
-                    ? FancyShimmerImage(
-                        imageUrl: politicos[i].urlFoto,
-                        width: 50,
-                        height: 50,
-                      )
-                    : FaIcon(
-                        FontAwesomeIcons.solidUserCircle,
-                        color: Theme.of(context).accentColor.withOpacity(.6),
-                        size: 50,
-                      ),
-              ),
-              dense: true,
-              title: Text(
-                politicos[i].nomeEleitoral,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              subtitle: Text(
-                'Dep. Federal - ${politicos[i].siglaPartido}',
-                style: TextStyle(
-                  color: Colors.grey[500],
-                ),
-              ),
-              trailing: OutlineButton(
-                child: Text(
-                  bloc.isPoliticBeingFollowed(politicos[i])
-                      ? 'Deixar de seguir'
-                      : 'Seguir',
-                  key: const ValueKey('follow-unfollow-btn'),
-                  style: const TextStyle(fontSize: 10),
-                ),
-                textColor: bloc.isPoliticBeingFollowed(politicos[i])
-                    ? Colors.red
-                    : Colors.green,
-                borderSide: BorderSide(
-                  color: bloc.isPoliticBeingFollowed(politicos[i])
-                      ? Colors.red
-                      : Colors.green,
-                ),
-                onPressed: () => bloc.add(
-                  FollowUnfollowSearchPolitic(
-                    user: context.bloc<UserBloc>().user,
-                    politico: politicos[i],
-                  ),
-                ),
-              ),
-            ),
-            separatorBuilder: (_, i) => const Divider(),
-            itemCount: politicos.length,
-          )
+        ? _buildList(context)
         : const Center(
-            child: Text('Nenhum político encontrado com os filtros escolhidos'),
+            child: Text(NO_RESULTS_FROM_SEARCH),
           );
+  }
+
+  Widget _buildList(BuildContext context) {
+    return ListView.separated(
+      key: const ValueKey('politics-list'),
+      separatorBuilder: (_, i) => const Divider(
+        height: 1,
+        indent: 8,
+        endIndent: 8,
+      ),
+      itemCount: politicos.length,
+      itemBuilder: (_, i) => _buildCard(context, politicos[i]),
+    );
+  }
+
+  Widget _buildCard(BuildContext context, PoliticoModel politico) {
+    final bloc = context.bloc<SearchPoliticBloc>();
+
+    return CardBase(
+      key: ValueKey(politico.id),
+      crossAxisAlignment: CrossAxisAlignment.center,
+      slotLeft: PhotoPolitic(urlPhoto: politico.urlFoto),
+      slotCenter: _buildCardContent(context, politico),
+      slotRight: ButtonFollowUnfollow(
+        isFollow: bloc.isPoliticBeingFollowed(politico),
+        key: const ValueKey('follow-unfollow-btn'),
+        onPressed: () => bloc.add(
+          FollowUnfollowSearchPolitic(
+            user: context.bloc<UserBloc>().user,
+            politico: politico,
+          ),
+        ),
+      ),
+      onTap: () => SimpleRouter.forward(
+        PoliticProfilePageConnected(politico.id),
+        name: POLITIC_PROFILE_PAGE,
+      ),
+    );
+  }
+
+  Widget _buildCardContent(BuildContext context, PoliticoModel politico) {
+    return Wrap(
+      direction: Axis.vertical,
+      spacing: 2,
+      children: <Widget>[
+        Text(
+          politico.nomeEleitoral,
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        Text(
+          '$POLITIC · ${politico.siglaPartido}'
+          ' · ${politico.siglaUf}',
+          style: TextStyle(
+            fontSize: 12,
+            color: Colors.grey[600],
+          ),
+        ),
+      ],
+    );
   }
 }

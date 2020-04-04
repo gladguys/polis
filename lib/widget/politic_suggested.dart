@@ -47,7 +47,7 @@ class PoliticSuggested extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.visible,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w500,
               ),
             ),
