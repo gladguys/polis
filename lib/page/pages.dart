@@ -9,6 +9,8 @@ export 'politic_profile/politic_profile_page.dart';
 export 'politic_profile/politic_profile_page_connected.dart';
 export 'politic_sugestion/politic_suggestion_page.dart';
 export 'politic_sugestion/politic_suggestion_page_connected.dart';
+export 'post/post_page.dart';
+export 'post/post_page_connected.dart';
 export 'search_politic/search_politic_page.dart';
 export 'search_politic/search_politic_page_connected.dart';
 export 'signin/signin_page.dart';

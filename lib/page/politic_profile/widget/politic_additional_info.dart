@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../../core/routing/route_names.dart';
+import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
 import '../../pages.dart';
 
@@ -18,7 +19,6 @@ class PoliticAdditionalInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
         GestureDetector(
-          key: const ValueKey('followers-count-btn'),
           onTap: () => SimpleRouter.forward(
             PoliticFollowersPageConnected(politic.id),
             name: POLITIC_FOLLOWERS_PAGE,
@@ -33,7 +33,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
                 ),
               ),
               const Text(
-                'Seguidores',
+                FOLLOWERS,
                 style: TextStyle(
                   color: Colors.grey,
                 ),
@@ -51,7 +51,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
               ),
             ),
             const Text(
-              'Proposições',
+              PROPOSERS,
               style: TextStyle(
                 color: Colors.grey,
               ),
@@ -68,7 +68,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
               ),
             ),
             const Text(
-              'Despesas',
+              EXPENSES,
               style: TextStyle(
                 color: Colors.grey,
               ),

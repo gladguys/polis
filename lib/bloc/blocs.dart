@@ -1,6 +1,7 @@
 export 'politic_followers/bloc.dart';
 export 'politic_profile/bloc.dart';
 export 'politic_suggestion/bloc.dart';
+export 'post/bloc.dart';
 export 'search_politic/bloc.dart';
 export 'signin/bloc.dart';
 export 'signup/bloc.dart';
