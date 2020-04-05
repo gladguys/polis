@@ -49,7 +49,7 @@ void main() {
                 tipoDespesa: 'D',
                 nomePolitico: 'pol',
                 nomeFornecedor: 'forn',
-                dataDocumento: '20/10/2020',
+                dataDocumento: '20-10-2020',
                 valorLiquido: '2.33',
                 numDocumento: '1',
                 fotoPolitico: 'foto',

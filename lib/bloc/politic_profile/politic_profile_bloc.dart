@@ -70,10 +70,15 @@ class PoliticProfileBloc
       yield UserFollowingPoliticChanged(
           isUserFollowingPolitic: shouldFollowPolitic);
 
-      if (shouldFollowPolitic) {
-        await followRepository.followPolitic(user: user, politico: politico);
-      } else {
-        await followRepository.unfollowPolitic(user: user, politico: politico);
+      try {
+        if (shouldFollowPolitic) {
+          await followRepository.followPolitic(user: user, politico: politico);
+        } else {
+          await followRepository.unfollowPolitic(
+              user: user, politico: politico);
+        }
+      } on Exception {
+        yield FollowPoliticFailed();
       }
     }
   }

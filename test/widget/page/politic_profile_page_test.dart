@@ -45,29 +45,40 @@ void main() {
     });
 
     testWidgets('should bring info when success', (tester) async {
+      when(mockPoliticProfileBloc.politico).thenReturn(
+        PoliticoModel(
+          id: '1',
+          siglaPartido: 'PT',
+          urlFoto: 'foto',
+          nomeEleitoral: 'nomeE',
+          siglaUf: 'CE',
+        ),
+      );
+      when(mockPoliticProfileBloc.lastActivities).thenReturn(
+        [
+          PropostaModel(
+            ementa: 'ementa',
+          ),
+          DespesaModel(
+            fotoPolitico: 'foto',
+            nomePolitico: 'nome',
+            nomeFornecedor: 'fornecedor',
+            tipoAtividade: 'ativi',
+            tipoDespesa: 'despesa',
+            valorLiquido: '3.51',
+            dataDocumento: '10-01-2020',
+          ),
+        ],
+      );
+      when(mockPoliticProfileBloc.isPoliticBeingFollowedByUser)
+          .thenReturn(true);
       when(mockPoliticProfileBloc.state).thenReturn(
         GetPoliticInfoSuccess(
-            politic: PoliticoModel(
-              id: '1',
-              siglaPartido: 'PT',
-              urlFoto: 'foto',
-              nomeEleitoral: 'nomeE',
-              siglaUf: 'CE',
-            ),
-            lastActivities: [
-              PropostaModel(
-                ementa: 'ementa',
-              ),
-              DespesaModel(
-                fotoPolitico: 'foto',
-                nomePolitico: 'nome',
-                nomeFornecedor: 'fornecedor',
-                tipoAtividade: 'ativi',
-                tipoDespesa: 'despesa',
-                valorLiquido: '3.51',
-                dataDocumento: '10/01/2020',
-              ),
-            ]),
+          politic: mockPoliticProfileBloc.politico,
+          lastActivities: mockPoliticProfileBloc.lastActivities,
+          isBeingFollowedByUser:
+              mockPoliticProfileBloc.isPoliticBeingFollowedByUser,
+        ),
       );
       await tester.pumpWidget(
         connectedWidget(
@@ -94,6 +105,92 @@ void main() {
         ),
       );
       expect(find.text(ERROR_FETCHING_POLITIC_INFO), findsOneWidget);
+    });
+
+    testWidgets('should show text FOLLOW when politic is being followed',
+        (tester) async {
+      when(mockPoliticProfileBloc.politico).thenReturn(
+        PoliticoModel(
+          id: '1',
+          siglaPartido: 'PT',
+          urlFoto: 'foto',
+          nomeEleitoral: 'nomeE',
+          siglaUf: 'CE',
+        ),
+      );
+      when(mockPoliticProfileBloc.lastActivities).thenReturn(
+        [
+          PropostaModel(
+            ementa: 'ementa',
+          ),
+          DespesaModel(
+            fotoPolitico: 'foto',
+            nomePolitico: 'nome',
+            nomeFornecedor: 'fornecedor',
+            tipoAtividade: 'ativi',
+            tipoDespesa: 'despesa',
+            valorLiquido: '3.51',
+            dataDocumento: '10-01-2020',
+          ),
+        ],
+      );
+      when(mockPoliticProfileBloc.state).thenReturn(
+        UserFollowingPoliticChanged(
+          isUserFollowingPolitic: false,
+        ),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<PoliticProfileBloc>(
+            bloc: mockPoliticProfileBloc,
+            page: PoliticProfilePage(),
+          ),
+        ),
+      );
+      expect(find.text(FOLLOW), findsOneWidget);
+    });
+
+    testWidgets('should show text STOP_FOLLOW when politic is being followed',
+        (tester) async {
+      when(mockPoliticProfileBloc.politico).thenReturn(
+        PoliticoModel(
+          id: '1',
+          siglaPartido: 'PT',
+          urlFoto: 'foto',
+          nomeEleitoral: 'nomeE',
+          siglaUf: 'CE',
+        ),
+      );
+      when(mockPoliticProfileBloc.lastActivities).thenReturn(
+        [
+          PropostaModel(
+            ementa: 'ementa',
+          ),
+          DespesaModel(
+            fotoPolitico: 'foto',
+            nomePolitico: 'nome',
+            nomeFornecedor: 'fornecedor',
+            tipoAtividade: 'ativi',
+            tipoDespesa: 'despesa',
+            valorLiquido: '3.51',
+            dataDocumento: '10-01-2020',
+          ),
+        ],
+      );
+      when(mockPoliticProfileBloc.state).thenReturn(
+        UserFollowingPoliticChanged(
+          isUserFollowingPolitic: true,
+        ),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<PoliticProfileBloc>(
+            bloc: mockPoliticProfileBloc,
+            page: PoliticProfilePage(),
+          ),
+        ),
+      );
+      expect(find.text(STOP_FOLLOW), findsOneWidget);
     });
   });
 }

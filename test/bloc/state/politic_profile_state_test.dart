@@ -9,6 +9,7 @@ void main() {
           () => GetPoliticInfoSuccess(
                 politic: null,
                 lastActivities: [],
+                isBeingFollowedByUser: true,
               ),
           throwsAssertionError);
 
@@ -16,6 +17,15 @@ void main() {
           () => GetPoliticInfoSuccess(
                 politic: PoliticoModel(),
                 lastActivities: null,
+                isBeingFollowedByUser: true,
+              ),
+          throwsAssertionError);
+
+      expect(
+          () => GetPoliticInfoSuccess(
+                politic: PoliticoModel(),
+                lastActivities: [],
+                isBeingFollowedByUser: null,
               ),
           throwsAssertionError);
     });
@@ -26,14 +36,18 @@ void main() {
         GetPoliticInfoSuccess(
           politic: PoliticoModel(),
           lastActivities: [],
+          isBeingFollowedByUser: true,
         ),
         GetPoliticInfoSuccess(
           politic: PoliticoModel(),
           lastActivities: [],
+          isBeingFollowedByUser: true,
         ),
       );
       expect(GetPoliticInfoFailed(), GetPoliticInfoFailed());
       expect(LoadingPoliticInfo(), LoadingPoliticInfo());
+      expect(UserFollowingPoliticChanged(isUserFollowingPolitic: true),
+          UserFollowingPoliticChanged(isUserFollowingPolitic: true));
     });
   });
 }

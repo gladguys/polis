@@ -47,3 +47,8 @@ class UserFollowingPoliticChanged extends PoliticProfileState {
   @override
   List<Object> get props => [isUserFollowingPolitic];
 }
+
+class FollowPoliticFailed extends PoliticProfileState {
+  @override
+  List<Object> get props => [];
+}

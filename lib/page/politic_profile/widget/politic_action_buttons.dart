@@ -5,7 +5,8 @@ import '../../../bloc/blocs.dart';
 import '../../../i18n/i18n.dart';
 
 class PoliticActionButtons extends StatelessWidget {
-  PoliticActionButtons({this.isBeingFollowedByUser});
+  PoliticActionButtons({@required this.isBeingFollowedByUser})
+      : assert(isBeingFollowedByUser != null);
 
   final bool isBeingFollowedByUser;
 
