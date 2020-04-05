@@ -8,3 +8,13 @@ class InitialPostState extends PostState {
   @override
   List<Object> get props => [];
 }
+
+class PostFavoritedSuccess extends PostState {
+  @override
+  List<Object> get props => [];
+}
+
+class PostFavoritedFailed extends PostState {
+  @override
+  List<Object> get props => [];
+}
