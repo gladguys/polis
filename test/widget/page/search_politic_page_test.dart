@@ -90,7 +90,7 @@ void main() {
           ),
         ),
       );
-      final politicoTile = find.byKey(const ValueKey('1'));
+      final politicoTile = find.byKey(const ValueKey('1')).first;
       expect(politicoTile, findsOneWidget);
       await tester.tap(politicoTile);
       await tester.pump();
