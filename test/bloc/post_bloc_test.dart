@@ -11,11 +11,11 @@ void main() {
 
     setUp(() {
       mockPostRepository = MockPostRepository();
-      postBloc = PostBloc(repository: mockPostRepository);
+      postBloc = PostBloc(postRepository: mockPostRepository);
     });
 
     test('asserts', () {
-      expect(() => PostBloc(repository: null), throwsAssertionError);
+      expect(() => PostBloc(postRepository: null), throwsAssertionError);
     });
 
     test('''Expects InitialPostState to be the initial state''', () {

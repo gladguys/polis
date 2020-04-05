@@ -8,7 +8,7 @@ part of 'partido_model.dart';
 
 class PartidoModelAdapter extends TypeAdapter<PartidoModel> {
   @override
-  final int typeId = 0;
+  final typeId = 0;
 
   @override
   PartidoModel read(BinaryReader reader) {

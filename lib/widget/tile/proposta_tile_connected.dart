@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
-import '../../enum/post_type.dart';
+import '../../model/models.dart';
+import '../../page/page_connected.dart';
 import '../../repository/concrete/repositories.dart';
-import '../page_connected.dart';
-import '../pages.dart';
+import 'proposta_tile.dart';
 
-class PostPageConnected extends StatelessWidget {
-  PostPageConnected({@required this.post, @required this.postType})
-      : assert(post != null),
-        assert(postType != null);
+class PropostaTileConnected extends StatelessWidget {
+  PropostaTileConnected(this.proposta);
 
-  final dynamic post;
-  final PostType postType;
+  final PropostaModel proposta;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +18,7 @@ class PostPageConnected extends StatelessWidget {
       bloc: PostBloc(
         postRepository: context.repository<FirebasePostRepository>(),
       ),
-      page: PostPage(post: post, postType: postType),
+      page: PropostaTile(proposta),
     );
   }
 }

@@ -84,7 +84,7 @@ class DefaultBottombar extends StatelessWidget {
                   isSelected: routeName == FAVORITE_POSTS_PAGE,
                   onPressed: () => routeName != FAVORITE_POSTS_PAGE
                       ? SimpleRouter.forward(
-                          FavoritePostsPage(),
+                          FavoritePostsPageConnected(),
                           name: FAVORITE_POSTS_PAGE,
                         )
                       : VoidCallback,

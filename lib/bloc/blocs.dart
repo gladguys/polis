@@ -1,3 +1,4 @@
+export 'favorite_posts/bloc.dart';
 export 'politic_followers/bloc.dart';
 export 'politic_profile/bloc.dart';
 export 'politic_suggestion/bloc.dart';
