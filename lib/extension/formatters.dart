@@ -16,5 +16,5 @@ extension NumberExtension on String {
 
 extension DateExtension on String {
   String formatDate() => DateFormat('d MMM y', 'pt_br')
-      .format(DateFormat('dd-MM-yyyy').parse(this));
+      .format(DateFormat('yyyy-MM-dd').parse(this));
 }
