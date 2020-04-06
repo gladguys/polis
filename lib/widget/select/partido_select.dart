@@ -20,12 +20,35 @@ class PartidoSelect extends StatefulWidget {
 class _PartidoSelectState extends State<PartidoSelect> {
   @override
   Widget build(BuildContext context) {
-    return SmartSelect<String>.single(
-      title: 'Partido',
-      value: widget.initialValue,
-      options: _getOptions(),
-      onChange: widget.onChange,
-      modalType: SmartSelectModalType.popupDialog,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(),
+      ),
+      child: SmartSelect<String>.single(
+        dense: true,
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        title: 'Partido',
+        value: widget.initialValue,
+        options: _getOptions(),
+        onChange: widget.onChange,
+        modalType: SmartSelectModalType.popupDialog,
+        modalConfig: SmartSelectModalConfig(
+          style: SmartSelectModalStyle(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          headerStyle: const SmartSelectModalHeaderStyle(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
