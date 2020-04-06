@@ -8,7 +8,7 @@ class ButtonActionCard extends StatelessWidget {
   })  : assert(icon != null),
         assert(onTap != null);
 
-  final IconData icon;
+  final Icon icon;
   final EdgeInsets paddingIcon;
   final Function onTap;
 
@@ -26,7 +26,7 @@ class ButtonActionCard extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: paddingIcon,
-                child: Icon(icon, size: 16),
+                child: icon,
               ),
             ],
           ),

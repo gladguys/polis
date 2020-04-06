@@ -19,6 +19,7 @@ class PostPageConnected extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageConnected<PostBloc>(
       bloc: PostBloc(
+        post: post,
         postRepository: context.repository<FirebasePostRepository>(),
       ),
       page: PostPage(post: post, postType: postType),

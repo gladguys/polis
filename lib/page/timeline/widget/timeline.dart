@@ -15,7 +15,6 @@ class Timeline extends StatelessWidget {
       padding: const EdgeInsets.only(top: 32),
       itemBuilder: (_, i) {
         if (activities[i] is DespesaModel) {
-          print(activities[i]);
           return DespesaTileConnected(activities[i] as DespesaModel);
         } else {
           return PropostaTileConnected(activities[i] as PropostaModel);

@@ -16,6 +16,7 @@ class PropostaTileConnected extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageConnected<PostBloc>(
       bloc: PostBloc(
+        post: proposta.toJson(),
         postRepository: context.repository<FirebasePostRepository>(),
       ),
       page: PropostaTile(proposta),

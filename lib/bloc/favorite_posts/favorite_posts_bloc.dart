@@ -20,6 +20,7 @@ class FavoritePostsBloc extends Bloc<FavoritePostsEvent, FavoritePostsState> {
       try {
         final favoritePosts =
             await repository.getUserFavoritePosts(event.userId);
+
         yield FetchUserFavoritePostsSuccess(favoritePosts);
       } on Exception {
         yield FetchUserFavoritePostsFailed();

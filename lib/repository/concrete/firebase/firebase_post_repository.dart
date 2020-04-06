@@ -18,8 +18,6 @@ class FirebasePostRepository implements PostRepository {
   @override
   Future<void> favoritePost({Map<String, dynamic> post, UserModel user}) async {
     try {
-      print(post);
-      print(post['id']);
       await postsFavoritosRef
           .document(user.userId)
           .collection(POSTS_FAVORITOS_USUARIO_SUBCOLLECTION)
@@ -37,7 +35,7 @@ class FirebasePostRepository implements PostRepository {
       await postsFavoritosRef
           .document(user.userId)
           .collection(POSTS_FAVORITOS_USUARIO_SUBCOLLECTION)
-          .document('1')
+          .document(post['id'])
           .delete();
     } on Exception {
       throw ComunicationException();

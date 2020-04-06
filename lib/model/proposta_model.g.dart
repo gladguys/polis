@@ -20,6 +20,7 @@ PropostaModel _$PropostaModelFromJson(Map<String, dynamic> json) {
     descricaoSituacao: json['descricaoSituacao'] as String,
     descricaoTramitacao: json['descricaoTramitacao'] as String,
     dataApresentacao: json['dataApresentacao'] as String,
+    favorito: json['favorito'] as bool,
     dataDocumento: json['dataDocumento'] as String,
     tipoDocumento: json['tipoDocumento'] as String,
     status: json['status'] as String,
@@ -43,4 +44,5 @@ Map<String, dynamic> _$PropostaModelToJson(PropostaModel instance) =>
       'descricaoTramitacao': instance.descricaoTramitacao,
       'dataApresentacao': instance.dataApresentacao,
       'status': instance.status,
+      'favorito': instance.favorito,
     };

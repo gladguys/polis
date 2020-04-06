@@ -14,10 +14,9 @@ class DespesaTileConnected extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-    print(despesa);
     return PageConnected<PostBloc>(
       bloc: PostBloc(
+        post: despesa.toJson(),
         postRepository: context.repository<FirebasePostRepository>(),
       ),
       page: DespesaTile(despesa),

@@ -24,12 +24,14 @@ class DespesaTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardBase(
       slotLeft: PhotoPolitic(urlPhoto: despesa.fotoPolitico),
-      slotCenter: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _buildTopContent(),
-          _buildCenterContent(),
-        ],
+      slotCenter: BlocBuilder<PostBloc, PostState>(
+        builder: (_, state) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _buildTopContent(),
+            _buildCenterContent(),
+          ],
+        ),
       ),
       slotBottom: _buildActions(context),
       onTap: () => SimpleRouter.forward(
@@ -97,40 +99,50 @@ class DespesaTile extends StatelessWidget {
   }
 
   Widget _buildActions(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: <Widget>[
-        ButtonActionCard(
-          icon: FontAwesomeIcons.thumbsUp,
-          paddingIcon: const EdgeInsets.only(bottom: 3),
-          onTap: () {},
-        ),
-        const SizedBox(width: 16),
-        ButtonActionCard(
-          icon: FontAwesomeIcons.thumbsDown,
-          onTap: () {},
-        ),
-        const SizedBox(width: 16),
-        ButtonActionCard(
-          icon: FontAwesomeIcons.comment,
-          paddingIcon: const EdgeInsets.only(bottom: 2),
-          onTap: () {},
-        ),
-        const Spacer(flex: 1),
-        ButtonActionCard(
-          icon: FontAwesomeIcons.bookmark,
-          paddingIcon: const EdgeInsets.symmetric(horizontal: 16),
-          onTap: () => context.bloc<PostBloc>().add(
-                FavoritePostForUser(
-                  post: {
-                    'id': despesa.id,
-                    ...despesa.toJson(),
-                  },
-                  user: context.bloc<UserBloc>().user,
+    return BlocBuilder<PostBloc, PostState>(
+      builder: (_, state) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          ButtonActionCard(
+            icon: Icon(FontAwesomeIcons.thumbsUp, size: 16),
+            paddingIcon: const EdgeInsets.only(bottom: 3),
+            onTap: () {},
+          ),
+          const SizedBox(width: 16),
+          ButtonActionCard(
+            icon: Icon(FontAwesomeIcons.thumbsDown, size: 16),
+            onTap: () {},
+          ),
+          const SizedBox(width: 16),
+          ButtonActionCard(
+            icon: Icon(FontAwesomeIcons.comment, size: 16),
+            paddingIcon: const EdgeInsets.only(bottom: 2),
+            onTap: () {},
+          ),
+          const Spacer(flex: 1),
+          ButtonActionCard(
+            icon: Icon(
+              context.bloc<PostBloc>().isPostFavorite
+                  ? FontAwesomeIcons.solidBookmark
+                  : FontAwesomeIcons.bookmark,
+              size: 16,
+              color: context.bloc<PostBloc>().isPostFavorite
+                  ? Colors.green
+                  : Colors.grey,
+            ),
+            paddingIcon: const EdgeInsets.symmetric(horizontal: 16),
+            onTap: () => context.bloc<PostBloc>().add(
+                  FavoritePostForUser(
+                    post: {
+                      'id': despesa.id,
+                      ...despesa.toJson(),
+                    },
+                    user: context.bloc<UserBloc>().user,
+                  ),
                 ),
-              ),
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }
