@@ -71,7 +71,7 @@ exports.onCreateFavorita = functions.firestore
         .collection('atividadesTimeline')
         .doc(documentId);
 
-        timelineActivitiesRef.set({"favorito": true});
+        timelineActivitiesRef.update({"favorito": true});
 
     });
 
@@ -90,7 +90,7 @@ exports.onCreateFavorita = functions.firestore
         .collection('atividadesTimeline')
         .doc(documentId);
 
-        timelineActivitiesRef.set({"favorito": false});
+        timelineActivitiesRef.update({"favorito": false});
         
     });
 
