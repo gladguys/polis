@@ -27,9 +27,11 @@ class FirebaseFavoritePostsRepository implements FavoritePostsRepository {
       final posts = [];
       for (var document in documents) {
         if (isDocumentDespesa(document.data)) {
-          posts.add(DespesaModel.fromJson(document.data));
+          final despesa = DespesaModel.fromJson(document.data);
+          posts.add(despesa.copyWith(favorito: true));
         } else {
-          posts.add(PropostaModel.fromJson(document.data));
+          final proposta = PropostaModel.fromJson(document.data);
+          posts.add(proposta.copyWith(favorito: true));
         }
       }
       return posts;

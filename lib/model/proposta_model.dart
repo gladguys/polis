@@ -45,6 +45,44 @@ class PropostaModel extends Equatable {
 
   Map<String, dynamic> toJson() => _$PropostaModelToJson(this);
 
+  PropostaModel copyWith({
+    String id,
+    String siglaTipo,
+    String descricaoTipo,
+    String numero,
+    String ano,
+    String ementa,
+    String nomePolitico,
+    String fotoPolitico,
+    String siglaPartido,
+    String dataDocumento,
+    String tipoDocumento,
+    String descricaoSituacao,
+    String descricaoTramitacao,
+    String dataApresentacao,
+    String status,
+    bool favorito,
+  }) {
+    return PropostaModel(
+      id: id ?? this.id,
+      siglaTipo: siglaTipo ?? this.siglaTipo,
+      descricaoTipo: descricaoTipo ?? this.descricaoTipo,
+      numero: numero ?? this.numero,
+      ano: ano ?? this.ano,
+      ementa: ementa ?? this.ementa,
+      nomePolitico: nomePolitico ?? this.nomePolitico,
+      fotoPolitico: fotoPolitico ?? this.fotoPolitico,
+      siglaPartido: siglaPartido ?? this.siglaPartido,
+      dataDocumento: dataDocumento ?? this.dataDocumento,
+      tipoDocumento: tipoDocumento ?? this.tipoDocumento,
+      descricaoSituacao: descricaoSituacao ?? this.descricaoSituacao,
+      descricaoTramitacao: descricaoTramitacao ?? this.descricaoTramitacao,
+      dataApresentacao: dataApresentacao ?? this.dataApresentacao,
+      status: status ?? this.status,
+      favorito: favorito ?? this.favorito,
+    );
+  }
+
   @override
   List<Object> get props => [id];
 
