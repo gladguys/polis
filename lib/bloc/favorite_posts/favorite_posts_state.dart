@@ -22,3 +22,8 @@ class FetchUserFavoritePostsFailed extends FavoritePostsState {
   @override
   List<Object> get props => [];
 }
+
+class LoadingFavoritesPosts extends FavoritePostsState {
+  @override
+  List<Object> get props => [];
+}

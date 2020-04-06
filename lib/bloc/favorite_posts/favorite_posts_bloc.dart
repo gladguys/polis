@@ -17,6 +17,8 @@ class FavoritePostsBloc extends Bloc<FavoritePostsEvent, FavoritePostsState> {
   @override
   Stream<FavoritePostsState> mapEventToState(FavoritePostsEvent event) async* {
     if (event is FetchUserFavoritePosts) {
+      yield LoadingFavoritesPosts();
+
       try {
         final favoritePosts =
             await repository.getUserFavoritePosts(event.userId);

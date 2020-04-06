@@ -132,7 +132,7 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: FavoritePostsPage(),
+            child: FavoritePostsPageConnected(),
           ),
         ),
       );

@@ -62,7 +62,7 @@ void main() {
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PostPage(
+          PostPageConnected(
             post: DespesaModel(
               nomePolitico: 'politico',
               nomeFornecedor: 'fornecedor',

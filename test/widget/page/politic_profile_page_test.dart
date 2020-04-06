@@ -58,6 +58,10 @@ void main() {
         [
           PropostaModel(
             ementa: 'ementa',
+            nomePolitico: 'nome',
+            descricaoTramitacao: 'descTra',
+            descricaoSituacao: 'descSit',
+            dataDocumento: '2020-02-05',
           ),
           DespesaModel(
             fotoPolitico: 'foto',
@@ -122,6 +126,10 @@ void main() {
         [
           PropostaModel(
             ementa: 'ementa',
+            nomePolitico: 'nome',
+            descricaoTramitacao: 'descTra',
+            descricaoSituacao: 'descSit',
+            dataDocumento: '2020-02-05',
           ),
           DespesaModel(
             fotoPolitico: 'foto',
@@ -165,6 +173,10 @@ void main() {
         [
           PropostaModel(
             ementa: 'ementa',
+            nomePolitico: 'nome',
+            descricaoTramitacao: 'descTra',
+            descricaoSituacao: 'descSit',
+            dataDocumento: '2020-02-05',
           ),
           DespesaModel(
             fotoPolitico: 'foto',

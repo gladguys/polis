@@ -5,6 +5,10 @@ void main() {
   group('PostState tests', () {
     test('states', () {
       expect(InitialPostState(), InitialPostState());
+      expect(PostFavoriteStatusChanged(isFavorite: true),
+          PostFavoriteStatusChanged(isFavorite: true));
+      expect(PostFavoritedSuccess(), PostFavoritedSuccess());
+      expect(PostFavoritedFailed(), PostFavoritedFailed());
     });
   });
 }

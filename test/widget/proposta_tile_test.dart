@@ -4,7 +4,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/widget/button_action_card.dart';
 import 'package:polis/widget/card_base.dart';
-import 'package:polis/widget/tile/proposta_tile.dart';
+import 'package:polis/widget/tile/proposta_tile_connected.dart';
 
 import 'utils.dart';
 
@@ -29,13 +29,13 @@ void main() {
 
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
-        connectedWidget(PropostaTile(proposta)),
+        connectedWidget(PropostaTileConnected(proposta)),
       );
     });
 
     testWidgets('should do something when click on card', (tester) async {
       await tester.pumpWidget(
-        connectedWidget(PropostaTile(proposta)),
+        connectedWidget(PropostaTileConnected(proposta)),
       );
       final card = find.byType(CardBase);
       expect(card, findsOneWidget);
@@ -44,11 +44,11 @@ void main() {
 
     testWidgets('should do something when click on like btn', (tester) async {
       await tester.pumpWidget(
-        connectedWidget(PropostaTile(proposta)),
+        connectedWidget(PropostaTileConnected(proposta)),
       );
       final likeButton = find.byWidgetPredicate((widget) {
         if (widget is ButtonActionCard &&
-            widget.icon == FontAwesomeIcons.thumbsUp) {
+            widget.icon.icon == FontAwesomeIcons.thumbsUp) {
           return true;
         }
         return false;
@@ -59,11 +59,11 @@ void main() {
 
     testWidgets('should do something when click on unlike btn', (tester) async {
       await tester.pumpWidget(
-        connectedWidget(PropostaTile(proposta)),
+        connectedWidget(PropostaTileConnected(proposta)),
       );
       final likeButton = find.byWidgetPredicate((widget) {
         if (widget is ButtonActionCard &&
-            widget.icon == FontAwesomeIcons.thumbsDown) {
+            widget.icon.icon == FontAwesomeIcons.thumbsDown) {
           return true;
         }
         return false;
@@ -75,11 +75,11 @@ void main() {
     testWidgets('should do something when click on comment btn',
         (tester) async {
       await tester.pumpWidget(
-        connectedWidget(PropostaTile(proposta)),
+        connectedWidget(PropostaTileConnected(proposta)),
       );
       final likeButton = find.byWidgetPredicate((widget) {
         if (widget is ButtonActionCard &&
-            widget.icon == FontAwesomeIcons.comment) {
+            widget.icon.icon == FontAwesomeIcons.comment) {
           return true;
         }
         return false;
@@ -91,11 +91,11 @@ void main() {
     testWidgets('should do something when click on bookmark btn',
         (tester) async {
       await tester.pumpWidget(
-        connectedWidget(PropostaTile(proposta)),
+        connectedWidget(PropostaTileConnected(proposta)),
       );
       final likeButton = find.byWidgetPredicate((widget) {
         if (widget is ButtonActionCard &&
-            widget.icon == FontAwesomeIcons.bookmark) {
+            widget.icon.icon == FontAwesomeIcons.bookmark) {
           return true;
         }
         return false;
