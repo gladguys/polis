@@ -57,7 +57,7 @@ exports.onCreateFollower = functions.firestore
         });
     });
 
-exports.onCreateFavorita = functions.firestore
+exports.onCreateFavoriteActivity = functions.firestore
     .document('/posts_favoritos/{userId}/postsFavoritosUsuario/{documentId}')
     .onCreate(async (snapshot, context) => {
         const userId = context.params.userId;
@@ -65,18 +65,18 @@ exports.onCreateFavorita = functions.firestore
 
         //atualizar o conteudo na timeline
         const timelineActivitiesRef = admin
-        .firestore()
-        .collection('timeline')
-        .doc(userId)
-        .collection('atividadesTimeline')
-        .doc(documentId);
+            .firestore()
+            .collection('timeline')
+            .doc(userId)
+            .collection('atividadesTimeline')
+            .doc(documentId);
 
-        timelineActivitiesRef.update({"favorito": true});
+        timelineActivitiesRef.update({ "favorito": true });
 
     });
 
 
-    exports.onDeleteFavorita = functions.firestore
+exports.onDeleteFavoriteActivity = functions.firestore
     .document('/posts_favoritos/{userId}/postsFavoritosUsuario/{documentId}')
     .onDelete(async (snapshot, context) => {
         const userId = context.params.userId;
@@ -84,14 +84,14 @@ exports.onCreateFavorita = functions.firestore
 
         //atualizar o conteudo na timeline
         const timelineActivitiesRef = admin
-        .firestore()
-        .collection('timeline')
-        .doc(userId)
-        .collection('atividadesTimeline')
-        .doc(documentId);
+            .firestore()
+            .collection('timeline')
+            .doc(userId)
+            .collection('atividadesTimeline')
+            .doc(documentId);
 
-        timelineActivitiesRef.update({"favorito": false});
-        
+        timelineActivitiesRef.update({ "favorito": false });
+
     });
 
 exports.onDeleteFollower = functions.firestore
