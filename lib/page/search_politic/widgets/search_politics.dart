@@ -22,7 +22,7 @@ class SearchPolitics extends StatelessWidget {
         Expanded(
           child: SearchPoliticsList(politics),
         ),
-        PopupFilterSearch(
+        _PopupFilterSearch(
           partidos: partidos,
           searchPoliticBloc: context.bloc<SearchPoliticBloc>(),
         ),
@@ -31,8 +31,8 @@ class SearchPolitics extends StatelessWidget {
   }
 }
 
-class PopupFilterSearch extends StatefulWidget {
-  const PopupFilterSearch({
+class _PopupFilterSearch extends StatefulWidget {
+  const _PopupFilterSearch({
     @required this.partidos,
     @required this.searchPoliticBloc,
   })  : assert(partidos != null),
@@ -45,10 +45,8 @@ class PopupFilterSearch extends StatefulWidget {
   State<StatefulWidget> createState() => _PopupFilterSearchState();
 }
 
-class _PopupFilterSearchState extends State<PopupFilterSearch> {
+class _PopupFilterSearchState extends State<_PopupFilterSearch> {
   bool isOpen;
-  OverlayEntry _overlayEntry;
-  final LayerLink _layerLink = LayerLink();
 
   @override
   void initState() {
@@ -58,72 +56,59 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
 
   @override
   Widget build(BuildContext context) {
-    return CompositedTransformTarget(
-      link: _layerLink,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: FieldSearch(
-          onChanged: (term) => widget.searchPoliticBloc
-              .add(ChangeSearchPoliticFilter(term: term)),
-          onPressedSuffix: _openFilter,
+    return Column(
+      children: <Widget>[
+        Container(
+          width: double.maxFinite,
+          height: 1,
+          color: Colors.grey[300],
         ),
-      ),
+        _buildFilter(),
+        Container(
+          width: 360,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: FieldSearch(
+            onChanged: (term) => widget.searchPoliticBloc
+                .add(ChangeSearchPoliticFilter(term: term)),
+            onPressedSuffix: () => setState(() => isOpen = !isOpen),
+          ),
+        ),
+      ],
     );
   }
 
-  _openFilter() {
-    setState(() => isOpen = !isOpen);
-
-    if (isOpen) {
-      _overlayEntry = _createOverlayEntry();
-      Overlay.of(context).insert(_overlayEntry);
-    } else {
-      _overlayEntry.remove();
-    }
-  }
-
-  OverlayEntry _createOverlayEntry() {
-    RenderBox renderBox = context.findRenderObject();
-    var size = renderBox.size;
-
-    return OverlayEntry(
-      builder: (context) {
-        return Positioned(
-          right: 16,
-          bottom: 95,
-          child: CompositedTransformFollower(
-            link: _layerLink,
-            showWhenUnlinked: false,
-            offset: Offset(size.width - 268, -145),
-            child: Material(
-              borderRadius: BorderRadius.circular(10),
-              elevation: 3,
-              color: Colors.white,
-              child: Container(
-                height: isOpen ? 146 : 0,
-                width: 250,
-                padding: const EdgeInsets.all(16),
-                child: Wrap(
-                  runSpacing: 12,
-                  children: <Widget>[
-                    EstadoSelect(
-                      initialValue: widget.searchPoliticBloc.statePicked,
-                      onChange: (estado) => widget.searchPoliticBloc
-                          .add(ChangeSearchPoliticFilter(estado: estado)),
-                    ),
-                    PartidoSelect(
-                      partidos: widget.partidos,
-                      initialValue: widget.searchPoliticBloc.partidoPicked,
-                      onChange: (partido) => widget.searchPoliticBloc
-                          .add(ChangeSearchPoliticFilter(partido: partido)),
-                    ),
-                  ],
-                ),
-              ),
+  Widget _buildFilter() {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 500),
+      width: 310,
+      height: isOpen ? 64 : 0,
+      margin: isOpen ? const EdgeInsets.only(top: 8) : EdgeInsets.zero,
+      child: Material(
+        borderRadius: BorderRadius.circular(10),
+        elevation: 3,
+        color: Colors.white,
+        clipBehavior: Clip.antiAlias,
+        child: Row(
+          children: <Widget>[
+            PartidoSelect(
+              partidos: widget.partidos,
+              initialValue: widget.searchPoliticBloc.partidoPicked,
+              onChange: (partido) => widget.searchPoliticBloc
+                  .add(ChangeSearchPoliticFilter(partido: partido)),
             ),
-          ),
-        );
-      },
+            Container(
+              height: 48,
+              width: 1,
+              color: Colors.grey[350],
+            ),
+            EstadoSelect(
+              initialValue: widget.searchPoliticBloc.statePicked,
+              onChange: (estado) => widget.searchPoliticBloc
+                  .add(ChangeSearchPoliticFilter(estado: estado)),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
