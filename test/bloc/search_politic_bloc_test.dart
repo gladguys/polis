@@ -230,6 +230,47 @@ void main() {
     );
 
     blocTest(
+      '#123 - https://github.com/gladguys/polis/issues/123',
+      build: () async {
+        when(mockSearchPoliticRepository.getAllPolitics()).thenAnswer(
+          (_) => Future.value([
+            PoliticoModel(id: '1', nomeEleitoral: 'Joao'),
+            PoliticoModel(id: '2', nomeEleitoral: 'Maria'),
+          ]),
+        );
+        when(mockUserFollowingPoliticsRepository.getFollowingPolitics('1'))
+            .thenAnswer(
+          (_) => Future.value([
+            PoliticoModel(id: '1', nomeEleitoral: 'Joao'),
+            PoliticoModel(id: '2', nomeEleitoral: 'Maria'),
+          ]),
+        );
+        return searchPoliticBloc;
+      },
+      act: (searchPoliticBloc) {
+        searchPoliticBloc.add(FetchPolitics('1'));
+        searchPoliticBloc.add(ChangeSearchPoliticFilter(term: 'J'));
+        searchPoliticBloc.add(ChangeSearchPoliticFilter(term: 'JW'));
+        searchPoliticBloc.add(ChangeSearchPoliticFilter(term: 'J'));
+        return;
+      },
+      expect: [
+        LoadingFetchPolitics(),
+        FetchSearchPoliticsSuccess([
+          PoliticoModel(id: '1', nomeEleitoral: 'Joao'),
+          PoliticoModel(id: '2', nomeEleitoral: 'Maria'),
+        ]),
+        SearchPoliticFilterChanged(
+          [PoliticoModel(id: '1', nomeEleitoral: 'Joao')],
+        ),
+        SearchPoliticFilterChanged([]),
+        SearchPoliticFilterChanged(
+          [PoliticoModel(id: '1', nomeEleitoral: 'Joao')],
+        ),
+      ],
+    );
+
+    blocTest(
       '''Expects to follow the politic when FollowUnfollowSearchPolitic added and politic not been followed''',
       build: () async {
         when(mockSearchPoliticRepository.getAllPolitics()).thenAnswer(
