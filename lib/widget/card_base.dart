@@ -9,7 +9,7 @@ class CardBase extends StatelessWidget {
     this.crossAxisAlignment = CrossAxisAlignment.start,
     this.key,
     this.onTap,
-  })  : assert(slotCenter != null);
+  }) : assert(slotCenter != null);
 
   final Widget slotLeft;
   final Widget slotCenter;
@@ -30,12 +30,26 @@ class CardBase extends StatelessWidget {
         children: <Widget>[
           const SizedBox(width: 8),
           Expanded(
-            child: InkWell(
-              onTap: onTap,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
-                child: _buildContent(),
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+
+                InkWell(
+                  onTap: onTap,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: _buildContent(),
+                  ),
+                ),
+                if (slotBottom != null)
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const SizedBox(width: 56),
+                      Expanded(child: slotBottom),
+                    ],
+                  )
+              ],
             ),
           ),
           if (slotRight != null) slotRight,
@@ -52,13 +66,7 @@ class CardBase extends StatelessWidget {
         if (slotLeft != null) slotLeft,
         if (slotLeft != null) const SizedBox(width: 8),
         Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              slotCenter,
-              if (slotBottom != null) slotBottom,
-            ],
-          ),
+          child: slotCenter,
         ),
       ],
     );
