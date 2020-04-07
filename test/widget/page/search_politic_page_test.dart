@@ -9,6 +9,7 @@ import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
 import 'package:polis/page/search_politic/widgets/search_politic_skeleton.dart';
 import 'package:polis/page/search_politic/widgets/search_politics.dart';
+import 'package:polis/widget/field_search.dart';
 import 'package:polis/widget/select/selects.dart';
 
 import '../../mock.dart';
@@ -120,6 +121,12 @@ void main() {
           ),
         ),
       );
+      final fieldSearch = find.byType(FieldSearch);
+      expect(fieldSearch, findsOneWidget);
+      final sliders = find.byKey(const ValueKey('sliders-icon'));
+      expect(sliders, findsOneWidget);
+      await tester.tap(sliders);
+      await tester.pumpAndSettle();
       expect(find.byType(SearchPolitics), findsOneWidget);
       final estadoSelect = find.byType(EstadoSelect);
       await tester.tap(estadoSelect);
@@ -154,6 +161,12 @@ void main() {
           ),
         ),
       );
+      final fieldSearch = find.byType(FieldSearch);
+      expect(fieldSearch, findsOneWidget);
+      final sliders = find.byKey(const ValueKey('sliders-icon'));
+      expect(sliders, findsOneWidget);
+      await tester.tap(sliders);
+      await tester.pumpAndSettle();
       expect(find.byType(SearchPolitics), findsOneWidget);
       final partidoSelect = find.byType(PartidoSelect);
       await tester.tap(partidoSelect);

@@ -22,7 +22,7 @@ class SearchPolitics extends StatelessWidget {
         Expanded(
           child: SearchPoliticsList(politics),
         ),
-        _PopupFilterSearch(
+        PopupFilterSearch(
           partidos: partidos,
           searchPoliticBloc: context.bloc<SearchPoliticBloc>(),
         ),
@@ -31,8 +31,8 @@ class SearchPolitics extends StatelessWidget {
   }
 }
 
-class _PopupFilterSearch extends StatefulWidget {
-  const _PopupFilterSearch({
+class PopupFilterSearch extends StatefulWidget {
+  const PopupFilterSearch({
     @required this.partidos,
     @required this.searchPoliticBloc,
   })  : assert(partidos != null),
@@ -45,7 +45,7 @@ class _PopupFilterSearch extends StatefulWidget {
   State<StatefulWidget> createState() => _PopupFilterSearchState();
 }
 
-class _PopupFilterSearchState extends State<_PopupFilterSearch> {
+class _PopupFilterSearchState extends State<PopupFilterSearch> {
   bool isOpen;
 
   @override

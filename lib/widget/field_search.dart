@@ -52,6 +52,7 @@ class FieldSearch extends StatelessWidget {
               padding: EdgeInsets.zero,
               child: FaIcon(
                 FontAwesomeIcons.slidersH,
+                key: const ValueKey('sliders-icon'),
                 size: 16,
                 color: Colors.black,
               ),
