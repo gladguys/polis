@@ -12,7 +12,7 @@ import '../../model/models.dart';
 import '../../page/pages.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';
-import '../photo_politic.dart';
+import '../photo.dart';
 import '../text_rich.dart';
 
 class DespesaTile extends StatelessWidget {
@@ -23,7 +23,7 @@ class DespesaTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardBase(
-      slotLeft: PhotoPolitic(urlPhoto: despesa.fotoPolitico),
+      slotLeft: Photo(url: despesa.fotoPolitico),
       slotCenter: BlocBuilder<PostBloc, PostState>(
         builder: (_, state) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,

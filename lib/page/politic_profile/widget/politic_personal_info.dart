@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
-import '../../../widget/photo_politic.dart';
+import '../../../widget/photo.dart';
 
 class PoliticPersonalInfo extends StatelessWidget {
   PoliticPersonalInfo(this.politic);
@@ -14,8 +14,8 @@ class PoliticPersonalInfo extends StatelessWidget {
     return Column(
       children: <Widget>[
         const SizedBox(height: 16),
-        PhotoPolitic(
-          urlPhoto: politic.urlFoto,
+        Photo(
+          url: politic.urlFoto,
           size: 120,
           borderRadius: BorderRadius.circular(60),
         ),

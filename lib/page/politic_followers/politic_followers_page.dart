@@ -8,7 +8,7 @@ import '../../model/usuario_seguindo_politico_model.dart';
 import '../../widget/card_base.dart';
 import '../../widget/centered_loading.dart';
 import '../../widget/default_bottombar.dart';
-import '../../widget/photo_politic.dart';
+import '../../widget/photo.dart';
 import '../../widget/text_title.dart';
 
 class PoliticFollowersPage extends StatelessWidget {
@@ -47,7 +47,7 @@ class PoliticFollowersPage extends StatelessWidget {
 
   Widget _buildListTile(UsuarioSeguindoPolitico follower) {
     return CardBase(
-      slotLeft: PhotoPolitic(urlPhoto: follower.photoUrl, boxFit: BoxFit.cover),
+      slotLeft: Photo(url: follower.photoUrl, boxFit: BoxFit.cover),
       slotCenter: Text(follower.name),
       crossAxisAlignment: CrossAxisAlignment.center,
     );

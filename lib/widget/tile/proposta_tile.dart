@@ -12,7 +12,7 @@ import '../../model/proposta_model.dart';
 import '../../page/pages.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';
-import '../photo_politic.dart';
+import '../photo.dart';
 import '../text_rich.dart';
 
 class PropostaTile extends StatelessWidget {
@@ -23,7 +23,7 @@ class PropostaTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardBase(
-      slotLeft: PhotoPolitic(urlPhoto: proposta.fotoPolitico),
+      slotLeft: Photo(url: proposta.fotoPolitico),
       slotCenter: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
