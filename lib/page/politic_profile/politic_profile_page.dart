@@ -33,17 +33,15 @@ class PoliticProfilePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     PoliticPersonalInfo(politico),
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 16),
                     PoliticActionButtons(
                         isBeingFollowedByUser: isPoliticBeingFollowedByUser),
                     const SizedBox(height: 16),
                     PoliticAdditionalInfo(politico),
-                    const SizedBox(height: 26),
-                    const Divider(),
-                    Container(
-                      child: Expanded(
-                        child: PoliticActivities(lastActivities),
-                      ),
+                    const SizedBox(height: 24),
+                    const Divider(color: Colors.grey, thickness: 0.3),
+                    Expanded(
+                      child: PoliticActivities(lastActivities),
                     ),
                   ],
                 ),

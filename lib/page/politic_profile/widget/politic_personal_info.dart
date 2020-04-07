@@ -1,8 +1,8 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
+import '../../../widget/photo_politic.dart';
 
 class PoliticPersonalInfo extends StatelessWidget {
   PoliticPersonalInfo(this.politic);
@@ -13,36 +13,27 @@ class PoliticPersonalInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0, 18, 0, 10),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(60),
-            child: politic.urlFoto != null
-                ? FancyShimmerImage(
-                    imageUrl: politic.urlFoto,
-                    width: 120,
-                    height: 120,
-                  )
-                : const FaIcon(
-                    FontAwesomeIcons.solidUserCircle,
-                    size: 120,
-                  ),
-          ),
+        const SizedBox(height: 16),
+        PhotoPolitic(
+          urlPhoto: politic.urlFoto,
+          size: 120,
+          borderRadius: BorderRadius.circular(60),
         ),
-        const SizedBox(height: 12),
-        Text(politic.nomeEleitoral),
-        const SizedBox(height: 4),
+        const SizedBox(height: 8),
         Text(
-          '${politic.siglaPartido} - ${politic.siglaUf}',
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
+          politic.nomeEleitoral,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(height: 6),
-        const Text(
-          'Deputado Federal',
+        const SizedBox(height: 4),
+        Text('${politic.siglaPartido} · ${politic.siglaUf}'),
+        Text(
+          politic.sexo == 'M' ? POLITIC_MALE : POLITIC_FEMALE,
           style: TextStyle(
-            color: Colors.grey,
+            fontSize: 12,
+            color: Colors.grey[600],
           ),
         ),
       ],

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../i18n/i18n.dart';
+import '../../../widget/button_follow_unfollow.dart';
 
 class PoliticActionButtons extends StatelessWidget {
   PoliticActionButtons({@required this.isBeingFollowedByUser})
@@ -15,41 +16,34 @@ class PoliticActionButtons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Container(
-          height: 28,
-          width: 140,
-          color: isBeingFollowedByUser ? Colors.red : Colors.green,
-          child: OutlineButton(
-            key: const ValueKey('follow-politic-profile'),
-            onPressed: () => context.bloc<PoliticProfileBloc>().add(
+        ButtonFollowUnfollow(
+          key: const ValueKey('follow-politic-profile'),
+          isOutline: false,
+          height: 26,
+          width: 130,
+          fontSize: 12,
+          isFollow: isBeingFollowedByUser,
+          onPressed: () {
+            context.bloc<PoliticProfileBloc>().add(
                   FollowUnfollowProfilePolitic(
-                      isFollowing: isBeingFollowedByUser),
-                ),
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            color: Colors.green,
-            child: Text(
-              isBeingFollowedByUser ? STOP_FOLLOW : FOLLOW,
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.white,
-              ),
-            ),
-          ),
+                    isFollowing: isBeingFollowedByUser,
+                  ),
+                );
+          },
         ),
-        const SizedBox(width: 14),
+        const SizedBox(width: 8),
         Container(
-          height: 28,
-          width: 140,
+          height: 26,
+          width: 130,
           child: OutlineButton(
             key: const ValueKey('send-email-btn'),
             onPressed: () {},
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            color: Colors.grey[350],
+            padding: EdgeInsets.zero,
+            highlightedBorderColor: Colors.grey[600],
             child: const Text(
-              'Enviar e-mail',
+              SEND_EMAIL,
               style: TextStyle(
                 fontSize: 12,
-                color: Colors.black,
               ),
             ),
           ),

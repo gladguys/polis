@@ -16,9 +16,10 @@ class PoliticAdditionalInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        GestureDetector(
+        InkWell(
+          borderRadius: BorderRadius.circular(5),
           onTap: () => SimpleRouter.forward(
             PoliticFollowersPageConnected(politic.id),
             name: POLITIC_FOLLOWERS_PAGE,
@@ -29,48 +30,53 @@ class PoliticAdditionalInfo extends StatelessWidget {
                 quantidadeSeguidores.toString(),
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 22,
+                  fontSize: 20,
                 ),
               ),
-              const Text(
+              Text(
                 FOLLOWERS,
                 style: TextStyle(
-                  color: Colors.grey,
+                  color: Colors.grey[600],
+                  fontSize: 12,
                 ),
               ),
             ],
           ),
         ),
+        const SizedBox(width: 16),
         Column(
           children: <Widget>[
             const Text(
               '50',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 22,
+                fontSize: 20,
               ),
             ),
-            const Text(
+            Text(
               PROPOSERS,
               style: TextStyle(
-                color: Colors.grey,
+                color: Colors.grey[600],
+                fontSize: 12,
               ),
             ),
           ],
         ),
+        const SizedBox(width: 16),
         Column(
           children: <Widget>[
             const Text(
               'R\$ 20k',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 22,
+                fontSize: 20,
               ),
             ),
-            const Text(
+            Text(
               EXPENSES,
               style: TextStyle(
-                color: Colors.grey,
+                color: Colors.grey[600],
+                fontSize: 12,
               ),
             ),
           ],

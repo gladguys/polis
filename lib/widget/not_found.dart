@@ -16,11 +16,11 @@ class NotFound extends StatelessWidget {
           FontAwesomeIcons.meh,
           size: 48,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
         Text(
           msg,
           style: const TextStyle(
-            fontSize: 18,
+            fontSize: 16,
           ),
         ),
       ],

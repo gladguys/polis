@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../i18n/i18n.dart';
 import '../../../model/despesa_model.dart';
 import '../../../model/models.dart';
+import '../../../widget/not_found.dart';
 import '../../../widget/tile/despesa_tile_connected.dart';
 import '../../../widget/tile/proposta_tile_connected.dart';
 
@@ -13,19 +14,20 @@ class PoliticActivities extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          const Text(
-            LAST_ACTIVITIES,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
+    return Column(
+      children: <Widget>[
+        const Text(
+          LAST_ACTIVITIES,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
           ),
-          _getActivities(lastActivities),
-        ],
-      ),
+        ),
+        const SizedBox(height: 8),
+        Expanded(
+          child: _getActivities(lastActivities),
+        ),
+      ],
     );
   }
 
@@ -45,9 +47,7 @@ class PoliticActivities extends StatelessWidget {
         itemCount: lastActivities.length,
       );
     } else {
-      return const Center(
-        child: Text(NO_ACTIVITY_FOR_POLITIC),
-      );
+      return NotFound(msg: NO_ACTIVITY_FOR_POLITIC);
     }
   }
 }
