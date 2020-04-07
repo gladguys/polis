@@ -7,11 +7,15 @@ class PhotoPolitic extends StatelessWidget {
     this.urlPhoto,
     this.size = 48,
     this.borderRadius,
+    this.backgroundColor = Colors.white,
+    this.boxFit = BoxFit.contain,
   });
 
   final String urlPhoto;
   final double size;
   final BorderRadius borderRadius;
+  final Color backgroundColor;
+  final BoxFit boxFit;
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +23,12 @@ class PhotoPolitic extends StatelessWidget {
       borderRadius: borderRadius ?? BorderRadius.circular(24),
       child: urlPhoto != null
           ? Container(
-              color: Colors.white,
+              color: backgroundColor,
               child: FancyShimmerImage(
                 imageUrl: urlPhoto,
                 width: size,
                 height: size,
-                boxFit: BoxFit.contain,
+                boxFit: boxFit,
               ),
             )
           : FaIcon(

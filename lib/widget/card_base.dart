@@ -3,22 +3,21 @@ import 'package:flutter/material.dart';
 class CardBase extends StatelessWidget {
   const CardBase({
     @required this.slotCenter,
-    @required this.onTap,
-    this.key,
     this.slotLeft,
     this.slotRight,
     this.slotBottom,
     this.crossAxisAlignment = CrossAxisAlignment.start,
-  })  : assert(slotCenter != null),
-        assert(onTap != null);
+    this.key,
+    this.onTap,
+  })  : assert(slotCenter != null);
 
   final Widget slotLeft;
   final Widget slotCenter;
   final Widget slotRight;
   final Widget slotBottom;
   final CrossAxisAlignment crossAxisAlignment;
-  final Function onTap;
   final Key key;
+  final Function onTap;
 
   @override
   Widget build(BuildContext context) {
