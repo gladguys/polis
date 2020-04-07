@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:polis/i18n/i18n.dart';
-import 'package:polis/widget/text_title.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
+import '../../i18n/i18n.dart';
 import '../../widget/centered_loading.dart';
 import '../../widget/default_bottombar.dart';
+import '../../widget/text_title.dart';
 import '../timeline/widget/timeline.dart';
 
 class FavoritePostsPage extends StatelessWidget {

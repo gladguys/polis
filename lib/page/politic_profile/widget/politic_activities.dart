@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:polis/widget/text_title.dart';
 
 import '../../../i18n/i18n.dart';
 import '../../../model/despesa_model.dart';
 import '../../../model/models.dart';
 import '../../../widget/not_found.dart';
+import '../../../widget/text_title.dart';
 import '../../../widget/tile/despesa_tile_connected.dart';
 import '../../../widget/tile/proposta_tile_connected.dart';
 
