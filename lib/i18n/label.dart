@@ -36,3 +36,4 @@ const CHOICE_PHOTO = 'Escolha sua foto';
 const SITUATION = 'Situação';
 const TRAMITATION = 'Tramitação';
 const DATE = 'Data';
+const SEARCH_HERE = 'Pesquise...';

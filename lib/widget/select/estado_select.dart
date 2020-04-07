@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smart_select/smart_select.dart';
+
+import '../../page/theme/main_theme.dart';
 
 class EstadoSelect extends StatefulWidget {
   EstadoSelect({this.initialValue, @required this.onChange})
@@ -15,12 +18,47 @@ class EstadoSelect extends StatefulWidget {
 class _EstadoSelectState extends State<EstadoSelect> {
   @override
   Widget build(BuildContext context) {
-    return SmartSelect<String>.single(
-      title: 'Estado',
-      value: widget.initialValue,
-      options: _getOptions(),
-      onChange: widget.onChange,
-      modalType: SmartSelectModalType.popupDialog,
+    return Container(
+      width: 180,
+      child: SmartSelect<String>.single(
+        title: 'Estado',
+        isTwoLine: true,
+        dense: true,
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        trailing: FaIcon(
+          FontAwesomeIcons.chevronCircleDown,
+          size: 18,
+          color: Colors.grey[400],
+        ),
+        value: widget.initialValue,
+        options: _getOptions(),
+        onChange: widget.onChange,
+        choiceConfig: SmartSelectChoiceConfig(
+          style: SmartSelectChoiceStyle(
+            activeColor: theme.primaryColor,
+            titleStyle: const TextStyle(
+              fontSize: 14,
+              fontFamily: 'Ubuntu',
+            ),
+          ),
+        ),
+        modalType: SmartSelectModalType.popupDialog,
+        modalConfig: SmartSelectModalConfig(
+          style: SmartSelectModalStyle(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          headerStyle: const SmartSelectModalHeaderStyle(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

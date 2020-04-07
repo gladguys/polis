@@ -9,6 +9,7 @@ import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
 import '../../../widget/button_follow_unfollow.dart';
 import '../../../widget/card_base.dart';
+import '../../../widget/not_found.dart';
 import '../../../widget/photo_politic.dart';
 import '../../pages.dart';
 
@@ -21,9 +22,7 @@ class SearchPoliticsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return politicos.isNotEmpty
         ? _buildList(context)
-        : const Center(
-            child: Text(NO_RESULTS_FROM_SEARCH),
-          );
+        : const NotFound(msg: NO_RESULTS_FROM_SEARCH);
   }
 
   Widget _buildList(BuildContext context) {
