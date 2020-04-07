@@ -121,16 +121,19 @@ class DespesaTile extends StatelessWidget {
           ),
           const Spacer(flex: 1),
           ButtonActionCard(
+            isIconOnly: true,
+            icon: Icon(FontAwesomeIcons.shareAlt, size: 16),
+            onTap: () {},
+          ),
+          const SizedBox(width: 16),
+          ButtonActionCard(
+            isIconOnly: true,
             icon: Icon(
               context.bloc<PostBloc>().isPostFavorite
                   ? FontAwesomeIcons.solidBookmark
                   : FontAwesomeIcons.bookmark,
               size: 16,
-              color: context.bloc<PostBloc>().isPostFavorite
-                  ? Colors.green
-                  : Colors.grey,
             ),
-            paddingIcon: const EdgeInsets.symmetric(horizontal: 16),
             onTap: () => context.bloc<PostBloc>().add(
                   FavoritePostForUser(
                     post: {
