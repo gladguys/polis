@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:polis/widget/text_title.dart';
 
 import '../../../i18n/i18n.dart';
 import '../../../model/despesa_model.dart';
@@ -16,13 +17,7 @@ class PoliticActivities extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        const Text(
-          LAST_ACTIVITIES,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-          ),
-        ),
+        const TextTitle(LAST_ACTIVITIES, fontSize: 15),
         const SizedBox(height: 8),
         Expanded(
           child: _getActivities(lastActivities),

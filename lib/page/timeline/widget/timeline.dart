@@ -12,7 +12,7 @@ class Timeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: const EdgeInsets.only(top: 32),
+      padding: const EdgeInsets.only(top: 8),
       itemBuilder: (_, i) {
         if (activities[i] is DespesaModel) {
           return DespesaTileConnected(activities[i] as DespesaModel);
