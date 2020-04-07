@@ -39,6 +39,7 @@ class CardBase extends StatelessWidget {
               ),
             ),
           ),
+          if (slotRight != null) slotRight,
           const SizedBox(width: 8),
         ],
       ),
@@ -60,7 +61,6 @@ class CardBase extends StatelessWidget {
             ],
           ),
         ),
-        if (slotRight != null) slotRight,
       ],
     );
   }
