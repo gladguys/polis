@@ -61,9 +61,10 @@ class PoliticProfileBloc
     if (event is FollowUnfollowProfilePolitic) {
       final shouldFollowPolitic = !event.isFollowing;
 
+      final quantidadeSeguidores = politico.quantidadeSeguidores ?? 0;
       final newFollowersCount = shouldFollowPolitic
-          ? politico.quantidadeSeguidores + 1
-          : max(politico.quantidadeSeguidores - 1, 0);
+          ? quantidadeSeguidores + 1
+          : max(quantidadeSeguidores - 1, 0);
 
       politico = politico.copyWith(quantidadeSeguidores: newFollowersCount);
 
