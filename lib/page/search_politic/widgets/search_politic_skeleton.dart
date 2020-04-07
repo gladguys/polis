@@ -9,7 +9,7 @@ class SearchPoliticSkeleton extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.only(top: 32),
       separatorBuilder: (context, index) => const SizedBox(height: 16),
-      itemCount: 6,
+      itemCount: 15,
       itemBuilder: (_, i) {
         return Row(
           children: <Widget>[
