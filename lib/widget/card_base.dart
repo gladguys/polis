@@ -33,7 +33,6 @@ class CardBase extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-
                 InkWell(
                   onTap: onTap,
                   child: Padding(
