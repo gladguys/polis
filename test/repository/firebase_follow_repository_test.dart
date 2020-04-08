@@ -15,6 +15,7 @@ void main() {
     MockCollectionReference mockUsuariosSeguindoCollectionReference;
     MockCollectionReference mockUsuariosSeguindoInnerCollectionReference;
     MockFirestore mockFirestore;
+    MockDocumentSnapshot mockDocumentSnapshot;
     MockDocumentReference mockUserDocumentReference;
     MockDocumentReference mockPoliticoDocumentReference;
 
@@ -24,6 +25,7 @@ void main() {
       mockUsuariosSeguindoCollectionReference = MockCollectionReference();
       mockPoliticosSeguidosInnerCollectionReference = MockCollectionReference();
       mockUsuariosSeguindoInnerCollectionReference = MockCollectionReference();
+      mockDocumentSnapshot = MockDocumentSnapshot();
       mockUserDocumentReference = MockDocumentReference();
       mockPoliticoDocumentReference = MockDocumentReference();
       firebaseFollowRepository = FirebaseFollowRepository(
@@ -147,6 +149,46 @@ void main() {
             .unfollowPolitic(
               user: user,
               politico: politico,
+            )
+            .catchError((e) => expect(e, isA<ComunicationException>()));
+      });
+    });
+
+    group('isPoliticBeingFollowed tests', () {
+      test(
+          '''when unfollowPolitic politic delete document in POLITICOS_SEGUIDOS and USUARIOS_SEGUINDO collections''',
+          () async {
+        when(mockFirestore.collection(USUARIOS_SEGUINDO_COLLECTION))
+            .thenReturn(mockUsuariosSeguindoCollectionReference);
+        when(mockUsuariosSeguindoCollectionReference.document('2'))
+            .thenReturn(mockPoliticoDocumentReference);
+        when(mockPoliticoDocumentReference
+                .collection(USUARIOS_SEGUINDO_SUBCOLLECTION))
+            .thenReturn(mockUsuariosSeguindoInnerCollectionReference);
+        when(mockUsuariosSeguindoInnerCollectionReference.document('1'))
+            .thenReturn(mockPoliticoDocumentReference);
+        when(mockPoliticoDocumentReference.get())
+            .thenAnswer((_) => Future.value(mockDocumentSnapshot));
+        when(mockDocumentSnapshot.exists).thenReturn(true);
+
+        await firebaseFollowRepository.isPoliticBeingFollowed(
+          user: UserModel(
+            userId: '1',
+          ),
+          politicId: '2',
+        );
+        verify(mockDocumentSnapshot.exists).called(1);
+      });
+
+      test('throws exception', () {
+        when(mockFirestore.collection(USUARIOS_SEGUINDO_COLLECTION))
+            .thenThrow(Exception());
+        firebaseFollowRepository
+            .isPoliticBeingFollowed(
+              user: UserModel(
+                userId: '1',
+              ),
+              politicId: '2',
             )
             .catchError((e) => expect(e, isA<ComunicationException>()));
       });

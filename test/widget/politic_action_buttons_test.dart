@@ -15,13 +15,18 @@ void main() {
       mockPoliticProfileBloc = MockPoliticProfileBloc();
     });
 
+    test('assert', () {
+      expect(() => PoliticActionButtons(isBeingFollowedByUser: null),
+          throwsAssertionError);
+    });
+
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<PoliticProfileBloc>(
             bloc: mockPoliticProfileBloc,
             page: Scaffold(
-              body: PoliticActionButtons(),
+              body: PoliticActionButtons(isBeingFollowedByUser: true),
             ),
           ),
         ),
@@ -34,13 +39,13 @@ void main() {
           PageConnected<PoliticProfileBloc>(
             bloc: mockPoliticProfileBloc,
             page: Scaffold(
-              body: PoliticActionButtons(),
+              body: PoliticActionButtons(isBeingFollowedByUser: true),
             ),
           ),
         ),
       );
       final followPoliticButton =
-          find.byKey(const ValueKey('follow-politic-profile'));
+          find.byKey(const ValueKey('follow-politic-profile')).first;
       expect(followPoliticButton, findsOneWidget);
       await tester.tap(followPoliticButton);
       await tester.pump();
@@ -52,7 +57,7 @@ void main() {
           PageConnected<PoliticProfileBloc>(
             bloc: mockPoliticProfileBloc,
             page: Scaffold(
-              body: PoliticActionButtons(),
+              body: PoliticActionButtons(isBeingFollowedByUser: true),
             ),
           ),
         ),

@@ -38,3 +38,16 @@ class FollowUnfollowSearchPolitic extends SearchPoliticEvent {
   @override
   List<Object> get props => [user, politico];
 }
+
+class ChangeFollowPoliticStatus extends SearchPoliticEvent {
+  ChangeFollowPoliticStatus(
+      {@required this.politico, @required this.isUserFollowingPolitic})
+      : assert(politico != null),
+        assert(isUserFollowingPolitic != null);
+
+  final PoliticoModel politico;
+  final bool isUserFollowingPolitic;
+
+  @override
+  List<Object> get props => [politico, isUserFollowingPolitic];
+}

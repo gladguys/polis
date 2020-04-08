@@ -41,6 +41,40 @@ class PoliticoModel extends Equatable {
 
   Map<String, dynamic> toJson() => _$PoliticoModelToJson(this);
 
+  PoliticoModel copyWith({
+    String id,
+    String nomeCivil,
+    String siglaPartido,
+    String siglaUf,
+    String urlFoto,
+    String email,
+    String nomeEleitoral,
+    String status,
+    String condicaoEleitoral,
+    String cpf,
+    String sexo,
+    double quantidadeSeguidores,
+    DateTime dataNascimento,
+    String escolaridade,
+  }) {
+    return PoliticoModel(
+      id: id ?? this.id,
+      nomeCivil: nomeCivil ?? this.nomeCivil,
+      siglaPartido: siglaPartido ?? this.siglaPartido,
+      siglaUf: siglaUf ?? this.siglaUf,
+      urlFoto: urlFoto ?? this.urlFoto,
+      email: email ?? this.email,
+      nomeEleitoral: nomeEleitoral ?? this.nomeEleitoral,
+      status: status ?? this.status,
+      condicaoEleitoral: condicaoEleitoral ?? this.condicaoEleitoral,
+      cpf: cpf ?? this.cpf,
+      sexo: sexo ?? this.sexo,
+      quantidadeSeguidores: quantidadeSeguidores ?? this.quantidadeSeguidores,
+      dataNascimento: dataNascimento ?? this.dataNascimento,
+      escolaridade: escolaridade ?? this.escolaridade,
+    );
+  }
+
   @override
   List<Object> get props => [id];
 

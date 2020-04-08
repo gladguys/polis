@@ -22,6 +22,7 @@ DespesaModel _$DespesaModelFromJson(Map<String, dynamic> json) {
     fotoPolitico: json['fotoPolitico'] as String,
     numRessarcimento: json['numRessarcimento'] as String,
     parcela: json['parcela'] as String,
+    favorito: json['favorito'] as bool,
     siglaPartido: json['siglaPartido'] as String,
     tipoAtividade: json['tipoAtividade'] as String,
     tipoDespesa: json['tipoDespesa'] as String,
@@ -57,4 +58,5 @@ Map<String, dynamic> _$DespesaModelToJson(DespesaModel instance) =>
       'valorDocumento': instance.valorDocumento,
       'valorGlosa': instance.valorGlosa,
       'valorLiquido': instance.valorLiquido,
+      'favorito': instance.favorito,
     };

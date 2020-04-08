@@ -1,4 +1,5 @@
 export 'favorite_posts/favorite_posts_page.dart';
+export 'favorite_posts/favorite_posts_page_connected.dart';
 export 'initial/initial_page.dart';
 export 'initial/initial_page_connected.dart';
 export 'intro/intro_page.dart';

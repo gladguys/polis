@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
+import 'package:polis/widget/card_base.dart';
 import 'package:polis/widget/centered_loading.dart';
 
 import '../../mock.dart';
@@ -62,7 +62,7 @@ void main() {
           ),
         ),
       );
-      expect(find.byType(ListTile), findsNWidgets(2));
+      expect(find.byType(CardBase), findsNWidgets(2));
     });
 
     testWidgets('should show loading', (tester) async {

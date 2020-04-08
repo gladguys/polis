@@ -51,7 +51,7 @@ void main() {
               tipoAtividade: 'tipo',
               tipoDespesa: 'tipod',
               valorLiquido: '22.85',
-              dataDocumento: '10/01/2020',
+              dataDocumento: '10-01-2020',
             ),
             postType: PostType.DESPESA,
           ),
@@ -62,7 +62,7 @@ void main() {
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PostPage(
+          PostPageConnected(
             post: DespesaModel(
               nomePolitico: 'politico',
               nomeFornecedor: 'fornecedor',
@@ -71,7 +71,7 @@ void main() {
               tipoAtividade: 'tipo',
               tipoDespesa: 'tipod',
               valorLiquido: '22.85',
-              dataDocumento: '10/01/2020',
+              dataDocumento: '10-01-2020',
             ),
             postType: PostType.DESPESA,
           ),

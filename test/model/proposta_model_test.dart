@@ -43,8 +43,16 @@ void main() {
     test('toString()', () {
       final modelToString = PropostaModel(id: '1').toString();
       final result =
-          '''PropostaModel{id: 1, siglaTipo: null, descricaoTipo: null, numero: null, ano: null, ementa: null, nomePolitico: null, fotoPolitico: null, siglaPartido: null, dataDocumento: null, tipoDocumento: null, descricaoSituacao: null, descricaoTramitacao: null, dataApresentacao: null, status: null}''';
+          '''PropostaModel{id: 1, siglaTipo: null, descricaoTipo: null, numero: null, ano: null, ementa: null, nomePolitico: null, fotoPolitico: null, siglaPartido: null, dataDocumento: null, tipoDocumento: null, descricaoSituacao: null, descricaoTramitacao: null, dataApresentacao: null, status: null, favorito: null}''';
       expect(modelToString == result, true);
+    });
+
+    test('copyWith()', () {
+      final proposta = PropostaModel(id: '1');
+      final propostaOriginal = proposta.copyWith(nomePolitico: 'nome');
+      final propostaCopy = proposta.copyWith(id: '2');
+      expect(proposta, propostaOriginal);
+      expect(proposta == propostaCopy, false);
     });
 
     test('fromJson()', () {

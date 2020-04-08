@@ -3,22 +3,21 @@ import 'package:flutter/material.dart';
 class CardBase extends StatelessWidget {
   const CardBase({
     @required this.slotCenter,
-    @required this.onTap,
-    this.key,
     this.slotLeft,
     this.slotRight,
     this.slotBottom,
     this.crossAxisAlignment = CrossAxisAlignment.start,
-  })  : assert(slotCenter != null),
-        assert(onTap != null);
+    this.key,
+    this.onTap,
+  }) : assert(slotCenter != null);
 
   final Widget slotLeft;
   final Widget slotCenter;
   final Widget slotRight;
   final Widget slotBottom;
   final CrossAxisAlignment crossAxisAlignment;
-  final Function onTap;
   final Key key;
+  final Function onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +30,28 @@ class CardBase extends StatelessWidget {
         children: <Widget>[
           const SizedBox(width: 8),
           Expanded(
-            child: InkWell(
-              onTap: onTap,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
-                child: _buildContent(),
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                InkWell(
+                  onTap: onTap,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: _buildContent(),
+                  ),
+                ),
+                if (slotBottom != null)
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const SizedBox(width: 56),
+                      Expanded(child: slotBottom),
+                    ],
+                  )
+              ],
             ),
           ),
+          if (slotRight != null) slotRight,
           const SizedBox(width: 8),
         ],
       ),
@@ -47,20 +60,14 @@ class CardBase extends StatelessWidget {
 
   Widget _buildContent() {
     return Row(
+      key: const ValueKey('card-base-content'),
       crossAxisAlignment: crossAxisAlignment,
       children: <Widget>[
         if (slotLeft != null) slotLeft,
         if (slotLeft != null) const SizedBox(width: 8),
         Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              slotCenter,
-              if (slotBottom != null) slotBottom,
-            ],
-          ),
+          child: slotCenter,
         ),
-        if (slotRight != null) slotRight,
       ],
     );
   }

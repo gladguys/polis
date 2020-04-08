@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../core/routing/route_names.dart';
 import '../../enum/post_type.dart';
+import '../../i18n/label.dart';
 import '../../widget/default_bottombar.dart';
+import '../../widget/field_rounded.dart';
 import '../../widget/tile/despesa_tile.dart';
 import '../../widget/tile/proposta_tile.dart';
 
@@ -19,28 +22,29 @@ class PostPage extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: DefaultBottombar(TIMELINE_PAGE, withBack: true),
       body: SafeArea(
-          child: Column(
-        children: <Widget>[
-          postType == PostType.DESPESA ? DespesaTile(post) : PropostaTile(post),
-          const Divider(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Escrever comentário...',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                suffixIcon: Icon(
-                  Icons.send,
-                  size: 26,
-                  color: Colors.black,
-                ),
+        child: Column(
+          children: <Widget>[
+            const SizedBox(height: 16),
+            Expanded(
+              child: postType == PostType.DESPESA
+                  ? DespesaTile(post)
+                  : PropostaTile(post),
+            ),
+            const Divider(color: Colors.grey, height: 1),
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: FieldRounded(
+                hintText: COMMENT_HERE,
+                width: 360,
+                iconSuffix: FontAwesomeIcons.solidPaperPlane,
+                onPressedSuffix: () {},
               ),
             ),
-          ),
-        ],
-      )),
+            const SizedBox(height: 12),
+          ],
+        ),
+      ),
     );
   }
 }
