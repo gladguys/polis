@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class FieldRounded extends StatelessWidget {
   const FieldRounded({
     this.width,
+    this.key,
     this.keySuffix,
     this.iconPrefix,
     this.iconSuffix,
@@ -14,6 +15,7 @@ class FieldRounded extends StatelessWidget {
   });
 
   final double width;
+  final Key key;
   final Key keySuffix;
   final IconData iconPrefix;
   final IconData iconSuffix;
@@ -33,6 +35,7 @@ class FieldRounded extends StatelessWidget {
           height: 40,
           width: width,
           child: TextField(
+            key: key,
             style: const TextStyle(fontSize: 14),
             decoration: InputDecoration(
               hintText: hintText,

@@ -1,10 +1,8 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:getflutter/getflutter.dart';
 
 import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
+import '../../../widget/photo.dart';
 
 class PersonalUserInfo extends StatelessWidget {
   PersonalUserInfo({this.user});
@@ -14,73 +12,52 @@ class PersonalUserInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0, 18, 0, 10),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(60),
-            child: user.photoUrl != null
-                ? FancyShimmerImage(
-                    imageUrl: user.photoUrl,
-                    width: 120,
-                    height: 120,
-                  )
-                : const FaIcon(
-                    FontAwesomeIcons.solidUserCircle,
-                    size: 120,
-                  ),
-          ),
+        Photo(
+          url: user.photoUrl,
+          boxFit: BoxFit.contain,
+          size: 120,
+          borderRadius: BorderRadius.circular(60),
         ),
         Text(
           user.name,
           style: const TextStyle(
             fontSize: 18,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w500,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           user.email,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Colors.grey,
+          style: TextStyle(
+            fontSize: 12,
+            color: Colors.grey[600],
           ),
         ),
         const SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            GFButton(
-              color: Colors.yellow,
-              type: GFButtonType.solid,
-              shape: GFButtonShape.pills,
-              size: 46,
-              child: const Text(
-                EDIT_PROFILE,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
+            Container(
+              height: 30,
+              width: 130,
+              child: FlatButton(
+                padding: EdgeInsets.zero,
+                child: const Text(EDIT_PROFILE),
+                color: Colors.amber,
+                onPressed: () {},
               ),
-              onPressed: () {},
             ),
             const SizedBox(width: 8),
-            GFButton(
-              type: GFButtonType.outline,
-              shape: GFButtonShape.pills,
-              size: 46,
-              color: Colors.grey,
-              child: const Text(
-                FAVORITE_POSTS,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
+            Container(
+              height: 30,
+              width: 130,
+              child: OutlineButton(
+                padding: EdgeInsets.zero,
+                child: const Text(FAVORITE_POSTS),
+                highlightedBorderColor: Colors.grey,
+                onPressed: () {},
               ),
-              onPressed: () {},
             ),
           ],
         )
