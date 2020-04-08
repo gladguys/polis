@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 
 import './bloc.dart';
@@ -91,9 +92,9 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
 
       final politicsFilteredByTerm = searchTerm != ''
           ? politicsFilteredByPartido
-              .where((politic) => politic.nomeEleitoral
-                  .toLowerCase()
-                  .contains(searchTerm.toLowerCase()))
+              .where((politic) =>
+                  removeDiacritics(politic.nomeEleitoral.toLowerCase())
+                      .contains(removeDiacritics(searchTerm.toLowerCase())))
               .toList()
           : politicsFilteredByPartido;
 
