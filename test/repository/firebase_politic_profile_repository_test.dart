@@ -76,7 +76,7 @@ void main() {
     });
 
     group('getLastActivities', () {
-      test('returns Politic last activities', () async {
+      test('returns Politic last activities in descending order', () async {
         when(mockFirestore.collection(ATIVIDADES_COLLECTION))
             .thenReturn(mockAtividadesCollectionReference);
         when(mockAtividadesCollectionReference.document('1'))
@@ -84,7 +84,8 @@ void main() {
         when(mockDocumentReference
                 .collection(ATIVIDADES_POLITICO_SUBCOLLECTION))
             .thenReturn(mockAtividadesSubcollectionReference);
-        when(mockAtividadesSubcollectionReference.orderBy(DATA_DOCUMENTO_FIELD))
+        when(mockAtividadesSubcollectionReference.orderBy(DATA_DOCUMENTO_FIELD,
+                descending: true))
             .thenReturn(mockQuery);
         when(mockQuery.limit(any)).thenReturn(mockQuery);
         when(mockQuery.getDocuments())
