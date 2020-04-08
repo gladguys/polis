@@ -8,6 +8,8 @@ class Photo extends StatelessWidget {
     this.size = 48,
     this.borderRadius,
     this.backgroundColor = Colors.white,
+    this.iconColor,
+    this.iconKey,
     this.boxFit = BoxFit.contain,
   });
 
@@ -15,6 +17,8 @@ class Photo extends StatelessWidget {
   final double size;
   final BorderRadius borderRadius;
   final Color backgroundColor;
+  final Color iconColor;
+  final Key iconKey;
   final BoxFit boxFit;
 
   @override
@@ -33,8 +37,9 @@ class Photo extends StatelessWidget {
             )
           : FaIcon(
               FontAwesomeIcons.solidUserCircle,
-              color: Colors.grey[400],
+              color: iconColor != null ? iconColor : Colors.grey[400],
               size: size,
+              key: iconKey,
             ),
     );
   }
