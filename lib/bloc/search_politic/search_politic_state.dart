@@ -32,12 +32,16 @@ class FetchSearchPoliticsFailed extends SearchPoliticState {
 }
 
 class SearchPoliticFilterChanged extends SearchPoliticState {
-  SearchPoliticFilterChanged(this.politics);
+  SearchPoliticFilterChanged(
+      {this.politics, this.statePicked, this.partidoPicked, this.searchTerm});
 
   final List<PoliticoModel> politics;
+  final String statePicked;
+  final String partidoPicked;
+  final String searchTerm;
 
   @override
-  List<Object> get props => [politics];
+  List<Object> get props => [politics, statePicked, partidoPicked, searchTerm];
 }
 
 class FollowedSearchPoliticsUpdated extends SearchPoliticState {

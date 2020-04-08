@@ -98,7 +98,12 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
           : politicsFilteredByPartido;
 
       politics = [...politicsFilteredByTerm];
-      yield SearchPoliticFilterChanged(politics);
+      yield SearchPoliticFilterChanged(
+        politics: politics,
+        statePicked: statePicked,
+        partidoPicked: partidoPicked,
+        searchTerm: searchTerm,
+      );
     }
     if (event is FollowUnfollowSearchPolitic) {
       try {
