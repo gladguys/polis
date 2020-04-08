@@ -7,7 +7,7 @@ class SearchPoliticSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.only(top: 32),
+      padding: const EdgeInsets.only(top: 4),
       separatorBuilder: (context, index) => const SizedBox(height: 16),
       itemCount: 15,
       itemBuilder: (_, i) {
