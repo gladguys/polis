@@ -35,7 +35,9 @@ class PoliticProfilePage extends StatelessWidget {
                     PoliticPersonalInfo(politico),
                     const SizedBox(height: 16),
                     PoliticActionButtons(
-                        isBeingFollowedByUser: isPoliticBeingFollowedByUser),
+                      politico: politico,
+                      isBeingFollowedByUser: isPoliticBeingFollowedByUser,
+                    ),
                     const SizedBox(height: 16),
                     PoliticAdditionalInfo(politico),
                     const SizedBox(height: 24),

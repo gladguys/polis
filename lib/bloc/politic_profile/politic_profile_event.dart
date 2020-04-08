@@ -23,3 +23,8 @@ class FollowUnfollowProfilePolitic extends PoliticProfileEvent {
   @override
   List<Object> get props => [isFollowing];
 }
+
+class SendEmailToPolitic extends PoliticProfileEvent {
+  @override
+  List<Object> get props => [];
+}

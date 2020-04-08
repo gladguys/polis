@@ -45,6 +45,8 @@ void main() {
         ),
       );
       expect(GetPoliticInfoFailed(), GetPoliticInfoFailed());
+      expect(PoliticDontHaveValidEmail(), PoliticDontHaveValidEmail());
+      expect(OpenEmailIntentFailed(), OpenEmailIntentFailed());
       expect(LoadingPoliticInfo(), LoadingPoliticInfo());
       expect(
         UserFollowingPoliticChanged(
