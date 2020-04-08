@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/politic_profile/widget/politic_action_buttons.dart';
 
@@ -16,7 +18,13 @@ void main() {
     });
 
     test('assert', () {
-      expect(() => PoliticActionButtons(isBeingFollowedByUser: null),
+      expect(
+          () =>
+              PoliticActionButtons(politico: null, isBeingFollowedByUser: true),
+          throwsAssertionError);
+      expect(
+          () => PoliticActionButtons(
+              politico: PoliticoModel(), isBeingFollowedByUser: null),
           throwsAssertionError);
     });
 
@@ -26,7 +34,8 @@ void main() {
           PageConnected<PoliticProfileBloc>(
             bloc: mockPoliticProfileBloc,
             page: Scaffold(
-              body: PoliticActionButtons(isBeingFollowedByUser: true),
+              body: PoliticActionButtons(
+                  politico: PoliticoModel(), isBeingFollowedByUser: true),
             ),
           ),
         ),
@@ -39,7 +48,8 @@ void main() {
           PageConnected<PoliticProfileBloc>(
             bloc: mockPoliticProfileBloc,
             page: Scaffold(
-              body: PoliticActionButtons(isBeingFollowedByUser: true),
+              body: PoliticActionButtons(
+                  politico: PoliticoModel(), isBeingFollowedByUser: true),
             ),
           ),
         ),
@@ -57,7 +67,8 @@ void main() {
           PageConnected<PoliticProfileBloc>(
             bloc: mockPoliticProfileBloc,
             page: Scaffold(
-              body: PoliticActionButtons(isBeingFollowedByUser: true),
+              body: PoliticActionButtons(
+                  politico: PoliticoModel(), isBeingFollowedByUser: true),
             ),
           ),
         ),
@@ -66,6 +77,7 @@ void main() {
       expect(sendEmailButton, findsOneWidget);
       await tester.tap(sendEmailButton);
       await tester.pump();
+      verify(mockPoliticProfileBloc.add(SendEmailToPolitic())).called(1);
     });
   });
 }

@@ -23,7 +23,13 @@ class PropostaTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardBase(
-      slotLeft: Photo(url: proposta.fotoPolitico),
+      slotLeft: GestureDetector(
+        child: Photo(url: proposta.fotoPolitico),
+        onTap: () => SimpleRouter.forward(
+          PoliticProfilePageConnected(proposta.idPoliticoAutor),
+          name: POLITIC_PROFILE_PAGE,
+        ),
+      ),
       slotCenter: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
