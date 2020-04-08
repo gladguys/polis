@@ -12,8 +12,6 @@ exports.onCreateFollower = functions.firestore
             .collection('politicos')
             .doc(politicoId);
 
-        const despesasPoliticoRef = politicoDocumentRef.collection('atividadesPolitico');
-
         await admin.firestore().runTransaction((transaction) => {
             return transaction.get(politicoDocumentRef).then((politicoDocument) => {
                 if (!politicoDocument.exists) {
@@ -25,7 +23,7 @@ exports.onCreateFollower = functions.firestore
             });
         });
 
-        const proposicoesPoliticoRef = admin
+        const atividadesPoliticoRef = admin
             .firestore()
             .collection('atividades')
             .doc(politicoId)
@@ -37,17 +35,8 @@ exports.onCreateFollower = functions.firestore
             .doc(followerId)
             .collection('atividadesTimeline');
 
-        const querySnapshotDespesa = await despesasPoliticoRef.get();
-        const querySnapshotProposicao = await proposicoesPoliticoRef.get();
+        const querySnapshotProposicao = await atividadesPoliticoRef.get();
 
-        querySnapshotDespesa.forEach(doc => {
-            if (doc.exists) {
-                const activityId = doc.id;
-                const activityData = doc.data();
-                timelineRef.doc(activityId).set(activityData)
-            }
-        });
-        
         querySnapshotProposicao.forEach(doc => {
             if (doc.exists) {
                 const activityId = doc.id;
@@ -85,9 +74,24 @@ exports.onDeleteFollower = functions.firestore
             .collection('atividadesTimeline')
             .where('idPolitico', '==', politicoId);
 
+        const timelineActivitiesPropRef = admin
+            .firestore()
+            .collection('timeline')
+            .doc(followerId)
+            .collection('atividadesTimeline')
+            .where('idPoliticoAutor', '==', politicoId);
+
+
         const querySnapshot = await timelineActivitiesRef.get();
+        const querySnapshotProp = await timelineActivitiesPropRef.get();
 
         querySnapshot.forEach(doc => {
+            if (doc.exists) {
+                doc.ref.delete();
+            }
+        });
+
+        querySnapshotProp.forEach(doc => {
             if (doc.exists) {
                 doc.ref.delete();
             }
@@ -108,3 +112,112 @@ exports.onDeleteFollower = functions.firestore
             }
         })
     });
+
+exports.onCreateFavoriteActivity = functions.firestore
+    .document('/posts_favoritos/{userId}/postsFavoritosUsuario/{documentId}')
+    .onCreate(async (snapshot, context) => {
+        const userId = context.params.userId;
+        const documentId = context.params.documentId;
+
+        //atualizar o conteudo na timeline
+        const timelineActivitiesRef = admin
+            .firestore()
+            .collection('timeline')
+            .doc(userId)
+            .collection('atividadesTimeline')
+            .doc(documentId);
+
+        timelineActivitiesRef.update({ "favorito": true });
+
+    });
+
+
+exports.onDeleteFavoriteActivity = functions.firestore
+    .document('/posts_favoritos/{userId}/postsFavoritosUsuario/{documentId}')
+    .onDelete(async (snapshot, context) => {
+        const userId = context.params.userId;
+        const documentId = context.params.documentId;
+
+        //atualizar o conteudo na timeline
+        const timelineActivitiesRef = admin
+            .firestore()
+            .collection('timeline')
+            .doc(userId)
+            .collection('atividadesTimeline')
+            .doc(documentId);
+
+        timelineActivitiesRef.update({ "favorito": false });
+
+    });
+
+
+exports.onCreateActivity = functions.firestore
+    .document('/atividades/{politicoId}/atividadesPolitico/{documentId}')
+    .onCreate(async (snapshot, context) => {
+        const politicoId = context.params.politicoId;
+        const documentId = context.params.documentId;
+
+        const timelineRef = admin
+            .firestore()
+            .collection('timeline');
+
+        var atividade = null;
+        var id = null;
+
+        admin
+            .firestore()
+            .collection('atividades')
+            .doc(politicoId)
+            .collection('atividadesPolitico')
+            .doc(documentId).get().then(function (doc) {
+                if (doc.exists) {
+                    id = doc.id;
+                    atividade = doc.data();
+                    admin
+                        .firestore()
+                        .collection('usuarios_seguindo')
+                        .doc(politicoId)
+                        .collection('usuariosSeguindo')
+                        .get().then(function (querySnapshot) {
+                            querySnapshot.forEach(function (doc) {
+                                timelineRef.doc(doc.id).collection('atividadesTimeline').doc(id).create(atividade);
+                            });
+                        });
+                }
+            });
+    })
+
+
+exports.onCreateActivity = functions.firestore
+    .document('/atividades/{politicoId}/atividadesPolitico/{documentId}')
+    .onCreate(async (snapshot, context) => {
+        const politicoId = context.params.politicoId;
+        const documentId = context.params.documentId;
+
+        const timelineRef = admin
+            .firestore()
+            .collection('timeline');
+
+        var atividade = null;
+        var id = null;
+
+        admin.firestore()
+            .collection('atividades')
+            .doc(politicoId)
+            .collection('atividadesPolitico')
+            .doc(documentId).get().then(function (doc) {
+                if (doc.exists) {
+                    id = doc.id;
+                    atividade = doc.data();
+                    admin.firestore()
+                        .collection('usuarios_seguindo')
+                        .doc(politicoId)
+                        .collection('usuariosSeguindo')
+                        .get().then(function (querySnapshot) {
+                            querySnapshot.forEach(function (doc) {
+                                timelineRef.doc(doc.id).collection('atividadesTimeline').doc(id).create(atividade);
+                            });
+                        });
+                }
+            });
+    })
