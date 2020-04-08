@@ -104,38 +104,33 @@ class DespesaTile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           ButtonActionCard(
-            icon: Icon(FontAwesomeIcons.thumbsUp, size: 16),
-            paddingIcon: const EdgeInsets.only(bottom: 3),
+            icon: FontAwesomeIcons.thumbsUp,
             onTap: () {},
           ),
           const SizedBox(width: 16),
           ButtonActionCard(
-            icon: Icon(FontAwesomeIcons.thumbsDown, size: 16),
+            icon: FontAwesomeIcons.thumbsDown,
             onTap: () {},
           ),
           const SizedBox(width: 16),
           ButtonActionCard(
-            icon: Icon(FontAwesomeIcons.comment, size: 16),
-            paddingIcon: const EdgeInsets.only(bottom: 2),
+            icon: FontAwesomeIcons.comment,
             onTap: () {},
           ),
           const Spacer(flex: 1),
           ButtonActionCard(
             isIconOnly: true,
-            icon: Icon(FontAwesomeIcons.shareAlt, size: 16),
+            icon: FontAwesomeIcons.shareAlt,
             onTap: () {},
           ),
           const SizedBox(width: 16),
           ButtonActionCard(
             isIconOnly: true,
-            icon: Icon(
-              context.bloc<PostBloc>().isPostFavorite
-                  ? FontAwesomeIcons.solidBookmark
-                  : FontAwesomeIcons.bookmark,
-              color:
-                  context.bloc<PostBloc>().isPostFavorite ? Colors.amber : null,
-              size: 16,
-            ),
+            icon: context.bloc<PostBloc>().isPostFavorite
+                ? FontAwesomeIcons.solidBookmark
+                : FontAwesomeIcons.bookmark,
+            iconColor:
+                context.bloc<PostBloc>().isPostFavorite ? Colors.amber : null,
             onTap: () => context.bloc<PostBloc>().add(
                   FavoritePostForUser(
                     post: {

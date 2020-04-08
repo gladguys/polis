@@ -21,7 +21,7 @@ class Timeline extends StatelessWidget {
         }
       },
       separatorBuilder: (_, i) => const Divider(
-        height: 1,
+        height: 16,
         indent: 8,
         endIndent: 8,
       ),
