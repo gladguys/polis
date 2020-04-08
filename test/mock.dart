@@ -159,6 +159,8 @@ class MockSharedPreferencesService extends Mock
 
 class MockPartidoService extends Mock implements PartidoService {}
 
+class MockUrlLauncherService extends Mock implements UrlLauncherService {}
+
 // Other
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 

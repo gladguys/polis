@@ -260,6 +260,36 @@ void main() {
     );
 
     blocTest(
+      '#139 - https://github.com/gladguys/polis/issues/139',
+      build: () async {
+        when(mockSearchPoliticRepository.getAllPolitics()).thenAnswer(
+          (_) => Future.value([
+            PoliticoModel(id: '1', nomeEleitoral: 'João'),
+          ]),
+        );
+        when(mockUserFollowingPoliticsRepository.getFollowingPolitics('1'))
+            .thenAnswer(
+          (_) => Future.value([]),
+        );
+        return searchPoliticBloc;
+      },
+      act: (searchPoliticBloc) {
+        searchPoliticBloc.add(FetchPolitics('1'));
+        searchPoliticBloc.add(ChangeSearchPoliticFilter(term: 'Joa'));
+        return;
+      },
+      expect: [
+        LoadingFetchPolitics(),
+        FetchSearchPoliticsSuccess([
+          PoliticoModel(id: '1', nomeEleitoral: 'João'),
+        ]),
+        SearchPoliticFilterChanged(
+          [PoliticoModel(id: '1', nomeEleitoral: 'João')],
+        ),
+      ],
+    );
+
+    blocTest(
       '#123 - https://github.com/gladguys/polis/issues/123',
       build: () async {
         when(mockSearchPoliticRepository.getAllPolitics()).thenAnswer(
