@@ -37,7 +37,7 @@ class FirebasePoliticProfileRepository implements PoliticProfileRepository {
       final query = atividadesRef
           .document(politicId)
           .collection(ATIVIDADES_POLITICO_SUBCOLLECTION)
-          .orderBy(DATA_DOCUMENTO_FIELD)
+          .orderBy(DATA_DOCUMENTO_FIELD, descending: true)
           .limit(count);
 
       final querySnapshot = await query.getDocuments();
