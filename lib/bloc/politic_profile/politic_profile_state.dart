@@ -56,3 +56,13 @@ class FollowPoliticFailed extends PoliticProfileState {
   @override
   List<Object> get props => [];
 }
+
+class PoliticDontHaveValidEmail extends PoliticProfileState {
+  @override
+  List<Object> get props => [];
+}
+
+class OpenEmailIntentFailed extends PoliticProfileState {
+  @override
+  List<Object> get props => [];
+}

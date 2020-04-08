@@ -23,7 +23,13 @@ class DespesaTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardBase(
-      slotLeft: Photo(url: despesa.fotoPolitico),
+      slotLeft: GestureDetector(
+        child: Photo(url: despesa.fotoPolitico),
+        onTap: () => SimpleRouter.forward(
+          PoliticProfilePageConnected(despesa.idPolitico),
+          name: POLITIC_PROFILE_PAGE,
+        ),
+      ),
       slotCenter: BlocBuilder<PostBloc, PostState>(
         builder: (_, state) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
