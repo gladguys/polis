@@ -13,14 +13,16 @@ class TimelinePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: DefaultBottombar(TIMELINE_PAGE),
-      body: BlocBuilder<TimelineBloc, TimelineState>(
-        builder: (_, state) {
-          if (state is TimelineUpdated) {
-            return Timeline(activities: state.activities);
-          } else {
-            return TimelineSkeleton();
-          }
-        },
+      body: SafeArea(
+        child: BlocBuilder<TimelineBloc, TimelineState>(
+          builder: (_, state) {
+            if (state is TimelineUpdated) {
+              return Timeline(activities: state.activities);
+            } else {
+              return TimelineSkeleton();
+            }
+          },
+        ),
       ),
     );
   }

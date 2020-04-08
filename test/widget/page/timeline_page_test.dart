@@ -32,7 +32,7 @@ void main() {
               tipoAtividade: 'tipoAtividade1',
               tipoDespesa: 'tipoDespesa1',
               valorLiquido: '10.00',
-              dataDocumento: '10/01/2020',
+              dataDocumento: '10-01-2020',
             ),
             DespesaModel(
               numDocumento: '2',
@@ -42,11 +42,11 @@ void main() {
               tipoAtividade: 'tipoAtividade2',
               tipoDespesa: 'tipoDespesa2',
               valorLiquido: '20.00',
-              dataDocumento: '20/01/2020',
+              dataDocumento: '20-01-2020',
             ),
             PropostaModel(
               id: '1',
-              dataDocumento: '20/01/2020',
+              dataDocumento: '20-01-2020',
               nomePolitico: 'nome',
               fotoPolitico: 'foto',
             )

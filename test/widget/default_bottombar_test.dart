@@ -46,22 +46,23 @@ void main() {
         ),
       );
       final homeIcon = find.byWidgetPredicate((widget) {
-        if (widget is FlatButton && widget.child is Icon) {
-          return (widget.child as Icon).icon == FontAwesomeIcons.home;
+        if (widget is FlatButton && widget.child is FaIcon) {
+          return (widget.child as FaIcon).icon == FontAwesomeIcons.home;
         }
         return false;
       });
       expect(homeIcon, findsOneWidget);
       final searchIcon = find.byWidgetPredicate((widget) {
-        if (widget is FlatButton && widget.child is Icon) {
-          return (widget.child as Icon).icon == FontAwesomeIcons.search;
+        if (widget is FlatButton && widget.child is FaIcon) {
+          return (widget.child as FaIcon).icon == FontAwesomeIcons.search;
         }
         return false;
       });
       expect(searchIcon, findsOneWidget);
       final bookmarkIcon = find.byWidgetPredicate((widget) {
-        if (widget is FlatButton && widget.child is Icon) {
-          return (widget.child as Icon).icon == FontAwesomeIcons.solidBookmark;
+        if (widget is FlatButton && widget.child is FaIcon) {
+          return (widget.child as FaIcon).icon ==
+              FontAwesomeIcons.solidBookmark;
         }
         return false;
       });
@@ -114,8 +115,8 @@ void main() {
         ),
       );
       final homeIcon = find.byWidgetPredicate((widget) {
-        if (widget is FlatButton && widget.child is Icon) {
-          return (widget.child as Icon).icon == FontAwesomeIcons.home;
+        if (widget is FlatButton && widget.child is FaIcon) {
+          return (widget.child as FaIcon).icon == FontAwesomeIcons.home;
         }
         return false;
       });
@@ -132,13 +133,13 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: FavoritePostsPage(),
+            child: FavoritePostsPageConnected(),
           ),
         ),
       );
       final homeIcon = find.byWidgetPredicate((widget) {
-        if (widget is FlatButton && widget.child is Icon) {
-          return (widget.child as Icon).icon == FontAwesomeIcons.home;
+        if (widget is FlatButton && widget.child is FaIcon) {
+          return (widget.child as FaIcon).icon == FontAwesomeIcons.home;
         }
         return false;
       });
@@ -159,8 +160,8 @@ void main() {
         ),
       );
       final searchIcon = find.byWidgetPredicate((widget) {
-        if (widget is FlatButton && widget.child is Icon) {
-          return (widget.child as Icon).icon == FontAwesomeIcons.search;
+        if (widget is FlatButton && widget.child is FaIcon) {
+          return (widget.child as FaIcon).icon == FontAwesomeIcons.search;
         }
         return false;
       });
@@ -181,8 +182,9 @@ void main() {
         ),
       );
       final bookmarkIcon = find.byWidgetPredicate((widget) {
-        if (widget is FlatButton && widget.child is Icon) {
-          return (widget.child as Icon).icon == FontAwesomeIcons.solidBookmark;
+        if (widget is FlatButton && widget.child is FaIcon) {
+          return (widget.child as FaIcon).icon ==
+              FontAwesomeIcons.solidBookmark;
         }
         return false;
       });

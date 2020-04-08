@@ -100,6 +100,11 @@ class MyAppInjections extends StatelessWidget {
             firestore: Firestore.instance,
           ),
         ),
+        RepositoryProvider(
+          create: (_) => FirebaseFavoritePostsRepository(
+            firestore: Firestore.instance,
+          ),
+        ),
       ],
       child: child,
     );

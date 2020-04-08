@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NotFound extends StatelessWidget {
-  const NotFound({@required this.msg}) : assert(msg != null);
+  NotFound({@required this.msg}) : assert(msg != null);
 
   final String msg;
 
@@ -16,11 +16,11 @@ class NotFound extends StatelessWidget {
           FontAwesomeIcons.meh,
           size: 48,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
         Text(
           msg,
           style: const TextStyle(
-            fontSize: 18,
+            fontSize: 16,
           ),
         ),
       ],

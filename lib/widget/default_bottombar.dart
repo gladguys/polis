@@ -1,4 +1,3 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,6 +9,7 @@ import '../core/service/locator.dart';
 import '../core/service/services.dart';
 import '../i18n/i18n.dart';
 import '../page/pages.dart';
+import 'photo.dart';
 
 enum DropDownOption { profile, logout }
 
@@ -31,7 +31,7 @@ class DefaultBottombar extends StatelessWidget {
         children: <Widget>[
           Container(
             width: 80,
-            height: 40,
+            height: 56,
             alignment: Alignment.centerLeft,
             child: routeName == TIMELINE_PAGE && !withBack
                 ? const Padding(
@@ -49,7 +49,6 @@ class DefaultBottombar extends StatelessWidget {
                 : _buildButtonBottomAppBar(
                     key: const ValueKey('arrow-back-btn'),
                     icon: FontAwesomeIcons.chevronLeft,
-                    padding: const EdgeInsets.only(right: 3),
                     onPressed: onPopCallback,
                   ),
           ),
@@ -61,7 +60,6 @@ class DefaultBottombar extends StatelessWidget {
                 _buildButtonBottomAppBar(
                   icon: FontAwesomeIcons.home,
                   isSelected: routeName == TIMELINE_PAGE,
-                  padding: const EdgeInsets.only(right: 3),
                   onPressed: () => routeName != TIMELINE_PAGE
                       ? SimpleRouter.forward(
                           TimelinePageConnected(),
@@ -84,7 +82,7 @@ class DefaultBottombar extends StatelessWidget {
                   isSelected: routeName == FAVORITE_POSTS_PAGE,
                   onPressed: () => routeName != FAVORITE_POSTS_PAGE
                       ? SimpleRouter.forward(
-                          FavoritePostsPage(),
+                          FavoritePostsPageConnected(),
                           name: FAVORITE_POSTS_PAGE,
                         )
                       : VoidCallback,
@@ -94,10 +92,11 @@ class DefaultBottombar extends StatelessWidget {
           ),
           Container(
             width: 80,
-            height: 40,
+            height: 48,
             alignment: Alignment.centerRight,
             child: _buildUserButton(context),
           ),
+          const SizedBox(width: 4),
         ],
       ),
     );
@@ -107,34 +106,27 @@ class DefaultBottombar extends StatelessWidget {
     final user = context.bloc<UserBloc>().user;
 
     Widget buildButtonContent() {
-      return user.photoUrl != null
-          ? Padding(
-              padding: const EdgeInsets.all(5),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: FancyShimmerImage(
-                  imageUrl: user.photoUrl,
-                  width: 30,
-                  height: 30,
-                  boxFit: BoxFit.cover,
-                ),
-              ),
-            )
-          : const Icon(
-              FontAwesomeIcons.solidUserCircle,
-              size: 28,
-              key: ValueKey('user-photoless-icon'),
-            );
+      return Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(2),
+        child: Photo(
+          url: user.photoUrl,
+          size: 40,
+          boxFit: BoxFit.cover,
+          iconColor: Colors.black,
+          iconKey: const ValueKey('user-photoless-icon'),
+        ),
+      );
     }
 
     return Material(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(24),
       clipBehavior: Clip.antiAlias,
       child: Container(
-        width: 40,
-        height: 40,
+        width: 48,
+        height: 60,
         child: PopupMenuButton(
-          offset: const Offset(0, -95),
+          offset: const Offset(0, -115),
           tooltip: '',
           child: buildButtonContent(),
           onSelected: (selectedValue) {
@@ -155,48 +147,46 @@ class DefaultBottombar extends StatelessWidget {
           itemBuilder: (context) {
             return <PopupMenuEntry>[
               PopupMenuItem(
-                height: 40,
+                height: 48,
                 value: DropDownOption.profile,
                 child: Row(
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(left: 2, bottom: 2),
-                      child: Icon(
-                        FontAwesomeIcons.userAlt,
-                        size: 16,
-                      ),
+                    const SizedBox(width: 8),
+                    FaIcon(
+                      FontAwesomeIcons.userAlt,
+                      size: 20,
                     ),
                     const SizedBox(width: 8),
                     const Text(
                       PROFILE,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 16,
                       ),
                     ),
+                    const SizedBox(width: 8),
                   ],
                 ),
               ),
               PopupMenuItem(
-                height: 40,
+                height: 48,
                 value: DropDownOption.logout,
                 child: Row(
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(right: 2, bottom: 1),
-                      child: Icon(
-                        FontAwesomeIcons.signOutAlt,
-                        size: 19,
-                        color: Colors.red[400],
-                      ),
+                    const SizedBox(width: 8),
+                    FaIcon(
+                      FontAwesomeIcons.signOutAlt,
+                      size: 20,
+                      color: Colors.red[400],
                     ),
                     const SizedBox(width: 5),
                     Text(
                       LOGOUT,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 16,
                         color: Colors.red[600],
                       ),
                     ),
+                    const SizedBox(width: 8),
                   ],
                 ),
               )
@@ -210,20 +200,19 @@ class DefaultBottombar extends StatelessWidget {
   Widget _buildButtonBottomAppBar({
     Widget child,
     IconData icon,
-    double iconSize = 20,
+    double iconSize = 24,
     bool isSelected = false,
-    EdgeInsets padding = EdgeInsets.zero,
     Function onPressed,
     Key key,
   }) {
     return Container(
       width: 48,
-      height: 32,
+      height: 48,
       child: FlatButton(
         key: key,
         color: isSelected ? Colors.grey[300] : null,
-        child: icon != null ? Icon(icon, size: iconSize) : child,
-        padding: padding,
+        child: icon != null ? FaIcon(icon, size: iconSize) : child,
+        padding: EdgeInsets.zero,
         onPressed: onPressed,
       ),
     );

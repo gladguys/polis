@@ -96,8 +96,8 @@ class _InitialPageState extends State<InitialPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 96),
+            const Padding(
+              padding: EdgeInsets.only(top: 96),
               child: Text(
                 POLIS,
                 style: TextStyle(
@@ -161,7 +161,7 @@ class _InitialPageState extends State<InitialPage> {
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     color: Colors.white,
                     textColor: Colors.white,
-                    borderSide: BorderSide(color: Colors.white),
+                    borderSide: const BorderSide(color: Colors.white),
                     highlightedBorderColor: Colors.white,
                     onPressed: () {
                       setState(() => _isSigninPanel = false);

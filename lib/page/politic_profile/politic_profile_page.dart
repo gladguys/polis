@@ -18,25 +18,30 @@ class PoliticProfilePage extends StatelessWidget {
       bottomNavigationBar: DefaultBottombar(SEARCH_POLITIC_PAGE),
       body: BlocBuilder<PoliticProfileBloc, PoliticProfileState>(
         builder: (_, state) {
-          if (state is GetPoliticInfoSuccess) {
-            final politic = state.politic;
-            final lastActivities = state.lastActivities;
+          if (state is GetPoliticInfoSuccess ||
+              state is UserFollowingPoliticChanged) {
+            final bloc = context.bloc<PoliticProfileBloc>();
+            final politico = bloc.politico;
+            final lastActivities = bloc.lastActivities;
+            final isPoliticBeingFollowedByUser =
+                state is UserFollowingPoliticChanged
+                    ? state.isUserFollowingPolitic
+                    : bloc.isPoliticBeingFollowedByUser;
             return SafeArea(
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    PoliticPersonalInfo(politic),
-                    const SizedBox(height: 14),
-                    PoliticActionButtons(),
+                    PoliticPersonalInfo(politico),
                     const SizedBox(height: 16),
-                    PoliticAdditionalInfo(politic),
-                    const SizedBox(height: 26),
-                    const Divider(),
-                    Container(
-                      child: Expanded(
-                        child: PoliticActivities(lastActivities),
-                      ),
+                    PoliticActionButtons(
+                        isBeingFollowedByUser: isPoliticBeingFollowedByUser),
+                    const SizedBox(height: 16),
+                    PoliticAdditionalInfo(politico),
+                    const SizedBox(height: 24),
+                    const Divider(color: Colors.grey, thickness: 0.3),
+                    Expanded(
+                      child: PoliticActivities(lastActivities),
                     ),
                   ],
                 ),

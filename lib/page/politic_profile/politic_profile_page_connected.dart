@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../bloc/blocs.dart';
 import '../../bloc/politic_profile/politic_profile_bloc.dart';
 import '../../bloc/politic_profile/politic_profile_event.dart';
 import '../../repository/concrete/repositories.dart';
@@ -16,7 +17,10 @@ class PoliticProfilePageConnected extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageConnected<PoliticProfileBloc>(
       bloc: PoliticProfileBloc(
-        repository: context.repository<FirebasePoliticProfileRepository>(),
+        user: context.bloc<UserBloc>().user,
+        politicProfileRepository:
+            context.repository<FirebasePoliticProfileRepository>(),
+        followRepository: context.repository<FirebaseFollowRepository>(),
       )..add(GetPoliticInfo(politicId)),
       page: PoliticProfilePage(),
     );

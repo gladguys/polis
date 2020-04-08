@@ -10,7 +10,7 @@ import '../../../model/models.dart';
 import '../../../widget/button_follow_unfollow.dart';
 import '../../../widget/card_base.dart';
 import '../../../widget/not_found.dart';
-import '../../../widget/photo_politic.dart';
+import '../../../widget/photo.dart';
 import '../../pages.dart';
 
 class SearchPoliticsList extends StatelessWidget {
@@ -22,7 +22,7 @@ class SearchPoliticsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return politicos.isNotEmpty
         ? _buildList(context)
-        : const NotFound(msg: NO_RESULTS_FROM_SEARCH);
+        : NotFound(msg: NO_RESULTS_FROM_SEARCH);
   }
 
   Widget _buildList(BuildContext context) {
@@ -44,7 +44,7 @@ class SearchPoliticsList extends StatelessWidget {
     return CardBase(
       key: ValueKey(politico.id),
       crossAxisAlignment: CrossAxisAlignment.center,
-      slotLeft: PhotoPolitic(urlPhoto: politico.urlFoto),
+      slotLeft: Photo(url: politico.urlFoto),
       slotCenter: _buildCardContent(context, politico),
       slotRight: ButtonFollowUnfollow(
         isFollow: bloc.isPoliticBeingFollowed(politico),
@@ -57,7 +57,11 @@ class SearchPoliticsList extends StatelessWidget {
         ),
       ),
       onTap: () => SimpleRouter.forward(
-        PoliticProfilePageConnected(politico.id),
+        BlocProvider.value(
+          value: context.bloc<SearchPoliticBloc>().politicProfileBloc
+            ..add(GetPoliticInfo(politico.id)),
+          child: PoliticProfilePage(),
+        ),
         name: POLITIC_PROFILE_PAGE,
       ),
     );

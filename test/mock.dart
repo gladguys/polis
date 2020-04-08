@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_admob/firebase_admob.dart';
@@ -13,6 +15,7 @@ import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/abstract/polis_image_picker.dart';
 import 'package:polis/core/service/services.dart';
 import 'package:polis/model/models.dart';
+import 'package:polis/repository/abstract/favorite_posts_repository.dart';
 import 'package:polis/repository/abstract/follow_repository.dart';
 import 'package:polis/repository/abstract/politic_followers_repository.dart';
 import 'package:polis/repository/abstract/politic_profile_repository.dart';
@@ -32,6 +35,10 @@ import 'package:sliding_panel/sliding_panel.dart';
 // Bloc
 class MockSigninBloc extends MockBloc<SigninEvent, SigninState>
     implements SigninBloc {}
+
+class MockFavoritePostsBloc
+    extends MockBloc<FavoritePostsEvent, FavoritePostsState>
+    implements FavoritePostsBloc {}
 
 class MockUserFollowingPoliticsBloc
     extends MockBloc<UserFollowingPoliticsEvent, UserFollowingPoliticsState>
@@ -91,6 +98,9 @@ class MockSearchPoliticRepository extends Mock
     implements SearchPoliticRepository {}
 
 class MockPostRepository extends Mock implements PostRepository {}
+
+class MockFavoritePostsRepository extends Mock
+    implements FavoritePostsRepository {}
 
 class MockFollowRepository extends Mock implements FollowRepository {}
 
@@ -159,3 +169,6 @@ class MockSharedPreferences extends Mock implements SharedPreferences {}
 class MockPolisImagePicker extends Mock implements PolisImagePicker {}
 
 class MockPanelController extends Mock implements PanelController {}
+
+class MockPoliticProfileStreamSubscription extends Mock
+    implements StreamSubscription<PoliticProfileState> {}

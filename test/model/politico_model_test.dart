@@ -17,6 +17,7 @@ void main() {
     'condicaoEleitoral': 'condicaoEleitoral',
     'cpf': 'cpf',
     'sexo': 'sexo',
+    'quantidadeSeguidores': 5,
     'escolaridade': 'escolaridade',
   };
 
@@ -30,6 +31,7 @@ void main() {
     email: 'email',
     nomeEleitoral: 'nomeEleitoral',
     status: 'status',
+    quantidadeSeguidores: 5,
     condicaoEleitoral: 'condicaoEleitoral',
     cpf: 'cpf',
     sexo: 'sexo',
@@ -63,6 +65,15 @@ void main() {
       expect(PoliticoModel.fromJson(jsonPolitico) == politicoModel, true);
     });
 
+    test('copyWith()', () {
+      final politico = PoliticoModel(quantidadeSeguidores: 5);
+      final politicoCopy = politico.copyWith(quantidadeSeguidores: 6);
+      final politicoCopyOriginalQtd = politico.copyWith(id: '1');
+      expect(politico, politicoCopy);
+      expect(politicoCopy.quantidadeSeguidores, 6);
+      expect(politicoCopyOriginalQtd.quantidadeSeguidores, 5);
+    });
+
     test('toJson()', () {
       final politicoToJson = politicoModel.toJson();
       expect(politicoToJson['id'] == jsonPolitico['id'], true);
@@ -77,6 +88,10 @@ void main() {
       expect(politicoToJson['nomeEleitoral'] == jsonPolitico['nomeEleitoral'],
           true);
       expect(politicoToJson['status'] == jsonPolitico['status'], true);
+      expect(
+          politicoToJson['quantidadeSeguidores'] ==
+              jsonPolitico['quantidadeSeguidores'],
+          true);
       expect(
           politicoToJson['condicaoEleitoral'] ==
               jsonPolitico['condicaoEleitoral'],

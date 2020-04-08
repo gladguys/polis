@@ -11,6 +11,16 @@ void main() {
       expect(FetchPoliticsFailed(), FetchPoliticsFailed());
       expect(FollowUnfollowFailed(), FollowUnfollowFailed());
       expect(LoadingPolitics(), LoadingPolitics());
+      expect(
+        UserFollowingPoliticChanged(
+          politico: PoliticoModel(),
+          isUserFollowingPolitic: true,
+        ),
+        UserFollowingPoliticChanged(
+          politico: PoliticoModel(),
+          isUserFollowingPolitic: true,
+        ),
+      );
 
       expect(
           FollowedPoliticsUpdated(
@@ -49,6 +59,18 @@ void main() {
               ),
           throwsAssertionError);
       expect(() => PoliticsFilteredByTerm(filteredPolitics: null),
+          throwsAssertionError);
+      expect(
+          () => UserFollowingPoliticChanged(
+                politico: null,
+                isUserFollowingPolitic: true,
+              ),
+          throwsAssertionError);
+      expect(
+          () => UserFollowingPoliticChanged(
+                politico: PoliticoModel(),
+                isUserFollowingPolitic: null,
+              ),
           throwsAssertionError);
     });
   });

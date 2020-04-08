@@ -9,6 +9,7 @@ import '../../model/models.dart';
 import '../../repository/abstract/follow_repository.dart';
 import '../../repository/abstract/search_politic_repository.dart';
 import '../../repository/abstract/user_following_politics_repository.dart';
+import '../blocs.dart';
 
 class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
   SearchPoliticBloc({
@@ -16,15 +17,33 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
     @required this.userFollowingPoliticsRepository,
     @required this.followRepository,
     @required this.partidoService,
-  })  : assert(searchPoliticRepository != null),
-        assert(userFollowingPoliticsRepository != null),
-        assert(followRepository != null),
-        assert(partidoService != null);
+    @required this.politicProfileBloc,
+  }) {
+    assert(searchPoliticRepository != null);
+    assert(userFollowingPoliticsRepository != null);
+    assert(followRepository != null);
+    assert(partidoService != null);
+    assert(politicProfileBloc != null);
+
+    politicProfileSubscription = politicProfileBloc.listen((state) {
+      if (state is UserFollowingPoliticChanged) {
+        add(
+          ChangeFollowPoliticStatus(
+            politico: state.politico,
+            isUserFollowingPolitic: state.isUserFollowingPolitic,
+          ),
+        );
+      }
+    });
+  }
 
   final SearchPoliticRepository searchPoliticRepository;
   final UserFollowingPoliticsRepository userFollowingPoliticsRepository;
   final FollowRepository followRepository;
   final PartidoService partidoService;
+  final PoliticProfileBloc politicProfileBloc;
+
+  StreamSubscription politicProfileSubscription;
 
   List<PartidoModel> allPartidos;
   List<PoliticoModel> allPolitics;
@@ -60,19 +79,9 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
       partidoPicked = event.partido ?? partidoPicked;
       searchTerm = event.term ?? searchTerm;
 
-      final politicsFilteredByTerm = searchTerm != ''
-          ? politics
-              .where((politic) => politic.nomeEleitoral
-                  .toLowerCase()
-                  .contains(searchTerm.toLowerCase()))
-              .toList()
-          : allPolitics;
-
       final politicsFiltereByEstado = statePicked != 'T'
-          ? politicsFilteredByTerm
-              .where((politic) => politic.siglaUf == statePicked)
-              .toList()
-          : politicsFilteredByTerm;
+          ? politics.where((politic) => politic.siglaUf == statePicked).toList()
+          : allPolitics;
 
       final politicsFilteredByPartido = partidoPicked != 'T'
           ? politicsFiltereByEstado
@@ -80,7 +89,15 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
               .toList()
           : politicsFiltereByEstado;
 
-      politics = [...politicsFilteredByPartido];
+      final politicsFilteredByTerm = searchTerm != ''
+          ? politicsFilteredByPartido
+              .where((politic) => politic.nomeEleitoral
+                  .toLowerCase()
+                  .contains(searchTerm.toLowerCase()))
+              .toList()
+          : politicsFilteredByPartido;
+
+      politics = [...politicsFilteredByTerm];
       yield SearchPoliticFilterChanged(politics);
     }
     if (event is FollowUnfollowSearchPolitic) {
@@ -106,6 +123,18 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
         yield FollowUnfollowPoliticsFailed();
       }
     }
+    if (event is ChangeFollowPoliticStatus) {
+      final politico = event.politico;
+      final isUserFollowingPolitic = event.isUserFollowingPolitic;
+
+      isPoliticFollowed[politico.id] = isUserFollowingPolitic;
+
+      yield FollowedSearchPoliticsUpdated(
+        followedPolitics: [...politics],
+        politicoUpdated: event.politico,
+        isFollowing: event.isUserFollowingPolitic,
+      );
+    }
   }
 
   bool isPoliticBeingFollowed(PoliticoModel politico) =>
@@ -115,5 +144,12 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
     for (var politic in followedPolitics) {
       isPoliticFollowed[politic.id] = true;
     }
+  }
+
+  @override
+  Future<void> close() {
+    politicProfileSubscription?.cancel();
+    politicProfileBloc.close();
+    return super.close();
   }
 }

@@ -13,6 +13,7 @@ void main() {
     MockUserFollowingPoliticsRepository mockUserFollowingPoliticsRepository;
     MockFollowRepository mockFollowRepository;
     MockPartidoService mockPartidoService;
+    MockPoliticProfileBloc mockPoliticProfileBloc;
 
     setUp(() {
       mockSearchPoliticRepository = MockSearchPoliticRepository();
@@ -20,11 +21,13 @@ void main() {
           MockUserFollowingPoliticsRepository();
       mockFollowRepository = MockFollowRepository();
       mockPartidoService = MockPartidoService();
+      mockPoliticProfileBloc = MockPoliticProfileBloc();
       searchPoliticBloc = SearchPoliticBloc(
         searchPoliticRepository: mockSearchPoliticRepository,
         userFollowingPoliticsRepository: mockUserFollowingPoliticsRepository,
         followRepository: mockFollowRepository,
         partidoService: mockPartidoService,
+        politicProfileBloc: mockPoliticProfileBloc,
       );
     });
 
@@ -36,6 +39,7 @@ void main() {
                 followRepository: null,
                 searchPoliticRepository: mockSearchPoliticRepository,
                 partidoService: mockPartidoService,
+                politicProfileBloc: mockPoliticProfileBloc,
               ),
           throwsAssertionError);
       expect(
@@ -44,6 +48,7 @@ void main() {
                 followRepository: mockFollowRepository,
                 searchPoliticRepository: mockSearchPoliticRepository,
                 partidoService: mockPartidoService,
+                politicProfileBloc: mockPoliticProfileBloc,
               ),
           throwsAssertionError);
       expect(
@@ -53,6 +58,7 @@ void main() {
                 followRepository: mockFollowRepository,
                 searchPoliticRepository: null,
                 partidoService: mockPartidoService,
+                politicProfileBloc: mockPoliticProfileBloc,
               ),
           throwsAssertionError);
       expect(
@@ -62,6 +68,17 @@ void main() {
                 followRepository: mockFollowRepository,
                 searchPoliticRepository: mockSearchPoliticRepository,
                 partidoService: null,
+                politicProfileBloc: mockPoliticProfileBloc,
+              ),
+          throwsAssertionError);
+      expect(
+          () => SearchPoliticBloc(
+                userFollowingPoliticsRepository:
+                    mockUserFollowingPoliticsRepository,
+                followRepository: mockFollowRepository,
+                searchPoliticRepository: mockSearchPoliticRepository,
+                partidoService: mockPartidoService,
+                politicProfileBloc: null,
               ),
           throwsAssertionError);
     });
@@ -230,6 +247,47 @@ void main() {
     );
 
     blocTest(
+      '#123 - https://github.com/gladguys/polis/issues/123',
+      build: () async {
+        when(mockSearchPoliticRepository.getAllPolitics()).thenAnswer(
+          (_) => Future.value([
+            PoliticoModel(id: '1', nomeEleitoral: 'Joao'),
+            PoliticoModel(id: '2', nomeEleitoral: 'Maria'),
+          ]),
+        );
+        when(mockUserFollowingPoliticsRepository.getFollowingPolitics('1'))
+            .thenAnswer(
+          (_) => Future.value([
+            PoliticoModel(id: '1', nomeEleitoral: 'Joao'),
+            PoliticoModel(id: '2', nomeEleitoral: 'Maria'),
+          ]),
+        );
+        return searchPoliticBloc;
+      },
+      act: (searchPoliticBloc) {
+        searchPoliticBloc.add(FetchPolitics('1'));
+        searchPoliticBloc.add(ChangeSearchPoliticFilter(term: 'J'));
+        searchPoliticBloc.add(ChangeSearchPoliticFilter(term: 'JW'));
+        searchPoliticBloc.add(ChangeSearchPoliticFilter(term: 'J'));
+        return;
+      },
+      expect: [
+        LoadingFetchPolitics(),
+        FetchSearchPoliticsSuccess([
+          PoliticoModel(id: '1', nomeEleitoral: 'Joao'),
+          PoliticoModel(id: '2', nomeEleitoral: 'Maria'),
+        ]),
+        SearchPoliticFilterChanged(
+          [PoliticoModel(id: '1', nomeEleitoral: 'Joao')],
+        ),
+        SearchPoliticFilterChanged([]),
+        SearchPoliticFilterChanged(
+          [PoliticoModel(id: '1', nomeEleitoral: 'Joao')],
+        ),
+      ],
+    );
+
+    blocTest(
       '''Expects to follow the politic when FollowUnfollowSearchPolitic added and politic not been followed''',
       build: () async {
         when(mockSearchPoliticRepository.getAllPolitics()).thenAnswer(
@@ -388,5 +446,58 @@ void main() {
         FollowUnfollowPoliticsFailed(),
       ],
     );
+
+    // TODO(rodrigo): fix this
+    /*blocTest(
+      '''Expects to yield ChangeFollowPoliticStatus when PoliticProfileBloc
+      state is UserFollowingPoliticChanged''',
+      build: () async {
+        final mockPoliticProfileRepository = MockPoliticProfileRepository();
+        final mockFollowRepository = MockFollowRepository();
+        when(mockPoliticProfileRepository.getInfoPolitic('1')).thenAnswer(
+          (_) => Future.value(
+            PoliticoModel(
+              id: '1',
+              quantidadeSeguidores: 5,
+            ),
+          ),
+        );
+        when(mockPoliticProfileRepository.getLastActivities(
+                politicId: '1', count: anyNamed('count')))
+            .thenAnswer(
+          (_) => Future.value([]),
+        );
+        when(mockFollowRepository.isPoliticBeingFollowed(
+                user: anyNamed('user'), politicId: '1'))
+            .thenAnswer((_) => Future.value(true));
+        final politicProfileBloc = PoliticProfileBloc(
+          user: UserModel(),
+          followRepository: mockFollowRepository,
+          politicProfileRepository: mockPoliticProfileRepository,
+        );
+        return SearchPoliticBloc(
+          searchPoliticRepository: mockSearchPoliticRepository,
+          userFollowingPoliticsRepository: mockUserFollowingPoliticsRepository,
+          followRepository: mockFollowRepository,
+          partidoService: mockPartidoService,
+          politicProfileBloc: politicProfileBloc,
+        );
+      },
+      act: (searchPoliticBloc) {
+        searchPoliticBloc.politicProfileBloc.add(
+          GetPoliticInfo('1'),
+        );
+        searchPoliticBloc.politicProfileBloc.add(
+          FollowUnfollowProfilePolitic(isFollowing: true),
+        );
+        return;
+      },
+      expect: [
+        ChangeFollowPoliticStatus(
+          politico: PoliticoModel(),
+          isUserFollowingPolitic: true,
+        ),
+      ],
+    );*/
   });
 }
