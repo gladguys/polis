@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/search_politic/bloc.dart';
+import '../../../i18n/label.dart';
 import '../../../model/models.dart';
-import '../../../widget/field_search.dart';
+import '../../../widget/field_rounded.dart';
 import '../../../widget/select/selects.dart';
+import '../../theme/main_theme.dart';
 import 'search_politics_list.dart';
 
 class SearchPolitics extends StatelessWidget {
@@ -64,15 +67,37 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
           color: Colors.grey[300],
         ),
         _buildFilter(),
-        Container(
-          width: 360,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: FieldSearch(
-            onChanged: (term) => widget.searchPoliticBloc
-                .add(ChangeSearchPoliticFilter(term: term)),
-            onPressedSuffix: () => setState(() => isOpen = !isOpen),
-          ),
+        const SizedBox(height: 12),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const SizedBox(width: 16),
+            FieldRounded(
+              hintText: SEARCH_HERE,
+              width: 260,
+              iconPrefix: FontAwesomeIcons.search,
+              onChanged: (term) => widget.searchPoliticBloc
+                  .add(ChangeSearchPoliticFilter(term: term)),
+            ),
+            const SizedBox(width: 8),
+            Container(
+              width: 40,
+              height: 40,
+              child: FlatButton(
+                key: const ValueKey('sliders-icon'),
+                color: theme.primaryColor,
+                padding: EdgeInsets.zero,
+                child: FaIcon(
+                  FontAwesomeIcons.slidersH,
+                  size: 16,
+                ),
+                onPressed: () => setState(() => isOpen = !isOpen),
+              ),
+            ),
+            const SizedBox(width: 16),
+          ],
         ),
+        const SizedBox(height: 12),
       ],
     );
   }
