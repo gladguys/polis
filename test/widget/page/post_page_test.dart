@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:polis/enum/post_type.dart';
@@ -59,7 +60,7 @@ void main() {
       );
     });
 
-    testWidgets('should build without exploding', (tester) async {
+    testWidgets('should build without exploding with despesa', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
           PostPageConnected(
@@ -77,6 +78,44 @@ void main() {
           ),
         ),
       );
+    });
+
+    testWidgets('should build without exploding with proposta', (tester) async {
+      await tester.pumpWidget(
+        connectedWidget(
+          PostPageConnected(
+            post: PropostaModel(
+              nomePolitico: 'politico',
+              tipoDocumento: 'PROPOSICAO',
+              fotoPolitico: 'foto',
+              siglaPartido: 'PT',
+              dataDocumento: '10-01-2020',
+            ),
+            postType: PostType.PROPOSICAO,
+          ),
+        ),
+      );
+    });
+
+    testWidgets('should do something when click comment button',
+        (tester) async {
+      await tester.pumpWidget(
+        connectedWidget(
+          PostPageConnected(
+            post: PropostaModel(
+              nomePolitico: 'politico',
+              tipoDocumento: 'PROPOSICAO',
+              fotoPolitico: 'foto',
+              siglaPartido: 'PT',
+              dataDocumento: '10-01-2020',
+            ),
+            postType: PostType.PROPOSICAO,
+          ),
+        ),
+      );
+      final commentButton = find.byKey(const ValueKey('comment-button'));
+      expect(commentButton, findsOneWidget);
+      await tester.tap(commentButton);
     });
   });
 }

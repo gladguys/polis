@@ -38,6 +38,7 @@ class PostPage extends StatelessWidget {
                 hintText: COMMENT_HERE,
                 width: 360,
                 iconSuffix: FontAwesomeIcons.solidPaperPlane,
+                keySuffix: const ValueKey('comment-button'),
                 onPressedSuffix: () {},
               ),
             ),

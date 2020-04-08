@@ -14,6 +14,7 @@ class PropostaModel extends Equatable {
       this.ementa,
       this.fotoPolitico,
       this.nomePolitico,
+      this.idPoliticoAutor,
       this.siglaPartido,
       this.descricaoSituacao,
       this.descricaoTramitacao,
@@ -30,6 +31,7 @@ class PropostaModel extends Equatable {
   final String ano;
   final String ementa;
   final String nomePolitico;
+  final String idPoliticoAutor;
   final String fotoPolitico;
   final String siglaPartido;
   final String dataDocumento;
@@ -53,6 +55,7 @@ class PropostaModel extends Equatable {
     String ano,
     String ementa,
     String nomePolitico,
+    String idPoliticoAutor,
     String fotoPolitico,
     String siglaPartido,
     String dataDocumento,
@@ -71,6 +74,7 @@ class PropostaModel extends Equatable {
       ano: ano ?? this.ano,
       ementa: ementa ?? this.ementa,
       nomePolitico: nomePolitico ?? this.nomePolitico,
+      idPoliticoAutor: idPoliticoAutor ?? this.idPoliticoAutor,
       fotoPolitico: fotoPolitico ?? this.fotoPolitico,
       siglaPartido: siglaPartido ?? this.siglaPartido,
       dataDocumento: dataDocumento ?? this.dataDocumento,
