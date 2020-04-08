@@ -284,7 +284,10 @@ void main() {
           PoliticoModel(id: '1', nomeEleitoral: 'João'),
         ]),
         SearchPoliticFilterChanged(
-          [PoliticoModel(id: '1', nomeEleitoral: 'João')],
+          politics: [PoliticoModel(id: '1', nomeEleitoral: 'João')],
+          statePicked: 'T',
+          partidoPicked: 'T',
+          searchTerm: 'Joa',
         ),
       ],
     );

@@ -81,7 +81,9 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
       searchTerm = event.term ?? searchTerm;
 
       final politicsFiltereByEstado = statePicked != 'T'
-          ? politics.where((politic) => politic.siglaUf == statePicked).toList()
+          ? allPolitics
+              .where((politic) => politic.siglaUf == statePicked)
+              .toList()
           : allPolitics;
 
       final politicsFilteredByPartido = partidoPicked != 'T'
