@@ -14,6 +14,15 @@ void main() {
       });
     });
 
+    group('SendEmailToPolitic', () {
+      test('props', () {
+        final ev1 = SendEmailToPolitic();
+        final ev2 = SendEmailToPolitic();
+
+        expect(ev1, ev2);
+      });
+    });
+
     group('FollowUnfollowProfilePolitic', () {
       test('asserts', () {
         expect(() => FollowUnfollowProfilePolitic(isFollowing: null),
