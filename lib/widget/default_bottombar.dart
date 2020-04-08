@@ -31,7 +31,7 @@ class DefaultBottombar extends StatelessWidget {
         children: <Widget>[
           Container(
             width: 80,
-            height: 40,
+            height: 48,
             alignment: Alignment.centerLeft,
             child: routeName == TIMELINE_PAGE && !withBack
                 ? const Padding(
@@ -49,7 +49,6 @@ class DefaultBottombar extends StatelessWidget {
                 : _buildButtonBottomAppBar(
                     key: const ValueKey('arrow-back-btn'),
                     icon: FontAwesomeIcons.chevronLeft,
-                    padding: const EdgeInsets.only(right: 3),
                     onPressed: onPopCallback,
                   ),
           ),
@@ -61,7 +60,6 @@ class DefaultBottombar extends StatelessWidget {
                 _buildButtonBottomAppBar(
                   icon: FontAwesomeIcons.home,
                   isSelected: routeName == TIMELINE_PAGE,
-                  padding: const EdgeInsets.only(right: 3),
                   onPressed: () => routeName != TIMELINE_PAGE
                       ? SimpleRouter.forward(
                           TimelinePageConnected(),
@@ -210,20 +208,19 @@ class DefaultBottombar extends StatelessWidget {
   Widget _buildButtonBottomAppBar({
     Widget child,
     IconData icon,
-    double iconSize = 20,
+    double iconSize = 24,
     bool isSelected = false,
-    EdgeInsets padding = EdgeInsets.zero,
     Function onPressed,
     Key key,
   }) {
     return Container(
       width: 48,
-      height: 32,
+      height: 40,
       child: FlatButton(
         key: key,
         color: isSelected ? Colors.grey[300] : null,
-        child: icon != null ? Icon(icon, size: iconSize) : child,
-        padding: padding,
+        child: icon != null ? FaIcon(icon, size: iconSize) : child,
+        padding: EdgeInsets.zero,
         onPressed: onPressed,
       ),
     );

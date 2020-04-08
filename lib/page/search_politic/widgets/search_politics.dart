@@ -7,7 +7,6 @@ import '../../../i18n/label.dart';
 import '../../../model/models.dart';
 import '../../../widget/field_rounded.dart';
 import '../../../widget/select/selects.dart';
-import '../../theme/main_theme.dart';
 import 'search_politics_list.dart';
 
 class SearchPolitics extends StatelessWidget {
@@ -74,7 +73,7 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
             const SizedBox(width: 16),
             FieldRounded(
               hintText: SEARCH_HERE,
-              width: 260,
+              width: 280,
               iconPrefix: FontAwesomeIcons.search,
               onChanged: (term) => widget.searchPoliticBloc
                   .add(ChangeSearchPoliticFilter(term: term)),
@@ -85,11 +84,10 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
               height: 40,
               child: FlatButton(
                 key: const ValueKey('sliders-icon'),
-                color: theme.primaryColor,
                 padding: EdgeInsets.zero,
                 child: FaIcon(
                   FontAwesomeIcons.slidersH,
-                  size: 16,
+                  size: 20,
                 ),
                 onPressed: () => setState(() => isOpen = !isOpen),
               ),

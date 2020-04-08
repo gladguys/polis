@@ -8,7 +8,6 @@ import '../../widget/default_bottombar.dart';
 import '../../widget/field_rounded.dart';
 import '../../widget/tile/despesa_tile.dart';
 import '../../widget/tile/proposta_tile.dart';
-import '../theme/main_theme.dart';
 
 class PostPage extends StatelessWidget {
   PostPage({@required this.post, @required this.postType})
@@ -39,7 +38,6 @@ class PostPage extends StatelessWidget {
                 hintText: COMMENT_HERE,
                 width: 360,
                 iconSuffix: FontAwesomeIcons.solidPaperPlane,
-                backgroundColorSuffix: theme.primaryColor,
                 onPressedSuffix: () {},
               ),
             ),
