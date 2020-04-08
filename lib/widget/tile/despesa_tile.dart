@@ -132,6 +132,8 @@ class DespesaTile extends StatelessWidget {
               context.bloc<PostBloc>().isPostFavorite
                   ? FontAwesomeIcons.solidBookmark
                   : FontAwesomeIcons.bookmark,
+              color:
+                  context.bloc<PostBloc>().isPostFavorite ? Colors.amber : null,
               size: 16,
             ),
             onTap: () => context.bloc<PostBloc>().add(
