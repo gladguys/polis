@@ -8,7 +8,7 @@ void main() {
       expect(() => ButtonActionCard(icon: null, onTap: () {}),
           throwsAssertionError);
 
-      expect(() => ButtonActionCard(icon: Icon(Icons.map), onTap: null),
+      expect(() => ButtonActionCard(icon: Icons.map, onTap: null),
           throwsAssertionError);
     });
   });

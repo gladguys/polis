@@ -125,8 +125,8 @@ void main() {
           ),
         ),
       );
-      final FieldRounded = find.byType(FieldRounded);
-      expect(FieldRounded, findsOneWidget);
+      final fieldRounded = find.byType(FieldRounded);
+      expect(fieldRounded, findsOneWidget);
       final sliders = find.byKey(const ValueKey('sliders-icon'));
       expect(sliders, findsOneWidget);
       await tester.tap(sliders);
@@ -165,8 +165,8 @@ void main() {
           ),
         ),
       );
-      final FieldRounded = find.byType(FieldRounded);
-      expect(FieldRounded, findsOneWidget);
+      final fieldRounded = find.byType(FieldRounded);
+      expect(fieldRounded, findsOneWidget);
       final sliders = find.byKey(const ValueKey('sliders-icon'));
       expect(sliders, findsOneWidget);
       await tester.tap(sliders);

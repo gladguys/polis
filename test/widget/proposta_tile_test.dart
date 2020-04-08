@@ -48,7 +48,7 @@ void main() {
       );
       final likeButton = find.byWidgetPredicate((widget) {
         if (widget is ButtonActionCard &&
-            widget.icon.icon == FontAwesomeIcons.thumbsUp) {
+            widget.icon == FontAwesomeIcons.thumbsUp) {
           return true;
         }
         return false;
@@ -63,7 +63,7 @@ void main() {
       );
       final likeButton = find.byWidgetPredicate((widget) {
         if (widget is ButtonActionCard &&
-            widget.icon.icon == FontAwesomeIcons.thumbsDown) {
+            widget.icon == FontAwesomeIcons.thumbsDown) {
           return true;
         }
         return false;
@@ -79,7 +79,7 @@ void main() {
       );
       final likeButton = find.byWidgetPredicate((widget) {
         if (widget is ButtonActionCard &&
-            widget.icon.icon == FontAwesomeIcons.comment) {
+            widget.icon == FontAwesomeIcons.comment) {
           return true;
         }
         return false;
@@ -94,7 +94,7 @@ void main() {
       );
       final likeButton = find.byWidgetPredicate((widget) {
         if (widget is ButtonActionCard &&
-            widget.icon.icon == FontAwesomeIcons.shareAlt) {
+            widget.icon == FontAwesomeIcons.shareAlt) {
           return true;
         }
         return false;
@@ -110,7 +110,7 @@ void main() {
       );
       final likeButton = find.byWidgetPredicate((widget) {
         if (widget is ButtonActionCard &&
-            widget.icon.icon == FontAwesomeIcons.bookmark) {
+            widget.icon == FontAwesomeIcons.bookmark) {
           return true;
         }
         return false;
