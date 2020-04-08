@@ -22,7 +22,7 @@ class SearchPoliticsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return politicos.isNotEmpty
         ? _buildList(context)
-        : const NotFound(msg: NO_RESULTS_FROM_SEARCH);
+        : NotFound(msg: NO_RESULTS_FROM_SEARCH);
   }
 
   Widget _buildList(BuildContext context) {
