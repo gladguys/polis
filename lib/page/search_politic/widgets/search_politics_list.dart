@@ -57,7 +57,11 @@ class SearchPoliticsList extends StatelessWidget {
         ),
       ),
       onTap: () => SimpleRouter.forward(
-        PoliticProfilePageConnected(politico.id),
+        BlocProvider.value(
+          value: context.bloc<SearchPoliticBloc>().politicProfileBloc
+            ..add(GetPoliticInfo(politico.id)),
+          child: PoliticProfilePage(),
+        ),
         name: POLITIC_PROFILE_PAGE,
       ),
     );

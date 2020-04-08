@@ -60,6 +60,7 @@ class CardBase extends StatelessWidget {
 
   Widget _buildContent() {
     return Row(
+      key: const ValueKey('card-base-content'),
       crossAxisAlignment: crossAxisAlignment,
       children: <Widget>[
         if (slotLeft != null) slotLeft,

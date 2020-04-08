@@ -177,7 +177,13 @@ void main() {
             ],
             isBeingFollowedByUser: true,
           ),
-          UserFollowingPoliticChanged(isUserFollowingPolitic: true),
+          UserFollowingPoliticChanged(
+            politico: PoliticoModel(
+              id: '1',
+              quantidadeSeguidores: 5,
+            ),
+            isUserFollowingPolitic: true,
+          ),
         ],
       );
 
@@ -235,7 +241,13 @@ void main() {
             ],
             isBeingFollowedByUser: true,
           ),
-          UserFollowingPoliticChanged(isUserFollowingPolitic: false),
+          UserFollowingPoliticChanged(
+            politico: PoliticoModel(
+              id: '1',
+              quantidadeSeguidores: 5,
+            ),
+            isUserFollowingPolitic: false,
+          ),
         ],
       );
 
@@ -296,7 +308,13 @@ void main() {
             ],
             isBeingFollowedByUser: true,
           ),
-          UserFollowingPoliticChanged(isUserFollowingPolitic: false),
+          UserFollowingPoliticChanged(
+            politico: PoliticoModel(
+              id: '1',
+              quantidadeSeguidores: 5,
+            ),
+            isUserFollowingPolitic: false,
+          ),
           FollowPoliticFailed(),
         ],
       );

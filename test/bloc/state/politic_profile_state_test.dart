@@ -46,8 +46,16 @@ void main() {
       );
       expect(GetPoliticInfoFailed(), GetPoliticInfoFailed());
       expect(LoadingPoliticInfo(), LoadingPoliticInfo());
-      expect(UserFollowingPoliticChanged(isUserFollowingPolitic: true),
-          UserFollowingPoliticChanged(isUserFollowingPolitic: true));
+      expect(
+        UserFollowingPoliticChanged(
+          politico: PoliticoModel(),
+          isUserFollowingPolitic: true,
+        ),
+        UserFollowingPoliticChanged(
+          politico: PoliticoModel(),
+          isUserFollowingPolitic: true,
+        ),
+      );
     });
   });
 }

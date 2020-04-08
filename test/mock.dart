@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_admob/firebase_admob.dart';
@@ -167,3 +169,6 @@ class MockSharedPreferences extends Mock implements SharedPreferences {}
 class MockPolisImagePicker extends Mock implements PolisImagePicker {}
 
 class MockPanelController extends Mock implements PanelController {}
+
+class MockPoliticProfileStreamSubscription extends Mock
+    implements StreamSubscription<PoliticProfileState> {}

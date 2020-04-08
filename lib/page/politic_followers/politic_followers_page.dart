@@ -34,7 +34,7 @@ class PoliticFollowersPage extends StatelessWidget {
     return Column(
       children: <Widget>[
         const SizedBox(height: 8),
-        const TextTitle(FOLLOWERS),
+        TextTitle(FOLLOWERS),
         Expanded(
           child: ListView.builder(
             itemBuilder: (_, i) => _buildListTile(followers[i]),

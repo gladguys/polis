@@ -1,9 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:polis/model/despesa_model.dart';
 import 'package:polis/widget/button_action_card.dart';
-import 'package:polis/widget/card_base.dart';
 import 'package:polis/widget/tile/despesa_tile_connected.dart';
 
 import 'utils.dart';
@@ -37,7 +37,7 @@ void main() {
       await tester.pumpWidget(
         connectedWidget(DespesaTileConnected(despesa)),
       );
-      final card = find.byType(CardBase);
+      final card = find.byKey(const ValueKey('card-base-content'));
       expect(card, findsOneWidget);
       await tester.tap(card);
     });
@@ -86,6 +86,21 @@ void main() {
       final likeButton = find.byWidgetPredicate((widget) {
         if (widget is ButtonActionCard &&
             widget.icon.icon == FontAwesomeIcons.comment) {
+          return true;
+        }
+        return false;
+      });
+      expect(likeButton, findsOneWidget);
+      await tester.tap(likeButton);
+    });
+
+    testWidgets('should do something when click on share btn', (tester) async {
+      await tester.pumpWidget(
+        connectedWidget(DespesaTileConnected(despesa)),
+      );
+      final likeButton = find.byWidgetPredicate((widget) {
+        if (widget is ButtonActionCard &&
+            widget.icon.icon == FontAwesomeIcons.shareAlt) {
           return true;
         }
         return false;

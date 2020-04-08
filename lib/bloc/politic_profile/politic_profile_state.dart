@@ -40,12 +40,16 @@ class LoadingPoliticInfo extends PoliticProfileState {
 }
 
 class UserFollowingPoliticChanged extends PoliticProfileState {
-  UserFollowingPoliticChanged({this.isUserFollowingPolitic});
+  UserFollowingPoliticChanged(
+      {@required this.politico, @required this.isUserFollowingPolitic})
+      : assert(politico != null),
+        assert(isUserFollowingPolitic != null);
 
+  final PoliticoModel politico;
   final bool isUserFollowingPolitic;
 
   @override
-  List<Object> get props => [isUserFollowingPolitic];
+  List<Object> get props => [politico, isUserFollowingPolitic];
 }
 
 class FollowPoliticFailed extends PoliticProfileState {

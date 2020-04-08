@@ -10,6 +10,7 @@ import 'package:polis/page/politic_profile/widget/politic_action_buttons.dart';
 import 'package:polis/page/politic_profile/widget/politic_activities.dart';
 import 'package:polis/page/politic_profile/widget/politic_additional_info.dart';
 import 'package:polis/page/politic_profile/widget/politic_personal_info.dart';
+import 'package:polis/widget/not_found.dart';
 
 import '../../mock.dart';
 import '../utils.dart';
@@ -98,6 +99,42 @@ void main() {
       expect(find.byType(PoliticActivities), findsOneWidget);
     });
 
+    testWidgets(
+        '''should show NotFound widget with NO_ACTIVITY_FOR_POLITIC message''',
+        (tester) async {
+      when(mockPoliticProfileBloc.politico).thenReturn(
+        PoliticoModel(
+          id: '1',
+          siglaPartido: 'PT',
+          urlFoto: 'foto',
+          nomeEleitoral: 'nomeE',
+          siglaUf: 'CE',
+        ),
+      );
+      when(mockPoliticProfileBloc.lastActivities).thenReturn([]);
+      when(mockPoliticProfileBloc.isPoliticBeingFollowedByUser)
+          .thenReturn(true);
+      when(mockPoliticProfileBloc.state).thenReturn(
+        GetPoliticInfoSuccess(
+          politic: mockPoliticProfileBloc.politico,
+          lastActivities: mockPoliticProfileBloc.lastActivities,
+          isBeingFollowedByUser:
+              mockPoliticProfileBloc.isPoliticBeingFollowedByUser,
+        ),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<PoliticProfileBloc>(
+            bloc: mockPoliticProfileBloc,
+            page: PoliticProfilePage(),
+          ),
+        ),
+      );
+      expect(find.byType(PoliticActivities), findsOneWidget);
+      expect(find.byType(NotFound), findsOneWidget);
+      expect(find.text(NO_ACTIVITY_FOR_POLITIC), findsOneWidget);
+    });
+
     testWidgets('should show error msg when fails', (tester) async {
       when(mockPoliticProfileBloc.state).thenReturn(GetPoliticInfoFailed());
       await tester.pumpWidget(
@@ -144,6 +181,13 @@ void main() {
       );
       when(mockPoliticProfileBloc.state).thenReturn(
         UserFollowingPoliticChanged(
+          politico: PoliticoModel(
+            id: '1',
+            siglaPartido: 'PT',
+            urlFoto: 'foto',
+            nomeEleitoral: 'nomeE',
+            siglaUf: 'CE',
+          ),
           isUserFollowingPolitic: false,
         ),
       );
@@ -191,6 +235,13 @@ void main() {
       );
       when(mockPoliticProfileBloc.state).thenReturn(
         UserFollowingPoliticChanged(
+          politico: PoliticoModel(
+            id: '1',
+            siglaPartido: 'PT',
+            urlFoto: 'foto',
+            nomeEleitoral: 'nomeE',
+            siglaUf: 'CE',
+          ),
           isUserFollowingPolitic: true,
         ),
       );

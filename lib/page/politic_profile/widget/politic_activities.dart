@@ -17,7 +17,7 @@ class PoliticActivities extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        const TextTitle(LAST_ACTIVITIES, fontSize: 15),
+        TextTitle(LAST_ACTIVITIES, fontSize: 15),
         const SizedBox(height: 8),
         Expanded(
           child: _getActivities(lastActivities),

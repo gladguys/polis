@@ -69,7 +69,9 @@ class PoliticProfileBloc
       politico = politico.copyWith(quantidadeSeguidores: newFollowersCount);
 
       yield UserFollowingPoliticChanged(
-          isUserFollowingPolitic: shouldFollowPolitic);
+        politico: politico,
+        isUserFollowingPolitic: shouldFollowPolitic,
+      );
 
       try {
         if (shouldFollowPolitic) {

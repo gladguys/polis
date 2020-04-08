@@ -45,7 +45,7 @@ void main() {
         ),
       );
       final followPoliticButton =
-          find.byKey(const ValueKey('follow-politic-profile'));
+          find.byKey(const ValueKey('follow-politic-profile')).first;
       expect(followPoliticButton, findsOneWidget);
       await tester.tap(followPoliticButton);
       await tester.pump();

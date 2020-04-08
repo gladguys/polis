@@ -70,7 +70,11 @@ void main() {
 
     testWidgets('shoud go to PoliticProfilePage when click on a politic',
         (tester) async {
+      final mockPoliticProfileBloc = MockPoliticProfileBloc();
       final mockSearchPoliticBloc = MockSearchPoliticBloc();
+      when(mockSearchPoliticBloc.politicProfileBloc)
+          .thenAnswer((_) => mockPoliticProfileBloc);
+      when(mockPoliticProfileBloc.listen((any))).thenAnswer((_) => null);
       when(mockSearchPoliticBloc.isPoliticBeingFollowed(any)).thenReturn(true);
       when(mockSearchPoliticBloc.allPartidos).thenReturn([]);
       when(mockSearchPoliticBloc.state).thenReturn(
@@ -96,7 +100,7 @@ void main() {
       await tester.tap(politicoTile);
       await tester.pump();
       await tester.pump();
-      expect(find.byType(PoliticProfilePageConnected), findsOneWidget);
+      expect(find.byType(PoliticProfilePage), findsOneWidget);
     });
 
     testWidgets('picking a state should thrigger bloc event', (tester) async {
