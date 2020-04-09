@@ -70,12 +70,13 @@ class _PartidoSelectState extends State<PartidoSelect> {
     final partidosSelect = [
       SmartSelectOption<String>(value: 'T', title: 'Todos'),
     ];
+
+    final partidos = widget.partidos;
+    partidos.sort((p1, p2) => p1.sigla.compareTo(p2.sigla));
     return partidosSelect
       ..addAll(
-        widget.partidos.map(
-          (partido) => SmartSelectOption<String>(
-              value: partido.sigla, title: partido.sigla),
-        ),
+        partidos.map((partido) => SmartSelectOption<String>(
+            value: partido.sigla, title: partido.sigla)),
       );
   }
 }

@@ -13,30 +13,32 @@ class SearchPoliticPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: DefaultBottombar(SEARCH_POLITIC_PAGE),
-      body: BlocBuilder<SearchPoliticBloc, SearchPoliticState>(
-        builder: (_, state) {
-          if (state is FetchSearchPoliticsSuccess) {
-            return SearchPolitics(
-              politics: state.politics,
-              partidos: context.bloc<SearchPoliticBloc>().allPartidos,
-            );
-          } else if (state is SearchPoliticFilterChanged) {
-            return SearchPolitics(
-              politics: state.politics,
-              partidos: context.bloc<SearchPoliticBloc>().allPartidos,
-            );
-          } else if (state is FollowedSearchPoliticsUpdated) {
-            return SearchPolitics(
-              politics: state.followedPolitics,
-              partidos: context.bloc<SearchPoliticBloc>().allPartidos,
-            );
-          } else if (state is InitialSearchPoliticState ||
-              state is LoadingFetchPolitics) {
-            return SearchPoliticSkeleton();
-          }
+      body: SafeArea(
+        child: BlocBuilder<SearchPoliticBloc, SearchPoliticState>(
+          builder: (_, state) {
+            if (state is FetchSearchPoliticsSuccess) {
+              return SearchPolitics(
+                politics: state.politics,
+                partidos: context.bloc<SearchPoliticBloc>().allPartidos,
+              );
+            } else if (state is SearchPoliticFilterChanged) {
+              return SearchPolitics(
+                politics: state.politics,
+                partidos: context.bloc<SearchPoliticBloc>().allPartidos,
+              );
+            } else if (state is FollowedSearchPoliticsUpdated) {
+              return SearchPolitics(
+                politics: state.followedPolitics,
+                partidos: context.bloc<SearchPoliticBloc>().allPartidos,
+              );
+            } else if (state is InitialSearchPoliticState ||
+                state is LoadingFetchPolitics) {
+              return SearchPoliticSkeleton();
+            }
 
-          return const SizedBox.shrink();
-        },
+            return const SizedBox.shrink();
+          },
+        ),
       ),
     );
   }

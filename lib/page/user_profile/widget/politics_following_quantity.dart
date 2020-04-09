@@ -13,37 +13,30 @@ class PoliticsFollowingQuantity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        const Text(
-          FOLLOWING,
-          style: TextStyle(
-            color: Colors.grey,
-          ),
-        ),
-        GestureDetector(
-          child: Text(
+    return InkWell(
+      borderRadius: BorderRadius.circular(5),
+      onTap: () => SimpleRouter.forwardAndReplace(
+        UserFollowingPoliticsPageConnected(),
+        name: USER_FOLLOWING_POLITICS_PAGE,
+      ),
+      child: Column(
+        children: <Widget>[
+          Text(
             politics.length.toString(),
             style: const TextStyle(
-              color: Colors.black,
               fontWeight: FontWeight.bold,
-              fontSize: 26,
+              fontSize: 20,
             ),
           ),
-          onTap: () => SimpleRouter.forwardAndReplace(
-            UserFollowingPoliticsPageConnected(),
-            name: USER_FOLLOWING_POLITICS_PAGE,
+          Text(
+            FOLLOWING,
+            style: TextStyle(
+              color: Colors.grey[600],
+              fontSize: 12,
+            ),
           ),
-        ),
-        const Text(
-          POLITICS,
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

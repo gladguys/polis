@@ -11,14 +11,17 @@ void main() {
     PoliticProfileBloc politicProfileBloc;
     MockPoliticProfileRepository mockPoliticProfileRepository;
     MockFollowRepository mockFollowRepository;
+    MockUrlLauncherService mockUrlLauncherService;
 
     setUp(() {
       mockPoliticProfileRepository = MockPoliticProfileRepository();
       mockFollowRepository = MockFollowRepository();
+      mockUrlLauncherService = MockUrlLauncherService();
       politicProfileBloc = PoliticProfileBloc(
         user: UserModel(),
         politicProfileRepository: mockPoliticProfileRepository,
         followRepository: mockFollowRepository,
+        urlLauncherService: mockUrlLauncherService,
       );
     });
 
@@ -28,6 +31,7 @@ void main() {
                 user: null,
                 politicProfileRepository: mockPoliticProfileRepository,
                 followRepository: mockFollowRepository,
+                urlLauncherService: mockUrlLauncherService,
               ),
           throwsAssertionError);
       expect(
@@ -35,6 +39,7 @@ void main() {
                 user: UserModel(),
                 politicProfileRepository: null,
                 followRepository: mockFollowRepository,
+                urlLauncherService: mockUrlLauncherService,
               ),
           throwsAssertionError);
       expect(
@@ -42,6 +47,15 @@ void main() {
                 user: UserModel(),
                 politicProfileRepository: mockPoliticProfileRepository,
                 followRepository: null,
+                urlLauncherService: mockUrlLauncherService,
+              ),
+          throwsAssertionError);
+      expect(
+          () => PoliticProfileBloc(
+                user: UserModel(),
+                politicProfileRepository: mockPoliticProfileRepository,
+                followRepository: mockFollowRepository,
+                urlLauncherService: null,
               ),
           throwsAssertionError);
     });
@@ -316,6 +330,133 @@ void main() {
             isUserFollowingPolitic: false,
           ),
           FollowPoliticFailed(),
+        ],
+      );
+    });
+
+    group('SendEmailToPolitic event', () {
+      blocTest(
+        'should send email to politic when email is valid',
+        build: () async {
+          when(mockUrlLauncherService.canLaunchEmailUrl(any))
+              .thenAnswer((_) => Future.value(true));
+          when(mockUrlLauncherService.launchEmailUrl(any))
+              .thenAnswer((_) => Future.value(true));
+          when(mockPoliticProfileRepository.getInfoPolitic('1')).thenAnswer(
+            (_) => Future.value(
+              PoliticoModel(id: '1', email: 'aValidEmail@gmail.com'),
+            ),
+          );
+          when(mockPoliticProfileRepository.getLastActivities(
+                  politicId: '1', count: 5))
+              .thenAnswer(
+            (_) => Future.value([]),
+          );
+          when(mockFollowRepository.isPoliticBeingFollowed(
+                  user: anyNamed('user'), politicId: anyNamed('politicId')))
+              .thenAnswer((_) async => true);
+          return politicProfileBloc;
+        },
+        act: (politicProfileBloc) async {
+          politicProfileBloc.add(GetPoliticInfo('1'));
+          politicProfileBloc.add(SendEmailToPolitic());
+        },
+        verify: (politicProfileBloc) async {
+          verify(mockUrlLauncherService.canLaunchEmailUrl(any)).called(1);
+          verify(mockUrlLauncherService.launchEmailUrl(any)).called(1);
+        },
+        expect: [
+          LoadingPoliticInfo(),
+          GetPoliticInfoSuccess(
+            politic: PoliticoModel(
+              id: '1',
+              quantidadeSeguidores: 5,
+            ),
+            lastActivities: [],
+            isBeingFollowedByUser: true,
+          ),
+        ],
+      );
+
+      blocTest(
+        'should yield OpenEmailIntentFailed when open intent failed',
+        build: () async {
+          when(mockUrlLauncherService.canLaunchEmailUrl(any))
+              .thenAnswer((_) => Future.value(false));
+          when(mockPoliticProfileRepository.getInfoPolitic('1')).thenAnswer(
+            (_) => Future.value(
+              PoliticoModel(id: '1', email: 'aValidEmail@gmail.com'),
+            ),
+          );
+          when(mockPoliticProfileRepository.getLastActivities(
+                  politicId: '1', count: 5))
+              .thenAnswer(
+            (_) => Future.value([]),
+          );
+          when(mockFollowRepository.isPoliticBeingFollowed(
+                  user: anyNamed('user'), politicId: anyNamed('politicId')))
+              .thenAnswer((_) async => true);
+          return politicProfileBloc;
+        },
+        act: (politicProfileBloc) async {
+          politicProfileBloc.add(GetPoliticInfo('1'));
+          politicProfileBloc.add(SendEmailToPolitic());
+        },
+        verify: (politicProfileBloc) async {
+          verify(mockUrlLauncherService.canLaunchEmailUrl(any)).called(1);
+          verifyNever(mockUrlLauncherService.launchEmailUrl(any));
+        },
+        expect: [
+          LoadingPoliticInfo(),
+          GetPoliticInfoSuccess(
+            politic: PoliticoModel(
+              id: '1',
+              quantidadeSeguidores: 5,
+            ),
+            lastActivities: [],
+            isBeingFollowedByUser: true,
+          ),
+          OpenEmailIntentFailed(),
+        ],
+      );
+
+      blocTest(
+        'should yield OpenEmailIntentFailed when open intent failed',
+        build: () async {
+          when(mockPoliticProfileRepository.getInfoPolitic('1')).thenAnswer(
+            (_) => Future.value(
+              PoliticoModel(id: '1', email: 'aNotValidEmail@gmail'),
+            ),
+          );
+          when(mockPoliticProfileRepository.getLastActivities(
+                  politicId: '1', count: 5))
+              .thenAnswer(
+            (_) => Future.value([]),
+          );
+          when(mockFollowRepository.isPoliticBeingFollowed(
+                  user: anyNamed('user'), politicId: anyNamed('politicId')))
+              .thenAnswer((_) async => true);
+          return politicProfileBloc;
+        },
+        act: (politicProfileBloc) async {
+          politicProfileBloc.add(GetPoliticInfo('1'));
+          politicProfileBloc.add(SendEmailToPolitic());
+        },
+        verify: (politicProfileBloc) async {
+          verifyNever(mockUrlLauncherService.canLaunchEmailUrl(any));
+          verifyNever(mockUrlLauncherService.launchEmailUrl(any));
+        },
+        expect: [
+          LoadingPoliticInfo(),
+          GetPoliticInfoSuccess(
+            politic: PoliticoModel(
+              id: '1',
+              quantidadeSeguidores: 5,
+            ),
+            lastActivities: [],
+            isBeingFollowedByUser: true,
+          ),
+          PoliticDontHaveValidEmail(),
         ],
       );
     });

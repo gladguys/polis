@@ -1,25 +1,25 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 
 import './bloc.dart';
 import '../../core/service/services.dart';
 import '../../model/models.dart';
 import '../../repository/abstract/follow_repository.dart';
-import '../../repository/abstract/search_politic_repository.dart';
 import '../../repository/abstract/user_following_politics_repository.dart';
 import '../blocs.dart';
 
 class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
   SearchPoliticBloc({
-    @required this.searchPoliticRepository,
+    @required this.politicoService,
     @required this.userFollowingPoliticsRepository,
     @required this.followRepository,
     @required this.partidoService,
     @required this.politicProfileBloc,
   }) {
-    assert(searchPoliticRepository != null);
+    assert(politicoService != null);
     assert(userFollowingPoliticsRepository != null);
     assert(followRepository != null);
     assert(partidoService != null);
@@ -37,9 +37,9 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
     });
   }
 
-  final SearchPoliticRepository searchPoliticRepository;
   final UserFollowingPoliticsRepository userFollowingPoliticsRepository;
   final FollowRepository followRepository;
+  final PoliticoService politicoService;
   final PartidoService partidoService;
   final PoliticProfileBloc politicProfileBloc;
 
@@ -64,7 +64,7 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
 
       try {
         allPartidos = await partidoService.getAllPartidos();
-        allPolitics = politics = await searchPoliticRepository.getAllPolitics();
+        allPolitics = politics = await politicoService.getAllPoliticos();
         followedPolitics = await userFollowingPoliticsRepository
             .getFollowingPolitics(event.userId);
         _initPoliticBeingFollowed();
@@ -80,7 +80,9 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
       searchTerm = event.term ?? searchTerm;
 
       final politicsFiltereByEstado = statePicked != 'T'
-          ? politics.where((politic) => politic.siglaUf == statePicked).toList()
+          ? allPolitics
+              .where((politic) => politic.siglaUf == statePicked)
+              .toList()
           : allPolitics;
 
       final politicsFilteredByPartido = partidoPicked != 'T'
@@ -91,14 +93,19 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
 
       final politicsFilteredByTerm = searchTerm != ''
           ? politicsFilteredByPartido
-              .where((politic) => politic.nomeEleitoral
-                  .toLowerCase()
-                  .contains(searchTerm.toLowerCase()))
+              .where((politic) =>
+                  removeDiacritics(politic.nomeEleitoral.toLowerCase())
+                      .contains(removeDiacritics(searchTerm.toLowerCase())))
               .toList()
           : politicsFilteredByPartido;
 
       politics = [...politicsFilteredByTerm];
-      yield SearchPoliticFilterChanged(politics);
+      yield SearchPoliticFilterChanged(
+        politics: politics,
+        statePicked: statePicked,
+        partidoPicked: partidoPicked,
+        searchTerm: searchTerm,
+      );
     }
     if (event is FollowUnfollowSearchPolitic) {
       try {

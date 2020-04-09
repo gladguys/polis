@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:mockito/mockito.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/widget/button_action_card.dart';
 import 'package:polis/widget/tile/proposta_tile_connected.dart';
@@ -117,6 +118,19 @@ void main() {
       });
       expect(likeButton, findsOneWidget);
       await tester.tap(likeButton);
+    });
+
+    testWidgets('should go to profile page when click on politic photo',
+        (tester) async {
+      await tester.pumpWidget(
+        connectedWidget(
+          connectedWidget(PropostaTileConnected(proposta)),
+        ),
+      );
+      final politicPhoto = find.byType(ClipRRect);
+      expect(politicPhoto, findsOneWidget);
+      await tester.tap(politicPhoto);
+      verify(mockObserver.didPush(any, any));
     });
   });
 }

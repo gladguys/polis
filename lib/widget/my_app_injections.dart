@@ -66,17 +66,22 @@ class MyAppInjections extends StatelessWidget {
           ),
         ),
         RepositoryProvider(
-          create: (_) => FirebaseSearchPoliticRepository(
-            firestore: Firestore.instance,
-          ),
-        ),
-        RepositoryProvider(
           create: (_) => FirebasePartidoRepository(
             firestore: Firestore.instance,
           ),
         ),
         RepositoryProvider(
           create: (_) => HivePartidoRepository(
+            hive: Hive,
+          ),
+        ),
+        RepositoryProvider(
+          create: (_) => FirebasePoliticoRepository(
+            firestore: Firestore.instance,
+          ),
+        ),
+        RepositoryProvider(
+          create: (_) => HivePoliticoRepository(
             hive: Hive,
           ),
         ),
@@ -102,6 +107,11 @@ class MyAppInjections extends StatelessWidget {
         ),
         RepositoryProvider(
           create: (_) => FirebaseFavoritePostsRepository(
+            firestore: Firestore.instance,
+          ),
+        ),
+        RepositoryProvider(
+          create: (_) => FirebaseSyncLogRepository(
             firestore: Firestore.instance,
           ),
         ),

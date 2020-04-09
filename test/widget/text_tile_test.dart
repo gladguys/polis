@@ -5,12 +5,12 @@ void main() {
   group('TextTitle tests', () {
     test('default font size', () {
       final textTile = TextTitle('text');
-      expect(textTile.fontSize, 16);
+      expect(textTile.fontSize, 18.0);
     });
 
     test('customised font size', () {
-      final textTile = TextTitle('text', fontSize: 18);
-      expect(textTile.fontSize, 18);
+      final textTile = TextTitle('text', fontSize: 22);
+      expect(textTile.fontSize, 22);
     });
   });
 }
