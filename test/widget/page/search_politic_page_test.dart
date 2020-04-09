@@ -292,7 +292,7 @@ void main() {
         (tester) async {
       final mockSearchPoliticBloc = MockSearchPoliticBloc();
       when(mockSearchPoliticBloc.state)
-          .thenReturn(SearchPoliticFilterChanged([]));
+          .thenReturn(SearchPoliticFilterChanged(politics: []));
       when(mockSearchPoliticBloc.allPartidos).thenReturn([]);
       await tester.pumpWidget(
         connectedWidget(
