@@ -170,7 +170,12 @@ void main() {
           PoliticoModel(id: '2', siglaUf: 'AC'),
         ]),
         SearchPoliticFilterChanged(
-          [PoliticoModel(id: '1', siglaUf: 'CE')],
+          politics: [
+            PoliticoModel(id: '1', siglaUf: 'CE'),
+          ],
+          statePicked: 'CE',
+          partidoPicked: 'T',
+          searchTerm: '',
         ),
       ],
     );
@@ -205,7 +210,12 @@ void main() {
           PoliticoModel(id: '2', siglaPartido: 'PMDB'),
         ]),
         SearchPoliticFilterChanged(
-          [PoliticoModel(id: '1', siglaPartido: 'PT')],
+          politics: [
+            PoliticoModel(id: '1', siglaPartido: 'PT'),
+          ],
+          partidoPicked: 'PT',
+          statePicked: 'T',
+          searchTerm: '',
         ),
       ],
     );
@@ -240,7 +250,10 @@ void main() {
           PoliticoModel(id: '2', nomeEleitoral: 'Maria'),
         ]),
         SearchPoliticFilterChanged(
-          [PoliticoModel(id: '1', nomeEleitoral: 'Joao')],
+          politics: [PoliticoModel(id: '1', nomeEleitoral: 'Joao')],
+          searchTerm: 'J',
+          statePicked: 'T',
+          partidoPicked: 'T',
         ),
       ],
     );
@@ -270,7 +283,10 @@ void main() {
           PoliticoModel(id: '1', nomeEleitoral: 'João'),
         ]),
         SearchPoliticFilterChanged(
-          [PoliticoModel(id: '1', nomeEleitoral: 'João')],
+          politics: [PoliticoModel(id: '1', nomeEleitoral: 'João')],
+          statePicked: 'T',
+          partidoPicked: 'T',
+          searchTerm: 'Joa',
         ),
       ],
     );
@@ -307,11 +323,22 @@ void main() {
           PoliticoModel(id: '2', nomeEleitoral: 'Maria'),
         ]),
         SearchPoliticFilterChanged(
-          [PoliticoModel(id: '1', nomeEleitoral: 'Joao')],
+          politics: [PoliticoModel(id: '1', nomeEleitoral: 'Joao')],
+          searchTerm: 'J',
+          partidoPicked: 'T',
+          statePicked: 'T',
         ),
-        SearchPoliticFilterChanged([]),
         SearchPoliticFilterChanged(
-          [PoliticoModel(id: '1', nomeEleitoral: 'Joao')],
+          politics: [],
+          searchTerm: 'JW',
+          partidoPicked: 'T',
+          statePicked: 'T',
+        ),
+        SearchPoliticFilterChanged(
+          politics: [PoliticoModel(id: '1', nomeEleitoral: 'Joao')],
+          searchTerm: 'J',
+          partidoPicked: 'T',
+          statePicked: 'T',
         ),
       ],
     );
@@ -366,17 +393,18 @@ void main() {
           PoliticoModel(id: '2', nomeEleitoral: 'Maria'),
         ]),
         FollowedSearchPoliticsUpdated(
-            followedPolitics: [
-              ...[
-                PoliticoModel(id: '1', nomeEleitoral: 'Joao'),
-                PoliticoModel(id: '2', nomeEleitoral: 'Maria'),
-              ]
-            ],
-            isFollowing: false,
-            politicoUpdated: PoliticoModel(
-              id: '1',
-              nomeEleitoral: 'Joao',
-            )),
+          followedPolitics: [
+            ...[
+              PoliticoModel(id: '1', nomeEleitoral: 'Joao'),
+              PoliticoModel(id: '2', nomeEleitoral: 'Maria'),
+            ]
+          ],
+          isFollowing: false,
+          politicoUpdated: PoliticoModel(
+            id: '1',
+            nomeEleitoral: 'Joao',
+          ),
+        ),
       ],
     );
 
