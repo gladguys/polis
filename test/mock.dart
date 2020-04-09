@@ -21,7 +21,6 @@ import 'package:polis/repository/abstract/politic_followers_repository.dart';
 import 'package:polis/repository/abstract/politic_profile_repository.dart';
 import 'package:polis/repository/abstract/politic_suggestion_repository.dart';
 import 'package:polis/repository/abstract/post_repository.dart';
-import 'package:polis/repository/abstract/search_politic_repository.dart';
 import 'package:polis/repository/abstract/signin_repository.dart';
 import 'package:polis/repository/abstract/signup_repository.dart';
 import 'package:polis/repository/abstract/timeline_repository.dart';
@@ -94,9 +93,6 @@ class MockUserRepository extends Mock implements UserRepository {}
 class MockUserFollowingPoliticsRepository extends Mock
     implements UserFollowingPoliticsRepository {}
 
-class MockSearchPoliticRepository extends Mock
-    implements SearchPoliticRepository {}
-
 class MockPostRepository extends Mock implements PostRepository {}
 
 class MockFavoritePostsRepository extends Mock
@@ -108,6 +104,9 @@ class MockFirebasePartidoRepository extends Mock
     implements FirebasePartidoRepository {}
 
 class MockHivePartidoRepository extends Mock implements HivePartidoRepository {}
+
+class MockHivePoliticoRepository extends Mock
+    implements HivePoliticoRepository {}
 
 // Firebase
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
@@ -158,6 +157,8 @@ class MockSharedPreferencesService extends Mock
     implements SharedPreferencesService {}
 
 class MockPartidoService extends Mock implements PartidoService {}
+
+class MockPoliticoService extends Mock implements PoliticoService {}
 
 class MockUrlLauncherService extends Mock implements UrlLauncherService {}
 
