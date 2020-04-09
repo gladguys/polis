@@ -32,8 +32,6 @@
 /android/app/google-services.json
 /coverage/*
 
-*.g*.dart
-
 # Web related
 lib/generated_plugin_registrant.dart
 

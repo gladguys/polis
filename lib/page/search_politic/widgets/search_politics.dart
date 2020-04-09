@@ -60,11 +60,7 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Container(
-          width: double.maxFinite,
-          height: 1,
-          color: Colors.grey[300],
-        ),
+        Divider(height: 1, color: Colors.grey[300]),
         _buildFilter(),
         const SizedBox(height: 12),
         Row(

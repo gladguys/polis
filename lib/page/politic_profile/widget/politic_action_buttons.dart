@@ -23,9 +23,9 @@ class PoliticActionButtons extends StatelessWidget {
         ButtonFollowUnfollow(
           key: const ValueKey('follow-politic-profile'),
           isOutline: false,
-          height: 26,
-          width: 130,
-          fontSize: 12,
+          height: 30,
+          width: 140,
+          fontSize: 14,
           isFollow: isBeingFollowedByUser,
           onPressed: () {
             context.bloc<PoliticProfileBloc>().add(
@@ -37,7 +37,7 @@ class PoliticActionButtons extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         Container(
-          height: 26,
+          height: 30,
           width: 130,
           child: OutlineButton(
             key: const ValueKey('send-email-btn'),
@@ -48,7 +48,7 @@ class PoliticActionButtons extends StatelessWidget {
             child: const Text(
               SEND_EMAIL,
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 14,
               ),
             ),
           ),

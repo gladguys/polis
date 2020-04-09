@@ -6,6 +6,7 @@ import 'package:polis/bloc/blocs.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
+import 'package:polis/widget/card_base.dart';
 
 import '../../mock.dart';
 import '../utils.dart';
@@ -140,7 +141,7 @@ void main() {
           ),
         ),
       );
-      expect(find.byType(ListTile), findsNWidgets(2));
+      expect(find.byType(CardBase), findsNWidgets(2));
     });
 
     testWidgets('''should call bloc when clicked follow button''',
@@ -168,9 +169,9 @@ void main() {
           ),
         ),
       );
-      expect(find.byType(ListTile), findsOneWidget);
+      expect(find.byType(CardBase), findsWidgets);
       final followUnfollowButton =
-          find.byKey(const ValueKey('follow-unfollow-btn'));
+          find.byKey(const ValueKey('follow-unfollow-btn')).first;
       expect(followUnfollowButton, findsOneWidget);
       await tester.tap(followUnfollowButton);
       verify(

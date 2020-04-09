@@ -15,19 +15,21 @@ void main() {
         (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          BlocProvider.value(
-            value: UserBloc(
-              user: UserModel(userId: '1'),
-              repository: MockUserRepository(),
-            ),
-            child: PoliticsFollowingQuantity(
-              politics: [],
+          Scaffold(
+            body: BlocProvider.value(
+              value: UserBloc(
+                user: UserModel(userId: '1'),
+                repository: MockUserRepository(),
+              ),
+              child: PoliticsFollowingQuantity(
+                politics: [],
+              ),
             ),
           ),
         ),
       );
       await tester.pumpAndSettle();
-      final qtdButton = find.byType(GestureDetector);
+      final qtdButton = find.byType(InkWell);
       expect(qtdButton, findsOneWidget);
       await tester.tap(qtdButton);
       verify(mockObserver.didPush(any, any));

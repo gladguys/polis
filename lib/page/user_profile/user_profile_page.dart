@@ -16,29 +16,31 @@ class UserProfilePage extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: DefaultBottombar(USER_PROFILE_PAGE),
       body: SafeArea(
-        child:
-            BlocBuilder<UserProfileBloc, UserProfileState>(builder: (_, state) {
-          if (state is FetchUserRelatedInfoSuccess) {
-            return Container(
-              width: double.infinity,
-              child: Column(
+        child: BlocBuilder<UserProfileBloc, UserProfileState>(
+          builder: (_, state) {
+            if (state is FetchUserRelatedInfoSuccess) {
+              return Column(
                 children: <Widget>[
+                  const SizedBox(height: 16),
                   PersonalUserInfo(user: context.bloc<UserBloc>().user),
-                  const SizedBox(height: 22),
+                  const SizedBox(height: 16),
                   PoliticsFollowingQuantity(politics: state.politicsFollowing),
-                  const Divider(height: 22),
-                  UserActivities(activities: state.userActivities),
+                  const SizedBox(height: 24),
+                  const Divider(color: Colors.grey, thickness: 0.3),
+                  Expanded(
+                    child: UserActivities(activities: state.userActivities),
+                  ),
                 ],
-              ),
-            );
-          } else if (state is LoadingFetchUserInfo) {
-            return CenteredLoading();
-          } else {
-            return const Center(
-              child: Text(ERROR_FETCHING_USER_INFO),
-            );
-          }
-        }),
+              );
+            } else if (state is LoadingFetchUserInfo) {
+              return CenteredLoading();
+            } else {
+              return const Center(
+                child: Text(ERROR_FETCHING_USER_INFO),
+              );
+            }
+          },
+        ),
       ),
     );
   }
