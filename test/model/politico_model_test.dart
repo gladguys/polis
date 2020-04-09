@@ -61,6 +61,21 @@ void main() {
       expect(modelToString == result, true);
     });
 
+    test('hashCode', () {
+      final politico1 = PoliticoModel(
+        id: '1',
+      );
+      final politico11 = PoliticoModel(
+        id: '1',
+      );
+      final politico2 = PoliticoModel(
+        id: '2',
+      );
+
+      expect(politico1.hashCode, politico11.hashCode);
+      expect(politico1.hashCode == politico2.hashCode, false);
+    });
+
     test('fromJson()', () {
       expect(PoliticoModel.fromJson(jsonPolitico) == politicoModel, true);
     });
