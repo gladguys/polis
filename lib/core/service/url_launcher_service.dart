@@ -10,4 +10,8 @@ class UrlLauncherService {
   Future<bool> launchEmailUrl(String email) {
     return launch('$kLaunchUrlEmail:$email');
   }
+
+  Future<bool> launchUrl(String url) {
+    return launch(url);
+  }
 }
