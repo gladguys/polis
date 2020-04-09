@@ -9,7 +9,20 @@ void main() {
       expect(FetchSearchPoliticsSuccess([]), FetchSearchPoliticsSuccess([]));
       expect(LoadingFetchPolitics(), LoadingFetchPolitics());
       expect(FetchSearchPoliticsFailed(), FetchSearchPoliticsFailed());
-      expect(SearchPoliticFilterChanged([]), SearchPoliticFilterChanged([]));
+      expect(
+        SearchPoliticFilterChanged(
+          politics: [],
+          partidoPicked: 'PT',
+          statePicked: 'CE',
+          searchTerm: 'Lu',
+        ),
+        SearchPoliticFilterChanged(
+          politics: [],
+          partidoPicked: 'PT',
+          statePicked: 'CE',
+          searchTerm: 'Lu',
+        ),
+      );
 
       expect(
           FollowedSearchPoliticsUpdated(
