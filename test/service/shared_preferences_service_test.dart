@@ -12,6 +12,8 @@ void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.setMockInitialValues({
     'USER': null,
+    'PARTIDO_HASH_PREF': 'PARTIDO_HASH',
+    'POLITICO_HASH_PREF': 'POLITICO_HASH',
   });
   MockSharedPreferences mockSharedPreferences;
   SharedPreferencesService sharedPreferencesService;
@@ -41,6 +43,48 @@ void main() async {
       final userEncoded = jsonEncode(user.toJson());
       when(mockSharedPreferences.getString('USER')).thenReturn(userEncoded);
       expect(sharedPreferencesService.getUser(), user);
+    });
+
+    group('setPartidoHash', () {
+      test('non null', () {
+        sharedPreferencesService.setUser(null);
+        expect(sharedPreferencesService.getPartidoHash(), isNull);
+        sharedPreferencesService.setPartidoHash('hash');
+      });
+
+      test('null', () {
+        sharedPreferencesService.setUser(null);
+        expect(sharedPreferencesService.getPartidoHash(), isNull);
+        sharedPreferencesService.setPartidoHash(null);
+        expect(sharedPreferencesService.getPartidoHash(), isNull);
+      });
+    });
+
+    test('getPartidoHash', () {
+      when(mockSharedPreferences.getString(PARTIDO_HASH_PREF))
+          .thenReturn('PARTIDO_HASH');
+      expect(sharedPreferencesService.getPartidoHash(), 'PARTIDO_HASH');
+    });
+
+    group('setPoliticoHash', () {
+      test('non null', () {
+        sharedPreferencesService.setUser(null);
+        expect(sharedPreferencesService.getPoliticoHash(), isNull);
+        sharedPreferencesService.setPoliticoHash('hash');
+      });
+
+      test('null', () {
+        sharedPreferencesService.setUser(null);
+        expect(sharedPreferencesService.getPoliticoHash(), isNull);
+        sharedPreferencesService.setPoliticoHash(null);
+        expect(sharedPreferencesService.getPoliticoHash(), isNull);
+      });
+    });
+
+    test('getPoliticoHash', () {
+      when(mockSharedPreferences.getString(POLITICO_HASH_PREF))
+          .thenReturn('POLITICO_HASH');
+      expect(sharedPreferencesService.getPoliticoHash(), 'POLITICO_HASH');
     });
   });
 }
