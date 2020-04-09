@@ -11,7 +11,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'bloc/flutter_bloc_delegate.dart';
 import 'core/service/locator.dart';
 import 'core/service/services.dart';
-import 'model/models.dart';
 import 'widget/my_app.dart';
 import 'widget/my_app_injections.dart';
 
