@@ -64,6 +64,7 @@ void main() {
           PartidoModel(id: '1'),
           PartidoModel(id: '2'),
         ]);
+        verify(mockPartidoBox.clear()).called(1);
         verify(mockPartidoBox.add(any)).called(2);
       });
 
@@ -73,6 +74,7 @@ void main() {
         when(mockHive.box<PartidoModel>(PARTIDOS_BOX))
             .thenReturn(mockPartidoBox);
         await hivePartidoRepository.storeAllPartidos([]);
+        verify(mockPartidoBox.clear()).called(1);
         verifyNever(mockPartidoBox.add(any));
       });
 

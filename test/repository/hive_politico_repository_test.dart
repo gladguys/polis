@@ -64,6 +64,7 @@ void main() {
           PoliticoModel(id: '1'),
           PoliticoModel(id: '2'),
         ]);
+        verify(mockPoliticoBox.clear()).called(1);
         verify(mockPoliticoBox.add(any)).called(2);
       });
 
@@ -73,6 +74,7 @@ void main() {
         when(mockHive.box<PoliticoModel>(POLITICOS_BOX))
             .thenReturn(mockPoliticoBox);
         await hivePoliticoRepository.storeAllPoliticos([]);
+        verify(mockPoliticoBox.clear()).called(1);
         verifyNever(mockPoliticoBox.add(any));
       });
 
