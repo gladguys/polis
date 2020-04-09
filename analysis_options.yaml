@@ -7,3 +7,4 @@ linter:
     one_member_abstracts: false
     directives_ordering: false
     prefer_const_constructors: true
+    type_annotate_public_apis: false
