@@ -33,10 +33,10 @@ class PoliticActivities extends StatelessWidget {
         itemBuilder: (_, i) {
           final activity = lastActivities[i];
           if (activity is DespesaModel) {
-            return DespesaTileConnected(activity);
+            return DespesaTileConnected(activity, clickableImage: false);
           } else {
             final proposicao = activity as PropostaModel;
-            return PropostaTileConnected(proposicao);
+            return PropostaTileConnected(proposicao, clickableImage: false);
           }
         },
         itemCount: lastActivities.length,

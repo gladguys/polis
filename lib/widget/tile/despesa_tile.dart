@@ -16,19 +16,22 @@ import '../photo.dart';
 import '../text_rich.dart';
 
 class DespesaTile extends StatelessWidget {
-  DespesaTile(this.despesa);
+  DespesaTile(this.despesa, {this.clickableImage});
 
   final DespesaModel despesa;
+  final bool clickableImage;
 
   @override
   Widget build(BuildContext context) {
     return CardBase(
       slotLeft: GestureDetector(
         child: Photo(url: despesa.fotoPolitico),
-        onTap: () => SimpleRouter.forward(
-          PoliticProfilePageConnected(despesa.idPolitico),
-          name: POLITIC_PROFILE_PAGE,
-        ),
+        onTap: () => clickableImage
+            ? SimpleRouter.forward(
+                PoliticProfilePageConnected(despesa.idPolitico),
+                name: POLITIC_PROFILE_PAGE,
+              )
+            : null,
       ),
       slotCenter: BlocBuilder<PostBloc, PostState>(
         builder: (_, state) => Column(
