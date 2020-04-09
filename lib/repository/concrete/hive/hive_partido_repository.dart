@@ -25,6 +25,7 @@ class HivePartidoRepository implements PartidoRepository {
     try {
       await hive.openBox<PartidoModel>(PARTIDOS_BOX);
       final partidoBox = await hive.box<PartidoModel>(PARTIDOS_BOX);
+      await partidoBox.clear();
       for (var partido in partidos) {
         await partidoBox.add(partido);
       }
