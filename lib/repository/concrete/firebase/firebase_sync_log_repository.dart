@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/exception/exceptions.dart';
 import '../../abstract/sync_log_repository.dart';
 import 'collection.dart';
 
@@ -15,13 +16,21 @@ class FirebaseSyncLogRepository implements SyncLogRepository {
 
   @override
   Future<String> getPartidoHash() async {
-    final documentSnapshot = await syncLogRef.document(PARTIDO_SYNC).get();
-    return documentSnapshot.data[HASH];
+    try {
+      final documentSnapshot = await syncLogRef.document(PARTIDO_SYNC).get();
+      return documentSnapshot.data[HASH];
+    } on Exception {
+      throw ComunicationException();
+    }
   }
 
   @override
   Future<String> getPoliticoHash() async {
-    final documentSnapshot = await syncLogRef.document(POLITICO_SYNC).get();
-    return documentSnapshot.data[HASH];
+    try {
+      final documentSnapshot = await syncLogRef.document(POLITICO_SYNC).get();
+      return documentSnapshot.data[HASH];
+    } on Exception {
+      throw ComunicationException();
+    }
   }
 }

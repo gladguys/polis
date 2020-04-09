@@ -11,7 +11,7 @@ void main() {
   MockHive mockHive;
   MockPartidoBox mockPartidoBox;
 
-  group('HivePartidoRepository', () {
+  group('HivePartidoRepository tests', () {
     setUp(() {
       mockHive = MockHive();
       hivePartidoRepository = HivePartidoRepository(

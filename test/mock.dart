@@ -23,6 +23,7 @@ import 'package:polis/repository/abstract/politic_suggestion_repository.dart';
 import 'package:polis/repository/abstract/post_repository.dart';
 import 'package:polis/repository/abstract/signin_repository.dart';
 import 'package:polis/repository/abstract/signup_repository.dart';
+import 'package:polis/repository/abstract/sync_log_repository.dart';
 import 'package:polis/repository/abstract/timeline_repository.dart';
 import 'package:polis/repository/abstract/user_following_politics_repository.dart';
 import 'package:polis/repository/abstract/user_profile_repository.dart';
@@ -105,8 +106,13 @@ class MockFirebasePartidoRepository extends Mock
 
 class MockHivePartidoRepository extends Mock implements HivePartidoRepository {}
 
+class MockFirebasePoliticoRepository extends Mock
+    implements FirebasePoliticoRepository {}
+
 class MockHivePoliticoRepository extends Mock
     implements HivePoliticoRepository {}
+
+class MockSyncLogRepository extends Mock implements SyncLogRepository {}
 
 // Firebase
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
@@ -147,6 +153,8 @@ class MockCrashlytics extends Mock implements Crashlytics {}
 class MockHive extends Mock implements HiveInterface {}
 
 class MockPartidoBox extends Mock implements Box<PartidoModel> {}
+
+class MockPoliticoBox extends Mock implements Box<PoliticoModel> {}
 
 // Service
 class MockAnalyticsService extends Mock implements AnalyticsService {}
