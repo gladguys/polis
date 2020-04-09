@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/user_following_politics/bloc.dart';
+import '../../../i18n/label.dart';
 import '../../../model/models.dart';
+import '../../../widget/field_rounded.dart';
 import 'following_politics_list.dart';
 
 class FollowingPoliticsSearch extends StatelessWidget {
@@ -15,35 +18,23 @@ class FollowingPoliticsSearch extends StatelessWidget {
     return Column(
       children: <Widget>[
         Expanded(
-          flex: 9,
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: FollowingPoliticsList(politicos),
+          child: FollowingPoliticsList(politicos),
+        ),
+        Divider(height: 1, color: Colors.grey[300]),
+        const SizedBox(height: 12),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: FieldRounded(
+            key: const ValueKey('search-textfield'),
+            hintText: SEARCH_HERE,
+            width: 300,
+            iconPrefix: FontAwesomeIcons.search,
+            onChanged: (term) => context
+                .bloc<UserFollowingPoliticsBloc>()
+                .add(SearchPoliticsByTerm(term)),
           ),
         ),
-        Expanded(
-          flex: 1,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: TextField(
-              key: const ValueKey('search-textfield'),
-              decoration: InputDecoration(
-                prefixIcon: Icon(
-                  Icons.search,
-                  size: 26,
-                  color: Colors.black,
-                ),
-                hintText: 'Pesquise...',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-              onChanged: (term) => context
-                  .bloc<UserFollowingPoliticsBloc>()
-                  .add(SearchPoliticsByTerm(term)),
-            ),
-          ),
-        )
+        const SizedBox(height: 12),
       ],
     );
   }

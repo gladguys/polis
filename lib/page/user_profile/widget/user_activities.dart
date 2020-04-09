@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../i18n/i18n.dart';
+import '../../../widget/not_found.dart';
+import '../../../widget/text_title.dart';
 
 class UserActivities extends StatelessWidget {
   UserActivities({this.activities});
@@ -12,15 +14,10 @@ class UserActivities extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        const Text(
-          MY_ACTIVITIES,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
-          ),
+        TextTitle(MY_ACTIVITIES, fontSize: 15),
+        Expanded(
+          child: NotFound(msg: NO_RECENT_ACTIVITY),
         ),
-        const SizedBox(height: 18),
-        const Text(NO_RECENT_ACTIVITY),
       ],
     );
   }
