@@ -123,6 +123,13 @@ class DespesaTile extends StatelessWidget {
             icon: FontAwesomeIcons.comment,
             onTap: () {},
           ),
+          const SizedBox(width: 16),
+          ButtonActionCard(
+            icon: FontAwesomeIcons.filePdf,
+            onTap: () => context.bloc<DespesaImageBloc>().add(
+                  OpenDespesaImage(despesa.urlDocumento),
+                ),
+          ),
           const Spacer(flex: 1),
           ButtonActionCard(
             isIconOnly: true,
