@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
+import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/service/locator.dart';
 import 'package:polis/model/despesa_model.dart';
 import 'package:polis/widget/button_action_card.dart';
+import 'package:polis/widget/tile/despesa_tile.dart';
 import 'package:polis/widget/tile/despesa_tile_connected.dart';
 
+import '../mock.dart';
 import 'utils.dart';
 
 void main() {
+  initLocator(MockSharedPreferences());
   TestWidgetsFlutterBinding.ensureInitialized();
   initializeDateFormatting('pt_BR', null);
 
@@ -25,6 +31,7 @@ void main() {
         tipoDespesa: 'despesa',
         valorLiquido: '3.51',
         dataDocumento: '10-01-2020',
+        urlDocumento: 'urlDoc',
       );
     });
 
@@ -131,14 +138,42 @@ void main() {
     testWidgets('should go to profile page when click on politic photo',
         (tester) async {
       await tester.pumpWidget(
-        connectedWidget(
-          connectedWidget(DespesaTileConnected(despesa)),
-        ),
+        connectedWidget(DespesaTileConnected(despesa)),
       );
       final politicPhoto = find.byType(ClipRRect);
       expect(politicPhoto, findsOneWidget);
       await tester.tap(politicPhoto);
       verify(mockObserver.didPush(any, any));
+    });
+
+    testWidgets(
+        'should call bloc with OpenDespesaImage event when click on pdf button',
+        (tester) async {
+      final mockDespesaImageBloc = MockDespesaImageBloc();
+      final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.isPostFavorite).thenReturn(true);
+      await tester.pumpWidget(
+        connectedWidget(
+          MultiBlocProvider(
+            providers: [
+              BlocProvider<PostBloc>(create: (_) => mockPostBloc),
+              BlocProvider<DespesaImageBloc>(
+                  create: (_) => mockDespesaImageBloc),
+            ],
+            child: DespesaTile(despesa),
+          ),
+        ),
+      );
+      final docButton = find.byWidgetPredicate((widget) {
+        if (widget is ButtonActionCard &&
+            widget.icon == FontAwesomeIcons.filePdf) {
+          return true;
+        }
+        return false;
+      });
+      expect(docButton, findsOneWidget);
+      await tester.tap(docButton);
+      verify(mockDespesaImageBloc.add(OpenDespesaImage('urlDoc'))).called(1);
     });
   });
 }

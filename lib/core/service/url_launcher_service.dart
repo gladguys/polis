@@ -12,6 +12,10 @@ class UrlLauncherService {
   }
 
   Future<bool> launchUrl(String url) {
-    return launch(url);
+    try {
+      return launch(url);
+    } on Exception {
+      rethrow;
+    }
   }
 }

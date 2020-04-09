@@ -26,7 +26,7 @@ class DespesaTileConnected extends StatelessWidget {
         bloc: DespesaImageBloc(
           urlLaunchService: G<UrlLauncherService>(),
         ),
-        page: DespesaTile(despesa),
+        page: DespesaTile(despesa, clickableImage: clickableImage),
       ),
     );
   }
