@@ -8,19 +8,18 @@ import './bloc.dart';
 import '../../core/service/services.dart';
 import '../../model/models.dart';
 import '../../repository/abstract/follow_repository.dart';
-import '../../repository/abstract/search_politic_repository.dart';
 import '../../repository/abstract/user_following_politics_repository.dart';
 import '../blocs.dart';
 
 class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
   SearchPoliticBloc({
-    @required this.searchPoliticRepository,
+    @required this.politicoService,
     @required this.userFollowingPoliticsRepository,
     @required this.followRepository,
     @required this.partidoService,
     @required this.politicProfileBloc,
   }) {
-    assert(searchPoliticRepository != null);
+    assert(politicoService != null);
     assert(userFollowingPoliticsRepository != null);
     assert(followRepository != null);
     assert(partidoService != null);
@@ -38,9 +37,9 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
     });
   }
 
-  final SearchPoliticRepository searchPoliticRepository;
   final UserFollowingPoliticsRepository userFollowingPoliticsRepository;
   final FollowRepository followRepository;
+  final PoliticoService politicoService;
   final PartidoService partidoService;
   final PoliticProfileBloc politicProfileBloc;
 
@@ -65,7 +64,7 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
 
       try {
         allPartidos = await partidoService.getAllPartidos();
-        allPolitics = politics = await searchPoliticRepository.getAllPolitics();
+        allPolitics = politics = await politicoService.getAllPoliticos();
         followedPolitics = await userFollowingPoliticsRepository
             .getFollowingPolitics(event.userId);
         _initPoliticBeingFollowed();
