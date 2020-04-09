@@ -19,6 +19,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(PartidoModelAdapter());
+  Hive.registerAdapter(PoliticoModelAdapter());
   initLocator(await SharedPreferences.getInstance());
   G<AdService>().initAds();
   G<CrashlyticsService>().initCrashlytics();

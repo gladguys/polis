@@ -21,9 +21,9 @@ import 'package:polis/repository/abstract/politic_followers_repository.dart';
 import 'package:polis/repository/abstract/politic_profile_repository.dart';
 import 'package:polis/repository/abstract/politic_suggestion_repository.dart';
 import 'package:polis/repository/abstract/post_repository.dart';
-import 'package:polis/repository/abstract/search_politic_repository.dart';
 import 'package:polis/repository/abstract/signin_repository.dart';
 import 'package:polis/repository/abstract/signup_repository.dart';
+import 'package:polis/repository/abstract/sync_log_repository.dart';
 import 'package:polis/repository/abstract/timeline_repository.dart';
 import 'package:polis/repository/abstract/user_following_politics_repository.dart';
 import 'package:polis/repository/abstract/user_profile_repository.dart';
@@ -94,9 +94,6 @@ class MockUserRepository extends Mock implements UserRepository {}
 class MockUserFollowingPoliticsRepository extends Mock
     implements UserFollowingPoliticsRepository {}
 
-class MockSearchPoliticRepository extends Mock
-    implements SearchPoliticRepository {}
-
 class MockPostRepository extends Mock implements PostRepository {}
 
 class MockFavoritePostsRepository extends Mock
@@ -108,6 +105,14 @@ class MockFirebasePartidoRepository extends Mock
     implements FirebasePartidoRepository {}
 
 class MockHivePartidoRepository extends Mock implements HivePartidoRepository {}
+
+class MockFirebasePoliticoRepository extends Mock
+    implements FirebasePoliticoRepository {}
+
+class MockHivePoliticoRepository extends Mock
+    implements HivePoliticoRepository {}
+
+class MockSyncLogRepository extends Mock implements SyncLogRepository {}
 
 // Firebase
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
@@ -149,6 +154,8 @@ class MockHive extends Mock implements HiveInterface {}
 
 class MockPartidoBox extends Mock implements Box<PartidoModel> {}
 
+class MockPoliticoBox extends Mock implements Box<PoliticoModel> {}
+
 // Service
 class MockAnalyticsService extends Mock implements AnalyticsService {}
 
@@ -158,6 +165,8 @@ class MockSharedPreferencesService extends Mock
     implements SharedPreferencesService {}
 
 class MockPartidoService extends Mock implements PartidoService {}
+
+class MockPoliticoService extends Mock implements PoliticoService {}
 
 class MockUrlLauncherService extends Mock implements UrlLauncherService {}
 

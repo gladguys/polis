@@ -5,8 +5,8 @@ import '../../repository/abstract/sync_log_repository.dart';
 import '../../repository/concrete/repositories.dart';
 import 'services.dart';
 
-class PartidoService {
-  PartidoService(
+class PoliticoService {
+  PoliticoService(
       {@required this.firebaseRepository,
       @required this.hiveRepository,
       @required this.syncLogRepository,
@@ -16,21 +16,21 @@ class PartidoService {
         assert(syncLogRepository != null),
         assert(sharedPreferencesService != null);
 
-  final FirebasePartidoRepository firebaseRepository;
-  final HivePartidoRepository hiveRepository;
+  final FirebasePoliticoRepository firebaseRepository;
+  final HivePoliticoRepository hiveRepository;
   final SyncLogRepository syncLogRepository;
   final SharedPreferencesService sharedPreferencesService;
 
-  Future<List<PartidoModel>> getAllPartidos() async {
-    final localHash = await sharedPreferencesService.getPartidoHash();
-    final remoteHash = await syncLogRepository.getPartidoHash();
+  Future<List<PoliticoModel>> getAllPoliticos() async {
+    final localHash = await sharedPreferencesService.getPoliticoHash();
+    final remoteHash = await syncLogRepository.getPoliticoHash();
     if (localHash != remoteHash) {
-      final partidosFromFirebase = await firebaseRepository.getAllPartidos();
-      await hiveRepository.storeAllPartidos(partidosFromFirebase);
-      await sharedPreferencesService.setPartidoHash(remoteHash);
-      return partidosFromFirebase;
+      final politicosFromFirebase = await firebaseRepository.getAllPoliticos();
+      await hiveRepository.storeAllPoliticos(politicosFromFirebase);
+      await sharedPreferencesService.setPoliticoHash(remoteHash);
+      return politicosFromFirebase;
     } else {
-      return await hiveRepository.getAllPartidos();
+      return await hiveRepository.getAllPoliticos();
     }
   }
 }

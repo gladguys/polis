@@ -1,10 +1,11 @@
-import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'politico_model.g.dart';
 
 @JsonSerializable()
-class PoliticoModel extends Equatable {
+@HiveType(typeId: 1)
+class PoliticoModel extends HiveObject {
   PoliticoModel(
       {this.id,
       this.nomeCivil,
@@ -21,19 +22,46 @@ class PoliticoModel extends Equatable {
       this.dataNascimento,
       this.escolaridade});
 
+  @HiveField(0)
   final String id;
+
+  @HiveField(1)
   final String nomeCivil;
+
+  @HiveField(2)
   final String siglaPartido;
+
+  @HiveField(3)
   final String siglaUf;
+
+  @HiveField(4)
   final String urlFoto;
+
+  @HiveField(5)
   final String email;
+
+  @HiveField(6)
   final String nomeEleitoral;
+
+  @HiveField(7)
   final String status;
+
+  @HiveField(8)
   final String condicaoEleitoral;
+
+  @HiveField(9)
   final String cpf;
+
+  @HiveField(10)
   final String sexo;
+
+  @HiveField(11)
   final double quantidadeSeguidores;
+
+  @HiveField(12)
   final DateTime dataNascimento;
+
+  @HiveField(13)
   final String escolaridade;
 
   factory PoliticoModel.fromJson(Map<String, dynamic> json) =>
@@ -76,7 +104,16 @@ class PoliticoModel extends Equatable {
   }
 
   @override
-  List<Object> get props => [id];
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PoliticoModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
+
+  @override
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
+  int get hashCode => id.hashCode;
 
   @override
   String toString() {

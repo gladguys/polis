@@ -9,24 +9,24 @@ import '../mock.dart';
 void main() {
   group('SearchPoliticBloc tests', () {
     SearchPoliticBloc searchPoliticBloc;
-    MockSearchPoliticRepository mockSearchPoliticRepository;
     MockUserFollowingPoliticsRepository mockUserFollowingPoliticsRepository;
     MockFollowRepository mockFollowRepository;
     MockPartidoService mockPartidoService;
+    MockPoliticoService mockPoliticoService;
     MockPoliticProfileBloc mockPoliticProfileBloc;
 
     setUp(() {
-      mockSearchPoliticRepository = MockSearchPoliticRepository();
       mockUserFollowingPoliticsRepository =
           MockUserFollowingPoliticsRepository();
       mockFollowRepository = MockFollowRepository();
       mockPartidoService = MockPartidoService();
+      mockPoliticoService = MockPoliticoService();
       mockPoliticProfileBloc = MockPoliticProfileBloc();
       searchPoliticBloc = SearchPoliticBloc(
-        searchPoliticRepository: mockSearchPoliticRepository,
         userFollowingPoliticsRepository: mockUserFollowingPoliticsRepository,
         followRepository: mockFollowRepository,
         partidoService: mockPartidoService,
+        politicoService: mockPoliticoService,
         politicProfileBloc: mockPoliticProfileBloc,
       );
     });
@@ -34,19 +34,19 @@ void main() {
     test('asserts', () {
       expect(
           () => SearchPoliticBloc(
+                userFollowingPoliticsRepository: null,
+                followRepository: mockFollowRepository,
+                politicoService: mockPoliticoService,
+                partidoService: mockPartidoService,
+                politicProfileBloc: mockPoliticProfileBloc,
+              ),
+          throwsAssertionError);
+      expect(
+          () => SearchPoliticBloc(
                 userFollowingPoliticsRepository:
                     mockUserFollowingPoliticsRepository,
                 followRepository: null,
-                searchPoliticRepository: mockSearchPoliticRepository,
-                partidoService: mockPartidoService,
-                politicProfileBloc: mockPoliticProfileBloc,
-              ),
-          throwsAssertionError);
-      expect(
-          () => SearchPoliticBloc(
-                userFollowingPoliticsRepository: null,
-                followRepository: mockFollowRepository,
-                searchPoliticRepository: mockSearchPoliticRepository,
+                politicoService: mockPoliticoService,
                 partidoService: mockPartidoService,
                 politicProfileBloc: mockPoliticProfileBloc,
               ),
@@ -56,7 +56,7 @@ void main() {
                 userFollowingPoliticsRepository:
                     mockUserFollowingPoliticsRepository,
                 followRepository: mockFollowRepository,
-                searchPoliticRepository: null,
+                politicoService: null,
                 partidoService: mockPartidoService,
                 politicProfileBloc: mockPoliticProfileBloc,
               ),
@@ -66,7 +66,7 @@ void main() {
                 userFollowingPoliticsRepository:
                     mockUserFollowingPoliticsRepository,
                 followRepository: mockFollowRepository,
-                searchPoliticRepository: mockSearchPoliticRepository,
+                politicoService: mockPoliticoService,
                 partidoService: null,
                 politicProfileBloc: mockPoliticProfileBloc,
               ),
@@ -76,7 +76,7 @@ void main() {
                 userFollowingPoliticsRepository:
                     mockUserFollowingPoliticsRepository,
                 followRepository: mockFollowRepository,
-                searchPoliticRepository: mockSearchPoliticRepository,
+                politicoService: mockPoliticoService,
                 partidoService: mockPartidoService,
                 politicProfileBloc: null,
               ),
@@ -90,7 +90,7 @@ void main() {
     blocTest(
       '''Expects [LoadingFetchPolitics, FetchSearchPoliticsSuccess] when FetchPolitics added''',
       build: () async {
-        when(mockSearchPoliticRepository.getAllPolitics()).thenAnswer(
+        when(mockPoliticoService.getAllPoliticos()).thenAnswer(
           (_) => Future.value([
             PoliticoModel(id: '1'),
             PoliticoModel(id: '2'),
@@ -108,7 +108,7 @@ void main() {
         return;
       },
       verify: (userFollowingPoliticsBloc) async {
-        verify(mockSearchPoliticRepository.getAllPolitics()).called(1);
+        verify(mockPoliticoService.getAllPoliticos()).called(1);
         verify(mockUserFollowingPoliticsRepository.getFollowingPolitics('1'))
             .called(1);
       },
@@ -124,8 +124,7 @@ void main() {
     blocTest(
       '''Expects [LoadingFetchPolitics, FetchSearchPoliticsFailed] when FetchPolitics failed''',
       build: () async {
-        when(mockSearchPoliticRepository.getAllPolitics())
-            .thenThrow(Exception());
+        when(mockPoliticoService.getAllPoliticos()).thenThrow(Exception());
         return searchPoliticBloc;
       },
       act: (searchPoliticBloc) {
@@ -133,7 +132,7 @@ void main() {
         return;
       },
       verify: (userFollowingPoliticsBloc) async {
-        verify(mockSearchPoliticRepository.getAllPolitics()).called(1);
+        verify(mockPoliticoService.getAllPoliticos()).called(1);
       },
       expect: [
         LoadingFetchPolitics(),
@@ -144,7 +143,7 @@ void main() {
     blocTest(
       'Expects [SearchPoliticFilterChanged] when state filter',
       build: () async {
-        when(mockSearchPoliticRepository.getAllPolitics()).thenAnswer(
+        when(mockPoliticoService.getAllPoliticos()).thenAnswer(
           (_) => Future.value([
             PoliticoModel(id: '1', siglaUf: 'CE'),
             PoliticoModel(id: '2', siglaUf: 'AC'),
@@ -184,7 +183,7 @@ void main() {
     blocTest(
       'Expects [SearchPoliticFilterChanged] when partido filter',
       build: () async {
-        when(mockSearchPoliticRepository.getAllPolitics()).thenAnswer(
+        when(mockPoliticoService.getAllPoliticos()).thenAnswer(
           (_) => Future.value([
             PoliticoModel(id: '1', siglaPartido: 'PT'),
             PoliticoModel(id: '2', siglaPartido: 'PMDB'),
@@ -224,7 +223,7 @@ void main() {
     blocTest(
       'Expects [SearchPoliticFilterChanged] when filtered by term',
       build: () async {
-        when(mockSearchPoliticRepository.getAllPolitics()).thenAnswer(
+        when(mockPoliticoService.getAllPoliticos()).thenAnswer(
           (_) => Future.value([
             PoliticoModel(id: '1', nomeEleitoral: 'Joao'),
             PoliticoModel(id: '2', nomeEleitoral: 'Maria'),
@@ -262,7 +261,7 @@ void main() {
     blocTest(
       '#139 - https://github.com/gladguys/polis/issues/139',
       build: () async {
-        when(mockSearchPoliticRepository.getAllPolitics()).thenAnswer(
+        when(mockPoliticoService.getAllPoliticos()).thenAnswer(
           (_) => Future.value([
             PoliticoModel(id: '1', nomeEleitoral: 'João'),
           ]),
@@ -295,7 +294,7 @@ void main() {
     blocTest(
       '#123 - https://github.com/gladguys/polis/issues/123',
       build: () async {
-        when(mockSearchPoliticRepository.getAllPolitics()).thenAnswer(
+        when(mockPoliticoService.getAllPoliticos()).thenAnswer(
           (_) => Future.value([
             PoliticoModel(id: '1', nomeEleitoral: 'Joao'),
             PoliticoModel(id: '2', nomeEleitoral: 'Maria'),
@@ -347,7 +346,7 @@ void main() {
     blocTest(
       '''Expects to follow the politic when FollowUnfollowSearchPolitic added and politic not been followed''',
       build: () async {
-        when(mockSearchPoliticRepository.getAllPolitics()).thenAnswer(
+        when(mockPoliticoService.getAllPoliticos()).thenAnswer(
           (_) => Future.value([
             PoliticoModel(id: '1', nomeEleitoral: 'Joao'),
             PoliticoModel(id: '2', nomeEleitoral: 'Maria'),
@@ -412,7 +411,7 @@ void main() {
     blocTest(
       '''Expects to unfollow the politic when FollowUnfollowSearchPolitic added and politic is been followed''',
       build: () async {
-        when(mockSearchPoliticRepository.getAllPolitics()).thenAnswer(
+        when(mockPoliticoService.getAllPoliticos()).thenAnswer(
           (_) => Future.value([
             PoliticoModel(id: '1', nomeEleitoral: 'Joao'),
             PoliticoModel(id: '2', nomeEleitoral: 'Maria'),
