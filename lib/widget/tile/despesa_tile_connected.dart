@@ -10,9 +10,10 @@ import '../../repository/concrete/repositories.dart';
 import 'despesa_tile.dart';
 
 class DespesaTileConnected extends StatelessWidget {
-  DespesaTileConnected(this.despesa);
+  DespesaTileConnected(this.despesa, {this.clickableImage = true});
 
   final DespesaModel despesa;
+  final bool clickableImage;
 
   @override
   Widget build(BuildContext context) {
