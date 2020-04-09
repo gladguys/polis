@@ -71,7 +71,8 @@ class PoliticProfileBloc
           ? quantidadeSeguidores + 1
           : max(quantidadeSeguidores - 1, 0);
 
-      politico = politico.copyWith(quantidadeSeguidores: newFollowersCount);
+      politico =
+          politico.copyWith(quantidadeSeguidores: newFollowersCount.toDouble());
 
       yield UserFollowingPoliticChanged(
         politico: politico,
