@@ -13,7 +13,6 @@ class PoliticPersonalInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        const SizedBox(height: 16),
         Photo(
           url: politic.urlFoto,
           size: 120,

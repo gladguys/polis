@@ -50,7 +50,8 @@ void main() {
           ),
         ),
       );
-      final searchTextfield = find.byKey(const ValueKey('search-textfield'));
+      final searchTextfield =
+          find.byKey(const ValueKey('search-textfield')).first;
       expect(searchTextfield, findsOneWidget);
       await tester.enterText(searchTextfield, 'teste');
       verify(mockUserFollowingPoliticsBloc.add(SearchPoliticsByTerm('teste')))
