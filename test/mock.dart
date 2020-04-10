@@ -36,6 +36,8 @@ import 'package:sliding_panel/sliding_panel.dart';
 class MockSigninBloc extends MockBloc<SigninEvent, SigninState>
     implements SigninBloc {}
 
+class MockPostBloc extends MockBloc<PostEvent, PostState> implements PostBloc {}
+
 class MockFavoritePostsBloc
     extends MockBloc<FavoritePostsEvent, FavoritePostsState>
     implements FavoritePostsBloc {}
@@ -58,6 +60,10 @@ class MockTimelineBloc extends MockBloc<TimelineEvent, TimelineState>
 
 class MockUserProfileBloc extends MockBloc<UserProfileEvent, UserProfileState>
     implements UserProfileBloc {}
+
+class MockDespesaImageBloc
+    extends MockBloc<DespesaImageEvent, DespesaImageState>
+    implements DespesaImageBloc {}
 
 class MockPoliticProfileBloc
     extends MockBloc<PoliticProfileEvent, PoliticProfileState>

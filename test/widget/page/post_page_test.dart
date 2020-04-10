@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:polis/core/service/locator.dart';
 import 'package:polis/enum/post_type.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/pages.dart';
 
+import '../../mock.dart';
 import '../utils.dart';
 
 void main() {
+  initLocator(MockSharedPreferences());
   TestWidgetsFlutterBinding.ensureInitialized();
   initializeDateFormatting('pt_BR', null);
 
