@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grouped_list/grouped_list.dart';
 
 import '../../../bloc/blocs.dart';
+import '../../../extension/formatters.dart';
 import '../../../model/models.dart';
 import '../../../widget/tile/despesa_tile_connected.dart';
 import '../../../widget/tile/proposta_tile_connected.dart';
+import '../../theme/main_theme.dart';
 
 class Timeline extends StatefulWidget {
   Timeline({this.activities});
@@ -44,23 +47,59 @@ class _TimelineState extends State<Timeline> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      key: UniqueKey(),
+    return GroupedListView(
       controller: scrollController,
-      padding: const EdgeInsets.only(top: 8),
-      itemBuilder: (_, i) {
-        if (widget.activities[i] is DespesaModel) {
-          return DespesaTileConnected(widget.activities[i] as DespesaModel);
+      useStickyGroupSeparators: true,
+      elements: widget.activities,
+      order: GroupedListOrder.DESC,
+      groupBy: (element) => element.dataDocumento,
+      groupSeparatorBuilder: (value) {
+        return Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Positioned(
+              left: 0,
+              width: MediaQuery.of(context).size.width,
+              child: Divider(
+                thickness: 1,
+                height: 1,
+                color: theme.primaryColorLight,
+              ),
+            ),
+            Center(
+              child: Container(
+                width: 100,
+                height: 20,
+                margin: const EdgeInsets.symmetric(vertical: 4),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: theme.primaryColorLight,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  value.toString().formatDate(),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+      itemBuilder: (_, element) {
+        if (element is DespesaModel) {
+          return DespesaTileConnected(element);
         } else {
-          return PropostaTileConnected(widget.activities[i] as PropostaModel);
+          return PropostaTileConnected(element as PropostaModel);
         }
       },
-      separatorBuilder: (_, i) => const Divider(
+      separator: const Divider(
         height: 16,
         indent: 8,
         endIndent: 8,
       ),
-      itemCount: widget.activities.length,
     );
   }
 }
