@@ -387,13 +387,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_widgets:
-    dependency: "direct main"
-    description:
-      name: flutter_widgets
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.12"
   font_awesome_flutter:
     dependency: "direct main"
     description:
@@ -450,6 +443,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0"
+  grouped_list:
+    dependency: "direct main"
+    description:
+      name: grouped_list
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.3.0"
   hive:
     dependency: "direct main"
     description:
@@ -1061,4 +1061,4 @@ packages:
     version: "2.2.0"
 sdks:
   dart: ">=2.7.0 <3.0.0"
-  flutter: ">=1.12.13+hotfix.5 <2.0.0"
+  flutter: ">=1.12.13+hotfix.4 <2.0.0"
