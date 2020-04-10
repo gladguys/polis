@@ -11,12 +11,15 @@ class InitialTimelineState extends TimelineState {
 }
 
 class TimelineUpdated extends TimelineState {
-  TimelineUpdated({@required this.activities}) : assert(activities != null);
+  TimelineUpdated({@required this.activities, @required this.count})
+      : assert(activities != null),
+        assert(count != null);
 
   final List<dynamic> activities;
+  final int count;
 
   @override
-  List<Object> get props => [activities];
+  List<Object> get props => [activities, count];
 }
 
 class FetchTimelineFailed extends TimelineState {
