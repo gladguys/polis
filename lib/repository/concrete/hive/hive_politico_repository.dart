@@ -26,6 +26,7 @@ class HivePoliticoRepository implements PoliticoRepository {
     try {
       await hive.openBox<PoliticoModel>(POLITICOS_BOX);
       final politicoBox = await hive.box<PoliticoModel>(POLITICOS_BOX);
+      await politicoBox.clear();
       for (var politico in politicos) {
         await politicoBox.add(politico);
       }
