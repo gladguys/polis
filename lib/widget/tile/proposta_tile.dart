@@ -16,19 +16,22 @@ import '../photo.dart';
 import '../text_rich.dart';
 
 class PropostaTile extends StatelessWidget {
-  PropostaTile(this.proposta);
+  PropostaTile(this.proposta, {this.clickableImage});
 
   final PropostaModel proposta;
+  final bool clickableImage;
 
   @override
   Widget build(BuildContext context) {
     return CardBase(
       slotLeft: GestureDetector(
         child: Photo(url: proposta.fotoPolitico),
-        onTap: () => SimpleRouter.forward(
-          PoliticProfilePageConnected(proposta.idPoliticoAutor),
-          name: POLITIC_PROFILE_PAGE,
-        ),
+        onTap: () => clickableImage
+            ? SimpleRouter.forward(
+                PoliticProfilePageConnected(proposta.idPoliticoAutor),
+                name: POLITIC_PROFILE_PAGE,
+              )
+            : null,
       ),
       slotCenter: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -8,9 +8,10 @@ import '../../repository/concrete/repositories.dart';
 import 'proposta_tile.dart';
 
 class PropostaTileConnected extends StatelessWidget {
-  PropostaTileConnected(this.proposta);
+  PropostaTileConnected(this.proposta, {this.clickableImage = true});
 
   final PropostaModel proposta;
+  final bool clickableImage;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class PropostaTileConnected extends StatelessWidget {
         post: proposta.toJson(),
         postRepository: context.repository<FirebasePostRepository>(),
       ),
-      page: PropostaTile(proposta),
+      page: PropostaTile(proposta, clickableImage: clickableImage),
     );
   }
 }
