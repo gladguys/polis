@@ -18,6 +18,10 @@ class Timeline extends StatefulWidget {
 class _TimelineState extends State<Timeline> {
   ScrollController scrollController;
 
+  double get currentPosition => scrollController.offset;
+  double get maxScrollPosition => scrollController.position.maxScrollExtent;
+  bool get isPositionInRange => !scrollController.position.outOfRange;
+
   @override
   void initState() {
     scrollController = ScrollController();
@@ -32,8 +36,7 @@ class _TimelineState extends State<Timeline> {
   }
 
   void _onScrollListener() {
-    if (scrollController.offset >= scrollController.position.maxScrollExtent &&
-        !scrollController.position.outOfRange) {
+    if (currentPosition >= maxScrollPosition && isPositionInRange) {
       final userId = context.bloc<UserBloc>().user.userId;
       context.bloc<TimelineBloc>().add(FetchMorePosts(userId));
     }
