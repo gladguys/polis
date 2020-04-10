@@ -17,8 +17,12 @@ void main() async {
       await urlLauncherService.canLaunchEmailUrl('rod@gmail.com');
     });
 
-    test('launch', () async {
+    test('launchEmailUrl', () async {
       await urlLauncherService.launchEmailUrl('rod@gmail.com');
+    });
+
+    test('launch', () async {
+      await urlLauncherService.launchUrl('url');
     });
   });
 }
