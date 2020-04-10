@@ -7,29 +7,16 @@ import '../../../widget/tile/proposta_tile_connected.dart';
 import '../../../extension/formatters.dart';
 import '../../theme/main_theme.dart';
 
-class Timeline extends StatefulWidget {
+class Timeline extends StatelessWidget {
   Timeline({this.activities});
 
   final List<dynamic> activities;
 
   @override
-  _TimelineState createState() => _TimelineState();
-}
-
-class _TimelineState extends State<Timeline> {
-  String currentHoverDate;
-
-  @override
-  void initState() {
-    currentHoverDate = '';
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return GroupedListView(
       useStickyGroupSeparators: true,
-      elements: widget.activities,
+      elements: activities,
       order: GroupedListOrder.DESC,
       groupBy: (element) => element.dataDocumento,
       groupSeparatorBuilder: (value) {
