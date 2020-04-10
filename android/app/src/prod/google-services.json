@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "285525154806",
+    "firebase_url": "https://polis-7d367.firebaseio.com",
+    "project_id": "polis-7d367",
+    "storage_bucket": "polis-7d367.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285525154806:android:f8973e03603952f0abc5d7",
+        "android_client_info": {
+          "package_name": "com.example.polis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "285525154806-b5scfjc839rftv8dp914fqms66fj5oci.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.polis",
+            "certificate_hash": "d5ff8abf6a4e2935a680dbd7e05b670c13627cae"
+          }
+        },
+        {
+          "client_id": "285525154806-2ka02g11s89s8onapp51jsn20s6cuuai.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.polis",
+            "certificate_hash": "7bfe91110d2209e2492ee8c67b923c72a88b9e50"
+          }
+        },
+        {
+          "client_id": "285525154806-muhof46bstmn2hls306t0injqtq6hqfa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJvb3CJctS0G_Ekrje7V1FKkrPC6kXwCw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "285525154806-muhof46bstmn2hls306t0injqtq6hqfa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
