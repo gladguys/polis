@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:grouped_list/grouped_list.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../extension/formatters.dart';
+import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
+import '../../../widget/text_rich.dart';
 import '../../../widget/tile/despesa_tile_connected.dart';
 import '../../../widget/tile/proposta_tile_connected.dart';
 import '../../theme/main_theme.dart';
@@ -48,6 +51,19 @@ class _TimelineState extends State<Timeline> {
 
   @override
   Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: <Widget>[
+        _buildList(),
+        Positioned(
+          top: 32,
+          child: _buildUpdateButton(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildList() {
     return GroupedListView(
       controller: scrollController,
       useStickyGroupSeparators: true,
@@ -100,6 +116,40 @@ class _TimelineState extends State<Timeline> {
         height: 16,
         indent: 8,
         endIndent: 8,
+      ),
+    );
+  }
+
+  Widget _buildUpdateButton() {
+    return Container(
+      height: 34,
+      width: 200,
+      child: RaisedButton(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            FaIcon(
+              FontAwesomeIcons.syncAlt,
+              size: 18,
+            ),
+            const SizedBox(width: 8),
+            TextRich(
+              fontSize: 14,
+              children: <InlineSpan>[
+                TextSpan(
+                  text: '10', // TODO: trazer qtd de atualizações
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextSpan(
+                  text: ' $NEW_ACTIVITIES',
+                ),
+              ],
+            ),
+          ],
+        ),
+        onPressed: () {},
       ),
     );
   }
