@@ -35,13 +35,6 @@ class _TimelineState extends State<Timeline> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    scrollController.removeListener(_onScrollListener);
-    scrollController.dispose();
-    super.dispose();
-  }
-
   void _onScrollListener() {
     if (currentPosition >= maxScrollPosition && isPositionInRange) {
       final userId = context.bloc<UserBloc>().user.userId;
@@ -121,36 +114,32 @@ class _TimelineState extends State<Timeline> {
   }
 
   Widget _buildUpdateButton() {
-    return Container(
-      height: 34,
-      width: 200,
-      child: RaisedButton(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FaIcon(
-              FontAwesomeIcons.syncAlt,
-              size: 18,
-            ),
-            const SizedBox(width: 8),
-            TextRich(
-              fontSize: 14,
-              children: <InlineSpan>[
-                const TextSpan(
-                  text: '10', // TODO: trazer qtd de atualizações
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+    return RaisedButton(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          FaIcon(
+            FontAwesomeIcons.syncAlt,
+            size: 18,
+          ),
+          const SizedBox(width: 8),
+          TextRich(
+            fontSize: 14,
+            children: <InlineSpan>[
+              const TextSpan(
+                text: '10', // TODO: trazer qtd de atualizações
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
                 ),
-                const TextSpan(
-                  text: ' $NEW_ACTIVITIES',
-                ),
-              ],
-            ),
-          ],
-        ),
-        onPressed: () {},
+              ),
+              const TextSpan(
+                text: ' $NEW_ACTIVITIES',
+              ),
+            ],
+          ),
+        ],
       ),
+      onPressed: () {},
     );
   }
 }

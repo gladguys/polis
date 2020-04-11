@@ -7,6 +7,7 @@ import 'package:polis/core/service/locator.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
+import 'package:polis/page/timeline/widget/timeline.dart';
 import 'package:polis/widget/tile/despesa_tile.dart';
 
 import '../../mock.dart';
@@ -66,6 +67,9 @@ void main() {
         ),
       );
       expect(find.byType(DespesaTile), findsNWidgets(2));
+      final timeline = find.byType(Timeline);
+      expect(timeline, findsOneWidget);
+      tester.ensureVisible(timeline);
     });
 
     testWidgets('should bring more posts on swipe down', (tester) async {
