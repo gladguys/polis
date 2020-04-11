@@ -35,6 +35,7 @@ class _TimelineState extends State<Timeline> {
   @override
   void dispose() {
     scrollController.removeListener(_onScrollListener);
+    scrollController.dispose();
     super.dispose();
   }
 
