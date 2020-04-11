@@ -136,13 +136,13 @@ class _TimelineState extends State<Timeline> {
             TextRich(
               fontSize: 14,
               children: <InlineSpan>[
-                TextSpan(
+                const TextSpan(
                   text: '10', // TODO: trazer qtd de atualizações
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                TextSpan(
+                const TextSpan(
                   text: ' $NEW_ACTIVITIES',
                 ),
               ],
