@@ -6,7 +6,7 @@ import '../../enum/post_type.dart';
 import '../../i18n/label.dart';
 import '../../widget/default_bottombar.dart';
 import '../../widget/field_rounded.dart';
-import '../../widget/tile/despesa_tile.dart';
+import '../../widget/tile/despesa_tile_connected.dart';
 import '../../widget/tile/proposta_tile.dart';
 
 class PostPage extends StatelessWidget {
@@ -27,7 +27,7 @@ class PostPage extends StatelessWidget {
             const SizedBox(height: 16),
             Expanded(
               child: postType == PostType.DESPESA
-                  ? DespesaTile(post)
+                  ? DespesaTileConnected(post)
                   : PropostaTile(post),
             ),
             const Divider(color: Colors.grey, height: 1),
