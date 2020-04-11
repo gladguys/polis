@@ -8,12 +8,18 @@ import '../../model/models.dart';
 import '../../page/page_connected.dart';
 import '../../repository/concrete/repositories.dart';
 import 'despesa_tile.dart';
+import 'despesa_tile_complete.dart';
 
 class DespesaTileConnected extends StatelessWidget {
-  DespesaTileConnected(this.despesa, {this.clickableImage = true});
+  DespesaTileConnected(
+    this.despesa, {
+    this.clickableImage = true,
+    this.isComplete = false,
+  });
 
   final DespesaModel despesa;
   final bool clickableImage;
+  final bool isComplete;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +32,9 @@ class DespesaTileConnected extends StatelessWidget {
         bloc: DespesaImageBloc(
           urlLaunchService: G<UrlLauncherService>(),
         ),
-        page: DespesaTile(despesa, clickableImage: clickableImage),
+        page: isComplete
+            ? DespesaTileComplete(despesa, clickableImage: clickableImage)
+            : DespesaTile(despesa, clickableImage: clickableImage),
       ),
     );
   }

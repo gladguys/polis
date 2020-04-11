@@ -6,12 +6,18 @@ import '../../model/models.dart';
 import '../../page/page_connected.dart';
 import '../../repository/concrete/repositories.dart';
 import 'proposta_tile.dart';
+import 'proposta_tile_complete.dart';
 
 class PropostaTileConnected extends StatelessWidget {
-  PropostaTileConnected(this.proposta, {this.clickableImage = true});
+  PropostaTileConnected(
+    this.proposta, {
+    this.clickableImage = true,
+    this.isComplete = false,
+  });
 
   final PropostaModel proposta;
   final bool clickableImage;
+  final bool isComplete;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +26,9 @@ class PropostaTileConnected extends StatelessWidget {
         post: proposta.toJson(),
         postRepository: context.repository<FirebasePostRepository>(),
       ),
-      page: PropostaTile(proposta, clickableImage: clickableImage),
+      page: isComplete
+          ? PropostaTileComplete(proposta, clickableImage: clickableImage)
+          : PropostaTile(proposta, clickableImage: clickableImage),
     );
   }
 }
