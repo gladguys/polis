@@ -7,6 +7,12 @@ exports.onCreateFollower = functions.firestore
     .onCreate(async (snapshot, context) => {
         const politicoId = context.params.politicoId;
         const followerId = context.params.followerId;
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+
+        today = dd + '/' + mm + '/' + yyyy;
 
         const politicoDocumentRef = await admin.firestore()
             .collection('politicos')
@@ -44,6 +50,20 @@ exports.onCreateFollower = functions.firestore
                 timelineRef.doc(activityId).set(activityData)
             }
         });
+
+        politicoDocumentRef.get().then(p => {
+
+            const acao = {
+                'tipo': 'SEGUIR',
+                'data': today,
+                'nomePolitico': p.data().nomeEleitoral,
+                'idPolitico': politicoId,
+                'mensagem': 'Segui o político ' + p.data().nomeEleitoral + ' no dia ' + today,
+                'urlFotoPolitico': p.data().urlFoto
+            };
+
+            admin.firestore().collection('acoes').doc(followerId).collection('acoesUsuario').add(acao);
+        });
     });
 
 exports.onDeleteFollower = functions.firestore
@@ -51,6 +71,12 @@ exports.onDeleteFollower = functions.firestore
     .onDelete(async (snapshot, context) => {
         const politicoId = context.params.politicoId;
         const followerId = context.params.followerId;
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+
+        today = dd + '/' + mm + '/' + yyyy;
 
         const politicoDocumentRef = await admin.firestore()
             .collection('politicos')
@@ -111,6 +137,21 @@ exports.onDeleteFollower = functions.firestore
                 doc.ref.delete();
             }
         })
+
+        politicoDocumentRef.get().then(p => {
+
+            const acao = {
+                'tipo': 'DEIXAR_SEGUIR',
+                'data': today,
+                'nomePolitico': p.data().nomeEleitoral,
+                'idPolitico': politicoId,
+                'mensagem': 'Deixei de seguir o político ' + p.data().nomeEleitoral + ' no dia ' + today,
+                'urlFotoPolitico': p.data().urlFoto
+            };
+
+            admin.firestore().collection('acoes').doc(followerId).collection('acoesUsuario').add(acao);
+        });
+
     });
 
 
@@ -149,6 +190,42 @@ exports.onDeleteFavoriteActivity = functions.firestore
         timelineActivitiesRef.update({ "favorito": false });
 
     });
+
+exports.onCreateActivity = functions.firestore
+    .document('/atividades/{politicoId}/atividadesPolitico/{documentId}')
+    .onCreate(async (snapshot, context) => {
+        const politicoId = context.params.politicoId;
+        const documentId = context.params.documentId;
+
+        const timelineRef = admin
+            .firestore()
+            .collection('timeline');
+
+        var atividade = null;
+        var id = null;
+
+        admin
+            .firestore()
+            .collection('atividades')
+            .doc(politicoId)
+            .collection('atividadesPolitico')
+            .doc(documentId).get().then(function (doc) {
+                if (doc.exists) {
+                    id = doc.id;
+                    atividade = doc.data();
+                    admin
+                        .firestore()
+                        .collection('usuarios_seguindo')
+                        .doc(politicoId)
+                        .collection('usuariosSeguindo')
+                        .get().then(function (querySnapshot) {
+                            querySnapshot.forEach(function (doc) {
+                                timelineRef.doc(doc.id).collection('atividadesTimeline').doc(id).create(atividade);
+                            });
+                        });
+                }
+            });
+    })
 
 exports.onCreateActivity = functions.firestore
     .document('/atividades/{politicoId}/atividadesPolitico/{documentId}')
