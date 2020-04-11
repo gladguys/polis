@@ -24,7 +24,8 @@ class PropostaTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardBase(
-      slotLeft: GestureDetector(
+      slotLeft: InkWell(
+        borderRadius: BorderRadius.circular(24),
         child: Photo(url: proposta.fotoPolitico),
         onTap: () => clickableImage
             ? SimpleRouter.forward(
@@ -62,12 +63,11 @@ class PropostaTile extends StatelessWidget {
           ),
         ),
         Text(
-          // TODO: trazer siglauf
-          ' · $POLITIC · ${proposta.siglaPartido} · ',
+          ' · $POLITIC · ${proposta.siglaPartido} · ${proposta.estadoPolitico}',
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.normal,
-            color: Colors.grey,
+            color: Colors.grey[600],
           ),
         ),
       ],
@@ -98,7 +98,7 @@ class PropostaTile extends StatelessWidget {
               text: '$TRAMITATION: ',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            TextSpan(text: proposta.descricaoTramitacao),
+            TextSpan(text: proposta.descricaoTramitacao ?? NOT_INFORMED_FEMALE),
           ],
         ),
         const SizedBox(height: 2),
@@ -110,7 +110,7 @@ class PropostaTile extends StatelessWidget {
               text: '$SITUATION: ',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            TextSpan(text: proposta.descricaoSituacao),
+            TextSpan(text: proposta.descricaoSituacao ?? NOT_INFORMED_FEMALE),
           ],
         ),
         const SizedBox(height: 2),
@@ -123,7 +123,7 @@ class PropostaTile extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             TextSpan(
-              text: '${proposta.dataDocumento.formatDate()}',
+              text: proposta.dataDocumento.formatDate() ?? NOT_INFORMED_FEMALE,
             ),
           ],
         ),
@@ -135,36 +135,22 @@ class PropostaTile extends StatelessWidget {
   Widget _buildActions(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
       builder: (_, state) => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           ButtonActionCard(
-            icon: FontAwesomeIcons.thumbsUp,
-            onTap: () {},
-          ),
-          const SizedBox(width: 16),
-          ButtonActionCard(
-            icon: FontAwesomeIcons.thumbsDown,
-            onTap: () {},
-          ),
-          const SizedBox(width: 16),
-          ButtonActionCard(
-            icon: FontAwesomeIcons.comment,
-            onTap: () {},
-          ),
-          const Spacer(flex: 1),
-          ButtonActionCard(
-            isIconOnly: true,
             icon: FontAwesomeIcons.shareAlt,
+            text: SHARE,
+            fontSize: 14,
             onTap: () {},
           ),
           const SizedBox(width: 16),
           ButtonActionCard(
-            isIconOnly: true,
             icon: context.bloc<PostBloc>().isPostFavorite
                 ? FontAwesomeIcons.solidBookmark
                 : FontAwesomeIcons.bookmark,
             iconColor:
                 context.bloc<PostBloc>().isPostFavorite ? Colors.amber : null,
+            text: context.bloc<PostBloc>().isPostFavorite ? SAVED : SAVE,
+            fontSize: 14,
             onTap: () => context.bloc<PostBloc>().add(
                   FavoritePostForUser(
                     post: proposta.toJson(),

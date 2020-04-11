@@ -4,6 +4,10 @@ extension StringExtension on String {
   String capitalizeUpperCase() {
     return this[0] + substring(1).toLowerCase();
   }
+
+  String removeDot() {
+    return replaceAll('.', '');
+  }
 }
 
 extension NumberExtension on String {
