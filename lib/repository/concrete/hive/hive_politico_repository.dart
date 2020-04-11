@@ -15,7 +15,6 @@ class HivePoliticoRepository implements PoliticoRepository {
     try {
       await hive.openBox<PoliticoModel>(POLITICOS_BOX);
       final politicoBox = await hive.box<PoliticoModel>(POLITICOS_BOX);
-      await politicoBox.clear();
       return Future.value(politicoBox.values.toList());
     } on Exception {
       rethrow;
