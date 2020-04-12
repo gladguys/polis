@@ -6,9 +6,7 @@ import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
 import '../../widget/centered_loading.dart';
 import '../../widget/default_bottombar.dart';
-import 'widget/personal_user_info.dart';
-import 'widget/politics_following_quantity.dart';
-import 'widget/user_activities.dart';
+import 'widget/user_profile.dart';
 
 class UserProfilePage extends StatelessWidget {
   @override
@@ -19,19 +17,7 @@ class UserProfilePage extends StatelessWidget {
         child: BlocBuilder<UserProfileBloc, UserProfileState>(
           builder: (_, state) {
             if (state is FetchUserRelatedInfoSuccess) {
-              return Column(
-                children: <Widget>[
-                  const SizedBox(height: 16),
-                  PersonalUserInfo(user: context.bloc<UserBloc>().user),
-                  const SizedBox(height: 16),
-                  PoliticsFollowingQuantity(politics: state.politicsFollowing),
-                  const SizedBox(height: 24),
-                  const Divider(color: Colors.grey, thickness: 0.3),
-                  Expanded(
-                    child: UserActivities(activities: state.userActivities),
-                  ),
-                ],
-              );
+              return UserProfile(state);
             } else if (state is LoadingFetchUserInfo) {
               return CenteredLoading();
             } else {
