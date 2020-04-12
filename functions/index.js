@@ -7,10 +7,10 @@ exports.onCreateFollower = functions.firestore
     .onCreate(async (snapshot, context) => {
         const politicoId = context.params.politicoId;
         const followerId = context.params.followerId;
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0');
-        var yyyy = today.getFullYear();
+        var todayDate = new Date();
+        var dd = String(todayDate.getDate()).padStart(2, '0');
+        var mm = String(todayDate.getMonth() + 1).padStart(2, '0');
+        var yyyy = todayDate.getFullYear();
 
         today = dd + '/' + mm + '/' + yyyy;
 
@@ -55,7 +55,7 @@ exports.onCreateFollower = functions.firestore
 
             const acao = {
                 'tipo': 'SEGUIR',
-                'data': today,
+                'data': admin.firestore.Timestamp.fromDate(todayDate),
                 'nomePolitico': p.data().nomeEleitoral,
                 'idPolitico': politicoId,
                 'mensagem': 'Segui o político ' + p.data().nomeEleitoral + ' no dia ' + today,
@@ -71,10 +71,10 @@ exports.onDeleteFollower = functions.firestore
     .onDelete(async (snapshot, context) => {
         const politicoId = context.params.politicoId;
         const followerId = context.params.followerId;
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0');
-        var yyyy = today.getFullYear();
+        var todayDate = new Date();
+        var dd = String(todayDate.getDate()).padStart(2, '0');
+        var mm = String(todayDate.getMonth() + 1).padStart(2, '0');
+        var yyyy = todayDate.getFullYear();
 
         today = dd + '/' + mm + '/' + yyyy;
 
@@ -142,7 +142,7 @@ exports.onDeleteFollower = functions.firestore
 
             const acao = {
                 'tipo': 'DEIXAR_SEGUIR',
-                'data': today,
+                'data': admin.firestore.Timestamp.fromDate(todayDate),
                 'nomePolitico': p.data().nomeEleitoral,
                 'idPolitico': politicoId,
                 'mensagem': 'Deixei de seguir o político ' + p.data().nomeEleitoral + ' no dia ' + today,
