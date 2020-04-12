@@ -136,7 +136,7 @@ class _TimelineState extends State<Timeline> {
             children: <InlineSpan>[
               TextSpan(
                 text: updatesCount.toString(),
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
