@@ -46,43 +46,6 @@ exports.onCreateFollower = functions.firestore
         });
     });
 
-exports.onCreateFavoriteActivity = functions.firestore
-    .document('/posts_favoritos/{userId}/postsFavoritosUsuario/{documentId}')
-    .onCreate(async (snapshot, context) => {
-        const userId = context.params.userId;
-        const documentId = context.params.documentId;
-
-        //atualizar o conteudo na timeline
-        const timelineActivitiesRef = admin
-            .firestore()
-            .collection('timeline')
-            .doc(userId)
-            .collection('atividadesTimeline')
-            .doc(documentId);
-
-        timelineActivitiesRef.update({ "favorito": true });
-
-    });
-
-
-exports.onDeleteFavoriteActivity = functions.firestore
-    .document('/posts_favoritos/{userId}/postsFavoritosUsuario/{documentId}')
-    .onDelete(async (snapshot, context) => {
-        const userId = context.params.userId;
-        const documentId = context.params.documentId;
-
-        //atualizar o conteudo na timeline
-        const timelineActivitiesRef = admin
-            .firestore()
-            .collection('timeline')
-            .doc(userId)
-            .collection('atividadesTimeline')
-            .doc(documentId);
-
-        timelineActivitiesRef.update({ "favorito": false });
-
-    });
-
 exports.onDeleteFollower = functions.firestore
     .document('/usuarios_seguindo/{politicoId}/usuariosSeguindo/{followerId}')
     .onDelete(async (snapshot, context) => {
@@ -150,6 +113,7 @@ exports.onDeleteFollower = functions.firestore
         })
     });
 
+
 exports.onCreateFavoriteActivity = functions.firestore
     .document('/posts_favoritos/{userId}/postsFavoritosUsuario/{documentId}')
     .onCreate(async (snapshot, context) => {
@@ -168,7 +132,6 @@ exports.onCreateFavoriteActivity = functions.firestore
 
     });
 
-
 exports.onDeleteFavoriteActivity = functions.firestore
     .document('/posts_favoritos/{userId}/postsFavoritosUsuario/{documentId}')
     .onDelete(async (snapshot, context) => {
@@ -186,7 +149,6 @@ exports.onDeleteFavoriteActivity = functions.firestore
         timelineActivitiesRef.update({ "favorito": false });
 
     });
-
 
 exports.onCreateActivity = functions.firestore
     .document('/atividades/{politicoId}/atividadesPolitico/{documentId}')

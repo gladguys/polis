@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "polis-7d367"
+    "default": "polis-7d367",
+    "dev": "polis-dev-3ec8e"
   }
 }
