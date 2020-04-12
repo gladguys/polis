@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:polis/page/theme/main_theme.dart';
 
 import '../../../bloc/search_politic/bloc.dart';
 import '../../../i18n/label.dart';
@@ -78,12 +79,15 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
             Container(
               width: 40,
               height: 40,
-              child: FlatButton(
+              child: OutlineButton(
                 key: const ValueKey('sliders-icon'),
+                color: theme.primaryColor,
+                highlightedBorderColor: theme.primaryColorDark,
+                borderSide: BorderSide(color: theme.primaryColor),
                 padding: EdgeInsets.zero,
                 child: FaIcon(
                   FontAwesomeIcons.slidersH,
-                  size: 20,
+                  size: 18,
                 ),
                 onPressed: () => setState(() => isOpen = !isOpen),
               ),

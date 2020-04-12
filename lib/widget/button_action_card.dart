@@ -6,6 +6,7 @@ class ButtonActionCard extends StatelessWidget {
     @required this.icon,
     @required this.onTap,
     this.text,
+    this.fontSize = 12,
     this.iconColor,
     this.isIconOnly = false,
   })  : assert(icon != null),
@@ -13,6 +14,7 @@ class ButtonActionCard extends StatelessWidget {
 
   final IconData icon;
   final String text;
+  final double fontSize;
   final Color iconColor;
   final bool isIconOnly;
   final Function onTap;
@@ -48,16 +50,16 @@ class ButtonActionCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 4),
           child: Wrap(
             crossAxisAlignment: WrapCrossAlignment.center,
-            spacing: 4,
+            spacing: 6,
             children: <Widget>[
               FaIcon(
                 icon,
-                size: 20,
+                size: 18,
                 color: iconColor,
               ),
               Text(
                 text ?? '',
-                style: const TextStyle(fontSize: 12),
+                style: TextStyle(fontSize: fontSize),
               ),
             ],
           ),

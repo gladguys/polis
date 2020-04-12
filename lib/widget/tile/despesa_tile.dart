@@ -24,7 +24,8 @@ class DespesaTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardBase(
-      slotLeft: GestureDetector(
+      slotLeft: InkWell(
+        borderRadius: BorderRadius.circular(24),
         child: Photo(url: despesa.fotoPolitico),
         onTap: () => clickableImage
             ? SimpleRouter.forward(
@@ -64,12 +65,11 @@ class DespesaTile extends StatelessWidget {
           ),
         ),
         Text(
-          // TODO: trazer siglauf
-          ' · $POLITIC · ${despesa.siglaPartido} · ',
+          ' · $POLITIC · ${despesa.siglaPartido} · ${despesa.estadoPolitico}',
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.normal,
-            color: Colors.grey,
+            color: Colors.grey[600],
           ),
         ),
       ],
@@ -84,10 +84,11 @@ class DespesaTile extends StatelessWidget {
         TextRich(
           children: [
             TextSpan(
-                text: '${despesa.tipoAtividade.capitalizeUpperCase()}'
-                    ' $WITH '
-                    '${despesa.tipoDespesa.toLowerCase()}'
-                    ' $IN_THE_AMOUNT_OF '),
+              text: '${despesa.tipoAtividade.capitalizeUpperCase()}'
+                  ' $WITH '
+                  '${despesa.tipoDespesa.toLowerCase().removeDot()}'
+                  ' $IN_THE_AMOUNT_OF ',
+            ),
             TextSpan(
               text: '${despesa.valorLiquido.formatCurrency()}.',
               style: const TextStyle(fontWeight: FontWeight.w500),
@@ -110,43 +111,22 @@ class DespesaTile extends StatelessWidget {
   Widget _buildActions(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
       builder: (_, state) => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           ButtonActionCard(
-            icon: FontAwesomeIcons.thumbsUp,
-            onTap: () {},
-          ),
-          const SizedBox(width: 16),
-          ButtonActionCard(
-            icon: FontAwesomeIcons.thumbsDown,
-            onTap: () {},
-          ),
-          const SizedBox(width: 16),
-          ButtonActionCard(
-            icon: FontAwesomeIcons.comment,
-            onTap: () {},
-          ),
-          const SizedBox(width: 16),
-          ButtonActionCard(
-            icon: FontAwesomeIcons.filePdf,
-            onTap: () => context.bloc<DespesaImageBloc>().add(
-                  OpenDespesaImage(despesa.urlDocumento),
-                ),
-          ),
-          const Spacer(flex: 1),
-          ButtonActionCard(
-            isIconOnly: true,
             icon: FontAwesomeIcons.shareAlt,
+            text: SHARE,
+            fontSize: 14,
             onTap: () {},
           ),
           const SizedBox(width: 16),
           ButtonActionCard(
-            isIconOnly: true,
             icon: context.bloc<PostBloc>().isPostFavorite
                 ? FontAwesomeIcons.solidBookmark
                 : FontAwesomeIcons.bookmark,
             iconColor:
-                context.bloc<PostBloc>().isPostFavorite ? Colors.amber : null,
+                context.bloc<PostBloc>().isPostFavorite ? Colors.yellow : null,
+            text: context.bloc<PostBloc>().isPostFavorite ? SAVED : SAVE,
+            fontSize: 14,
             onTap: () => context.bloc<PostBloc>().add(
                   FavoritePostForUser(
                     post: {

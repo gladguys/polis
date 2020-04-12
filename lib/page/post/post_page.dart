@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../core/routing/route_names.dart';
 import '../../enum/post_type.dart';
@@ -7,7 +6,7 @@ import '../../i18n/label.dart';
 import '../../widget/default_bottombar.dart';
 import '../../widget/field_rounded.dart';
 import '../../widget/tile/despesa_tile_connected.dart';
-import '../../widget/tile/proposta_tile.dart';
+import '../../widget/tile/proposta_tile_connected.dart';
 
 class PostPage extends StatelessWidget {
   PostPage({@required this.post, @required this.postType})
@@ -24,12 +23,14 @@ class PostPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             Expanded(
               child: postType == PostType.DESPESA
-                  ? DespesaTileConnected(post)
-                  : PropostaTile(post),
+                  ? DespesaTileConnected(post, isComplete: true)
+                  : PropostaTileConnected(post, isComplete: true),
             ),
+            /*
+            ESCONDIDO ENQUANTO NÃO IMPLEMENTADO
             const Divider(color: Colors.grey, height: 1),
             const SizedBox(height: 12),
             Padding(
@@ -37,12 +38,14 @@ class PostPage extends StatelessWidget {
               child: FieldRounded(
                 hintText: COMMENT_HERE,
                 width: 360,
-                iconSuffix: FontAwesomeIcons.solidPaperPlane,
+                textSuffix: SEND,
+                widthSuffix: 70,
                 keySuffix: const ValueKey('comment-button'),
                 onPressedSuffix: () {},
               ),
             ),
             const SizedBox(height: 12),
+            */
           ],
         ),
       ),
