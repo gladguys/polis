@@ -30,6 +30,8 @@
 .pub/
 /build/
 /android/app/google-services.json
+/android/app/src/dev/google-services.json
+/android/app/src/prod/google-services.json
 /coverage/*
 
 *.g*dart
