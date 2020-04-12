@@ -133,6 +133,8 @@ class MockGoogleSignInAccount extends Mock implements GoogleSignInAccount {}
 
 class MockQuery extends Mock implements Query {}
 
+class MockDocumentChange extends Mock implements DocumentChange {}
+
 class MockQuerySnapshot extends Mock implements QuerySnapshot {}
 
 class MockAuthResult extends Mock implements AuthResult {}

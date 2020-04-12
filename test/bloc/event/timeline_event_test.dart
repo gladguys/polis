@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:polis/bloc/blocs.dart';
-import 'package:polis/model/models.dart';
 
 void main() {
   group('TimelineEvent tests', () {
@@ -17,11 +16,31 @@ void main() {
 
     group('UpdateTimeline', () {
       test('props', () {
-        final ev1 = UpdateTimeline(activities: []);
-        final ev2 = UpdateTimeline(activities: []);
-        final ev3 = UpdateTimeline(activities: [
-          DespesaModel(),
-        ]);
+        final ev1 = UpdateTimelineActivitiesCount(count: 0);
+        final ev2 = UpdateTimelineActivitiesCount(count: 0);
+        final ev3 = UpdateTimelineActivitiesCount(count: 1);
+
+        expect(ev1, ev2);
+        expect(ev1 == ev3, false);
+      });
+    });
+
+    group('FetchMorePosts', () {
+      test('props', () {
+        final ev1 = FetchMorePosts('1');
+        final ev2 = FetchMorePosts('1');
+        final ev3 = FetchMorePosts('2');
+
+        expect(ev1, ev2);
+        expect(ev1 == ev3, false);
+      });
+    });
+
+    group('ReloadTimeline', () {
+      test('props', () {
+        final ev1 = ReloadTimeline('1');
+        final ev2 = ReloadTimeline('1');
+        final ev3 = ReloadTimeline('2');
 
         expect(ev1, ev2);
         expect(ev1 == ev3, false);

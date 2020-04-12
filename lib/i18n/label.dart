@@ -41,3 +41,4 @@ const DATE = 'Data';
 const SEARCH_HERE = 'Pesquise...';
 const SEND_EMAIL = 'Enviar email';
 const COMMENT_HERE = 'Deixe seu comentário...';
+const NEW_ACTIVITIES = 'novas atividades';

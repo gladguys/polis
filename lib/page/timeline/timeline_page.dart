@@ -17,7 +17,10 @@ class TimelinePage extends StatelessWidget {
         child: BlocBuilder<TimelineBloc, TimelineState>(
           builder: (_, state) {
             if (state is TimelineUpdated) {
-              return Timeline(activities: state.activities);
+              return Timeline(
+                activities: state.activities,
+                updatesCount: state.updatesCount,
+              );
             } else {
               return TimelineSkeleton();
             }

@@ -27,6 +27,7 @@ dependencies:
   # Utils
   diacritic: ^0.1.1
   uuid: ^2.0.4
+  tuple: ^1.0.3
 
   # Firebase
   cloud_firestore: ^0.13.4+2
