@@ -18,7 +18,7 @@ class FirebaseTimelineRepository implements TimelineRepository {
       firestore.collection(TIMELINE_COLLECTION);
 
   @override
-  Stream<List<dynamic>> getUserTimeline(String userId) {
+  Stream<int> getNewActivitiesCounter(String userId) {
     try {
       return timelineRef
           .document(userId)
@@ -26,17 +26,15 @@ class FirebaseTimelineRepository implements TimelineRepository {
           .orderBy(DATA_DOCUMENTO_FIELD, descending: true)
           .snapshots()
           .map((snapshot) {
-        final documents = snapshot.documents;
-        final activities = [];
-        for (var document in documents) {
-          if (isDocumentDespesa(document.data)) {
-            final despesaModel = DespesaModel.fromJson(document.data);
-            activities.add(despesaModel.copyWith(id: document.documentID));
-          } else {
-            activities.add(PropostaModel.fromJson(document.data));
+        var changes = 0;
+        final documentChanges = snapshot.documentChanges;
+        for (var change in documentChanges) {
+          if (change.type == DocumentChangeType.added ||
+              change.type == DocumentChangeType.modified) {
+            changes += 1;
           }
         }
-        return activities;
+        return changes;
       });
     } on Exception {
       throw ComunicationException();

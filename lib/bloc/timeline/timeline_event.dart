@@ -13,6 +13,15 @@ class FetchUserTimeline extends TimelineEvent {
   List<Object> get props => [userId];
 }
 
+class ReloadTimeline extends TimelineEvent {
+  ReloadTimeline(this.userId);
+
+  final String userId;
+
+  @override
+  List<Object> get props => [userId];
+}
+
 class FetchMorePosts extends TimelineEvent {
   FetchMorePosts(this.userId);
 

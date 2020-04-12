@@ -13,9 +13,12 @@ import '../../../widget/tile/proposta_tile_connected.dart';
 import '../../theme/main_theme.dart';
 
 class Timeline extends StatefulWidget {
-  Timeline({this.activities});
+  Timeline({@required this.activities, @required this.updatesCount})
+      : assert(activities != null),
+        assert(updatesCount != null);
 
   final List<dynamic> activities;
+  final int updatesCount;
 
   @override
   _TimelineState createState() => _TimelineState();
@@ -27,6 +30,9 @@ class _TimelineState extends State<Timeline> {
   double get currentPosition => scrollController.offset;
   double get maxScrollPosition => scrollController.position.maxScrollExtent;
   bool get isPositionInRange => !scrollController.position.outOfRange;
+  int get updatesCount => widget.updatesCount;
+  TimelineBloc get timelineBloc => context.bloc<TimelineBloc>();
+  String get userId => context.bloc<UserBloc>().user.userId;
 
   @override
   void initState() {
@@ -37,8 +43,7 @@ class _TimelineState extends State<Timeline> {
 
   void _onScrollListener() {
     if (currentPosition >= maxScrollPosition && isPositionInRange) {
-      final userId = context.bloc<UserBloc>().user.userId;
-      context.bloc<TimelineBloc>().add(FetchMorePosts(userId));
+      timelineBloc.add(FetchMorePosts(userId));
     }
   }
 
@@ -48,10 +53,12 @@ class _TimelineState extends State<Timeline> {
       alignment: Alignment.topCenter,
       children: <Widget>[
         _buildList(),
-        Positioned(
-          top: 32,
-          child: _buildUpdateButton(),
-        ),
+        updatesCount > 0
+            ? Positioned(
+                top: 32,
+                child: _buildUpdateButton(),
+              )
+            : const SizedBox.shrink(),
       ],
     );
   }
@@ -115,6 +122,7 @@ class _TimelineState extends State<Timeline> {
 
   Widget _buildUpdateButton() {
     return RaisedButton(
+      key: const ValueKey('update-timeline-btn'),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -126,8 +134,8 @@ class _TimelineState extends State<Timeline> {
           TextRich(
             fontSize: 14,
             children: <InlineSpan>[
-              const TextSpan(
-                text: '10', // TODO: trazer qtd de atualizações
+              TextSpan(
+                text: updatesCount.toString(),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
@@ -139,7 +147,7 @@ class _TimelineState extends State<Timeline> {
           ),
         ],
       ),
-      onPressed: () {},
+      onPressed: () => timelineBloc.add(ReloadTimeline(userId)),
     );
   }
 }

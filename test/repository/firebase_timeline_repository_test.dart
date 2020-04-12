@@ -19,7 +19,8 @@ void main() {
     MockQuerySnapshot mockQuerySnapshot;
     MockDocumentSnapshot mockDocumentSnapshot;
     MockDocumentSnapshot mockDocument2Snapshot;
-    Stream<QuerySnapshot> snapshotStream;
+    MockDocumentChange mockDocumentChange;
+    MockDocumentChange mockDocumentChange2;
     MockQuery mockQuery;
     MockQuery mockQueryPaginated;
     MockQuery mockQueryLimit;
@@ -35,7 +36,8 @@ void main() {
       mockQuerySnapshot = MockQuerySnapshot();
       mockDocumentSnapshot = MockDocumentSnapshot();
       mockDocument2Snapshot = MockDocumentSnapshot();
-      snapshotStream = Stream.value(mockQuerySnapshot);
+      mockDocumentChange = MockDocumentChange();
+      mockDocumentChange2 = MockDocumentChange();
       mockQuery = MockQuery();
       mockQueryPaginated = MockQuery();
       mockQueryLimit = MockQuery();
@@ -61,18 +63,14 @@ void main() {
         when(mockAtividadesTimelineCollectionReference
                 .orderBy(DATA_DOCUMENTO_FIELD, descending: true))
             .thenReturn(mockQuery);
-        when(mockQuery.snapshots()).thenAnswer((_) => snapshotStream);
-        when(mockDocumentSnapshot.data)
-            .thenReturn({TIPO_ATIVIDADE_FIELD: 'DESPESA'});
-        when(mockDocument2Snapshot.data)
-            .thenReturn({TIPO_ATIVIDADE_FIELD: 'PROPOSTA'});
-        when(mockQuerySnapshot.documents).thenReturn([
-          mockDocumentSnapshot,
-          mockDocument2Snapshot,
-        ]);
-
-        firebaseTimelineRepository.getUserTimeline('1').listen((data) {
-          expect(data, [DespesaModel(), PropostaModel()]);
+        when(mockQuery.snapshots())
+            .thenAnswer((_) => Stream.value(mockQuerySnapshot));
+        when(mockQuerySnapshot.documentChanges)
+            .thenReturn([mockDocumentChange, mockDocumentChange2]);
+        when(mockDocumentChange.type).thenReturn(DocumentChangeType.added);
+        when(mockDocumentChange2.type).thenReturn(DocumentChangeType.modified);
+        firebaseTimelineRepository.getNewActivitiesCounter('1').listen((data) {
+          expect(data, 2);
         });
       });
 
@@ -80,7 +78,7 @@ void main() {
         when(when(mockFirestore.collection(TIMELINE_COLLECTION)))
             .thenThrow(Exception());
         try {
-          firebaseTimelineRepository.getUserTimeline('1');
+          firebaseTimelineRepository.getNewActivitiesCounter('1');
         } on Exception catch (e) {
           expect(e, isA<ComunicationException>());
         }

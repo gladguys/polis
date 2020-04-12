@@ -14,8 +14,13 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
   final TimelineRepository repository;
   StreamSubscription _timelineSubscription;
 
+  int newActivitiesCount = 0;
   List<dynamic> timelinePosts = [];
   DocumentSnapshot lastDocument;
+
+  /// We just want to track the changes, so we don't need to make use of the
+  /// the first values emitted onto the stream
+  bool firstRun = true;
 
   @override
   TimelineState get initialState => InitialTimelineState();
@@ -27,11 +32,17 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
 
       _timelineSubscription?.cancel();
       try {
-        _timelineSubscription = repository.getUserTimeline(event.userId).listen(
-              (timelineData) => add(
-                UpdateTimelineActivitiesCount(count: 0),
-              ),
-            );
+        _timelineSubscription =
+            repository.getNewActivitiesCounter(event.userId).listen(
+          (count) {
+            if (!firstRun) {
+              newActivitiesCount += count;
+              add(UpdateTimelineActivitiesCount(count: newActivitiesCount));
+            } else {
+              firstRun = false;
+            }
+          },
+        );
       } on Exception {
         yield FetchTimelineFailed();
       }
@@ -45,7 +56,8 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
 
         yield TimelineUpdated(
           activities: timelinePosts,
-          count: timelinePosts.length,
+          postsCount: timelinePosts.length,
+          updatesCount: newActivitiesCount,
         );
       } on Exception {
         yield FetchTimelineFailed();
@@ -61,11 +73,39 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
 
         yield TimelineUpdated(
           activities: timelinePosts,
-          count: timelinePosts.length,
+          postsCount: timelinePosts.length,
+          updatesCount: newActivitiesCount,
         );
       } on Exception {
         yield FetchTimelineFailed();
       }
+    }
+    if (event is ReloadTimeline) {
+      yield LoadingTimeline();
+
+      try {
+        final timelineFirstData = await repository.getTimelineFirstPosts(
+            event.userId, kTimelinePageSize);
+
+        newActivitiesCount = 0;
+        timelinePosts = [...timelineFirstData.item1];
+        lastDocument = timelineFirstData.item2;
+
+        yield TimelineUpdated(
+          activities: timelinePosts,
+          postsCount: timelinePosts.length,
+          updatesCount: newActivitiesCount,
+        );
+      } on Exception {
+        yield FetchTimelineFailed();
+      }
+    }
+    if (event is UpdateTimelineActivitiesCount) {
+      yield TimelineUpdated(
+        activities: timelinePosts,
+        postsCount: timelinePosts.length,
+        updatesCount: newActivitiesCount,
+      );
     }
   }
 

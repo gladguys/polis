@@ -5,15 +5,23 @@ void main() {
   group('TimelineState tests', () {
     test('states', () {
       expect(InitialTimelineState(), InitialTimelineState());
-      expect(TimelineUpdated(activities: [], count: 0),
-          TimelineUpdated(activities: [], count: 0));
+      expect(TimelineUpdated(activities: [], postsCount: 0, updatesCount: 0),
+          TimelineUpdated(activities: [], postsCount: 0, updatesCount: 0));
       expect(FetchTimelineFailed(), FetchTimelineFailed());
     });
 
     test('asserts', () {
-      expect(() => TimelineUpdated(activities: null, count: 0),
+      expect(
+          () =>
+              TimelineUpdated(activities: null, postsCount: 0, updatesCount: 0),
           throwsAssertionError);
-      expect(() => TimelineUpdated(activities: [], count: null),
+      expect(
+          () => TimelineUpdated(
+              activities: [], postsCount: null, updatesCount: 0),
+          throwsAssertionError);
+      expect(
+          () => TimelineUpdated(
+              activities: [], postsCount: 0, updatesCount: null),
           throwsAssertionError);
     });
   });

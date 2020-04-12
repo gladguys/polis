@@ -19,11 +19,76 @@ void main() {
   initializeDateFormatting('pt_BR', null);
 
   group('TimelinePage tests', () {
+    test('assert', () {
+      expect(
+          () => Timeline(
+                activities: null,
+                updatesCount: 0,
+              ),
+          throwsAssertionError);
+      expect(
+          () => Timeline(
+                activities: [],
+                updatesCount: null,
+              ),
+          throwsAssertionError);
+    });
+
     testWidgets('shoud build without exploding', (tester) async {
       await tester.pumpWidget(connectedWidget(TimelinePageConnected()));
     });
 
     testWidgets('shoud build Timeline with activity', (tester) async {
+      final mockTimelineBloc = MockTimelineBloc();
+      when(mockTimelineBloc.state).thenReturn(
+        TimelineUpdated(activities: [
+          DespesaModel(
+            numDocumento: '1',
+            fotoPolitico: 'foto',
+            nomePolitico: 'politico 1',
+            nomeFornecedor: 'fornecedor 1',
+            tipoAtividade: 'tipoAtividade1',
+            tipoDespesa: 'tipoDespesa1',
+            valorLiquido: '10.00',
+            dataDocumento: '10-01-2020',
+          ),
+          DespesaModel(
+            numDocumento: '2',
+            fotoPolitico: 'foto',
+            nomePolitico: 'politico 2',
+            nomeFornecedor: 'fornecedor 2',
+            tipoAtividade: 'tipoAtividade2',
+            tipoDespesa: 'tipoDespesa2',
+            valorLiquido: '20.00',
+            dataDocumento: '20-01-2020',
+          ),
+          PropostaModel(
+            id: '1',
+            dataDocumento: '20-01-2020',
+            nomePolitico: 'nome',
+            fotoPolitico: 'foto',
+          )
+        ], postsCount: 3, updatesCount: 0),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<TimelineBloc>(
+            bloc: mockTimelineBloc,
+            page: TimelinePage(),
+          ),
+        ),
+      );
+      expect(find.byType(DespesaTile), findsNWidgets(2));
+      final timeline = find.byType(Timeline);
+      expect(timeline, findsOneWidget);
+      tester.ensureVisible(timeline);
+    });
+
+    testWidgets(
+        '''shoud build Timeline with update button when there are new updates''',
+        (tester) async {
+      final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.user).thenReturn(UserModel(userId: '1'));
       final mockTimelineBloc = MockTimelineBloc();
       when(mockTimelineBloc.state).thenReturn(
         TimelineUpdated(
@@ -55,14 +120,18 @@ void main() {
               fotoPolitico: 'foto',
             )
           ],
-          count: 3,
+          postsCount: 3,
+          updatesCount: 3,
         ),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<TimelineBloc>(
-            bloc: mockTimelineBloc,
-            page: TimelinePage(),
+          PageConnected<UserBloc>(
+            bloc: mockUserBloc,
+            page: PageConnected<TimelineBloc>(
+              bloc: mockTimelineBloc,
+              page: TimelinePage(),
+            ),
           ),
         ),
       );
@@ -70,6 +139,11 @@ void main() {
       final timeline = find.byType(Timeline);
       expect(timeline, findsOneWidget);
       tester.ensureVisible(timeline);
+      final updateTimelineButtonn =
+          find.byKey(const ValueKey('update-timeline-btn'));
+      expect(updateTimelineButtonn, findsOneWidget);
+      await tester.tap(updateTimelineButtonn);
+      verify(mockTimelineBloc.add(ReloadTimeline('1'))).called(1);
     });
 
     testWidgets('should bring more posts on swipe down', (tester) async {
@@ -126,7 +200,8 @@ void main() {
               fotoPolitico: 'foto',
             )
           ],
-          count: 3,
+          postsCount: 3,
+          updatesCount: 0,
         ),
       );
       await tester.pumpWidget(

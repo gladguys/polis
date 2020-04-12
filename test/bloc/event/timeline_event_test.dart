@@ -35,5 +35,16 @@ void main() {
         expect(ev1 == ev3, false);
       });
     });
+
+    group('ReloadTimeline', () {
+      test('props', () {
+        final ev1 = ReloadTimeline('1');
+        final ev2 = ReloadTimeline('1');
+        final ev3 = ReloadTimeline('2');
+
+        expect(ev1, ev2);
+        expect(ev1 == ev3, false);
+      });
+    });
   });
 }

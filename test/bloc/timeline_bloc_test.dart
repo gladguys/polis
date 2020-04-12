@@ -11,7 +11,7 @@ void main() {
   group('TimelineBloc tests', () {
     TimelineBloc timelineBloc;
     MockTimelineRepository mockTimelineRepository;
-    Stream<List<dynamic>> timelineStream;
+    Stream<int> timelineStream;
     MockDocumentSnapshot mockDocumentSnapshot;
 
     setUp(() {
@@ -20,7 +20,7 @@ void main() {
       timelineBloc = TimelineBloc(
         repository: mockTimelineRepository,
       );
-      timelineStream = Stream.value([]);
+      timelineStream = Stream.value(0);
     });
 
     test('asserts', () {
@@ -36,9 +36,9 @@ void main() {
     });
 
     blocTest(
-      '''Expects [LoadingTimeline, UpdateTimeline]''',
+      '''Expects [LoadingTimeline, TimelineUpdated]''',
       build: () async {
-        when(mockTimelineRepository.getUserTimeline('1'))
+        when(mockTimelineRepository.getNewActivitiesCounter('1'))
             .thenAnswer((_) => timelineStream);
         when(mockTimelineRepository.getTimelineFirstPosts('1', 5)).thenAnswer(
           (_) => Future.value(Tuple2([], mockDocumentSnapshot)),
@@ -53,19 +53,47 @@ void main() {
         return;
       },
       verify: (timelineBloc) async {
-        verify(mockTimelineRepository.getUserTimeline('1')).called(1);
+        verify(mockTimelineRepository.getNewActivitiesCounter('1')).called(1);
         verify(mockTimelineRepository.getTimelineFirstPosts('1', 5)).called(1);
       },
       expect: [
         LoadingTimeline(),
-        TimelineUpdated(activities: [], count: 0),
+        TimelineUpdated(activities: [], postsCount: 0, updatesCount: 0),
+      ],
+    );
+
+    blocTest(
+      'set firstRun flag to false after the first run',
+      build: () async {
+        when(mockTimelineRepository.getNewActivitiesCounter('1'))
+            .thenAnswer((_) => timelineStream);
+        when(mockTimelineRepository.getTimelineFirstPosts('1', 5)).thenAnswer(
+          (_) => Future.value(Tuple2([], mockDocumentSnapshot)),
+        );
+        return timelineBloc;
+      },
+      act: (timelineBloc) {
+        timelineBloc.add(FetchUserTimeline('1'));
+        timelineBloc.add(FetchUserTimeline('1'));
+        timelineBloc.add(UpdateTimelineActivitiesCount(count: 0));
+        return;
+      },
+      verify: (timelineBloc) async {
+        verify(mockTimelineRepository.getNewActivitiesCounter('1')).called(2);
+        verify(mockTimelineRepository.getTimelineFirstPosts('1', 5)).called(1);
+      },
+      expect: [
+        LoadingTimeline(),
+        TimelineUpdated(activities: [], postsCount: 0, updatesCount: 0),
+        LoadingTimeline(),
+        TimelineUpdated(activities: [], postsCount: 0, updatesCount: 0),
       ],
     );
 
     blocTest(
       '''Expects [FetchTimelineFailed] when getUserTimeline failed''',
       build: () async {
-        when(mockTimelineRepository.getUserTimeline('1'))
+        when(mockTimelineRepository.getNewActivitiesCounter('1'))
             .thenThrow(Exception());
         return timelineBloc;
       },
@@ -74,7 +102,7 @@ void main() {
         return;
       },
       verify: (timelineBloc) async {
-        verify(mockTimelineRepository.getUserTimeline('1')).called(1);
+        verify(mockTimelineRepository.getNewActivitiesCounter('1')).called(1);
       },
       expect: [
         LoadingTimeline(),
@@ -85,7 +113,7 @@ void main() {
     blocTest(
       '''Expects [FetchTimelineFailed] when getTimelineFirstPosts failed''',
       build: () async {
-        when(mockTimelineRepository.getUserTimeline('1'))
+        when(mockTimelineRepository.getNewActivitiesCounter('1'))
             .thenAnswer((_) => timelineStream);
         when(mockTimelineRepository.getTimelineFirstPosts('1', 5))
             .thenThrow(Exception());
@@ -96,7 +124,7 @@ void main() {
         return;
       },
       verify: (timelineBloc) async {
-        verify(mockTimelineRepository.getUserTimeline('1')).called(1);
+        verify(mockTimelineRepository.getNewActivitiesCounter('1')).called(1);
         verify(mockTimelineRepository.getTimelineFirstPosts('1', 5)).called(1);
       },
       expect: [
@@ -106,9 +134,9 @@ void main() {
     );
 
     blocTest(
-      '''Expects [LoadingTimeline, UpdateTimeline, UpdateTimeline] when fetch more posts''',
+      '''Expects [LoadingTimeline, TimelineUpdated, UpdateTimeline] when fetch more posts''',
       build: () async {
-        when(mockTimelineRepository.getUserTimeline('1'))
+        when(mockTimelineRepository.getNewActivitiesCounter('1'))
             .thenAnswer((_) => timelineStream);
         when(mockTimelineRepository.getTimelineFirstPosts('1', 5)).thenAnswer(
           (_) => Future.value(
@@ -131,7 +159,7 @@ void main() {
         return;
       },
       verify: (timelineBloc) async {
-        verify(mockTimelineRepository.getUserTimeline('1')).called(1);
+        verify(mockTimelineRepository.getNewActivitiesCounter('1')).called(1);
         verify(mockTimelineRepository.getTimelineFirstPosts('1', 5)).called(1);
         verify(mockTimelineRepository.getMorePosts(
                 '1', 5, mockDocumentSnapshot))
@@ -140,18 +168,22 @@ void main() {
       expect: [
         LoadingTimeline(),
         isA<TimelineUpdated>(),
-        TimelineUpdated(activities: [
-          DespesaModel(id: '1'),
-          DespesaModel(id: '2'),
-          DespesaModel(id: '3')
-        ], count: 3),
+        TimelineUpdated(
+          activities: [
+            DespesaModel(id: '1'),
+            DespesaModel(id: '2'),
+            DespesaModel(id: '3')
+          ],
+          postsCount: 3,
+          updatesCount: 0,
+        ),
       ],
     );
 
     blocTest(
-      '''Expects [LoadingTimeline, UpdateTimeline, FetchTimelineFailed] when fetch more posts failed''',
+      '''Expects [LoadingTimeline, TimelineUpdated, FetchTimelineFailed] when fetch more posts failed''',
       build: () async {
-        when(mockTimelineRepository.getUserTimeline('1'))
+        when(mockTimelineRepository.getNewActivitiesCounter('1'))
             .thenAnswer((_) => timelineStream);
         when(mockTimelineRepository.getTimelineFirstPosts('1', 5)).thenAnswer(
           (_) => Future.value(
@@ -169,7 +201,7 @@ void main() {
         return;
       },
       verify: (timelineBloc) async {
-        verify(mockTimelineRepository.getUserTimeline('1')).called(1);
+        verify(mockTimelineRepository.getNewActivitiesCounter('1')).called(1);
         verify(mockTimelineRepository.getTimelineFirstPosts('1', 5)).called(1);
         verify(mockTimelineRepository.getMorePosts(
                 '1', 5, mockDocumentSnapshot))
@@ -178,6 +210,55 @@ void main() {
       expect: [
         LoadingTimeline(),
         isA<TimelineUpdated>(),
+        FetchTimelineFailed(),
+      ],
+    );
+
+    blocTest(
+      '''Expects [LoadingTimeline, TimelineUpdated] when reload timeline is added''',
+      build: () async {
+        when(mockTimelineRepository.getTimelineFirstPosts('1', 5)).thenAnswer(
+          (_) => Future.value(
+            Tuple2([DespesaModel(id: '1')], mockDocumentSnapshot),
+          ),
+        );
+        return timelineBloc;
+      },
+      act: (timelineBloc) {
+        timelineBloc.add(ReloadTimeline('1'));
+        return;
+      },
+      verify: (timelineBloc) async {
+        verify(mockTimelineRepository.getTimelineFirstPosts('1', 5)).called(1);
+      },
+      expect: [
+        LoadingTimeline(),
+        TimelineUpdated(
+          activities: [
+            DespesaModel(id: '1'),
+          ],
+          postsCount: 1,
+          updatesCount: 0,
+        ),
+      ],
+    );
+
+    blocTest(
+      '''Expects [LoadingTimeline, FetchTimelineFailed] when reload timeline throws exception''',
+      build: () async {
+        when(mockTimelineRepository.getTimelineFirstPosts('1', 5))
+            .thenThrow(Exception());
+        return timelineBloc;
+      },
+      act: (timelineBloc) {
+        timelineBloc.add(ReloadTimeline('1'));
+        return;
+      },
+      verify: (timelineBloc) async {
+        verify(mockTimelineRepository.getTimelineFirstPosts('1', 5)).called(1);
+      },
+      expect: [
+        LoadingTimeline(),
         FetchTimelineFailed(),
       ],
     );

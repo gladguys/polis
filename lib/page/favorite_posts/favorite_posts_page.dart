@@ -36,6 +36,7 @@ class FavoritePostsPage extends StatelessWidget {
         Expanded(
           child: Timeline(
             activities: posts,
+            updatesCount: 0,
           ),
         ),
       ],
