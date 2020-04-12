@@ -65,3 +65,4 @@ const PROVIDER_NAME = 'Nome do fornecedor';
 const SHARE = 'Compartilhar';
 const SAVE = 'Salvar';
 const SAVED = 'Salvo';
+const NEW_ACTIVITIES = 'novas atividades';

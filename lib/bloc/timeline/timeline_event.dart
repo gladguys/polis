@@ -13,11 +13,29 @@ class FetchUserTimeline extends TimelineEvent {
   List<Object> get props => [userId];
 }
 
-class UpdateTimeline extends TimelineEvent {
-  UpdateTimeline({this.activities});
+class ReloadTimeline extends TimelineEvent {
+  ReloadTimeline(this.userId);
 
-  final List<dynamic> activities;
+  final String userId;
 
   @override
-  List<Object> get props => [activities];
+  List<Object> get props => [userId];
+}
+
+class FetchMorePosts extends TimelineEvent {
+  FetchMorePosts(this.userId);
+
+  final String userId;
+
+  @override
+  List<Object> get props => [userId];
+}
+
+class UpdateTimelineActivitiesCount extends TimelineEvent {
+  UpdateTimelineActivitiesCount({this.count});
+
+  final int count;
+
+  @override
+  List<Object> get props => [count];
 }
