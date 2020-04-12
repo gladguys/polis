@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:polis/page/theme/main_theme.dart';
 
 import '../../../bloc/search_politic/bloc.dart';
 import '../../../i18n/label.dart';
 import '../../../model/models.dart';
 import '../../../widget/field_rounded.dart';
 import '../../../widget/select/selects.dart';
+import '../../theme/main_theme.dart';
 import 'search_politics_list.dart';
 
 class SearchPolitics extends StatelessWidget {
