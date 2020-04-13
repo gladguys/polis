@@ -11,7 +11,7 @@ void main() {
   group('TimelineBloc tests', () {
     TimelineBloc timelineBloc;
     MockTimelineRepository mockTimelineRepository;
-    Stream<int> timelineStream;
+    var timelineStream = Stream.fromIterable([0, 3, 5]);
     MockDocumentSnapshot mockDocumentSnapshot;
 
     setUp(() {
@@ -63,7 +63,7 @@ void main() {
     );
 
     blocTest(
-      'set firstRun flag to false after the first run',
+      'set isTimelineFetchedOnce flag to true after the first run',
       build: () async {
         when(mockTimelineRepository.getNewActivitiesCounter('1'))
             .thenAnswer((_) => timelineStream);
@@ -74,8 +74,9 @@ void main() {
       },
       act: (timelineBloc) {
         timelineBloc.add(FetchUserTimeline('1'));
-        timelineBloc.add(FetchUserTimeline('1'));
         timelineBloc.add(UpdateTimelineActivitiesCount(count: 0));
+        timelineBloc.add(NotifyTimelineFetchedOnce());
+        timelineBloc.add(FetchUserTimeline('1'));
         return;
       },
       verify: (timelineBloc) async {
@@ -85,6 +86,31 @@ void main() {
       expect: [
         LoadingTimeline(),
         TimelineUpdated(activities: [], postsCount: 0, updatesCount: 0),
+        LoadingTimeline(),
+      ],
+    );
+
+    blocTest(
+      'set isTimelineFetchedOnce flag to true before the first run',
+      build: () async {
+        when(mockTimelineRepository.getNewActivitiesCounter('1'))
+            .thenAnswer((_) => timelineStream);
+        when(mockTimelineRepository.getTimelineFirstPosts('1', 5)).thenAnswer(
+          (_) => Future.value(Tuple2([], mockDocumentSnapshot)),
+        );
+        return timelineBloc;
+      },
+      act: (timelineBloc) {
+        timelineBloc.add(NotifyTimelineFetchedOnce());
+        timelineBloc.add(FetchUserTimeline('1'));
+        timelineBloc.add(UpdateTimelineActivitiesCount(count: 0));
+        return;
+      },
+      verify: (timelineBloc) async {
+        verify(mockTimelineRepository.getNewActivitiesCounter('1')).called(1);
+        verify(mockTimelineRepository.getTimelineFirstPosts('1', 5)).called(1);
+      },
+      expect: [
         LoadingTimeline(),
         TimelineUpdated(activities: [], postsCount: 0, updatesCount: 0),
       ],

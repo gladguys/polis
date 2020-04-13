@@ -33,6 +33,7 @@ class FavoritePostsPage extends StatelessWidget {
       children: <Widget>[
         const SizedBox(height: 8),
         TextTitle(FAVORITE_POSTS),
+        const SizedBox(height: 8),
         Expanded(
           child: Timeline(
             activities: posts,

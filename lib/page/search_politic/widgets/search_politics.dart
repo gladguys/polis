@@ -7,6 +7,7 @@ import '../../../i18n/label.dart';
 import '../../../model/models.dart';
 import '../../../widget/field_rounded.dart';
 import '../../../widget/select/selects.dart';
+import '../../theme/main_theme.dart';
 import 'search_politics_list.dart';
 
 class SearchPolitics extends StatelessWidget {
@@ -78,12 +79,15 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
             Container(
               width: 40,
               height: 40,
-              child: FlatButton(
+              child: OutlineButton(
                 key: const ValueKey('sliders-icon'),
+                color: theme.primaryColor,
+                highlightedBorderColor: theme.primaryColorDark,
+                borderSide: BorderSide(color: theme.primaryColor),
                 padding: EdgeInsets.zero,
                 child: FaIcon(
                   FontAwesomeIcons.slidersH,
-                  size: 20,
+                  size: 18,
                 ),
                 onPressed: () => setState(() => isOpen = !isOpen),
               ),

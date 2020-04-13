@@ -4,26 +4,14 @@ import '../constants.dart';
 
 class UrlLauncherService {
   Future<bool> canLaunchEmailUrl(String email) async {
-    try {
-      return await canLaunch('$kLaunchUrlEmail:$email');
-    } on Exception {
-      rethrow;
-    }
+    return await canLaunch('$kLaunchUrlEmail:$email');
   }
 
   Future<bool> launchEmailUrl(String email) {
-    try {
-      return launch('$kLaunchUrlEmail:$email');
-    } on Exception {
-      rethrow;
-    }
+    return launch('$kLaunchUrlEmail:$email');
   }
 
   Future<bool> launchUrl(String url) {
-    try {
-      return launch(url);
-    } on Exception {
-      rethrow;
-    }
+    return launch(url);
   }
 }

@@ -21,39 +21,41 @@ class CardBase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.transparent,
-      elevation: 0,
-      margin: EdgeInsets.zero,
-      key: key,
-      child: Row(
-        children: <Widget>[
-          const SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                InkWell(
-                  onTap: onTap,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: _buildContent(),
+    return SingleChildScrollView(
+      child: Card(
+        color: Colors.transparent,
+        elevation: 0,
+        margin: EdgeInsets.zero,
+        key: key,
+        child: Row(
+          children: <Widget>[
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  InkWell(
+                    onTap: onTap,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: _buildContent(),
+                    ),
                   ),
-                ),
-                if (slotBottom != null)
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      const SizedBox(width: 56),
-                      Expanded(child: slotBottom),
-                    ],
-                  )
-              ],
+                  if (slotBottom != null)
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        const SizedBox(width: 56),
+                        Expanded(child: slotBottom),
+                      ],
+                    )
+                ],
+              ),
             ),
-          ),
-          if (slotRight != null) slotRight,
-          const SizedBox(width: 8),
-        ],
+            if (slotRight != null) slotRight,
+            const SizedBox(width: 8),
+          ],
+        ),
       ),
     );
   }

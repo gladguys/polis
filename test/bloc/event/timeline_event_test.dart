@@ -46,5 +46,14 @@ void main() {
         expect(ev1 == ev3, false);
       });
     });
+
+    group('NotifyTimelineFetchedOnce', () {
+      test('props', () {
+        final ev1 = NotifyTimelineFetchedOnce();
+        final ev2 = NotifyTimelineFetchedOnce();
+
+        expect(ev1, ev2);
+      });
+    });
   });
 }

@@ -8,7 +8,10 @@ import '../../repository/concrete/repositories.dart';
 import 'proposta_tile.dart';
 
 class PropostaTileConnected extends StatelessWidget {
-  PropostaTileConnected(this.proposta, {this.clickableImage = true});
+  PropostaTileConnected(
+    this.proposta, {
+    this.clickableImage = true,
+  });
 
   final PropostaModel proposta;
   final bool clickableImage;

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../page/theme/main_theme.dart';
+
 class FieldRounded extends StatelessWidget {
   const FieldRounded({
     this.width,
@@ -8,6 +10,8 @@ class FieldRounded extends StatelessWidget {
     this.keySuffix,
     this.iconPrefix,
     this.iconSuffix,
+    this.textSuffix,
+    this.widthSuffix,
     this.backgroundColorSuffix,
     this.hintText,
     this.onChanged,
@@ -19,6 +23,8 @@ class FieldRounded extends StatelessWidget {
   final Key keySuffix;
   final IconData iconPrefix;
   final IconData iconSuffix;
+  final String textSuffix;
+  final double widthSuffix;
   final Color backgroundColorSuffix;
   final String hintText;
   final Function onChanged;
@@ -66,6 +72,28 @@ class FieldRounded extends StatelessWidget {
                 iconPrefix,
                 size: 16,
                 color: Colors.grey[600],
+              ),
+            ),
+          ),
+        if (textSuffix != null)
+          Positioned(
+            right: 5,
+            top: 5,
+            child: Container(
+              height: 30,
+              width: widthSuffix,
+              alignment: Alignment.center,
+              child: FlatButton(
+                color: theme.primaryColor,
+                padding: EdgeInsets.zero,
+                child: Text(
+                  textSuffix,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                onPressed: onPressedSuffix,
               ),
             ),
           ),

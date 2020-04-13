@@ -54,6 +54,8 @@ void main() {
                 nomeFornecedor: 'forn',
                 dataDocumento: '20-10-2020',
                 valorLiquido: '2.33',
+                valorDocumento: '2.33',
+                valorGlosa: '2.33',
                 numDocumento: '1',
                 fotoPolitico: 'foto',
               ),

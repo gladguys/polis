@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:polis/core/service/locator.dart';
@@ -50,11 +49,12 @@ void main() {
             post: DespesaModel(
               nomePolitico: 'politico',
               nomeFornecedor: 'fornecedor',
-              valorDocumento: 'valor',
+              valorDocumento: '22.85',
               fotoPolitico: 'foto',
               tipoAtividade: 'tipo',
               tipoDespesa: 'tipod',
               valorLiquido: '22.85',
+              valorGlosa: '22.85',
               dataDocumento: '10-01-2020',
             ),
             postType: PostType.DESPESA,
@@ -70,11 +70,12 @@ void main() {
             post: DespesaModel(
               nomePolitico: 'politico',
               nomeFornecedor: 'fornecedor',
-              valorDocumento: 'valor',
+              valorDocumento: '22.85',
               fotoPolitico: 'foto',
               tipoAtividade: 'tipo',
               tipoDespesa: 'tipod',
               valorLiquido: '22.85',
+              valorGlosa: '22.85',
               dataDocumento: '10-01-2020',
             ),
             postType: PostType.DESPESA,
@@ -93,32 +94,12 @@ void main() {
               fotoPolitico: 'foto',
               siglaPartido: 'PT',
               dataDocumento: '10-01-2020',
+              dataApresentacao: '10-01-2020',
             ),
             postType: PostType.PROPOSICAO,
           ),
         ),
       );
-    });
-
-    testWidgets('should do something when click comment button',
-        (tester) async {
-      await tester.pumpWidget(
-        connectedWidget(
-          PostPageConnected(
-            post: PropostaModel(
-              nomePolitico: 'politico',
-              tipoDocumento: 'PROPOSICAO',
-              fotoPolitico: 'foto',
-              siglaPartido: 'PT',
-              dataDocumento: '10-01-2020',
-            ),
-            postType: PostType.PROPOSICAO,
-          ),
-        ),
-      );
-      final commentButton = find.byKey(const ValueKey('comment-button'));
-      expect(commentButton, findsOneWidget);
-      await tester.tap(commentButton);
     });
   });
 }
