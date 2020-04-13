@@ -1,3 +1,4 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -33,6 +34,8 @@ class _TimelineState extends State<Timeline> {
   int get updatesCount => widget.updatesCount;
   TimelineBloc get timelineBloc => context.bloc<TimelineBloc>();
   String get userId => context.bloc<UserBloc>().user.userId;
+
+  int counter = 0;
 
   @override
   void initState() {
@@ -106,17 +109,24 @@ class _TimelineState extends State<Timeline> {
         );
       },
       itemBuilder: (_, element) {
+        counter += 1;
         if (element is DespesaModel) {
           return DespesaTileConnected(element);
         } else {
           return PropostaTileConnected(element as PropostaModel);
         }
       },
-      separator: const Divider(
-        height: 16,
-        indent: 8,
-        endIndent: 8,
-      ),
+      separator: counter % 2 != 0
+          ? const Divider(
+              height: 16,
+              indent: 8,
+              endIndent: 8,
+            )
+          : AdmobBanner(
+              adUnitId: 'ca-app-pub-5806526425473649/1618913550',
+              adSize: AdmobBannerSize.BANNER,
+              listener: (event, args) {},
+            ),
     );
   }
 
