@@ -24,21 +24,21 @@ class ActivitiesList extends StatelessWidget {
             children: [
               TextSpan(
                 text: isFollow ? 'Segui' : 'Deixei de seguir',
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const TextSpan(text: ' o politico '),
               TextSpan(
                 text: activities[i].nomePolitico,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const TextSpan(text: ' no dia '),
               TextSpan(
                 text: activities[i].data.toString().formatDate(),
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
