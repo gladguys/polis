@@ -37,7 +37,7 @@ class FirebaseUserProfileRepository implements UserProfileRepository {
       final collectionRef = await acoesRef
           .document(userId)
           .collection(ACOES_USUARIO_SUBCOLLECTION)
-          .orderBy(DATA, descending: true);
+          .orderBy(DATA_ACAO, descending: true);
       final querySnapshot = await collectionRef.getDocuments();
       final documents = querySnapshot.documents;
       return List.generate(documents.length,

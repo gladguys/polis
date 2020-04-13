@@ -1,12 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_test_utils/image_test_utils.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/enum/acao_type.dart';
 import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
+import 'package:polis/page/user_profile/widget/activities_list.dart';
 import 'package:polis/page/user_profile/widget/personal_user_info.dart';
 import 'package:polis/page/user_profile/widget/politics_following_quantity.dart';
 import 'package:polis/page/user_profile/widget/user_activities.dart';
@@ -16,6 +19,8 @@ import '../../mock.dart';
 import '../utils.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  initializeDateFormatting('pt_BR', null);
   MockUserProfileBloc mockUserProfileBloc;
 
   group('UserProfilePage tests', () {
@@ -48,7 +53,8 @@ void main() {
       );
     });
 
-    testWidgets('should build info when success', (tester) async {
+    testWidgets('should build info when success with no activity',
+        (tester) async {
       provideMockedNetworkImages(() async {
         when(mockUserProfileBloc.state).thenReturn(
           FetchUserRelatedInfoSuccess(
@@ -86,7 +92,63 @@ void main() {
       });
     });
 
-    testWidgets('should build info when success', (tester) async {
+    testWidgets('should build info when success with activity', (tester) async {
+      provideMockedNetworkImages(() async {
+        when(mockUserProfileBloc.state).thenReturn(
+          FetchUserRelatedInfoSuccess(
+            userActivities: [
+              AcaoUsuarioModel(
+                idPolitico: '1',
+                mensagem: 'mensagem',
+                tipo: AcaoType.follow,
+                data: DateTime.now(),
+                nomePolitico: 'Nome',
+                urlFotoPolitico: 'foto',
+              ),
+              AcaoUsuarioModel(
+                idPolitico: '1',
+                mensagem: 'mensagem',
+                tipo: AcaoType.unfollow,
+                data: DateTime.now(),
+                nomePolitico: 'Nome',
+                urlFotoPolitico: 'foto',
+              ),
+            ],
+            politicsFollowing: [
+              PoliticoModel(
+                id: '1',
+                nomeCivil: 'nome',
+                urlFoto: 'foto',
+              )
+            ],
+          ),
+        );
+        await tester.pumpWidget(
+          connectedWidget(
+            BlocProvider(
+              create: (_) => UserBloc(
+                repository: MockUserRepository(),
+                user: UserModel(
+                  name: 'name',
+                  email: 'email',
+                  photoUrl: 'photo',
+                ),
+              ),
+              child: PageConnected<UserProfileBloc>(
+                bloc: mockUserProfileBloc,
+                page: UserProfilePage(),
+              ),
+            ),
+          ),
+        );
+        expect(find.byType(PersonalUserInfo), findsOneWidget);
+        expect(find.byType(PoliticsFollowingQuantity), findsOneWidget);
+        expect(find.byType(UserActivities), findsOneWidget);
+        expect(find.byType(ActivitiesList), findsOneWidget);
+      });
+    });
+
+    testWidgets('should build loading', (tester) async {
       provideMockedNetworkImages(() async {
         when(mockUserProfileBloc.state).thenReturn(LoadingFetchUserInfo());
         await tester.pumpWidget(
