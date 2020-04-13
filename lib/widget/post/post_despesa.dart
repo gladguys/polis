@@ -5,7 +5,6 @@ import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
-import '../../enum/post_type.dart';
 import '../../extension/formatters.dart';
 import '../../i18n/i18n.dart';
 import '../../model/models.dart';
@@ -17,11 +16,10 @@ import '../label_value.dart';
 import '../photo.dart';
 import '../text_rich.dart';
 
-class DespesaTileComplete extends StatelessWidget {
-  DespesaTileComplete(this.despesa, {this.clickableImage});
+class PostDespesa extends StatelessWidget {
+  PostDespesa(this.despesa);
 
   final DespesaModel despesa;
-  final bool clickableImage;
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +27,10 @@ class DespesaTileComplete extends StatelessWidget {
       slotLeft: InkWell(
         borderRadius: BorderRadius.circular(24),
         child: Photo(url: despesa.fotoPolitico),
-        onTap: () => clickableImage
-            ? SimpleRouter.forward(
-                PoliticProfilePageConnected(despesa.idPolitico),
-                name: POLITIC_PROFILE_PAGE,
-              )
-            : null,
+        onTap: () => SimpleRouter.forward(
+          PoliticProfilePageConnected(despesa.idPolitico),
+          name: POLITIC_PROFILE_PAGE,
+        ),
       ),
       slotCenter: BlocBuilder<PostBloc, PostState>(
         builder: (_, state) => Column(

@@ -5,7 +5,6 @@ import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
-import '../../enum/post_type.dart';
 import '../../extension/formatters.dart';
 import '../../i18n/i18n.dart';
 import '../../model/proposta_model.dart';
@@ -16,11 +15,10 @@ import '../label_value.dart';
 import '../photo.dart';
 import '../text_rich.dart';
 
-class PropostaTileComplete extends StatelessWidget {
-  PropostaTileComplete(this.proposta, {this.clickableImage});
+class PostProposta extends StatelessWidget {
+  PostProposta(this.proposta);
 
   final PropostaModel proposta;
-  final bool clickableImage;
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +26,10 @@ class PropostaTileComplete extends StatelessWidget {
       slotLeft: InkWell(
         borderRadius: BorderRadius.circular(24),
         child: Photo(url: proposta.fotoPolitico),
-        onTap: () => clickableImage
-            ? SimpleRouter.forward(
-                PoliticProfilePageConnected(proposta.idPoliticoAutor),
-                name: POLITIC_PROFILE_PAGE,
-              )
-            : null,
+        onTap: () => SimpleRouter.forward(
+          PoliticProfilePageConnected(proposta.idPoliticoAutor),
+          name: POLITIC_PROFILE_PAGE,
+        ),
       ),
       slotCenter: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

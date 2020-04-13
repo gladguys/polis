@@ -13,6 +13,11 @@ class FetchUserTimeline extends TimelineEvent {
   List<Object> get props => [userId];
 }
 
+class NotifyTimelineFetchedOnce extends TimelineEvent {
+  @override
+  List<Object> get props => [];
+}
+
 class ReloadTimeline extends TimelineEvent {
   ReloadTimeline(this.userId);
 

@@ -251,7 +251,8 @@ void main() {
           ),
         ),
       );
-      final followUnfollowButton = find.byType(OutlineButton);
+      final followUnfollowButton =
+          find.byKey(const ValueKey('follow-unfollow-btn')).first;
       expect(followUnfollowButton, findsOneWidget);
       await tester.tap(followUnfollowButton);
       verify(mockSearchPoliticBloc.add(any)).called(1);
