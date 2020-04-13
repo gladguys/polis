@@ -167,6 +167,8 @@ class MockPoliticoBox extends Mock implements Box<PoliticoModel> {}
 // Service
 class MockAnalyticsService extends Mock implements AnalyticsService {}
 
+class MockPerformanceService extends Mock implements PerformanceService {}
+
 class MockAdService extends Mock implements AdService {}
 
 class MockSharedPreferencesService extends Mock
