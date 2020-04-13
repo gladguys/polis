@@ -19,10 +19,10 @@ class FetchUserRelatedInfoSuccess extends UserProfileState {
         assert(userActivities != null);
 
   final List<PoliticoModel> politicsFollowing;
-  final dynamic userActivities;
+  final List<AcaoUsuarioModel> userActivities;
 
   @override
-  List<Object> get props => [politicsFollowing];
+  List<Object> get props => [politicsFollowing, userActivities];
 }
 
 class FetchUserRelatedInfoFailed extends UserProfileState {
