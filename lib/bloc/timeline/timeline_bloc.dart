@@ -6,14 +6,19 @@ import 'package:flutter/material.dart';
 
 import './bloc.dart';
 import '../../core/constants.dart';
+import '../../core/service/services.dart';
+import '../../core/traces.dart';
 import '../../repository/abstract/timeline_repository.dart';
 
 class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
-  TimelineBloc({@required this.repository}) : assert(repository != null);
+  TimelineBloc({@required this.repository, @required this.performanceService})
+      : assert(repository != null),
+        assert(performanceService != null);
 
   final TimelineRepository repository;
-  StreamSubscription _timelineSubscription;
+  final PerformanceService performanceService;
 
+  StreamSubscription _timelineSubscription;
   int newActivitiesCount = 0;
   List<dynamic> timelinePosts = [];
   DocumentSnapshot lastDocument;
@@ -49,8 +54,12 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
       }
 
       try {
+        final trace = await performanceService.getTimelineTrace(
+            trace: tTimelineGetFirstPosts);
+        trace.start();
         final timelineFirstData = await repository.getTimelineFirstPosts(
             event.userId, kTimelinePageSize);
+        trace.stop();
 
         timelinePosts.addAll(timelineFirstData.item1);
         lastDocument = timelineFirstData.item2;
@@ -66,8 +75,12 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
     }
     if (event is FetchMorePosts) {
       try {
+        final trace = await performanceService.getTimelineTrace(
+            trace: tTimelineGetMorePosts);
+        trace.start();
         final timelineData = await repository.getMorePosts(
             event.userId, kTimelinePageSize, lastDocument);
+        trace.stop();
 
         timelinePosts.addAll(timelineData.item1);
         lastDocument = timelineData.item2;
@@ -85,8 +98,12 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
       yield LoadingTimeline();
 
       try {
+        final trace = await performanceService.getTimelineTrace(
+            trace: tTimelineGetFirstPosts);
+        trace.start();
         final timelineFirstData = await repository.getTimelineFirstPosts(
             event.userId, kTimelinePageSize);
+        trace.stop();
 
         newActivitiesCount = 0;
         timelinePosts = [...timelineFirstData.item1];
