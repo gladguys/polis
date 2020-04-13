@@ -20,6 +20,7 @@ const POSTS_FAVORITOS_USUARIO_SUBCOLLECTION = 'postsFavoritosUsuario';
 const SIGLA_UF_FIELD = 'siglaUf';
 const TIPO_ATIVIDADE_FIELD = 'tipoAtividade';
 const DATA_DOCUMENTO_FIELD = 'dataDocumento';
+const DATA_FAVORITADO_FIELD = 'dataFavoritado';
 const HASH = 'hash';
 
 // References
