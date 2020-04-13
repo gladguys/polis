@@ -11,8 +11,10 @@ class FirebaseUserProfileRepository implements UserProfileRepository {
       : assert(firestore != null);
 
   final Firestore firestore;
+
   CollectionReference get politicosSeguidosRef =>
       firestore.collection(POLITICOS_SEGUIDOS_COLLECTION);
+  CollectionReference get acoesRef => firestore.collection(ACOES_COLLECTION);
 
   @override
   Future<List<PoliticoModel>> getPoliticsFollowing(String userId) async {
@@ -30,7 +32,18 @@ class FirebaseUserProfileRepository implements UserProfileRepository {
   }
 
   @override
-  Future<List> getUserActivities(String userId) async {
-    return [];
+  Future<List<AcaoUsuarioModel>> getUserActivities(String userId) async {
+    try {
+      final collectionRef = await acoesRef
+          .document(userId)
+          .collection(ACOES_USUARIO_SUBCOLLECTION)
+          .orderBy(DATA, descending: true);
+      final querySnapshot = await collectionRef.getDocuments();
+      final documents = querySnapshot.documents;
+      return List.generate(documents.length,
+          (i) => AcaoUsuarioModel.fromJson(documents[i].data));
+    } on Exception {
+      throw ComunicationException();
+    }
   }
 }
