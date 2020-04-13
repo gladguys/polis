@@ -11,6 +11,7 @@ void main() {
   group('TimelineBloc tests', () {
     TimelineBloc timelineBloc;
     MockTimelineRepository mockTimelineRepository;
+    MockPerformanceService mockPerformanceService;
     var timelineStream = Stream.fromIterable([0, 3, 5]);
     MockDocumentSnapshot mockDocumentSnapshot;
 
@@ -19,6 +20,7 @@ void main() {
       mockDocumentSnapshot = MockDocumentSnapshot();
       timelineBloc = TimelineBloc(
         repository: mockTimelineRepository,
+        performanceService: mockPerformanceService,
       );
       timelineStream = Stream.value(0);
     });
@@ -27,6 +29,13 @@ void main() {
       expect(
           () => TimelineBloc(
                 repository: null,
+                performanceService: mockPerformanceService,
+              ),
+          throwsAssertionError);
+      expect(
+          () => TimelineBloc(
+                repository: mockTimelineRepository,
+                performanceService: null,
               ),
           throwsAssertionError);
     });
