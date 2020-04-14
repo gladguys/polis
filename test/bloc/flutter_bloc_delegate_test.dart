@@ -64,18 +64,24 @@ void main() {
       });
 
       test('should send FetchUserTimeline performance', () {
+        when(mockPerformanceService.getTrace(trace: anyNamed('trace')))
+            .thenAnswer((_) => Future.value(MockTrace()));
         delegate.onEvent(timelineBloc, FetchUserTimeline('1'));
         verify(mockPerformanceService.getTrace(trace: anyNamed('trace')))
             .called(1);
       });
 
       test('should send FetchMorePosts performance', () {
+        when(mockPerformanceService.getTrace(trace: anyNamed('trace')))
+            .thenAnswer((_) => Future.value(MockTrace()));
         delegate.onEvent(timelineBloc, FetchMorePosts('1'));
         verify(mockPerformanceService.getTrace(trace: anyNamed('trace')))
             .called(1);
       });
 
       test('should send ReloadTimeline performance', () {
+        when(mockPerformanceService.getTrace(trace: anyNamed('trace')))
+            .thenAnswer((_) => Future.value(MockTrace()));
         delegate.onEvent(timelineBloc, ReloadTimeline('1'));
         verify(mockPerformanceService.getTrace(trace: anyNamed('trace')))
             .called(1);

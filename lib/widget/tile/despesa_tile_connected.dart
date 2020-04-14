@@ -8,7 +8,7 @@ import '../../repository/concrete/repositories.dart';
 import 'despesa_tile.dart';
 
 class DespesaTileConnected extends StatelessWidget {
-  DespesaTileConnected(
+  const DespesaTileConnected(
     this.despesa, {
     this.clickableImage = true,
   });
