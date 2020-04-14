@@ -1,42 +1,70 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/model/models.dart';
+import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/service/locator.dart';
+import 'package:polis/model/despesa_model.dart';
+import 'package:polis/page/page_connected.dart';
 import 'package:polis/widget/button_action_card.dart';
-import 'package:polis/widget/tile/proposta_tile_connected.dart';
+import 'package:polis/widget/post/post_despesa.dart';
 
+import '../mock.dart';
 import 'utils.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  initializeDateFormatting('pt_BR', null);
 
-  PropostaModel proposta;
+  setUpAll(() {
+    const channel = MethodChannel('plugins.flutter.io/firebase_performance');
+    channel.setMockMethodCallHandler((methodCall) async => true);
+    initLocator(MockSharedPreferences());
+    initializeDateFormatting('pt_BR', null);
+  });
 
-  group('DespesaTile tests', () {
+  DespesaModel despesa;
+
+  group('PostDespesa tests', () {
     setUp(() {
-      proposta = PropostaModel(
+      despesa = DespesaModel(
         fotoPolitico: 'foto',
         nomePolitico: 'nome',
-        ementa: 'ementa',
-        siglaPartido: 'sigla',
-        tipoDocumento: 'tipo',
-        status: 'status',
+        nomeFornecedor: 'fornecedor',
+        tipoAtividade: 'ativi',
+        tipoDespesa: 'despesa',
+        valorLiquido: '3.51',
+        valorDocumento: '3.51',
+        valorGlosa: '3.51',
         dataDocumento: '10-01-2020',
+        urlDocumento: 'urlDoc',
       );
     });
 
     testWidgets('should build without exploding', (tester) async {
+      final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.isPostFavorite).thenReturn(false);
       await tester.pumpWidget(
-        connectedWidget(PropostaTileConnected(proposta)),
+        connectedWidget(
+          PageConnected<PostBloc>(
+            bloc: mockPostBloc,
+            page: PostDespesa(despesa),
+          ),
+        ),
       );
     });
 
     testWidgets('should do something when click on card', (tester) async {
+      final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.isPostFavorite).thenReturn(false);
       await tester.pumpWidget(
-        connectedWidget(PropostaTileConnected(proposta)),
+        connectedWidget(
+          PageConnected<PostBloc>(
+            bloc: mockPostBloc,
+            page: PostDespesa(despesa),
+          ),
+        ),
       );
       final card = find.byKey(const ValueKey('card-base-content'));
       expect(card, findsOneWidget);
@@ -44,8 +72,15 @@ void main() {
     });
 
     testWidgets('should do something when click on share btn', (tester) async {
+      final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.isPostFavorite).thenReturn(false);
       await tester.pumpWidget(
-        connectedWidget(PropostaTileConnected(proposta)),
+        connectedWidget(
+          PageConnected<PostBloc>(
+            bloc: mockPostBloc,
+            page: PostDespesa(despesa),
+          ),
+        ),
       );
       final likeButton = find.byWidgetPredicate((widget) {
         if (widget is ButtonActionCard &&
@@ -60,8 +95,15 @@ void main() {
 
     testWidgets('should do something when click on bookmark btn',
         (tester) async {
+      final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.isPostFavorite).thenReturn(false);
       await tester.pumpWidget(
-        connectedWidget(PropostaTileConnected(proposta)),
+        connectedWidget(
+          PageConnected<PostBloc>(
+            bloc: mockPostBloc,
+            page: PostDespesa(despesa),
+          ),
+        ),
       );
       final likeButton = find.byWidgetPredicate((widget) {
         if (widget is ButtonActionCard &&
@@ -76,9 +118,14 @@ void main() {
 
     testWidgets('should go to profile page when click on politic photo',
         (tester) async {
+      final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.isPostFavorite).thenReturn(false);
       await tester.pumpWidget(
         connectedWidget(
-          connectedWidget(PropostaTileConnected(proposta)),
+          PageConnected<PostBloc>(
+            bloc: mockPostBloc,
+            page: PostDespesa(despesa),
+          ),
         ),
       );
       final politicPhoto = find.byType(ClipRRect);

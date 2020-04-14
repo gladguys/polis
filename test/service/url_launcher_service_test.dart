@@ -4,6 +4,8 @@ import 'package:polis/core/service/services.dart';
 
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
+  const channel = MethodChannel('plugins.flutter.io/url_launcher');
+  channel.setMockMethodCallHandler((methodCall) async => true);
   UrlLauncherService urlLauncherService;
 
   group('UrlLauncherService', () {
@@ -11,48 +13,16 @@ void main() async {
       urlLauncherService = UrlLauncherService();
     });
 
-    group('works', () {
-      setUp(() {
-        const channel = MethodChannel('plugins.flutter.io/url_launcher');
-        channel.setMockMethodCallHandler((methodCall) async => true);
-      });
-
-      test('canLaunchEmailUrl', () async {
-        await urlLauncherService.canLaunchEmailUrl('rod@gmail.com');
-      });
-
-      test('launchEmailUrl', () async {
-        await urlLauncherService.launchEmailUrl('rod@gmail.com');
-      });
-
-      test('launchUrl', () async {
-        await urlLauncherService.launchUrl('url');
-      });
+    test('canLaunchEmailUrl', () async {
+      await urlLauncherService.canLaunchEmailUrl('rod@gmail.com');
     });
 
-    group('throws exception', () {
-      setUp(() {
-        const channel = MethodChannel('plugins.flutter.io/url_launcher');
-        channel.setMockMethodCallHandler((methodCall) async => throwsException);
-      });
+    test('launchEmailUrl', () async {
+      await urlLauncherService.launchEmailUrl('rod@gmail.com');
+    });
 
-      test('canLaunchEmailUrl', () async {
-        urlLauncherService
-            .canLaunchEmailUrl('rod@gmail.com')
-            .catchError((e) => expect(e, isA<PlatformException>()));
-      });
-
-      test('launchEmailUrl', () async {
-        urlLauncherService
-            .launchEmailUrl('rod@gmail.com')
-            .catchError((e) => expect(e, isA<PlatformException>()));
-      });
-
-      test('launchUrl', () async {
-        urlLauncherService
-            .launchUrl('url')
-            .catchError((e) => expect(e, isA<PlatformException>()));
-      });
+    test('launchUrl', () async {
+      await urlLauncherService.launchUrl('url');
     });
   });
 }

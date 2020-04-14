@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../core/routing/route_names.dart';
 import '../../enum/post_type.dart';
 import '../../widget/default_bottombar.dart';
-import 'widget/post_despesa.dart';
-import 'widget/post_proposta.dart';
+import '../../widget/post/post_despesa_connected.dart';
+import '../../widget/post/post_proposta.dart';
 
 class PostPage extends StatelessWidget {
   PostPage({@required this.post, @required this.postType})
@@ -24,7 +24,7 @@ class PostPage extends StatelessWidget {
             const SizedBox(height: 8),
             Expanded(
               child: postType == PostType.DESPESA
-                  ? PostDespesa(post)
+                  ? PostDespesaConnected(post)
                   : PostProposta(post),
             ),
             /*

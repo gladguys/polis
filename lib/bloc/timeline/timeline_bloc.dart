@@ -12,15 +12,15 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
   TimelineBloc({@required this.repository}) : assert(repository != null);
 
   final TimelineRepository repository;
-  StreamSubscription _timelineSubscription;
 
+  StreamSubscription _timelineSubscription;
   int newActivitiesCount = 0;
   List<dynamic> timelinePosts = [];
   DocumentSnapshot lastDocument;
 
   /// We just want to track the changes, so we don't need to make use of the
   /// the first values emitted onto the stream
-  bool firstRun = true;
+  bool isTimelineFetchedOnce = false;
 
   @override
   TimelineState get initialState => InitialTimelineState();
@@ -35,11 +35,12 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
         _timelineSubscription =
             repository.getNewActivitiesCounter(event.userId).listen(
           (count) {
-            if (!firstRun) {
+            if (isTimelineFetchedOnce) {
               newActivitiesCount += count;
               add(UpdateTimelineActivitiesCount(count: newActivitiesCount));
             } else {
-              firstRun = false;
+              add(NotifyTimelineFetchedOnce());
+              isTimelineFetchedOnce = true;
             }
           },
         );
@@ -106,6 +107,9 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
         postsCount: timelinePosts.length,
         updatesCount: newActivitiesCount,
       );
+    }
+    if (event is NotifyTimelineFetchedOnce) {
+      isTimelineFetchedOnce = true;
     }
   }
 

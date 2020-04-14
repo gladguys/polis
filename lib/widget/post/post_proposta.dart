@@ -3,23 +3,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../../bloc/blocs.dart';
-import '../../../core/routing/route_names.dart';
-import '../../../extension/formatters.dart';
-import '../../../i18n/i18n.dart';
-import '../../../model/proposta_model.dart';
-import '../../../page/pages.dart';
-import '../../../widget/button_action_card.dart';
-import '../../../widget/card_base.dart';
-import '../../../widget/label_value.dart';
-import '../../../widget/photo.dart';
-import '../../../widget/text_rich.dart';
+import '../../bloc/blocs.dart';
+import '../../core/routing/route_names.dart';
+import '../../extension/formatters.dart';
+import '../../i18n/i18n.dart';
+import '../../model/proposta_model.dart';
+import '../../page/pages.dart';
+import '../button_action_card.dart';
+import '../card_base.dart';
+import '../label_value.dart';
+import '../photo.dart';
+import '../text_rich.dart';
 
 class PostProposta extends StatelessWidget {
-  PostProposta(this.proposta, {this.clickableImage});
+  PostProposta(this.proposta);
 
   final PropostaModel proposta;
-  final bool clickableImage;
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +26,10 @@ class PostProposta extends StatelessWidget {
       slotLeft: InkWell(
         borderRadius: BorderRadius.circular(24),
         child: Photo(url: proposta.fotoPolitico),
-        onTap: () => clickableImage
-            ? SimpleRouter.forward(
-                PoliticProfilePageConnected(proposta.idPoliticoAutor),
-                name: POLITIC_PROFILE_PAGE,
-              )
-            : null,
+        onTap: () => SimpleRouter.forward(
+          PoliticProfilePageConnected(proposta.idPoliticoAutor),
+          name: POLITIC_PROFILE_PAGE,
+        ),
       ),
       slotCenter: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -71,7 +71,7 @@ void main() {
     test('toString()', () {
       final modelToString = DespesaModel(codDocumento: '1').toString();
       final result =
-          '''DespesaModel{id: null, ano: null, mes: null, cnpjCpfFornecedor: null, codDocumento: 1, codLote: null, codTipoDocumento: null, fotoPolitico: null, dataDocumento: null, idPolitico: null, nomeFornecedor: null, nomePolitico: null, numDocumento: null, numRessarcimento: null, parcela: null, siglaPartido: null, tipoAtividade: null, tipoDespesa: null, tipoDocumento: null, urlDocumento: null, valorDocumento: null, valorGlosa: null, valorLiquido: null, favorito: null}''';
+          '''DespesaModel{id: null, ano: null, mes: null, cnpjCpfFornecedor: null, codDocumento: 1, codLote: null, codTipoDocumento: null, fotoPolitico: null, dataDocumento: null, estadoPolitico: null, idPolitico: null, nomeFornecedor: null, nomePolitico: null, numDocumento: null, numRessarcimento: null, parcela: null, siglaPartido: null, tipoAtividade: null, tipoDespesa: null, tipoDocumento: null, urlDocumento: null, valorDocumento: null, valorGlosa: null, valorLiquido: null, favorito: null}''';
       expect(modelToString == result, true);
     });
 
