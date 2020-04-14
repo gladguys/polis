@@ -106,13 +106,13 @@ void main() {
         expect(lastActivities, isNotNull);
         expect(lastActivities, isNotEmpty);
         expect(
-          lastActivities[0],
+          lastActivities.item1[0],
           DespesaModel(
             codDocumento: '1',
           ),
         );
         expect(
-          lastActivities[1],
+          lastActivities.item1[1],
           PropostaModel(
             id: '1',
           ),

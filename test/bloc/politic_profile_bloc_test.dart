@@ -1,8 +1,10 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/model/models.dart';
+import 'package:tuple/tuple.dart';
 
 import '../mock.dart';
 
@@ -78,11 +80,13 @@ void main() {
           when(mockPoliticProfileRepository.getLastActivities(
                   politicId: '1', count: 5))
               .thenAnswer(
-            (_) => Future.value([
-              DespesaModel(
-                codDocumento: '123',
-              )
-            ]),
+            (_) => Future.value(
+              Tuple2<List<dynamic>, DocumentSnapshot>([
+                DespesaModel(
+                  codDocumento: '123',
+                )
+              ], null),
+            ),
           );
           when(mockFollowRepository.isPoliticBeingFollowed(
                   user: anyNamed('user'), politicId: anyNamed('politicId')))
@@ -110,6 +114,7 @@ void main() {
                 codDocumento: '123',
               )
             ],
+            activitiesCount: 1,
             isBeingFollowedByUser: true,
           ),
         ],
@@ -151,11 +156,13 @@ void main() {
           when(mockPoliticProfileRepository.getLastActivities(
                   politicId: '1', count: 5))
               .thenAnswer(
-            (_) => Future.value([
-              DespesaModel(
-                codDocumento: '123',
-              )
-            ]),
+            (_) => Future.value(
+              Tuple2<List<dynamic>, DocumentSnapshot>([
+                DespesaModel(
+                  codDocumento: '123',
+                )
+              ], null),
+            ),
           );
           when(mockFollowRepository.isPoliticBeingFollowed(
                   user: anyNamed('user'), politicId: anyNamed('politicId')))
@@ -189,6 +196,7 @@ void main() {
                 codDocumento: '123',
               )
             ],
+            activitiesCount: 1,
             isBeingFollowedByUser: true,
           ),
           UserFollowingPoliticChanged(
@@ -215,11 +223,13 @@ void main() {
           when(mockPoliticProfileRepository.getLastActivities(
                   politicId: '1', count: 5))
               .thenAnswer(
-            (_) => Future.value([
-              DespesaModel(
-                codDocumento: '123',
-              )
-            ]),
+            (_) => Future.value(
+              Tuple2<List<dynamic>, DocumentSnapshot>([
+                DespesaModel(
+                  codDocumento: '123',
+                )
+              ], null),
+            ),
           );
           when(mockFollowRepository.isPoliticBeingFollowed(
                   user: anyNamed('user'), politicId: anyNamed('politicId')))
@@ -253,6 +263,7 @@ void main() {
                 codDocumento: '123',
               )
             ],
+            activitiesCount: 1,
             isBeingFollowedByUser: true,
           ),
           UserFollowingPoliticChanged(
@@ -279,11 +290,13 @@ void main() {
           when(mockPoliticProfileRepository.getLastActivities(
                   politicId: '1', count: 5))
               .thenAnswer(
-            (_) => Future.value([
-              DespesaModel(
-                codDocumento: '123',
-              )
-            ]),
+            (_) => Future.value(
+              Tuple2<List<dynamic>, DocumentSnapshot>([
+                DespesaModel(
+                  codDocumento: '123',
+                )
+              ], null),
+            ),
           );
           when(mockFollowRepository.isPoliticBeingFollowed(
                   user: anyNamed('user'), politicId: anyNamed('politicId')))
@@ -320,6 +333,7 @@ void main() {
                 codDocumento: '123',
               )
             ],
+            activitiesCount: 1,
             isBeingFollowedByUser: true,
           ),
           UserFollowingPoliticChanged(
@@ -350,7 +364,12 @@ void main() {
           when(mockPoliticProfileRepository.getLastActivities(
                   politicId: '1', count: 5))
               .thenAnswer(
-            (_) => Future.value([]),
+            (_) => Future.value(
+              const Tuple2<List<dynamic>, DocumentSnapshot>(
+                [],
+                null,
+              ),
+            ),
           );
           when(mockFollowRepository.isPoliticBeingFollowed(
                   user: anyNamed('user'), politicId: anyNamed('politicId')))
@@ -373,6 +392,7 @@ void main() {
               quantidadeSeguidores: 5,
             ),
             lastActivities: [],
+            activitiesCount: 0,
             isBeingFollowedByUser: true,
           ),
         ],
@@ -391,7 +411,12 @@ void main() {
           when(mockPoliticProfileRepository.getLastActivities(
                   politicId: '1', count: 5))
               .thenAnswer(
-            (_) => Future.value([]),
+            (_) => Future.value(
+              const Tuple2<List<dynamic>, DocumentSnapshot>(
+                [],
+                null,
+              ),
+            ),
           );
           when(mockFollowRepository.isPoliticBeingFollowed(
                   user: anyNamed('user'), politicId: anyNamed('politicId')))
@@ -414,6 +439,7 @@ void main() {
               quantidadeSeguidores: 5,
             ),
             lastActivities: [],
+            activitiesCount: 0,
             isBeingFollowedByUser: true,
           ),
           OpenEmailIntentFailed(),
@@ -431,7 +457,12 @@ void main() {
           when(mockPoliticProfileRepository.getLastActivities(
                   politicId: '1', count: 5))
               .thenAnswer(
-            (_) => Future.value([]),
+            (_) => Future.value(
+              const Tuple2<List<dynamic>, DocumentSnapshot>(
+                [],
+                null,
+              ),
+            ),
           );
           when(mockFollowRepository.isPoliticBeingFollowed(
                   user: anyNamed('user'), politicId: anyNamed('politicId')))
@@ -454,6 +485,7 @@ void main() {
               quantidadeSeguidores: 5,
             ),
             lastActivities: [],
+            activitiesCount: 0,
             isBeingFollowedByUser: true,
           ),
           PoliticDontHaveValidEmail(),

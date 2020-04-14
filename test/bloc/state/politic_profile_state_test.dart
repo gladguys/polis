@@ -9,6 +9,7 @@ void main() {
           () => GetPoliticInfoSuccess(
                 politic: null,
                 lastActivities: [],
+                activitiesCount: 0,
                 isBeingFollowedByUser: true,
               ),
           throwsAssertionError);
@@ -17,6 +18,7 @@ void main() {
           () => GetPoliticInfoSuccess(
                 politic: PoliticoModel(),
                 lastActivities: null,
+                activitiesCount: 0,
                 isBeingFollowedByUser: true,
               ),
           throwsAssertionError);
@@ -25,6 +27,16 @@ void main() {
           () => GetPoliticInfoSuccess(
                 politic: PoliticoModel(),
                 lastActivities: [],
+                activitiesCount: null,
+                isBeingFollowedByUser: true,
+              ),
+          throwsAssertionError);
+
+      expect(
+          () => GetPoliticInfoSuccess(
+                politic: PoliticoModel(),
+                lastActivities: [],
+                activitiesCount: 0,
                 isBeingFollowedByUser: null,
               ),
           throwsAssertionError);
@@ -36,11 +48,13 @@ void main() {
         GetPoliticInfoSuccess(
           politic: PoliticoModel(),
           lastActivities: [],
+          activitiesCount: 0,
           isBeingFollowedByUser: true,
         ),
         GetPoliticInfoSuccess(
           politic: PoliticoModel(),
           lastActivities: [],
+          activitiesCount: 0,
           isBeingFollowedByUser: true,
         ),
       );

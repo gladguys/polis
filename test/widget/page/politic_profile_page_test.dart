@@ -89,6 +89,7 @@ void main() {
         GetPoliticInfoSuccess(
           politic: mockPoliticProfileBloc.politico,
           lastActivities: mockPoliticProfileBloc.lastActivities,
+          activitiesCount: mockPoliticProfileBloc.lastActivities.length,
           isBeingFollowedByUser:
               mockPoliticProfileBloc.isPoliticBeingFollowedByUser,
         ),
@@ -126,6 +127,7 @@ void main() {
         GetPoliticInfoSuccess(
           politic: mockPoliticProfileBloc.politico,
           lastActivities: mockPoliticProfileBloc.lastActivities,
+          activitiesCount: mockPoliticProfileBloc.lastActivities.length,
           isBeingFollowedByUser:
               mockPoliticProfileBloc.isPoliticBeingFollowedByUser,
         ),
