@@ -83,7 +83,7 @@ class _PoliticProfileState extends State<PoliticProfile> {
           ),
         ),
         const SizedBox(height: 8),
-        TextTitle(LAST_ACTIVITIES, fontSize: 15),
+        TextTitle(ACTIVITIES, fontSize: 15),
         const SizedBox(height: 8),
       ],
     );
