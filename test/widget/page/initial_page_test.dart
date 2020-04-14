@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/i18n/i18n.dart';
@@ -7,7 +8,13 @@ import '../../mock.dart';
 import '../utils.dart';
 
 void main() {
-  initLocator(MockSharedPreferences());
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  setUpAll(() {
+    const channel = MethodChannel('plugins.flutter.io/firebase_performance');
+    channel.setMockMethodCallHandler((methodCall) async => true);
+    initLocator(MockSharedPreferences());
+  });
 
   group('InitialPage tests', () {
     testWidgets('should build without exploding', (tester) async {

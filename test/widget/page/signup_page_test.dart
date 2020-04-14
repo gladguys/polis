@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
@@ -15,13 +16,17 @@ import '../../mock.dart';
 import '../utils.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  setUpAll(() {
+    const channel = MethodChannel('plugins.flutter.io/firebase_performance');
+    channel.setMockMethodCallHandler((methodCall) async => true);
+    initLocator(MockSharedPreferences());
+  });
+
   MockPanelController mockPanelController;
 
   group('SignupPage tests', () {
-    setUpAll(() {
-      initLocator(MockSharedPreferences());
-    });
-
     setUp(() {
       mockPanelController = MockPanelController();
     });

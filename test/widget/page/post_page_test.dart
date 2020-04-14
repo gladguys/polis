@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:polis/core/service/locator.dart';
@@ -9,9 +10,14 @@ import '../../mock.dart';
 import '../utils.dart';
 
 void main() {
-  initLocator(MockSharedPreferences());
   TestWidgetsFlutterBinding.ensureInitialized();
-  initializeDateFormatting('pt_BR', null);
+
+  setUpAll(() {
+    const channel = MethodChannel('plugins.flutter.io/firebase_performance');
+    channel.setMockMethodCallHandler((methodCall) async => true);
+    initLocator(MockSharedPreferences());
+    initializeDateFormatting('pt_BR', null);
+  });
 
   group('PostPage tests', () {
     test('assert', () {
