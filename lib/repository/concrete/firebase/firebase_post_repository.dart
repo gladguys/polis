@@ -17,12 +17,16 @@ class FirebasePostRepository implements PostRepository {
 
   @override
   Future<void> favoritePost({Map<String, dynamic> post, UserModel user}) async {
+    final postWithTimestamp = {
+      ...post,
+      DATA_FAVORITADO_FIELD: Timestamp.now(),
+    };
     try {
       await postsFavoritosRef
           .document(user.userId)
           .collection(POSTS_FAVORITOS_USUARIO_SUBCOLLECTION)
           .document(post['id'])
-          .setData(post);
+          .setData(postWithTimestamp);
     } on Exception {
       throw ComunicationException();
     }
