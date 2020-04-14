@@ -24,8 +24,10 @@ void main() async {
   G<AdService>().initAds();
   G<CrashlyticsService>().initCrashlytics();
   FlutterError.onError = G<CrashlyticsService>().crashlytics.recordFlutterError;
-  BlocSupervisor.delegate =
-      FlutterBlocDelegate(analyticsService: G<AnalyticsService>());
+  BlocSupervisor.delegate = FlutterBlocDelegate(
+    analyticsService: G<AnalyticsService>(),
+    performanceService: G<PerformanceService>(),
+  );
   initializeDateFormatting('pt_BR', null);
 
   runZoned(() {

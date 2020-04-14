@@ -52,9 +52,7 @@ void main() {
             userId: '2',
           ),
         );
-        verify(mockPostDocumentReference.setData({
-          'id': '1',
-        })).called(1);
+        verify(mockPostDocumentReference.setData(any)).called(1);
       });
 
       test('should throw ComunicationException', () async {

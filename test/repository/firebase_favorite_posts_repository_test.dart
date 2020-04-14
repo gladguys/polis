@@ -16,6 +16,7 @@ void main() {
   MockQuerySnapshot mockQuerySnapshot;
   MockDocumentSnapshot mockDespesaDocumentSnapshot;
   MockDocumentSnapshot mockPropostaDocumentSnapshot;
+  MockQuery mockQuery;
 
   group('FirebasePostRepository tests', () {
     setUp(() {
@@ -30,6 +31,7 @@ void main() {
       mockQuerySnapshot = MockQuerySnapshot();
       mockDespesaDocumentSnapshot = MockDocumentSnapshot();
       mockPropostaDocumentSnapshot = MockDocumentSnapshot();
+      mockQuery = MockQuery();
     });
 
     test('test asserts', () {
@@ -46,7 +48,10 @@ void main() {
         when(mockUserDocumentReference
                 .collection(POSTS_FAVORITOS_USUARIO_SUBCOLLECTION))
             .thenReturn(mockPostsFavoritosUsuarioSubcollectionReference);
-        when(mockPostsFavoritosUsuarioSubcollectionReference.getDocuments())
+        when(mockPostsFavoritosUsuarioSubcollectionReference
+                .orderBy(DATA_FAVORITADO_FIELD, descending: true))
+            .thenReturn(mockQuery);
+        when(mockQuery.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
         when(mockQuerySnapshot.documents).thenReturn(
             [mockDespesaDocumentSnapshot, mockPropostaDocumentSnapshot]);

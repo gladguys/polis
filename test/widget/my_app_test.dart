@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:polis/bloc/blocs.dart';
@@ -12,6 +13,8 @@ void main() async {
   SharedPreferences.setMockInitialValues({
     'USER': null,
   });
+  const channel = MethodChannel('plugins.flutter.io/firebase_performance');
+  channel.setMockMethodCallHandler((methodCall) async => true);
   initLocator(await SharedPreferences.getInstance());
 
   testWidgets('MyApp tests', (tester) async {
