@@ -58,7 +58,7 @@ void main() {
       provideMockedNetworkImages(() async {
         when(mockUserProfileBloc.state).thenReturn(
           FetchUserRelatedInfoSuccess(
-            userActivities: [],
+            userActions: [],
             politicsFollowing: [
               PoliticoModel(
                 id: '1',
@@ -96,7 +96,7 @@ void main() {
       provideMockedNetworkImages(() async {
         when(mockUserProfileBloc.state).thenReturn(
           FetchUserRelatedInfoSuccess(
-            userActivities: [
+            userActions: [
               AcaoUsuarioModel(
                 idPolitico: '1',
                 mensagem: 'mensagem',

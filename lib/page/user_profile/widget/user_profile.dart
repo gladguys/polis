@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
 import '../../../bloc/user/user_bloc.dart';
-import '../../../bloc/user_profile/user_profile_state.dart';
 import '../../../i18n/label.dart';
+import '../../../model/models.dart';
 import '../../../widget/text_title.dart';
 import '../../theme/main_theme.dart';
 import 'personal_user_info.dart';
@@ -12,9 +12,10 @@ import 'politics_following_quantity.dart';
 import 'user_activities.dart';
 
 class UserProfile extends StatefulWidget {
-  const UserProfile(this.userProfileState);
+  const UserProfile({this.politicsFollowing, this.userActions});
 
-  final UserProfileState userProfileState;
+  final List<PoliticoModel> politicsFollowing;
+  final List<AcaoUsuarioModel> userActions;
 
   @override
   _UserProfileState createState() => _UserProfileState();
@@ -89,21 +90,17 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   Widget _buildBody(BuildContext context) {
-    final state = widget.userProfileState as FetchUserRelatedInfoSuccess;
-
     return Column(
       children: <Widget>[
         const SizedBox(height: 16),
         PersonalUserInfo(user: context.bloc<UserBloc>().user),
         const SizedBox(height: 16),
-        PoliticsFollowingQuantity(
-          politics: state.politicsFollowing,
-        ),
+        PoliticsFollowingQuantity(politics: widget.politicsFollowing),
       ],
     );
   }
 
   Widget _buildPanel(BuildContext context) {
-    return UserActivities([]);
+    return UserActions(actions: widget.userActions);
   }
 }

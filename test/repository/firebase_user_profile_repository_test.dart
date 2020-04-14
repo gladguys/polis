@@ -85,14 +85,14 @@ void main() {
           'data': Timestamp.fromMillisecondsSinceEpoch(555)
         });
         final activities =
-            await firebaseUserProfileRepository.getUserActivities('1');
+            await firebaseUserProfileRepository.getUserActions('1');
         expect(activities, isNotEmpty);
       });
 
       test('throw ComunicationException when something is wrong', () async {
         when(mockFirestore.collection(ACOES_COLLECTION)).thenThrow(Exception());
         firebaseUserProfileRepository
-            .getUserActivities('1')
+            .getUserActions('1')
             .catchError((e) => expect(e, isA<ComunicationException>()));
       });
     });

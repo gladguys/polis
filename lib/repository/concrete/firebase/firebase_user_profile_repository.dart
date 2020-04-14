@@ -32,7 +32,7 @@ class FirebaseUserProfileRepository implements UserProfileRepository {
   }
 
   @override
-  Future<List<AcaoUsuarioModel>> getUserActivities(String userId) async {
+  Future<List<AcaoUsuarioModel>> getUserActions(String userId) async {
     try {
       final collectionRef = await acoesRef
           .document(userId)

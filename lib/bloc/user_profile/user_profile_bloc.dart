@@ -12,7 +12,7 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
 
   final UserProfileRepository repository;
   List<PoliticoModel> politicsFollowing;
-  List<dynamic> userActivities;
+  List<AcaoUsuarioModel> userActions;
 
   @override
   UserProfileState get initialState => InitialUserProfileState();
@@ -24,11 +24,11 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
 
       try {
         politicsFollowing = await repository.getPoliticsFollowing(event.userId);
-        userActivities = await repository.getUserActivities(event.userId);
+        userActions = await repository.getUserActions(event.userId);
 
         yield FetchUserRelatedInfoSuccess(
           politicsFollowing: politicsFollowing,
-          userActivities: userActivities,
+          userActions: userActions,
         );
       } on Exception {
         yield FetchUserRelatedInfoFailed();
