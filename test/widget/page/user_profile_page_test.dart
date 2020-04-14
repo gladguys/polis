@@ -88,7 +88,7 @@ void main() {
         );
         expect(find.byType(PersonalUserInfo), findsOneWidget);
         expect(find.byType(PoliticsFollowingQuantity), findsOneWidget);
-        expect(find.byType(UserActivities), findsOneWidget);
+        expect(find.byType(UserActions), findsOneWidget);
       });
     });
 
@@ -143,8 +143,8 @@ void main() {
         );
         expect(find.byType(PersonalUserInfo), findsOneWidget);
         expect(find.byType(PoliticsFollowingQuantity), findsOneWidget);
-        expect(find.byType(UserActivities), findsOneWidget);
-        expect(find.byType(ActivitiesList), findsOneWidget);
+        expect(find.byType(UserActions), findsOneWidget);
+        expect(find.byType(UserActionsList), findsOneWidget);
       });
     });
 

@@ -48,17 +48,6 @@ class PersonalUserInfo extends StatelessWidget {
                 onPressed: () {},
               ),
             ),
-            const SizedBox(width: 8),
-            Container(
-              height: 30,
-              width: 130,
-              child: OutlineButton(
-                padding: EdgeInsets.zero,
-                child: const Text(FAVORITE_POSTS),
-                highlightedBorderColor: Colors.grey,
-                onPressed: () {},
-              ),
-            ),
           ],
         )
       ],

@@ -28,7 +28,7 @@ class UserProfilePage extends StatelessWidget {
                   const SizedBox(height: 24),
                   const Divider(color: Colors.grey, thickness: 0.3),
                   Expanded(
-                    child: UserActivities(activities: state.userActivities),
+                    child: UserActions(actions: state.userActivities),
                   ),
                 ],
               );

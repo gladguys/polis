@@ -6,10 +6,10 @@ import '../../../widget/not_found.dart';
 import '../../../widget/text_title.dart';
 import 'activities_list.dart';
 
-class UserActivities extends StatelessWidget {
-  UserActivities({this.activities});
+class UserActions extends StatelessWidget {
+  UserActions({this.actions});
 
-  final List<AcaoUsuarioModel> activities;
+  final List<AcaoUsuarioModel> actions;
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +17,8 @@ class UserActivities extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         TextTitle(MY_ACTIVITIES, fontSize: 15),
-        activities.isNotEmpty
-            ? ActivitiesList(activities)
+        actions.isNotEmpty
+            ? UserActionsList(actions)
             : Expanded(
                 child: NotFound(msg: NO_RECENT_ACTIVITY),
               ),

@@ -5,17 +5,17 @@ import '../../../extension/formatters.dart';
 import '../../../model/models.dart';
 import '../../../widget/text_rich.dart';
 
-class ActivitiesList extends StatelessWidget {
-  ActivitiesList(this.activities);
+class UserActionsList extends StatelessWidget {
+  UserActionsList(this.actions);
 
-  final List<AcaoUsuarioModel> activities;
+  final List<AcaoUsuarioModel> actions;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
       itemBuilder: (_, i) {
-        final isFollow = activities[i].tipo == AcaoType.follow;
+        final isFollow = actions[i].tipo == AcaoType.follow;
         return ListTile(
           leading: isFollow
               ? Icon(Icons.check, color: Colors.green)
@@ -30,14 +30,14 @@ class ActivitiesList extends StatelessWidget {
               ),
               const TextSpan(text: ' o politico '),
               TextSpan(
-                text: activities[i].nomePolitico,
+                text: actions[i].nomePolitico,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const TextSpan(text: ' no dia '),
               TextSpan(
-                text: activities[i].data.toString().formatDate(),
+                text: actions[i].data.toString().formatDate(),
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
@@ -46,7 +46,7 @@ class ActivitiesList extends StatelessWidget {
           ),
         );
       },
-      itemCount: activities.length,
+      itemCount: actions.length,
     );
   }
 }
