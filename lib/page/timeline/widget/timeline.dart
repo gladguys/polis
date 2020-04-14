@@ -41,6 +41,12 @@ class _TimelineState extends State<Timeline> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
   void _onScrollListener() {
     if (currentPosition >= maxScrollPosition && isPositionInRange) {
       timelineBloc.add(FetchMorePosts(userId));
