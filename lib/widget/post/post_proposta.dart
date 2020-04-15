@@ -28,23 +28,26 @@ class PostProposta extends StatelessWidget {
   Widget build(BuildContext context) {
     return Screenshot(
       controller: screenshotController,
-      child: CardBase(
-        slotLeft: InkWell(
-          borderRadius: BorderRadius.circular(24),
-          child: Photo(url: proposta.fotoPolitico),
-          onTap: () => SimpleRouter.forward(
-            PoliticProfilePageConnected(proposta.idPoliticoAutor),
-            name: POLITIC_PROFILE_PAGE,
+      child: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: CardBase(
+          slotLeft: InkWell(
+            borderRadius: BorderRadius.circular(24),
+            child: Photo(url: proposta.fotoPolitico),
+            onTap: () => SimpleRouter.forward(
+              PoliticProfilePageConnected(proposta.idPoliticoAutor),
+              name: POLITIC_PROFILE_PAGE,
+            ),
           ),
+          slotCenter: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _buildTopContent(),
+              _buildCenterContent(),
+            ],
+          ),
+          slotBottom: _buildActions(context),
         ),
-        slotCenter: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _buildTopContent(),
-            _buildCenterContent(),
-          ],
-        ),
-        slotBottom: _buildActions(context),
       ),
     );
   }
