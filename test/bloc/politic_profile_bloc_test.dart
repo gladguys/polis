@@ -492,5 +492,80 @@ void main() {
         ],
       );
     });
+
+    group('GetMoreActivities', () {
+      blocTest(
+        'should yield GetPoliticInfoSuccess when get more activities',
+        build: () async {
+          when(mockPoliticProfileRepository.getInfoPolitic('1')).thenAnswer(
+            (_) => Future.value(
+              PoliticoModel(id: '1', email: 'aNotValidEmail@gmail'),
+            ),
+          );
+          when(mockPoliticProfileRepository.getLastActivities(
+                  politicId: '1', count: 5))
+              .thenAnswer(
+            (_) => Future.value(
+              const Tuple2<List<dynamic>, DocumentSnapshot>(
+                [],
+                null,
+              ),
+            ),
+          );
+          when(mockFollowRepository.isPoliticBeingFollowed(
+                  user: anyNamed('user'), politicId: anyNamed('politicId')))
+              .thenAnswer((_) async => true);
+          when(mockPoliticProfileRepository.getMoreActivities(
+                  politicId: '1',
+                  count: 5,
+                  lastDocument: MockDocumentSnapshot()))
+              .thenAnswer(
+            (_) => Future.value(Tuple2(
+              [PoliticoModel(id: '1', email: 'email@gmail')],
+              MockDocumentSnapshot(),
+            )),
+          );
+          when(mockFollowRepository.isPoliticBeingFollowed(
+                  user: anyNamed('user'), politicId: anyNamed('politicId')))
+              .thenAnswer((_) async => true);
+          return politicProfileBloc;
+        },
+        act: (politicProfileBloc) async {
+          politicProfileBloc.add(GetPoliticInfo('1'));
+          politicProfileBloc.add(GetMoreActivities('1'));
+        },
+        expect: [
+          LoadingPoliticInfo(),
+          GetPoliticInfoSuccess(
+            politic: PoliticoModel(
+              id: '1',
+              quantidadeSeguidores: 5,
+            ),
+            lastActivities: [PoliticoModel(id: '1', email: 'email@gmail')],
+            activitiesCount: 0,
+            isBeingFollowedByUser: true,
+          ),
+        ],
+      );
+
+      blocTest(
+        '''Expects [GetPoliticInfoFailed] when fails''',
+        build: () async {
+          when(mockPoliticProfileRepository.getMoreActivities(
+                  politicId: anyNamed('politicId'),
+                  count: anyNamed('count'),
+                  lastDocument: anyNamed('lastDocument')))
+              .thenThrow(Exception());
+          return politicProfileBloc;
+        },
+        act: (politicProfileBloc) {
+          politicProfileBloc.add(GetMoreActivities('1'));
+          return;
+        },
+        expect: [
+          GetPoliticInfoFailed(),
+        ],
+      );
+    });
   });
 }

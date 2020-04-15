@@ -18,7 +18,6 @@ class PoliticProfilePage extends StatelessWidget {
           builder: (_, state) {
             if (state is GetPoliticInfoSuccess ||
                 state is UserFollowingPoliticChanged) {
-              print(state);
               return PoliticProfile(state);
             } else if (state is GetPoliticInfoFailed) {
               return const Center(

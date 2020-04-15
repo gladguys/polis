@@ -23,6 +23,15 @@ void main() {
       });
     });
 
+    group('GetMoreActivities', () {
+      test('props', () {
+        final ev1 = GetMoreActivities('1');
+        final ev2 = GetMoreActivities('1');
+
+        expect(ev1, ev2);
+      });
+    });
+
     group('FollowUnfollowProfilePolitic', () {
       test('asserts', () {
         expect(() => FollowUnfollowProfilePolitic(isFollowing: null),

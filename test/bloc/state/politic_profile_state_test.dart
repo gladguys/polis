@@ -40,6 +40,9 @@ void main() {
                 isBeingFollowedByUser: null,
               ),
           throwsAssertionError);
+
+      expect(() => PoliticMoreActivitiesSuccess(activities: null),
+          throwsAssertionError);
     });
 
     test('states', () {
@@ -62,6 +65,8 @@ void main() {
       expect(PoliticDontHaveValidEmail(), PoliticDontHaveValidEmail());
       expect(OpenEmailIntentFailed(), OpenEmailIntentFailed());
       expect(LoadingPoliticInfo(), LoadingPoliticInfo());
+      expect(PoliticMoreActivitiesSuccess(activities: []),
+          PoliticMoreActivitiesSuccess(activities: []));
       expect(
         UserFollowingPoliticChanged(
           politico: PoliticoModel(),
