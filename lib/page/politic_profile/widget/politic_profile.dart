@@ -116,8 +116,6 @@ class _PoliticProfileState extends State<PoliticProfile> {
 
   Widget _buildPanel(BuildContext context) {
     final bloc = context.bloc<PoliticProfileBloc>();
-    final lastActivities = bloc.lastActivities;
-
-    return PoliticActivities(lastActivities);
+    return PoliticActivities(bloc.lastActivities);
   }
 }

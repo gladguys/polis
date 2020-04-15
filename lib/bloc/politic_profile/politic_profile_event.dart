@@ -14,6 +14,15 @@ class GetPoliticInfo extends PoliticProfileEvent {
   List<Object> get props => [politicId];
 }
 
+class GetMoreActivities extends PoliticProfileEvent {
+  GetMoreActivities(this.politicId);
+
+  final String politicId;
+
+  @override
+  List<Object> get props => [politicId];
+}
+
 class FollowUnfollowProfilePolitic extends PoliticProfileEvent {
   FollowUnfollowProfilePolitic({@required this.isFollowing})
       : assert(isFollowing != null);

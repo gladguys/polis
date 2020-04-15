@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:tuple/tuple.dart';
 
 import '../../../core/exception/exceptions.dart';
 import '../../../model/models.dart';
@@ -30,9 +31,8 @@ class FirebasePoliticProfileRepository implements PoliticProfileRepository {
   }
 
   @override
-  Future<List<dynamic>> getLastActivities({String politicId, int count}) async {
-    final activities = [];
-
+  Future<Tuple2<List<dynamic>, DocumentSnapshot>> getLastActivities(
+      {String politicId, int count}) async {
     try {
       final query = atividadesRef
           .document(politicId)
@@ -41,17 +41,48 @@ class FirebasePoliticProfileRepository implements PoliticProfileRepository {
           .limit(count);
 
       final querySnapshot = await query.getDocuments();
-      final documents = querySnapshot.documents;
-      for (var document in documents) {
-        if (isDocumentDespesa(document.data)) {
-          activities.add(DespesaModel.fromJson(document.data));
-        } else {
-          activities.add(PropostaModel.fromJson(document.data));
-        }
-      }
-      return activities;
+      final activities = getActivitiesFromSnapshot(querySnapshot);
+
+      return Tuple2<List<dynamic>, DocumentSnapshot>(
+          activities, querySnapshot.documents?.last);
     } on Exception {
       throw ComunicationException();
     }
+  }
+
+  @override
+  Future<Tuple2<List<dynamic>, DocumentSnapshot>> getMoreActivities(
+      {String politicId, int count, DocumentSnapshot lastDocument}) async {
+    try {
+      final query = atividadesRef
+          .document(politicId)
+          .collection(ATIVIDADES_POLITICO_SUBCOLLECTION)
+          .orderBy(DATA_DOCUMENTO_FIELD, descending: true)
+          .startAfterDocument(lastDocument)
+          .limit(count);
+
+      final querySnapshot = await query.getDocuments();
+      final activities = getActivitiesFromSnapshot(querySnapshot);
+
+      return Tuple2<List<dynamic>, DocumentSnapshot>(
+          activities, querySnapshot.documents?.last);
+    } on Exception {
+      throw ComunicationException();
+    }
+  }
+
+  List<dynamic> getActivitiesFromSnapshot(QuerySnapshot querySnapshot) {
+    final activities = <dynamic>[];
+
+    final documents = querySnapshot.documents;
+    for (var document in documents) {
+      if (isDocumentDespesa(document.data)) {
+        final despesaModel = DespesaModel.fromJson(document.data);
+        activities.add(despesaModel.copyWith(id: document.documentID));
+      } else {
+        activities.add(PropostaModel.fromJson(document.data));
+      }
+    }
+    return activities;
   }
 }
