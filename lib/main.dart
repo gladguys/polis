@@ -26,8 +26,10 @@ void main() async {
   Admob.initialize('ca-app-pub-5806526425473649~5721958482');
   G<CrashlyticsService>().initCrashlytics();
   FlutterError.onError = G<CrashlyticsService>().crashlytics.recordFlutterError;
-  BlocSupervisor.delegate =
-      FlutterBlocDelegate(analyticsService: G<AnalyticsService>());
+  BlocSupervisor.delegate = FlutterBlocDelegate(
+    analyticsService: G<AnalyticsService>(),
+    performanceService: G<PerformanceService>(),
+  );
   initializeDateFormatting('pt_BR', null);
 
   runZoned(() {

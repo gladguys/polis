@@ -12,8 +12,8 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
   TimelineBloc({@required this.repository}) : assert(repository != null);
 
   final TimelineRepository repository;
-  StreamSubscription _timelineSubscription;
 
+  StreamSubscription _timelineSubscription;
   int newActivitiesCount = 0;
   List<dynamic> timelinePosts = [];
   DocumentSnapshot lastDocument;

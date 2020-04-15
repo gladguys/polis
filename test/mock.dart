@@ -6,6 +6,7 @@ import 'package:firebase_admob/firebase_admob.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_performance/firebase_performance.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -157,6 +158,8 @@ class MockFirebaseAnalytics extends Mock implements FirebaseAnalytics {}
 
 class MockCrashlytics extends Mock implements Crashlytics {}
 
+class MockFirebasePerformance extends Mock implements FirebasePerformance {}
+
 // Hive
 class MockHive extends Mock implements HiveInterface {}
 
@@ -166,6 +169,8 @@ class MockPoliticoBox extends Mock implements Box<PoliticoModel> {}
 
 // Service
 class MockAnalyticsService extends Mock implements AnalyticsService {}
+
+class MockPerformanceService extends Mock implements PerformanceService {}
 
 class MockAdService extends Mock implements AdService {}
 
@@ -182,6 +187,8 @@ class MockUrlLauncherService extends Mock implements UrlLauncherService {}
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 class MockBannerAd extends Mock implements BannerAd {}
+
+class MockTrace extends Mock implements Trace {}
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 

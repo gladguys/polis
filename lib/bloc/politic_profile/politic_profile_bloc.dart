@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import './bloc.dart';
@@ -33,6 +34,7 @@ class PoliticProfileBloc
   List<dynamic> lastActivities;
   bool isPoliticBeingFollowedByUser;
   int followersCount;
+  DocumentSnapshot lastDocument;
 
   @override
   PoliticProfileState get initialState => InitialPoliticProfileState();
@@ -51,12 +53,18 @@ class PoliticProfileBloc
 
         politico = await politicProfileRepository.getInfoPolitic(politicId);
         followersCount = politico.quantidadeSeguidores?.toInt() ?? 0;
-        lastActivities = await politicProfileRepository.getLastActivities(
-            politicId: politicId, count: kLastActivitiesQuantity);
+
+        final activitiesData = await politicProfileRepository.getLastActivities(
+          politicId: politicId,
+          count: kLastActivitiesQuantity,
+        );
+        lastActivities = activitiesData.item1;
+        lastDocument = activitiesData.item2;
 
         yield GetPoliticInfoSuccess(
           politic: politico,
           lastActivities: lastActivities,
+          activitiesCount: lastActivities.length,
           isBeingFollowedByUser: isPoliticBeingFollowedByUser,
         );
       } on Exception {
@@ -100,6 +108,25 @@ class PoliticProfileBloc
         }
       } else {
         yield PoliticDontHaveValidEmail();
+      }
+    }
+    if (event is GetMoreActivities) {
+      try {
+        final activitiesData = await politicProfileRepository.getMoreActivities(
+          politicId: event.politicId,
+          count: kLastActivitiesQuantity,
+          lastDocument: lastDocument,
+        );
+        lastActivities.addAll(activitiesData.item1);
+        lastDocument = activitiesData.item2;
+        yield GetPoliticInfoSuccess(
+          politic: politico,
+          lastActivities: lastActivities,
+          activitiesCount: lastActivities.length,
+          isBeingFollowedByUser: isPoliticBeingFollowedByUser,
+        );
+      } on Exception {
+        yield GetPoliticInfoFailed();
       }
     }
   }

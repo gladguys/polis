@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
@@ -17,9 +19,14 @@ import '../../mock.dart';
 import '../utils.dart';
 
 void main() {
-  initLocator(MockSharedPreferences());
   TestWidgetsFlutterBinding.ensureInitialized();
-  initializeDateFormatting('pt_BR', null);
+
+  setUpAll(() {
+    const channel = MethodChannel('plugins.flutter.io/firebase_performance');
+    channel.setMockMethodCallHandler((methodCall) async => true);
+    initLocator(MockSharedPreferences());
+    initializeDateFormatting('pt_BR', null);
+  });
 
   MockPoliticProfileBloc mockPoliticProfileBloc;
 
@@ -83,6 +90,7 @@ void main() {
         GetPoliticInfoSuccess(
           politic: mockPoliticProfileBloc.politico,
           lastActivities: mockPoliticProfileBloc.lastActivities,
+          activitiesCount: mockPoliticProfileBloc.lastActivities.length,
           isBeingFollowedByUser:
               mockPoliticProfileBloc.isPoliticBeingFollowedByUser,
         ),
@@ -99,6 +107,88 @@ void main() {
       expect(find.byType(PoliticActionButtons), findsOneWidget);
       expect(find.byType(PoliticAdditionalInfo), findsOneWidget);
       expect(find.byType(PoliticActivities), findsOneWidget);
+    });
+
+    testWidgets('should get more activities when paginate', (tester) async {
+      when(mockPoliticProfileBloc.politico).thenReturn(
+        PoliticoModel(
+          id: '1',
+          siglaPartido: 'PT',
+          urlFoto: 'foto',
+          nomeEleitoral: 'nomeE',
+          siglaUf: 'CE',
+        ),
+      );
+      when(mockPoliticProfileBloc.lastActivities).thenReturn(
+        [
+          PropostaModel(
+            ementa: 'ementa',
+            nomePolitico: 'nome',
+            descricaoTramitacao: 'descTra',
+            descricaoSituacao: 'descSit',
+            dataDocumento: '2020-02-05',
+          ),
+          PropostaModel(
+            ementa: 'ementa',
+            nomePolitico: 'nome',
+            descricaoTramitacao: 'descTra',
+            descricaoSituacao: 'descSit',
+            dataDocumento: '2020-02-05',
+          ),
+          PropostaModel(
+            ementa: 'ementa',
+            nomePolitico: 'nome',
+            descricaoTramitacao: 'descTra',
+            descricaoSituacao: 'descSit',
+            dataDocumento: '2020-02-05',
+          ),
+          PropostaModel(
+            ementa: 'ementa',
+            nomePolitico: 'nome',
+            descricaoTramitacao: 'descTra',
+            descricaoSituacao: 'descSit',
+            dataDocumento: '2020-02-05',
+          ),
+          DespesaModel(
+            fotoPolitico: 'foto',
+            nomePolitico: 'nome',
+            nomeFornecedor: 'fornecedor',
+            tipoAtividade: 'ativi',
+            tipoDespesa: 'despesa',
+            valorLiquido: '3.51',
+            dataDocumento: '10-01-2020',
+          ),
+        ],
+      );
+      when(mockPoliticProfileBloc.isPoliticBeingFollowedByUser)
+          .thenReturn(true);
+      when(mockPoliticProfileBloc.state).thenReturn(
+        GetPoliticInfoSuccess(
+          politic: mockPoliticProfileBloc.politico,
+          lastActivities: mockPoliticProfileBloc.lastActivities,
+          activitiesCount: mockPoliticProfileBloc.lastActivities.length,
+          isBeingFollowedByUser:
+              mockPoliticProfileBloc.isPoliticBeingFollowedByUser,
+        ),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<PoliticProfileBloc>(
+            bloc: mockPoliticProfileBloc,
+            page: PoliticProfilePage(),
+          ),
+        ),
+      );
+      expect(find.byType(PoliticPersonalInfo), findsOneWidget);
+      expect(find.byType(PoliticActionButtons), findsOneWidget);
+      expect(find.byType(PoliticAdditionalInfo), findsOneWidget);
+      final politicActivities = find.byType(PoliticActivities);
+      expect(politicActivities, findsOneWidget);
+      final listview = find.byType(ListView);
+      expect(listview, findsOneWidget);
+      await tester.drag(listview, const Offset(0, -3000));
+      await tester.pump();
+      verify(mockPoliticProfileBloc.add(GetMoreActivities('1'))).called(1);
     });
 
     testWidgets(
@@ -120,6 +210,7 @@ void main() {
         GetPoliticInfoSuccess(
           politic: mockPoliticProfileBloc.politico,
           lastActivities: mockPoliticProfileBloc.lastActivities,
+          activitiesCount: mockPoliticProfileBloc.lastActivities.length,
           isBeingFollowedByUser:
               mockPoliticProfileBloc.isPoliticBeingFollowedByUser,
         ),

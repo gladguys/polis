@@ -22,6 +22,7 @@ class FirebaseFavoritePostsRepository implements FavoritePostsRepository {
       final querySnapshot = await postsFavoritosRef
           .document(userId)
           .collection(POSTS_FAVORITOS_USUARIO_SUBCOLLECTION)
+          .orderBy(DATA_FAVORITADO_FIELD, descending: true)
           .getDocuments();
       final documents = querySnapshot.documents;
       final posts = [];
