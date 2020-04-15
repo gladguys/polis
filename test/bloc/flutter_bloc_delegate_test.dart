@@ -86,6 +86,14 @@ void main() {
         verify(mockPerformanceService.getTrace(trace: anyNamed('trace')))
             .called(1);
       });
+
+      test('should call super.event when event when timeline event not tracked',
+          () {
+        when(mockPerformanceService.getTrace(trace: anyNamed('trace')))
+            .thenAnswer((_) => Future.value(MockTrace()));
+        delegate.onEvent(timelineBloc, NotifyTimelineFetchedOnce());
+        verifyNever(mockPerformanceService.getTrace(trace: anyNamed('trace')));
+      });
     });
 
     test('onTransition test', () {

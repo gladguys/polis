@@ -9,6 +9,7 @@ void main() {
           () => GetPoliticInfoSuccess(
                 politic: null,
                 lastActivities: [],
+                activitiesCount: 0,
                 isBeingFollowedByUser: true,
               ),
           throwsAssertionError);
@@ -17,6 +18,7 @@ void main() {
           () => GetPoliticInfoSuccess(
                 politic: PoliticoModel(),
                 lastActivities: null,
+                activitiesCount: 0,
                 isBeingFollowedByUser: true,
               ),
           throwsAssertionError);
@@ -25,8 +27,21 @@ void main() {
           () => GetPoliticInfoSuccess(
                 politic: PoliticoModel(),
                 lastActivities: [],
+                activitiesCount: null,
+                isBeingFollowedByUser: true,
+              ),
+          throwsAssertionError);
+
+      expect(
+          () => GetPoliticInfoSuccess(
+                politic: PoliticoModel(),
+                lastActivities: [],
+                activitiesCount: 0,
                 isBeingFollowedByUser: null,
               ),
+          throwsAssertionError);
+
+      expect(() => PoliticMoreActivitiesSuccess(activities: null),
           throwsAssertionError);
     });
 
@@ -36,11 +51,13 @@ void main() {
         GetPoliticInfoSuccess(
           politic: PoliticoModel(),
           lastActivities: [],
+          activitiesCount: 0,
           isBeingFollowedByUser: true,
         ),
         GetPoliticInfoSuccess(
           politic: PoliticoModel(),
           lastActivities: [],
+          activitiesCount: 0,
           isBeingFollowedByUser: true,
         ),
       );
@@ -48,6 +65,8 @@ void main() {
       expect(PoliticDontHaveValidEmail(), PoliticDontHaveValidEmail());
       expect(OpenEmailIntentFailed(), OpenEmailIntentFailed());
       expect(LoadingPoliticInfo(), LoadingPoliticInfo());
+      expect(PoliticMoreActivitiesSuccess(activities: []),
+          PoliticMoreActivitiesSuccess(activities: []));
       expect(
         UserFollowingPoliticChanged(
           politico: PoliticoModel(),

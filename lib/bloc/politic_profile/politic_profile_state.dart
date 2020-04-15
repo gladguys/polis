@@ -13,20 +13,33 @@ class InitialPoliticProfileState extends PoliticProfileState {
 }
 
 class GetPoliticInfoSuccess extends PoliticProfileState {
-  GetPoliticInfoSuccess(
-      {@required this.politic,
-      @required this.lastActivities,
-      @required this.isBeingFollowedByUser})
-      : assert(politic != null),
+  GetPoliticInfoSuccess({
+    @required this.politic,
+    @required this.lastActivities,
+    @required this.activitiesCount,
+    @required this.isBeingFollowedByUser,
+  })  : assert(politic != null),
         assert(lastActivities != null),
+        assert(activitiesCount != null),
         assert(isBeingFollowedByUser != null);
 
   final PoliticoModel politic;
   final List<dynamic> lastActivities;
+  final int activitiesCount;
   final bool isBeingFollowedByUser;
 
   @override
-  List<Object> get props => [politic, isBeingFollowedByUser];
+  List<Object> get props => [politic, activitiesCount, isBeingFollowedByUser];
+}
+
+class PoliticMoreActivitiesSuccess extends PoliticProfileState {
+  PoliticMoreActivitiesSuccess({@required this.activities})
+      : assert(activities != null);
+
+  final List<dynamic> activities;
+
+  @override
+  List<Object> get props => [activities];
 }
 
 class GetPoliticInfoFailed extends PoliticProfileState {

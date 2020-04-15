@@ -160,6 +160,8 @@ class MockFirebaseAnalytics extends Mock implements FirebaseAnalytics {}
 
 class MockCrashlytics extends Mock implements Crashlytics {}
 
+class MockFirebasePerformance extends Mock implements FirebasePerformance {}
+
 // Hive
 class MockHive extends Mock implements HiveInterface {}
 
