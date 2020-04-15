@@ -35,8 +35,6 @@ class _TimelineState extends State<Timeline> {
   TimelineBloc get timelineBloc => context.bloc<TimelineBloc>();
   String get userId => context.bloc<UserBloc>().user.userId;
 
-  int counter = 0;
-
   @override
   void initState() {
     scrollController = ScrollController();
@@ -108,25 +106,23 @@ class _TimelineState extends State<Timeline> {
           ],
         );
       },
-      itemBuilder: (_, element) {
-        counter += 1;
-        if (element is DespesaModel) {
-          return DespesaTileConnected(element);
-        } else {
-          return PropostaTileConnected(element as PropostaModel);
-        }
+      indexedItemBuilder: (_, element, index) {
+        return Column(
+          children: <Widget>[
+            if (element is DespesaModel)
+              DespesaTileConnected(element)
+            else
+              PropostaTileConnected(element as PropostaModel),
+            if ((index == 2) || (index > 2 && index % 5 == 0))
+              _buildAdmobBanner(),
+          ],
+        );
       },
-      separator: counter % 2 != 0
-          ? const Divider(
-              height: 16,
-              indent: 8,
-              endIndent: 8,
-            )
-          : AdmobBanner(
-              adUnitId: 'ca-app-pub-5806526425473649/1618913550',
-              adSize: AdmobBannerSize.BANNER,
-              listener: (event, args) {},
-            ),
+      separator: const Divider(
+        height: 16,
+        indent: 8,
+        endIndent: 8,
+      ),
     );
   }
 
@@ -158,6 +154,20 @@ class _TimelineState extends State<Timeline> {
         ],
       ),
       onPressed: () => timelineBloc.add(ReloadTimeline(userId)),
+    );
+  }
+
+  Widget _buildAdmobBanner() {
+    return Center(
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 24),
+        color: Colors.grey[200],
+        child: AdmobBanner(
+          adUnitId: 'ca-app-pub-5806526425473649/1618913550',
+          adSize: AdmobBannerSize.MEDIUM_RECTANGLE,
+          listener: (event, args) {},
+        ),
+      ),
     );
   }
 }
