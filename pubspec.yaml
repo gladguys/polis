@@ -50,7 +50,6 @@ dependencies:
   flutter_grid_delegate_ext: ^0.0.2
   sliding_panel: ^1.0.3
   skeleton_text: ^1.0.0
-  grouped_list: ^2.3.0
 
 dev_dependencies:
   flutter_test:
