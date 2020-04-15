@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
@@ -16,29 +17,35 @@ import '../photo.dart';
 import '../text_rich.dart';
 
 class PostProposta extends StatelessWidget {
-  PostProposta(this.proposta);
+  PostProposta(this.proposta, {@required this.screenshotController})
+      : assert(proposta != null),
+        assert(screenshotController != null);
 
   final PropostaModel proposta;
+  final ScreenshotController screenshotController;
 
   @override
   Widget build(BuildContext context) {
-    return CardBase(
-      slotLeft: InkWell(
-        borderRadius: BorderRadius.circular(24),
-        child: Photo(url: proposta.fotoPolitico),
-        onTap: () => SimpleRouter.forward(
-          PoliticProfilePageConnected(proposta.idPoliticoAutor),
-          name: POLITIC_PROFILE_PAGE,
+    return Screenshot(
+      controller: screenshotController,
+      child: CardBase(
+        slotLeft: InkWell(
+          borderRadius: BorderRadius.circular(24),
+          child: Photo(url: proposta.fotoPolitico),
+          onTap: () => SimpleRouter.forward(
+            PoliticProfilePageConnected(proposta.idPoliticoAutor),
+            name: POLITIC_PROFILE_PAGE,
+          ),
         ),
+        slotCenter: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _buildTopContent(),
+            _buildCenterContent(),
+          ],
+        ),
+        slotBottom: _buildActions(context),
       ),
-      slotCenter: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _buildTopContent(),
-          _buildCenterContent(),
-        ],
-      ),
-      slotBottom: _buildActions(context),
     );
   }
 
@@ -146,7 +153,10 @@ class PostProposta extends StatelessWidget {
               icon: FontAwesomeIcons.shareAlt,
               text: SHARE,
               fontSize: 14,
-              onTap: () {},
+              onTap: () async {
+                final postImage = await screenshotController.capture();
+                context.bloc<PostBloc>().add(SharePost(postImage: postImage));
+              },
             ),
             const SizedBox(width: 16),
             ButtonActionCard(

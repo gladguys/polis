@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
+import '../../core/service/locator.dart';
+import '../../core/service/services.dart';
 import '../../model/models.dart';
 import '../../page/page_connected.dart';
 import '../../repository/concrete/repositories.dart';
@@ -22,6 +24,7 @@ class PropostaTileConnected extends StatelessWidget {
       bloc: PostBloc(
         post: proposta.toJson(),
         postRepository: context.repository<FirebasePostRepository>(),
+        shareService: G<ShareService>(),
       ),
       page: PropostaTile(proposta, clickableImage: clickableImage),
     );
