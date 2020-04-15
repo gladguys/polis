@@ -10,12 +10,17 @@ void main() {
   group('PostBloc tests', () {
     PostBloc postBloc;
     MockPostRepository mockPostRepository;
+    MockShareService mockShareService;
+    MockFile mockFile;
 
     setUp(() {
       mockPostRepository = MockPostRepository();
+      mockShareService = MockShareService();
+      mockFile = MockFile();
       postBloc = PostBloc(
         post: {},
         postRepository: mockPostRepository,
+        shareService: mockShareService,
       );
     });
 
@@ -24,6 +29,7 @@ void main() {
           () => PostBloc(
                 post: null,
                 postRepository: mockPostRepository,
+                shareService: mockShareService,
               ),
           throwsAssertionError);
 
@@ -31,6 +37,15 @@ void main() {
           () => PostBloc(
                 post: {},
                 postRepository: null,
+                shareService: mockShareService,
+              ),
+          throwsAssertionError);
+
+      expect(
+          () => PostBloc(
+                post: {},
+                postRepository: mockPostRepository,
+                shareService: null,
               ),
           throwsAssertionError);
     });
@@ -53,6 +68,7 @@ void main() {
           'favorito': true,
         },
         postRepository: mockPostRepository,
+        shareService: mockShareService,
       ),
       act: (postBloc) async =>
           postBloc.add(FavoritePostForUser(post: {}, user: UserModel())),
@@ -76,6 +92,7 @@ void main() {
             'favorito': true,
           },
           postRepository: mockPostRepository,
+          shareService: mockShareService,
         );
       },
       act: (postBloc) async =>
@@ -87,6 +104,27 @@ void main() {
       verify: (postBloc) async => verify(mockPostRepository.unfavoritePost(
               post: anyNamed('post'), user: anyNamed('user')))
           .called(1),
+    );
+
+    blocTest(
+      'Expects to share the image file',
+      build: () async {
+        when(mockShareService.shareFile(MockFile()))
+            .thenAnswer((_) => Future.value());
+        return PostBloc(
+          post: {
+            'favorito': true,
+          },
+          postRepository: mockPostRepository,
+          shareService: mockShareService,
+        );
+      },
+      act: (postBloc) async => postBloc.add(SharePost(postImage: mockFile)),
+      expect: [],
+      verify: (postBloc) async => verify(
+        mockShareService.shareFile(mockFile,
+            title: anyNamed('title'), name: 'post.png', mimeType: 'image/png'),
+      ).called(1),
     );
   });
 }
