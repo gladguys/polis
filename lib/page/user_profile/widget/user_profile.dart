@@ -84,7 +84,7 @@ class _UserProfileState extends State<UserProfile> {
         ),
         const SizedBox(height: 8),
         TextTitle(MY_ACTIVITIES, fontSize: 15),
-        const SizedBox(height: 8),
+        const SizedBox(height: 4),
       ],
     );
   }
