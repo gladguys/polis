@@ -115,6 +115,18 @@ class MyAppInjections extends StatelessWidget {
             firestore: Firestore.instance,
           ),
         ),
+        RepositoryProvider(
+          create: (_) => FirebaseEditProfileRepository(
+            firestore: Firestore.instance,
+            firebaseAuth: FirebaseAuth.instance,
+            firebaseStorage: FirebaseStorage.instance,
+          ),
+        ),
+        RepositoryProvider(
+          create: (_) => FirebaseChangePasswordRepository(
+            firebaseAuth: FirebaseAuth.instance,
+          ),
+        ),
       ],
       child: child,
     );
