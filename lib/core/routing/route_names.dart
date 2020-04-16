@@ -11,3 +11,5 @@ const POLITIC_PROFILE_PAGE = 'PoliticProfilePage';
 const POLITIC_FOLLOWERS_PAGE = 'PoliticFollowersPage';
 const USER_FOLLOWING_POLITICS_PAGE = 'UserFollowingPoliticsPage';
 const POST_PAGE = 'PostPage';
+const EDIT_PROFILE_PAGE = 'EditProfilePage';
+const CHANGE_PASSWORD_PAGE = 'ChangePasswordPage';
