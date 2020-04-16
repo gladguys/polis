@@ -1,4 +1,6 @@
+export 'change_password/bloc.dart';
 export 'despesa_image/bloc.dart';
+export 'edit_profile/bloc.dart';
 export 'favorite_posts/bloc.dart';
 export 'politic_followers/bloc.dart';
 export 'politic_profile/bloc.dart';

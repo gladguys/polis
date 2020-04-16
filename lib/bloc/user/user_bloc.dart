@@ -34,5 +34,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         yield SignoutFailed();
       }
     }
+    if (event is UpdateCurrentUser) {
+      user = event.user;
+      yield CurrentUserUpdated(event.user);
+    }
   }
 }
