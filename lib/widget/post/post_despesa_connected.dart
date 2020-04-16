@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screenshot/screenshot.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/service/locator.dart';
@@ -18,7 +19,10 @@ class PostDespesaConnected extends StatelessWidget {
       bloc: DespesaImageBloc(
         urlLaunchService: G<UrlLauncherService>(),
       ),
-      page: PostDespesa(despesa),
+      page: PostDespesa(
+        despesa,
+        screenshotController: ScreenshotController(),
+      ),
     );
   }
 }

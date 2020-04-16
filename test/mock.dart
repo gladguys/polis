@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -30,6 +31,7 @@ import 'package:polis/repository/abstract/user_following_politics_repository.dar
 import 'package:polis/repository/abstract/user_profile_repository.dart';
 import 'package:polis/repository/abstract/user_repository.dart';
 import 'package:polis/repository/concrete/repositories.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
@@ -174,6 +176,8 @@ class MockPerformanceService extends Mock implements PerformanceService {}
 
 class MockAdService extends Mock implements AdService {}
 
+class MockShareService extends Mock implements ShareService {}
+
 class MockSharedPreferencesService extends Mock
     implements SharedPreferencesService {}
 
@@ -189,6 +193,10 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 class MockBannerAd extends Mock implements BannerAd {}
 
 class MockTrace extends Mock implements Trace {}
+
+class MockScreenshotController extends Mock implements ScreenshotController {}
+
+class MockFile extends Mock implements File {}
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 
