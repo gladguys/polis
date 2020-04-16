@@ -13,12 +13,14 @@ class AcaoUsuarioModel extends Equatable {
       this.nomePolitico,
       this.data,
       this.mensagem,
+      this.sexoPolitico,
       this.tipo,
       this.urlFotoPolitico});
 
   final String idPolitico;
   final String nomePolitico;
   final String mensagem;
+  final String sexoPolitico;
   @JsonKey(fromJson: _fromJsonTipo, toJson: _toJsonTipo)
   final AcaoType tipo;
   final String urlFotoPolitico;
@@ -44,6 +46,6 @@ class AcaoUsuarioModel extends Equatable {
 
   @override
   String toString() {
-    return '''AcaoUsuarioModel{idPolitico: $idPolitico, nomePolitico: $nomePolitico, data: $data, mensagem: $mensagem, tipo: $tipo, urlFotoPolitico: $urlFotoPolitico}''';
+    return '''AcaoUsuarioModel{idPolitico: $idPolitico, nomePolitico: $nomePolitico, data: $data, mensagem: $mensagem, sexoPolitico: $sexoPolitico, tipo: $tipo, urlFotoPolitico: $urlFotoPolitico}''';
   }
 }
