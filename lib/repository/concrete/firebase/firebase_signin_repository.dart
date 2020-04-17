@@ -8,6 +8,7 @@ import '../../../core/exception/exceptions.dart';
 import '../../../model/models.dart';
 import '../../abstract/signin_repository.dart';
 import 'collection.dart';
+import 'firebase_error_constants.dart';
 
 class FirebaseSigninRepository extends SigninRepository {
   FirebaseSigninRepository(
@@ -29,14 +30,24 @@ class FirebaseSigninRepository extends SigninRepository {
     try {
       final authResult = await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
+
+      if (!authResult.user.isEmailVerified) {
+        throw EmailNotVerifiedException();
+      }
+
       if (authResult != null) {
         return await getUserById(authResult.user.uid);
       }
       return null;
     } on ComunicationException {
       rethrow;
-    } on Exception {
-      throw InvalidCredentialsException();
+    } on Exception catch (e) {
+      if (e.toString().contains(ERROR_INVALID_EMAIL)) {
+        throw InvalidCredentialsException();
+      } else if (e.toString().contains(ERROR_WRONG_PASSWORD)) {
+        throw InvalidCredentialsException();
+      }
+      rethrow;
     }
   }
 
