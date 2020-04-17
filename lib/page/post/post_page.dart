@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screenshot/screenshot.dart';
 
 import '../../core/routing/route_names.dart';
 import '../../enum/post_type.dart';
@@ -25,7 +26,10 @@ class PostPage extends StatelessWidget {
             Expanded(
               child: postType == PostType.DESPESA
                   ? PostDespesaConnected(post)
-                  : PostProposta(post),
+                  : PostProposta(
+                      post,
+                      screenshotController: ScreenshotController(),
+                    ),
             ),
             /*
             ESCONDIDO ENQUANTO NÃO IMPLEMENTADO
