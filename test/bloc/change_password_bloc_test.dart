@@ -27,7 +27,7 @@ void main() {
     });
 
     blocTest(
-      'Expects [UserPasswordChangeSuccess] when ChangeUserPassword called',
+      '''Expects [UserPasswordChanging, UserPasswordChangeSuccess] when ChangeUserPassword called''',
       build: () async {
         when(
           mockChangePasswordRepository.changeUserPassword(
@@ -44,6 +44,7 @@ void main() {
         ),
       ),
       expect: [
+        UserPasswordChanging(),
         UserPasswordChangeSuccess(),
       ],
       verify: (changePasswordBloc) async {
@@ -57,7 +58,7 @@ void main() {
     );
 
     blocTest(
-      'Expects [UserWrongPasswordInformed] when current password is wrong',
+      '''Expects [UserPasswordChanging, UserWrongPasswordInformed] when current password is wrong''',
       build: () async {
         when(
           mockChangePasswordRepository.changeUserPassword(
@@ -74,6 +75,7 @@ void main() {
         ),
       ),
       expect: [
+        UserPasswordChanging(),
         UserWrongPasswordInformed(),
       ],
       verify: (changePasswordBloc) async {
@@ -87,7 +89,7 @@ void main() {
     );
 
     blocTest(
-      'Expects [UserPasswordChangeFailed] when some exception is thrown',
+      '''Expects [UserPasswordChanging, UserPasswordChangeFailed] when some exception is thrown''',
       build: () async {
         when(
           mockChangePasswordRepository.changeUserPassword(
@@ -104,6 +106,7 @@ void main() {
         ),
       ),
       expect: [
+        UserPasswordChanging(),
         UserPasswordChangeFailed(),
       ],
       verify: (changePasswordBloc) async {

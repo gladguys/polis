@@ -180,5 +180,46 @@ void main() {
         ),
       );
     });
+
+    testWidgets('should validate form when passwords is not 6 caracters long',
+        (tester) async {
+      final mockChangePasswordBloc = MockChangePasswordBloc();
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<ChangePasswordBloc>(
+            bloc: mockChangePasswordBloc,
+            page: ChangePasswordPage(),
+          ),
+        ),
+      );
+      final form = tester.widget(find.byType(Form)) as Form;
+      final formKey = form.key as GlobalKey<FormState>;
+
+      final currentPasswordField =
+          find.byKey(const ValueKey('current-password-field'));
+      final newPasswordField = find.byKey(const ValueKey('new-password-field'));
+      final newPasswordConfirmationField =
+          find.byKey(const ValueKey('new-password-confirmation-field'));
+
+      await tester.enterText(currentPasswordField, '12345');
+      await tester.testTextInput.receiveAction(TextInputAction.next);
+      await tester.enterText(newPasswordField, '12345678');
+      await tester.testTextInput.receiveAction(TextInputAction.next);
+      await tester.enterText(newPasswordConfirmationField, '1234567');
+      await tester.pump();
+
+      final confirmBtn = find.text(CONFIRM);
+      await tester.tap(confirmBtn);
+      await tester.pumpAndSettle();
+      expect(formKey.currentState.validate(), isFalse);
+      verifyNever(
+        mockChangePasswordBloc.add(
+          ChangeUserPassword(
+            currentPassword: '123456',
+            newPassword: '12345678',
+          ),
+        ),
+      );
+    });
   });
 }

@@ -5,6 +5,7 @@ void main() {
   group('ChangePasswordState tests', () {
     test('states', () {
       expect(InitialChangePasswordState(), InitialChangePasswordState());
+      expect(UserPasswordChanging(), UserPasswordChanging());
       expect(UserPasswordChangeSuccess(), UserPasswordChangeSuccess());
       expect(UserWrongPasswordInformed(), UserWrongPasswordInformed());
       expect(UserPasswordChangeFailed(), UserPasswordChangeFailed());
