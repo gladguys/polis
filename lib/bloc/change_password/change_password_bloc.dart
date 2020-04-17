@@ -20,6 +20,8 @@ class ChangePasswordBloc
   Stream<ChangePasswordState> mapEventToState(
       ChangePasswordEvent event) async* {
     if (event is ChangeUserPassword) {
+      yield UserPasswordChanging();
+
       try {
         await repository.changeUserPassword(
           currentPassword: event.currentPassword,

@@ -9,6 +9,11 @@ class InitialChangePasswordState extends ChangePasswordState {
   List<Object> get props => [];
 }
 
+class UserPasswordChanging extends ChangePasswordState {
+  @override
+  List<Object> get props => [];
+}
+
 class UserPasswordChangeSuccess extends ChangePasswordState {
   @override
   List<Object> get props => [];

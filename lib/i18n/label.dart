@@ -16,6 +16,7 @@ const PASSWORD = 'Senha';
 const PASSWORD_CONFIRMATION = 'Confirme a senha';
 const RECOVERY_PASSWORD = 'Recuperar senha';
 const REQUIRED_FIELD = 'Campo Obrigatório';
+const MIN_PASSWORD_LENGTH = 'A senha deve ter no mínimo 6 caracteres';
 const PASSWORD_AND_CONFIRMATION_DONT_MATCH = 'Senhas diferentes';
 const SIGNIN = 'Entrar';
 const SIGNIN_WITH_EMAIL = 'Entrar com email';
