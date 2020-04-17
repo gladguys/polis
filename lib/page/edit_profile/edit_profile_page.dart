@@ -88,7 +88,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   const SizedBox(height: 16),
                   Container(
                     height: 40,
-                    width: 160,
+                    width: 220,
                     child: FlatButton(
                       padding: EdgeInsets.zero,
                       child: const Text(CONFIRM),
@@ -112,7 +112,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   const SizedBox(height: 12),
                   Container(
                     height: 40,
-                    width: 160,
+                    width: 220,
                     child: OutlineButton.icon(
                       padding: EdgeInsets.zero,
                       icon: Icon(Icons.lock, size: 18),
@@ -168,6 +168,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget getImageContainer() {
     if (pickedPhoto != null) {
       return ClipRRect(
+        key: const ValueKey('photo-url-file'),
         borderRadius: BorderRadius.circular(60),
         child: Image.file(
           pickedPhoto,
@@ -178,6 +179,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       );
     } else if (user.photoUrl != null) {
       return ClipRRect(
+        key: const ValueKey('photo-url-user'),
         borderRadius: BorderRadius.circular(60),
         child: Image.network(
           user.photoUrl,
