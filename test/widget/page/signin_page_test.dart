@@ -153,7 +153,7 @@ void main() {
       whenListen(
         mockSigninBloc,
         Stream<SigninState>.fromIterable(
-            [InitialSignin(), SigninFailed('fail')]),
+            [InitialSignin(), SigninFailed(ERROR_INVALID_CREDENTIALS)]),
       );
       await tester.pumpWidget(
         connectedWidget(
@@ -166,7 +166,7 @@ void main() {
         ),
       );
       await tester.pump();
-      expect(find.text(SIGNIN_FAILED), findsOneWidget);
+      expect(find.text(ERROR_INVALID_CREDENTIALS), findsOneWidget);
     });
 
     testWidgets('should show error message when signin auth failed',
