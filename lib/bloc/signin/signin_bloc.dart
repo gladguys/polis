@@ -49,7 +49,9 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
         yield* _tryToAuthUser(user, SigninMethod.emailAndPassword);
       } on InvalidCredentialsException {
         yield SigninFailed(ERROR_INVALID_CREDENTIALS);
-      } on Exception {
+      } on EmailNotVerifiedException {
+        yield SigninFailed(ERROR_EMAIL_NOT_VERIFIED);
+      } on ComunicationException {
         yield SigninFailed(ERROR_SIGNIN);
       }
     }

@@ -1,5 +1,6 @@
 export 'comunication_exception.dart';
 export 'email_already_in_use_exception.dart';
+export 'email_not_verified_exception.dart';
 export 'google_signin_exception.dart';
 export 'invalid_credentials_exception.dart';
 export 'invalid_email_exception.dart';
