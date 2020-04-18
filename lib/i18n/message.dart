@@ -2,6 +2,13 @@ const EMAIL_ALREADY_IN_USE = 'Email já esta em uso';
 const PASSWORD_IS_WEAK = 'Password é muito fraco';
 const EMAIL_IS_INVALID = 'O email é inválido';
 const USER_CREATED_WITH_SUCCESS = 'Usuário criado com sucesso';
+const USER_UPDATED_WITH_SUCCESS = 'Usuário editado com sucesso';
+const USER_UPDATE_FAILED = 'Falha ao editar o usuário';
+const USER_PASSWORD_UPDATED_WITH_SUCCESS =
+    'Senha do usuário atualizada com sucesso';
+const USER_UPDATE_PASSWORD_FAILED = 'Falha ao atualizar senha do usuário';
+const USER_UPDATE_PASSWORD_WRONG_PASSWORD =
+    'A senha atual informada é inválida';
 
 const FOLLOW = 'Seguir';
 const STOP_FOLLOW = 'Deixar de seguir';

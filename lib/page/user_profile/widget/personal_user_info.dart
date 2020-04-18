@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:simple_router/simple_router.dart';
 
+import '../../../core/routing/route_names.dart';
 import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
 import '../../../widget/photo.dart';
+import '../../pages.dart';
 
 class PersonalUserInfo extends StatelessWidget {
   PersonalUserInfo({this.user});
@@ -45,7 +48,10 @@ class PersonalUserInfo extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 child: const Text(EDIT_PROFILE),
                 color: Colors.amber,
-                onPressed: () {},
+                onPressed: () => SimpleRouter.forward(
+                  EditProfilePageConnected(),
+                  name: EDIT_PROFILE_PAGE,
+                ),
               ),
             ),
           ],

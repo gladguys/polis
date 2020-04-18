@@ -17,6 +17,8 @@ import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/abstract/polis_image_picker.dart';
 import 'package:polis/core/service/services.dart';
 import 'package:polis/model/models.dart';
+import 'package:polis/repository/abstract/change_password_repository.dart';
+import 'package:polis/repository/abstract/edit_profile_repository.dart';
 import 'package:polis/repository/abstract/favorite_posts_repository.dart';
 import 'package:polis/repository/abstract/follow_repository.dart';
 import 'package:polis/repository/abstract/politic_followers_repository.dart';
@@ -38,6 +40,13 @@ import 'package:sliding_panel/sliding_panel.dart';
 // Bloc
 class MockSigninBloc extends MockBloc<SigninEvent, SigninState>
     implements SigninBloc {}
+
+class MockEditProfileBloc extends MockBloc<EditProfileEvent, EditProfileState>
+    implements EditProfileBloc {}
+
+class MockChangePasswordBloc
+    extends MockBloc<ChangePasswordEvent, ChangePasswordState>
+    implements ChangePasswordBloc {}
 
 class MockPostBloc extends MockBloc<PostEvent, PostState> implements PostBloc {}
 
@@ -82,6 +91,11 @@ class MockSearchPoliticBloc
 
 // Repository
 class MockSigninRepository extends Mock implements SigninRepository {}
+
+class MockEditProfileRepository extends Mock implements EditProfileRepository {}
+
+class MockChangePasswordRepository extends Mock
+    implements ChangePasswordRepository {}
 
 class MockPoliticSugestionRepository extends Mock
     implements PoliticSuggestionRepository {}

@@ -19,3 +19,12 @@ class Logout extends UserEvent {
   @override
   List<Object> get props => [];
 }
+
+class UpdateCurrentUser extends UserEvent {
+  UpdateCurrentUser(this.user);
+
+  final UserModel user;
+
+  @override
+  List<Object> get props => [user];
+}

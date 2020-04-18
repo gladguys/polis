@@ -23,6 +23,7 @@ class FirebaseSignupRepository extends SignupRepository {
   final FirebaseAuth firebaseAuth;
   final Firestore firestore;
   final FirebaseStorage storage;
+
   CollectionReference get userRef => firestore.collection(USERS_COLLECTION);
 
   @override
