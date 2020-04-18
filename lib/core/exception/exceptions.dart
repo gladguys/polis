@@ -8,3 +8,4 @@ export 'signout_exception.dart';
 export 'upload_file_exception.dart';
 export 'user_deleted_exception.dart';
 export 'weak_password_exception.dart';
+export 'wrong_password_exception.dart';
