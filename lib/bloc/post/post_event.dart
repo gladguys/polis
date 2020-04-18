@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 
 import '../../model/models.dart';
@@ -23,4 +25,13 @@ class FavoritePostForUser extends PostEvent {
 
   @override
   List<Object> get props => [post, user];
+}
+
+class SharePost extends PostEvent {
+  SharePost({this.postImage});
+
+  final File postImage;
+
+  @override
+  List<Object> get props => [postImage];
 }

@@ -39,4 +39,7 @@ void initLocator([SharedPreferences sharedPreferences]) {
   G.registerSingleton(
     UrlLauncherService(),
   );
+  G.registerSingleton(
+    ShareService(),
+  );
 }

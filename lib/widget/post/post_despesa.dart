@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
@@ -17,31 +18,40 @@ import '../photo.dart';
 import '../text_rich.dart';
 
 class PostDespesa extends StatelessWidget {
-  PostDespesa(this.despesa);
+  PostDespesa(this.despesa, {@required this.screenshotController})
+      : assert(despesa != null),
+        assert(screenshotController != null);
 
   final DespesaModel despesa;
+  final ScreenshotController screenshotController;
 
   @override
   Widget build(BuildContext context) {
-    return CardBase(
-      slotLeft: InkWell(
-        borderRadius: BorderRadius.circular(24),
-        child: Photo(url: despesa.fotoPolitico),
-        onTap: () => SimpleRouter.forward(
-          PoliticProfilePageConnected(despesa.idPolitico),
-          name: POLITIC_PROFILE_PAGE,
+    return Screenshot(
+      controller: screenshotController,
+      child: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: CardBase(
+          slotLeft: InkWell(
+            borderRadius: BorderRadius.circular(24),
+            child: Photo(url: despesa.fotoPolitico),
+            onTap: () => SimpleRouter.forward(
+              PoliticProfilePageConnected(despesa.idPolitico),
+              name: POLITIC_PROFILE_PAGE,
+            ),
+          ),
+          slotCenter: BlocBuilder<PostBloc, PostState>(
+            builder: (_, state) => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                _buildTopContent(),
+                _buildCenterContent(_),
+              ],
+            ),
+          ),
+          slotBottom: _buildActions(context),
         ),
       ),
-      slotCenter: BlocBuilder<PostBloc, PostState>(
-        builder: (_, state) => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _buildTopContent(),
-            _buildCenterContent(_),
-          ],
-        ),
-      ),
-      slotBottom: _buildActions(context),
     );
   }
 
@@ -187,7 +197,10 @@ class PostDespesa extends StatelessWidget {
               icon: FontAwesomeIcons.shareAlt,
               text: SHARE,
               fontSize: 14,
-              onTap: () {},
+              onTap: () async {
+                final postImage = await screenshotController.capture();
+                context.bloc<PostBloc>().add(SharePost(postImage: postImage));
+              },
             ),
             const SizedBox(width: 16),
             ButtonActionCard(

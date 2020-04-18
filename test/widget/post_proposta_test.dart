@@ -32,6 +32,21 @@ void main() {
       );
     });
 
+    test('assert', () {
+      expect(
+          () => PostProposta(
+                null,
+                screenshotController: MockScreenshotController(),
+              ),
+          throwsAssertionError);
+      expect(
+          () => PostProposta(
+                PropostaModel(),
+                screenshotController: null,
+              ),
+          throwsAssertionError);
+    });
+
     testWidgets('should build without exploding', (tester) async {
       final mockPostBloc = MockPostBloc();
       when(mockPostBloc.isPostFavorite).thenReturn(true);
@@ -39,32 +54,43 @@ void main() {
         connectedWidget(
           PageConnected<PostBloc>(
             bloc: mockPostBloc,
-            page: PostProposta(proposta),
+            page: PostProposta(
+              proposta,
+              screenshotController: MockScreenshotController(),
+            ),
           ),
         ),
       );
     });
 
     testWidgets('should do something when click on share btn', (tester) async {
+      final mockFile = MockFile();
+      final mockScreenshotController = MockScreenshotController();
+      when(mockScreenshotController.capture())
+          .thenAnswer((_) => Future.value(mockFile));
       final mockPostBloc = MockPostBloc();
       when(mockPostBloc.isPostFavorite).thenReturn(true);
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<PostBloc>(
             bloc: mockPostBloc,
-            page: PostProposta(proposta),
+            page: PostProposta(
+              proposta,
+              screenshotController: mockScreenshotController,
+            ),
           ),
         ),
       );
-      final likeButton = find.byWidgetPredicate((widget) {
+      final shareButton = find.byWidgetPredicate((widget) {
         if (widget is ButtonActionCard &&
             widget.icon == FontAwesomeIcons.shareAlt) {
           return true;
         }
         return false;
       });
-      expect(likeButton, findsOneWidget);
-      await tester.tap(likeButton);
+      expect(shareButton, findsOneWidget);
+      await tester.tap(shareButton);
+      verify(mockPostBloc.add(SharePost(postImage: mockFile))).called(1);
     });
 
     testWidgets('should do something when click on bookmark btn',
@@ -75,7 +101,10 @@ void main() {
         connectedWidget(
           PageConnected<PostBloc>(
             bloc: mockPostBloc,
-            page: PostProposta(proposta),
+            page: PostProposta(
+              proposta,
+              screenshotController: MockScreenshotController(),
+            ),
           ),
         ),
       );
@@ -98,7 +127,10 @@ void main() {
         connectedWidget(
           PageConnected<PostBloc>(
             bloc: mockPostBloc,
-            page: PostProposta(proposta),
+            page: PostProposta(
+              proposta,
+              screenshotController: MockScreenshotController(),
+            ),
           ),
         ),
       );
