@@ -52,6 +52,9 @@ dependencies:
   sliding_panel: ^1.0.3
   skeleton_text: ^1.0.0
   grouped_list: ^2.3.0
+  flare_splash_screen: ^3.0.1
+  flare_loading: ^2.1.1
+  animated_text_kit: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +77,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/animations/
+
   fonts:
     - family: Philosopher
       fonts:
