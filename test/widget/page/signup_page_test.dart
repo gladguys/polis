@@ -11,6 +11,7 @@ import 'package:polis/core/service/locator.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
+import 'package:polis/widget/centered_loading.dart';
 
 import '../../mock.dart';
 import '../utils.dart';
@@ -196,7 +197,7 @@ void main() {
           ),
         ),
       );
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      expect(find.byType(CenteredLoading), findsOneWidget);
     });
 
     testWidgets('should show error when signup failed', (tester) async {

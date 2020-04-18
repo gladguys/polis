@@ -11,6 +11,7 @@ import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
 import 'package:polis/page/politic_sugestion/widget/politics_suggested_grid.dart';
+import 'package:polis/widget/centered_loading.dart';
 import 'package:polis/widget/politic_suggested.dart';
 
 import '../../mock.dart';
@@ -43,7 +44,7 @@ void main() {
           ),
         ),
       );
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      expect(find.byType(CenteredLoading), findsOneWidget);
     });
 
     testWidgets('should call SavePoliticsToFollow when click on button',
