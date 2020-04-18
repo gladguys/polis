@@ -109,12 +109,16 @@ class DefaultBottombar extends StatelessWidget {
       return Container(
         alignment: Alignment.center,
         padding: const EdgeInsets.all(2),
-        child: Photo(
-          url: user.photoUrl,
-          size: 40,
-          boxFit: BoxFit.cover,
-          iconColor: Colors.black,
-          iconKey: const ValueKey('user-photoless-icon'),
+        child: BlocBuilder<UserBloc, UserState>(
+          builder: (_, state) => Photo(
+            url: state is CurrentUserUpdated
+                ? state.user.photoUrl
+                : user.photoUrl,
+            size: 40,
+            boxFit: BoxFit.cover,
+            iconColor: Colors.black,
+            iconKey: const ValueKey('user-photoless-icon'),
+          ),
         ),
       );
     }

@@ -51,6 +51,18 @@ void main() {
     );
 
     blocTest(
+      'Expects [CurrentUserUpdated] when UpdateCurrentUser added',
+      build: () async => userBloc,
+      act: (userBloc) {
+        userBloc.add(UpdateCurrentUser(UserModel()));
+        return;
+      },
+      expect: [
+        CurrentUserUpdated(UserModel()),
+      ],
+    );
+
+    blocTest(
       'Expects [SignoutLoading, SignoutFailed] when Logout fails',
       build: () async {
         when(mockUserRepository.signOut()).thenThrow(SignOutException());
