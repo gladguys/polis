@@ -46,7 +46,7 @@ void main() {
     test('toString()', () {
       final modelToString = AcaoUsuarioModel(idPolitico: '1').toString();
       final result =
-          '''AcaoUsuarioModel{idPolitico: 1, nomePolitico: null, data: null, mensagem: null, tipo: null, urlFotoPolitico: null}''';
+          '''AcaoUsuarioModel{idPolitico: 1, nomePolitico: null, data: null, mensagem: null, sexoPolitico: null, tipo: null, urlFotoPolitico: null}''';
       expect(modelToString == result, true);
     });
 
