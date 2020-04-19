@@ -59,7 +59,8 @@ exports.onCreateFollower = functions.firestore
                 'nomePolitico': p.data().nomeEleitoral,
                 'idPolitico': politicoId,
                 'mensagem': 'Segui o político ' + p.data().nomeEleitoral + ' no dia ' + today,
-                'urlFotoPolitico': p.data().urlFoto
+                'urlFotoPolitico': p.data().urlFoto,
+                'sexoPolitico': p.sexoPolitico
             };
 
             admin.firestore().collection('acoes').doc(followerId).collection('acoesUsuario').add(acao);
@@ -146,7 +147,8 @@ exports.onDeleteFollower = functions.firestore
                 'nomePolitico': p.data().nomeEleitoral,
                 'idPolitico': politicoId,
                 'mensagem': 'Deixei de seguir o político ' + p.data().nomeEleitoral + ' no dia ' + today,
-                'urlFotoPolitico': p.data().urlFoto
+                'urlFotoPolitico': p.data().urlFoto,
+                'sexoPolitico': p.sexoPolitico
             };
 
             admin.firestore().collection('acoes').doc(followerId).collection('acoesUsuario').add(acao);

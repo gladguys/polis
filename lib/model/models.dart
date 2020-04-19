@@ -1,3 +1,4 @@
+export 'acao_usuario_model.dart';
 export 'despesa_model.dart';
 export 'partido_model.dart';
 export 'politico_model.dart';

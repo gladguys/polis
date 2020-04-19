@@ -12,12 +12,12 @@ void main() {
 
     group('FetchUserRelatedInfoSuccess', () {
       test('props', () {
-        final st1 = FetchUserRelatedInfoSuccess(
-            politicsFollowing: [], userActivities: []);
-        final st2 = FetchUserRelatedInfoSuccess(
-            politicsFollowing: [], userActivities: []);
+        final st1 =
+            FetchUserRelatedInfoSuccess(politicsFollowing: [], userActions: []);
+        final st2 =
+            FetchUserRelatedInfoSuccess(politicsFollowing: [], userActions: []);
         final st3 = FetchUserRelatedInfoSuccess(
-            politicsFollowing: [PoliticoModel()], userActivities: []);
+            politicsFollowing: [PoliticoModel()], userActions: []);
         expect(st1, st2);
         expect(st1 == st3, false);
       });
@@ -25,11 +25,11 @@ void main() {
       test('assert', () {
         expect(
             () => FetchUserRelatedInfoSuccess(
-                politicsFollowing: null, userActivities: []),
+                politicsFollowing: null, userActions: []),
             throwsAssertionError);
         expect(
             () => FetchUserRelatedInfoSuccess(
-                politicsFollowing: [], userActivities: null),
+                politicsFollowing: [], userActions: null),
             throwsAssertionError);
       });
     });

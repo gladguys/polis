@@ -29,7 +29,7 @@ void main() {
         build: () async {
           when(mockUserProfileRepository.getPoliticsFollowing('1'))
               .thenAnswer((_) => Future.value([]));
-          when(mockUserProfileRepository.getUserActivities('1'))
+          when(mockUserProfileRepository.getUserActions('1'))
               .thenAnswer((_) => Future.value([]));
           return userProfileBloc;
         },
@@ -39,13 +39,13 @@ void main() {
         },
         verify: (userProfileBloc) async {
           verify(mockUserProfileRepository.getPoliticsFollowing('1')).called(1);
-          verify(mockUserProfileRepository.getUserActivities('1')).called(1);
+          verify(mockUserProfileRepository.getUserActions('1')).called(1);
         },
         expect: [
           LoadingFetchUserInfo(),
           FetchUserRelatedInfoSuccess(
             politicsFollowing: [],
-            userActivities: [],
+            userActions: [],
           ),
         ],
       );
@@ -55,7 +55,7 @@ void main() {
         build: () async {
           when(mockUserProfileRepository.getPoliticsFollowing('1'))
               .thenAnswer((_) => Future.value([]));
-          when(mockUserProfileRepository.getUserActivities('1'))
+          when(mockUserProfileRepository.getUserActions('1'))
               .thenThrow(Exception());
           return userProfileBloc;
         },
@@ -65,7 +65,7 @@ void main() {
         },
         verify: (userProfileBloc) async {
           verify(mockUserProfileRepository.getPoliticsFollowing('1')).called(1);
-          verify(mockUserProfileRepository.getUserActivities('1')).called(1);
+          verify(mockUserProfileRepository.getUserActions('1')).called(1);
         },
         expect: [
           LoadingFetchUserInfo(),
