@@ -17,7 +17,12 @@ class UserProfilePage extends StatelessWidget {
         child: BlocBuilder<UserProfileBloc, UserProfileState>(
           builder: (_, state) {
             if (state is FetchUserRelatedInfoSuccess) {
-              return UserProfile(state);
+              final politicsFollowing = state.politicsFollowing;
+              final userActions = state.userActions;
+              return UserProfile(
+                politicsFollowing: politicsFollowing,
+                userActions: userActions,
+              );
             } else if (state is LoadingFetchUserInfo) {
               return CenteredLoading();
             } else {

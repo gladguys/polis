@@ -1,26 +1,19 @@
 import 'package:flutter/material.dart';
 
 import '../../../i18n/i18n.dart';
+import '../../../model/models.dart';
 import '../../../widget/not_found.dart';
+import 'activities_list.dart';
 
-class UserActivities extends StatelessWidget {
-  UserActivities(this.activities);
+class UserActions extends StatelessWidget {
+  UserActions({this.actions});
 
-  final List<dynamic> activities;
+  final List<AcaoUsuarioModel> actions;
 
   @override
   Widget build(BuildContext context) {
-    if (activities.length > 0) {
-      return Container(
-        height: (MediaQuery.of(context).size.height * 0.97) - 50 - 72,
-        child: ListView.separated(
-          shrinkWrap: true,
-          padding: const EdgeInsets.only(bottom: 24),
-          itemCount: activities.length,
-          separatorBuilder: (_, i) => const Divider(indent: 8, endIndent: 8),
-          itemBuilder: (_, i) => Container(),
-        ),
-      );
+    if (actions.isNotEmpty) {
+      return UserActionsList(actions);
     } else {
       return Padding(
         padding: const EdgeInsets.only(top: 64),
