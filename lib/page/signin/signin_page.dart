@@ -57,7 +57,7 @@ class _SigninPageState extends State<SigninPage> {
           }
         }
         if (state is SigninFailed) {
-          Snackbar.error(context, SIGNIN_FAILED);
+          Snackbar.error(context, state.errorMessage);
         }
         if (state is UserAuthenticationFailed) {
           Snackbar.error(context, ERROR_AUTENTICATING_USER);

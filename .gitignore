@@ -34,6 +34,7 @@
 /android/app/src/prod/google-services.json
 /coverage/*
 
+/test/null
 *.g*dart
 
 # Web related

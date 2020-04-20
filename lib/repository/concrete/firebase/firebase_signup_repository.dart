@@ -53,6 +53,7 @@ class FirebaseSignupRepository extends SignupRepository {
           authResult.user.uid,
           user.copyWith(photoUrl: imageUrl),
         );
+        await authResult.user.sendEmailVerification();
         return;
       }
     } on Exception catch (e) {

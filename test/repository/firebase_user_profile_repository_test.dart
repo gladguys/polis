@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/core/exception/exceptions.dart';
@@ -11,9 +12,13 @@ void main() {
     FirebaseUserProfileRepository firebaseUserProfileRepository;
     MockFirestore mockFirestore;
     MockQuerySnapshot mockQuerySnapshot;
+    MockDocumentSnapshot mockDocumentSnapshot;
     MockDocumentReference mockDocumentReference;
     MockCollectionReference mockCollectionReference;
+    MockCollectionReference mockAcoesCollectionReference;
+    MockCollectionReference mockAcoesUsuarioSubcollectionReference;
     MockCollectionReference mockPoliticsFollowingCollectionReference;
+    MockQuery mockQuery;
 
     setUp(() {
       mockFirestore = MockFirestore();
@@ -23,7 +28,11 @@ void main() {
         firestore: mockFirestore,
       );
       mockCollectionReference = MockCollectionReference();
+      mockDocumentSnapshot = MockDocumentSnapshot();
+      mockAcoesCollectionReference = MockCollectionReference();
+      mockAcoesUsuarioSubcollectionReference = MockCollectionReference();
       mockPoliticsFollowingCollectionReference = MockCollectionReference();
+      mockQuery = MockQuery();
     });
 
     test('test asserts', () {
@@ -58,10 +67,33 @@ void main() {
     });
 
     group('getUserActivities tests', () {
-      test('returns [] for now', () async {
+      test('works', () async {
+        when(mockFirestore.collection(ACOES_COLLECTION))
+            .thenReturn(mockAcoesCollectionReference);
+        when(mockAcoesCollectionReference.document('1'))
+            .thenReturn(mockDocumentReference);
+        when(mockDocumentReference.collection(ACOES_USUARIO_SUBCOLLECTION))
+            .thenReturn(mockAcoesUsuarioSubcollectionReference);
+        when(mockAcoesUsuarioSubcollectionReference.orderBy(DATA_ACAO,
+                descending: true))
+            .thenReturn(mockQuery);
+        when(mockQuery.getDocuments())
+            .thenAnswer((_) => Future.value(mockQuerySnapshot));
+        when(mockQuerySnapshot.documents).thenReturn([mockDocumentSnapshot]);
+        when(mockDocumentSnapshot.data).thenReturn({
+          'idPolitico': '1',
+          'data': Timestamp.fromMillisecondsSinceEpoch(555)
+        });
         final activities =
-            await firebaseUserProfileRepository.getUserActivities('1');
-        expect(activities, isEmpty);
+            await firebaseUserProfileRepository.getUserActions('1');
+        expect(activities, isNotEmpty);
+      });
+
+      test('throw ComunicationException when something is wrong', () async {
+        when(mockFirestore.collection(ACOES_COLLECTION)).thenThrow(Exception());
+        firebaseUserProfileRepository
+            .getUserActions('1')
+            .catchError((e) => expect(e, isA<ComunicationException>()));
       });
     });
   });
