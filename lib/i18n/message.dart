@@ -26,6 +26,8 @@ const NO_RESULTS_FROM_SEARCH = 'Político não encontrado.';
 const ERROR_CREATING_USER = 'Ocorreu um erro no cadastro do usuário';
 const ERROR_AUTENTICATING_USER = 'Ocorreu um erro ao autenticar o usuário';
 const ERROR_INVALID_CREDENTIALS = 'Usuário ou senha inválidos';
+const ERROR_EMAIL_NOT_VERIFIED =
+    'Usuário ainda não foi verificado. Veja seu email';
 const ERROR_SIGNIN = 'Ocorreu um erro de comunicação ao logar';
 const ERROR_COMUNICATION = 'Ocorreu um erro de comunicação';
 const ERROR_FETCHING_USER_INFO = 'Erro ao buscar informações do usuário';

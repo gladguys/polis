@@ -138,7 +138,7 @@ void main() {
       'ERROR_SIGNIN when SigninWithEmailAndPassword added and theres an error',
       build: () async {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
-            .thenThrow(Exception(ERROR_SIGNIN));
+            .thenThrow(ComunicationException());
         return signinBloc;
       },
       act: (signinBloc) {
@@ -196,6 +196,28 @@ void main() {
       expect: [
         SigninLoading(),
         UserAuthenticationFailed(ERROR_AUTENTICATING_USER),
+      ],
+    );
+
+    blocTest(
+      '''Expects [SigninLoading, SigninFailed] with 
+      ERROR_EMAIL_NOT_VERIFIED when user is not verified''',
+      build: () async {
+        when(mockSigninRepository.signInWithEmailAndPassword(any, any))
+            .thenThrow(EmailNotVerifiedException());
+        return signinBloc;
+      },
+      act: (signinBloc) {
+        signinBloc.add(SigninWithEmailAndPassword('', ''));
+        return;
+      },
+      verify: (signinBloc) async {
+        verify(mockSigninRepository.signInWithEmailAndPassword(any, any))
+            .called(1);
+      },
+      expect: [
+        SigninLoading(),
+        SigninFailed(ERROR_EMAIL_NOT_VERIFIED),
       ],
     );
 
