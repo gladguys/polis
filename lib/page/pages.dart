@@ -1,5 +1,6 @@
 export 'change_password/change_password_page.dart';
 export 'change_password/change_password_page_connected.dart';
+export 'crunching_data/crunching_data_page.dart';
 export 'edit_profile/edit_profile_page.dart';
 export 'edit_profile/edit_profile_page_connected.dart';
 export 'favorite_posts/favorite_posts_page.dart';

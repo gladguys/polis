@@ -6,6 +6,7 @@ import 'package:polis/bloc/blocs.dart';
 import 'package:polis/i18n/i18n.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
+import 'package:polis/widget/centered_loading.dart';
 
 import '../../mock.dart';
 import '../utils.dart';
@@ -24,6 +25,20 @@ void main() {
           ),
         ),
       );
+    });
+
+    testWidgets('should show loading', (tester) async {
+      final mockChangePasswordBloc = MockChangePasswordBloc();
+      when(mockChangePasswordBloc.state).thenReturn(UserPasswordChanging());
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<ChangePasswordBloc>(
+            bloc: mockChangePasswordBloc,
+            page: ChangePasswordPage(),
+          ),
+        ),
+      );
+      expect(find.byType(CenteredLoading), findsOneWidget);
     });
 
     testWidgets('should show snackbar when success', (tester) async {

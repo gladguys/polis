@@ -9,6 +9,7 @@ import '../../bloc/blocs.dart';
 import '../../core/abstract/polis_image_picker.dart';
 import '../../i18n/i18n.dart';
 import '../../model/models.dart';
+import '../../widget/centered_loading.dart';
 import '../../widget/snackbar.dart';
 import '../theme/main_theme.dart';
 
@@ -84,12 +85,7 @@ class _SignupPageState extends State<SignupPage> {
               state is UserCreated) {
             return _signupForm();
           } else {
-            return const Center(
-              child: Padding(
-                padding: EdgeInsets.only(top: 72),
-                child: CircularProgressIndicator(),
-              ),
-            );
+            return CenteredLoading();
           }
         },
       ),
