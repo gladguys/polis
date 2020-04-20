@@ -1,4 +1,4 @@
-import 'package:polis/i18n/i18n.dart';
+import '../i18n/i18n.dart';
 
 class Validators {
   static bool validateEmail(String email) {
