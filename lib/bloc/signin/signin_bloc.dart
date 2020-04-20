@@ -65,6 +65,15 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
         yield SigninFailed(ERROR_SIGNIN);
       }
     }
+    if (event is SendResetPasswordEmail) {
+      try {
+        yield SentingResetEmail();
+        await repository.sendResetEmail(event.email);
+        yield ResetEmailSentSuccess();
+      } on Exception {
+        yield ResetEmailSentFailed();
+      }
+    }
   }
 
   Stream<SigninState> _tryToAuthUser(
