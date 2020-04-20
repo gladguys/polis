@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,9 +8,11 @@ import '../../bloc/blocs.dart';
 import '../../bloc/signin/signin_bloc.dart';
 import '../../bloc/signin/signin_state.dart';
 import '../../core/routing/route_names.dart';
+import '../../core/validators.dart';
 import '../../i18n/i18n.dart';
 import '../../widget/snackbar.dart';
 import '../pages.dart';
+import 'widget/reset_password_form.dart';
 
 class SigninPage extends StatefulWidget {
   @override
@@ -21,6 +24,8 @@ class _SigninPageState extends State<SigninPage> {
   String _email;
   String _password;
   FocusNode _passwordFN;
+
+  SigninBloc get signinBloc => context.bloc<SigninBloc>();
 
   @override
   void initState() {
@@ -61,10 +66,19 @@ class _SigninPageState extends State<SigninPage> {
         if (state is UserAuthenticationFailed) {
           Snackbar.error(context, ERROR_AUTENTICATING_USER);
         }
+        if (state is ResetEmailSentSuccess) {
+          Snackbar.success(context, EMAIL_RESET_SEND);
+        }
+        if (state is ResetEmailSentFailed) {
+          Snackbar.error(context, ERROR_SENTING_RESET_PASSWORD_EMAIL);
+        }
       },
       child: BlocBuilder<SigninBloc, SigninState>(
         builder: (_, state) {
-          if (state is InitialSignin) {
+          if (state is InitialSignin ||
+              state is ResetEmailSentSuccess ||
+              state is SigninFailed ||
+              state is UserAuthenticationFailed) {
             return _form();
           }
           if (state is SigninLoading) {
@@ -75,11 +89,13 @@ class _SigninPageState extends State<SigninPage> {
               ),
             );
           }
-          if (state is SigninFailed) {
-            return _form();
-          }
-          if (state is UserAuthenticationFailed) {
-            return _form();
+          if (state is SentingResetEmail) {
+            return const Center(
+              child: Padding(
+                padding: EdgeInsets.only(top: 72),
+                child: CircularProgressIndicator(),
+              ),
+            );
           }
           return const SizedBox.shrink();
         },
@@ -92,9 +108,7 @@ class _SigninPageState extends State<SigninPage> {
       final formState = _formKey.currentState;
       if (formState.validate()) {
         formState.save();
-        context
-            .bloc<SigninBloc>()
-            .add(SigninWithEmailAndPassword(_email, _password));
+        signinBloc.add(SigninWithEmailAndPassword(_email, _password));
       }
     }
 
@@ -121,7 +135,7 @@ class _SigninPageState extends State<SigninPage> {
               keyboardType: TextInputType.emailAddress,
               onEditingComplete: () => _passwordFN.requestFocus(),
               onSaved: (email) => _email = email,
-              validator: (email) => email.isEmpty ? REQUIRED_FIELD : null,
+              validator: Validators.emailValidator,
             ),
             const SizedBox(height: 16),
             TextFormField(
@@ -168,7 +182,21 @@ class _SigninPageState extends State<SigninPage> {
                 textColor: Colors.black,
                 borderSide: const BorderSide(color: Colors.black),
                 highlightedBorderColor: Colors.black,
-                onPressed: () {},
+                onPressed: () => {
+                  showDialog(
+                    context: context,
+                    builder: (_) => BlocProvider.value(
+                      value: signinBloc,
+                      child: Dialog(
+                        child: Container(
+                          height: 180,
+                          width: 200,
+                          child: ResetPasswordForm(),
+                        ),
+                      ),
+                    ),
+                  )
+                },
               ),
             ),
             const SizedBox(height: 16),

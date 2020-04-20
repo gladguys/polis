@@ -7,6 +7,7 @@ import 'package:sliding_panel/sliding_panel.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/abstract/polis_image_picker.dart';
+import '../../core/validators.dart';
 import '../../i18n/i18n.dart';
 import '../../model/models.dart';
 import '../../widget/snackbar.dart';
@@ -187,7 +188,7 @@ class _SignupPageState extends State<SignupPage> {
               onEditingComplete: () => _passwordFN.requestFocus(),
               keyboardType: TextInputType.emailAddress,
               onSaved: (email) => _email = email,
-              validator: (email) => email.isEmpty ? REQUIRED_FIELD : null,
+              validator: Validators.emailValidator,
             ),
             const SizedBox(height: 16),
             TextFormField(
