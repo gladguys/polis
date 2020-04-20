@@ -10,6 +10,7 @@ import '../../bloc/signin/signin_state.dart';
 import '../../core/routing/route_names.dart';
 import '../../core/validators.dart';
 import '../../i18n/i18n.dart';
+import '../../widget/centered_loading.dart';
 import '../../widget/snackbar.dart';
 import '../pages.dart';
 import 'widget/reset_password_form.dart';
@@ -82,10 +83,10 @@ class _SigninPageState extends State<SigninPage> {
             return _form();
           }
           if (state is SigninLoading) {
-            return const Center(
+            return Center(
               child: Padding(
-                padding: EdgeInsets.only(top: 72),
-                child: CircularProgressIndicator(),
+                padding: const EdgeInsets.only(top: 72),
+                child: CenteredLoading(),
               ),
             );
           }

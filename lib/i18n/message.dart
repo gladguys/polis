@@ -12,6 +12,9 @@ const USER_UPDATE_PASSWORD_FAILED = 'Falha ao atualizar senha do usuário';
 const USER_UPDATE_PASSWORD_WRONG_PASSWORD =
     'A senha atual informada é inválida';
 
+const PICK_YOUR_STATE = 'Escolha seu estado';
+const STATE_MESSAGE =
+    'Nos diga qual estado você deseja para buscarmos politicos neste estado';
 const FOLLOW = 'Seguir';
 const STOP_FOLLOW = 'Deixar de seguir';
 const YOU_DONT_FOLLOW_ANYONE_YET = 'Você ainda não segue nenhum politico!';
