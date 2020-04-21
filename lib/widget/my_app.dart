@@ -50,6 +50,8 @@ class _MyAppState extends State<MyApp> {
       create: (_) => UserBloc(
         user: user ?? UserModel(),
         repository: context.repository<FirebaseUserRepository>(),
+        analyticsService: G<AnalyticsService>(),
+        sharedPreferencesService: G<SharedPreferencesService>(),
       ),
       child: MaterialApp(
         title: POLIS,

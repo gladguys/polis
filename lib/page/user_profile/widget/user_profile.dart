@@ -4,10 +4,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
+import '../../../bloc/blocs.dart';
 import '../../../bloc/user/user_bloc.dart';
 import '../../../core/routing/route_names.dart';
-import '../../../core/service/locator.dart';
-import '../../../core/service/services.dart';
 import '../../../i18n/label.dart';
 import '../../../model/models.dart';
 import '../../../widget/text_title.dart';
@@ -108,11 +107,12 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   Widget _buildLogoutButton() {
-    final user = context.bloc<UserBloc>().user;
+    final userBloc = context.bloc<UserBloc>();
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         Container(
+          key: const ValueKey('logout-button'),
           height: 30,
           child: OutlineButton.icon(
             padding: EdgeInsets.zero,
@@ -125,8 +125,7 @@ class _UserProfileState extends State<UserProfile> {
             textColor: Colors.red,
             highlightedBorderColor: Colors.red,
             onPressed: () {
-              G<AnalyticsService>().logLogout(user.name);
-              G<SharedPreferencesService>().setUser(null);
+              userBloc.add(Logout());
               SimpleRouter.forwardAndRemoveAll(
                 InitialPage(),
                 name: INITIAL_PAGE,

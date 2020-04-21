@@ -1,12 +1,12 @@
 import 'package:flare_loading/flare_loading.dart';
 import 'package:flutter/material.dart';
 
-class LoadingFlare extends StatefulWidget {
+class Loading extends StatefulWidget {
   @override
-  _LoadingFlareState createState() => _LoadingFlareState();
+  _LoadingState createState() => _LoadingState();
 }
 
-class _LoadingFlareState extends State<LoadingFlare> {
+class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return FlareLoading(

@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
-import '../../widget/centered_loading.dart';
 import '../../widget/default_bottombar.dart';
+import '../../widget/loading.dart';
 import '../../widget/snackbar.dart';
 import '../../widget/text_title.dart';
 
@@ -46,7 +46,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           }
         }, builder: (_, state) {
           if (state is UserPasswordChanging) {
-            return CenteredLoading();
+            return Loading();
           } else {
             return Column(
               children: <Widget>[

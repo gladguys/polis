@@ -10,8 +10,8 @@ import '../../core/abstract/polis_image_picker.dart';
 import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
 import '../../model/models.dart';
-import '../../widget/centered_loading.dart';
 import '../../widget/default_bottombar.dart';
+import '../../widget/loading.dart';
 import '../../widget/snackbar.dart';
 import '../../widget/text_title.dart';
 import '../pages.dart';
@@ -56,7 +56,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           },
           builder: (_, state) {
             if (state is UpdatingUser) {
-              return CenteredLoading();
+              return Loading();
             } else {
               return Column(
                 children: <Widget>[

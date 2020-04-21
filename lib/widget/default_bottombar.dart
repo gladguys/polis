@@ -107,6 +107,7 @@ class DefaultBottombar extends StatelessWidget {
         width: 48,
         height: 60,
         child: Container(
+          key: const ValueKey('profile-image-bottombar'),
           alignment: Alignment.center,
           padding: const EdgeInsets.all(2),
           child: BlocBuilder<UserBloc, UserState>(
