@@ -18,6 +18,8 @@ Widget connectedWidget(Widget widget) {
           userId: '1',
         ),
         repository: MockUserRepository(),
+        analyticsService: MockAnalyticsService(),
+        sharedPreferencesService: MockSharedPreferencesService(),
       ),
       child: MaterialApp(
         navigatorObservers: [

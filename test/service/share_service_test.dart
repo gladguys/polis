@@ -8,6 +8,9 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   const channel = MethodChannel('plugins.flutter.io/path_provider');
   channel.setMockMethodCallHandler((methodCall) async => ".");
+  const channel2 =
+      MethodChannel('channel:github.com/orgs/esysberlin/esys-flutter-share');
+  channel2.setMockMethodCallHandler((methodCall) async => ".");
 
   ShareService shareService;
 

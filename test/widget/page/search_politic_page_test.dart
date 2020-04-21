@@ -245,6 +245,8 @@ void main() {
                 userId: '1',
               ),
               repository: MockUserRepository(),
+              analyticsService: MockAnalyticsService(),
+              sharedPreferencesService: MockSharedPreferencesService(),
             ),
             child: PageConnected<UserBloc>(
               bloc: mockUserBloc,
