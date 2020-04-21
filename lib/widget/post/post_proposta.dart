@@ -177,6 +177,16 @@ class PostProposta extends StatelessWidget {
                     ),
                   ),
             ),
+            const SizedBox(width: 16),
+            ButtonActionCard(
+              icon: FontAwesomeIcons.exchangeAlt,
+              text: TRAMITATIONS,
+              fontSize: 14,
+              onTap: () => SimpleRouter.forward(
+                TramitacaoPropostaPageConnected(proposta),
+                name: TRAMITACAO_PROPOSTA_PAGE,
+              ),
+            ),
           ],
         ),
       ),
