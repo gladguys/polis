@@ -61,9 +61,9 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                       SimpleRouter.back();
                     }
                   },
-                  child: Text(
+                  child: const Text(
                     CONFIRM,
-                    style: const TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 18),
                   ),
                 ),
               ),
