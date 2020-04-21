@@ -31,7 +31,7 @@ void main() {
       await tester.pump();
       expect(formKey.currentState.validate(), isTrue);
 
-      final sendButton = find.text(SEND);
+      final sendButton = find.text(CONFIRM);
       expect(sendButton, findsOneWidget);
       await tester.tap(sendButton);
       verify(mockSigninBloc.add(SendResetPasswordEmail('test@gmail.com')))
