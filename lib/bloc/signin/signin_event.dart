@@ -16,3 +16,12 @@ class SigninWithGoogle extends SigninEvent {
   @override
   List<Object> get props => [];
 }
+
+class SendResetPasswordEmail extends SigninEvent {
+  SendResetPasswordEmail(this.email);
+
+  final String email;
+
+  @override
+  List<Object> get props => [email];
+}

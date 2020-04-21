@@ -19,5 +19,12 @@ void main() {
         expect(SigninWithGoogle(), SigninWithGoogle());
       });
     });
+
+    group('SendResetPasswordEmail', () {
+      test('props', () {
+        expect(
+            SendResetPasswordEmail('email'), SendResetPasswordEmail('email'));
+      });
+    });
   });
 }

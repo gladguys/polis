@@ -16,6 +16,11 @@ class SigninLoading extends SigninState {
   List<Object> get props => [];
 }
 
+class SentingResetEmail extends SigninState {
+  @override
+  List<Object> get props => [];
+}
+
 class UserAuthenticated extends SigninState {
   UserAuthenticated(this.user);
 
@@ -41,4 +46,14 @@ class SigninFailed extends SigninState {
 
   @override
   List<Object> get props => [errorMessage];
+}
+
+class ResetEmailSentSuccess extends SigninState {
+  @override
+  List<Object> get props => [];
+}
+
+class ResetEmailSentFailed extends SigninState {
+  @override
+  List<Object> get props => [];
 }

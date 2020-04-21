@@ -86,6 +86,49 @@ void main() {
     );
 
     blocTest(
+      'Expects [SentingResetEmail, ResetEmailSentSuccess]'
+      ' when SendResetPasswordEmail added',
+      build: () async {
+        when(mockSigninRepository.sendResetEmail('email@email.com'))
+            .thenAnswer((_) => Future.value());
+        return signinBloc;
+      },
+      act: (signinBloc) {
+        signinBloc.add(SendResetPasswordEmail('email@email.com'));
+        return;
+      },
+      verify: (signinBloc) async {
+        verify(mockSigninRepository.sendResetEmail('email@email.com'))
+            .called(1);
+      },
+      expect: [
+        SentingResetEmail(),
+        ResetEmailSentSuccess(),
+      ],
+    );
+
+    blocTest(
+      'Expects [SentingResetEmail, ResetEmailSentFailed] when email send fails',
+      build: () async {
+        when(mockSigninRepository.sendResetEmail('email@email.com'))
+            .thenThrow(Exception());
+        return signinBloc;
+      },
+      act: (signinBloc) {
+        signinBloc.add(SendResetPasswordEmail('email@email.com'));
+        return;
+      },
+      verify: (signinBloc) async {
+        verify(mockSigninRepository.sendResetEmail('email@email.com'))
+            .called(1);
+      },
+      expect: [
+        SentingResetEmail(),
+        ResetEmailSentFailed(),
+      ],
+    );
+
+    blocTest(
       'Expects [SigninLoading, UserAuthenticated]'
       ' when SigninWithGoogle added',
       build: () async {

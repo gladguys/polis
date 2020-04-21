@@ -107,4 +107,9 @@ class FirebaseSigninRepository extends SigninRepository {
       throw ComunicationException();
     }
   }
+
+  @override
+  Future<void> sendResetEmail(String email) async {
+    await firebaseAuth.sendPasswordResetEmail(email: email);
+  }
 }
