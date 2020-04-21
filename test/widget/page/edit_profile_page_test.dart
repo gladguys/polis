@@ -11,7 +11,7 @@ import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
-import 'package:polis/widget/centered_loading.dart';
+import 'package:polis/widget/loading.dart';
 
 import '../../mock.dart';
 import '../utils.dart';
@@ -134,7 +134,7 @@ void main() {
           ),
         ),
       );
-      final loading = find.byType(CenteredLoading);
+      final loading = find.byType(Loading);
       expect(loading, findsOneWidget);
     });
 

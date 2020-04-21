@@ -5,13 +5,9 @@ import 'package:simple_router/simple_router.dart';
 
 import '../bloc/blocs.dart';
 import '../core/routing/route_names.dart';
-import '../core/service/locator.dart';
-import '../core/service/services.dart';
 import '../i18n/i18n.dart';
 import '../page/pages.dart';
 import 'photo.dart';
-
-enum DropDownOption { profile, logout }
 
 class DefaultBottombar extends StatelessWidget {
   DefaultBottombar(
@@ -105,100 +101,31 @@ class DefaultBottombar extends StatelessWidget {
   Widget _buildUserButton(BuildContext context) {
     final user = context.bloc<UserBloc>().user;
 
-    Widget buildButtonContent() {
-      return Container(
-        alignment: Alignment.center,
-        padding: const EdgeInsets.all(2),
-        child: BlocBuilder<UserBloc, UserState>(
-          builder: (_, state) => Photo(
-            url: state is CurrentUserUpdated
-                ? state.user.photoUrl
-                : user.photoUrl,
-            size: 40,
-            boxFit: BoxFit.cover,
-            iconColor: Colors.black,
-            iconKey: const ValueKey('user-photoless-icon'),
-          ),
-        ),
-      );
-    }
-
-    return Material(
+    return InkWell(
       borderRadius: BorderRadius.circular(24),
-      clipBehavior: Clip.antiAlias,
       child: Container(
         width: 48,
         height: 60,
-        child: PopupMenuButton(
-          offset: const Offset(0, -115),
-          tooltip: '',
-          child: buildButtonContent(),
-          onSelected: (selectedValue) {
-            if (selectedValue == DropDownOption.profile) {
-              SimpleRouter.forward(
-                UserProfilePageConnected(),
-                name: USER_PROFILE_PAGE,
-              );
-            } else {
-              G<AnalyticsService>().logLogout(user.name);
-              G<SharedPreferencesService>().setUser(null);
-              context.bloc<UserBloc>().add(Logout());
-
-              SimpleRouter.forwardAndRemoveAll(
-                InitialPageConnected(),
-                name: INITIAL_PAGE,
-              );
-            }
-          },
-          itemBuilder: (context) {
-            return <PopupMenuEntry>[
-              PopupMenuItem(
-                height: 48,
-                value: DropDownOption.profile,
-                child: Row(
-                  children: <Widget>[
-                    const SizedBox(width: 8),
-                    FaIcon(
-                      FontAwesomeIcons.userAlt,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 8),
-                    const Text(
-                      PROFILE,
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                height: 48,
-                value: DropDownOption.logout,
-                child: Row(
-                  children: <Widget>[
-                    const SizedBox(width: 8),
-                    FaIcon(
-                      FontAwesomeIcons.signOutAlt,
-                      size: 20,
-                      color: Colors.red[400],
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      LOGOUT,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.red[600],
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                  ],
-                ),
-              )
-            ];
-          },
+        child: Container(
+          key: const ValueKey('profile-image-bottombar'),
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(2),
+          child: BlocBuilder<UserBloc, UserState>(
+            builder: (_, state) => Photo(
+              url: state is CurrentUserUpdated
+                  ? state.user.photoUrl
+                  : user.photoUrl,
+              size: 40,
+              boxFit: BoxFit.cover,
+              iconColor: Colors.black,
+              iconKey: const ValueKey('user-photoless-icon'),
+            ),
+          ),
         ),
+      ),
+      onTap: () => SimpleRouter.forward(
+        UserProfilePageConnected(),
+        name: USER_PROFILE_PAGE,
       ),
     );
   }

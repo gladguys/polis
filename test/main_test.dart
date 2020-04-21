@@ -13,6 +13,10 @@ void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   const channel = MethodChannel('plugins.flutter.io/path_provider');
   channel.setMockMethodCallHandler((methodCall) async => ".");
+  const channel2 = MethodChannel('plugins.flutter.io/firebase_performance');
+  channel2.setMockMethodCallHandler((methodCall) async => true);
+  const channel3 = MethodChannel('plugins.flutter.io/firebase_admob');
+  channel3.setMockMethodCallHandler((methodCall) async => true);
 
   SharedPreferences.setMockInitialValues({
     'USER': null,
