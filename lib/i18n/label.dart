@@ -71,6 +71,7 @@ const PORTION = 'Parcela';
 const TYPE_DOCUMENT_CODE = 'Cód. do tipo de documento';
 const PROVIDER_NAME = 'Nome do fornecedor';
 const SHARE = 'Compartilhar';
+const TRAMITATIONS = 'Tramitações';
 const SAVE = 'Salvar';
 const SAVED = 'Salvo';
 const NEW_ACTIVITIES = 'novas atividades';
