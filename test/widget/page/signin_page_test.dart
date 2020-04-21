@@ -169,6 +169,49 @@ void main() {
       expect(find.text(ERROR_INVALID_CREDENTIALS), findsOneWidget);
     });
 
+    testWidgets('should show error message when reset email failed',
+        (tester) async {
+      final mockSigninBloc = MockSigninBloc();
+      whenListen(
+        mockSigninBloc,
+        Stream<SigninState>.fromIterable(
+            [InitialSignin(), ResetEmailSentFailed()]),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<SigninBloc>(
+            bloc: mockSigninBloc,
+            page: Scaffold(
+              body: SigninPage(),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      expect(find.text(ERROR_SENTING_RESET_PASSWORD_EMAIL), findsOneWidget);
+    });
+
+    testWidgets('should show message when reset email success', (tester) async {
+      final mockSigninBloc = MockSigninBloc();
+      whenListen(
+        mockSigninBloc,
+        Stream<SigninState>.fromIterable(
+            [InitialSignin(), ResetEmailSentSuccess()]),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<SigninBloc>(
+            bloc: mockSigninBloc,
+            page: Scaffold(
+              body: SigninPage(),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      expect(find.text(EMAIL_RESET_SEND), findsOneWidget);
+    });
+
     testWidgets('should show error message when signin auth failed',
         (tester) async {
       final mockSigninBloc = MockSigninBloc();
