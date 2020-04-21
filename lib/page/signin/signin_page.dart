@@ -188,12 +188,11 @@ class _SigninPageState extends State<SigninPage> {
                     context: context,
                     builder: (_) => BlocProvider.value(
                       value: signinBloc,
-                      child: Dialog(
-                        child: Container(
-                          height: 180,
-                          width: 200,
-                          child: ResetPasswordForm(),
+                      child: AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24),
                         ),
+                        content: ResetPasswordForm(),
                       ),
                     ),
                   )

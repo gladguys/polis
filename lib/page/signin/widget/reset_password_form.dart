@@ -24,26 +24,36 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: <Widget>[
-            TextFormField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: EMAIL,
-                labelText: EMAIL,
+    return SingleChildScrollView(
+      child: Form(
+        key: formKey,
+        child: Container(
+          width: 320,
+          child: Column(
+            children: <Widget>[
+              const Text(
+                RECOVER_YOUR_PASSWORD,
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-              validator: Validators.emailValidator,
-              onSaved: (email) => signinBloc.add(SendResetPasswordEmail(email)),
-            ),
-            const SizedBox(height: 18),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                RaisedButton(
+              const SizedBox(height: 24),
+              TextFormField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: EMAIL,
+                ),
+                keyboardType: TextInputType.emailAddress,
+                validator: Validators.emailValidator,
+                onSaved: (email) =>
+                    signinBloc.add(SendResetPasswordEmail(email)),
+              ),
+              const SizedBox(height: 32),
+              Container(
+                width: 160,
+                child: RaisedButton(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
                   onPressed: () {
                     final form = formKey.currentState;
                     if (form.validate()) {
@@ -51,11 +61,14 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                       SimpleRouter.back();
                     }
                   },
-                  child: Text(SEND),
-                )
-              ],
-            )
-          ],
+                  child: Text(
+                    CONFIRM,
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
