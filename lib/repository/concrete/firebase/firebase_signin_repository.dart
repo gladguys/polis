@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../core/abstract/polis_google_auth_provider.dart';
 import '../../../core/exception/exceptions.dart';
+import '../../../enum/auth_provider.dart';
 import '../../../model/models.dart';
 import '../../abstract/signin_repository.dart';
 import 'collection.dart';
@@ -14,14 +16,18 @@ class FirebaseSigninRepository extends SigninRepository {
   FirebaseSigninRepository(
       {@required this.firebaseAuth,
       @required this.firestore,
-      @required this.googleSignin})
+      @required this.googleSignin,
+      @required this.polisGoogleAuthProvider})
       : assert(firebaseAuth != null),
         assert(firestore != null),
-        assert(googleSignin != null);
+        assert(googleSignin != null),
+        assert(polisGoogleAuthProvider != null);
 
   final FirebaseAuth firebaseAuth;
   final Firestore firestore;
   final GoogleSignIn googleSignin;
+  final PolisGoogleAuthProvider polisGoogleAuthProvider;
+
   CollectionReference get userRef => firestore.collection(USERS_COLLECTION);
 
   @override
@@ -63,24 +69,41 @@ class FirebaseSigninRepository extends SigninRepository {
 
   @override
   Future<UserModel> signInWithGoogle() async {
-    final googleSignInAccount = await googleSignin.signIn();
-    if (googleSignInAccount != null) {
-      final userCreatedPreviously =
-          await getUserByEmail(googleSignInAccount.email);
-      if (userCreatedPreviously != null) {
-        return userCreatedPreviously;
-      } else {
-        final userToCreate = UserModel(
-          userId: Uuid().v1(),
-          name: googleSignInAccount.displayName,
-          email: googleSignInAccount.email,
-          photoUrl: googleSignInAccount.photoUrl,
+    try {
+      final googleSignInAccount = await googleSignin.signIn();
+
+      if (googleSignInAccount != null) {
+        final googleSignInAuthentication =
+            await googleSignInAccount.authentication;
+
+        final credential = GoogleAuthProvider.getCredential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
         );
-        await _createUserOnFirestore(userToCreate);
-        return userToCreate;
+
+        await firebaseAuth.signInWithCredential(credential);
+
+        final userCreatedPreviously =
+            await getUserByEmail(googleSignInAccount.email);
+        if (userCreatedPreviously != null) {
+          return userCreatedPreviously;
+        } else {
+          final userToCreate = UserModel(
+            userId: Uuid().v1(),
+            name: googleSignInAccount.displayName,
+            email: googleSignInAccount.email,
+            photoUrl: googleSignInAccount.photoUrl,
+            isFirstLoginDone: false,
+            authProvider: AuthProvider.google,
+          );
+          await _createUserOnFirestore(userToCreate);
+          return userToCreate;
+        }
+      } else {
+        throw GoogleSigninException();
       }
-    } else {
-      throw GoogleSigninException();
+    } on Exception {
+      throw ComunicationException();
     }
   }
 
