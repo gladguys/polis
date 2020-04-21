@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:image_test_utils/image_test_utils.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/enum/auth_provider.dart';
 import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
@@ -199,18 +200,29 @@ void main() {
       ).called(1);
     });
 
-    testWidgets('should go to ChangePasswordPage when click btn',
+    testWidgets(
+        '''should go to ChangePasswordPage when user is not from google and click btn''',
         (tester) async {
+      final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.user).thenReturn(
+        UserModel(
+          userId: '1',
+          authProvider: AuthProvider.emailAndPassword,
+        ),
+      );
       final mockEditProfileBloc = MockEditProfileBloc();
       final mockPolisImagePicker = MockPolisImagePicker();
       when(mockPolisImagePicker.getImage())
           .thenAnswer((_) => Future.value(File('assets/images/google.png')));
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<EditProfileBloc>(
-            bloc: mockEditProfileBloc,
-            page: EditProfilePage(
-              imagePicker: MockPolisImagePicker(),
+          PageConnected<UserBloc>(
+            bloc: mockUserBloc,
+            page: PageConnected<EditProfileBloc>(
+              bloc: mockEditProfileBloc,
+              page: EditProfilePage(
+                imagePicker: MockPolisImagePicker(),
+              ),
             ),
           ),
         ),
@@ -220,6 +232,37 @@ void main() {
       await tester.tap(changePasswordButton);
       await tester.pumpAndSettle();
       expect(find.byType(ChangePasswordPage), findsOneWidget);
+    });
+
+    testWidgets(
+        '''ChangePassword button should not appear when user from google''',
+        (tester) async {
+      final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.user).thenReturn(
+        UserModel(
+          userId: '1',
+          authProvider: AuthProvider.google,
+        ),
+      );
+      final mockEditProfileBloc = MockEditProfileBloc();
+      final mockPolisImagePicker = MockPolisImagePicker();
+      when(mockPolisImagePicker.getImage())
+          .thenAnswer((_) => Future.value(File('assets/images/google.png')));
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<UserBloc>(
+            bloc: mockUserBloc,
+            page: PageConnected<EditProfileBloc>(
+              bloc: mockEditProfileBloc,
+              page: EditProfilePage(
+                imagePicker: MockPolisImagePicker(),
+              ),
+            ),
+          ),
+        ),
+      );
+      final changePasswordButton = find.text(CHANGE_PASSWORD);
+      expect(changePasswordButton, findsNothing);
     });
   });
 }
