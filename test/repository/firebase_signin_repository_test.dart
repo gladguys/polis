@@ -13,6 +13,9 @@ void main() {
     MockFirebaseAuth mockFirebaseAuth;
     MockFirestore mockFirestore;
     MockGoogleSignin mockGoogleSignin;
+    MockGoogleSignInAuthentication mockGoogleSignInAuthentication;
+    MockPolisGoogleAuthProvider mockPolisGoogleAuthProvider;
+    MockAuthCredential mockAuthCredential;
     MockQuery mockQuery;
     MockQuerySnapshot mockQuerySnapshot;
     MockGoogleSignInAccount mockGoogleSignInAccount;
@@ -27,12 +30,16 @@ void main() {
       mockFirestore = MockFirestore();
       mockGoogleSignin = MockGoogleSignin();
       mockGoogleSignInAccount = MockGoogleSignInAccount();
+      mockGoogleSignInAuthentication = MockGoogleSignInAuthentication();
+      mockPolisGoogleAuthProvider = MockPolisGoogleAuthProvider();
+      mockAuthCredential = MockAuthCredential();
       mockQuery = MockQuery();
       mockQuerySnapshot = MockQuerySnapshot();
       firebaseSigninRepository = FirebaseSigninRepository(
         firebaseAuth: mockFirebaseAuth,
         firestore: mockFirestore,
         googleSignin: mockGoogleSignin,
+        polisGoogleAuthProvider: mockPolisGoogleAuthProvider,
       );
       mockAuthResult = MockAuthResult();
       mockFirebaseUser = MockFirebaseUser();
@@ -47,6 +54,7 @@ void main() {
                 firebaseAuth: null,
                 firestore: mockFirestore,
                 googleSignin: mockGoogleSignin,
+                polisGoogleAuthProvider: mockPolisGoogleAuthProvider,
               ),
           throwsAssertionError);
       expect(
@@ -54,6 +62,7 @@ void main() {
                 firebaseAuth: mockFirebaseAuth,
                 firestore: null,
                 googleSignin: mockGoogleSignin,
+                polisGoogleAuthProvider: mockPolisGoogleAuthProvider,
               ),
           throwsAssertionError);
       expect(
@@ -61,6 +70,15 @@ void main() {
                 firebaseAuth: mockFirebaseAuth,
                 firestore: mockFirestore,
                 googleSignin: null,
+                polisGoogleAuthProvider: mockPolisGoogleAuthProvider,
+              ),
+          throwsAssertionError);
+      expect(
+          () => FirebaseSigninRepository(
+                firebaseAuth: mockFirebaseAuth,
+                firestore: mockFirestore,
+                googleSignin: mockGoogleSignin,
+                polisGoogleAuthProvider: null,
               ),
           throwsAssertionError);
     });
@@ -140,6 +158,21 @@ void main() {
         });
       });
 
+      test(
+          '''throw InvalidCredentialsException when auth fails and contains ERROR_WRONG_PASSWORD''',
+          () async {
+        when(mockFirebaseAuth.signInWithEmailAndPassword(
+                email: 'email', password: 'password'))
+            .thenThrow(PlatformException(code: 'ERROR_WRONG_PASSWORD'));
+
+        firebaseSigninRepository
+            .signInWithEmailAndPassword('email', 'password')
+            .then((_) {})
+            .catchError((e) {
+          expect(e, isInstanceOf<InvalidCredentialsException>());
+        });
+      });
+
       test('throw ComunicationException when firestore mess up', () async {
         when(mockFirebaseAuth.signInWithEmailAndPassword(
                 email: 'email', password: 'password'))
@@ -162,6 +195,16 @@ void main() {
         test('return UserModel when user exists', () async {
           when(mockGoogleSignin.signIn())
               .thenAnswer((_) => Future.value(mockGoogleSignInAccount));
+          when(mockGoogleSignInAccount.authentication)
+              .thenAnswer((_) => Future.value(mockGoogleSignInAuthentication));
+          when(mockGoogleSignInAuthentication.accessToken)
+              .thenReturn('acesss-token');
+          when(mockGoogleSignInAuthentication.idToken).thenReturn('id-token');
+          when(mockPolisGoogleAuthProvider.getCredential(
+                  accessToken: 'acesss-token', idToken: 'id-token'))
+              .thenReturn(mockAuthCredential);
+          when(mockFirebaseAuth.signInWithCredential(mockAuthCredential))
+              .thenAnswer((_) => Future.value());
           when(mockGoogleSignInAccount.email).thenReturn('test@gmail.com');
           when(mockFirestore.collection(USERS_COLLECTION))
               .thenReturn(mockCollectionReference);
@@ -182,6 +225,16 @@ void main() {
             () async {
           when(mockGoogleSignin.signIn())
               .thenAnswer((_) => Future.value(mockGoogleSignInAccount));
+          when(mockGoogleSignInAccount.authentication)
+              .thenAnswer((_) => Future.value(mockGoogleSignInAuthentication));
+          when(mockGoogleSignInAuthentication.accessToken)
+              .thenReturn('acesss-token');
+          when(mockGoogleSignInAuthentication.idToken).thenReturn('id-token');
+          when(mockPolisGoogleAuthProvider.getCredential(
+                  accessToken: 'acesss-token', idToken: 'id-token'))
+              .thenReturn(mockAuthCredential);
+          when(mockFirebaseAuth.signInWithCredential(mockAuthCredential))
+              .thenAnswer((_) => Future.value());
           when(mockGoogleSignInAccount.email).thenReturn('test@gmail.com');
           when(mockFirestore.collection(USERS_COLLECTION))
               .thenReturn(mockCollectionReference);
@@ -204,6 +257,16 @@ void main() {
             () async {
           when(mockGoogleSignin.signIn())
               .thenAnswer((_) => Future.value(mockGoogleSignInAccount));
+          when(mockGoogleSignInAccount.authentication)
+              .thenAnswer((_) => Future.value(mockGoogleSignInAuthentication));
+          when(mockGoogleSignInAuthentication.accessToken)
+              .thenReturn('acesss-token');
+          when(mockGoogleSignInAuthentication.idToken).thenReturn('id-token');
+          when(mockPolisGoogleAuthProvider.getCredential(
+                  accessToken: 'acesss-token', idToken: 'id-token'))
+              .thenReturn(mockAuthCredential);
+          when(mockFirebaseAuth.signInWithCredential(mockAuthCredential))
+              .thenAnswer((_) => Future.value());
           when(mockGoogleSignInAccount.email).thenReturn('test@gmail.com');
           when(mockFirestore.collection(USERS_COLLECTION))
               .thenReturn(mockCollectionReference);
@@ -218,6 +281,16 @@ void main() {
             () async {
           when(mockGoogleSignin.signIn())
               .thenAnswer((_) => Future.value(mockGoogleSignInAccount));
+          when(mockGoogleSignInAccount.authentication)
+              .thenAnswer((_) => Future.value(mockGoogleSignInAuthentication));
+          when(mockGoogleSignInAuthentication.accessToken)
+              .thenReturn('acesss-token');
+          when(mockGoogleSignInAuthentication.idToken).thenReturn('id-token');
+          when(mockPolisGoogleAuthProvider.getCredential(
+                  accessToken: 'acesss-token', idToken: 'id-token'))
+              .thenReturn(mockAuthCredential);
+          when(mockFirebaseAuth.signInWithCredential(mockAuthCredential))
+              .thenAnswer((_) => Future.value());
           when(mockGoogleSignInAccount.email).thenReturn('test@gmail.com');
           when(mockFirestore.collection(USERS_COLLECTION))
               .thenReturn(mockCollectionReference);
@@ -237,7 +310,7 @@ void main() {
         test('throw GoogleSigninException when trying to login fail', () async {
           when(mockGoogleSignin.signIn()).thenAnswer((_) => Future.value(null));
           firebaseSigninRepository.signInWithGoogle().catchError(
-              (e) => expect(e, isInstanceOf<GoogleSigninException>()));
+              (e) => expect(e, isInstanceOf<ComunicationException>()));
         });
       });
     });
