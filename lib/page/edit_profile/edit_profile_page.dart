@@ -8,6 +8,7 @@ import 'package:simple_router/simple_router.dart';
 import '../../bloc/blocs.dart';
 import '../../core/abstract/polis_image_picker.dart';
 import '../../core/routing/route_names.dart';
+import '../../enum/auth_provider.dart';
 import '../../i18n/i18n.dart';
 import '../../model/models.dart';
 import '../../widget/centered_loading.dart';
@@ -99,7 +100,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           formState.save();
                           editProfileBloc.add(
                             UpdateUserInfo(
-                              currentUser: context.bloc<UserBloc>().user,
+                              currentUser: user,
                               name: _name,
                               email: _email,
                               pickedPhoto: pickedPhoto,
@@ -110,20 +111,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  Container(
-                    height: 40,
-                    width: 220,
-                    child: OutlineButton.icon(
-                      padding: EdgeInsets.zero,
-                      icon: Icon(Icons.lock, size: 18),
-                      label: const Text(CHANGE_PASSWORD),
-                      highlightedBorderColor: Colors.grey,
-                      onPressed: () => SimpleRouter.forward(
-                        ChangePasswordPageConnected(),
-                        name: CHANGE_PASSWORD_PAGE,
-                      ),
-                    ),
-                  ),
+                  user.authProvider == AuthProvider.emailAndPassword
+                      ? Container(
+                          height: 40,
+                          width: 220,
+                          child: OutlineButton.icon(
+                            padding: EdgeInsets.zero,
+                            icon: Icon(Icons.lock, size: 18),
+                            label: const Text(CHANGE_PASSWORD),
+                            highlightedBorderColor: Colors.grey,
+                            onPressed: () => SimpleRouter.forward(
+                              ChangePasswordPageConnected(),
+                              name: CHANGE_PASSWORD_PAGE,
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
                 ],
               );
             }

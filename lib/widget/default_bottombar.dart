@@ -142,8 +142,10 @@ class DefaultBottombar extends StatelessWidget {
             } else {
               G<AnalyticsService>().logLogout(user.name);
               G<SharedPreferencesService>().setUser(null);
+              context.bloc<UserBloc>().add(Logout());
+
               SimpleRouter.forwardAndRemoveAll(
-                InitialPage(),
+                InitialPageConnected(),
                 name: INITIAL_PAGE,
               );
             }
