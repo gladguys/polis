@@ -140,8 +140,8 @@ class _TimelineState extends State<Timeline> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const TextSpan(
-                text: ' $NEW_ACTIVITIES',
+              TextSpan(
+                text: updatesCount > 1 ? ' $NEW_ACTIVITIES' : ' $NEW_ACTIVITY',
               ),
             ],
           ),
