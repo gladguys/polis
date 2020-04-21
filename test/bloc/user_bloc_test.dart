@@ -13,16 +13,54 @@ void main() {
   group('UserBloc tests', () {
     UserBloc userBloc;
     MockUserRepository mockUserRepository;
+    MockAnalyticsService mockAnalyticsService;
+    MockSharedPreferencesService mockSharedPreferencesService;
 
     setUp(() {
       mockUserRepository = MockUserRepository();
-      userBloc = UserBloc(user: user, repository: mockUserRepository);
+      mockAnalyticsService = MockAnalyticsService();
+      mockSharedPreferencesService = MockSharedPreferencesService();
+      mockUserRepository = MockUserRepository();
+      userBloc = UserBloc(
+        user: user,
+        repository: mockUserRepository,
+        analyticsService: mockAnalyticsService,
+        sharedPreferencesService: mockSharedPreferencesService,
+      );
     });
 
     test('test asserts', () {
-      expect(() => UserBloc(user: UserModel(), repository: null),
+      expect(
+          () => UserBloc(
+                user: UserModel(),
+                repository: null,
+                analyticsService: mockAnalyticsService,
+                sharedPreferencesService: mockSharedPreferencesService,
+              ),
           throwsAssertionError);
-      expect(() => UserBloc(repository: mockUserRepository, user: null),
+      expect(
+          () => UserBloc(
+                repository: mockUserRepository,
+                user: null,
+                analyticsService: mockAnalyticsService,
+                sharedPreferencesService: mockSharedPreferencesService,
+              ),
+          throwsAssertionError);
+      expect(
+          () => UserBloc(
+                repository: mockUserRepository,
+                user: UserModel(),
+                analyticsService: null,
+                sharedPreferencesService: mockSharedPreferencesService,
+              ),
+          throwsAssertionError);
+      expect(
+          () => UserBloc(
+                repository: mockUserRepository,
+                user: UserModel(),
+                analyticsService: mockAnalyticsService,
+                sharedPreferencesService: null,
+              ),
           throwsAssertionError);
     });
 
@@ -31,8 +69,7 @@ void main() {
     });
 
     blocTest(
-      'Expects [SignoutLoading, SignoutSucceded] when Logout'
-      'added',
+      '''Expects to logout user, send analytics metrics and set shared preferences user to null when Logout added''',
       build: () async {
         when(mockUserRepository.signOut()).thenAnswer((_) => Future.value());
         return userBloc;
@@ -43,6 +80,8 @@ void main() {
       },
       verify: (userBloc) async {
         verify(mockUserRepository.signOut()).called(1);
+        verify(mockAnalyticsService.logLogout(any)).called(1);
+        verify(mockSharedPreferencesService.setUser(null)).called(1);
       },
       expect: [
         SignoutLoading(),
