@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:simple_router/simple_router.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
 import '../../../bloc/user/user_bloc.dart';
+import '../../../core/routing/route_names.dart';
+import '../../../core/service/locator.dart';
+import '../../../core/service/services.dart';
 import '../../../i18n/label.dart';
 import '../../../model/models.dart';
 import '../../../widget/text_title.dart';
+import '../../initial/initial_page.dart';
 import '../../theme/main_theme.dart';
 import 'personal_user_info.dart';
 import 'politics_following_quantity.dart';
@@ -92,10 +98,43 @@ class _UserProfileState extends State<UserProfile> {
   Widget _buildBody(BuildContext context) {
     return Column(
       children: <Widget>[
-        const SizedBox(height: 16),
+        const SizedBox(height: 8),
+        _buildLogoutButton(),
         PersonalUserInfo(user: context.bloc<UserBloc>().user),
         const SizedBox(height: 16),
         PoliticsFollowingQuantity(politics: widget.politicsFollowing),
+      ],
+    );
+  }
+
+  Widget _buildLogoutButton() {
+    final user = context.bloc<UserBloc>().user;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Container(
+          height: 30,
+          child: OutlineButton.icon(
+            padding: EdgeInsets.zero,
+            label: Text(LOGOUT.toUpperCase()),
+            icon: FaIcon(
+              FontAwesomeIcons.signOutAlt,
+              size: 18,
+            ),
+            color: Colors.red,
+            textColor: Colors.red,
+            highlightedBorderColor: Colors.red,
+            onPressed: () {
+              G<AnalyticsService>().logLogout(user.name);
+              G<SharedPreferencesService>().setUser(null);
+              SimpleRouter.forwardAndRemoveAll(
+                InitialPage(),
+                name: INITIAL_PAGE,
+              );
+            },
+          ),
+        ),
+        const SizedBox(width: 8),
       ],
     );
   }
