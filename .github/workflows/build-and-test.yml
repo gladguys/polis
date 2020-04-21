@@ -25,4 +25,4 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         with:
           token: ${{secrets.CODECOV_TOKEN}}
-          file: ./coverage/lcov.info
+          file: ./coverage/lcov.info 
