@@ -1,11 +1,16 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
+import '../../model/models.dart';
 import '../../repository/abstract/edit_profile_repository.dart';
 import '../blocs.dart';
-import 'bloc.dart';
+
+part 'edit_profile_event.dart';
+part 'edit_profile_state.dart';
 
 class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
   EditProfileBloc({@required this.repository, @required this.userBloc})

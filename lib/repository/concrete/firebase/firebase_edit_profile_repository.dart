@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../core/exception/exceptions.dart';
 import '../../../model/user_model.dart';
 import '../../abstract/edit_profile_repository.dart';
-import 'collection.dart';
+import 'firebase.dart';
 
 class FirebaseEditProfileRepository implements EditProfileRepository {
   FirebaseEditProfileRepository(

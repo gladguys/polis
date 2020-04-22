@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-
-import '../../model/models.dart';
+part of 'politic_followers_bloc.dart';
 
 abstract class PoliticFollowersState extends Equatable {
   const PoliticFollowersState();

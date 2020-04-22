@@ -1,11 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import './bloc.dart';
 import '../../core/exception/exceptions.dart';
 import '../../repository/abstract/change_password_repository.dart';
+
+part 'change_password_event.dart';
+part 'change_password_state.dart';
 
 class ChangePasswordBloc
     extends Bloc<ChangePasswordEvent, ChangePasswordState> {

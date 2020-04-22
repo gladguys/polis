@@ -1,8 +1,4 @@
-import 'dart:io';
-
-import 'package:equatable/equatable.dart';
-
-import '../../model/models.dart';
+part of 'edit_profile_bloc.dart';
 
 abstract class EditProfileEvent extends Equatable {
   const EditProfileEvent();

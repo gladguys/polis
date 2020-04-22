@@ -7,7 +7,7 @@ import 'package:uuid/uuid.dart';
 import '../../../core/exception/exceptions.dart';
 import '../../../model/models.dart';
 import '../../abstract/signin_repository.dart';
-import 'collection.dart';
+import 'firebase.dart';
 import 'firebase_error_constants.dart';
 
 class FirebaseSigninRepository extends SigninRepository {

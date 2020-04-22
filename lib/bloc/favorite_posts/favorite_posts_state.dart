@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+part of 'favorite_posts_bloc.dart';
 
 abstract class FavoritePostsState extends Equatable {
   const FavoritePostsState();

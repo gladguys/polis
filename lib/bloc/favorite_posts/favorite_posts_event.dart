@@ -1,5 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+part of 'favorite_posts_bloc.dart';
 
 abstract class FavoritePostsEvent extends Equatable {
   const FavoritePostsEvent();

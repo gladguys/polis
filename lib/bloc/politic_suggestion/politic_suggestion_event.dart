@@ -1,7 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
-
-import '../../model/models.dart';
+part of 'politic_suggestion_bloc.dart';
 
 abstract class PoliticSuggestionEvent extends Equatable {
   const PoliticSuggestionEvent();

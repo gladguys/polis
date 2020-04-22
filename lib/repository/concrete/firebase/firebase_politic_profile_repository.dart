@@ -6,7 +6,7 @@ import '../../../core/exception/exceptions.dart';
 import '../../../model/models.dart';
 import '../../abstract/politic_profile_repository.dart';
 import '../../utils.dart';
-import 'collection.dart';
+import 'firebase.dart';
 
 class FirebasePoliticProfileRepository implements PoliticProfileRepository {
   FirebasePoliticProfileRepository({@required this.firestore})

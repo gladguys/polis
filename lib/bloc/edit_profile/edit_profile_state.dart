@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+part of 'edit_profile_bloc.dart';
 
 abstract class EditProfileState extends Equatable {
   const EditProfileState();
