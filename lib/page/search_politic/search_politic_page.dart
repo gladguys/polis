@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
-import '../../bloc/search_politic/bloc.dart';
 import '../../core/routing/route_names.dart';
 import '../../widget/default_bottombar.dart';
 import 'widgets/search_politic_skeleton.dart';

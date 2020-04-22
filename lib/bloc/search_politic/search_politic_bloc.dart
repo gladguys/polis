@@ -2,14 +2,17 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:diacritic/diacritic.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import './bloc.dart';
 import '../../core/service/services.dart';
 import '../../model/models.dart';
 import '../../repository/abstract/follow_repository.dart';
 import '../../repository/abstract/user_following_politics_repository.dart';
 import '../blocs.dart';
+
+part 'search_politic_event.dart';
+part 'search_politic_state.dart';
 
 class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
   SearchPoliticBloc({

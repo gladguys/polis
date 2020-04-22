@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../core/exception/exceptions.dart';
 import '../../../model/models.dart';
 import '../../abstract/partido_repository.dart';
-import 'collection.dart';
+import 'firebase.dart';
 
 class FirebasePartidoRepository implements PartidoRepository {
   FirebasePartidoRepository({@required this.firestore})

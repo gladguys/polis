@@ -1,11 +1,16 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import './bloc.dart';
 import '../../core/service/services.dart';
+import '../../model/models.dart';
 import '../../repository/abstract/post_repository.dart';
+
+part 'post_event.dart';
+part 'post_state.dart';
 
 class PostBloc extends Bloc<PostEvent, PostState> {
   PostBloc(

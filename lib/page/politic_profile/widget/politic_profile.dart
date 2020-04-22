@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
-import '../../../bloc/politic_profile/politic_profile_bloc.dart';
-import '../../../bloc/politic_profile/politic_profile_state.dart';
+import '../../../bloc/blocs.dart';
 import '../../../i18n/label.dart';
 import '../../../widget/text_title.dart';
 import '../../theme/main_theme.dart';

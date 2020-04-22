@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:polis/bloc/politic_followers/bloc.dart';
+import 'package:polis/bloc/blocs.dart';
 
 void main() {
   group('PoliticFollowersState tests', () {

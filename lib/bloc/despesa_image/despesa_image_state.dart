@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+part of 'despesa_image_bloc.dart';
 
 abstract class DespesaImageState extends Equatable {
   const DespesaImageState();

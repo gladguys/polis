@@ -6,7 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../../../core/exception/exceptions.dart';
 import '../../../model/models.dart';
 import '../../abstract/user_repository.dart';
-import 'collection.dart';
+import 'firebase.dart';
 
 class FirebaseUserRepository implements UserRepository {
   FirebaseUserRepository(

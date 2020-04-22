@@ -5,7 +5,7 @@ import '../../../core/exception/exceptions.dart';
 import '../../../model/models.dart';
 import '../../abstract/favorite_posts_repository.dart';
 import '../../utils.dart';
-import 'collection.dart';
+import 'firebase.dart';
 
 class FirebaseFavoritePostsRepository implements FavoritePostsRepository {
   FirebaseFavoritePostsRepository({@required this.firestore})

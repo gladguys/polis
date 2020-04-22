@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../bloc/user_following_politics/bloc.dart';
+import '../../../bloc/blocs.dart';
 import '../../../i18n/label.dart';
 import '../../../model/models.dart';
 import '../../../widget/field_rounded.dart';

@@ -1,5 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
+part of 'timeline_bloc.dart';
 
 abstract class TimelineState extends Equatable {
   const TimelineState();
