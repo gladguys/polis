@@ -1,11 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import './bloc.dart';
 import '../../model/models.dart';
 import '../../repository/abstract/user_profile_repository.dart';
+
+part 'user_profile_event.dart';
+part 'user_profile_state.dart';
 
 class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   UserProfileBloc({@required this.repository}) : assert(repository != null);

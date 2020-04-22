@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../core/exception/exceptions.dart';
 import '../../../model/usuario_seguindo_politico_model.dart';
 import '../../abstract/politic_followers_repository.dart';
-import 'collection.dart';
+import 'firebase.dart';
 
 class FirebasePoliticFollowersRepository implements PoliticFollowersRepository {
   FirebasePoliticFollowersRepository({@required this.firestore})

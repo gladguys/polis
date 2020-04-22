@@ -6,7 +6,7 @@ import '../../../core/exception/exceptions.dart';
 import '../../../model/models.dart';
 import '../../abstract/timeline_repository.dart';
 import '../../utils.dart';
-import 'collection.dart';
+import 'firebase.dart';
 
 class FirebaseTimelineRepository implements TimelineRepository {
   FirebaseTimelineRepository({@required this.firestore})

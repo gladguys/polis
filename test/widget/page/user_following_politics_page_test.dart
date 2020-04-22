@@ -39,6 +39,8 @@ void main() {
               user: UserModel(
                 userId: '1',
               ),
+              analyticsService: MockAnalyticsService(),
+              sharedPreferencesService: MockSharedPreferencesService(),
             ),
             child: UserFollowingPoliticsPageConnected(),
           ),
@@ -69,6 +71,8 @@ void main() {
               user: UserModel(
                 userId: '1',
               ),
+              analyticsService: MockAnalyticsService(),
+              sharedPreferencesService: MockSharedPreferencesService(),
             ),
             child: PageConnected<UserFollowingPoliticsBloc>(
               bloc: mockUserFollowingPoliticsBloc,
@@ -102,6 +106,8 @@ void main() {
               user: UserModel(
                 userId: '1',
               ),
+              analyticsService: MockAnalyticsService(),
+              sharedPreferencesService: MockSharedPreferencesService(),
             ),
             child: PageConnected<UserFollowingPoliticsBloc>(
               bloc: mockUserFollowingPoliticsBloc,
@@ -133,6 +139,8 @@ void main() {
               user: UserModel(
                 userId: '1',
               ),
+              analyticsService: MockAnalyticsService(),
+              sharedPreferencesService: MockSharedPreferencesService(),
             ),
             child: PageConnected<UserFollowingPoliticsBloc>(
               bloc: mockUserFollowingPoliticsBloc,
@@ -161,6 +169,8 @@ void main() {
               user: UserModel(
                 userId: '1',
               ),
+              analyticsService: MockAnalyticsService(),
+              sharedPreferencesService: MockSharedPreferencesService(),
             ),
             child: PageConnected<UserFollowingPoliticsBloc>(
               bloc: mockUserFollowingPoliticsBloc,
@@ -199,6 +209,8 @@ void main() {
               user: UserModel(
                 userId: '1',
               ),
+              analyticsService: MockAnalyticsService(),
+              sharedPreferencesService: MockSharedPreferencesService(),
             ),
             child: PageConnected<UserFollowingPoliticsBloc>(
               bloc: mockUserFollowingPoliticsBloc,
@@ -221,6 +233,8 @@ void main() {
               user: UserModel(
                 userId: '1',
               ),
+              analyticsService: MockAnalyticsService(),
+              sharedPreferencesService: MockSharedPreferencesService(),
             ),
             child: PageConnected<UserFollowingPoliticsBloc>(
               bloc: mockUserFollowingPoliticsBloc,
@@ -248,6 +262,8 @@ void main() {
               user: UserModel(
                 userId: '1',
               ),
+              analyticsService: MockAnalyticsService(),
+              sharedPreferencesService: MockSharedPreferencesService(),
             ),
             child: PageConnected<UserFollowingPoliticsBloc>(
               bloc: mockUserFollowingPoliticsBloc,
@@ -275,6 +291,8 @@ void main() {
               user: UserModel(
                 userId: '1',
               ),
+              analyticsService: MockAnalyticsService(),
+              sharedPreferencesService: MockSharedPreferencesService(),
             ),
             child: PageConnected<UserFollowingPoliticsBloc>(
               bloc: mockUserFollowingPoliticsBloc,

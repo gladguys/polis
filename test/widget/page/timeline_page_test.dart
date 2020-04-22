@@ -5,10 +5,12 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/service/locator.dart';
+import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
 import 'package:polis/page/timeline/widget/timeline.dart';
+import 'package:polis/widget/text_rich.dart';
 import 'package:polis/widget/tile/despesa_tile.dart';
 
 import '../../mock.dart';
@@ -150,6 +152,63 @@ void main() {
       expect(updateTimelineButtonn, findsOneWidget);
       await tester.tap(updateTimelineButtonn);
       verify(mockTimelineBloc.add(ReloadTimeline('1'))).called(1);
+    });
+
+    testWidgets(
+        '''shoud build Timeline with string activity when only one update is pending''',
+        (tester) async {
+      final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.user).thenReturn(UserModel(userId: '1'));
+      final mockTimelineBloc = MockTimelineBloc();
+      when(mockTimelineBloc.state).thenReturn(
+        TimelineUpdated(
+          activities: [
+            DespesaModel(
+              numDocumento: '1',
+              fotoPolitico: 'foto',
+              nomePolitico: 'politico 1',
+              nomeFornecedor: 'fornecedor 1',
+              tipoAtividade: 'tipoAtividade1',
+              tipoDespesa: 'tipoDespesa1',
+              valorLiquido: '10.00',
+              dataDocumento: '10-01-2020',
+            ),
+          ],
+          postsCount: 1,
+          updatesCount: 1,
+        ),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<UserBloc>(
+            bloc: mockUserBloc,
+            page: PageConnected<TimelineBloc>(
+              bloc: mockTimelineBloc,
+              page: TimelinePage(),
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byType(DespesaTile), findsNWidgets(1));
+      final timeline = find.byType(Timeline);
+      expect(timeline, findsOneWidget);
+      tester.ensureVisible(timeline);
+      final updateTimelineButtonn =
+          find.byKey(const ValueKey('update-timeline-btn'));
+      expect(updateTimelineButtonn, findsOneWidget);
+      expect(find.byWidgetPredicate((widget) {
+        if (widget is TextRich) {
+          final spans = widget.children;
+          for (var span in spans) {
+            final textSpan = span as TextSpan;
+            if (textSpan.text.contains(NEW_ACTIVITY)) {
+              return true;
+            }
+          }
+        }
+        return false;
+      }), findsOneWidget);
     });
 
     testWidgets('should bring more posts on swipe down', (tester) async {

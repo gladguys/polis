@@ -2,11 +2,14 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import './bloc.dart';
 import '../../core/constants.dart';
 import '../../repository/abstract/timeline_repository.dart';
+
+part 'timeline_event.dart';
+part 'timeline_state.dart';
 
 class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
   TimelineBloc({@required this.repository}) : assert(repository != null);

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../core/exception/exceptions.dart';
 import '../../../model/models.dart';
 import '../../abstract/signup_repository.dart';
-import 'collection.dart';
+import 'firebase.dart';
 import 'firebase_error_constants.dart';
 
 class FirebaseSignupRepository extends SignupRepository {

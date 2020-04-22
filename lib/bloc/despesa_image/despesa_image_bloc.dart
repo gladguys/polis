@@ -1,10 +1,13 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import './bloc.dart';
 import '../../core/service/services.dart';
+
+part 'despesa_image_event.dart';
+part 'despesa_image_state.dart';
 
 class DespesaImageBloc extends Bloc<DespesaImageEvent, DespesaImageState> {
   DespesaImageBloc({@required this.urlLaunchService})

@@ -76,6 +76,7 @@ const TRAMITATIONS = 'Tramitações';
 const SAVE = 'Salvar';
 const SAVED = 'Salvo';
 const NEW_ACTIVITIES = 'novas atividades';
+const NEW_ACTIVITY = 'nova atividade';
 const STARTED_FOLLOWING = 'Comecei a seguir';
 const STOPPED_FOLLOWING = 'Deixei de seguir';
 const THE_POLITIC = 'o Deputado Federal';

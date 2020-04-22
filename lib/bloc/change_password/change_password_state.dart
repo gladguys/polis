@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+part of 'change_password_bloc.dart';
 
 abstract class ChangePasswordState extends Equatable {
   const ChangePasswordState();

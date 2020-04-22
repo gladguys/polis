@@ -20,6 +20,8 @@ void main() {
               value: UserBloc(
                 user: UserModel(userId: '1'),
                 repository: MockUserRepository(),
+                analyticsService: MockAnalyticsService(),
+                sharedPreferencesService: MockSharedPreferencesService(),
               ),
               child: PoliticsFollowingQuantity(
                 politics: [],

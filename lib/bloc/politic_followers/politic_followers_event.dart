@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+part of 'politic_followers_bloc.dart';
 
 abstract class PoliticFollowersEvent extends Equatable {
   const PoliticFollowersEvent();

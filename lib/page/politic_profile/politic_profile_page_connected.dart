@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
-import '../../bloc/politic_profile/politic_profile_bloc.dart';
-import '../../bloc/politic_profile/politic_profile_event.dart';
 import '../../core/service/locator.dart';
 import '../../core/service/services.dart';
 import '../../repository/concrete/repositories.dart';

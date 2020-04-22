@@ -1,7 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
-
-import '../../model/models.dart';
+part of 'user_profile_bloc.dart';
 
 abstract class UserProfileState extends Equatable {
   const UserProfileState();

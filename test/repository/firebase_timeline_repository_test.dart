@@ -4,7 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:polis/core/constants.dart';
 import 'package:polis/core/exception/exceptions.dart';
 import 'package:polis/model/models.dart';
-import 'package:polis/repository/concrete/firebase/collection.dart';
+import 'package:polis/repository/concrete/firebase/firebase.dart';
 import 'package:polis/repository/concrete/repositories.dart';
 
 import '../mock.dart';

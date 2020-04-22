@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/exception/exceptions.dart';
 import '../../abstract/sync_log_repository.dart';
-import 'collection.dart';
+import 'firebase.dart';
 
 class FirebaseSyncLogRepository implements SyncLogRepository {
   FirebaseSyncLogRepository({@required this.firestore})

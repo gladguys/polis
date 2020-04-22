@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../bloc/user_following_politics/bloc.dart';
+import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
 import '../../widget/default_bottombar.dart';
 import '../pages.dart';
