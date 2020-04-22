@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import './bloc.dart';
 import '../../model/models.dart';
 import '../../repository/abstract/tramitacao_proposta_repository.dart';
-import 'bloc.dart';
+
+part 'tramitacao_proposta_event.dart';
+part 'tramitacao_proposta_state.dart';
 
 class TramitacaoPropostaBloc
     extends Bloc<TramitacaoPropostaEvent, TramitacaoPropostaState> {

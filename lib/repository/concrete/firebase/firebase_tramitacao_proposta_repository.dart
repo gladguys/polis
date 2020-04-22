@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../core/exception/exceptions.dart';
 import '../../../model/tramitacao_proposta_model.dart';
 import '../../abstract/tramitacao_proposta_repository.dart';
-import 'collection.dart';
+import 'firebase.dart';
 
 class FirebaseTramitacaoPropostaRepository
     implements TramitacaoPropostaRepository {
