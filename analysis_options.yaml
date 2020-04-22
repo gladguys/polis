@@ -8,3 +8,7 @@ linter:
     directives_ordering: false
     prefer_const_constructors: true
     type_annotate_public_apis: false
+
+analyzer:
+  errors:
+    prefer_const_constructors: error
