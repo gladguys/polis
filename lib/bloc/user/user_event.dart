@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-
-import '../../model/models.dart';
+part of 'user_bloc.dart';
 
 abstract class UserEvent extends Equatable {
   const UserEvent();
@@ -18,4 +16,13 @@ class StoreUser extends UserEvent {
 class Logout extends UserEvent {
   @override
   List<Object> get props => [];
+}
+
+class UpdateCurrentUser extends UserEvent {
+  UpdateCurrentUser(this.user);
+
+  final UserModel user;
+
+  @override
+  List<Object> get props => [user];
 }

@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/core/exception/exceptions.dart';
-import 'package:polis/repository/concrete/firebase/collection.dart';
+import 'package:polis/repository/concrete/firebase/firebase.dart';
 import 'package:polis/repository/concrete/repositories.dart';
 
 import '../mock.dart';
@@ -71,6 +71,7 @@ void main() {
                 email: 'email', password: 'password'))
             .thenAnswer((_) => Future.value(mockAuthResult));
         when(mockAuthResult.user).thenReturn(mockFirebaseUser);
+        when(mockFirebaseUser.isEmailVerified).thenReturn(true);
         when(mockFirebaseUser.uid).thenReturn('1');
         when(mockFirestore.collection(USERS_COLLECTION))
             .thenReturn(mockCollectionReference);
@@ -93,11 +94,25 @@ void main() {
         expect(user.userId == userJson['userId'], true);
       });
 
+      test('throw EmailNotVerifiedException when user is not verified',
+          () async {
+        when(mockFirebaseAuth.signInWithEmailAndPassword(
+                email: 'email', password: 'password'))
+            .thenAnswer((_) => Future.value(mockAuthResult));
+        when(mockAuthResult.user).thenReturn(mockFirebaseUser);
+        when(mockFirebaseUser.isEmailVerified).thenReturn(false);
+
+        firebaseSigninRepository
+            .signInWithEmailAndPassword('email', 'password')
+            .catchError((e) => expect(e, isA<EmailNotVerifiedException>()));
+      });
+
       test('return null when user doesn\'t exists', () async {
         when(mockFirebaseAuth.signInWithEmailAndPassword(
                 email: 'email', password: 'password'))
             .thenAnswer((_) => Future.value(mockAuthResult));
         when(mockAuthResult.user).thenReturn(mockFirebaseUser);
+        when(mockFirebaseUser.isEmailVerified).thenReturn(true);
         when(mockFirebaseUser.uid).thenReturn('1');
         when(mockFirestore.collection(USERS_COLLECTION))
             .thenReturn(mockCollectionReference);
@@ -115,7 +130,7 @@ void main() {
       test('throw InvalidCredentialsException when auth fails', () async {
         when(mockFirebaseAuth.signInWithEmailAndPassword(
                 email: 'email', password: 'password'))
-            .thenThrow(PlatformException(code: 'INVALID_CREDENTIALS'));
+            .thenThrow(PlatformException(code: 'ERROR_INVALID_EMAIL'));
 
         firebaseSigninRepository
             .signInWithEmailAndPassword('email', 'password')
@@ -130,6 +145,7 @@ void main() {
                 email: 'email', password: 'password'))
             .thenAnswer((_) => Future.value(mockAuthResult));
         when(mockAuthResult.user).thenReturn(mockFirebaseUser);
+        when(mockFirebaseUser.isEmailVerified).thenReturn(true);
         when(mockFirebaseUser.uid).thenReturn('1');
         when(mockFirestore.collection(USERS_COLLECTION))
             .thenReturn(mockCollectionReference);

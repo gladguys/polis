@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+part of 'signup_bloc.dart';
 
 abstract class SignupState extends Equatable {}
 

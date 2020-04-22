@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../core/exception/exceptions.dart';
 import '../../../model/user_model.dart';
 import '../../abstract/post_repository.dart';
-import 'collection.dart';
+import 'firebase.dart';
 
 class FirebasePostRepository implements PostRepository {
   FirebasePostRepository({@required this.firestore})

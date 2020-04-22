@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:simple_router/simple_router.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
+import '../../../bloc/blocs.dart';
 import '../../../bloc/user/user_bloc.dart';
-import '../../../bloc/user_profile/user_profile_state.dart';
+import '../../../core/routing/route_names.dart';
 import '../../../i18n/label.dart';
+import '../../../model/models.dart';
 import '../../../widget/text_title.dart';
+import '../../initial/initial_page.dart';
 import '../../theme/main_theme.dart';
 import 'personal_user_info.dart';
 import 'politics_following_quantity.dart';
 import 'user_activities.dart';
 
 class UserProfile extends StatefulWidget {
-  const UserProfile(this.userProfileState);
+  const UserProfile({this.politicsFollowing, this.userActions});
 
-  final UserProfileState userProfileState;
+  final List<PoliticoModel> politicsFollowing;
+  final List<AcaoUsuarioModel> userActions;
 
   @override
   _UserProfileState createState() => _UserProfileState();
@@ -83,27 +89,56 @@ class _UserProfileState extends State<UserProfile> {
         ),
         const SizedBox(height: 8),
         TextTitle(MY_ACTIVITIES, fontSize: 15),
-        const SizedBox(height: 8),
+        const SizedBox(height: 4),
       ],
     );
   }
 
   Widget _buildBody(BuildContext context) {
-    final state = widget.userProfileState as FetchUserRelatedInfoSuccess;
-
     return Column(
       children: <Widget>[
-        const SizedBox(height: 16),
+        const SizedBox(height: 8),
+        _buildLogoutButton(),
         PersonalUserInfo(user: context.bloc<UserBloc>().user),
         const SizedBox(height: 16),
-        PoliticsFollowingQuantity(
-          politics: state.politicsFollowing,
+        PoliticsFollowingQuantity(politics: widget.politicsFollowing),
+      ],
+    );
+  }
+
+  Widget _buildLogoutButton() {
+    final userBloc = context.bloc<UserBloc>();
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Container(
+          key: const ValueKey('logout-button'),
+          height: 30,
+          child: OutlineButton.icon(
+            padding: EdgeInsets.zero,
+            label: Text(LOGOUT.toUpperCase()),
+            icon: FaIcon(
+              FontAwesomeIcons.signOutAlt,
+              size: 18,
+            ),
+            color: Colors.red,
+            textColor: Colors.red,
+            highlightedBorderColor: Colors.red,
+            onPressed: () {
+              userBloc.add(Logout());
+              SimpleRouter.forwardAndRemoveAll(
+                InitialPage(),
+                name: INITIAL_PAGE,
+              );
+            },
+          ),
         ),
+        const SizedBox(width: 8),
       ],
     );
   }
 
   Widget _buildPanel(BuildContext context) {
-    return UserActivities([]);
+    return UserActions(actions: widget.userActions);
   }
 }

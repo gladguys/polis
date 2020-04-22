@@ -1,5 +1,6 @@
 // Collection
 const ATIVIDADES_COLLECTION = 'atividades';
+const ACOES_COLLECTION = 'acoes';
 const USERS_COLLECTION = 'users';
 const PARTIDOS_COLLECTION = 'partidos';
 const POLITICOS_COLLECTION = 'politicos';
@@ -15,11 +16,13 @@ const USUARIOS_SEGUINDO_SUBCOLLECTION = 'usuariosSeguindo';
 const ATIVIDADES_TIMELINE_SUBCOLLECTION = 'atividadesTimeline';
 const ATIVIDADES_POLITICO_SUBCOLLECTION = 'atividadesPolitico';
 const POSTS_FAVORITOS_USUARIO_SUBCOLLECTION = 'postsFavoritosUsuario';
+const ACOES_USUARIO_SUBCOLLECTION = 'acoesUsuario';
 
 // Field
 const SIGLA_UF_FIELD = 'siglaUf';
 const TIPO_ATIVIDADE_FIELD = 'tipoAtividade';
 const DATA_DOCUMENTO_FIELD = 'dataDocumento';
+const DATA_ACAO = 'data';
 const DATA_FAVORITADO_FIELD = 'dataFavoritado';
 const HASH = 'hash';
 

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../core/exception/exceptions.dart';
 import '../../../model/models.dart';
 import '../../abstract/signup_repository.dart';
-import 'collection.dart';
+import 'firebase.dart';
 import 'firebase_error_constants.dart';
 
 class FirebaseSignupRepository extends SignupRepository {
@@ -23,6 +23,7 @@ class FirebaseSignupRepository extends SignupRepository {
   final FirebaseAuth firebaseAuth;
   final Firestore firestore;
   final FirebaseStorage storage;
+
   CollectionReference get userRef => firestore.collection(USERS_COLLECTION);
 
   @override
@@ -52,6 +53,7 @@ class FirebaseSignupRepository extends SignupRepository {
           authResult.user.uid,
           user.copyWith(photoUrl: imageUrl),
         );
+        await authResult.user.sendEmailVerification();
         return;
       }
     } on Exception catch (e) {

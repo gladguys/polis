@@ -7,8 +7,10 @@ import 'package:sliding_panel/sliding_panel.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/abstract/polis_image_picker.dart';
+import '../../core/validators.dart';
 import '../../i18n/i18n.dart';
 import '../../model/models.dart';
+import '../../widget/centered_loading.dart';
 import '../../widget/snackbar.dart';
 import '../theme/main_theme.dart';
 
@@ -84,12 +86,7 @@ class _SignupPageState extends State<SignupPage> {
               state is UserCreated) {
             return _signupForm();
           } else {
-            return const Center(
-              child: Padding(
-                padding: EdgeInsets.only(top: 72),
-                child: CircularProgressIndicator(),
-              ),
-            );
+            return CenteredLoading();
           }
         },
       ),
@@ -187,7 +184,7 @@ class _SignupPageState extends State<SignupPage> {
               onEditingComplete: () => _passwordFN.requestFocus(),
               keyboardType: TextInputType.emailAddress,
               onSaved: (email) => _email = email,
-              validator: (email) => email.isEmpty ? REQUIRED_FIELD : null,
+              validator: Validators.emailValidator,
             ),
             const SizedBox(height: 16),
             TextFormField(

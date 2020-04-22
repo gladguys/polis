@@ -1,5 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+part of 'politic_profile_bloc.dart';
 
 abstract class PoliticProfileEvent extends Equatable {
   const PoliticProfileEvent();

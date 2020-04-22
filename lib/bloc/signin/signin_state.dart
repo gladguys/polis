@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-
-import '../../model/models.dart';
+part of 'signin_bloc.dart';
 
 abstract class SigninState extends Equatable {
   const SigninState();
@@ -12,6 +10,11 @@ class InitialSignin extends SigninState {
 }
 
 class SigninLoading extends SigninState {
+  @override
+  List<Object> get props => [];
+}
+
+class SentingResetEmail extends SigninState {
   @override
   List<Object> get props => [];
 }
@@ -41,4 +44,14 @@ class SigninFailed extends SigninState {
 
   @override
   List<Object> get props => [errorMessage];
+}
+
+class ResetEmailSentSuccess extends SigninState {
+  @override
+  List<Object> get props => [];
+}
+
+class ResetEmailSentFailed extends SigninState {
+  @override
+  List<Object> get props => [];
 }

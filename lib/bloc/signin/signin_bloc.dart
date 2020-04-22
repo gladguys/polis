@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/exception/exceptions.dart';
@@ -8,7 +9,9 @@ import '../../core/service/services.dart';
 import '../../i18n/i18n.dart';
 import '../../model/models.dart';
 import '../../repository/abstract/signin_repository.dart';
-import 'bloc.dart';
+
+part 'signin_event.dart';
+part 'signin_state.dart';
 
 enum SigninMethod { emailAndPassword, google }
 
@@ -49,7 +52,9 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
         yield* _tryToAuthUser(user, SigninMethod.emailAndPassword);
       } on InvalidCredentialsException {
         yield SigninFailed(ERROR_INVALID_CREDENTIALS);
-      } on Exception {
+      } on EmailNotVerifiedException {
+        yield SigninFailed(ERROR_EMAIL_NOT_VERIFIED);
+      } on ComunicationException {
         yield SigninFailed(ERROR_SIGNIN);
       }
     }
@@ -63,6 +68,15 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
         yield SigninFailed(ERROR_INVALID_CREDENTIALS);
       } on Exception {
         yield SigninFailed(ERROR_SIGNIN);
+      }
+    }
+    if (event is SendResetPasswordEmail) {
+      try {
+        yield SentingResetEmail();
+        await repository.sendResetEmail(event.email);
+        yield ResetEmailSentSuccess();
+      } on Exception {
+        yield ResetEmailSentFailed();
       }
     }
   }

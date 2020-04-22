@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,6 +17,8 @@ import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/abstract/polis_image_picker.dart';
 import 'package:polis/core/service/services.dart';
 import 'package:polis/model/models.dart';
+import 'package:polis/repository/abstract/change_password_repository.dart';
+import 'package:polis/repository/abstract/edit_profile_repository.dart';
 import 'package:polis/repository/abstract/favorite_posts_repository.dart';
 import 'package:polis/repository/abstract/follow_repository.dart';
 import 'package:polis/repository/abstract/politic_followers_repository.dart';
@@ -30,12 +33,20 @@ import 'package:polis/repository/abstract/user_following_politics_repository.dar
 import 'package:polis/repository/abstract/user_profile_repository.dart';
 import 'package:polis/repository/abstract/user_repository.dart';
 import 'package:polis/repository/concrete/repositories.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
 // Bloc
 class MockSigninBloc extends MockBloc<SigninEvent, SigninState>
     implements SigninBloc {}
+
+class MockEditProfileBloc extends MockBloc<EditProfileEvent, EditProfileState>
+    implements EditProfileBloc {}
+
+class MockChangePasswordBloc
+    extends MockBloc<ChangePasswordEvent, ChangePasswordState>
+    implements ChangePasswordBloc {}
 
 class MockPostBloc extends MockBloc<PostEvent, PostState> implements PostBloc {}
 
@@ -80,6 +91,11 @@ class MockSearchPoliticBloc
 
 // Repository
 class MockSigninRepository extends Mock implements SigninRepository {}
+
+class MockEditProfileRepository extends Mock implements EditProfileRepository {}
+
+class MockChangePasswordRepository extends Mock
+    implements ChangePasswordRepository {}
 
 class MockPoliticSugestionRepository extends Mock
     implements PoliticSuggestionRepository {}
@@ -174,6 +190,8 @@ class MockPerformanceService extends Mock implements PerformanceService {}
 
 class MockAdService extends Mock implements AdService {}
 
+class MockShareService extends Mock implements ShareService {}
+
 class MockSharedPreferencesService extends Mock
     implements SharedPreferencesService {}
 
@@ -189,6 +207,10 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 class MockBannerAd extends Mock implements BannerAd {}
 
 class MockTrace extends Mock implements Trace {}
+
+class MockScreenshotController extends Mock implements ScreenshotController {}
+
+class MockFile extends Mock implements File {}
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 

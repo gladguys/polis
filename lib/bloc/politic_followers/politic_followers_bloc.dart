@@ -1,10 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import './bloc.dart';
+import '../../model/models.dart';
 import '../../repository/abstract/politic_followers_repository.dart';
+
+part 'politic_followers_event.dart';
+part 'politic_followers_state.dart';
 
 class PoliticFollowersBloc
     extends Bloc<PoliticFollowersEvent, PoliticFollowersState> {

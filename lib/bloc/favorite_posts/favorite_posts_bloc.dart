@@ -1,10 +1,13 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import './bloc.dart';
 import '../../repository/abstract/favorite_posts_repository.dart';
+
+part 'favorite_posts_event.dart';
+part 'favorite_posts_state.dart';
 
 class FavoritePostsBloc extends Bloc<FavoritePostsEvent, FavoritePostsState> {
   FavoritePostsBloc({@required this.repository}) : assert(repository != null);

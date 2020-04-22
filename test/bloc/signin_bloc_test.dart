@@ -86,6 +86,49 @@ void main() {
     );
 
     blocTest(
+      'Expects [SentingResetEmail, ResetEmailSentSuccess]'
+      ' when SendResetPasswordEmail added',
+      build: () async {
+        when(mockSigninRepository.sendResetEmail('email@email.com'))
+            .thenAnswer((_) => Future.value());
+        return signinBloc;
+      },
+      act: (signinBloc) {
+        signinBloc.add(SendResetPasswordEmail('email@email.com'));
+        return;
+      },
+      verify: (signinBloc) async {
+        verify(mockSigninRepository.sendResetEmail('email@email.com'))
+            .called(1);
+      },
+      expect: [
+        SentingResetEmail(),
+        ResetEmailSentSuccess(),
+      ],
+    );
+
+    blocTest(
+      'Expects [SentingResetEmail, ResetEmailSentFailed] when email send fails',
+      build: () async {
+        when(mockSigninRepository.sendResetEmail('email@email.com'))
+            .thenThrow(Exception());
+        return signinBloc;
+      },
+      act: (signinBloc) {
+        signinBloc.add(SendResetPasswordEmail('email@email.com'));
+        return;
+      },
+      verify: (signinBloc) async {
+        verify(mockSigninRepository.sendResetEmail('email@email.com'))
+            .called(1);
+      },
+      expect: [
+        SentingResetEmail(),
+        ResetEmailSentFailed(),
+      ],
+    );
+
+    blocTest(
       'Expects [SigninLoading, UserAuthenticated]'
       ' when SigninWithGoogle added',
       build: () async {
@@ -138,7 +181,7 @@ void main() {
       'ERROR_SIGNIN when SigninWithEmailAndPassword added and theres an error',
       build: () async {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
-            .thenThrow(Exception(ERROR_SIGNIN));
+            .thenThrow(ComunicationException());
         return signinBloc;
       },
       act: (signinBloc) {
@@ -196,6 +239,28 @@ void main() {
       expect: [
         SigninLoading(),
         UserAuthenticationFailed(ERROR_AUTENTICATING_USER),
+      ],
+    );
+
+    blocTest(
+      '''Expects [SigninLoading, SigninFailed] with 
+      ERROR_EMAIL_NOT_VERIFIED when user is not verified''',
+      build: () async {
+        when(mockSigninRepository.signInWithEmailAndPassword(any, any))
+            .thenThrow(EmailNotVerifiedException());
+        return signinBloc;
+      },
+      act: (signinBloc) {
+        signinBloc.add(SigninWithEmailAndPassword('', ''));
+        return;
+      },
+      verify: (signinBloc) async {
+        verify(mockSigninRepository.signInWithEmailAndPassword(any, any))
+            .called(1);
+      },
+      expect: [
+        SigninLoading(),
+        SigninFailed(ERROR_EMAIL_NOT_VERIFIED),
       ],
     );
 

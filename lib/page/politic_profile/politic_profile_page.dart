@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/politic_profile/bloc.dart';
+import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
-import '../../widget/centered_loading.dart';
 import '../../widget/default_bottombar.dart';
+import '../../widget/loading.dart';
 import 'widget/politic_profile.dart';
 
 class PoliticProfilePage extends StatelessWidget {
@@ -24,7 +24,7 @@ class PoliticProfilePage extends StatelessWidget {
                 child: Text(ERROR_FETCHING_POLITIC_INFO),
               );
             } else {
-              return CenteredLoading();
+              return Loading();
             }
           },
         ),

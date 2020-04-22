@@ -1,3 +1,5 @@
+export 'firebase/firebase_change_password_repository.dart';
+export 'firebase/firebase_edit_profile_repository.dart';
 export 'firebase/firebase_favorite_posts_repository.dart';
 export 'firebase/firebase_follow_repository.dart';
 export 'firebase/firebase_partido_repository.dart';

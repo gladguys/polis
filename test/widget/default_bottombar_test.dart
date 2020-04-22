@@ -1,3 +1,4 @@
+import 'package:bloc_test/bloc_test.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,7 +8,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/service/locator.dart';
-import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/pages.dart';
 
@@ -46,6 +46,8 @@ void main() {
               user: UserModel(
                 photoUrl: 'photo',
               ),
+              analyticsService: MockAnalyticsService(),
+              sharedPreferencesService: MockSharedPreferencesService(),
             ),
             child: TimelinePageConnected(),
           ),
@@ -84,6 +86,8 @@ void main() {
               user: UserModel(
                 photoUrl: 'photo',
               ),
+              analyticsService: MockAnalyticsService(),
+              sharedPreferencesService: MockSharedPreferencesService(),
             ),
             child: TimelinePageConnected(),
           ),
@@ -100,6 +104,8 @@ void main() {
             create: (_) => UserBloc(
               repository: MockUserRepository(),
               user: UserModel(),
+              analyticsService: MockAnalyticsService(),
+              sharedPreferencesService: MockSharedPreferencesService(),
             ),
             child: TimelinePageConnected(),
           ),
@@ -198,7 +204,7 @@ void main() {
       await tester.tap(bookmarkIcon);
     });
 
-    testWidgets('shoud open PopupMenuButton when clicking on photo',
+    testWidgets('shoud go to UserProfilePage page when clicking on photo',
         (tester) async {
       final mockUserBloc = MockUserBloc();
       when(mockUserBloc.user).thenReturn(UserModel());
@@ -210,18 +216,29 @@ void main() {
           ),
         ),
       );
-      final profile = find.byKey(const ValueKey('user-photoless-icon'));
+      final profile = find.byKey(const ValueKey('profile-image-bottombar'));
       expect(profile, findsOneWidget);
       await tester.tap(profile);
       await tester.pump();
       await tester.pump();
-      expect(find.byType(PopupMenuItem), findsNWidgets(2));
+      expect(find.byType(UserProfilePage), findsOneWidget);
     });
 
-    testWidgets('shoud go to UserProfilePage when clicking first option',
-        (tester) async {
+    testWidgets('shoud update user photo when state change', (tester) async {
       final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(UserModel());
+      whenListen(
+        mockUserBloc,
+        Stream.fromIterable(
+          [
+            InitialUser(),
+            CurrentUserUpdated(
+              UserModel(
+                photoUrl: 'photourl',
+              ),
+            ),
+          ],
+        ),
+      );
       await tester.pumpWidget(
         connectedWidget(
           BlocProvider(
@@ -230,34 +247,6 @@ void main() {
           ),
         ),
       );
-      final profile = find.byKey(const ValueKey('user-photoless-icon'));
-      expect(profile, findsOneWidget);
-      await tester.ensureVisible(profile);
-      await tester.tap(profile);
-      await tester.pump();
-      final userOption = find.text(PROFILE);
-      expect(userOption, findsOneWidget);
-      await tester.ensureVisible(userOption);
-      await tester.tap(userOption);
-    });
-
-    testWidgets('shoud logout user when clicking last option', (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(UserModel());
-      await tester.pumpWidget(
-        connectedWidget(
-          BlocProvider(
-            create: (_) => mockUserBloc,
-            child: TimelinePageConnected(),
-          ),
-        ),
-      );
-      final profile = find.byKey(const ValueKey('user-photoless-icon'));
-      expect(profile, findsOneWidget);
-      await tester.tap(profile);
-      await tester.pump();
-      final logoutOption = find.byType(PopupMenuItem).last;
-      await tester.tap(logoutOption);
     });
   });
 }

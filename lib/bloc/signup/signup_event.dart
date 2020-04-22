@@ -1,9 +1,4 @@
-import 'dart:io';
-
-import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
-
-import '../../model/models.dart';
+part of 'signup_bloc.dart';
 
 abstract class SignupEvent extends Equatable {}
 
