@@ -9,7 +9,7 @@ import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
-import 'package:polis/widget/centered_loading.dart';
+import 'package:polis/widget/loading.dart';
 
 import '../../mock.dart';
 import '../utils.dart';
@@ -171,7 +171,7 @@ void main() {
         ),
       );
       await tester.pump();
-      expect(find.byType(CenteredLoading), findsOneWidget);
+      expect(find.byType(Loading), findsOneWidget);
     });
 
     testWidgets('shuld go to signup page when click on no account button',

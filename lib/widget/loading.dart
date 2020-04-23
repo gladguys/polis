@@ -1,5 +1,5 @@
-import 'package:flare_loading/flare_loading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Loading extends StatefulWidget {
   @override
@@ -9,12 +9,11 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
-    return FlareLoading(
-      name: 'assets/animations/PolisLoading.flr',
-      startAnimation: 'Loading',
-      loopAnimation: 'Loading',
-      onSuccess: (data) {},
-      onError: (e, stacktrace) {},
+    return Center(
+      child: SpinKitChasingDots(
+        color: Colors.amber,
+        size: 50.0,
+      ),
     );
   }
 }

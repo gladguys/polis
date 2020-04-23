@@ -1,5 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:flare_splash_screen/flare_splash_screen.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_router/simple_router.dart';
 
@@ -23,6 +23,8 @@ class _CrunchingDataPageState extends State<CrunchingDataPage>
       duration: const Duration(seconds: 1),
     );
     controller.addListener(() => setState(() {}));
+    Future.delayed(const Duration(seconds: 4))
+        .then((_) => controller.forward());
     super.initState();
   }
 
@@ -42,17 +44,11 @@ class _CrunchingDataPageState extends State<CrunchingDataPage>
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               const SizedBox(height: 28),
-              Flexible(
+              const Flexible(
                 flex: 6,
-                child: SplashScreen.callback(
-                  name: 'assets/animations/PolisIntro.flr',
-                  onSuccess: (data) {
-                    controller.forward();
-                  },
-                  onError: (e, stacktrace) {},
-                  until: () => Future.delayed(const Duration(seconds: 4)),
-                  loopAnimation: 'start',
-                  startAnimation: 'start',
+                child: FlareActor(
+                  'assets/animations/PolisIntro.flr',
+                  animation: 'start',
                 ),
               ),
               Flexible(

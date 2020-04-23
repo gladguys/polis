@@ -5,8 +5,8 @@ import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
 import '../../extension/formatters.dart';
 import '../../i18n/label.dart';
-import '../../widget/centered_loading.dart';
 import '../../widget/default_bottombar.dart';
+import '../../widget/loading.dart';
 import '../../widget/text_title.dart';
 import '../../widget/timeline_tile.dart';
 
@@ -53,7 +53,7 @@ class TramitacaoPropostaPage extends StatelessWidget {
                 ],
               );
             }
-            return CenteredLoading();
+            return Loading();
           },
         ),
       ),

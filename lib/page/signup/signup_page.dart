@@ -11,7 +11,7 @@ import '../../core/keys.dart';
 import '../../core/validators.dart';
 import '../../i18n/i18n.dart';
 import '../../model/models.dart';
-import '../../widget/centered_loading.dart';
+import '../../widget/loading.dart';
 import '../../widget/snackbar.dart';
 import '../theme/main_theme.dart';
 
@@ -87,7 +87,7 @@ class _SignupPageState extends State<SignupPage> {
               state is UserCreated) {
             return _signupForm();
           } else {
-            return CenteredLoading();
+            return Loading();
           }
         },
       ),

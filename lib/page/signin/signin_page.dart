@@ -10,7 +10,7 @@ import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../core/validators.dart';
 import '../../i18n/i18n.dart';
-import '../../widget/centered_loading.dart';
+import '../../widget/loading.dart';
 import '../../widget/snackbar.dart';
 import '../pages.dart';
 import 'widget/reset_password_form.dart';
@@ -86,7 +86,7 @@ class _SigninPageState extends State<SigninPage> {
             return Center(
               child: Padding(
                 padding: const EdgeInsets.only(top: 72),
-                child: CenteredLoading(),
+                child: Loading(),
               ),
             );
           }

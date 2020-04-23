@@ -1,4 +1,4 @@
-import 'package:flare_loading/flare_loading.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 
 import '../i18n/message.dart';
@@ -16,14 +16,11 @@ class _ErrorContainerState extends State<ErrorContainer> {
         padding: const EdgeInsets.all(12),
         child: Column(
           children: <Widget>[
-            Expanded(
+            const Expanded(
               flex: 8,
-              child: FlareLoading(
-                name: 'assets/animations/app_error.flr',
-                startAnimation: 'error',
-                loopAnimation: 'error',
-                onSuccess: (data) {},
-                onError: (e, stacktrace) {},
+              child: FlareActor(
+                'assets/animations/app_error.flr',
+                animation: 'error',
               ),
             ),
             const SizedBox(height: 16),

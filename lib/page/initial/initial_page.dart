@@ -9,7 +9,7 @@ import '../../bloc/blocs.dart';
 import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
-import '../../widget/centered_loading.dart';
+import '../../widget/loading.dart';
 import '../../widget/snackbar.dart';
 import '../pages.dart';
 import '../theme/main_theme.dart';
@@ -59,7 +59,7 @@ class _InitialPageState extends State<InitialPage> {
         }
       }, builder: (_, state) {
         if (state is SigninLoading || state is UserAuthenticated) {
-          return CenteredLoading();
+          return Loading();
         } else {
           return SlidingPanel(
             panelController: _panelController,
