@@ -25,6 +25,7 @@ class PropostaModel extends Equatable {
       this.favorito,
       this.dataDocumento,
       this.tipoDocumento,
+      this.sequencia,
       this.status});
 
   final String id;
@@ -46,6 +47,7 @@ class PropostaModel extends Equatable {
   final String descricaoTramitacao;
   final String dataApresentacao;
   final String status;
+  final String sequencia;
   final bool favorito;
 
   factory PropostaModel.fromJson(Map<String, dynamic> json) =>
@@ -73,6 +75,7 @@ class PropostaModel extends Equatable {
     String descricaoTramitacao,
     String dataApresentacao,
     String status,
+    String sequencia,
     bool favorito,
   }) {
     return PropostaModel(
@@ -95,6 +98,7 @@ class PropostaModel extends Equatable {
       descricaoTramitacao: descricaoTramitacao ?? this.descricaoTramitacao,
       dataApresentacao: dataApresentacao ?? this.dataApresentacao,
       status: status ?? this.status,
+      sequencia: sequencia ?? this.sequencia,
       favorito: favorito ?? this.favorito,
     );
   }
@@ -104,6 +108,6 @@ class PropostaModel extends Equatable {
 
   @override
   String toString() {
-    return '''PropostaModel{id: $id, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, nomePolitico: $nomePolitico, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, dataDocumento: $dataDocumento, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataApresentacao: $dataApresentacao, status: $status, favorito: $favorito}''';
+    return '''PropostaModel{id: $id, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, nomePolitico: $nomePolitico, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, dataDocumento: $dataDocumento, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataApresentacao: $dataApresentacao, status: $status, sequencia: $sequencia, favorito: $favorito}''';
   }
 }
