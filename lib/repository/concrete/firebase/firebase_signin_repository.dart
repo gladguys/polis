@@ -46,6 +46,8 @@ class FirebaseSigninRepository extends SigninRepository {
         throw InvalidCredentialsException();
       } else if (e.toString().contains(ERROR_WRONG_PASSWORD)) {
         throw InvalidCredentialsException();
+      } else if (e.toString().contains(ERROR_USER_NOT_FOUND)) {
+        throw InvalidCredentialsException();
       }
       rethrow;
     }
