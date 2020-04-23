@@ -80,15 +80,35 @@ class PropostaTile extends StatelessWidget {
       children: <Widget>[
         const SizedBox(height: 4),
         TextRich(
-          maxLines: 4,
           children: [
-            TextSpan(
-              text: '${proposta.descricaoTipo}: ',
-              style: const TextStyle(fontWeight: FontWeight.w500),
+            const TextSpan(
+              text: '$SITUATION: ',
+              style: TextStyle(fontWeight: FontWeight.w500),
             ),
-            TextSpan(text: '${proposta.ementa}'),
+            TextSpan(
+              text: proposta.descricaoSituacao ?? NOT_INFORMED_FEMALE,
+              style: TextStyle(
+                color: proposta.descricaoSituacao == null
+                    ? Colors.grey[600]
+                    : null,
+              ),
+            ),
           ],
         ),
+        const SizedBox(height: 2),
+        if (proposta.descricaoTipo == PLENARY_AMENDMENT)
+          Text('${proposta.descricaoTipo}')
+        else
+          TextRich(
+            maxLines: 4,
+            children: [
+              TextSpan(
+                text: '${proposta.descricaoTipo}: ',
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+              TextSpan(text: '${proposta.ementa}'),
+            ],
+          ),
         const SizedBox(height: 4),
         TextRich(
           fontSize: 12,
@@ -99,18 +119,6 @@ class PropostaTile extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             TextSpan(text: proposta.descricaoTramitacao ?? NOT_INFORMED_FEMALE),
-          ],
-        ),
-        const SizedBox(height: 2),
-        TextRich(
-          fontSize: 12,
-          color: Colors.grey[600],
-          children: [
-            const TextSpan(
-              text: '$SITUATION: ',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            TextSpan(text: proposta.descricaoSituacao ?? NOT_INFORMED_FEMALE),
           ],
         ),
         const SizedBox(height: 2),
