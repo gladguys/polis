@@ -10,6 +10,7 @@ export 'search_politic/search_politic_bloc.dart';
 export 'signin/signin_bloc.dart';
 export 'signup/signup_bloc.dart';
 export 'timeline/timeline_bloc.dart';
+export 'tramitacao_proposta/tramitacao_proposta_bloc.dart';
 export 'user/user_bloc.dart';
 export 'user_following_politics/user_following_politics_bloc.dart';
 export 'user_profile/user_profile_bloc.dart';

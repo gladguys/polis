@@ -29,6 +29,7 @@ import 'package:polis/repository/abstract/signin_repository.dart';
 import 'package:polis/repository/abstract/signup_repository.dart';
 import 'package:polis/repository/abstract/sync_log_repository.dart';
 import 'package:polis/repository/abstract/timeline_repository.dart';
+import 'package:polis/repository/abstract/tramitacao_proposta_repository.dart';
 import 'package:polis/repository/abstract/user_following_politics_repository.dart';
 import 'package:polis/repository/abstract/user_profile_repository.dart';
 import 'package:polis/repository/abstract/user_repository.dart';
@@ -67,6 +68,10 @@ class MockSignupBloc extends MockBloc<SignupEvent, SignupState>
 
 class MockUserBloc extends MockBloc<UserEvent, UserState> implements UserBloc {}
 
+class MockTramitacaoPropostaBloc
+    extends MockBloc<TramitacaoPropostaEvent, TramitacaoPropostaState>
+    implements TramitacaoPropostaBloc {}
+
 class MockTimelineBloc extends MockBloc<TimelineEvent, TimelineState>
     implements TimelineBloc {}
 
@@ -93,6 +98,9 @@ class MockSearchPoliticBloc
 class MockSigninRepository extends Mock implements SigninRepository {}
 
 class MockEditProfileRepository extends Mock implements EditProfileRepository {}
+
+class MockTramitacaoPropostaRepository extends Mock
+    implements TramitacaoPropostaRepository {}
 
 class MockChangePasswordRepository extends Mock
     implements ChangePasswordRepository {}
