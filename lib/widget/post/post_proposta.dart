@@ -81,15 +81,20 @@ class PostProposta extends StatelessWidget {
         spacing: 16,
         runSpacing: 8,
         children: <Widget>[
-          TextRich(
-            children: [
-              TextSpan(
-                text: '${proposta.descricaoTipo}: ',
-                style: const TextStyle(fontWeight: FontWeight.w500),
-              ),
-              TextSpan(text: '${proposta.ementa ?? NOT_INFORMED_FEMALE}'),
-            ],
-          ),
+          if (proposta.descricaoTipo == 'Emenda de Plenário')
+            Row(children: [
+              Text('${proposta.descricaoTipo}'),
+            ])
+          else
+            TextRich(
+              children: [
+                TextSpan(
+                  text: '${proposta.descricaoTipo}: ',
+                  style: const TextStyle(fontWeight: FontWeight.w500),
+                ),
+                TextSpan(text: '${proposta.ementa ?? NOT_INFORMED_FEMALE}'),
+              ],
+            ),
           LabelValue(
             label: DETAILED_MENU,
             value: proposta.ementaDetalhada,
