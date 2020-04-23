@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:polis/page/theme/main_theme.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:simple_router/simple_router.dart';
 
@@ -11,6 +10,7 @@ import '../../extension/formatters.dart';
 import '../../i18n/i18n.dart';
 import '../../model/proposta_model.dart';
 import '../../page/pages.dart';
+import '../../page/theme/main_theme.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';
 import '../label_value.dart';
