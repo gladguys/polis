@@ -6,6 +6,7 @@ import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
 import '../../widget/select/selects.dart';
 import '../pages.dart';
+import '../theme/main_theme.dart';
 
 const DEFAULT_OPTION = 'T';
 
@@ -19,32 +20,59 @@ class _IntroPageState extends State<IntroPage> {
 
   @override
   Widget build(BuildContext context) {
-    return IntroductionScreen(
-      pages: [
-        PageViewModel(
-          title: PICK_YOUR_STATE,
-          body: STATE_MESSAGE,
-          image: const Center(child: Icon(Icons.android)),
-          footer: Column(
-            children: <Widget>[
-              EstadoSelect(
-                initialValue: _stateOption,
-                onChange: (sigla) => setState(() => _stateOption = sigla),
+    return Scaffold(
+      body: SafeArea(
+        child: IntroductionScreen(
+          pages: [
+            PageViewModel(
+              titleWidget: const Text(
+                POLIS,
+                style: TextStyle(
+                  fontFamily: 'Philosopher',
+                  fontSize: 56,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ],
+              bodyWidget: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  const SizedBox(height: 80),
+                  const Text(
+                    STATE_MESSAGE,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: EstadoSelect(
+                      initialValue: _stateOption,
+                      onChange: (sigla) => setState(() => _stateOption = sigla),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+          done: Text(
+            CONFIRM.toUpperCase(),
+            key: const ValueKey('done-btn'),
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          dotsDecorator: DotsDecorator(
+            activeColor: theme.primaryColor,
+          ),
+          onDone: () => SimpleRouter.forwardAndReplace(
+            PoliticSuggestionPageConnected(_stateOption),
+            name: POLITIC_SUGGESTION_PAGE,
           ),
         ),
-      ],
-      done: const Text(
-        'Done',
-        key: ValueKey('done-btn'),
-        style: TextStyle(
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-      onDone: () => SimpleRouter.forwardAndReplace(
-        PoliticSuggestionPageConnected(_stateOption),
-        name: POLITIC_SUGGESTION_PAGE,
       ),
     );
   }
