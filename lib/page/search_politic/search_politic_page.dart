@@ -35,7 +35,6 @@ class SearchPoliticPage extends StatelessWidget {
                 state is LoadingFetchPolitics) {
               return SearchPoliticSkeleton();
             }
-
             return ErrorContainer();
           },
         ),

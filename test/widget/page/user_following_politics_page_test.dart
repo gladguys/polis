@@ -7,6 +7,7 @@ import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
 import 'package:polis/widget/card_base.dart';
+import 'package:polis/widget/error_container.dart';
 
 import '../../mock.dart';
 import '../utils.dart';
@@ -81,6 +82,33 @@ void main() {
           ),
         ),
       );
+    });
+
+    testWidgets('should show error container when theres an error',
+        (tester) async {
+      when(mockUserFollowingPoliticsBloc.isPoliticBeingFollowed(any))
+          .thenReturn(true);
+      when(mockUserFollowingPoliticsBloc.state)
+          .thenReturn(FetchPoliticsFailed());
+      await tester.pumpWidget(
+        connectedWidget(
+          BlocProvider(
+            create: (_) => UserBloc(
+              repository: MockUserRepository(),
+              user: UserModel(
+                userId: '1',
+              ),
+              analyticsService: MockAnalyticsService(),
+              sharedPreferencesService: MockSharedPreferencesService(),
+            ),
+            child: PageConnected<UserFollowingPoliticsBloc>(
+              bloc: mockUserFollowingPoliticsBloc,
+              page: UserFollowingPoliticsPage(),
+            ),
+          ),
+        ),
+      );
+      expect(find.byType(ErrorContainer), findsOneWidget);
     });
 
     testWidgets(
