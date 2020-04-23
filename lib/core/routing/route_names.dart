@@ -13,3 +13,4 @@ const USER_FOLLOWING_POLITICS_PAGE = 'UserFollowingPoliticsPage';
 const POST_PAGE = 'PostPage';
 const EDIT_PROFILE_PAGE = 'EditProfilePage';
 const CHANGE_PASSWORD_PAGE = 'ChangePasswordPage';
+const TRAMITACAO_PROPOSTA_PAGE = 'TramitacaoPropostaPage';

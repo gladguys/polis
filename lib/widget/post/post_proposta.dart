@@ -10,6 +10,7 @@ import '../../extension/formatters.dart';
 import '../../i18n/i18n.dart';
 import '../../model/proposta_model.dart';
 import '../../page/pages.dart';
+import '../../page/theme/main_theme.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';
 import '../label_value.dart';
@@ -134,6 +135,25 @@ class PostProposta extends StatelessWidget {
             label: PRESENTATION_DATE,
             value: proposta.dataApresentacao.formatDate(),
             emptyValue: NOT_INFORMED_FEMALE,
+          ),
+          Container(
+            height: 30,
+            margin: const EdgeInsets.only(top: 4),
+            child: OutlineButton.icon(
+              icon: FaIcon(FontAwesomeIcons.exchangeAlt, size: 18),
+              label: Text(
+                TRAMITATIONS.toUpperCase(),
+                style: const TextStyle(fontSize: 13),
+              ),
+              color: theme.primaryColor,
+              highlightedBorderColor: theme.primaryColorDark,
+              borderSide: BorderSide(color: theme.primaryColor),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              onPressed: () => SimpleRouter.forward(
+                TramitacaoPropostaPageConnected(proposta),
+                name: TRAMITACAO_PROPOSTA_PAGE,
+              ),
+            ),
           ),
         ],
       ),
