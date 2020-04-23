@@ -79,8 +79,7 @@ class _TimelineState extends State<Timeline> {
               DespesaTileConnected(widget.activities[i])
             else
               PropostaTileConnected(widget.activities[i] as PropostaModel),
-            if ((i == 2) || (i > 2 && i % 5 == 0))
-              _buildAdmobBanner(),
+            if ((i == 2) || (i > 2 && i % 5 == 0)) _buildAdmobBanner(),
           ],
         );
       },
@@ -131,7 +130,6 @@ class _TimelineState extends State<Timeline> {
         child: AdmobBanner(
           adUnitId: 'ca-app-pub-5806526425473649/1618913550',
           adSize: AdmobBannerSize.MEDIUM_RECTANGLE,
-          listener: (event, args) {},
         ),
       ),
     );

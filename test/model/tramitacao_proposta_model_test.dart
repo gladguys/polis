@@ -42,7 +42,6 @@ void main() {
 
     test('toString()', () {
       final modelToString = TramitacaoPropostaModel(sequencia: '1').toString();
-      print(modelToString);
       final result =
           '''TramitacaoPropostaModel{ambito: null, dataHora: null, descricaoSituacao: null, descricaoTramitacao: null, despacho: null, regime: null, sequencia: 1, siglaOrgao: null}''';
       expect(modelToString == result, true);

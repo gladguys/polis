@@ -162,6 +162,7 @@ class PostDespesa extends StatelessWidget {
             height: 30,
             margin: const EdgeInsets.only(top: 4),
             child: OutlineButton.icon(
+              key: const ValueKey('despesa-image-icon'),
               icon: FaIcon(FontAwesomeIcons.file, size: 18),
               label: Text(
                 VIEW_DOCUMENT.toUpperCase(),

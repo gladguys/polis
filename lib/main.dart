@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:admob_flutter/admob_flutter.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +22,7 @@ void main() async {
   Hive.registerAdapter(PartidoModelAdapter());
   Hive.registerAdapter(PoliticoModelAdapter());
   initLocator(await SharedPreferences.getInstance());
-  Admob.initialize('ca-app-pub-5806526425473649~5721958482');
+  G<AdService>().initAds();
   G<CrashlyticsService>().initCrashlytics();
   FlutterError.onError = G<CrashlyticsService>().crashlytics.recordFlutterError;
   BlocSupervisor.delegate = FlutterBlocDelegate(

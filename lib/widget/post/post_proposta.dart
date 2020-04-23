@@ -145,6 +145,7 @@ class PostProposta extends StatelessWidget {
             height: 30,
             margin: const EdgeInsets.only(top: 4),
             child: OutlineButton.icon(
+              key: const ValueKey('tramitations-icon'),
               icon: FaIcon(FontAwesomeIcons.exchangeAlt, size: 18),
               label: Text(
                 TRAMITATIONS.toUpperCase(),

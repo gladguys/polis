@@ -23,6 +23,7 @@ void main() async {
   });
 
   test('main method', () async {
+    TestWidgetsFlutterBinding.ensureInitialized();
     await m.main();
     expect(Crashlytics.instance.enableInDevMode, true);
     expect(FlutterError.onError,

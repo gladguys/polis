@@ -170,5 +170,26 @@ void main() {
       await tester.tap(politicPhoto);
       verify(mockObserver.didPush(any, any));
     });
+
+    testWidgets('should go to tramitations page when click on icon',
+        (tester) async {
+      final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.isPostFavorite).thenReturn(true);
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<PostBloc>(
+            bloc: mockPostBloc,
+            page: PostProposta(
+              proposta,
+              screenshotController: MockScreenshotController(),
+            ),
+          ),
+        ),
+      );
+      final tramitationsIcon = find.byKey(const ValueKey('tramitations-icon'));
+      expect(tramitationsIcon, findsOneWidget);
+      await tester.tap(tramitationsIcon);
+      verify(mockObserver.didPush(any, any));
+    });
   });
 }

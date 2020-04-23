@@ -168,5 +168,30 @@ void main() {
       await tester.tap(politicPhoto);
       verify(mockObserver.didPush(any, any));
     });
+
+    testWidgets('should open despesa image when clicked document icon',
+        (tester) async {
+      final mockDespesaImageBloc = MockDespesaImageBloc();
+      final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.isPostFavorite).thenReturn(false);
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<PostBloc>(
+            bloc: mockPostBloc,
+            page: PageConnected<DespesaImageBloc>(
+              bloc: mockDespesaImageBloc,
+              page: PostDespesa(
+                despesa,
+                screenshotController: MockScreenshotController(),
+              ),
+            ),
+          ),
+        ),
+      );
+      final despesaIcon = find.byKey(const ValueKey('despesa-image-icon'));
+      expect(despesaIcon, findsOneWidget);
+      await tester.tap(despesaIcon);
+      verify(mockDespesaImageBloc.add(OpenDespesaImage('urlDoc'))).called(1);
+    });
   });
 }
