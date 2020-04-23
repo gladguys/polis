@@ -13,6 +13,7 @@ import 'package:polis/page/politic_profile/widget/politic_action_buttons.dart';
 import 'package:polis/page/politic_profile/widget/politic_activities.dart';
 import 'package:polis/page/politic_profile/widget/politic_additional_info.dart';
 import 'package:polis/page/politic_profile/widget/politic_personal_info.dart';
+import 'package:polis/widget/error_container.dart';
 import 'package:polis/widget/not_found.dart';
 
 import '../../mock.dart';
@@ -228,7 +229,7 @@ void main() {
       expect(find.text(NO_ACTIVITY_FOR_POLITIC), findsOneWidget);
     });
 
-    testWidgets('should show error msg when fails', (tester) async {
+    testWidgets('should show error widget when fails', (tester) async {
       when(mockPoliticProfileBloc.state).thenReturn(GetPoliticInfoFailed());
       await tester.pumpWidget(
         connectedWidget(
@@ -238,7 +239,7 @@ void main() {
           ),
         ),
       );
-      expect(find.text(ERROR_FETCHING_POLITIC_INFO), findsOneWidget);
+      expect(find.byType(ErrorContainer), findsOneWidget);
     });
 
     testWidgets('should show text FOLLOW when politic is being followed',

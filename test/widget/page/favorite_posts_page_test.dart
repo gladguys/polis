@@ -4,6 +4,7 @@ import 'package:polis/bloc/blocs.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
 import 'package:polis/page/timeline/widget/timeline.dart';
+import 'package:polis/widget/loading.dart';
 
 import '../../mock.dart';
 import '../utils.dart';
@@ -32,6 +33,19 @@ void main() {
         ),
       );
       expect(find.byType(Timeline), findsOneWidget);
+    });
+
+    testWidgets('shoud show loading widget', (tester) async {
+      when(mockFavoritePostsBloc.state).thenReturn(LoadingFavoritesPosts());
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<FavoritePostsBloc>(
+            bloc: mockFavoritePostsBloc,
+            page: FavoritePostsPage(),
+          ),
+        ),
+      );
+      expect(find.byType(Loading), findsOneWidget);
     });
   });
 }

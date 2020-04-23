@@ -8,7 +8,6 @@ import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/enum/acao_type.dart';
-import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
@@ -16,6 +15,7 @@ import 'package:polis/page/user_profile/widget/activities_list.dart';
 import 'package:polis/page/user_profile/widget/personal_user_info.dart';
 import 'package:polis/page/user_profile/widget/politics_following_quantity.dart';
 import 'package:polis/page/user_profile/widget/user_activities.dart';
+import 'package:polis/widget/error_container.dart';
 import 'package:polis/widget/loading.dart';
 
 import '../../mock.dart';
@@ -222,7 +222,7 @@ void main() {
             ),
           ),
         );
-        expect(find.text(ERROR_FETCHING_USER_INFO), findsOneWidget);
+        expect(find.byType(ErrorContainer), findsOneWidget);
       });
     });
 

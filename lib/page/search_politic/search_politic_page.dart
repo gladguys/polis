@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
 import '../../widget/default_bottombar.dart';
+import '../../widget/error_container.dart';
 import 'widgets/search_politic_skeleton.dart';
 import 'widgets/search_politics.dart';
 
@@ -34,8 +35,7 @@ class SearchPoliticPage extends StatelessWidget {
                 state is LoadingFetchPolitics) {
               return SearchPoliticSkeleton();
             }
-
-            return const SizedBox.shrink();
+            return ErrorContainer();
           },
         ),
       ),

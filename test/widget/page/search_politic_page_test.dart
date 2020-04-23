@@ -10,6 +10,7 @@ import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
 import 'package:polis/page/search_politic/widgets/search_politic_skeleton.dart';
 import 'package:polis/page/search_politic/widgets/search_politics.dart';
+import 'package:polis/widget/error_container.dart';
 import 'package:polis/widget/field_rounded.dart';
 import 'package:polis/widget/select/selects.dart';
 
@@ -294,6 +295,23 @@ void main() {
         ),
       );
       expect(find.byType(SearchPolitics), findsOneWidget);
+    });
+
+    testWidgets('shoud show error container when something fails',
+        (tester) async {
+      final mockSearchPoliticBloc = MockSearchPoliticBloc();
+      when(mockSearchPoliticBloc.isPoliticBeingFollowed(any)).thenReturn(false);
+      when(mockSearchPoliticBloc.allPartidos).thenReturn([]);
+      when(mockSearchPoliticBloc.state).thenReturn(FetchSearchPoliticsFailed());
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<SearchPoliticBloc>(
+            bloc: mockSearchPoliticBloc,
+            page: SearchPoliticPage(),
+          ),
+        ),
+      );
+      expect(find.byType(ErrorContainer), findsOneWidget);
     });
 
     testWidgets('shoud show SearchPolitics when filter changes',
