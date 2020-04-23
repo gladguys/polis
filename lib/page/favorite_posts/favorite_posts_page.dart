@@ -5,6 +5,7 @@ import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
 import '../../widget/default_bottombar.dart';
+import '../../widget/error_container.dart';
 import '../../widget/loading.dart';
 import '../../widget/text_title.dart';
 import '../timeline/widget/timeline.dart';
@@ -19,8 +20,10 @@ class FavoritePostsPage extends StatelessWidget {
           builder: (_, state) {
             if (state is FetchUserFavoritePostsSuccess) {
               return _buildList(state.posts);
-            } else {
+            } else if (state is LoadingFavoritesPosts) {
               return Loading();
+            } else {
+              return ErrorContainer();
             }
           },
         ),

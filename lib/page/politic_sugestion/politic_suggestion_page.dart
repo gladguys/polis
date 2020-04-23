@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
+import '../../widget/error_container.dart';
 import '../../widget/loading.dart';
 import '../pages.dart';
 import 'widget/politics_sugestion.dart';
@@ -28,7 +29,7 @@ class PoliticSuggestionPage extends StatelessWidget {
                 state is ChangedPoliticsFollowingStatus) {
               return PoliticsSuggestion();
             } else {
-              return const SizedBox.shrink();
+              return ErrorContainer();
             }
           },
         ),

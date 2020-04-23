@@ -5,6 +5,7 @@ import 'package:simple_router/simple_router.dart';
 import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
 import '../../widget/default_bottombar.dart';
+import '../../widget/error_container.dart';
 import '../pages.dart';
 import 'widget/following_politics_search.dart';
 import 'widget/following_politics_skeleton.dart';
@@ -29,6 +30,8 @@ class UserFollowingPoliticsPage extends StatelessWidget {
               return FollowingPoliticsSearch(state.filteredPolitics);
             } else if (state is FollowedPoliticsUpdated) {
               return FollowingPoliticsSearch(state.followedPolitics);
+            } else if (state is FetchPoliticsFailed) {
+              return ErrorContainer();
             } else {
               return FollowingPoliticsSkeleton();
             }

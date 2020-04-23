@@ -28,6 +28,7 @@ const SIGNIN_FAILED = 'Falha no login';
 const SIGNUP_FAILED = 'Falha no cadastro do usuário';
 const NO_ACTIVITY_FOR_POLITIC = 'Nenhuma atividade para o político.';
 const NO_RESULTS_FROM_SEARCH = 'Político não encontrado.';
+const OH_NO = 'Essa não!';
 
 const ERROR_CREATING_USER = 'Ocorreu um erro no cadastro do usuário';
 const ERROR_AUTENTICATING_USER = 'Ocorreu um erro ao autenticar o usuário';
@@ -38,3 +39,5 @@ const ERROR_SIGNIN = 'Ocorreu um erro de comunicação ao logar';
 const ERROR_COMUNICATION = 'Ocorreu um erro de comunicação';
 const ERROR_FETCHING_USER_INFO = 'Erro ao buscar informações do usuário';
 const ERROR_FETCHING_POLITIC_INFO = 'Erro ao buscar informações do político';
+const UNEXPECTED_ERROR_HAPPENED =
+    'Um erro inesperado ocorreu. Por favor tente novamente mais tarde.';

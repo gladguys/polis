@@ -13,6 +13,7 @@ import '../model/models.dart';
 import '../page/pages.dart';
 import '../page/theme/main_theme.dart';
 import '../repository/concrete/repositories.dart';
+import 'error_container.dart';
 
 class MyApp extends StatefulWidget {
   @override
@@ -58,7 +59,7 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         theme: theme,
         navigatorKey: SimpleRouter.getKey(),
-        home: isUserLogged ? TimelinePageConnected() : InitialPageConnected(),
+        home: isUserLogged ? ErrorContainer() : InitialPageConnected(),
         navigatorObservers: [
           FirebaseAnalyticsObserver(analytics: G<AnalyticsService>().analytics),
           PolisRoutingObserver(),
