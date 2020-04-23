@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/models.dart';
@@ -147,8 +148,7 @@ void main() {
       final timeline = find.byType(Timeline);
       expect(timeline, findsOneWidget);
       tester.ensureVisible(timeline);
-      final updateTimelineButtonn =
-          find.byKey(const ValueKey('update-timeline-btn'));
+      final updateTimelineButtonn = find.byKey(updateTimelineButtonKey);
       expect(updateTimelineButtonn, findsOneWidget);
       await tester.tap(updateTimelineButtonn);
       verify(mockTimelineBloc.add(ReloadTimeline('1'))).called(1);
@@ -194,8 +194,7 @@ void main() {
       final timeline = find.byType(Timeline);
       expect(timeline, findsOneWidget);
       tester.ensureVisible(timeline);
-      final updateTimelineButtonn =
-          find.byKey(const ValueKey('update-timeline-btn'));
+      final updateTimelineButtonn = find.byKey(updateTimelineButtonKey);
       expect(updateTimelineButtonn, findsOneWidget);
       expect(find.byWidgetPredicate((widget) {
         if (widget is TextRich) {

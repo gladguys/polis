@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/model/despesa_model.dart';
 import 'package:polis/page/page_connected.dart';
@@ -87,7 +88,7 @@ void main() {
           ),
         ),
       );
-      final card = find.byKey(const ValueKey('card-base-content'));
+      final card = find.byKey(cardBaseContentKey);
       expect(card, findsOneWidget);
       await tester.tap(card);
     });
@@ -188,7 +189,7 @@ void main() {
           ),
         ),
       );
-      final despesaIcon = find.byKey(const ValueKey('despesa-image-icon'));
+      final despesaIcon = find.byKey(despesaImageIconKey);
       expect(despesaIcon, findsOneWidget);
       await tester.tap(despesaIcon);
       verify(mockDespesaImageBloc.add(OpenDespesaImage('urlDoc'))).called(1);

@@ -7,6 +7,7 @@ import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/abstract/polis_image_picker.dart';
+import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../enum/auth_provider.dart';
 import '../../i18n/i18n.dart';
@@ -75,7 +76,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       child: InkWell(
                         borderRadius: BorderRadius.circular(60),
                         child: Center(
-                          key: const ValueKey('profile-container'),
+                          key: editProfileProfileContainerKey,
                           child: getImageContainer(),
                         ),
                         onTap: getImage,
@@ -142,7 +143,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       child: Column(
         children: <Widget>[
           TextFormField(
-            key: const ValueKey('name-field'),
+            key: editProfileNameFieldKey,
             decoration: const InputDecoration(
               labelText: NAME,
             ),
@@ -153,7 +154,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ),
           const SizedBox(height: 12),
           TextFormField(
-            key: const ValueKey('email-field'),
+            key: editProfileEmailFieldKey,
             decoration: const InputDecoration(
               labelText: EMAIL,
             ),
@@ -171,7 +172,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget getImageContainer() {
     if (pickedPhoto != null) {
       return ClipRRect(
-        key: const ValueKey('photo-url-file'),
+        key: photoUrlFileKey,
         borderRadius: BorderRadius.circular(60),
         child: Image.file(
           pickedPhoto,
@@ -182,7 +183,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       );
     } else if (user.photoUrl != null) {
       return ClipRRect(
-        key: const ValueKey('photo-url-user'),
+        key: photoUrlUserKey,
         borderRadius: BorderRadius.circular(60),
         child: Image.network(
           user.photoUrl,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/blocs.dart';
+import '../../../core/keys.dart';
 import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
 import '../../../widget/button_follow_unfollow.dart';
@@ -43,7 +44,7 @@ class FollowingPoliticsList extends StatelessWidget {
       slotCenter: _buildSlotCenter(politico),
       slotRight: ButtonFollowUnfollow(
         isFollow: bloc.isPoliticBeingFollowed(politico),
-        key: const ValueKey('follow-unfollow-btn'),
+        key: followUnfollowButtonKey,
         onPressed: () => bloc.add(
           FollowUnfollowPolitic(
             user: context.bloc<UserBloc>().user,

@@ -6,6 +6,7 @@ import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
 import '../../bloc/signin/signin_bloc.dart';
+import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../core/validators.dart';
 import '../../i18n/i18n.dart';
@@ -120,7 +121,7 @@ class _SigninPageState extends State<SigninPage> {
           children: <Widget>[
             const SizedBox(height: 16),
             TextFormField(
-              key: const ValueKey('email-field'),
+              key: emailFieldKey,
               decoration: InputDecoration(
                 hintText: EMAIL,
                 prefixIcon: Center(
@@ -139,7 +140,7 @@ class _SigninPageState extends State<SigninPage> {
             ),
             const SizedBox(height: 16),
             TextFormField(
-              key: const ValueKey('password-field'),
+              key: passwordFieldKey,
               focusNode: _passwordFN,
               obscureText: true,
               onEditingComplete: _validateAndSendForm,
@@ -161,7 +162,7 @@ class _SigninPageState extends State<SigninPage> {
               width: 160,
               child: RaisedButton(
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                key: const ValueKey('signin-btn'),
+                key: signinBtnKey,
                 child: const Text(
                   SIGNIN,
                   style: TextStyle(fontSize: 18),

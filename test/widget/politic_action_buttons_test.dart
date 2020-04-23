@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/keys.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/politic_profile/widget/politic_action_buttons.dart';
@@ -54,8 +55,7 @@ void main() {
           ),
         ),
       );
-      final followPoliticButton =
-          find.byKey(const ValueKey('follow-politic-profile')).first;
+      final followPoliticButton = find.byKey(followPoliticProfileKey).first;
       expect(followPoliticButton, findsOneWidget);
       await tester.tap(followPoliticButton);
       await tester.pump();
@@ -73,7 +73,7 @@ void main() {
           ),
         ),
       );
-      final sendEmailButton = find.byKey(const ValueKey('send-email-btn'));
+      final sendEmailButton = find.byKey(sendEmailButtonKey);
       expect(sendEmailButton, findsOneWidget);
       await tester.tap(sendEmailButton);
       await tester.pump();

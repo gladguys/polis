@@ -5,6 +5,7 @@ import 'package:screenshot/screenshot.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
+import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../extension/formatters.dart';
 import '../../i18n/i18n.dart';
@@ -145,7 +146,7 @@ class PostProposta extends StatelessWidget {
             height: 30,
             margin: const EdgeInsets.only(top: 4),
             child: OutlineButton.icon(
-              key: const ValueKey('tramitations-icon'),
+              key: tramitationsIconKey,
               icon: FaIcon(FontAwesomeIcons.exchangeAlt, size: 18),
               label: Text(
                 TRAMITATIONS.toUpperCase(),

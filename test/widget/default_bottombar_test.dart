@@ -7,9 +7,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/pages.dart';
+import 'package:polis/widget/my_app_injections.dart';
 
 import '../mock.dart';
 import 'utils.dart';
@@ -111,7 +113,7 @@ void main() {
           ),
         ),
       );
-      expect(find.byKey(const ValueKey('user-photoless-icon')), findsOneWidget);
+      expect(find.byKey(userPhotolessIconKey), findsOneWidget);
     });
 
     testWidgets('shoud go to TimelinePage when clicking home icon',
@@ -216,7 +218,7 @@ void main() {
           ),
         ),
       );
-      final profile = find.byKey(const ValueKey('profile-image-bottombar'));
+      final profile = find.byKey(profileImageBottombarKey);
       expect(profile, findsOneWidget);
       await tester.tap(profile);
       await tester.pump();
@@ -231,6 +233,7 @@ void main() {
         Stream.fromIterable(
           [
             InitialUser(),
+            SignoutSucceded(),
             CurrentUserUpdated(
               UserModel(
                 photoUrl: 'photourl',
@@ -244,6 +247,35 @@ void main() {
           BlocProvider(
             create: (_) => mockUserBloc,
             child: TimelinePageConnected(),
+          ),
+        ),
+      );
+    });
+
+    testWidgets('shoud show photo from the state when changed', (tester) async {
+      final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.user).thenReturn(
+        UserModel(
+          userId: '1',
+        ),
+      );
+      when(mockUserBloc.state).thenReturn(
+        CurrentUserUpdated(
+          UserModel(
+            photoUrl: 'photourl',
+          ),
+        ),
+      );
+      await tester.pumpWidget(
+        MyAppInjections(
+          child: BlocProvider<UserBloc>(
+            create: (_) => mockUserBloc,
+            child: MaterialApp(
+              navigatorObservers: [
+                mockObserver,
+              ],
+              home: TimelinePageConnected(),
+            ),
           ),
         ),
       );

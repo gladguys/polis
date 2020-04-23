@@ -6,6 +6,7 @@ import 'package:simple_router/simple_router.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
 import '../../bloc/blocs.dart';
+import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
 import '../../widget/centered_loading.dart';
@@ -159,7 +160,7 @@ class _InitialPageState extends State<InitialPage> {
                   ),
                   const SizedBox(height: 12),
                   RaisedButton(
-                    key: const ValueKey('google-signin-btn'),
+                    key: googleSigninButtonKey,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[

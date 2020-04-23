@@ -5,6 +5,7 @@ import 'package:screenshot/screenshot.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
+import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../extension/formatters.dart';
 import '../../i18n/i18n.dart';
@@ -162,7 +163,7 @@ class PostDespesa extends StatelessWidget {
             height: 30,
             margin: const EdgeInsets.only(top: 4),
             child: OutlineButton.icon(
-              key: const ValueKey('despesa-image-icon'),
+              key: despesaImageIconKey,
               icon: FaIcon(FontAwesomeIcons.file, size: 18),
               label: Text(
                 VIEW_DOCUMENT.toUpperCase(),

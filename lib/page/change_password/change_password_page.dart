@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
+import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
 import '../../widget/default_bottombar.dart';
@@ -95,7 +96,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       child: Column(
         children: <Widget>[
           TextFormField(
-            key: const ValueKey('current-password-field'),
+            key: currentPasswordFieldKey,
             decoration: const InputDecoration(
               labelText: CURRENT_PASSWORD,
             ),
@@ -113,7 +114,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           ),
           const SizedBox(height: 12),
           TextFormField(
-            key: const ValueKey('new-password-field'),
+            key: newPasswordFieldKey,
             decoration: const InputDecoration(
               labelText: NEW_PASSWORD,
             ),
@@ -132,7 +133,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           ),
           const SizedBox(height: 12),
           TextFormField(
-            key: const ValueKey('new-password-confirmation-field'),
+            key: newPasswordConfirmationFieldKey,
             decoration: const InputDecoration(
               labelText: NEW_PASSWORD_CONFIRMATION,
             ),

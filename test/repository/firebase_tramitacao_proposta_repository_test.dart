@@ -15,6 +15,7 @@ void main() {
     MockDocumentReference mockPropostaDocumentRef;
     MockQuery mockQuery;
     MockQuerySnapshot mockQuerySnapshot;
+    MockDocumentSnapshot mockDocumentSnapshot;
 
     setUp(() {
       mockFirestore = MockFirestore();
@@ -23,6 +24,7 @@ void main() {
       mockPropostaDocumentRef = MockDocumentReference();
       mockQuery = MockQuery();
       mockQuerySnapshot = MockQuerySnapshot();
+      mockDocumentSnapshot = MockDocumentSnapshot();
       firebaseTramitacaoPropostaRepository =
           FirebaseTramitacaoPropostaRepository(
         firestore: mockFirestore,
@@ -50,7 +52,10 @@ void main() {
             .thenReturn(mockQuery);
         when(mockQuery.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
-        when(mockQuerySnapshot.documents).thenReturn([]);
+        when(mockQuerySnapshot.documents).thenReturn([mockDocumentSnapshot]);
+        when(mockDocumentSnapshot.data).thenReturn({
+          'ambito': 'ambito',
+        });
 
         await firebaseTramitacaoPropostaRepository.getTramitacoesProposta('1');
       });

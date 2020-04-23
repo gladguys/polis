@@ -509,8 +509,12 @@ void main() {
                   politicId: '1', count: kTimelinePageSize))
               .thenAnswer(
             (_) => Future.value(
-              const Tuple2<List<dynamic>, DocumentSnapshot>(
-                [],
+              Tuple2<List<dynamic>, DocumentSnapshot>(
+                [
+                  DespesaModel(
+                    codDocumento: '1111',
+                  )
+                ],
                 null,
               ),
             ),
@@ -538,7 +542,7 @@ void main() {
               .thenAnswer(
             (_) => Future.value(
               Tuple2<List<dynamic>, DocumentSnapshot>(
-                [],
+                [PropostaModel(id: '8')],
                 mockDocumentSnapshot,
               ),
             ),
@@ -556,8 +560,20 @@ void main() {
               id: '1',
               quantidadeSeguidores: 5,
             ),
-            lastActivities: [PoliticoModel(id: '1', email: 'email@gmail')],
-            activitiesCount: 0,
+            lastActivities: [DespesaModel(codDocumento: '1111')],
+            activitiesCount: 1,
+            isBeingFollowedByUser: true,
+          ),
+          GetPoliticInfoSuccess(
+            politic: PoliticoModel(
+              id: '1',
+              quantidadeSeguidores: 5,
+            ),
+            lastActivities: [
+              DespesaModel(codDocumento: '1111'),
+              PropostaModel(id: '8')
+            ],
+            activitiesCount: 2,
             isBeingFollowedByUser: true,
           ),
         ],

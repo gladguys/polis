@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/blocs.dart';
+import '../../../core/keys.dart';
 import '../../../i18n/label.dart';
 import '../../../model/models.dart';
 import '../../../widget/field_rounded.dart';
@@ -25,7 +26,7 @@ class FollowingPoliticsSearch extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: FieldRounded(
-            key: const ValueKey('search-textfield'),
+            key: searchTextfieldKey,
             hintText: SEARCH_HERE,
             width: 300,
             iconPrefix: FontAwesomeIcons.search,

@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/keys.dart';
 import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
@@ -186,7 +187,7 @@ void main() {
           ),
         ),
       );
-      final tramitationsIcon = find.byKey(const ValueKey('tramitations-icon'));
+      final tramitationsIcon = find.byKey(tramitationsIconKey);
       expect(tramitationsIcon, findsOneWidget);
       await tester.tap(tramitationsIcon);
       verify(mockObserver.didPush(any, any));

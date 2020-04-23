@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/keys.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
@@ -208,8 +208,7 @@ void main() {
         ),
       );
       expect(find.byType(CardBase), findsWidgets);
-      final followUnfollowButton =
-          find.byKey(const ValueKey('follow-unfollow-btn')).first;
+      final followUnfollowButton = find.byKey(followUnfollowButtonKey).first;
       expect(followUnfollowButton, findsOneWidget);
       await tester.tap(followUnfollowButton);
       verify(
@@ -329,7 +328,7 @@ void main() {
           ),
         ),
       );
-      final backButton = find.byKey(const ValueKey('arrow-back-btn'));
+      final backButton = find.byKey(arrowBackButtonKey);
       expect(backButton, findsOneWidget);
       await tester.tap(backButton);
     });

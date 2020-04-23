@@ -7,6 +7,7 @@ import 'package:sliding_panel/sliding_panel.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/abstract/polis_image_picker.dart';
+import '../../core/keys.dart';
 import '../../core/validators.dart';
 import '../../i18n/i18n.dart';
 import '../../model/models.dart';
@@ -126,7 +127,7 @@ class _SignupPageState extends State<SignupPage> {
                 child: InkWell(
                   borderRadius: BorderRadius.circular(60),
                   child: Center(
-                    key: const ValueKey('profile-container'),
+                    key: profileContainerKey,
                     child: _profilePhoto != null
                         ? ClipRRect(
                             borderRadius: BorderRadius.circular(60),
@@ -164,7 +165,7 @@ class _SignupPageState extends State<SignupPage> {
             ),
             const SizedBox(height: 16),
             TextFormField(
-              key: const ValueKey('name-field'),
+              key: nameFieldKey,
               decoration: const InputDecoration(
                 labelText: NAME,
               ),
@@ -175,7 +176,7 @@ class _SignupPageState extends State<SignupPage> {
             ),
             const SizedBox(height: 16),
             TextFormField(
-              key: const ValueKey('email-field'),
+              key: signupEmailFieldKey,
               focusNode: _emailFN,
               decoration: const InputDecoration(
                 labelText: EMAIL,
@@ -188,7 +189,7 @@ class _SignupPageState extends State<SignupPage> {
             ),
             const SizedBox(height: 16),
             TextFormField(
-              key: const ValueKey('password-field'),
+              key: signupPasswordFieldKey,
               focusNode: _passwordFN,
               obscureText: true,
               decoration: const InputDecoration(
@@ -202,7 +203,7 @@ class _SignupPageState extends State<SignupPage> {
             ),
             const SizedBox(height: 16),
             TextFormField(
-              key: const ValueKey('confirm-password-field'),
+              key: confirmPasswordFieldKey,
               focusNode: _confirmPasswordFN,
               obscureText: true,
               decoration: const InputDecoration(
@@ -222,7 +223,7 @@ class _SignupPageState extends State<SignupPage> {
             Container(
               width: 160,
               child: RaisedButton(
-                key: const ValueKey('signup-btn'),
+                key: signupButtonKey,
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: const Text(
                   SIGNUP,

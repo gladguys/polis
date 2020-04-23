@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/blocs.dart';
+import '../../../core/keys.dart';
 import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
 import '../../../widget/text_rich.dart';
@@ -93,7 +94,7 @@ class _TimelineState extends State<Timeline> {
 
   Widget _buildUpdateButton() {
     return RaisedButton(
-      key: const ValueKey('update-timeline-btn'),
+      key: updateTimelineButtonKey,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
@@ -133,7 +134,7 @@ void main() {
       );
       final fieldRounded = find.byType(FieldRounded);
       expect(fieldRounded, findsOneWidget);
-      final sliders = find.byKey(const ValueKey('sliders-icon'));
+      final sliders = find.byKey(searchPoliticsSlidersIconKey);
       expect(sliders, findsOneWidget);
       await tester.tap(sliders);
       await tester.pumpAndSettle();
@@ -173,7 +174,7 @@ void main() {
       );
       final fieldRounded = find.byType(FieldRounded);
       expect(fieldRounded, findsOneWidget);
-      final sliders = find.byKey(const ValueKey('sliders-icon'));
+      final sliders = find.byKey(searchPoliticsSlidersIconKey);
       expect(sliders, findsOneWidget);
       await tester.tap(sliders);
       await tester.pumpAndSettle();
@@ -260,7 +261,7 @@ void main() {
         ),
       );
       final followUnfollowButton =
-          find.byKey(const ValueKey('follow-unfollow-btn')).first;
+          find.byKey(searchPoliticsFollowUnfollowButton).first;
       expect(followUnfollowButton, findsOneWidget);
       await tester.tap(followUnfollowButton);
       verify(mockSearchPoliticBloc.add(any)).called(1);

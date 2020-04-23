@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
+import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/model/despesa_model.dart';
 import 'package:polis/widget/button_action_card.dart';
@@ -50,7 +51,7 @@ void main() {
       await tester.pumpWidget(
         connectedWidget(DespesaTileConnected(despesa)),
       );
-      final card = find.byKey(const ValueKey('card-base-content'));
+      final card = find.byKey(cardBaseContentKey);
       expect(card, findsOneWidget);
       await tester.tap(card);
     });

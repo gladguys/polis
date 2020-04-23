@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../core/routing/route_names.dart';
+import '../../i18n/i18n.dart';
 import '../pages.dart';
 
 class CrunchingDataPage extends StatefulWidget {
@@ -62,13 +63,13 @@ class _CrunchingDataPageState extends State<CrunchingDataPage>
                     opacity: 1 - controller.value,
                     child: const RotateAnimatedTextKit(
                       text: [
-                        'Buscando Políticos...',
-                        'Buscando Partidos..',
-                        'Buscando Estados..'
+                        SEARCHING_POLITICS,
+                        SEARCHING_PARTIES,
+                        SEARCHING_STATES
                       ],
                       textStyle: TextStyle(
                         fontSize: 32,
-                        fontFamily: "Horizon",
+                        fontFamily: 'Horizon',
                       ),
                       alignment: AlignmentDirectional.topStart,
                     ),
@@ -82,7 +83,7 @@ class _CrunchingDataPageState extends State<CrunchingDataPage>
                   child: RaisedButton(
                     color: Colors.amber,
                     child: const Text(
-                      'Tudo pronto. Vamos lá!',
+                      ALL_SET_LETS_GO,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
