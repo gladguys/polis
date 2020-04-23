@@ -130,6 +130,11 @@ class MyAppInjections extends StatelessWidget {
             firebaseAuth: FirebaseAuth.instance,
           ),
         ),
+        RepositoryProvider(
+          create: (_) => FirebaseTramitacaoPropostaRepository(
+            firestore: Firestore.instance,
+          ),
+        ),
       ],
       child: child,
     );

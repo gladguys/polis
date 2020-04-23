@@ -172,6 +172,21 @@ void main() {
           expect(e, isInstanceOf<InvalidCredentialsException>());
         });
       });
+            
+      test(
+          '''throw InvalidCredentialsException when auth fails for ERROR_USER_NOT_FOUND''',
+          () async {
+        when(mockFirebaseAuth.signInWithEmailAndPassword(
+                email: 'email', password: 'password'))
+            .thenThrow(PlatformException(code: 'ERROR_USER_NOT_FOUND'));
+
+        firebaseSigninRepository
+            .signInWithEmailAndPassword('email', 'password')
+            .then((_) {})
+            .catchError((e) {
+          expect(e, isInstanceOf<InvalidCredentialsException>());
+        });
+      });
 
       test('throw ComunicationException when firestore mess up', () async {
         when(mockFirebaseAuth.signInWithEmailAndPassword(
