@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
 
+import '../core/abstract/polis_google_auth_provider.dart';
 import '../repository/concrete/repositories.dart';
 
 const SCOPE_TYPE = 'email';
@@ -30,6 +31,7 @@ class MyAppInjections extends StatelessWidget {
                 SCOPE_URL,
               ],
             ),
+            polisGoogleAuthProvider: PolisGoogleAuthProvider(),
           ),
         ),
         RepositoryProvider(
@@ -53,6 +55,7 @@ class MyAppInjections extends StatelessWidget {
           create: (_) => FirebaseUserRepository(
             firestore: Firestore.instance,
             firebaseAuth: FirebaseAuth.instance,
+            googleSignIn: GoogleSignIn(),
           ),
         ),
         RepositoryProvider(

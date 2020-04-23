@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/exception/exceptions.dart';
+import '../../../enum/auth_provider.dart';
 import '../../../model/models.dart';
 import '../../abstract/signup_repository.dart';
 import 'firebase.dart';
@@ -51,7 +52,10 @@ class FirebaseSignupRepository extends SignupRepository {
 
         await createFirestoreUser(
           authResult.user.uid,
-          user.copyWith(photoUrl: imageUrl),
+          user.copyWith(
+            photoUrl: imageUrl,
+            authProvider: AuthProvider.emailAndPassword,
+          ),
         );
         await authResult.user.sendEmailVerification();
         return;

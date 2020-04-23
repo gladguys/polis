@@ -11,6 +11,7 @@ void main() {
   group('FirebaseUserRepository tests', () {
     MockFirebaseAuth mockFirebaseAuth;
     MockFirestore mockFirestore;
+    MockGoogleSignin mockGoogleSignin;
     FirebaseUserRepository firebaseUserRepository;
     MockCollectionReference mockUserCollectionRef;
     MockDocumentReference mockUserDocumentRef;
@@ -20,8 +21,10 @@ void main() {
       mockUserDocumentRef = MockDocumentReference();
       mockFirebaseAuth = MockFirebaseAuth();
       mockFirestore = MockFirestore();
+      mockGoogleSignin = MockGoogleSignin();
       firebaseUserRepository = FirebaseUserRepository(
         firebaseAuth: mockFirebaseAuth,
+        googleSignIn: mockGoogleSignin,
         firestore: mockFirestore,
       );
     });
@@ -30,6 +33,7 @@ void main() {
       expect(
           () => FirebaseUserRepository(
                 firebaseAuth: null,
+                googleSignIn: mockGoogleSignin,
                 firestore: mockFirestore,
               ),
           throwsAssertionError);
@@ -37,6 +41,15 @@ void main() {
       expect(
           () => FirebaseUserRepository(
                 firebaseAuth: mockFirebaseAuth,
+                googleSignIn: null,
+                firestore: mockFirestore,
+              ),
+          throwsAssertionError);
+
+      expect(
+          () => FirebaseUserRepository(
+                firebaseAuth: mockFirebaseAuth,
+                googleSignIn: mockGoogleSignin,
                 firestore: null,
               ),
           throwsAssertionError);

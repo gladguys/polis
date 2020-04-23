@@ -10,7 +10,7 @@ import '../../../core/routing/route_names.dart';
 import '../../../i18n/label.dart';
 import '../../../model/models.dart';
 import '../../../widget/text_title.dart';
-import '../../initial/initial_page.dart';
+import '../../pages.dart';
 import '../../theme/main_theme.dart';
 import 'personal_user_info.dart';
 import 'politics_following_quantity.dart';
@@ -127,7 +127,7 @@ class _UserProfileState extends State<UserProfile> {
             onPressed: () {
               userBloc.add(Logout());
               SimpleRouter.forwardAndRemoveAll(
-                InitialPage(),
+                InitialPageConnected(),
                 name: INITIAL_PAGE,
               );
             },

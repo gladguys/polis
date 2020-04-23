@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:polis/enum/auth_provider.dart';
 import 'package:polis/model/models.dart';
 
 void main() {
@@ -7,6 +8,7 @@ void main() {
     'name': 'name',
     'email': 'email',
     'photoUrl': 'photoUrl',
+    'authProvider': 'GOOGLE',
     'isFirstLoginDone': true,
   };
 
@@ -15,6 +17,7 @@ void main() {
       name: 'name',
       email: 'email',
       photoUrl: 'photoUrl',
+      authProvider: AuthProvider.google,
       isFirstLoginDone: true);
 
   group('UserModel tests', () {
@@ -24,6 +27,7 @@ void main() {
         name: 'user1',
         email: 'user1@gmail.com',
         password: 'verysecret',
+        authProvider: AuthProvider.google,
         isFirstLoginDone: true,
       );
       final user2 = UserModel(
@@ -31,6 +35,7 @@ void main() {
         name: 'user1',
         email: 'user1@gmail.com',
         password: 'verysecretqqq',
+        authProvider: AuthProvider.google,
         isFirstLoginDone: true,
       );
       final user3 = UserModel(
@@ -38,6 +43,7 @@ void main() {
         name: 'user3',
         email: 'user3@gmail.com',
         password: 'verysecret',
+        authProvider: AuthProvider.emailAndPassword,
         isFirstLoginDone: false,
       );
 
@@ -48,7 +54,7 @@ void main() {
     test('toString()', () {
       final modelToString = UserModel(userId: 'myId').toString();
       final result =
-          '''UserModel{userId: myId, name: null, email: null, photoUrl: null, isFirstLoginDone: null, password: null}''';
+          '''UserModel{userId: myId, name: null, email: null, photoUrl: null, isFirstLoginDone: null, authProvider: null, password: null}''';
       expect(modelToString == result, true);
     });
 
@@ -71,6 +77,7 @@ void main() {
       expect(userToJson['name'] == jsonUser['name'], true);
       expect(userToJson['email'] == jsonUser['email'], true);
       expect(userToJson['password'] == jsonUser['password'], true);
+      expect(userToJson['authProvider'] == jsonUser['authProvider'], true);
       expect(
           userToJson['isFirstLoginDone'] == jsonUser['isFirstLoginDone'], true);
     });
