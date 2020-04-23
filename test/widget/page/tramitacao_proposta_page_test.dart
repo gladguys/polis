@@ -1,15 +1,20 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
-import 'package:polis/widget/card_base.dart';
+import 'package:polis/widget/timeline_tile.dart';
 
 import '../../mock.dart';
 import '../utils.dart';
 
 void main() {
+  setUpAll(() {
+    initializeDateFormatting('pt_BR', null);
+  });
+
   group('TramitacaoPropostaPage tests', () {
     testWidgets('shoud build without exploding', (tester) async {
       await tester.pumpWidget(
@@ -26,6 +31,7 @@ void main() {
       when(mockTramitacaoPropostaBloc.proposta).thenReturn(
         PropostaModel(
           sequencia: '1',
+          dataApresentacao: '10-01-2020',
         ),
       );
       when(mockTramitacaoPropostaBloc.state).thenReturn(
@@ -34,10 +40,12 @@ void main() {
             TramitacaoPropostaModel(
               descricaoTramitacao: 'descricao1',
               sequencia: '1',
+              dataHora: '10-01-2020',
             ),
             TramitacaoPropostaModel(
               descricaoTramitacao: 'descricao2',
               sequencia: '2',
+              dataHora: '10-01-2020',
             ),
           ],
         ),
@@ -50,7 +58,7 @@ void main() {
           ),
         ),
       );
-      expect(find.byType(CardBase), findsNWidgets(2));
+      expect(find.byType(TimelineTile), findsNWidgets(2));
     });
   });
 }
