@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:polis/page/theme/main_theme.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:simple_router/simple_router.dart';
 
@@ -135,6 +136,25 @@ class PostProposta extends StatelessWidget {
             value: proposta.dataApresentacao.formatDate(),
             emptyValue: NOT_INFORMED_FEMALE,
           ),
+          Container(
+            height: 30,
+            margin: const EdgeInsets.only(top: 4),
+            child: OutlineButton.icon(
+              icon: FaIcon(FontAwesomeIcons.exchangeAlt, size: 18),
+              label: Text(
+                TRAMITATIONS.toUpperCase(),
+                style: const TextStyle(fontSize: 13),
+              ),
+              color: theme.primaryColor,
+              highlightedBorderColor: theme.primaryColorDark,
+              borderSide: BorderSide(color: theme.primaryColor),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              onPressed: () => SimpleRouter.forward(
+                TramitacaoPropostaPageConnected(proposta),
+                name: TRAMITACAO_PROPOSTA_PAGE,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -176,16 +196,6 @@ class PostProposta extends StatelessWidget {
                       user: context.bloc<UserBloc>().user,
                     ),
                   ),
-            ),
-            const SizedBox(width: 16),
-            ButtonActionCard(
-              icon: FontAwesomeIcons.exchangeAlt,
-              text: TRAMITATIONS,
-              fontSize: 14,
-              onTap: () => SimpleRouter.forward(
-                TramitacaoPropostaPageConnected(proposta),
-                name: TRAMITACAO_PROPOSTA_PAGE,
-              ),
             ),
           ],
         ),
