@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/blocs.dart';
+import '../../../core/keys.dart';
 import '../../../i18n/label.dart';
 import '../../../model/models.dart';
 import '../../../widget/field_rounded.dart';
@@ -80,7 +81,7 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
               width: 40,
               height: 40,
               child: OutlineButton(
-                key: const ValueKey('sliders-icon'),
+                key: searchPoliticsSlidersIconKey,
                 color: theme.primaryColor,
                 highlightedBorderColor: theme.primaryColorDark,
                 borderSide: BorderSide(color: theme.primaryColor),

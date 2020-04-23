@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../../bloc/blocs.dart';
+import '../../../core/keys.dart';
 import '../../../core/routing/route_names.dart';
 import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
@@ -27,7 +28,7 @@ class SearchPoliticsList extends StatelessWidget {
 
   Widget _buildList(BuildContext context) {
     return ListView.separated(
-      key: const ValueKey('politics-list'),
+      key: politicsListKey,
       separatorBuilder: (_, i) => const Divider(
         height: 1,
         indent: 8,
@@ -48,7 +49,7 @@ class SearchPoliticsList extends StatelessWidget {
       slotCenter: _buildCardContent(context, politico),
       slotRight: ButtonFollowUnfollow(
         isFollow: bloc.isPoliticBeingFollowed(politico),
-        key: const ValueKey('follow-unfollow-btn'),
+        key: searchPoliticsFollowUnfollowButton,
         onPressed: () => bloc.add(
           FollowUnfollowSearchPolitic(
             user: context.bloc<UserBloc>().user,

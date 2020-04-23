@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:polis/core/keys.dart';
 import 'package:polis/page/pages.dart';
 import 'package:polis/widget/select/selects.dart';
 
@@ -27,7 +27,7 @@ void main() {
     testWidgets('should go to POLITIC_SUGGESTION_PAGE page when click on done',
         (tester) async {
       await tester.pumpWidget(connectedWidget(IntroPage()));
-      final doneButton = find.byKey(const ValueKey('done-btn'));
+      final doneButton = find.byKey(doneButtonKey);
       expect(doneButton, doneButton);
       await tester.tap(doneButton);
       await tester.pump();

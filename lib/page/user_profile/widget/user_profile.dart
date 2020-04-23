@@ -6,6 +6,7 @@ import 'package:sliding_panel/sliding_panel.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../bloc/user/user_bloc.dart';
+import '../../../core/keys.dart';
 import '../../../core/routing/route_names.dart';
 import '../../../i18n/label.dart';
 import '../../../model/models.dart';
@@ -112,7 +113,7 @@ class _UserProfileState extends State<UserProfile> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         Container(
-          key: const ValueKey('logout-button'),
+          key: logoutButtonKey,
           height: 30,
           child: OutlineButton.icon(
             padding: EdgeInsets.zero,

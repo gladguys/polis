@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:simple_router/simple_router.dart';
 
+import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
 import '../../widget/select/selects.dart';
@@ -60,7 +61,7 @@ class _IntroPageState extends State<IntroPage> {
           ],
           done: Text(
             CONFIRM.toUpperCase(),
-            key: const ValueKey('done-btn'),
+            key: doneButtonKey,
             style: const TextStyle(
               fontWeight: FontWeight.w600,
             ),

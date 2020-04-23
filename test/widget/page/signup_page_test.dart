@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/abstract/polis_image_picker.dart';
+import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
@@ -83,11 +84,10 @@ void main() {
       final form = tester.widget(find.byType(Form)) as Form;
       final formKey = form.key as GlobalKey<FormState>;
 
-      final nameField = find.byKey(const ValueKey('name-field'));
-      final emailField = find.byKey(const ValueKey('email-field'));
-      final passwordField = find.byKey(const ValueKey('password-field'));
-      final confirmPasswordField =
-          find.byKey(const ValueKey('confirm-password-field'));
+      final nameField = find.byKey(nameFieldKey);
+      final emailField = find.byKey(signupEmailFieldKey);
+      final passwordField = find.byKey(signupPasswordFieldKey);
+      final confirmPasswordField = find.byKey(confirmPasswordFieldKey);
 
       final signupUser = UserModel(
         name: 'test',
@@ -103,7 +103,7 @@ void main() {
       await tester.enterText(confirmPasswordField, 'secret');
       await tester.pump();
 
-      final signupBtn = find.byKey(const ValueKey('signup-btn'));
+      final signupBtn = find.byKey(signupButtonKey);
       await tester.tap(signupBtn);
       await tester.pumpAndSettle();
       expect(formKey.currentState.validate(), isTrue);
@@ -131,11 +131,10 @@ void main() {
       final form = tester.widget(find.byType(Form)) as Form;
       final formKey = form.key as GlobalKey<FormState>;
 
-      final nameField = find.byKey(const ValueKey('name-field'));
-      final emailField = find.byKey(const ValueKey('email-field'));
-      final passwordField = find.byKey(const ValueKey('password-field'));
-      final confirmPasswordField =
-          find.byKey(const ValueKey('confirm-password-field'));
+      final nameField = find.byKey(nameFieldKey);
+      final emailField = find.byKey(signupEmailFieldKey);
+      final passwordField = find.byKey(signupPasswordFieldKey);
+      final confirmPasswordField = find.byKey(confirmPasswordFieldKey);
 
       final signupUser = UserModel(
         name: 'test',
@@ -267,7 +266,7 @@ void main() {
           ),
         ),
       );
-      final profile = find.byKey(const ValueKey('profile-container'));
+      final profile = find.byKey(profileContainerKey);
       expect(profile, findsOneWidget);
       await tester.tap(profile);
       await tester.pumpAndSettle();

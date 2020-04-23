@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/model/despesa_model.dart';
 import 'package:polis/page/page_connected.dart';
@@ -87,7 +88,7 @@ void main() {
           ),
         ),
       );
-      final card = find.byKey(const ValueKey('card-base-content'));
+      final card = find.byKey(cardBaseContentKey);
       expect(card, findsOneWidget);
       await tester.tap(card);
     });
@@ -167,6 +168,31 @@ void main() {
       expect(politicPhoto, findsOneWidget);
       await tester.tap(politicPhoto);
       verify(mockObserver.didPush(any, any));
+    });
+
+    testWidgets('should open despesa image when clicked document icon',
+        (tester) async {
+      final mockDespesaImageBloc = MockDespesaImageBloc();
+      final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.isPostFavorite).thenReturn(false);
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<PostBloc>(
+            bloc: mockPostBloc,
+            page: PageConnected<DespesaImageBloc>(
+              bloc: mockDespesaImageBloc,
+              page: PostDespesa(
+                despesa,
+                screenshotController: MockScreenshotController(),
+              ),
+            ),
+          ),
+        ),
+      );
+      final despesaIcon = find.byKey(despesaImageIconKey);
+      expect(despesaIcon, findsOneWidget);
+      await tester.tap(despesaIcon);
+      verify(mockDespesaImageBloc.add(OpenDespesaImage('urlDoc'))).called(1);
     });
   });
 }

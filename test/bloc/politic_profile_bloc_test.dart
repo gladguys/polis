@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/constants.dart';
 import 'package:polis/model/models.dart';
 import 'package:tuple/tuple.dart';
 
@@ -14,8 +15,10 @@ void main() {
     MockPoliticProfileRepository mockPoliticProfileRepository;
     MockFollowRepository mockFollowRepository;
     MockUrlLauncherService mockUrlLauncherService;
+    MockDocumentSnapshot mockDocumentSnapshot;
 
     setUp(() {
+      mockDocumentSnapshot = MockDocumentSnapshot();
       mockPoliticProfileRepository = MockPoliticProfileRepository();
       mockFollowRepository = MockFollowRepository();
       mockUrlLauncherService = MockUrlLauncherService();
@@ -78,7 +81,7 @@ void main() {
             ),
           );
           when(mockPoliticProfileRepository.getLastActivities(
-                  politicId: '1', count: 5))
+                  politicId: '1', count: kTimelinePageSize))
               .thenAnswer(
             (_) => Future.value(
               Tuple2<List<dynamic>, DocumentSnapshot>([
@@ -100,7 +103,7 @@ void main() {
         verify: (politicProfileBloc) async {
           verify(mockPoliticProfileRepository.getInfoPolitic('1')).called(1);
           verify(mockPoliticProfileRepository.getLastActivities(
-                  politicId: '1', count: 5))
+                  politicId: '1', count: kTimelinePageSize))
               .called(1);
         },
         expect: [
@@ -154,7 +157,7 @@ void main() {
             ),
           );
           when(mockPoliticProfileRepository.getLastActivities(
-                  politicId: '1', count: 5))
+                  politicId: '1', count: kTimelinePageSize))
               .thenAnswer(
             (_) => Future.value(
               Tuple2<List<dynamic>, DocumentSnapshot>([
@@ -178,7 +181,7 @@ void main() {
         verify: (politicProfileBloc) async {
           verify(mockPoliticProfileRepository.getInfoPolitic('1')).called(1);
           verify(mockPoliticProfileRepository.getLastActivities(
-                  politicId: '1', count: 5))
+                  politicId: '1', count: kTimelinePageSize))
               .called(1);
           verify(mockFollowRepository.followPolitic(
                   user: anyNamed('user'), politico: anyNamed('politico')))
@@ -221,7 +224,7 @@ void main() {
             ),
           );
           when(mockPoliticProfileRepository.getLastActivities(
-                  politicId: '1', count: 5))
+                  politicId: '1', count: kTimelinePageSize))
               .thenAnswer(
             (_) => Future.value(
               Tuple2<List<dynamic>, DocumentSnapshot>([
@@ -245,7 +248,7 @@ void main() {
         verify: (politicProfileBloc) async {
           verify(mockPoliticProfileRepository.getInfoPolitic('1')).called(1);
           verify(mockPoliticProfileRepository.getLastActivities(
-                  politicId: '1', count: 5))
+                  politicId: '1', count: kTimelinePageSize))
               .called(1);
           verify(mockFollowRepository.unfollowPolitic(
                   user: anyNamed('user'), politico: anyNamed('politico')))
@@ -288,7 +291,7 @@ void main() {
             ),
           );
           when(mockPoliticProfileRepository.getLastActivities(
-                  politicId: '1', count: 5))
+                  politicId: '1', count: kTimelinePageSize))
               .thenAnswer(
             (_) => Future.value(
               Tuple2<List<dynamic>, DocumentSnapshot>([
@@ -315,7 +318,7 @@ void main() {
         verify: (politicProfileBloc) async {
           verify(mockPoliticProfileRepository.getInfoPolitic('1')).called(1);
           verify(mockPoliticProfileRepository.getLastActivities(
-                  politicId: '1', count: 5))
+                  politicId: '1', count: kTimelinePageSize))
               .called(1);
           verify(mockFollowRepository.unfollowPolitic(
                   user: anyNamed('user'), politico: anyNamed('politico')))
@@ -362,7 +365,7 @@ void main() {
             ),
           );
           when(mockPoliticProfileRepository.getLastActivities(
-                  politicId: '1', count: 5))
+                  politicId: '1', count: kTimelinePageSize))
               .thenAnswer(
             (_) => Future.value(
               const Tuple2<List<dynamic>, DocumentSnapshot>(
@@ -409,7 +412,7 @@ void main() {
             ),
           );
           when(mockPoliticProfileRepository.getLastActivities(
-                  politicId: '1', count: 5))
+                  politicId: '1', count: kTimelinePageSize))
               .thenAnswer(
             (_) => Future.value(
               const Tuple2<List<dynamic>, DocumentSnapshot>(
@@ -455,7 +458,7 @@ void main() {
             ),
           );
           when(mockPoliticProfileRepository.getLastActivities(
-                  politicId: '1', count: 5))
+                  politicId: '1', count: kTimelinePageSize))
               .thenAnswer(
             (_) => Future.value(
               const Tuple2<List<dynamic>, DocumentSnapshot>(
@@ -503,11 +506,15 @@ void main() {
             ),
           );
           when(mockPoliticProfileRepository.getLastActivities(
-                  politicId: '1', count: 5))
+                  politicId: '1', count: kTimelinePageSize))
               .thenAnswer(
             (_) => Future.value(
-              const Tuple2<List<dynamic>, DocumentSnapshot>(
-                [],
+              Tuple2<List<dynamic>, DocumentSnapshot>(
+                [
+                  DespesaModel(
+                    codDocumento: '1111',
+                  )
+                ],
                 null,
               ),
             ),
@@ -528,6 +535,18 @@ void main() {
           when(mockFollowRepository.isPoliticBeingFollowed(
                   user: anyNamed('user'), politicId: anyNamed('politicId')))
               .thenAnswer((_) async => true);
+          when(mockPoliticProfileRepository.getMoreActivities(
+                  politicId: anyNamed('politicId'),
+                  lastDocument: anyNamed('lastDocument'),
+                  count: anyNamed('count')))
+              .thenAnswer(
+            (_) => Future.value(
+              Tuple2<List<dynamic>, DocumentSnapshot>(
+                [PropostaModel(id: '8')],
+                mockDocumentSnapshot,
+              ),
+            ),
+          );
           return politicProfileBloc;
         },
         act: (politicProfileBloc) async {
@@ -541,8 +560,20 @@ void main() {
               id: '1',
               quantidadeSeguidores: 5,
             ),
-            lastActivities: [PoliticoModel(id: '1', email: 'email@gmail')],
-            activitiesCount: 0,
+            lastActivities: [DespesaModel(codDocumento: '1111')],
+            activitiesCount: 1,
+            isBeingFollowedByUser: true,
+          ),
+          GetPoliticInfoSuccess(
+            politic: PoliticoModel(
+              id: '1',
+              quantidadeSeguidores: 5,
+            ),
+            lastActivities: [
+              DespesaModel(codDocumento: '1111'),
+              PropostaModel(id: '8')
+            ],
+            activitiesCount: 2,
             isBeingFollowedByUser: true,
           ),
         ],

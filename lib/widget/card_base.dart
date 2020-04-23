@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../core/keys.dart';
+
 class CardBase extends StatelessWidget {
   const CardBase({
     @required this.slotCenter,
@@ -62,7 +64,7 @@ class CardBase extends StatelessWidget {
 
   Widget _buildContent() {
     return Row(
-      key: const ValueKey('card-base-content'),
+      key: cardBaseContentKey,
       crossAxisAlignment: crossAxisAlignment,
       children: <Widget>[
         if (slotLeft != null) slotLeft,

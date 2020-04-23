@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_admob/firebase_admob.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -220,8 +219,6 @@ class MockUrlLauncherService extends Mock implements UrlLauncherService {}
 
 // Other
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
-
-class MockBannerAd extends Mock implements BannerAd {}
 
 class MockTrace extends Mock implements Trace {}
 

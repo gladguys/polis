@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/models.dart';
@@ -101,14 +102,14 @@ void main() {
       final form = tester.widget(find.byType(Form)) as Form;
       final formKey = form.key as GlobalKey<FormState>;
 
-      final emailField = find.byKey(const ValueKey('email-field'));
-      final passwordField = find.byKey(const ValueKey('password-field'));
+      final emailField = find.byKey(emailFieldKey);
+      final passwordField = find.byKey(passwordFieldKey);
 
       await tester.enterText(emailField, 'test@gmail.com');
       await tester.enterText(passwordField, 'secret');
       await tester.pump();
 
-      final signinBtn = find.byKey(const ValueKey('signin-btn'));
+      final signinBtn = find.byKey(signinBtnKey);
       await tester.tap(signinBtn);
       await tester.pumpAndSettle();
       expect(formKey.currentState.validate(), isTrue);
@@ -134,8 +135,8 @@ void main() {
       final form = tester.widget(find.byType(Form)) as Form;
       final formKey = form.key as GlobalKey<FormState>;
 
-      final emailField = find.byKey(const ValueKey('email-field'));
-      final passwordField = find.byKey(const ValueKey('password-field'));
+      final emailField = find.byKey(emailFieldKey);
+      final passwordField = find.byKey(passwordFieldKey);
 
       await tester.enterText(emailField, 'test@gmail.com');
       await tester.testTextInput.receiveAction(TextInputAction.next);

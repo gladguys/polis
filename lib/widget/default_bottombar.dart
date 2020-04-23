@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../bloc/blocs.dart';
+import '../core/keys.dart';
 import '../core/routing/route_names.dart';
 import '../i18n/i18n.dart';
 import '../page/pages.dart';
@@ -43,7 +44,7 @@ class DefaultBottombar extends StatelessWidget {
                     ),
                   )
                 : _buildButtonBottomAppBar(
-                    key: const ValueKey('arrow-back-btn'),
+                    key: arrowBackButtonKey,
                     icon: FontAwesomeIcons.chevronLeft,
                     onPressed: onPopCallback,
                   ),
@@ -107,7 +108,7 @@ class DefaultBottombar extends StatelessWidget {
         width: 48,
         height: 60,
         child: Container(
-          key: const ValueKey('profile-image-bottombar'),
+          key: profileImageBottombarKey,
           alignment: Alignment.center,
           padding: const EdgeInsets.all(2),
           child: BlocBuilder<UserBloc, UserState>(
@@ -118,7 +119,7 @@ class DefaultBottombar extends StatelessWidget {
               size: 40,
               boxFit: BoxFit.cover,
               iconColor: Colors.black,
-              iconKey: const ValueKey('user-photoless-icon'),
+              iconKey: userPhotolessIconKey,
             ),
           ),
         ),

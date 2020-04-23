@@ -172,7 +172,7 @@ void main() {
           expect(e, isInstanceOf<InvalidCredentialsException>());
         });
       });
-            
+
       test(
           '''throw InvalidCredentialsException when auth fails for ERROR_USER_NOT_FOUND''',
           () async {
@@ -203,6 +203,22 @@ void main() {
             .signInWithEmailAndPassword('email', 'password')
             .catchError((e) {
           expect(e, isInstanceOf<ComunicationException>());
+        });
+      });
+
+      group('sendResetEmail', () {
+        test('works', () async {
+          when(mockFirebaseAuth.sendPasswordResetEmail(email: 'email'))
+              .thenAnswer((_) => Future.value());
+          await firebaseSigninRepository.sendResetEmail('email');
+        });
+
+        test('throws exception', () {
+          when(mockFirebaseAuth.sendPasswordResetEmail(email: 'email'))
+              .thenThrow(Exception());
+          firebaseSigninRepository
+              .sendResetEmail('email')
+              .catchError((e) => expect(e, isA<ComunicationException>()));
         });
       });
 

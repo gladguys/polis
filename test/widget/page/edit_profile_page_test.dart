@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:image_test_utils/image_test_utils.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/keys.dart';
 import 'package:polis/enum/auth_provider.dart';
 import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/models.dart';
@@ -116,7 +117,7 @@ void main() {
             ),
           ),
         );
-        final userPhoto = find.byKey(const ValueKey('photo-url-user'));
+        final userPhoto = find.byKey(photoUrlUserKey);
         expect(userPhoto, findsOneWidget);
       });
     });
@@ -153,11 +154,11 @@ void main() {
           ),
         ),
       );
-      final profile = find.byKey(const ValueKey('profile-container'));
+      final profile = find.byKey(profileContainerKey);
       expect(profile, findsOneWidget);
       await tester.tap(profile);
       await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('photo-url-file')), findsOneWidget);
+      expect(find.byKey(photoUrlFileKey), findsOneWidget);
     });
 
     testWidgets('should validate and save the form', (tester) async {
@@ -175,8 +176,8 @@ void main() {
       final form = tester.widget(find.byType(Form)) as Form;
       final formKey = form.key as GlobalKey<FormState>;
 
-      final nameField = find.byKey(const ValueKey('name-field'));
-      final emailField = find.byKey(const ValueKey('email-field'));
+      final nameField = find.byKey(editProfileNameFieldKey);
+      final emailField = find.byKey(editProfileEmailFieldKey);
 
       await tester.enterText(nameField, 'test');
       await tester.testTextInput.receiveAction(TextInputAction.next);

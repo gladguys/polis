@@ -1,4 +1,3 @@
-import 'package:firebase_admob/firebase_admob.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_performance/firebase_performance.dart';
@@ -11,18 +10,7 @@ final GetIt G = GetIt.instance;
 
 void initLocator([SharedPreferences sharedPreferences]) {
   G.registerSingleton(
-    AdService(
-      bannerAd: BannerAd(
-        adUnitId: BannerAd.testAdUnitId,
-        size: AdSize.smartBanner,
-        targetingInfo: const MobileAdTargetingInfo(
-          keywords: <String>['flutterio', 'beautiful apps'],
-          contentUrl: 'https://flutter.io',
-          childDirected: false,
-          testDevices: <String>[],
-        ),
-      ),
-    ),
+    AdService(),
   );
   G.registerSingleton(
     AnalyticsService(analytics: FirebaseAnalytics()),

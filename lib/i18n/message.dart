@@ -13,6 +13,11 @@ const USER_UPDATE_PASSWORD_FAILED = 'Falha ao atualizar senha do usuário';
 const USER_UPDATE_PASSWORD_WRONG_PASSWORD =
     'A senha atual informada é inválida';
 
+const SEARCHING_POLITICS = 'Buscando Políticos...';
+const SEARCHING_PARTIES = 'Buscando Partidos...';
+const SEARCHING_STATES = 'Buscando Estados...';
+
+const ALL_SET_LETS_GO = 'Tudo pronto. Vamos lá!';
 const PICK_YOUR_STATE = 'Escolha seu estado';
 const STATE_MESSAGE = 'Qual o seu Estado?';
 const FOLLOW = 'Seguir';

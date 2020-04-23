@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/keys.dart';
 import 'package:polis/i18n/i18n.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
@@ -127,11 +128,10 @@ void main() {
       final form = tester.widget(find.byType(Form)) as Form;
       final formKey = form.key as GlobalKey<FormState>;
 
-      final currentPasswordField =
-          find.byKey(const ValueKey('current-password-field'));
-      final newPasswordField = find.byKey(const ValueKey('new-password-field'));
+      final currentPasswordField = find.byKey(currentPasswordFieldKey);
+      final newPasswordField = find.byKey(newPasswordFieldKey);
       final newPasswordConfirmationField =
-          find.byKey(const ValueKey('new-password-confirmation-field'));
+          find.byKey(newPasswordConfirmationFieldKey);
 
       await tester.enterText(currentPasswordField, '123456');
       await tester.testTextInput.receiveAction(TextInputAction.next);
@@ -169,11 +169,10 @@ void main() {
       final form = tester.widget(find.byType(Form)) as Form;
       final formKey = form.key as GlobalKey<FormState>;
 
-      final currentPasswordField =
-          find.byKey(const ValueKey('current-password-field'));
-      final newPasswordField = find.byKey(const ValueKey('new-password-field'));
+      final currentPasswordField = find.byKey(currentPasswordFieldKey);
+      final newPasswordField = find.byKey(newPasswordFieldKey);
       final newPasswordConfirmationField =
-          find.byKey(const ValueKey('new-password-confirmation-field'));
+          find.byKey(newPasswordConfirmationFieldKey);
 
       await tester.enterText(currentPasswordField, '123456');
       await tester.testTextInput.receiveAction(TextInputAction.next);
@@ -210,11 +209,10 @@ void main() {
       final form = tester.widget(find.byType(Form)) as Form;
       final formKey = form.key as GlobalKey<FormState>;
 
-      final currentPasswordField =
-          find.byKey(const ValueKey('current-password-field'));
-      final newPasswordField = find.byKey(const ValueKey('new-password-field'));
+      final currentPasswordField = find.byKey(currentPasswordFieldKey);
+      final newPasswordField = find.byKey(newPasswordFieldKey);
       final newPasswordConfirmationField =
-          find.byKey(const ValueKey('new-password-confirmation-field'));
+          find.byKey(newPasswordConfirmationFieldKey);
 
       await tester.enterText(currentPasswordField, '12345');
       await tester.testTextInput.receiveAction(TextInputAction.next);

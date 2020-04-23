@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -6,6 +5,7 @@ import 'package:image_test_utils/image_test_utils.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/enum/acao_type.dart';
 import 'package:polis/model/models.dart';
@@ -276,7 +276,7 @@ void main() {
           ),
         ),
       );
-      final logoutButton = find.byKey(const ValueKey('logout-button'));
+      final logoutButton = find.byKey(logoutButtonKey);
       expect(logoutButton, findsOneWidget);
       await tester.tap(logoutButton);
       await tester.pumpAndSettle();

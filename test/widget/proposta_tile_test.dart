@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
+import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/models.dart';
@@ -68,7 +69,7 @@ void main() {
       await tester.pumpWidget(
         connectedWidget(PropostaTileConnected(proposta)),
       );
-      final card = find.byKey(const ValueKey('card-base-content'));
+      final card = find.byKey(cardBaseContentKey);
       expect(card, findsOneWidget);
       await tester.tap(card);
     });

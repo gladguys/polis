@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/constants.dart';
 import 'package:polis/model/despesa_model.dart';
 import 'package:tuple/tuple.dart';
 
@@ -40,7 +41,9 @@ void main() {
       build: () async {
         when(mockTimelineRepository.getNewActivitiesCounter('1'))
             .thenAnswer((_) => timelineStream);
-        when(mockTimelineRepository.getTimelineFirstPosts('1', 5)).thenAnswer(
+        when(mockTimelineRepository.getTimelineFirstPosts(
+                '1', kTimelinePageSize))
+            .thenAnswer(
           (_) => Future.value(Tuple2([], mockDocumentSnapshot)),
         );
         return timelineBloc;
@@ -54,7 +57,9 @@ void main() {
       },
       verify: (timelineBloc) async {
         verify(mockTimelineRepository.getNewActivitiesCounter('1')).called(1);
-        verify(mockTimelineRepository.getTimelineFirstPosts('1', 5)).called(1);
+        verify(mockTimelineRepository.getTimelineFirstPosts(
+                '1', kTimelinePageSize))
+            .called(1);
       },
       expect: [
         LoadingTimeline(),
@@ -67,7 +72,9 @@ void main() {
       build: () async {
         when(mockTimelineRepository.getNewActivitiesCounter('1'))
             .thenAnswer((_) => timelineStream);
-        when(mockTimelineRepository.getTimelineFirstPosts('1', 5)).thenAnswer(
+        when(mockTimelineRepository.getTimelineFirstPosts(
+                '1', kTimelinePageSize))
+            .thenAnswer(
           (_) => Future.value(Tuple2([], mockDocumentSnapshot)),
         );
         return timelineBloc;
@@ -81,7 +88,9 @@ void main() {
       },
       verify: (timelineBloc) async {
         verify(mockTimelineRepository.getNewActivitiesCounter('1')).called(2);
-        verify(mockTimelineRepository.getTimelineFirstPosts('1', 5)).called(1);
+        verify(mockTimelineRepository.getTimelineFirstPosts(
+                '1', kTimelinePageSize))
+            .called(1);
       },
       expect: [
         LoadingTimeline(),
@@ -95,7 +104,9 @@ void main() {
       build: () async {
         when(mockTimelineRepository.getNewActivitiesCounter('1'))
             .thenAnswer((_) => timelineStream);
-        when(mockTimelineRepository.getTimelineFirstPosts('1', 5)).thenAnswer(
+        when(mockTimelineRepository.getTimelineFirstPosts(
+                '1', kTimelinePageSize))
+            .thenAnswer(
           (_) => Future.value(Tuple2([], mockDocumentSnapshot)),
         );
         return timelineBloc;
@@ -108,7 +119,9 @@ void main() {
       },
       verify: (timelineBloc) async {
         verify(mockTimelineRepository.getNewActivitiesCounter('1')).called(1);
-        verify(mockTimelineRepository.getTimelineFirstPosts('1', 5)).called(1);
+        verify(mockTimelineRepository.getTimelineFirstPosts(
+                '1', kTimelinePageSize))
+            .called(1);
       },
       expect: [
         LoadingTimeline(),
@@ -141,7 +154,8 @@ void main() {
       build: () async {
         when(mockTimelineRepository.getNewActivitiesCounter('1'))
             .thenAnswer((_) => timelineStream);
-        when(mockTimelineRepository.getTimelineFirstPosts('1', 5))
+        when(mockTimelineRepository.getTimelineFirstPosts(
+                '1', kTimelinePageSize))
             .thenThrow(Exception());
         return timelineBloc;
       },
@@ -151,7 +165,9 @@ void main() {
       },
       verify: (timelineBloc) async {
         verify(mockTimelineRepository.getNewActivitiesCounter('1')).called(1);
-        verify(mockTimelineRepository.getTimelineFirstPosts('1', 5)).called(1);
+        verify(mockTimelineRepository.getTimelineFirstPosts(
+                '1', kTimelinePageSize))
+            .called(1);
       },
       expect: [
         LoadingTimeline(),
@@ -164,12 +180,15 @@ void main() {
       build: () async {
         when(mockTimelineRepository.getNewActivitiesCounter('1'))
             .thenAnswer((_) => timelineStream);
-        when(mockTimelineRepository.getTimelineFirstPosts('1', 5)).thenAnswer(
+        when(mockTimelineRepository.getTimelineFirstPosts(
+                '1', kTimelinePageSize))
+            .thenAnswer(
           (_) => Future.value(
             Tuple2([DespesaModel(id: '1')], mockDocumentSnapshot),
           ),
         );
-        when(mockTimelineRepository.getMorePosts('1', 5, mockDocumentSnapshot))
+        when(mockTimelineRepository.getMorePosts(
+                '1', kTimelinePageSize, mockDocumentSnapshot))
             .thenAnswer(
           (_) => Future.value(
             Tuple2([DespesaModel(id: '2'), DespesaModel(id: '3')],
@@ -186,9 +205,11 @@ void main() {
       },
       verify: (timelineBloc) async {
         verify(mockTimelineRepository.getNewActivitiesCounter('1')).called(1);
-        verify(mockTimelineRepository.getTimelineFirstPosts('1', 5)).called(1);
+        verify(mockTimelineRepository.getTimelineFirstPosts(
+                '1', kTimelinePageSize))
+            .called(1);
         verify(mockTimelineRepository.getMorePosts(
-                '1', 5, mockDocumentSnapshot))
+                '1', kTimelinePageSize, mockDocumentSnapshot))
             .called(1);
       },
       expect: [
@@ -211,12 +232,15 @@ void main() {
       build: () async {
         when(mockTimelineRepository.getNewActivitiesCounter('1'))
             .thenAnswer((_) => timelineStream);
-        when(mockTimelineRepository.getTimelineFirstPosts('1', 5)).thenAnswer(
+        when(mockTimelineRepository.getTimelineFirstPosts(
+                '1', kTimelinePageSize))
+            .thenAnswer(
           (_) => Future.value(
             Tuple2([DespesaModel(id: '1')], mockDocumentSnapshot),
           ),
         );
-        when(mockTimelineRepository.getMorePosts('1', 5, mockDocumentSnapshot))
+        when(mockTimelineRepository.getMorePosts(
+                '1', kTimelinePageSize, mockDocumentSnapshot))
             .thenThrow(Exception());
         return timelineBloc;
       },
@@ -228,9 +252,11 @@ void main() {
       },
       verify: (timelineBloc) async {
         verify(mockTimelineRepository.getNewActivitiesCounter('1')).called(1);
-        verify(mockTimelineRepository.getTimelineFirstPosts('1', 5)).called(1);
+        verify(mockTimelineRepository.getTimelineFirstPosts(
+                '1', kTimelinePageSize))
+            .called(1);
         verify(mockTimelineRepository.getMorePosts(
-                '1', 5, mockDocumentSnapshot))
+                '1', kTimelinePageSize, mockDocumentSnapshot))
             .called(1);
       },
       expect: [
@@ -243,7 +269,9 @@ void main() {
     blocTest(
       '''Expects [LoadingTimeline, TimelineUpdated] when reload timeline is added''',
       build: () async {
-        when(mockTimelineRepository.getTimelineFirstPosts('1', 5)).thenAnswer(
+        when(mockTimelineRepository.getTimelineFirstPosts(
+                '1', kTimelinePageSize))
+            .thenAnswer(
           (_) => Future.value(
             Tuple2([DespesaModel(id: '1')], mockDocumentSnapshot),
           ),
@@ -255,7 +283,9 @@ void main() {
         return;
       },
       verify: (timelineBloc) async {
-        verify(mockTimelineRepository.getTimelineFirstPosts('1', 5)).called(1);
+        verify(mockTimelineRepository.getTimelineFirstPosts(
+                '1', kTimelinePageSize))
+            .called(1);
       },
       expect: [
         LoadingTimeline(),
@@ -272,7 +302,8 @@ void main() {
     blocTest(
       '''Expects [LoadingTimeline, FetchTimelineFailed] when reload timeline throws exception''',
       build: () async {
-        when(mockTimelineRepository.getTimelineFirstPosts('1', 5))
+        when(mockTimelineRepository.getTimelineFirstPosts(
+                '1', kTimelinePageSize))
             .thenThrow(Exception());
         return timelineBloc;
       },
@@ -281,7 +312,9 @@ void main() {
         return;
       },
       verify: (timelineBloc) async {
-        verify(mockTimelineRepository.getTimelineFirstPosts('1', 5)).called(1);
+        verify(mockTimelineRepository.getTimelineFirstPosts(
+                '1', kTimelinePageSize))
+            .called(1);
       },
       expect: [
         LoadingTimeline(),
