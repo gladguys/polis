@@ -2,10 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_router/simple_router.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
-import '../../bloc/signin/signin_bloc.dart';
+import '../../bloc/blocs.dart';
+import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
+import '../../widget/centered_loading.dart';
+import '../../widget/snackbar.dart';
 import '../pages.dart';
 import '../theme/main_theme.dart';
 
@@ -19,6 +23,8 @@ class _InitialPageState extends State<InitialPage> {
   bool _isSigninPanel = false;
   double _expandedHeight = 0.55;
 
+  SigninBloc get signinBloc => context.bloc<SigninBloc>();
+
   @override
   void initState() {
     _panelController = PanelController();
@@ -28,34 +34,62 @@ class _InitialPageState extends State<InitialPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SlidingPanel(
-        panelController: _panelController,
-        backPressBehavior: BackPressBehavior.CLOSE_PERSIST,
-        snapping: PanelSnapping.enabled,
-        decoration: PanelDecoration(
-          backgroundColor: Colors.white.withOpacity(.95),
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(24),
-            topRight: Radius.circular(24),
-          ),
-        ),
-        size: PanelSize(
-          closedHeight: 0,
-          collapsedHeight: 0,
-          expandedHeight: _expandedHeight,
-        ),
-        content: PanelContent(
-          panelContent: _panel(),
-          bodyContent: _body(context),
-        ),
-        onPanelStateChanged: (panelState) {
-          if (panelState == PanelState.animating) {
-            setState(() {
-              _expandedHeight = _isSigninPanel ? 0.55 : 0.85;
-            });
+      body: BlocConsumer<SigninBloc, SigninState>(listener: (_, state) {
+        if (state is UserAuthenticated) {
+          final user = state.user;
+          context.bloc<UserBloc>().add(StoreUser(user));
+          if (user.isFirstLoginDone) {
+            SimpleRouter.forwardAndReplace(
+              TimelinePageConnected(),
+              name: TIMELINE_PAGE,
+            );
+          } else {
+            SimpleRouter.forwardAndReplace(
+              IntroPage(),
+              name: INTRO_PAGE,
+            );
           }
-        },
-      ),
+        }
+        if (state is SigninFailed) {
+          Snackbar.error(context, state.errorMessage);
+        }
+        if (state is UserAuthenticationFailed) {
+          Snackbar.error(context, ERROR_AUTENTICATING_USER);
+        }
+      }, builder: (_, state) {
+        if (state is SigninLoading || state is UserAuthenticated) {
+          return CenteredLoading();
+        } else {
+          return SlidingPanel(
+            panelController: _panelController,
+            backPressBehavior: BackPressBehavior.CLOSE_PERSIST,
+            snapping: PanelSnapping.enabled,
+            decoration: PanelDecoration(
+              backgroundColor: Colors.white.withOpacity(.95),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(24),
+                topRight: Radius.circular(24),
+              ),
+            ),
+            size: PanelSize(
+              closedHeight: 0,
+              collapsedHeight: 0,
+              expandedHeight: _expandedHeight,
+            ),
+            content: PanelContent(
+              panelContent: _panel(),
+              bodyContent: _body(context),
+            ),
+            onPanelStateChanged: (panelState) {
+              if (panelState == PanelState.animating) {
+                setState(() {
+                  _expandedHeight = _isSigninPanel ? 0.55 : 0.85;
+                });
+              }
+            },
+          );
+        }
+      }),
     );
   }
 
@@ -144,9 +178,7 @@ class _InitialPageState extends State<InitialPage> {
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     color: Colors.white,
-                    onPressed: () {
-                      context.bloc<SigninBloc>().add(SigninWithGoogle());
-                    },
+                    onPressed: () => signinBloc.add(SigninWithGoogle()),
                   ),
                   const SizedBox(height: 12),
                   OutlineButton(

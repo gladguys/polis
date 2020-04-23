@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import '../enum/auth_provider.dart';
+
 part 'user_model.g.dart';
 
 @JsonSerializable()
@@ -11,16 +13,27 @@ class UserModel extends Equatable {
       this.email,
       this.photoUrl,
       this.password,
-      this.isFirstLoginDone});
+      this.isFirstLoginDone,
+      this.authProvider});
 
   final String userId;
   final String name;
   final String email;
   final String photoUrl;
   final bool isFirstLoginDone;
+  @JsonKey(fromJson: _fromJsonAuth, toJson: _toJsonAuth)
+  final AuthProvider authProvider;
 
   @JsonKey(ignore: true)
   final String password;
+
+  static AuthProvider _fromJsonAuth(String authProvider) =>
+      authProvider == 'GOOGLE'
+          ? AuthProvider.google
+          : AuthProvider.emailAndPassword;
+
+  static String _toJsonAuth(AuthProvider authProvider) =>
+      authProvider == AuthProvider.google ? 'GOOGLE' : 'EMAIL_PASSWORD';
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
@@ -34,6 +47,7 @@ class UserModel extends Equatable {
     String photoUrl,
     String password,
     bool isFirstLoginDone,
+    AuthProvider authProvider,
   }) {
     return UserModel(
       userId: userId ?? this.userId,
@@ -42,6 +56,7 @@ class UserModel extends Equatable {
       photoUrl: photoUrl ?? this.photoUrl,
       password: password ?? this.password,
       isFirstLoginDone: isFirstLoginDone ?? this.isFirstLoginDone,
+      authProvider: authProvider ?? this.authProvider,
     );
   }
 
@@ -50,6 +65,6 @@ class UserModel extends Equatable {
 
   @override
   String toString() {
-    return '''UserModel{userId: $userId, name: $name, email: $email, photoUrl: $photoUrl, isFirstLoginDone: $isFirstLoginDone, password: $password}''';
+    return '''UserModel{userId: $userId, name: $name, email: $email, photoUrl: $photoUrl, isFirstLoginDone: $isFirstLoginDone, authProvider: $authProvider, password: $password}''';
   }
 }

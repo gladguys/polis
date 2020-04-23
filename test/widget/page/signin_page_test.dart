@@ -9,6 +9,7 @@ import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
+import 'package:polis/widget/centered_loading.dart';
 
 import '../../mock.dart';
 import '../utils.dart';
@@ -167,6 +168,26 @@ void main() {
       );
       await tester.pump();
       expect(find.text(ERROR_INVALID_CREDENTIALS), findsOneWidget);
+    });
+
+    testWidgets('should show loading', (tester) async {
+      final mockSigninBloc = MockSigninBloc();
+      whenListen(
+        mockSigninBloc,
+        Stream<SigninState>.fromIterable([InitialSignin(), SigninLoading()]),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<SigninBloc>(
+            bloc: mockSigninBloc,
+            page: Scaffold(
+              body: SigninPage(),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      expect(find.byType(CenteredLoading), findsOneWidget);
     });
 
     testWidgets('should show error message when reset email failed',

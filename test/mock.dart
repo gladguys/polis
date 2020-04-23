@@ -14,6 +14,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/abstract/polis_google_auth_provider.dart';
 import 'package:polis/core/abstract/polis_image_picker.dart';
 import 'package:polis/core/service/services.dart';
 import 'package:polis/model/models.dart';
@@ -165,6 +166,14 @@ class MockQuerySnapshot extends Mock implements QuerySnapshot {}
 class MockAuthResult extends Mock implements AuthResult {}
 
 class MockFirebaseUser extends Mock implements FirebaseUser {}
+
+class MockGoogleSignInAuthentication extends Mock
+    implements GoogleSignInAuthentication {}
+
+class MockPolisGoogleAuthProvider extends Mock
+    implements PolisGoogleAuthProvider {}
+
+class MockAuthCredential extends Mock implements AuthCredential {}
 
 class MockCollectionReference extends Mock implements CollectionReference {}
 
