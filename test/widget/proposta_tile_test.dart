@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/core/service/locator.dart';
+import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/widget/button_action_card.dart';
 import 'package:polis/widget/tile/proposta_tile_connected.dart';
@@ -41,6 +42,26 @@ void main() {
       await tester.pumpWidget(
         connectedWidget(PropostaTileConnected(proposta)),
       );
+    });
+
+    testWidgets(
+        'should style diferent when descricaoTipo equals PLENARY_AMENDMENT',
+        (tester) async {
+      final propostaDesc = PropostaModel(
+        fotoPolitico: 'foto',
+        nomePolitico: 'nome',
+        descricaoTipo: PLENARY_AMENDMENT,
+        ementa: 'ementa',
+        siglaPartido: 'sigla',
+        tipoDocumento: 'tipo',
+        status: 'status',
+        dataDocumento: '10-01-2020',
+      );
+      await tester.pumpWidget(
+        connectedWidget(PropostaTileConnected(propostaDesc)),
+      );
+      final text = find.text(PLENARY_AMENDMENT);
+      expect(text, findsOneWidget);
     });
 
     testWidgets('should do something when click on card', (tester) async {
