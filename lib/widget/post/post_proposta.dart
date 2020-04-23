@@ -81,7 +81,7 @@ class PostProposta extends StatelessWidget {
         spacing: 16,
         runSpacing: 8,
         children: <Widget>[
-          if (proposta.descricaoTipo == 'Emenda de Plenário')
+          if (proposta.descricaoTipo == PLENARY_AMENDMENT)
             Row(children: [
               Text('${proposta.descricaoTipo}'),
             ])

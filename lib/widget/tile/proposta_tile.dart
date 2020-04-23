@@ -96,7 +96,7 @@ class PropostaTile extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 2),
-        if (proposta.descricaoTipo == 'Emenda de Plenário')
+        if (proposta.descricaoTipo == PLENARY_AMENDMENT)
           Text('${proposta.descricaoTipo}')
         else
           TextRich(

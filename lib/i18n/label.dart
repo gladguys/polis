@@ -13,6 +13,7 @@ const NO_ACCOUNT = 'Não tenho conta';
 const POLIS = 'Pólis';
 const PROFILE = 'Perfil';
 const PASSWORD = 'Senha';
+const PLENARY_AMENDMENT = 'Emenda de Plenário';
 const PASSWORD_CONFIRMATION = 'Confirme a senha';
 const RECOVERY_PASSWORD = 'Recuperar senha';
 const RECOVER_YOUR_PASSWORD = 'Recupere sua senha';
