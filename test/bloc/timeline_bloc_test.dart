@@ -37,7 +37,7 @@ void main() {
     });
 
     blocTest(
-      '''Expects [LoadingTimeline, TimelineUpdated]''',
+      '''should emit NoPostsAvailable state when no post is found on users timeline ''',
       build: () async {
         when(mockTimelineRepository.getNewActivitiesCounter('1'))
             .thenAnswer((_) => timelineStream);
@@ -63,7 +63,45 @@ void main() {
       },
       expect: [
         LoadingTimeline(),
+        NoPostsAvailable(),
         TimelineUpdated(activities: [], postsCount: 0, updatesCount: 0),
+      ],
+    );
+
+    blocTest(
+      '''Expects [LoadingTimeline, TimelineUpdated]''',
+      build: () async {
+        when(mockTimelineRepository.getNewActivitiesCounter('1'))
+            .thenAnswer((_) => timelineStream);
+        when(mockTimelineRepository.getTimelineFirstPosts(
+                '1', kTimelinePageSize))
+            .thenAnswer(
+          (_) => Future.value(Tuple2([DespesaModel()], mockDocumentSnapshot)),
+        );
+        return timelineBloc;
+      },
+      act: (timelineBloc) {
+        timelineBloc.add(FetchUserTimeline('1'));
+        timelineBloc.add(
+          UpdateTimelineActivitiesCount(count: 0),
+        );
+        return;
+      },
+      verify: (timelineBloc) async {
+        verify(mockTimelineRepository.getNewActivitiesCounter('1')).called(1);
+        verify(mockTimelineRepository.getTimelineFirstPosts(
+                '1', kTimelinePageSize))
+            .called(1);
+      },
+      expect: [
+        LoadingTimeline(),
+        TimelineUpdated(
+          activities: [
+            DespesaModel(),
+          ],
+          postsCount: 1,
+          updatesCount: 0,
+        ),
       ],
     );
 
@@ -94,6 +132,7 @@ void main() {
       },
       expect: [
         LoadingTimeline(),
+        NoPostsAvailable(),
         TimelineUpdated(activities: [], postsCount: 0, updatesCount: 0),
         LoadingTimeline(),
       ],
@@ -125,6 +164,7 @@ void main() {
       },
       expect: [
         LoadingTimeline(),
+        NoPostsAvailable(),
         TimelineUpdated(activities: [], postsCount: 0, updatesCount: 0),
       ],
     );
