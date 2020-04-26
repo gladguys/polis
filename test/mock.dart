@@ -213,6 +213,8 @@ class MockSharedPreferencesService extends Mock
 
 class MockPartidoService extends Mock implements PartidoService {}
 
+class MockOrgaoService extends Mock implements OrgaoService {}
+
 class MockPoliticoService extends Mock implements PoliticoService {}
 
 class MockUrlLauncherService extends Mock implements UrlLauncherService {}

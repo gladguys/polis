@@ -1,6 +1,7 @@
 export 'ad_service.dart';
 export 'analytics_service.dart';
 export 'crashlytics_service.dart';
+export 'orgao_service.dart';
 export 'partido_service.dart';
 export 'performance_service.dart';
 export 'politico_service.dart';

@@ -11,16 +11,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'bloc/flutter_bloc_delegate.dart';
 import 'core/service/locator.dart';
 import 'core/service/services.dart';
-import 'model/partido_model.dart';
-import 'model/politico_model.dart';
+import 'model/models.dart';
 import 'widget/my_app.dart';
 import 'widget/my_app_injections.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-  Hive.registerAdapter(PartidoModelAdapter());
-  Hive.registerAdapter(PoliticoModelAdapter());
+  await initHive();
   initLocator(await SharedPreferences.getInstance());
   G<AdService>().initAds();
   G<CrashlyticsService>().initCrashlytics();
@@ -38,4 +35,11 @@ void main() async {
       ),
     );
   }, onError: G<CrashlyticsService>().crashlytics.recordError);
+}
+
+Future<void> initHive() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(PartidoModelAdapter());
+  Hive.registerAdapter(PoliticoModelAdapter());
+  Hive.registerAdapter(OrgaoModelAdapter());
 }
