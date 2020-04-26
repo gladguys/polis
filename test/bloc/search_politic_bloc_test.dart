@@ -14,10 +14,8 @@ void main() {
     MockPartidoService mockPartidoService;
     MockPoliticoService mockPoliticoService;
     MockPoliticProfileBloc mockPoliticProfileBloc;
-    MockPoliticProfileRepository mockPoliticProfileRepository;
 
     setUp(() {
-      mockPoliticProfileRepository = MockPoliticProfileRepository();
       mockUserFollowingPoliticsRepository =
           MockUserFollowingPoliticsRepository();
       mockFollowRepository = MockFollowRepository();
