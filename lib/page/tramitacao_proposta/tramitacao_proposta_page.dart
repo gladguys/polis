@@ -44,6 +44,10 @@ class TramitacaoPropostaPage extends StatelessWidget {
                               tramitacoes[i].descricaoTramitacao,
                             ),
                             const SizedBox(height: 8),
+                            Text(
+                              '''${tramitacoes[i].siglaOrgao}: ${context.bloc<TramitacaoPropostaBloc>().orgaosMap[tramitacoes[i].siglaOrgao].nome}''',
+                            ),
+                            const SizedBox(height: 8),
                           ],
                         ),
                       ),

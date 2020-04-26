@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/service/services.dart';
 import '../../model/models.dart';
 import '../../repository/abstract/tramitacao_proposta_repository.dart';
 
@@ -12,12 +13,16 @@ part 'tramitacao_proposta_state.dart';
 
 class TramitacaoPropostaBloc
     extends Bloc<TramitacaoPropostaEvent, TramitacaoPropostaState> {
-  TramitacaoPropostaBloc({@required this.repository})
-      : assert(repository != null);
+  TramitacaoPropostaBloc(
+      {@required this.repository, @required this.orgaoService})
+      : assert(repository != null),
+        assert(orgaoService != null);
 
   final TramitacaoPropostaRepository repository;
+  final OrgaoService orgaoService;
 
   PropostaModel proposta;
+  Map<String, OrgaoModel> orgaosMap = {};
 
   @override
   TramitacaoPropostaState get initialState => InitialTramitacaoPropostaState();
@@ -27,6 +32,8 @@ class TramitacaoPropostaBloc
       TramitacaoPropostaEvent event) async* {
     if (event is FetchTramitacoesProposicao) {
       yield LoadingTramitacaoProposta();
+
+      orgaosMap = await orgaoService.getAllOrgaosMap();
       try {
         proposta = event.proposta;
         final tramitacoes =
