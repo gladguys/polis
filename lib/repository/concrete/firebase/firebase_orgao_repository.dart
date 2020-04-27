@@ -21,7 +21,7 @@ class FirebaseOrgaoRepository implements OrgaoRepository {
       final documents = querySnapshot.documents;
       final orgaosList = List.generate(
           documents.length, (i) => OrgaoModel.fromJson(documents[i].data));
-      final orgaosMap = {};
+      final orgaosMap = <String, OrgaoModel>{};
       for (var orgao in orgaosList) {
         orgaosMap.putIfAbsent(orgao.sigla, () => orgao);
       }
