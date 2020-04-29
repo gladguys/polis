@@ -9,13 +9,13 @@ void main() {
     'descricaoTramitacao': 'descricaoTramitacao',
     'despacho': 'despacho',
     'regime': 'regime',
-    'sequencia': 'sequencia',
+    'sequencia': 1,
     'siglaOrgao': 'siglaOrgao',
   };
 
   final tramitacaoPropostaModel = TramitacaoPropostaModel(
     ambito: 'ambito',
-    sequencia: 'sequencia',
+    sequencia: 1,
     descricaoTramitacao: 'descricaoTramitacao',
     dataHora: 'dataHora',
     descricaoSituacao: 'descricaoSituacao',
@@ -27,13 +27,13 @@ void main() {
   group('TramitacaoPropostaModel tests', () {
     test('props', () {
       final proposta1 = TramitacaoPropostaModel(
-        sequencia: '1',
+        sequencia: 1,
       );
       final proposta11 = TramitacaoPropostaModel(
-        sequencia: '1',
+        sequencia: 1,
       );
       final proposta2 = TramitacaoPropostaModel(
-        sequencia: '2',
+        sequencia: 2,
       );
 
       expect(proposta1 == proposta11, true);
@@ -41,7 +41,7 @@ void main() {
     });
 
     test('toString()', () {
-      final modelToString = TramitacaoPropostaModel(sequencia: '1').toString();
+      final modelToString = TramitacaoPropostaModel(sequencia: 1).toString();
       final result =
           '''TramitacaoPropostaModel{ambito: null, dataHora: null, descricaoSituacao: null, descricaoTramitacao: null, despacho: null, regime: null, sequencia: 1, siglaOrgao: null}''';
       expect(modelToString == result, true);

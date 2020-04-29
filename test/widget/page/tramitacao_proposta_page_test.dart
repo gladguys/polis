@@ -39,12 +39,12 @@ void main() {
           [
             TramitacaoPropostaModel(
               descricaoTramitacao: 'descricao1',
-              sequencia: '1',
+              sequencia: 1,
               dataHora: '10-01-2020',
             ),
             TramitacaoPropostaModel(
               descricaoTramitacao: 'descricao2',
-              sequencia: '2',
+              sequencia: 2,
               dataHora: '10-01-2020',
             ),
           ],
