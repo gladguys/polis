@@ -47,7 +47,7 @@ class PropostaModel extends Equatable {
   final String descricaoTramitacao;
   final String dataApresentacao;
   final String status;
-  final String sequencia;
+  final int sequencia;
   final bool favorito;
 
   factory PropostaModel.fromJson(Map<String, dynamic> json) =>

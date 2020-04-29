@@ -30,7 +30,7 @@ void main() {
       final mockTramitacaoPropostaBloc = MockTramitacaoPropostaBloc();
       when(mockTramitacaoPropostaBloc.proposta).thenReturn(
         PropostaModel(
-          sequencia: '1',
+          sequencia: 1,
           dataApresentacao: '10-01-2020',
         ),
       );
