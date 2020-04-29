@@ -46,6 +46,7 @@ const WITH = 'com';
 const IN_THE_AMOUNT_OF = 'no valor de';
 const CHOICE_PHOTO = 'Escolha sua foto';
 const SITUATION = 'Situação';
+const FOLLOW_POLITICS = 'Seguir políticos';
 const TRAMITATION = 'Tramitação';
 const DATE = 'Data';
 const SEARCH_HERE = 'Pesquise...';
