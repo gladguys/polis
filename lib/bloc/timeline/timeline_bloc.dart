@@ -55,14 +55,20 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
         final timelineFirstData = await repository.getTimelineFirstPosts(
             event.userId, kTimelinePageSize);
 
-        timelinePosts.addAll(timelineFirstData.item1);
+        final firstPosts = timelineFirstData.item1;
+
+        timelinePosts.addAll(firstPosts);
         lastDocument = timelineFirstData.item2;
 
-        yield TimelineUpdated(
-          activities: timelinePosts,
-          postsCount: timelinePosts.length,
-          updatesCount: newActivitiesCount,
-        );
+        if (firstPosts.isNotEmpty) {
+          yield TimelineUpdated(
+            activities: timelinePosts,
+            postsCount: timelinePosts.length,
+            updatesCount: newActivitiesCount,
+          );
+        } else {
+          yield NoPostsAvailable();
+        }
       } on Exception {
         yield FetchTimelineFailed();
       }

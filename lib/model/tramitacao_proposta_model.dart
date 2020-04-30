@@ -21,7 +21,7 @@ class TramitacaoPropostaModel extends Equatable {
   final String descricaoTramitacao;
   final String despacho;
   final String regime;
-  final String sequencia;
+  final int sequencia;
   final String siglaOrgao;
 
   factory TramitacaoPropostaModel.fromJson(Map<String, dynamic> json) =>

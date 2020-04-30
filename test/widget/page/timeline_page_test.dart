@@ -93,6 +93,24 @@ void main() {
       tester.ensureVisible(timeline);
     });
 
+    testWidgets('shoud show TIMELINE_IS_EMPTY message', (tester) async {
+      final mockTimelineBloc = MockTimelineBloc();
+      when(mockTimelineBloc.state).thenReturn(NoPostsAvailable());
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<TimelineBloc>(
+            bloc: mockTimelineBloc,
+            page: TimelinePage(),
+          ),
+        ),
+      );
+      expect(find.text(TIMELINE_IS_EMPTY), findsOneWidget);
+      final followPoliticButton = find.text(FOLLOW_POLITICS);
+      expect(followPoliticButton, findsOneWidget);
+      await tester.tap(followPoliticButton);
+      verify(mockObserver.didPush(any, any));
+    });
+
     testWidgets(
         '''shoud build Timeline with update button when there are new updates''',
         (tester) async {

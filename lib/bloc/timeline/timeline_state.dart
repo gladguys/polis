@@ -9,6 +9,11 @@ class InitialTimelineState extends TimelineState {
   List<Object> get props => [];
 }
 
+class NoPostsAvailable extends TimelineState {
+  @override
+  List<Object> get props => [];
+}
+
 class TimelineUpdated extends TimelineState {
   TimelineUpdated(
       {@required this.activities,
