@@ -5,6 +5,7 @@ import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
 import 'package:polis/widget/card_base.dart';
+import 'package:polis/widget/empty_info.dart';
 import 'package:polis/widget/loading.dart';
 
 import '../../mock.dart';
@@ -63,6 +64,21 @@ void main() {
         ),
       );
       expect(find.byType(CardBase), findsNWidgets(2));
+    });
+
+    testWidgets('should EmptyInfo when there is not followers', (tester) async {
+      when(mockPoliticFollowersBloc.state).thenReturn(
+        GetPoliticFollowersSuccess(followers: []),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<PoliticFollowersBloc>(
+            bloc: mockPoliticFollowersBloc,
+            page: PoliticFollowersPage(),
+          ),
+        ),
+      );
+      expect(find.byType(EmptyInfo), findsOneWidget);
     });
 
     testWidgets('should show loading', (tester) async {
