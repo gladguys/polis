@@ -29,8 +29,7 @@ class FirebaseTimelineRepository implements TimelineRepository {
         var changes = 0;
         final documentChanges = snapshot.documentChanges;
         for (var change in documentChanges) {
-          if (change.type == DocumentChangeType.added ||
-              change.type == DocumentChangeType.modified) {
+          if (change.type == DocumentChangeType.added) {
             changes += 1;
           }
         }
