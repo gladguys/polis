@@ -5,6 +5,7 @@ import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
 import '../../i18n/i18n.dart';
 import '../../widget/default_bottombar.dart';
+import '../../widget/empty_info.dart';
 import '../../widget/error_container.dart';
 import '../../widget/loading.dart';
 import '../../widget/text_title.dart';
@@ -19,7 +20,7 @@ class FavoritePostsPage extends StatelessWidget {
         child: BlocBuilder<FavoritePostsBloc, FavoritePostsState>(
           builder: (_, state) {
             if (state is FetchUserFavoritePostsSuccess) {
-              return _buildList(state.posts);
+              return _buildList(state.posts, context);
             } else if (state is LoadingFavoritesPosts) {
               return Loading();
             } else {
@@ -31,18 +32,25 @@ class FavoritePostsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildList(List posts) {
+  Widget _buildList(List posts, BuildContext context) {
     return Column(
       children: <Widget>[
         const SizedBox(height: 8),
         TextTitle(FAVORITE_POSTS),
         const SizedBox(height: 8),
-        Expanded(
-          child: Timeline(
-            activities: posts,
-            updatesCount: 0,
-          ),
-        ),
+        posts.isNotEmpty
+            ? Expanded(
+                child: Timeline(
+                  activities: posts,
+                  updatesCount: 0,
+                ),
+              )
+            : Expanded(
+                child: EmptyInfo(
+                  text: NO_FAVORITE_POST,
+                  imageName: 'empty.png',
+                ),
+              ),
       ],
     );
   }
