@@ -22,7 +22,6 @@ void main() async {
   Hive.registerAdapter(PartidoModelAdapter());
   Hive.registerAdapter(PoliticoModelAdapter());
   initLocator(await SharedPreferences.getInstance());
-  G<AdService>().initAds();
   G<CrashlyticsService>().initCrashlytics();
   FlutterError.onError = G<CrashlyticsService>().crashlytics.recordFlutterError;
   BlocSupervisor.delegate = FlutterBlocDelegate(
