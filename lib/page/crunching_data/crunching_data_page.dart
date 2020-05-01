@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:simple_router/simple_router.dart';
 
+import '../../core/constants.dart';
 import '../../core/routing/route_names.dart';
+import '../../extension/media_query_extensions.dart';
 import '../../i18n/i18n.dart';
 import '../pages.dart';
 import 'widget/searching_info.dart';
@@ -18,8 +20,8 @@ class _CrunchingDataPageState extends State<CrunchingDataPage>
   bool showText;
   AnimationController controller, controller2, controller3, controller4;
 
-  double get screenHeight => MediaQuery.of(context).size.height;
-  double get screenWidth => MediaQuery.of(context).size.width;
+  double get screenHeight => context.screenHeight;
+  double get screenWidth => context.screenWidth;
 
   @override
   void initState() {
