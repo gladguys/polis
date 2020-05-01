@@ -64,6 +64,7 @@ class _IntroPageState extends State<IntroPage> {
             key: doneButtonKey,
             style: const TextStyle(
               fontWeight: FontWeight.w600,
+              fontSize: 13,
             ),
           ),
           dotsDecorator: DotsDecorator(
