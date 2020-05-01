@@ -1,6 +1,7 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 
+import '../core/constants.dart';
 import '../i18n/message.dart';
 
 class ErrorContainer extends StatefulWidget {
@@ -19,7 +20,7 @@ class _ErrorContainerState extends State<ErrorContainer> {
             const Expanded(
               flex: 8,
               child: FlareActor(
-                'assets/animations/app_error.flr',
+                '$kAnimationsPath/app_error.flr',
                 animation: 'error',
               ),
             ),
