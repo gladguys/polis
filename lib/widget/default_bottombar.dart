@@ -30,7 +30,7 @@ class DefaultBottombar extends StatelessWidget {
             width: 80,
             height: 56,
             alignment: Alignment.centerLeft,
-            child: routeName == TIMELINE_PAGE && !withBack
+            child: !withBack
                 ? const Padding(
                     padding: EdgeInsets.only(left: 8),
                     child: Text(
@@ -58,7 +58,7 @@ class DefaultBottombar extends StatelessWidget {
                   icon: FontAwesomeIcons.home,
                   isSelected: routeName == TIMELINE_PAGE,
                   onPressed: () => routeName != TIMELINE_PAGE
-                      ? SimpleRouter.forward(
+                      ? SimpleRouter.forwardAndReplace(
                           TimelinePageConnected(),
                           name: TIMELINE_PAGE,
                         )
@@ -68,7 +68,7 @@ class DefaultBottombar extends StatelessWidget {
                   icon: FontAwesomeIcons.search,
                   isSelected: routeName == SEARCH_POLITIC_PAGE,
                   onPressed: () => routeName != SEARCH_POLITIC_PAGE
-                      ? SimpleRouter.forward(
+                      ? SimpleRouter.forwardAndReplace(
                           SearchPoliticPageConnected(),
                           name: SEARCH_POLITIC_PAGE,
                         )
@@ -78,7 +78,7 @@ class DefaultBottombar extends StatelessWidget {
                   icon: FontAwesomeIcons.solidBookmark,
                   isSelected: routeName == FAVORITE_POSTS_PAGE,
                   onPressed: () => routeName != FAVORITE_POSTS_PAGE
-                      ? SimpleRouter.forward(
+                      ? SimpleRouter.forwardAndReplace(
                           FavoritePostsPageConnected(),
                           name: FAVORITE_POSTS_PAGE,
                         )
