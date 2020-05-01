@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../enum/acao_type.dart';
 import '../../../extension/formatters.dart';
+import '../../../extension/media_query_extensions.dart';
 import '../../../i18n/label.dart';
 import '../../../model/models.dart';
 import '../../../widget/card_base.dart';
@@ -16,7 +17,7 @@ class UserActionsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: (MediaQuery.of(context).size.height * 0.97) - 50 - 72,
+      height: (context.screenHeight * 0.97) - 50 - 72,
       child: ListView.separated(
         shrinkWrap: true,
         padding: const EdgeInsets.only(top: 4, bottom: 24),

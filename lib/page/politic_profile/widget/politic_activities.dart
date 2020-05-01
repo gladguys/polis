@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/blocs.dart';
+import '../../../extension/media_query_extensions.dart';
 import '../../../i18n/i18n.dart';
 import '../../../model/despesa_model.dart';
 import '../../../model/models.dart';
@@ -44,7 +45,7 @@ class _PoliticActivitiesState extends State<PoliticActivities> {
   Widget build(BuildContext context) {
     if (widget.lastActivities.isNotEmpty) {
       return Container(
-        height: (MediaQuery.of(context).size.height * 0.97) - 50 - 72,
+        height: (context.screenHeight * 0.97) - 50 - 72,
         child: ListView.separated(
           controller: scrollController,
           shrinkWrap: true,
