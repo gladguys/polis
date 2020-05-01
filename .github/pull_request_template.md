@@ -1,8 +1,8 @@
-<!--  Thanks for sending a pull request!-->
+<!--  Obrigado pela sua contribuição !-->
 
-**What this PR does / why we need it**:
+**O que esse PR faz / por que precisamos dele?**:
 
-**Which issue(s) this PR fixes**:
+**Quais issue(s) esse PR corrige?**:
 <!--
 *Automatically closes linked issue when PR is merged.
 Usage: `Fixes #<issue number>`, or `Fixes (paste link of issue)`.
@@ -10,9 +10,7 @@ _If PR is about `failing-tests or flakes`, please post the related issues/tests 
 -->
 Fixes #
 
-**Special notes for your reviewer**:
-
-**Additional Information**:
+**Informações Adicionais para o Revisor**:
 ```docs
 
 ```
