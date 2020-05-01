@@ -18,7 +18,7 @@ class PersonalUserInfo extends StatelessWidget {
       children: <Widget>[
         Photo(
           url: user.photoUrl,
-          boxFit: BoxFit.contain,
+          boxFit: BoxFit.cover,
           size: 120,
           borderRadius: BorderRadius.circular(60),
         ),
