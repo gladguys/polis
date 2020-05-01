@@ -6,8 +6,9 @@ import '../i18n/i18n.dart';
 class EmptyInfo extends StatelessWidget {
   EmptyInfo({this.imageName, this.icon, @required this.text})
       : assert(text != null),
-        assert(imageName != null || icon != null, ASSERT_ATLEAST_IMAGE_OR_ICON),
-        assert(!(imageName == null && icon == null),
+        assert(
+            !(imageName == null && icon == null), ASSERT_ATLEAST_IMAGE_OR_ICON),
+        assert(!(imageName != null && icon != null),
             ASSERT_IMAGE_AND_ICON_NOT_PRESENT);
 
   final String imageName;
