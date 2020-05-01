@@ -23,14 +23,11 @@ void main() {
 
     testWidgets('should go to timeline when click button', (tester) async {
       await tester.pumpWidget(
-        TickerMode(
-          child: connectedWidget(
-            CrunchingDataPage(),
-          ),
-          enabled: false,
+        connectedWidget(
+          CrunchingDataPage(),
         ),
       );
-      await tester.pump(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
       final button = find.byType(RaisedButton);
       await tester.tap(button);
       await tester.pump();
