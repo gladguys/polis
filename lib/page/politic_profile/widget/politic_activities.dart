@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/blocs.dart';
-import '../../../extension/media_query_extensions.dart';
+import '../../../extension/extensions.dart';
 import '../../../i18n/i18n.dart';
 import '../../../model/despesa_model.dart';
 import '../../../model/models.dart';

@@ -1,13 +1,13 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../core/constants.dart';
 import '../../core/routing/route_names.dart';
-import '../../extension/media_query_extensions.dart';
+import '../../extension/extensions.dart';
 import '../../i18n/i18n.dart';
 import '../pages.dart';
+import 'widget/searching_info.dart';
 
 class CrunchingDataPage extends StatefulWidget {
   @override
@@ -15,24 +15,67 @@ class CrunchingDataPage extends StatefulWidget {
 }
 
 class _CrunchingDataPageState extends State<CrunchingDataPage>
-    with SingleTickerProviderStateMixin {
-  AnimationController controller;
+    with TickerProviderStateMixin {
+  bool showText;
+  AnimationController controller, controller2, controller3, controller4;
+
+  double get screenHeight => context.screenHeight;
+  double get screenWidth => context.screenWidth;
 
   @override
   void initState() {
+    showText = true;
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: 2300.milliseconds,
     );
+    controller2 = AnimationController(
+      vsync: this,
+      duration: 2300.milliseconds,
+    );
+    controller3 = AnimationController(
+      vsync: this,
+      duration: 2300.milliseconds,
+    );
+    controller4 = AnimationController(
+      vsync: this,
+      duration: 1.second,
+    );
+
     controller.addListener(() => setState(() {}));
-    Future.delayed(const Duration(seconds: 4))
-        .then((_) => controller.forward());
+    controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        controller2.forward();
+      }
+    });
+
+    controller2.addListener(() => setState(() {}));
+    controller2.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        controller3.forward();
+      }
+    });
+
+    controller3.addListener(() => setState(() {}));
+    controller3.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        setState(() => showText = false);
+        controller4.forward();
+      }
+    });
+
+    controller4.addListener(() => setState(() {}));
+
+    Future.delayed(1.second).then((_) => controller.forward());
     super.initState();
   }
 
   @override
   void dispose() {
     controller.dispose();
+    controller2.dispose();
+    controller3.dispose();
+    controller4.dispose();
     super.dispose();
   }
 
@@ -40,62 +83,73 @@ class _CrunchingDataPageState extends State<CrunchingDataPage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          width: context.screenWidth,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              const SizedBox(height: 28),
-              const Flexible(
-                flex: 6,
-                child: FlareActor(
-                  '$kAnimationsPath/PolisIntro.flr',
-                  animation: 'start',
-                ),
+        child: Stack(
+          children: <Widget>[
+            Opacity(
+              opacity: controller3.value,
+              child: SearchingInfo(
+                icon: MaterialCommunityIcons.map_search_outline,
               ),
-              Flexible(
-                flex: 1,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 60, top: 42),
-                  child: Opacity(
-                    opacity: 1 - controller.value,
-                    child: const RotateAnimatedTextKit(
-                      text: [
-                        SEARCHING_POLITICS,
-                        SEARCHING_PARTIES,
-                        SEARCHING_STATES
+            ),
+            Opacity(
+              opacity: 1 - controller2.value,
+              child: SearchingInfo(
+                icon: AntDesign.flag,
+              ),
+            ),
+            Opacity(
+              opacity: 1 - controller.value,
+              child: SearchingInfo(
+                icon: Foundation.torso_business,
+              ),
+            ),
+            Positioned(
+              bottom: showText ? screenHeight / 5 : screenHeight / 4,
+              left: showText ? screenWidth / 12 : screenWidth / 4.5,
+              child: showText
+                  ? Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        const Text(
+                          SEARCHING,
+                          style: TextStyle(fontSize: 34),
+                        ),
+                        const SizedBox(width: 12),
+                        RotateAnimatedTextKit(
+                          text: [
+                            POLITICS_DOTS,
+                            PARTIES_DOTS,
+                            STATES_DOTS,
+                          ],
+                          textStyle: const TextStyle(
+                            fontSize: 34,
+                          ),
+                          textAlign: TextAlign.start,
+                          alignment: AlignmentDirectional.topStart,
+                          isRepeatingAnimation: false,
+                          duration: 2.seconds,
+                        ),
                       ],
-                      textStyle: TextStyle(
-                        fontSize: 32,
-                        fontFamily: 'Horizon',
-                      ),
-                      alignment: AlignmentDirectional.topStart,
-                    ),
-                  ),
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: Opacity(
-                  opacity: controller.value,
-                  child: RaisedButton(
-                    color: Colors.amber,
-                    child: const Text(
-                      ALL_SET_LETS_GO,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
+                    )
+                  : Opacity(
+                      opacity: controller4.value,
+                      child: RaisedButton(
+                        color: Colors.amber,
+                        child: const Text(
+                          ALL_SET_LETS_GO,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        ),
+                        onPressed: () => SimpleRouter.forwardAndReplace(
+                          TimelinePageConnected(),
+                          name: TIMELINE_PAGE,
+                        ),
                       ),
                     ),
-                    onPressed: () => SimpleRouter.forwardAndReplace(
-                      TimelinePageConnected(),
-                      name: TIMELINE_PAGE,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

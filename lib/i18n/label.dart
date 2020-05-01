@@ -85,3 +85,6 @@ const THE_POLITIC = 'o Deputado Federal';
 const THE_POLITIC_FEMALE = 'a Deputada Federal';
 const IN_DAY = 'no dia';
 const TRAMITATION_OF_PROPOSE = 'Tramitação da proposta';
+const POLITICS_DOTS = 'Políticos...';
+const PARTIES_DOTS = 'Partidos...';
+const STATES_DOTS = 'Estados...';
