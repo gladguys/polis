@@ -5,6 +5,7 @@ import 'package:simple_router/simple_router.dart';
 
 import '../../core/constants.dart';
 import '../../core/routing/route_names.dart';
+import '../../extension/media_query_extensions.dart';
 import '../../i18n/i18n.dart';
 import '../pages.dart';
 
@@ -40,7 +41,7 @@ class _CrunchingDataPageState extends State<CrunchingDataPage>
     return Scaffold(
       body: SafeArea(
         child: Container(
-          width: MediaQuery.of(context).size.width,
+          width: context.screenWidth,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
