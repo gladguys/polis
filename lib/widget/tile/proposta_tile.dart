@@ -86,9 +86,9 @@ class PropostaTile extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
             TextSpan(
-              text: proposta.descricaoSituacao ?? NOT_INFORMED_FEMALE,
+              text: proposta.despacho ?? NOT_INFORMED_FEMALE,
               style: TextStyle(
-                color: proposta.descricaoSituacao == null
+                color: proposta.despacho == null
                     ? Colors.grey[600]
                     : null,
               ),
