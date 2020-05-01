@@ -10,9 +10,6 @@ final GetIt G = GetIt.instance;
 
 void initLocator([SharedPreferences sharedPreferences]) {
   G.registerSingleton(
-    AdService(),
-  );
-  G.registerSingleton(
     AnalyticsService(analytics: FirebaseAnalytics()),
   );
   G.registerSingleton(

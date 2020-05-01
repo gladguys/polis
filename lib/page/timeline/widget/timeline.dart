@@ -1,6 +1,7 @@
-import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_admob/flutter_native_admob.dart';
+import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/blocs.dart';
@@ -25,6 +26,7 @@ class Timeline extends StatefulWidget {
 
 class _TimelineState extends State<Timeline> {
   ScrollController scrollController;
+  NativeAdmobController nativeAdmobController;
 
   double get currentPosition => scrollController.offset;
   double get maxScrollPosition => scrollController.position.maxScrollExtent;
@@ -37,12 +39,14 @@ class _TimelineState extends State<Timeline> {
   void initState() {
     scrollController = ScrollController();
     scrollController.addListener(_onScrollListener);
+    nativeAdmobController = NativeAdmobController();
     super.initState();
   }
 
   @override
   void dispose() {
     scrollController.dispose();
+    nativeAdmobController.dispose();
     super.dispose();
   }
 
@@ -125,12 +129,18 @@ class _TimelineState extends State<Timeline> {
 
   Widget _buildAdmobBanner() {
     return Center(
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 24),
-        color: Colors.grey[200],
-        child: AdmobBanner(
-          adUnitId: 'ca-app-pub-5806526425473649/1618913550',
-          adSize: AdmobBannerSize.MEDIUM_RECTANGLE,
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Container(
+          height: 200,
+          margin: const EdgeInsets.symmetric(vertical: 24),
+          color: Colors.grey[200],
+          child: NativeAdmob(
+            loading: Container(),
+            adUnitID: 'ca-app-pub-5806526425473649/2966344739',
+            controller: nativeAdmobController,
+            type: NativeAdmobType.banner,
+          ),
         ),
       ),
     );
