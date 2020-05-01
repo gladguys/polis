@@ -3,6 +3,7 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_router/simple_router.dart';
 
+import '../../core/constants.dart';
 import '../../core/routing/route_names.dart';
 import '../../extension/media_query_extensions.dart';
 import '../../i18n/i18n.dart';
@@ -48,7 +49,7 @@ class _CrunchingDataPageState extends State<CrunchingDataPage>
               const Flexible(
                 flex: 6,
                 child: FlareActor(
-                  'assets/animations/PolisIntro.flr',
+                  '$kAnimationsPath/PolisIntro.flr',
                   animation: 'start',
                 ),
               ),

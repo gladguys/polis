@@ -33,6 +33,8 @@ const SIGNIN_FAILED = 'Falha no login';
 const SIGNUP_FAILED = 'Falha no cadastro do usuário';
 const NO_ACTIVITY_FOR_POLITIC = 'Nenhuma atividade para o político.';
 const NO_RESULTS_FROM_SEARCH = 'Político não encontrado.';
+const NO_FAVORITE_POST = 'Você ainda não possui nenhum post favorito!';
+const POLITIC_HAS_NO_FOLLOWER = 'Este político não tem nenhum seguidor!';
 const OH_NO = 'Essa não!';
 
 const ERROR_CREATING_USER = 'Ocorreu um erro no cadastro do usuário';
@@ -46,3 +48,8 @@ const ERROR_FETCHING_USER_INFO = 'Erro ao buscar informações do usuário';
 const ERROR_FETCHING_POLITIC_INFO = 'Erro ao buscar informações do político';
 const UNEXPECTED_ERROR_HAPPENED =
     'Um erro inesperado ocorreu. Por favor tente novamente mais tarde.';
+
+const ASSERT_ATLEAST_IMAGE_OR_ICON =
+    'You have to pass at least an image or an icon';
+const ASSERT_IMAGE_AND_ICON_NOT_PRESENT =
+    'You must not pass both an image and an icon';
