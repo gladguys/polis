@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../core/constants.dart';
 import '../../core/routing/route_names.dart';
-import '../../extension/media_query_extensions.dart';
+import '../../extension/extensions.dart';
 import '../../i18n/i18n.dart';
 import '../pages.dart';
 import 'widget/searching_info.dart';
@@ -28,19 +27,19 @@ class _CrunchingDataPageState extends State<CrunchingDataPage>
     showText = true;
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2300),
+      duration: 2300.milliseconds,
     );
     controller2 = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2300),
+      duration: 2300.milliseconds,
     );
     controller3 = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2300),
+      duration: 2300.milliseconds,
     );
     controller4 = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: 1.second,
     );
 
     controller.addListener(() => setState(() {}));
@@ -67,8 +66,7 @@ class _CrunchingDataPageState extends State<CrunchingDataPage>
 
     controller4.addListener(() => setState(() {}));
 
-    Future.delayed(const Duration(seconds: 1))
-        .then((_) => controller.forward());
+    Future.delayed(1.second).then((_) => controller.forward());
     super.initState();
   }
 
@@ -117,17 +115,19 @@ class _CrunchingDataPageState extends State<CrunchingDataPage>
                           style: TextStyle(fontSize: 34),
                         ),
                         const SizedBox(width: 12),
-                        const RotateAnimatedTextKit(
+                        RotateAnimatedTextKit(
                           text: [
                             POLITICS_DOTS,
                             PARTIES_DOTS,
                             STATES_DOTS,
                           ],
-                          textStyle: TextStyle(fontSize: 34),
+                          textStyle: const TextStyle(
+                            fontSize: 34,
+                          ),
                           textAlign: TextAlign.start,
                           alignment: AlignmentDirectional.topStart,
                           isRepeatingAnimation: false,
-                          duration: Duration(seconds: 2),
+                          duration: 2.seconds,
                         ),
                       ],
                     )

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
-import '../../extension/formatters.dart';
+import '../../extension/extensions.dart';
 import '../../i18n/label.dart';
 import '../../widget/default_bottombar.dart';
 import '../../widget/loading.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:polis/extension/extensions.dart';
 import 'package:polis/page/pages.dart';
 
 import '../utils.dart';
@@ -18,7 +19,7 @@ void main() {
           enabled: false,
         ),
       );
-      await tester.pump(const Duration(seconds: 5));
+      await tester.pump(5.seconds);
     });
 
     testWidgets('should go to timeline when click button', (tester) async {
