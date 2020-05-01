@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
@@ -7,6 +8,7 @@ import '../../i18n/i18n.dart';
 import '../../model/usuario_seguindo_politico_model.dart';
 import '../../widget/card_base.dart';
 import '../../widget/default_bottombar.dart';
+import '../../widget/empty_info.dart';
 import '../../widget/loading.dart';
 import '../../widget/photo.dart';
 import '../../widget/text_title.dart';
@@ -35,12 +37,17 @@ class PoliticFollowersPage extends StatelessWidget {
       children: <Widget>[
         const SizedBox(height: 8),
         TextTitle(FOLLOWERS),
-        Expanded(
-          child: ListView.builder(
-            itemBuilder: (_, i) => _buildListTile(followers[i]),
-            itemCount: followers.length,
-          ),
-        ),
+        followers.isNotEmpty
+            ? Expanded(
+                child: ListView.builder(
+                  itemBuilder: (_, i) => _buildListTile(followers[i]),
+                  itemCount: followers.length,
+                ),
+              )
+            : EmptyInfo(
+                text: POLITIC_HAS_NO_FOLLOWER,
+                icon: MaterialCommunityIcons.account_question_outline,
+              ),
       ],
     );
   }
