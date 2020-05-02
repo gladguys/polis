@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:polis/model/tramitacao_proposta_model.dart';
-import 'package:polis/widget/label_value.dart';
-import 'package:polis/widget/text_rich.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
 import '../../extension/formatters.dart';
 import '../../i18n/label.dart';
+import '../../model/tramitacao_proposta_model.dart';
 import '../../widget/default_bottombar.dart';
+import '../../widget/label_value.dart';
 import '../../widget/loading.dart';
 import '../../widget/text_title.dart';
 import '../../widget/timeline_tile.dart';
