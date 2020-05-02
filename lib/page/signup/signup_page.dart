@@ -9,7 +9,7 @@ import '../../bloc/blocs.dart';
 import '../../core/abstract/polis_image_picker.dart';
 import '../../core/keys.dart';
 import '../../core/validators.dart';
-import '../../extension/media_query_extensions.dart';
+import '../../extension/extensions.dart';
 import '../../i18n/i18n.dart';
 import '../../model/models.dart';
 import '../../widget/loading.dart';
@@ -71,7 +71,7 @@ class _SignupPageState extends State<SignupPage> {
       listener: (context, state) {
         if (state is UserCreated) {
           Snackbar.success(context, USER_CREATED_WITH_SUCCESS);
-          Future.delayed(const Duration(seconds: 1))
+          Future.delayed(1.second)
               .then((value) => widget.panelController.close());
         } else if (state is UserCreationFailed) {
           Snackbar.error(context, state.statusMessage);

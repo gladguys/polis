@@ -12,7 +12,7 @@ class UserProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: DefaultBottombar(USER_PROFILE_PAGE),
+      bottomNavigationBar: DefaultBottombar(USER_PROFILE_PAGE, withBack: true),
       body: SafeArea(
         child: BlocBuilder<UserProfileBloc, UserProfileState>(
           builder: (_, state) {

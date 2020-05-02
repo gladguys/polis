@@ -19,7 +19,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initHive();
   initLocator(await SharedPreferences.getInstance());
-  G<AdService>().initAds();
   G<CrashlyticsService>().initCrashlytics();
   FlutterError.onError = G<CrashlyticsService>().crashlytics.recordFlutterError;
   BlocSupervisor.delegate = FlutterBlocDelegate(

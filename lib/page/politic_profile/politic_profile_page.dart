@@ -12,7 +12,8 @@ class PoliticProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: DefaultBottombar(SEARCH_POLITIC_PAGE),
+      bottomNavigationBar:
+          DefaultBottombar(SEARCH_POLITIC_PAGE, withBack: true),
       body: SafeArea(
         child: BlocBuilder<PoliticProfileBloc, PoliticProfileState>(
           builder: (_, state) {

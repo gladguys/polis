@@ -16,6 +16,7 @@ class UserFollowingPoliticsPage extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: DefaultBottombar(
         USER_FOLLOWING_POLITICS_PAGE,
+        withBack: true,
         onPopCallback: () =>
             SimpleRouter.forwardAndReplace(UserProfilePageConnected()),
       ),
