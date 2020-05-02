@@ -47,7 +47,7 @@ class _PoliticProfileState extends State<PoliticProfile> {
         ),
       ),
       size: const PanelSize(
-        closedHeight: 0.45,
+        closedHeight: 0.40,
         expandedHeight: 0.97,
       ),
       content: PanelContent(

@@ -23,7 +23,7 @@ class PoliticoModel extends HiveObject {
       this.quantidadeSeguidores,
       this.dataNascimento,
       this.escolaridade,
-      this.qntDespesas});
+      this.totalDespesa});
 
   @HiveField(0)
   final String id;
@@ -68,7 +68,7 @@ class PoliticoModel extends HiveObject {
   final String escolaridade;
 
   @HiveField(14)
-  final double qntDespesas;
+  final double totalDespesa;
 
   factory PoliticoModel.fromJson(Map<String, dynamic> json) =>
       _$PoliticoModelFromJson(json);
@@ -90,7 +90,7 @@ class PoliticoModel extends HiveObject {
     double quantidadeSeguidores,
     DateTime dataNascimento,
     String escolaridade,
-    Double qntDespesas
+    Double totalDespesa
   }) {
     return PoliticoModel(
       id: id ?? this.id,
@@ -107,7 +107,7 @@ class PoliticoModel extends HiveObject {
       quantidadeSeguidores: quantidadeSeguidores ?? this.quantidadeSeguidores,
       dataNascimento: dataNascimento ?? this.dataNascimento,
       escolaridade: escolaridade ?? this.escolaridade,
-      qntDespesas: qntDespesas ?? this.qntDespesas,
+      totalDespesa: totalDespesa ?? this.totalDespesa,
     );
   }
 
