@@ -94,4 +94,12 @@ final ThemeData theme = ThemeData(
       borderRadius: BorderRadius.circular(10),
     ),
   ),
+  tooltipTheme: TooltipThemeData(
+    showDuration: const Duration(seconds: 5),
+    preferBelow: false,
+    decoration: BoxDecoration(
+      color: Colors.black.withOpacity(.8),
+      borderRadius: BorderRadius.circular(20),
+    ),
+  ),
 );
