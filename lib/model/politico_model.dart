@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -20,7 +22,8 @@ class PoliticoModel extends HiveObject {
       this.sexo,
       this.quantidadeSeguidores,
       this.dataNascimento,
-      this.escolaridade});
+      this.escolaridade,
+      this.qntDespesas});
 
   @HiveField(0)
   final String id;
@@ -64,6 +67,9 @@ class PoliticoModel extends HiveObject {
   @HiveField(13)
   final String escolaridade;
 
+  @HiveField(14)
+  final double qntDespesas;
+
   factory PoliticoModel.fromJson(Map<String, dynamic> json) =>
       _$PoliticoModelFromJson(json);
 
@@ -84,6 +90,7 @@ class PoliticoModel extends HiveObject {
     double quantidadeSeguidores,
     DateTime dataNascimento,
     String escolaridade,
+    Double qntDespesas
   }) {
     return PoliticoModel(
       id: id ?? this.id,
@@ -100,6 +107,7 @@ class PoliticoModel extends HiveObject {
       quantidadeSeguidores: quantidadeSeguidores ?? this.quantidadeSeguidores,
       dataNascimento: dataNascimento ?? this.dataNascimento,
       escolaridade: escolaridade ?? this.escolaridade,
+      qntDespesas: qntDespesas ?? this.qntDespesas,
     );
   }
 
