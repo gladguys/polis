@@ -72,7 +72,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
         Column(
           children: <Widget>[
             Text(
-              totalDespesa.toString().formatCurrency(),
+              totalDespesa.formatCurrency(),
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
