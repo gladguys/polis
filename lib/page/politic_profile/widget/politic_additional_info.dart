@@ -13,7 +13,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
   final PoliticoModel politic;
 
   int get quantidadeSeguidores => (politic.quantidadeSeguidores ?? 0).toInt();
-  double get totalDespesa => (politic.totalDespesa ?? 0).toDouble();
+  double get totalDespesas => (politic.totalDespesas ?? 0).toDouble();
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +72,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
         Column(
           children: <Widget>[
             Text(
-              totalDespesa.formatCurrency(),
+              totalDespesas.formatCurrency(),
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
