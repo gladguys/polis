@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../enum/acao_type.dart';
-import '../../../extension/formatters.dart';
-import '../../../extension/media_query_extensions.dart';
+import '../../../extension/extensions.dart';
 import '../../../i18n/label.dart';
 import '../../../model/models.dart';
 import '../../../widget/card_base.dart';

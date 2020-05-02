@@ -211,8 +211,6 @@ class MockAnalyticsService extends Mock implements AnalyticsService {}
 
 class MockPerformanceService extends Mock implements PerformanceService {}
 
-class MockAdService extends Mock implements AdService {}
-
 class MockShareService extends Mock implements ShareService {}
 
 class MockSharedPreferencesService extends Mock

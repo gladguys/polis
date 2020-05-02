@@ -9,6 +9,7 @@ import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/abstract/polis_image_picker.dart';
 import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
+import 'package:polis/extension/extensions.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
@@ -175,7 +176,7 @@ void main() {
         ),
       );
       await tester.pump();
-      await tester.pumpAndSettle(const Duration(seconds: 10));
+      await tester.pumpAndSettle(10.seconds);
       verify(mockObserver.didPush(any, any));
       verify(mockPanelController.close()).called(1);
     });

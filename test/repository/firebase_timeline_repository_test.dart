@@ -70,7 +70,7 @@ void main() {
         when(mockDocumentChange.type).thenReturn(DocumentChangeType.added);
         when(mockDocumentChange2.type).thenReturn(DocumentChangeType.modified);
         firebaseTimelineRepository.getNewActivitiesCounter('1').listen((data) {
-          expect(data, 2);
+          expect(data, 1);
         });
       });
 

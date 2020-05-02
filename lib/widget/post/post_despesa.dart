@@ -7,7 +7,7 @@ import 'package:simple_router/simple_router.dart';
 import '../../bloc/blocs.dart';
 import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
-import '../../extension/formatters.dart';
+import '../../extension/extensions.dart';
 import '../../i18n/i18n.dart';
 import '../../model/models.dart';
 import '../../page/pages.dart';

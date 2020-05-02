@@ -88,3 +88,6 @@ const TRAMITATION_OF_PROPOSE = 'Tramitação da proposta';
 const AMBIT = 'Âmbito';
 const REGIME = 'Regime';
 const ORGAN = 'Órgão';
+const POLITICS_DOTS = 'Políticos...';
+const PARTIES_DOTS = 'Partidos...';
+const STATES_DOTS = 'Estados...';
