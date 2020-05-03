@@ -7,26 +7,26 @@ const admin = require("firebase-admin");
  */
 exports.onUpdateUser = functions.firestore
     .document('/users/{userId}')
-    .onCreate(async (change, context) => {
+    .onUpdate(async (change, context) => {
         const userId = context.params.userId;
         const previousUser = change.before.data();
         const newUser = change.after.data();
 
-        if (newUser.photoURL !== previousUser.photoURL) {
-            const newPhotoUrl = newUser.photoURL;
+        if (newUser.photoUrl !== previousUser.photoUrl) {
+            const newPhotoUrl = newUser.photoUrl;
 
-            const politicosSeguidosUsuario = await admin
+            const querySnapshotPoliticosSeguidosUsuario = await admin
                 .firestore()
                 .collection('politicos_seguidos')
                 .doc(userId)
                 .collection('politicosSeguidos')
                 .get();
 
-            politicosSeguidosUsuario.forEach(async (politico) => {
+            querySnapshotPoliticosSeguidosUsuario.forEach(async (politicoDoc) => {
                 await admin
                     .firestore()
                     .collection('usuarios_seguindo')
-                    .doc(politico.id)
+                    .doc(politicoDoc.id)
                     .collection('usuariosSeguindo')
                     .doc(userId)
                     .update({ "photoUrl": newPhotoUrl });
