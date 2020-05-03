@@ -3,6 +3,7 @@ const ATIVIDADES_COLLECTION = 'atividades';
 const ACOES_COLLECTION = 'acoes';
 const USERS_COLLECTION = 'users';
 const PARTIDOS_COLLECTION = 'partidos';
+const ORGAOS_COLLECTION = 'orgaos';
 const POLITICOS_COLLECTION = 'politicos';
 const TIMELINE_COLLECTION = 'timeline';
 const TRAMITACOES_COLLECTION = 'tramitacoes';
@@ -32,3 +33,4 @@ const HASH = 'hash';
 // References
 const PARTIDO_SYNC = 'PARTIDOSYNC';
 const POLITICO_SYNC = 'POLITICOSYNC';
+const ORGAO_SYNC = 'ORGAOSYNC';

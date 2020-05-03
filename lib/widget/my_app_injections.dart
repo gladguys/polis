@@ -89,6 +89,16 @@ class MyAppInjections extends StatelessWidget {
           ),
         ),
         RepositoryProvider(
+          create: (_) => FirebaseOrgaoRepository(
+            firestore: Firestore.instance,
+          ),
+        ),
+        RepositoryProvider(
+          create: (_) => HiveOrgaoRepository(
+            hive: Hive,
+          ),
+        ),
+        RepositoryProvider(
           create: (_) => FirebaseTimelineRepository(
             firestore: Firestore.instance,
           ),

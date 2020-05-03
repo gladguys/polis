@@ -23,7 +23,7 @@ dependencies:
   shared_preferences: ^0.5.7
   image_picker: ^0.6.5+2
   url_launcher: ^5.4.5
-  admob_flutter: ^0.3.4
+  flutter_native_admob: ^2.1.0
 
   # Utils
   diacritic: ^0.1.1

@@ -135,6 +135,11 @@ class MockFollowRepository extends Mock implements FollowRepository {}
 class MockFirebasePartidoRepository extends Mock
     implements FirebasePartidoRepository {}
 
+class MockFirebaseOrgaoRepository extends Mock
+    implements FirebaseOrgaoRepository {}
+
+class MockHiveOrgaoRepository extends Mock implements HiveOrgaoRepository {}
+
 class MockHivePartidoRepository extends Mock implements HivePartidoRepository {}
 
 class MockFirebasePoliticoRepository extends Mock
@@ -199,12 +204,12 @@ class MockPartidoBox extends Mock implements Box<PartidoModel> {}
 
 class MockPoliticoBox extends Mock implements Box<PoliticoModel> {}
 
+class MockOrgaoBox extends Mock implements Box<OrgaoModel> {}
+
 // Service
 class MockAnalyticsService extends Mock implements AnalyticsService {}
 
 class MockPerformanceService extends Mock implements PerformanceService {}
-
-class MockAdService extends Mock implements AdService {}
 
 class MockShareService extends Mock implements ShareService {}
 
@@ -212,6 +217,8 @@ class MockSharedPreferencesService extends Mock
     implements SharedPreferencesService {}
 
 class MockPartidoService extends Mock implements PartidoService {}
+
+class MockOrgaoService extends Mock implements OrgaoService {}
 
 class MockPoliticoService extends Mock implements PoliticoService {}
 

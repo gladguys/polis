@@ -14,6 +14,7 @@ void main() async {
     'USER': null,
     'PARTIDO_HASH_PREF': 'PARTIDO_HASH',
     'POLITICO_HASH_PREF': 'POLITICO_HASH',
+    'ORGAO_HASH_PREF': 'ORGAO_HASH',
   });
   MockSharedPreferences mockSharedPreferences;
   SharedPreferencesService sharedPreferencesService;
@@ -85,6 +86,27 @@ void main() async {
       when(mockSharedPreferences.getString(POLITICO_HASH_PREF))
           .thenReturn('POLITICO_HASH');
       expect(sharedPreferencesService.getPoliticoHash(), 'POLITICO_HASH');
+    });
+
+    group('setOrgaoHash', () {
+      test('non null', () {
+        sharedPreferencesService.setUser(null);
+        expect(sharedPreferencesService.getOrgaoHash(), isNull);
+        sharedPreferencesService.setOrgaoHash('hash');
+      });
+
+      test('null', () {
+        sharedPreferencesService.setUser(null);
+        expect(sharedPreferencesService.getOrgaoHash(), isNull);
+        sharedPreferencesService.setOrgaoHash(null);
+        expect(sharedPreferencesService.getOrgaoHash(), isNull);
+      });
+    });
+
+    test('getOrgaoHash', () {
+      when(mockSharedPreferences.getString(ORGAO_HASH_PREF))
+          .thenReturn('ORGAO_HASH');
+      expect(sharedPreferencesService.getOrgaoHash(), 'ORGAO_HASH');
     });
   });
 }

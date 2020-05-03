@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../core/keys.dart';
+import '../../../extension/extensions.dart';
 import '../../../i18n/label.dart';
 import '../../../model/models.dart';
 import '../../../widget/field_rounded.dart';
@@ -103,7 +104,7 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
 
   Widget _buildFilter() {
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 500),
+      duration: 500.milliseconds,
       width: 310,
       height: isOpen ? 64 : 0,
       margin: isOpen ? const EdgeInsets.only(top: 8) : EdgeInsets.zero,
