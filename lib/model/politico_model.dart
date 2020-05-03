@@ -8,22 +8,24 @@ part 'politico_model.g.dart';
 @JsonSerializable()
 @HiveType(typeId: 1)
 class PoliticoModel extends HiveObject {
-  PoliticoModel(
-      {this.id,
-      this.nomeCivil,
-      this.siglaPartido,
-      this.siglaUf,
-      this.urlFoto,
-      this.email,
-      this.nomeEleitoral,
-      this.status,
-      this.condicaoEleitoral,
-      this.cpf,
-      this.sexo,
-      this.quantidadeSeguidores,
-      this.dataNascimento,
-      this.escolaridade,
-      this.totalDespesas});
+  PoliticoModel({
+    this.id,
+    this.nomeCivil,
+    this.siglaPartido,
+    this.siglaUf,
+    this.urlFoto,
+    this.email,
+    this.nomeEleitoral,
+    this.status,
+    this.condicaoEleitoral,
+    this.cpf,
+    this.sexo,
+    this.quantidadeSeguidores,
+    this.dataNascimento,
+    this.escolaridade,
+    this.totalDespesas,
+    this.totalProposicoes,
+  });
 
   @HiveField(0)
   final String id;
@@ -70,6 +72,9 @@ class PoliticoModel extends HiveObject {
   @HiveField(14)
   final double totalDespesas;
 
+  @HiveField(15)
+  final int totalProposicoes;
+
   factory PoliticoModel.fromJson(Map<String, dynamic> json) =>
       _$PoliticoModelFromJson(json);
 
@@ -90,7 +95,8 @@ class PoliticoModel extends HiveObject {
     double quantidadeSeguidores,
     DateTime dataNascimento,
     String escolaridade,
-    Double totalDespesas
+    Double totalDespesas,
+    int totalProposicoes,
   }) {
     return PoliticoModel(
       id: id ?? this.id,
@@ -108,6 +114,7 @@ class PoliticoModel extends HiveObject {
       dataNascimento: dataNascimento ?? this.dataNascimento,
       escolaridade: escolaridade ?? this.escolaridade,
       totalDespesas: totalDespesas ?? this.totalDespesas,
+      totalProposicoes: totalProposicoes ?? this.totalProposicoes,
     );
   }
 
@@ -125,6 +132,6 @@ class PoliticoModel extends HiveObject {
 
   @override
   String toString() {
-    return '''PoliticoModel{id: $id, nomeCivil: $nomeCivil, siglaPartido: $siglaPartido, siglaUf: $siglaUf, urlFoto: $urlFoto, email: $email, nomeEleitoral: $nomeEleitoral, status: $status, condicaoEleitoral: $condicaoEleitoral, cpf: $cpf, sexo: $sexo, quantidadeSeguidores: $quantidadeSeguidores, dataNascimento: $dataNascimento, escolaridade: $escolaridade}''';
+    return '''PoliticoModel{id: $id, nomeCivil: $nomeCivil, siglaPartido: $siglaPartido, siglaUf: $siglaUf, urlFoto: $urlFoto, email: $email, nomeEleitoral: $nomeEleitoral, status: $status, condicaoEleitoral: $condicaoEleitoral, cpf: $cpf, sexo: $sexo, quantidadeSeguidores: $quantidadeSeguidores, dataNascimento: $dataNascimento, escolaridade: $escolaridade, totalDespesas: $totalDespesas, totalProposicoes: $totalProposicoes}''';
   }
 }
