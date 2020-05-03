@@ -9,18 +9,32 @@ import '../mock.dart';
 void main() {
   TramitacaoPropostaBloc tramitacaoPropostaBloc;
   MockTramitacaoPropostaRepository mockTramitacaoPropostaRepository;
+  MockOrgaoService mockOrgaoService;
 
   group('TramitacaoPropostaBloc tests', () {
     setUp(() {
       mockTramitacaoPropostaRepository = MockTramitacaoPropostaRepository();
+      mockOrgaoService = MockOrgaoService();
       tramitacaoPropostaBloc = TramitacaoPropostaBloc(
         repository: mockTramitacaoPropostaRepository,
+        orgaoService: mockOrgaoService,
       );
     });
 
     test('asserts', () {
       expect(
-          () => TramitacaoPropostaBloc(repository: null), throwsAssertionError);
+          () => TramitacaoPropostaBloc(
+                repository: null,
+                orgaoService: MockOrgaoService(),
+              ),
+          throwsAssertionError);
+
+      expect(
+          () => TramitacaoPropostaBloc(
+                repository: mockTramitacaoPropostaRepository,
+                orgaoService: null,
+              ),
+          throwsAssertionError);
     });
 
     test('''Expects InitialTimelineState to be the initial state''', () {

@@ -33,4 +33,14 @@ class FirebaseSyncLogRepository implements SyncLogRepository {
       throw ComunicationException();
     }
   }
+
+  @override
+  Future<String> getOrgaoHash() async {
+    try {
+      final documentSnapshot = await syncLogRef.document(ORGAO_SYNC).get();
+      return documentSnapshot.data[HASH];
+    } on Exception {
+      throw ComunicationException();
+    }
+  }
 }

@@ -8,6 +8,7 @@ import '../../model/models.dart';
 const USER_PREF = 'USER';
 const PARTIDO_HASH_PREF = 'PARTIDO_HASH';
 const POLITICO_HASH_PREF = 'POLITICO_HASH';
+const ORGAO_HASH_PREF = 'ORGAO_HASH';
 
 class SharedPreferencesService {
   SharedPreferencesService({@required this.sharedPreferences})
@@ -56,5 +57,17 @@ class SharedPreferencesService {
 
   String getPoliticoHash() {
     return sharedPreferences.getString(POLITICO_HASH_PREF);
+  }
+
+  Future<void> setOrgaoHash(String orgaoHash) async {
+    if (orgaoHash != null) {
+      await sharedPreferences.setString(ORGAO_HASH_PREF, orgaoHash);
+    } else {
+      await sharedPreferences.setString(ORGAO_HASH_PREF, null);
+    }
+  }
+
+  String getOrgaoHash() {
+    return sharedPreferences.getString(ORGAO_HASH_PREF);
   }
 }
