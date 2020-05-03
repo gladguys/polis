@@ -14,6 +14,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
 
   int get quantidadeSeguidores => (politic.quantidadeSeguidores ?? 0).toInt();
   double get totalDespesas => (politic.totalDespesas ?? 0).toDouble();
+  int get totalProposicoes => (politic.totalProposicoes ?? 0).toInt();
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +51,9 @@ class PoliticAdditionalInfo extends StatelessWidget {
             const SizedBox(width: 16),
             Column(
               children: <Widget>[
-                const Text(
-                  '50',
-                  style: TextStyle(
+                Text(
+                  totalProposicoes.toString(),
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
