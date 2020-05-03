@@ -234,18 +234,14 @@ exports.onCreateActivity = functions.firestore
                         .collection('politicos')
                         .doc(politicoId)
                         .update({"qntDespesas": increment});
-                    } else if (atividade.tipoAtividade == 'PROPOSICAO' && atividade.sequencia) {
-                        const politico = await admin
-                            .firestore()
-                            .collection('politicos')
-                            .doc(politicoId);
-                        const qtdAtualProposicoes = parseInt(politico.qtdProposicoes || 0);
+                    } else if (atividade.tipoAtividade == 'PROPOSICAO' && atividade.sequencia === 1) {
+                    const incrementByOne = admin.firestore.FieldValue.increment(1);
 
                         admin
                             .firestore()
                             .collection('politicos')
                             .doc(politicoId)
-                            .update({"qntProposicoes": qtdAtualProposicoes + 1});
+                            .update({"totalProposicoes": incrementByOne });
                     }
                 }
             });
