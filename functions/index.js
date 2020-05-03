@@ -211,7 +211,7 @@ exports.onCreateActivity = functions.firestore
             .collection('atividades')
             .doc(politicoId)
             .collection('atividadesPolitico')
-            .doc(documentId).get().then(function (doc) {
+            .doc(documentId).get().then(async function (doc) {
                 if (doc.exists) {
                     id = doc.id;
                     atividade = doc.data();
@@ -227,7 +227,6 @@ exports.onCreateActivity = functions.firestore
                         });
                     
                     if (atividade.tipoAtividade == 'DESPESA') {
-                        
                         const increment = admin.firestore.FieldValue.increment(parseFloat(atividade.valorDocumento));
                         
                         admin
@@ -235,6 +234,18 @@ exports.onCreateActivity = functions.firestore
                         .collection('politicos')
                         .doc(politicoId)
                         .update({"qntDespesas": increment});
+                    } else if (atividade.tipoAtividade == 'PROPOSICAO' && atividade.sequencia) {
+                        const politico = await admin
+                            .firestore()
+                            .collection('politicos')
+                            .doc(politicoId);
+                        const qtdAtualProposicoes = parseInt(politico.qtdProposicoes || 0);
+
+                        admin
+                            .firestore()
+                            .collection('politicos')
+                            .doc(politicoId)
+                            .update({"qntProposicoes": qtdAtualProposicoes + 1});
                     }
                 }
             });
