@@ -64,7 +64,7 @@ exports.onCreateFollower = functions.firestore
                 'idPolitico': politicoId,
                 'mensagem': 'Segui o político ' + p.data().nomeEleitoral + ' no dia ' + today,
                 'urlFotoPolitico': p.data().urlFoto,
-                'sexoPolitico': p.sexoPolitico
+                'sexoPolitico': p.sexo
             };
 
             admin.firestore().collection('acoes').doc(followerId).collection('acoesUsuario').add(acao);
