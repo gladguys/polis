@@ -226,6 +226,27 @@ void main() {
       expect(find.byType(UserProfilePage), findsOneWidget);
     });
 
+    testWidgets(
+        '''shoud not reload UserProfilePage page when clicking on photo and user is already on UserProfilePage''',
+        (tester) async {
+      final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.user).thenReturn(UserModel());
+      await tester.pumpWidget(
+        connectedWidget(
+          BlocProvider(
+            create: (_) => mockUserBloc,
+            child: UserProfilePageConnected(),
+          ),
+        ),
+      );
+      final profile = find.byKey(profileImageBottombarKey);
+      expect(profile, findsOneWidget);
+      await tester.tap(profile);
+      await tester.pump();
+      await tester.pump();
+      expect(find.byType(UserProfilePage), findsOneWidget);
+    });
+
     testWidgets('shoud update user photo when state change', (tester) async {
       final mockUserBloc = MockUserBloc();
       whenListen(
