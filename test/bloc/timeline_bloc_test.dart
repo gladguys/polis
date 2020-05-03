@@ -216,7 +216,7 @@ void main() {
     );
 
     blocTest(
-      '''Expects [LoadingTimeline, TimelineUpdated, UpdateTimeline] when fetch more posts''',
+      '''Expects [LoadingTimeline, TimelineUpdated, ReachedEndFetchingMore, UpdateTimeline] when fetch more posts''',
       build: () async {
         when(mockTimelineRepository.getNewActivitiesCounter('1'))
             .thenAnswer((_) => timelineStream);
@@ -255,6 +255,13 @@ void main() {
       expect: [
         LoadingTimeline(),
         isA<TimelineUpdated>(),
+        ReachedEndFetchingMore(
+          activities: [
+            DespesaModel(id: '1'),
+            DespesaModel(id: '2'),
+            DespesaModel(id: '3')
+          ],
+        ),
         TimelineUpdated(
           activities: [
             DespesaModel(id: '1'),
@@ -302,6 +309,11 @@ void main() {
       expect: [
         LoadingTimeline(),
         isA<TimelineUpdated>(),
+        ReachedEndFetchingMore(
+          activities: [
+            DespesaModel(id: '1'),
+          ],
+        ),
         FetchTimelineFailed(),
       ],
     );

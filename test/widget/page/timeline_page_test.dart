@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
@@ -91,6 +92,24 @@ void main() {
       final timeline = find.byType(Timeline);
       expect(timeline, findsOneWidget);
       tester.ensureVisible(timeline);
+    });
+
+    testWidgets('shoud show loading while fetching more', (tester) async {
+      final mockTimelineBloc = MockTimelineBloc();
+      when(mockTimelineBloc.state).thenReturn(
+        ReachedEndFetchingMore(
+          activities: [],
+        ),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<TimelineBloc>(
+            bloc: mockTimelineBloc,
+            page: TimelinePage(),
+          ),
+        ),
+      );
+      expect(find.byType(SpinKitCircle), findsOneWidget);
     });
 
     testWidgets('shoud show TIMELINE_IS_EMPTY message', (tester) async {
