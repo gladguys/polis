@@ -1,7 +1,9 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/service/locator.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
@@ -11,7 +13,12 @@ import '../../mock.dart';
 import '../utils.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   setUpAll(() {
+    const channel = MethodChannel('plugins.flutter.io/firebase_performance');
+    channel.setMockMethodCallHandler((methodCall) async => true);
+    initLocator(MockSharedPreferences());
     initializeDateFormatting('pt_BR', null);
   });
 
@@ -34,6 +41,14 @@ void main() {
           dataApresentacao: '10-01-2020',
         ),
       );
+      when(mockTramitacaoPropostaBloc.orgaosMap).thenReturn({
+        'T': OrgaoModel(
+          id: '1',
+          sigla: 'T',
+          nome: 'Teste',
+          apelido: 'Teste',
+        )
+      });
       when(mockTramitacaoPropostaBloc.state).thenReturn(
         GetTramitacaoPropostaSuccess(
           [
@@ -41,11 +56,13 @@ void main() {
               descricaoTramitacao: 'descricao1',
               sequencia: 1,
               dataHora: '10-01-2020',
+              siglaOrgao: 'T',
             ),
             TramitacaoPropostaModel(
               descricaoTramitacao: 'descricao2',
               sequencia: 2,
               dataHora: '10-01-2020',
+              siglaOrgao: 'T',
             ),
           ],
         ),

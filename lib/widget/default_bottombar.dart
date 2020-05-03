@@ -91,7 +91,7 @@ class DefaultBottombar extends StatelessWidget {
             width: 80,
             height: 48,
             alignment: Alignment.centerRight,
-            child: _buildUserButton(context),
+            child: _buildUserButton(context, routeName),
           ),
           const SizedBox(width: 4),
         ],
@@ -99,7 +99,7 @@ class DefaultBottombar extends StatelessWidget {
     );
   }
 
-  Widget _buildUserButton(BuildContext context) {
+  Widget _buildUserButton(BuildContext context, String routeName) {
     final user = context.bloc<UserBloc>().user;
 
     return InkWell(
@@ -124,10 +124,12 @@ class DefaultBottombar extends StatelessWidget {
           ),
         ),
       ),
-      onTap: () => SimpleRouter.forward(
-        UserProfilePageConnected(),
-        name: USER_PROFILE_PAGE,
-      ),
+      onTap: () => routeName != USER_PROFILE_PAGE
+          ? SimpleRouter.forward(
+              UserProfilePageConnected(),
+              name: USER_PROFILE_PAGE,
+            )
+          : VoidCallback,
     );
   }
 

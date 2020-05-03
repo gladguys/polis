@@ -77,5 +77,28 @@ void main() {
             .catchError((e) => expect(e, isA<ComunicationException>()));
       });
     });
+
+    group('getOrgaoHash', () {
+      test('get the hash', () async {
+        when(mockFirestore.collection(SYNC_LOG_COLLECTION))
+            .thenReturn(mockSyncLogCollectionReference);
+        when(mockSyncLogCollectionReference.document(ORGAO_SYNC))
+            .thenAnswer((_) => mockDocumentReference);
+        when(mockDocumentReference.get())
+            .thenAnswer((_) => Future.value(mockDocumentSnapshot));
+        when(mockDocumentSnapshot.data).thenReturn({'hash': 'hashOrgao'});
+
+        final hashOrgao = await firebaseSyncLogRepository.getOrgaoHash();
+        expect(hashOrgao, 'hashOrgao');
+      });
+
+      test('throws exception', () {
+        when(mockFirestore.collection(SYNC_LOG_COLLECTION))
+            .thenThrow(Exception());
+        firebaseSyncLogRepository
+            .getOrgaoHash()
+            .catchError((e) => expect(e, isA<ComunicationException>()));
+      });
+    });
   });
 }

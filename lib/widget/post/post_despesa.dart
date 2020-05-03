@@ -159,25 +159,27 @@ class PostDespesa extends StatelessWidget {
             value: despesa.cnpjCpfFornecedor,
             emptyValue: NOT_INFORMED,
           ),
-          Container(
-            height: 30,
-            margin: const EdgeInsets.only(top: 4),
-            child: OutlineButton.icon(
-              key: despesaImageIconKey,
-              icon: FaIcon(FontAwesomeIcons.file, size: 18),
-              label: Text(
-                VIEW_DOCUMENT.toUpperCase(),
-                style: const TextStyle(fontSize: 13),
-              ),
-              color: theme.primaryColor,
-              highlightedBorderColor: theme.primaryColorDark,
-              borderSide: BorderSide(color: theme.primaryColor),
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              onPressed: () => context.bloc<DespesaImageBloc>().add(
-                    OpenDespesaImage(despesa.urlDocumento),
+          despesa.urlDocumento != null
+              ? Container(
+                  height: 30,
+                  margin: const EdgeInsets.only(top: 4),
+                  child: OutlineButton.icon(
+                    key: despesaImageIconKey,
+                    icon: FaIcon(FontAwesomeIcons.file, size: 18),
+                    label: Text(
+                      VIEW_DOCUMENT.toUpperCase(),
+                      style: const TextStyle(fontSize: 13),
+                    ),
+                    color: theme.primaryColor,
+                    highlightedBorderColor: theme.primaryColorDark,
+                    borderSide: BorderSide(color: theme.primaryColor),
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    onPressed: () => context.bloc<DespesaImageBloc>().add(
+                          OpenDespesaImage(despesa.urlDocumento),
+                        ),
                   ),
-            ),
-          ),
+                )
+              : const SizedBox.shrink(),
         ],
       ),
     );
