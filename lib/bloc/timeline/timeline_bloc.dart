@@ -75,6 +75,9 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
     }
     if (event is FetchMorePosts) {
       try {
+        yield ReachedEndFetchingMore(
+          activities: timelinePosts,
+        );
         final timelineData = await repository.getMorePosts(
             event.userId, kTimelinePageSize, lastDocument);
 
