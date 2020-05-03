@@ -88,7 +88,7 @@ exports.onDeleteFollower = functions.firestore
                 'idPolitico': politicoId,
                 'mensagem': 'Deixei de seguir o político ' + p.data().nomeEleitoral + ' no dia ' + today,
                 'urlFotoPolitico': p.data().urlFoto,
-                'sexoPolitico': p.sexo
+                'sexoPolitico': p.data().sexo
             };
 
             admin.firestore().collection('acoes').doc(followerId).collection('acoesUsuario').add(acao);
