@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:incrementally_loading_listview/incrementally_loading_listview.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../core/keys.dart';
@@ -25,35 +26,22 @@ class Timeline extends StatefulWidget {
 }
 
 class _TimelineState extends State<Timeline> {
-  ScrollController scrollController;
   NativeAdmobController nativeAdmobController;
 
-  double get currentPosition => scrollController.offset;
-  double get maxScrollPosition => scrollController.position.maxScrollExtent;
-  bool get isPositionInRange => !scrollController.position.outOfRange;
   int get updatesCount => widget.updatesCount;
   TimelineBloc get timelineBloc => context.bloc<TimelineBloc>();
   String get userId => context.bloc<UserBloc>().user.userId;
 
   @override
   void initState() {
-    scrollController = ScrollController();
-    scrollController.addListener(_onScrollListener);
     nativeAdmobController = NativeAdmobController();
     super.initState();
   }
 
   @override
   void dispose() {
-    scrollController.dispose();
     nativeAdmobController.dispose();
     super.dispose();
-  }
-
-  void _onScrollListener() {
-    if (currentPosition >= maxScrollPosition && isPositionInRange) {
-      timelineBloc.add(FetchMorePosts(userId));
-    }
   }
 
   @override
@@ -73,27 +61,20 @@ class _TimelineState extends State<Timeline> {
   }
 
   Widget _buildList() {
-    return ListView.separated(
+    return IncrementallyLoadingListView(
       key: timelineListKey,
-      controller: scrollController,
-      physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.only(top: 8, bottom: 16),
-      itemCount: widget.activities.length,
-      itemBuilder: (_, i) {
-        return Column(
-          children: <Widget>[
-            if (widget.activities[i] is DespesaModel)
-              DespesaTileConnected(widget.activities[i])
-            else
-              PropostaTileConnected(widget.activities[i] as PropostaModel),
-            if ((i == 2) || (i > 2 && i % 5 == 0)) _buildAdmobBanner(),
-          ],
-        );
-      },
-      separatorBuilder: (_, i) => const Divider(
-        height: 16,
-        indent: 8,
-        endIndent: 8,
+      itemCount: () => widget.activities.length,
+      hasMore: () => true,
+      loadMore: () async => timelineBloc.add(FetchMorePosts(userId)),
+      itemBuilder: (_, i) => Column(
+        children: <Widget>[
+          if (widget.activities[i] is DespesaModel)
+            DespesaTileConnected(widget.activities[i])
+          else
+            PropostaTileConnected(widget.activities[i] as PropostaModel),
+          if ((i == 2) || (i > 2 && i % 5 == 0)) _buildAdmobBanner(),
+        ],
       ),
     );
   }
