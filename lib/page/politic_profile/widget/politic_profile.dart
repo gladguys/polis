@@ -1,3 +1,4 @@
+import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sliding_panel/sliding_panel.dart';
@@ -31,6 +32,12 @@ class _PoliticProfileState extends State<PoliticProfile> {
 
   @override
   Widget build(BuildContext context) {
+    return ExpandableBottomSheet(
+      background: _buildBody(context),
+      expandableContent: _buildPanel(context),
+      persistentContentHeight: MediaQuery.of(context).size.height - 480,
+      persistentHeader: _buildHeader(),
+    );
     return SlidingPanel(
       panelController: _panelController,
       parallaxSlideAmount: 0,
@@ -70,21 +77,34 @@ class _PoliticProfileState extends State<PoliticProfile> {
   }
 
   Widget _buildHeader() {
-    return Column(
-      children: <Widget>[
-        const SizedBox(height: 6),
-        Container(
-          width: 40,
-          height: 4,
-          decoration: BoxDecoration(
-            color: theme.accentColor.withOpacity(.25),
-            borderRadius: BorderRadius.circular(4),
-          ),
+    return Container(
+      width: double.maxFinite,
+      decoration: BoxDecoration(
+        color: theme.scaffoldBackgroundColor,
+        boxShadow: [
+          BoxShadow(color: Colors.black26, blurRadius: 3),
+        ],
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(24),
+          topRight: Radius.circular(24),
         ),
-        const SizedBox(height: 8),
-        TextTitle(ACTIVITIES, fontSize: 15),
-        const SizedBox(height: 8),
-      ],
+      ),
+      child: Column(
+        children: <Widget>[
+          const SizedBox(height: 6),
+          Container(
+            width: 40,
+            height: 4,
+            decoration: BoxDecoration(
+              color: theme.accentColor.withOpacity(.25),
+              borderRadius: BorderRadius.circular(4),
+            ),
+          ),
+          const SizedBox(height: 8),
+          TextTitle(ACTIVITIES, fontSize: 15),
+          const SizedBox(height: 8),
+        ],
+      ),
     );
   }
 
@@ -115,6 +135,9 @@ class _PoliticProfileState extends State<PoliticProfile> {
 
   Widget _buildPanel(BuildContext context) {
     final bloc = context.bloc<PoliticProfileBloc>();
-    return PoliticActivities(bloc.lastActivities);
+    return Container(
+      color: theme.scaffoldBackgroundColor,
+      child: PoliticActivities(bloc.lastActivities),
+    );
   }
 }
