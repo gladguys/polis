@@ -16,7 +16,7 @@ class UserActions extends StatelessWidget {
       return UserActionsList(actions);
     } else {
       return Padding(
-        padding: const EdgeInsets.only(top: 64),
+        padding: const EdgeInsets.only(top: 24, bottom: 64),
         child: NotFound(msg: NO_RECENT_ACTIVITY),
       );
     }

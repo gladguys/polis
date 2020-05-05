@@ -45,7 +45,7 @@ class _PoliticActivitiesState extends State<PoliticActivities> {
   Widget build(BuildContext context) {
     if (widget.lastActivities.isNotEmpty) {
       return Container(
-        height: (context.screenHeight * 0.97) - 50 - 72,
+        height: context.screenHeight - 140,
         child: ListView.separated(
           controller: scrollController,
           shrinkWrap: true,
@@ -64,7 +64,10 @@ class _PoliticActivitiesState extends State<PoliticActivities> {
         ),
       );
     } else {
-      return NotFound(msg: NO_ACTIVITY_FOR_POLITIC);
+      return Padding(
+        padding: const EdgeInsets.only(top: 24, bottom: 64),
+        child: NotFound(msg: NO_ACTIVITY_FOR_POLITIC),
+      );
     }
   }
 }
