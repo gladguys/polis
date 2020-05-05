@@ -1,7 +1,6 @@
 import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sliding_panel/sliding_panel.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../i18n/label.dart';
@@ -22,57 +21,13 @@ class PoliticProfile extends StatefulWidget {
 }
 
 class _PoliticProfileState extends State<PoliticProfile> {
-  PanelController _panelController;
-
-  @override
-  void initState() {
-    _panelController = PanelController();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return ExpandableBottomSheet(
-      background: _buildBody(context),
-      expandableContent: _buildPanel(context),
       persistentContentHeight: MediaQuery.of(context).size.height - 480,
       persistentHeader: _buildHeader(),
-    );
-    return SlidingPanel(
-      panelController: _panelController,
-      parallaxSlideAmount: 0,
-      isTwoStatePanel: true,
-      isDraggable: true,
-      decoration: PanelDecoration(
-        backgroundColor: theme.scaffoldBackgroundColor,
-        boxShadows: [
-          BoxShadow(color: Colors.black26, blurRadius: 3),
-        ],
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
-        ),
-      ),
-      size: const PanelSize(
-        closedHeight: 0.45,
-        expandedHeight: 0.97,
-      ),
-      content: PanelContent(
-        headerWidget: PanelHeaderWidget(
-          headerContent: _buildHeader(),
-          options: const PanelHeaderOptions(centerTitle: true),
-          decoration: const PanelDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(24),
-              topRight: Radius.circular(24),
-            ),
-          ),
-        ),
-        panelContent: <Widget>[
-          _buildPanel(context),
-        ],
-        bodyContent: _buildBody(context),
-      ),
+      expandableContent: _buildPanel(context),
+      background: _buildBody(context),
     );
   }
 
@@ -82,7 +37,11 @@ class _PoliticProfileState extends State<PoliticProfile> {
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,
         boxShadow: [
-          BoxShadow(color: Colors.black26, blurRadius: 3),
+          const BoxShadow(
+            color: Colors.black12,
+            blurRadius: 1,
+            offset: Offset(0, -3),
+          ),
         ],
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(24),
@@ -108,6 +67,14 @@ class _PoliticProfileState extends State<PoliticProfile> {
     );
   }
 
+  Widget _buildPanel(BuildContext context) {
+    final bloc = context.bloc<PoliticProfileBloc>();
+    return Container(
+      color: theme.scaffoldBackgroundColor,
+      child: PoliticActivities(bloc.lastActivities),
+    );
+  }
+
   Widget _buildBody(BuildContext context) {
     final bloc = context.bloc<PoliticProfileBloc>();
     final politico = bloc.politico;
@@ -130,14 +97,6 @@ class _PoliticProfileState extends State<PoliticProfile> {
         PoliticAdditionalInfo(politico),
         const SizedBox(height: 24),
       ],
-    );
-  }
-
-  Widget _buildPanel(BuildContext context) {
-    final bloc = context.bloc<PoliticProfileBloc>();
-    return Container(
-      color: theme.scaffoldBackgroundColor,
-      child: PoliticActivities(bloc.lastActivities),
     );
   }
 }
