@@ -25,7 +25,7 @@ void main() async {
     analyticsService: G<AnalyticsService>(),
     performanceService: G<PerformanceService>(),
   );
-  initializeDateFormatting('pt_BR', null);
+  initializeDateFormatting("pt_BR", null);
 
   runZoned(() {
     runApp(
