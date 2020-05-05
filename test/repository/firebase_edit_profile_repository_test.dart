@@ -18,6 +18,7 @@ void main() {
   MockDocumentReference mockUserDocumentReference;
   MockStorageReference mockStorageReference;
   MockStorageReference mockUsersStorageReference;
+  MockStorageReference userImageRef;
   MockStorageReference imageRef;
   MockStorageTaskSnapshot mockStorageTaskSnapshot;
   MockStorageUploadTask mockStorageUploadTask;
@@ -31,6 +32,7 @@ void main() {
       mockUsersStorageReference = MockStorageReference();
       mockStorageUploadTask = MockStorageUploadTask();
       mockStorageTaskSnapshot = MockStorageTaskSnapshot();
+      userImageRef = MockStorageReference();
       imageRef = MockStorageReference();
       firebaseEditProfileRepository = FirebaseEditProfileRepository(
         firestore: mockFirestore,
@@ -70,7 +72,8 @@ void main() {
         when(mockFirebaseStorage.ref()).thenReturn(mockStorageReference);
         when(mockStorageReference.child(USERS_COLLECTION))
             .thenReturn(mockUsersStorageReference);
-        when(mockUsersStorageReference.child('1')).thenReturn(imageRef);
+        when(mockUsersStorageReference.child('1')).thenReturn(userImageRef);
+        when(userImageRef.child(any)).thenReturn(imageRef);
         when(mockFirestore.collection(USERS_COLLECTION))
             .thenReturn(mockUsersCollectionReference);
         when(mockUsersCollectionReference.document('1'))
@@ -96,7 +99,8 @@ void main() {
         when(mockFirebaseStorage.ref()).thenReturn(mockStorageReference);
         when(mockStorageReference.child(USERS_COLLECTION))
             .thenReturn(mockUsersStorageReference);
-        when(mockUsersStorageReference.child('1')).thenReturn(imageRef);
+        when(mockUsersStorageReference.child('1')).thenReturn(userImageRef);
+        when(userImageRef.child(any)).thenReturn(imageRef);
 
         when(imageRef.putFile(any)).thenThrow(Exception());
 
