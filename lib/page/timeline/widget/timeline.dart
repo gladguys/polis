@@ -67,12 +67,14 @@ class _TimelineState extends State<Timeline> {
       itemCount: () => widget.activities.length,
       hasMore: () => true,
       loadMore: () async => timelineBloc.add(FetchMorePosts(userId)),
+      loadMoreOffsetFromBottom: 3,
       itemBuilder: (_, i) => Column(
         children: <Widget>[
           if (widget.activities[i] is DespesaModel)
             DespesaTileConnected(widget.activities[i])
           else
             PropostaTileConnected(widget.activities[i] as PropostaModel),
+          const Divider(height: 16, indent: 8, endIndent: 8),
           if ((i == 2) || (i > 2 && i % 5 == 0)) _buildAdmobBanner(),
         ],
       ),
@@ -111,21 +113,24 @@ class _TimelineState extends State<Timeline> {
   }
 
   Widget _buildAdmobBanner() {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Container(
-          height: 200,
-          margin: const EdgeInsets.symmetric(vertical: 24),
-          color: Colors.grey[200],
-          child: NativeAdmob(
-            loading: Container(),
-            adUnitID: 'ca-app-pub-5806526425473649/2966344739',
-            controller: nativeAdmobController,
-            type: NativeAdmobType.banner,
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Container(
+            height: 200,
+            margin: const EdgeInsets.symmetric(vertical: 24),
+            color: Colors.grey[200],
+            child: NativeAdmob(
+              loading: Container(),
+              adUnitID: 'ca-app-pub-5806526425473649/2966344739',
+              controller: nativeAdmobController,
+              type: NativeAdmobType.banner,
+            ),
           ),
         ),
-      ),
+        const Divider(height: 16, indent: 8, endIndent: 8),
+      ],
     );
   }
 }
