@@ -16,7 +16,7 @@ class UserActionsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: (context.screenHeight * 0.97) - 50 - 72,
+      height: context.screenHeight - 140,
       child: ListView.separated(
         shrinkWrap: true,
         padding: const EdgeInsets.only(top: 4, bottom: 24),

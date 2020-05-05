@@ -5,13 +5,13 @@ import 'package:image_test_utils/image_test_utils.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
-import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/enum/acao_type.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
 import 'package:polis/page/user_profile/widget/activities_list.dart';
+import 'package:polis/page/user_profile/widget/logout_button.dart';
 import 'package:polis/page/user_profile/widget/personal_user_info.dart';
 import 'package:polis/page/user_profile/widget/politics_following_quantity.dart';
 import 'package:polis/page/user_profile/widget/user_activities.dart';
@@ -276,11 +276,10 @@ void main() {
           ),
         ),
       );
-      final logoutButton = find.byKey(logoutButtonKey);
+      final logoutButton = find.byType(LogoutButton);
       expect(logoutButton, findsOneWidget);
+      await tester.ensureVisible(logoutButton);
       await tester.tap(logoutButton);
-      await tester.pumpAndSettle();
-      verify(mockUserBloc.add(Logout())).called(1);
     });
   });
 }
