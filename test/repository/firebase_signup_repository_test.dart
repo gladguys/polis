@@ -93,6 +93,7 @@ void main() {
         '''createUserWithEmailAndPassword uploads profilePhoto to FirebaseStorage''',
         () async {
       final userStorageRef = MockStorageReference();
+      final userImageRedeRef = MockStorageReference();
       final imageRef = MockStorageReference();
       final user = UserModel(userId: '1', email: 'email', password: 'password');
       when(mockFirebaseAuth.createUserWithEmailAndPassword(
@@ -110,7 +111,8 @@ void main() {
       when(mockFirebaseStorage.ref()).thenReturn(mockStorageReference);
       when(mockStorageReference.child(USERS_COLLECTION))
           .thenReturn(userStorageRef);
-      when(userStorageRef.child(any)).thenReturn(imageRef);
+      when(userStorageRef.child(any)).thenReturn(userImageRedeRef);
+      when(userImageRedeRef.child(any)).thenReturn(imageRef);
       when(imageRef.putFile(any)).thenReturn(mockStorageUploadTask);
       when(mockStorageUploadTask.onComplete)
           .thenAnswer((_) => Future.value(mockStorageTaskSnapshot));

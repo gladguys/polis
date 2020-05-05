@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../core/exception/exceptions.dart';
 import '../../../enum/auth_provider.dart';
@@ -42,7 +43,8 @@ class FirebaseSignupRepository extends SignupRepository {
             final storageReference = storage
                 .ref()
                 .child(USERS_COLLECTION)
-                .child(authResult.user.uid);
+                .child(authResult.user.uid)
+                .child(Uuid().v1());
             await storageReference.putFile(profileImage).onComplete;
             imageUrl = await storageReference.getDownloadURL();
           } on Exception {
