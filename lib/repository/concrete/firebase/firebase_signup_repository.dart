@@ -47,9 +47,7 @@ class FirebaseSignupRepository extends SignupRepository {
                 .child(Uuid().v1());
             await storageReference.putFile(profileImage).onComplete;
             imageUrl = await storageReference.getDownloadURL();
-          } on Exception catch (e) {
-            print('qqqqqqqqqq');
-            print(e);
+          } on Exception {
             throw UploadFileException();
           }
         }
