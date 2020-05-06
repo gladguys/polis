@@ -19,6 +19,8 @@ void main() {
     'sexo': 'sexo',
     'quantidadeSeguidores': 5,
     'escolaridade': 'escolaridade',
+    'totalDespesas': 600.0,
+    'totalProposicoes': 7,
   };
 
   final politicoModel = PoliticoModel(
@@ -36,6 +38,8 @@ void main() {
     cpf: 'cpf',
     sexo: 'sexo',
     escolaridade: 'escolaridade',
+    totalDespesas: 600.0,
+    totalProposicoes: 7,
   );
 
   group('PoliticoModel tests', () {
@@ -56,8 +60,9 @@ void main() {
 
     test('toString()', () {
       final modelToString = PoliticoModel(id: '1').toString();
+      print(modelToString);
       final result =
-          '''PoliticoModel{id: 1, nomeCivil: null, siglaPartido: null, siglaUf: null, urlFoto: null, email: null, nomeEleitoral: null, status: null, condicaoEleitoral: null, cpf: null, sexo: null, quantidadeSeguidores: null, dataNascimento: null, escolaridade: null}''';
+          '''PoliticoModel{id: 1, nomeCivil: null, siglaPartido: null, siglaUf: null, urlFoto: null, email: null, nomeEleitoral: null, status: null, condicaoEleitoral: null, cpf: null, sexo: null, quantidadeSeguidores: null, dataNascimento: null, escolaridade: null, totalDespesas: null, totalProposicoes: null}''';
       expect(modelToString == result, true);
     });
 
@@ -115,6 +120,12 @@ void main() {
       expect(politicoToJson['sexo'] == jsonPolitico['sexo'], true);
       expect(
           politicoToJson['escolaridade'] == jsonPolitico['escolaridade'], true);
+      expect(politicoToJson['totalDespesas'] == jsonPolitico['totalDespesas'],
+          true);
+      expect(
+          politicoToJson['totalProposicoes'] ==
+              jsonPolitico['totalProposicoes'],
+          true);
     });
   });
 }
