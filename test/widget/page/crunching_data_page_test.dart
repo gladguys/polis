@@ -28,7 +28,7 @@ void main() {
           CrunchingDataPage(),
         ),
       );
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(seconds: 12));
       final button = find.byType(RaisedButton);
       await tester.tap(button);
       await tester.pump();
