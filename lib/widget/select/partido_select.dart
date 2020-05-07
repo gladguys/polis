@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smart_select/smart_select.dart';
 
@@ -23,8 +24,9 @@ class _PartidoSelectState extends State<PartidoSelect> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 128,
+      width: 150,
       child: SmartSelect<String>.single(
+        leading: Icon(AntDesign.flag),
         title: 'Partido',
         isTwoLine: true,
         dense: true,
