@@ -20,7 +20,7 @@ final ThemeData theme = ThemeData(
     elevation: 0,
     color: Colors.grey[50],
     textTheme: const TextTheme(
-      title: TextStyle(
+      headline6: TextStyle(
         fontFamily: 'Philosopher',
         fontSize: 30,
         color: Colors.black,
