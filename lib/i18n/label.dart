@@ -57,6 +57,7 @@ const NOT_INFORMED = 'Não informado';
 const NOT_INFORMED_FEMALE = 'Não informada';
 const DETAILED_MENU = 'Ementa detalhada';
 const DISPATCH = 'Despacho';
+const UPDATE_DATE = 'Data de atualização';
 const DOCUMENT_DATE = 'Data do documento';
 const PRESENTATION_DATE = 'Data da apresentação';
 const TYPE_ACRONYM = 'Sigla do tipo';

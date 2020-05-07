@@ -21,9 +21,8 @@ class PropostaModel extends Equatable {
       this.siglaPartido,
       this.descricaoSituacao,
       this.descricaoTramitacao,
-      this.dataApresentacao,
       this.favorito,
-      this.dataDocumento,
+      this.dataAtualizacao,
       this.tipoDocumento,
       this.sequencia,
       this.status});
@@ -41,11 +40,10 @@ class PropostaModel extends Equatable {
   final String fotoPolitico;
   final String estadoPolitico;
   final String siglaPartido;
-  final String dataDocumento;
   final String tipoDocumento;
   final String descricaoSituacao;
   final String descricaoTramitacao;
-  final String dataApresentacao;
+  final String dataAtualizacao;
   final String status;
   final int sequencia;
   final bool favorito;
@@ -69,11 +67,10 @@ class PropostaModel extends Equatable {
     String fotoPolitico,
     String estadoPolitico,
     String siglaPartido,
-    String dataDocumento,
     String tipoDocumento,
     String descricaoSituacao,
     String descricaoTramitacao,
-    String dataApresentacao,
+    String dataAtualizacao,
     String status,
     String sequencia,
     bool favorito,
@@ -92,11 +89,10 @@ class PropostaModel extends Equatable {
       fotoPolitico: fotoPolitico ?? this.fotoPolitico,
       estadoPolitico: estadoPolitico ?? this.estadoPolitico,
       siglaPartido: siglaPartido ?? this.siglaPartido,
-      dataDocumento: dataDocumento ?? this.dataDocumento,
+      dataAtualizacao: dataAtualizacao ?? this.dataAtualizacao,
       tipoDocumento: tipoDocumento ?? this.tipoDocumento,
       descricaoSituacao: descricaoSituacao ?? this.descricaoSituacao,
       descricaoTramitacao: descricaoTramitacao ?? this.descricaoTramitacao,
-      dataApresentacao: dataApresentacao ?? this.dataApresentacao,
       status: status ?? this.status,
       sequencia: sequencia ?? this.sequencia,
       favorito: favorito ?? this.favorito,
@@ -108,6 +104,6 @@ class PropostaModel extends Equatable {
 
   @override
   String toString() {
-    return '''PropostaModel{id: $id, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, nomePolitico: $nomePolitico, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, dataDocumento: $dataDocumento, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataApresentacao: $dataApresentacao, status: $status, sequencia: $sequencia, favorito: $favorito}''';
+    return '''PropostaModel{id: $id, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, ementaDetalhada: $ementaDetalhada, despacho: $despacho, nomePolitico: $nomePolitico, idPoliticoAutor: $idPoliticoAutor, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataAtualizacao: $dataAtualizacao, status: $status, sequencia: $sequencia, favorito: $favorito}''';
   }
 }

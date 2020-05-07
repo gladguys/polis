@@ -6,7 +6,7 @@ void main() {
     'id': '1',
     'status': 'Pendente',
     'ano': '1912',
-    'dataApresentacao': 'data',
+    'dataAtualizacao': 'data',
     'descricaoTipo': 'Tipo',
     'siglaTipo': 'T',
     'ementa': 'lalalala',
@@ -17,7 +17,7 @@ void main() {
     id: '1',
     status: 'Pendente',
     ano: '1912',
-    dataApresentacao: 'data',
+    dataAtualizacao: 'data',
     descricaoTipo: 'Tipo',
     siglaTipo: 'T',
     ementa: 'lalalala',
@@ -43,7 +43,7 @@ void main() {
     test('toString()', () {
       final modelToString = PropostaModel(id: '1').toString();
       final result =
-          '''PropostaModel{id: 1, siglaTipo: null, descricaoTipo: null, numero: null, ano: null, ementa: null, nomePolitico: null, fotoPolitico: null, estadoPolitico: null, siglaPartido: null, dataDocumento: null, tipoDocumento: null, descricaoSituacao: null, descricaoTramitacao: null, dataApresentacao: null, status: null, sequencia: null, favorito: null}''';
+          '''PropostaModel{id: 1, siglaTipo: null, descricaoTipo: null, numero: null, ano: null, ementa: null, ementaDetalhada: null, despacho: null, nomePolitico: null, idPoliticoAutor: null, fotoPolitico: null, estadoPolitico: null, siglaPartido: null, tipoDocumento: null, descricaoSituacao: null, descricaoTramitacao: null, dataAtualizacao: null, status: null, sequencia: null, favorito: null}''';
       expect(modelToString == result, true);
     });
 
@@ -69,8 +69,7 @@ void main() {
       expect(propostaToJson['ano'] == jsonProposta['ano'], true);
       expect(propostaToJson['ementa'] == jsonProposta['ementa'], true);
       expect(
-          propostaToJson['dataApresentacao'] ==
-              jsonProposta['dataApresentacao'],
+          propostaToJson['dataAtualizacao'] == jsonProposta['dataAtualizacao'],
           true);
       expect(propostaToJson['status'] == jsonProposta['status'], true);
     });

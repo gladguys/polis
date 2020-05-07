@@ -29,8 +29,7 @@ void main() {
         siglaPartido: 'sigla',
         tipoDocumento: 'tipo',
         status: 'status',
-        dataDocumento: '10-01-2020',
-        dataApresentacao: '10-01-2020',
+        dataAtualizacao: '10-01-2020',
       );
     });
 
@@ -75,8 +74,7 @@ void main() {
         siglaPartido: 'sigla',
         tipoDocumento: 'tipo',
         status: 'status',
-        dataDocumento: '10-01-2020',
-        dataApresentacao: '10-01-2020',
+        dataAtualizacao: '10-01-2020',
         descricaoTipo: PLENARY_AMENDMENT,
       );
       final mockPostBloc = MockPostBloc();
