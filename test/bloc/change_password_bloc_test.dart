@@ -18,6 +18,10 @@ void main() {
       );
     });
 
+    tearDown(() {
+      changePasswordBloc?.close();
+    });
+
     test('asserts', () {
       expect(() => ChangePasswordBloc(repository: null), throwsAssertionError);
     });

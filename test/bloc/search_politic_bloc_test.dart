@@ -31,6 +31,10 @@ void main() {
       );
     });
 
+    tearDown(() {
+      searchPoliticBloc?.close();
+    });
+
     test('asserts', () {
       expect(
           () => SearchPoliticBloc(

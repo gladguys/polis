@@ -18,7 +18,7 @@ class SearchingInfo extends StatelessWidget {
             Icon(icon, size: 180),
             Text(
               text,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 34,
                 fontWeight: FontWeight.bold,
               ),

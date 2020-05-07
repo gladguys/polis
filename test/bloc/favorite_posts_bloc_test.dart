@@ -17,6 +17,10 @@ void main() {
       );
     });
 
+    tearDown(() {
+      favoritePostsBloc?.close();
+    });
+
     test('asserts', () {
       expect(
           () => FavoritePostsBloc(

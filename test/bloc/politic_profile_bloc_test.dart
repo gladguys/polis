@@ -30,6 +30,10 @@ void main() {
       );
     });
 
+    tearDown(() {
+      politicProfileBloc?.close();
+    });
+
     test('asserts', () {
       expect(
           () => PoliticProfileBloc(

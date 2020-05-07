@@ -21,6 +21,10 @@ void main() {
       );
     });
 
+    tearDown(() {
+      politicSuggestionBloc?.close();
+    });
+
     test('asserts', () {
       expect(
           () => PoliticSuggestionBloc(
