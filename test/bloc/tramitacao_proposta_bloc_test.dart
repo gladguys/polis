@@ -21,6 +21,10 @@ void main() {
       );
     });
 
+    tearDown(() {
+      tramitacaoPropostaBloc?.close();
+    });
+
     test('asserts', () {
       expect(
           () => TramitacaoPropostaBloc(

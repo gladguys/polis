@@ -29,6 +29,10 @@ void main() {
       );
     });
 
+    tearDown(() {
+      userBloc?.close();
+    });
+
     test('test asserts', () {
       expect(
           () => UserBloc(

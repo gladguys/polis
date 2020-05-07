@@ -21,6 +21,10 @@ void main() {
       );
     });
 
+    tearDown(() {
+      editProfileBloc?.close();
+    });
+
     test('asserts', () {
       expect(
           () => EditProfileBloc(

@@ -17,6 +17,10 @@ void main() {
       );
     });
 
+    tearDown(() {
+      politicFollowersBloc?.close();
+    });
+
     test('asserts', () {
       expect(
           () => PoliticFollowersBloc(

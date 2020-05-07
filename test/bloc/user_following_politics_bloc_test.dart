@@ -22,6 +22,10 @@ void main() {
       );
     });
 
+    tearDown(() {
+      userFollowingPoliticsBloc?.close();
+    });
+
     test('asserts', () {
       expect(
           () => UserFollowingPoliticsBloc(

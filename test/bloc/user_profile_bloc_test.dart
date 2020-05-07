@@ -15,6 +15,10 @@ void main() {
       userProfileBloc = UserProfileBloc(repository: mockUserProfileRepository);
     });
 
+    tearDown(() {
+      userProfileBloc?.close();
+    });
+
     test('asserts', () {
       expect(() => UserProfileBloc(repository: null), throwsAssertionError);
     });

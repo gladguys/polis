@@ -24,6 +24,10 @@ void main() {
       );
     });
 
+    tearDown(() {
+      postBloc?.close();
+    });
+
     test('asserts', () {
       expect(
           () => PostBloc(

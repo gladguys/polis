@@ -17,6 +17,10 @@ void main() {
       );
     });
 
+    tearDown(() {
+      despesaImageBloc?.close();
+    });
+
     test('asserts', () {
       expect(
           () => DespesaImageBloc(

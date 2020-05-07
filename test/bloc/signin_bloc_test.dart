@@ -30,6 +30,10 @@ void main() {
       );
     });
 
+    tearDown(() {
+      signinBloc?.close();
+    });
+
     test('asserts', () {
       expect(
           () => SigninBloc(

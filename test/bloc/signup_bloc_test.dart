@@ -26,6 +26,10 @@ void main() {
           analyticsService: mockAnalyticsService);
     });
 
+    tearDown(() {
+      signupBloc?.close();
+    });
+
     test('asserts', () {
       expect(
           () => SignupBloc(
