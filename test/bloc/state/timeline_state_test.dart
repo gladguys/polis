@@ -23,6 +23,8 @@ void main() {
           () => TimelineUpdated(
               activities: [], postsCount: 0, updatesCount: null),
           throwsAssertionError);
+      expect(
+          () => ReachedEndFetchingMore(activities: null), throwsAssertionError);
     });
   });
 }

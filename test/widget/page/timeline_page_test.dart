@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
@@ -73,12 +74,13 @@ void main() {
           ),
           PropostaModel(
             id: '1',
-            dataDocumento: '20-01-2020',
+            dataAtualizacao: '20-01-2020',
             nomePolitico: 'nome',
             fotoPolitico: 'foto',
           )
         ], postsCount: 3, updatesCount: 0),
       );
+      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<TimelineBloc>(
@@ -91,6 +93,25 @@ void main() {
       final timeline = find.byType(Timeline);
       expect(timeline, findsOneWidget);
       tester.ensureVisible(timeline);
+    });
+
+    testWidgets('shoud show loading while fetching more', (tester) async {
+      final mockTimelineBloc = MockTimelineBloc();
+      when(mockTimelineBloc.state).thenReturn(
+        ReachedEndFetchingMore(
+          activities: [],
+        ),
+      );
+      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<TimelineBloc>(
+            bloc: mockTimelineBloc,
+            page: TimelinePage(),
+          ),
+        ),
+      );
+      expect(find.byType(SpinKitCircle), findsOneWidget);
     });
 
     testWidgets('shoud show TIMELINE_IS_EMPTY message', (tester) async {
@@ -142,7 +163,7 @@ void main() {
             ),
             PropostaModel(
               id: '1',
-              dataDocumento: '20-01-2020',
+              dataAtualizacao: '20-01-2020',
               nomePolitico: 'nome',
               fotoPolitico: 'foto',
             )
@@ -151,6 +172,7 @@ void main() {
           updatesCount: 3,
         ),
       );
+      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<UserBloc>(
@@ -196,6 +218,7 @@ void main() {
           updatesCount: 1,
         ),
       );
+      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<UserBloc>(
@@ -207,7 +230,6 @@ void main() {
           ),
         ),
       );
-
       expect(find.byType(DespesaTile), findsNWidgets(1));
       final timeline = find.byType(Timeline);
       expect(timeline, findsOneWidget);
@@ -277,7 +299,7 @@ void main() {
             ),
             PropostaModel(
               id: '1',
-              dataDocumento: '20-01-2020',
+              dataAtualizacao: '20-01-2020',
               nomePolitico: 'nome',
               fotoPolitico: 'foto',
             )
@@ -286,6 +308,7 @@ void main() {
           updatesCount: 0,
         ),
       );
+      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<UserBloc>(
@@ -301,7 +324,7 @@ void main() {
       expect(listview, findsOneWidget);
       await tester.drag(listview, const Offset(0, -3000));
       await tester.pump();
-      verify(mockTimelineBloc.add(FetchMorePosts('1'))).called(1);
+      verify(mockTimelineBloc.add(FetchMorePosts('1', 371.0))).called(1);
     });
   });
 }

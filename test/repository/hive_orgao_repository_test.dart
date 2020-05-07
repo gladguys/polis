@@ -31,7 +31,6 @@ void main() {
         when(mockHive.box<OrgaoModel>(ORGAOS_BOX)).thenReturn(mockOrgaoBox);
         when(mockOrgaoBox.values).thenReturn([OrgaoModel(id: '1', sigla: 'T')]);
         final politicosMap = await hiveOrgaoRepository.getAllOrgaosMap();
-        print(politicosMap.runtimeType);
         expect(politicosMap, isNotEmpty);
       });
 

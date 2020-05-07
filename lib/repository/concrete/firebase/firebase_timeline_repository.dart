@@ -76,10 +76,13 @@ class FirebaseTimelineRepository implements TimelineRepository {
 
       final querySnapshot = await query.getDocuments();
       final activities = getActivitiesFromSnapshot(querySnapshot);
+      final documentsSnapshot = querySnapshot.documents;
 
       return Tuple2<List<dynamic>, DocumentSnapshot>(
         activities,
-        querySnapshot.documents.last,
+        documentsSnapshot.isNotEmpty
+            ? querySnapshot.documents.last
+            : lastDocument,
       );
     } on Exception {
       throw ComunicationException();
