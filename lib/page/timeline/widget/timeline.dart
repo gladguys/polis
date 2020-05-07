@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../core/keys.dart';
@@ -26,7 +25,7 @@ class Timeline extends StatefulWidget {
 }
 
 class _TimelineState extends State<Timeline> {
-  AutoScrollController scrollController;
+  ScrollController scrollController;
   NativeAdmobController nativeAdmobController;
 
   double get currentPosition => scrollController.offset;
@@ -47,7 +46,7 @@ class _TimelineState extends State<Timeline> {
 
   @override
   void initState() {
-    scrollController = AutoScrollController();
+    scrollController = ScrollController();
     scrollController.addListener(_onScrollListener);
     nativeAdmobController = NativeAdmobController();
     WidgetsBinding.instance.addPostFrameCallback(
@@ -79,29 +78,26 @@ class _TimelineState extends State<Timeline> {
   }
 
   Widget _buildList() {
-    return ListView.builder(
+    return ListView.separated(
       controller: scrollController,
       key: timelineListKey,
       padding: const EdgeInsets.only(top: 8, bottom: 16),
       itemCount: widget.activities.length,
-      itemBuilder: (_, i) {
-        final a = AutoScrollTag(
-          key: ValueKey(i),
-          index: i,
-          controller: scrollController,
-          child: Column(
-            children: <Widget>[
-              if (widget.activities[i] is DespesaModel)
-                DespesaTileConnected(widget.activities[i])
-              else
-                PropostaTileConnected(widget.activities[i] as PropostaModel),
-              const Divider(height: 16, indent: 8, endIndent: 8),
-              if ((i == 2) || (i > 2 && i % 5 == 0)) _buildAdmobBanner(),
-            ],
-          ),
-        );
-        return a;
-      },
+      itemBuilder: (_, i) => Column(
+        children: <Widget>[
+          if (widget.activities[i] is DespesaModel)
+            DespesaTileConnected(widget.activities[i])
+          else
+            PropostaTileConnected(widget.activities[i] as PropostaModel),
+          const Divider(height: 16, indent: 8, endIndent: 8),
+          if ((i == 2) || (i > 2 && i % 5 == 0)) _buildAdmobBanner(),
+        ],
+      ),
+      separatorBuilder: (_, i) => const Divider(
+        height: 16,
+        indent: 8,
+        endIndent: 8,
+      ),
     );
   }
 

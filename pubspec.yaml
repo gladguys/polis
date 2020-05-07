@@ -54,7 +54,6 @@ dependencies:
   animated_text_kit: ^2.0.1
   flutter_spinkit: ^4.1.2+1
   expandable_bottom_sheet: ^0.2.1+1
-  scroll_to_index: ^1.0.6
 
 dev_dependencies:
   flutter_test:
