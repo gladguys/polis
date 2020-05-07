@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:incrementally_loading_listview/incrementally_loading_listview.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../core/keys.dart';
@@ -26,20 +26,38 @@ class Timeline extends StatefulWidget {
 }
 
 class _TimelineState extends State<Timeline> {
+  AutoScrollController scrollController;
   NativeAdmobController nativeAdmobController;
 
+  double get currentPosition => scrollController.offset;
+  double get maxScrollPosition => scrollController.position.maxScrollExtent;
+  bool get isPositionInRange => !scrollController.position.outOfRange;
   int get updatesCount => widget.updatesCount;
   TimelineBloc get timelineBloc => context.bloc<TimelineBloc>();
+  double get timelineCurrentPosition => timelineBloc.timelineCurrentPosition;
   String get userId => context.bloc<UserBloc>().user.userId;
+
+  final kAverageCardHeight = 150;
+
+  void _onScrollListener() {
+    if (currentPosition >= maxScrollPosition && isPositionInRange) {
+      timelineBloc.add(FetchMorePosts(userId, currentPosition));
+    }
+  }
 
   @override
   void initState() {
+    scrollController = AutoScrollController();
+    scrollController.addListener(_onScrollListener);
     nativeAdmobController = NativeAdmobController();
+    WidgetsBinding.instance.addPostFrameCallback(
+        (_) => scrollController.jumpTo(timelineCurrentPosition));
     super.initState();
   }
 
   @override
   void dispose() {
+    scrollController.dispose();
     nativeAdmobController.dispose();
     super.dispose();
   }
@@ -61,23 +79,29 @@ class _TimelineState extends State<Timeline> {
   }
 
   Widget _buildList() {
-    return IncrementallyLoadingListView(
+    return ListView.builder(
+      controller: scrollController,
       key: timelineListKey,
       padding: const EdgeInsets.only(top: 8, bottom: 16),
-      itemCount: () => widget.activities.length,
-      hasMore: () => true,
-      loadMore: () async => timelineBloc.add(FetchMorePosts(userId)),
-      loadMoreOffsetFromBottom: 3,
-      itemBuilder: (_, i) => Column(
-        children: <Widget>[
-          if (widget.activities[i] is DespesaModel)
-            DespesaTileConnected(widget.activities[i])
-          else
-            PropostaTileConnected(widget.activities[i] as PropostaModel),
-          const Divider(height: 16, indent: 8, endIndent: 8),
-          if ((i == 2) || (i > 2 && i % 5 == 0)) _buildAdmobBanner(),
-        ],
-      ),
+      itemCount: widget.activities.length,
+      itemBuilder: (_, i) {
+        final a = AutoScrollTag(
+          key: ValueKey(i),
+          index: i,
+          controller: scrollController,
+          child: Column(
+            children: <Widget>[
+              if (widget.activities[i] is DespesaModel)
+                DespesaTileConnected(widget.activities[i])
+              else
+                PropostaTileConnected(widget.activities[i] as PropostaModel),
+              const Divider(height: 16, indent: 8, endIndent: 8),
+              if ((i == 2) || (i > 2 && i % 5 == 0)) _buildAdmobBanner(),
+            ],
+          ),
+        );
+        return a;
+      },
     );
   }
 

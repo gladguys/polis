@@ -17,6 +17,7 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
   final TimelineRepository repository;
 
   StreamSubscription _timelineSubscription;
+  double timelineCurrentPosition = 0;
   int newActivitiesCount = 0;
   List<dynamic> timelinePosts = [];
   DocumentSnapshot lastDocument;
@@ -74,6 +75,7 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
       }
     }
     if (event is FetchMorePosts) {
+      timelineCurrentPosition = event.timelineCurrentPosition;
       try {
         yield ReachedEndFetchingMore(
           activities: timelinePosts,
