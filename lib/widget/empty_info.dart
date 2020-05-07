@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../core/constants.dart';
+import '../extension/media_query_extensions.dart';
 import '../i18n/i18n.dart';
 
 class EmptyInfo extends StatelessWidget {
@@ -19,7 +20,7 @@ class EmptyInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: MediaQuery.of(context).size.height / 5,
+        top: context.screenHeight / 5,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

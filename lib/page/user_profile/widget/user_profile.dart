@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../bloc/user/user_bloc.dart';
+import '../../../extension/media_query_extensions.dart';
 import '../../../i18n/label.dart';
 import '../../../model/models.dart';
 import '../../../widget/text_title.dart';
@@ -27,7 +28,7 @@ class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     return ExpandableBottomSheet(
-      persistentContentHeight: MediaQuery.of(context).size.height - 460,
+      persistentContentHeight: context.screenHeight * 0.35,
       persistentHeader: _buildHeader(),
       expandableContent: _buildPanel(context),
       background: _buildBody(context),
@@ -78,14 +79,17 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   Widget _buildBody(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        const SizedBox(height: 8),
-        LogoutButton(),
-        PersonalUserInfo(user: context.bloc<UserBloc>().user),
-        const SizedBox(height: 16),
-        PoliticsFollowingQuantity(politics: widget.politicsFollowing),
-      ],
+    return Container(
+      height: context.screenHeight * 0.6,
+      child: Column(
+        children: <Widget>[
+          const SizedBox(height: 8),
+          LogoutButton(),
+          PersonalUserInfo(user: context.bloc<UserBloc>().user),
+          const SizedBox(height: 16),
+          PoliticsFollowingQuantity(politics: widget.politicsFollowing),
+        ],
+      ),
     );
   }
 }

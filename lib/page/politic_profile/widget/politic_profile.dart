@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/blocs.dart';
+import '../../../extension/media_query_extensions.dart';
 import '../../../i18n/label.dart';
 import '../../../widget/text_title.dart';
 import '../../theme/main_theme.dart';
@@ -24,7 +25,7 @@ class _PoliticProfileState extends State<PoliticProfile> {
   @override
   Widget build(BuildContext context) {
     return ExpandableBottomSheet(
-      persistentContentHeight: MediaQuery.of(context).size.height - 480,
+      persistentContentHeight: context.screenHeight * 0.3,
       persistentHeader: _buildHeader(),
       expandableContent: _buildPanel(context),
       background: _buildBody(context),
@@ -83,20 +84,23 @@ class _PoliticProfileState extends State<PoliticProfile> {
         ? state.isUserFollowingPolitic
         : bloc.isPoliticBeingFollowedByUser;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        const SizedBox(height: 16),
-        PoliticPersonalInfo(politico),
-        const SizedBox(height: 16),
-        PoliticActionButtons(
-          politico: politico,
-          isBeingFollowedByUser: isPoliticBeingFollowedByUser,
-        ),
-        const SizedBox(height: 16),
-        PoliticAdditionalInfo(politico),
-        const SizedBox(height: 24),
-      ],
+    return Container(
+      height: context.screenHeight * 0.6,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          const SizedBox(height: 16),
+          PoliticPersonalInfo(politico),
+          const SizedBox(height: 16),
+          PoliticActionButtons(
+            politico: politico,
+            isBeingFollowedByUser: isPoliticBeingFollowedByUser,
+          ),
+          const SizedBox(height: 16),
+          PoliticAdditionalInfo(politico),
+          const SizedBox(height: 24),
+        ],
+      ),
     );
   }
 }
