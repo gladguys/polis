@@ -51,22 +51,26 @@ void main() {
 
     testWidgets('shoud show timeline of favorite posts when fetch success',
         (tester) async {
+      final mockTimelineBloc = MockTimelineBloc();
       when(mockFavoritePostsBloc.state).thenReturn(
         FetchUserFavoritePostsSuccess(
           [
             PropostaModel(
               nomePolitico: 'nome',
-              dataDocumento: '10-01-2020',
-              dataApresentacao: '10-01-2020',
+              dataAtualizacao: '10-01-2020',
             ),
           ],
         ),
       );
+      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<FavoritePostsBloc>(
-            bloc: mockFavoritePostsBloc,
-            page: FavoritePostsPage(),
+          PageConnected<TimelineBloc>(
+            bloc: mockTimelineBloc,
+            page: PageConnected<FavoritePostsBloc>(
+              bloc: mockFavoritePostsBloc,
+              page: FavoritePostsPage(),
+            ),
           ),
         ),
       );

@@ -17,6 +17,7 @@ const updateTimelineButtonKey = ValueKey('update-timeline-btn');
 const politicsListKey = ValueKey('politics-list');
 const searchPoliticsFollowUnfollowButton = ValueKey('follow-unfollow-btn');
 const logoutButtonKey = ValueKey('logout-button');
+const timelineListKey = ValueKey('timeline-list');
 const searchPoliticsSlidersIconKey = ValueKey('sliders-icon');
 const followPoliticProfileKey = ValueKey('follow-politic-profile');
 const sendEmailButtonKey = ValueKey('send-email-btn');

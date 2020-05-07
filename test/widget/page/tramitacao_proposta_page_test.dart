@@ -38,7 +38,7 @@ void main() {
       when(mockTramitacaoPropostaBloc.proposta).thenReturn(
         PropostaModel(
           sequencia: 1,
-          dataApresentacao: '10-01-2020',
+          dataAtualizacao: '10-01-2020',
         ),
       );
       when(mockTramitacaoPropostaBloc.orgaosMap).thenReturn({

@@ -46,7 +46,6 @@ void main() {
 
     test('toString()', () {
       final modelToString = OrgaoModel(id: '1').toString();
-      print(modelToString);
       final result =
           '''OrgaoModel{id: 1, apelido: null, nome: null, sigla: null, tipoOrgao: null}''';
       expect(modelToString == result, true);

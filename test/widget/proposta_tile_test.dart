@@ -35,7 +35,7 @@ void main() {
         siglaPartido: 'sigla',
         tipoDocumento: 'tipo',
         status: 'status',
-        dataDocumento: '10-01-2020',
+        dataAtualizacao: '10-01-2020',
       );
     });
 
@@ -56,7 +56,7 @@ void main() {
         siglaPartido: 'sigla',
         tipoDocumento: 'tipo',
         status: 'status',
-        dataDocumento: '10-01-2020',
+        dataAtualizacao: '10-01-2020',
       );
       await tester.pumpWidget(
         connectedWidget(PropostaTileConnected(propostaDesc)),

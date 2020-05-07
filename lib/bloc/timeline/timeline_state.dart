@@ -36,6 +36,16 @@ class FetchTimelineFailed extends TimelineState {
   List<Object> get props => [];
 }
 
+class ReachedEndFetchingMore extends TimelineState {
+  ReachedEndFetchingMore({@required this.activities})
+      : assert(activities != null);
+
+  final List<dynamic> activities;
+
+  @override
+  List<Object> get props => [activities];
+}
+
 class LoadingTimeline extends TimelineState {
   @override
   List<Object> get props => [];

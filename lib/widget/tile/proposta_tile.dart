@@ -88,9 +88,7 @@ class PropostaTile extends StatelessWidget {
             TextSpan(
               text: proposta.despacho ?? NOT_INFORMED_FEMALE,
               style: TextStyle(
-                color: proposta.despacho == null
-                    ? Colors.grey[600]
-                    : null,
+                color: proposta.despacho == null ? Colors.grey[600] : null,
               ),
             ),
           ],
@@ -131,7 +129,8 @@ class PropostaTile extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             TextSpan(
-              text: proposta.dataDocumento.formatDate() ?? NOT_INFORMED_FEMALE,
+              text:
+                  proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
             ),
           ],
         ),

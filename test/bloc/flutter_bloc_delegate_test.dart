@@ -74,7 +74,7 @@ void main() {
       test('should send FetchMorePosts performance', () {
         when(mockPerformanceService.getTrace(trace: anyNamed('trace')))
             .thenAnswer((_) => Future.value(MockTrace()));
-        delegate.onEvent(timelineBloc, FetchMorePosts('1'));
+        delegate.onEvent(timelineBloc, FetchMorePosts('1', 0));
         verify(mockPerformanceService.getTrace(trace: anyNamed('trace')))
             .called(1);
       });

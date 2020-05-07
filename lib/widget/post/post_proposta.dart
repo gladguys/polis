@@ -133,13 +133,8 @@ class PostProposta extends StatelessWidget {
             emptyValue: NOT_INFORMED_FEMALE,
           ),
           LabelValue(
-            label: DOCUMENT_DATE,
-            value: proposta.dataDocumento.formatDate(),
-            emptyValue: NOT_INFORMED_FEMALE,
-          ),
-          LabelValue(
-            label: PRESENTATION_DATE,
-            value: proposta.dataApresentacao.formatDate(),
+            label: UPDATE_DATE,
+            value: proposta.dataAtualizacao.formatDate(),
             emptyValue: NOT_INFORMED_FEMALE,
           ),
           Container(

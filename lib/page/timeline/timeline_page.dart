@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
@@ -23,6 +24,21 @@ class TimelinePage extends StatelessWidget {
               return Timeline(
                 activities: state.activities,
                 updatesCount: state.updatesCount,
+              );
+            } else if (state is ReachedEndFetchingMore) {
+              return Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Timeline(
+                      activities: state.activities,
+                      updatesCount: 0,
+                    ),
+                  ),
+                  const SpinKitCircle(
+                    color: Colors.amber,
+                    size: 50,
+                  ),
+                ],
               );
             } else if (state is NoPostsAvailable) {
               return Container(
