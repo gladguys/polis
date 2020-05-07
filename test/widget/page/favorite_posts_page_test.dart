@@ -56,8 +56,7 @@ void main() {
           [
             PropostaModel(
               nomePolitico: 'nome',
-              dataDocumento: '10-01-2020',
-              dataApresentacao: '10-01-2020',
+              dataAtualizacao: '10-01-2020',
             ),
           ],
         ),

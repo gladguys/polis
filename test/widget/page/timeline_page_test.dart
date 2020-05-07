@@ -73,7 +73,7 @@ void main() {
           ),
           PropostaModel(
             id: '1',
-            dataDocumento: '20-01-2020',
+            dataAtualizacao: '20-01-2020',
             nomePolitico: 'nome',
             fotoPolitico: 'foto',
           )
@@ -142,7 +142,7 @@ void main() {
             ),
             PropostaModel(
               id: '1',
-              dataDocumento: '20-01-2020',
+              dataAtualizacao: '20-01-2020',
               nomePolitico: 'nome',
               fotoPolitico: 'foto',
             )
@@ -277,7 +277,7 @@ void main() {
             ),
             PropostaModel(
               id: '1',
-              dataDocumento: '20-01-2020',
+              dataAtualizacao: '20-01-2020',
               nomePolitico: 'nome',
               fotoPolitico: 'foto',
             )
