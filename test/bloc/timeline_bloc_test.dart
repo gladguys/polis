@@ -240,7 +240,7 @@ void main() {
       act: (timelineBloc) {
         timelineBloc.add(FetchUserTimeline('1'));
         timelineBloc.add(UpdateTimelineActivitiesCount(count: 0));
-        timelineBloc.add(FetchMorePosts('1'));
+        timelineBloc.add(FetchMorePosts('1', 0));
         return;
       },
       verify: (timelineBloc) async {
@@ -294,7 +294,7 @@ void main() {
       act: (timelineBloc) {
         timelineBloc.add(FetchUserTimeline('1'));
         timelineBloc.add(UpdateTimelineActivitiesCount(count: 0));
-        timelineBloc.add(FetchMorePosts('1'));
+        timelineBloc.add(FetchMorePosts('1', 0));
         return;
       },
       verify: (timelineBloc) async {

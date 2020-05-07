@@ -80,6 +80,7 @@ void main() {
           )
         ], postsCount: 3, updatesCount: 0),
       );
+      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<TimelineBloc>(
@@ -101,6 +102,7 @@ void main() {
           activities: [],
         ),
       );
+      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<TimelineBloc>(
@@ -170,6 +172,7 @@ void main() {
           updatesCount: 3,
         ),
       );
+      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<UserBloc>(
@@ -215,6 +218,7 @@ void main() {
           updatesCount: 1,
         ),
       );
+      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<UserBloc>(
@@ -226,7 +230,6 @@ void main() {
           ),
         ),
       );
-
       expect(find.byType(DespesaTile), findsNWidgets(1));
       final timeline = find.byType(Timeline);
       expect(timeline, findsOneWidget);
@@ -305,6 +308,7 @@ void main() {
           updatesCount: 0,
         ),
       );
+      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<UserBloc>(
@@ -320,7 +324,7 @@ void main() {
       expect(listview, findsOneWidget);
       await tester.drag(listview, const Offset(0, -3000));
       await tester.pump();
-      verify(mockTimelineBloc.add(FetchMorePosts('1'))).called(2);
+      verify(mockTimelineBloc.add(FetchMorePosts('1', 340.0))).called(1);
     });
   });
 }

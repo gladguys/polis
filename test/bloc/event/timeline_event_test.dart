@@ -27,9 +27,9 @@ void main() {
 
     group('FetchMorePosts', () {
       test('props', () {
-        final ev1 = FetchMorePosts('1');
-        final ev2 = FetchMorePosts('1');
-        final ev3 = FetchMorePosts('2');
+        final ev1 = FetchMorePosts('1', 0);
+        final ev2 = FetchMorePosts('1', 0);
+        final ev3 = FetchMorePosts('2', 0);
 
         expect(ev1, ev2);
         expect(ev1 == ev3, false);
