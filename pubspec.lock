@@ -564,13 +564,6 @@ packages:
       url: "https://github.com/MarcinusX/image_test_utils"
     source: git
     version: "1.1.0"
-  incrementally_loading_listview:
-    dependency: "direct main"
-    description:
-      name: incrementally_loading_listview
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0"
   intl:
     dependency: "direct main"
     description:
@@ -802,6 +795,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.1"
+  scroll_to_index:
+    dependency: "direct main"
+    description:
+      name: scroll_to_index
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.6"
   shared_preferences:
     dependency: "direct main"
     description:
