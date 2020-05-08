@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/blocs.dart';
+import '../../../core/constants.dart';
 import '../../../core/keys.dart';
+import '../../../enum/timeline_status.dart';
 import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
 import '../../../widget/text_rich.dart';
@@ -13,12 +16,16 @@ import '../../../widget/tile/despesa_tile_connected.dart';
 import '../../../widget/tile/proposta_tile_connected.dart';
 
 class Timeline extends StatefulWidget {
-  Timeline({@required this.activities, @required this.updatesCount})
-      : assert(activities != null),
+  Timeline({
+    @required this.activities,
+    @required this.updatesCount,
+    this.timelineStatus = TimelineStatus.loaded,
+  })  : assert(activities != null),
         assert(updatesCount != null);
 
   final List<dynamic> activities;
   final int updatesCount;
+  final timelineStatus;
 
   @override
   _TimelineState createState() => _TimelineState();
@@ -31,26 +38,30 @@ class _TimelineState extends State<Timeline> {
   double get currentPosition => scrollController.offset;
   double get maxScrollPosition => scrollController.position.maxScrollExtent;
   bool get isPositionInRange => !scrollController.position.outOfRange;
+  bool get scrollPositionPassedLimit =>
+      currentPosition >= maxScrollPosition - kBottomOffsetToLoadMore;
   int get updatesCount => widget.updatesCount;
   TimelineBloc get timelineBloc => context.bloc<TimelineBloc>();
   double get timelineCurrentPosition => timelineBloc.timelineCurrentPosition;
   String get userId => context.bloc<UserBloc>().user.userId;
 
-  final kAverageCardHeight = 150;
+  bool hasLoadedAlready;
 
   void _onScrollListener() {
-    if (currentPosition >= maxScrollPosition && isPositionInRange) {
+    if (scrollPositionPassedLimit && isPositionInRange && !hasLoadedAlready) {
       timelineBloc.add(FetchMorePosts(userId, currentPosition));
+      hasLoadedAlready = true;
     }
   }
 
   @override
   void initState() {
-    scrollController = ScrollController();
+    hasLoadedAlready = false;
+    scrollController = ScrollController(
+      initialScrollOffset: timelineCurrentPosition,
+    );
     scrollController.addListener(_onScrollListener);
     nativeAdmobController = NativeAdmobController();
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => scrollController.jumpTo(timelineCurrentPosition));
     super.initState();
   }
 
@@ -78,27 +89,60 @@ class _TimelineState extends State<Timeline> {
   }
 
   Widget _buildList() {
-    return ListView.separated(
-      controller: scrollController,
-      key: timelineListKey,
-      padding: const EdgeInsets.only(top: 8, bottom: 16),
-      itemCount: widget.activities.length,
-      itemBuilder: (_, i) => Column(
-        children: <Widget>[
-          if (widget.activities[i] is DespesaModel)
-            DespesaTileConnected(widget.activities[i])
-          else
-            PropostaTileConnected(widget.activities[i] as PropostaModel),
-          const Divider(height: 16, indent: 8, endIndent: 8),
-          if ((i == 2) || (i > 2 && i % 5 == 0)) _buildAdmobBanner(),
-        ],
-      ),
-      separatorBuilder: (_, i) => const Divider(
-        height: 16,
-        indent: 8,
-        endIndent: 8,
-      ),
-    );
+    if (widget.timelineStatus == TimelineStatus.loaded) {
+      return ListView.separated(
+        controller: scrollController,
+        key: timelineListKey,
+        padding: const EdgeInsets.only(top: 8, bottom: 16),
+        itemCount: widget.activities.length,
+        itemBuilder: (_, i) => Column(
+          children: <Widget>[
+            if (widget.activities[i] is DespesaModel)
+              DespesaTileConnected(widget.activities[i])
+            else
+              PropostaTileConnected(widget.activities[i] as PropostaModel),
+            if ((i == 2) || (i > 2 && i % 5 == 0)) _buildAdmobBanner(),
+          ],
+        ),
+        separatorBuilder: (_, i) => const Divider(
+          height: 16,
+          indent: 8,
+          endIndent: 8,
+        ),
+      );
+    } else {
+      return ListView.separated(
+        controller: scrollController,
+        key: timelineListKey,
+        padding: const EdgeInsets.only(top: 8, bottom: 16),
+        itemCount: widget.activities.length + 1,
+        itemBuilder: (_, i) {
+          if (i == widget.activities.length) {
+            return const ListTile(
+              title: SpinKitFadingCircle(
+                color: Colors.amber,
+                size: 45,
+              ),
+            );
+          } else {
+            return Column(
+              children: <Widget>[
+                if (widget.activities[i] is DespesaModel)
+                  DespesaTileConnected(widget.activities[i])
+                else
+                  PropostaTileConnected(widget.activities[i] as PropostaModel),
+                if ((i == 2) || (i > 2 && i % 5 == 0)) _buildAdmobBanner(),
+              ],
+            );
+          }
+        },
+        separatorBuilder: (_, i) => const Divider(
+          height: 16,
+          indent: 8,
+          endIndent: 8,
+        ),
+      );
+    }
   }
 
   Widget _buildUpdateButton() {
@@ -149,7 +193,6 @@ class _TimelineState extends State<Timeline> {
             ),
           ),
         ),
-        const Divider(height: 16, indent: 8, endIndent: 8),
       ],
     );
   }
