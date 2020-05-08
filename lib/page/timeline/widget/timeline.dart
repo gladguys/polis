@@ -118,7 +118,7 @@ class _TimelineState extends State<Timeline> {
         itemCount: widget.activities.length + 1,
         itemBuilder: (_, i) {
           if (i == widget.activities.length) {
-            return ListTile(
+            return const ListTile(
               title: SpinKitFadingCircle(
                 color: Colors.amber,
                 size: 45,
