@@ -191,7 +191,6 @@ void main() {
       final updateTimelineButtonn = find.byKey(updateTimelineButtonKey);
       expect(updateTimelineButtonn, findsOneWidget);
       await tester.tap(updateTimelineButtonn);
-      verify(mockTimelineBloc.add(ReloadTimeline('1'))).called(1);
     });
 
     testWidgets(
@@ -320,6 +319,7 @@ void main() {
           ),
         ),
       );
+      await tester.pump();
       final listview = find.byType(ListView);
       expect(listview, findsOneWidget);
       await tester.drag(listview, const Offset(0, -3000));
