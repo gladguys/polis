@@ -60,6 +60,8 @@ dependency_overrides:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  # Generators
   build_runner:
   hive_generator: ^0.7.0+2
 

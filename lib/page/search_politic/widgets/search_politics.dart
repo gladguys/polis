@@ -115,21 +115,24 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
         clipBehavior: Clip.antiAlias,
         child: Row(
           children: <Widget>[
-            PartidoSelect(
-              partidos: widget.partidos,
-              initialValue: widget.searchPoliticBloc.partidoPicked,
-              onChange: (partido) => widget.searchPoliticBloc
-                  .add(ChangeSearchPoliticFilter(partido: partido)),
+            Expanded(
+              child: PartidoSelect(
+                partidos: widget.partidos,
+                initialValue: widget.searchPoliticBloc.partidoPicked,
+                onChange: (partido) => widget.searchPoliticBloc
+                    .add(ChangeSearchPoliticFilter(partido: partido)),
+              ),
             ),
-            Container(
-              height: 48,
+            VerticalDivider(
               width: 1,
               color: Colors.grey[350],
             ),
-            EstadoSelect(
-              initialValue: widget.searchPoliticBloc.statePicked,
-              onChange: (estado) => widget.searchPoliticBloc
-                  .add(ChangeSearchPoliticFilter(estado: estado)),
+            Expanded(
+              child: EstadoSelect(
+                initialValue: widget.searchPoliticBloc.statePicked,
+                onChange: (estado) => widget.searchPoliticBloc
+                    .add(ChangeSearchPoliticFilter(estado: estado)),
+              ),
             ),
           ],
         ),

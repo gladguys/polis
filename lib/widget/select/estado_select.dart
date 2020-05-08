@@ -3,6 +3,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smart_select/smart_select.dart';
 
+import '../../i18n/i18n.dart';
 import '../../page/theme/main_theme.dart';
 
 class EstadoSelect extends StatefulWidget {
@@ -20,10 +21,10 @@ class _EstadoSelectState extends State<EstadoSelect> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 148,
+      width: 160,
       child: SmartSelect<String>.single(
         leading: Icon(MaterialCommunityIcons.map_search_outline),
-        title: 'Estado',
+        title: STATE,
         isTwoLine: true,
         dense: true,
         padding: const EdgeInsets.symmetric(horizontal: 8),
