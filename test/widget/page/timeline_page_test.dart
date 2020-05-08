@@ -95,6 +95,56 @@ void main() {
       tester.ensureVisible(timeline);
     });
 
+    testWidgets('shoud build Timeline with activity and loading',
+        (tester) async {
+      final mockTimelineBloc = MockTimelineBloc();
+      when(mockTimelineBloc.state).thenReturn(
+        ReachedEndFetchingMore(
+          activities: [
+            DespesaModel(
+              numDocumento: '1',
+              fotoPolitico: 'foto',
+              nomePolitico: 'politico 1',
+              nomeFornecedor: 'fornecedor 1',
+              tipoAtividade: 'tipoAtividade1',
+              tipoDespesa: 'tipoDespesa1',
+              valorLiquido: '10.00',
+              dataDocumento: '10-01-2020',
+            ),
+            DespesaModel(
+              numDocumento: '2',
+              fotoPolitico: 'foto',
+              nomePolitico: 'politico 2',
+              nomeFornecedor: 'fornecedor 2',
+              tipoAtividade: 'tipoAtividade2',
+              tipoDespesa: 'tipoDespesa2',
+              valorLiquido: '20.00',
+              dataDocumento: '20-01-2020',
+            ),
+            PropostaModel(
+              id: '1',
+              dataAtualizacao: '20-01-2020',
+              nomePolitico: 'nome',
+              fotoPolitico: 'foto',
+            )
+          ],
+        ),
+      );
+      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<TimelineBloc>(
+            bloc: mockTimelineBloc,
+            page: TimelinePage(),
+          ),
+        ),
+      );
+      expect(find.byType(DespesaTile), findsNWidgets(2));
+      final timeline = find.byType(Timeline);
+      expect(timeline, findsOneWidget);
+      tester.ensureVisible(timeline);
+    });
+
     testWidgets('shoud show loading while fetching more', (tester) async {
       final mockTimelineBloc = MockTimelineBloc();
       when(mockTimelineBloc.state).thenReturn(
@@ -111,7 +161,7 @@ void main() {
           ),
         ),
       );
-      expect(find.byType(SpinKitCircle), findsOneWidget);
+      expect(find.byType(SpinKitFadingCircle), findsOneWidget);
     });
 
     testWidgets('shoud show TIMELINE_IS_EMPTY message', (tester) async {
@@ -191,7 +241,6 @@ void main() {
       final updateTimelineButtonn = find.byKey(updateTimelineButtonKey);
       expect(updateTimelineButtonn, findsOneWidget);
       await tester.tap(updateTimelineButtonn);
-      verify(mockTimelineBloc.add(ReloadTimeline('1'))).called(1);
     });
 
     testWidgets(
@@ -320,11 +369,12 @@ void main() {
           ),
         ),
       );
+      await tester.pump();
       final listview = find.byType(ListView);
       expect(listview, findsOneWidget);
       await tester.drag(listview, const Offset(0, -3000));
       await tester.pump();
-      verify(mockTimelineBloc.add(FetchMorePosts('1', 371.0))).called(1);
+      verify(mockTimelineBloc.add(FetchMorePosts('1', 308.0))).called(1);
     });
   });
 }
