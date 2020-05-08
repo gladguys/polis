@@ -11,7 +11,6 @@ import '../../../model/models.dart';
 import '../../../widget/text_rich.dart';
 import '../../../widget/tile/despesa_tile_connected.dart';
 import '../../../widget/tile/proposta_tile_connected.dart';
-import 'timeline_skeleton.dart';
 
 class Timeline extends StatefulWidget {
   Timeline({@required this.activities, @required this.updatesCount})
@@ -28,36 +27,29 @@ class Timeline extends StatefulWidget {
 class _TimelineState extends State<Timeline> {
   ScrollController scrollController;
   NativeAdmobController nativeAdmobController;
-  bool alreadyScrolledToPosition;
 
   double get currentPosition => scrollController.offset;
   double get maxScrollPosition => scrollController.position.maxScrollExtent;
   bool get isPositionInRange => !scrollController.position.outOfRange;
+  bool get scrollPositionPassedLimit => currentPosition >= maxScrollPosition;
   int get updatesCount => widget.updatesCount;
   TimelineBloc get timelineBloc => context.bloc<TimelineBloc>();
   double get timelineCurrentPosition => timelineBloc.timelineCurrentPosition;
   String get userId => context.bloc<UserBloc>().user.userId;
 
-  final kAverageCardHeight = 150;
-
   void _onScrollListener() {
-    if (currentPosition >= maxScrollPosition && isPositionInRange) {
+    if (scrollPositionPassedLimit && isPositionInRange) {
       timelineBloc.add(FetchMorePosts(userId, currentPosition));
     }
   }
 
   @override
   void initState() {
-    alreadyScrolledToPosition = false;
-    scrollController = ScrollController();
+    scrollController = ScrollController(
+      initialScrollOffset: timelineCurrentPosition,
+    );
     scrollController.addListener(_onScrollListener);
     nativeAdmobController = NativeAdmobController();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
-        scrollController.jumpTo(timelineCurrentPosition);
-        setState(() => alreadyScrolledToPosition = true);
-      },
-    );
     super.initState();
   }
 
@@ -80,12 +72,6 @@ class _TimelineState extends State<Timeline> {
                 child: _buildUpdateButton(),
               )
             : const SizedBox.shrink(),
-        alreadyScrolledToPosition
-            ? const SizedBox.shrink()
-            : Container(
-                color: Theme.of(context).scaffoldBackgroundColor,
-                child: TimelineSkeleton(),
-              ),
       ],
     );
   }

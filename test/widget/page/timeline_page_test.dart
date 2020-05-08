@@ -111,7 +111,7 @@ void main() {
           ),
         ),
       );
-      expect(find.byType(SpinKitCircle), findsOneWidget);
+      expect(find.byType(SpinKitFadingCircle), findsOneWidget);
     });
 
     testWidgets('shoud show TIMELINE_IS_EMPTY message', (tester) async {

@@ -29,11 +29,14 @@ class TimelinePage extends StatelessWidget {
               return Column(
                 children: <Widget>[
                   Expanded(
-                    child: TimelineSkeleton(),
+                    child: Timeline(
+                      activities: state.activities,
+                      updatesCount: 0,
+                    ),
                   ),
-                  const SpinKitCircle(
+                  const SpinKitFadingCircle(
                     color: Colors.amber,
-                    size: 50,
+                    size: 45,
                   ),
                 ],
               );
