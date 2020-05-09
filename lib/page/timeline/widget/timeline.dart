@@ -14,6 +14,7 @@ import '../../../model/models.dart';
 import '../../../widget/text_rich.dart';
 import '../../../widget/tile/despesa_tile_connected.dart';
 import '../../../widget/tile/proposta_tile_connected.dart';
+import '../../theme/main_theme.dart';
 
 class Timeline extends StatefulWidget {
   Timeline({
@@ -120,10 +121,10 @@ class _TimelineState extends State<Timeline> {
           if ((i == 2) || (i > 2 && i % 5 == 0)) _buildAdmobBanner(),
           if (i == widget.activities.length - 1 &&
               widget.timelineStatus == TimelineStatus.loading)
-            const Padding(
-              padding: EdgeInsets.only(top: 16),
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
               child: SpinKitThreeBounce(
-                color: Colors.amber,
+                color: theme.primaryColor,
                 size: 32,
               ),
             )
