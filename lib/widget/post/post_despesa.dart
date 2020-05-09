@@ -110,19 +110,9 @@ class PostDespesa extends StatelessWidget {
             emptyValue: NOT_INFORMED,
           ),
           LabelValue(
-            label: LOT,
-            value: despesa.codLote,
-            emptyValue: NOT_INFORMED,
-          ),
-          LabelValue(
             label: DOCUMENT_DATE,
             value: despesa.dataDocumento.formatDate(),
             emptyValue: NOT_INFORMED_FEMALE,
-          ),
-          LabelValue(
-            label: REFUND_NUMBER,
-            value: despesa.numRessarcimento,
-            emptyValue: NOT_INFORMED,
           ),
           LabelValue(
             label: DOCUMENT_VALUE,
@@ -136,13 +126,8 @@ class PostDespesa extends StatelessWidget {
           ),
           LabelValue(
             label: PORTION,
-            value: despesa.parcela,
+            value: despesa.parcela == '0' ? IN_CASH : despesa.parcela,
             emptyValue: NOT_INFORMED_FEMALE,
-          ),
-          LabelValue(
-            label: DOCUMENT_TYPE,
-            value: despesa.tipoDocumento,
-            emptyValue: NOT_INFORMED,
           ),
           LabelValue(
             label: TYPE_DOCUMENT_CODE,

@@ -98,11 +98,6 @@ class PostProposta extends StatelessWidget {
               ],
             ),
           LabelValue(
-            label: DETAILED_MENU,
-            value: proposta.ementaDetalhada,
-            emptyValue: NOT_INFORMED_FEMALE,
-          ),
-          LabelValue(
             label: TRAMITATION,
             value: proposta.descricaoTramitacao,
             emptyValue: NOT_INFORMED_FEMALE,
@@ -112,26 +107,7 @@ class PostProposta extends StatelessWidget {
             value: proposta.despacho,
             emptyValue: NOT_INFORMED,
           ),
-          LabelValue(
-            label: SITUATION,
-            value: proposta.descricaoSituacao,
-            emptyValue: NOT_INFORMED_FEMALE,
-          ),
-          LabelValue(
-            label: DOCUMENT_TYPE,
-            value: proposta.tipoDocumento,
-            emptyValue: NOT_INFORMED,
-          ),
-          LabelValue(
-            label: TYPE_ACRONYM,
-            value: proposta.siglaTipo,
-            emptyValue: NOT_INFORMED,
-          ),
-          LabelValue(
-            label: PROPOSAL_NUMBER,
-            value: proposta.numero,
-            emptyValue: NOT_INFORMED_FEMALE,
-          ),
+          
           LabelValue(
             label: UPDATE_DATE,
             value: proposta.dataAtualizacao.formatDate(),
