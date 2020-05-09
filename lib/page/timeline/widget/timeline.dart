@@ -46,6 +46,8 @@ class _TimelineState extends State<Timeline> {
   String get userId => context.bloc<UserBloc>().user.userId;
 
   bool hasLoadedAlready;
+  int currentActivitiesLength;
+  int oldActivitiesLength;
 
   void _onScrollListener() {
     if (scrollPositionPassedLimit && isPositionInRange && !hasLoadedAlready) {
@@ -57,12 +59,27 @@ class _TimelineState extends State<Timeline> {
   @override
   void initState() {
     hasLoadedAlready = false;
+    currentActivitiesLength = widget.activities.length;
+    oldActivitiesLength = widget.activities.length;
+
     scrollController = ScrollController(
       initialScrollOffset: timelineCurrentPosition,
     );
     scrollController.addListener(_onScrollListener);
     nativeAdmobController = NativeAdmobController();
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(Timeline oldWidget) {
+    currentActivitiesLength = widget.activities.length;
+
+    if (widget.timelineStatus == TimelineStatus.loaded &&
+        oldActivitiesLength != currentActivitiesLength) {
+      hasLoadedAlready = false;
+      oldActivitiesLength = widget.activities.length;
+    }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -89,60 +106,35 @@ class _TimelineState extends State<Timeline> {
   }
 
   Widget _buildList() {
-    if (widget.timelineStatus == TimelineStatus.loaded) {
-      return ListView.separated(
-        controller: scrollController,
-        key: timelineListKey,
-        padding: const EdgeInsets.only(top: 8, bottom: 16),
-        itemCount: widget.activities.length,
-        itemBuilder: (_, i) => Column(
-          children: <Widget>[
-            if (widget.activities[i] is DespesaModel)
-              DespesaTileConnected(widget.activities[i])
-            else
-              PropostaTileConnected(widget.activities[i] as PropostaModel),
-            if ((i == 2) || (i > 2 && i % 5 == 0)) _buildAdmobBanner(),
-          ],
-        ),
-        separatorBuilder: (_, i) => const Divider(
-          height: 16,
-          indent: 8,
-          endIndent: 8,
-        ),
-      );
-    } else {
-      return ListView.separated(
-        controller: scrollController,
-        key: timelineListKey,
-        padding: const EdgeInsets.only(top: 8, bottom: 16),
-        itemCount: widget.activities.length + 1,
-        itemBuilder: (_, i) {
-          if (i == widget.activities.length) {
-            return const ListTile(
-              title: SpinKitFadingCircle(
+    return ListView.separated(
+      controller: scrollController,
+      key: timelineListKey,
+      padding: const EdgeInsets.only(top: 8, bottom: 16),
+      itemCount: widget.activities.length,
+      itemBuilder: (_, i) => Column(
+        children: <Widget>[
+          if (widget.activities[i] is DespesaModel)
+            DespesaTileConnected(widget.activities[i])
+          else
+            PropostaTileConnected(widget.activities[i] as PropostaModel),
+          if ((i == 2) || (i > 2 && i % 5 == 0)) _buildAdmobBanner(),
+          if (i == widget.activities.length - 1 &&
+              widget.timelineStatus == TimelineStatus.loading)
+            const Padding(
+              padding: EdgeInsets.only(top: 16),
+              child: SpinKitThreeBounce(
                 color: Colors.amber,
-                size: 45,
+                size: 32,
               ),
-            );
-          } else {
-            return Column(
-              children: <Widget>[
-                if (widget.activities[i] is DespesaModel)
-                  DespesaTileConnected(widget.activities[i])
-                else
-                  PropostaTileConnected(widget.activities[i] as PropostaModel),
-                if ((i == 2) || (i > 2 && i % 5 == 0)) _buildAdmobBanner(),
-              ],
-            );
-          }
-        },
-        separatorBuilder: (_, i) => const Divider(
-          height: 16,
-          indent: 8,
-          endIndent: 8,
-        ),
-      );
-    }
+            )
+        ],
+      ),
+      separatorBuilder: (_, i) => const Divider(
+        height: 16,
+        indent: 8,
+        endIndent: 8,
+      ),
+    );
   }
 
   Widget _buildUpdateButton() {
