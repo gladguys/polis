@@ -96,3 +96,4 @@ const ORGAN = 'Órgão';
 const POLITICS_DOTS = 'Políticos...';
 const PARTIES_DOTS = 'Partidos...';
 const STATES_DOTS = 'Estados...';
+const IN_CASH = 'À vista';
