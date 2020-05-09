@@ -107,7 +107,11 @@ class PostProposta extends StatelessWidget {
             value: proposta.despacho,
             emptyValue: NOT_INFORMED,
           ),
-          
+          LabelValue(
+            label: SITUATION,
+            value: proposta.descricaoSituacao,
+            emptyValue: NOT_INFORMED,
+          ),
           LabelValue(
             label: UPDATE_DATE,
             value: proposta.dataAtualizacao.formatDate(),
