@@ -33,45 +33,46 @@ class TimelinePage extends StatelessWidget {
               );
             } else if (state is NoPostsAvailable) {
               return Container(
-                  child: Padding(
-                padding: const EdgeInsets.all(48),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(AntDesign.unknowfile1, size: 48),
-                    const SizedBox(height: 22),
-                    const Text(
-                      TIMELINE_IS_EMPTY,
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    const Text(
-                      GO_FOLLOW_SOME_POLITICS,
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    const SizedBox(height: 18),
-                    RaisedButton(
-                      color: Colors.amber,
-                      child: const Text(
-                        FOLLOW_POLITICS,
+                child: Padding(
+                  padding: const EdgeInsets.all(48),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(AntDesign.unknowfile1, size: 48),
+                      const SizedBox(height: 22),
+                      const Text(
+                        TIMELINE_IS_EMPTY,
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      onPressed: () => SimpleRouter.forward(
-                        SearchPoliticPageConnected(),
-                        name: SEARCH_POLITIC_PAGE,
+                      const SizedBox(height: 12),
+                      const Text(
+                        GO_FOLLOW_SOME_POLITICS,
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 18),
+                      RaisedButton(
+                        color: Colors.amber,
+                        child: const Text(
+                          FOLLOW_POLITICS,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        ),
+                        onPressed: () => SimpleRouter.forward(
+                          SearchPoliticPageConnected(),
+                          name: SEARCH_POLITIC_PAGE,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ));
+              );
             } else {
               return TimelineSkeleton();
             }
