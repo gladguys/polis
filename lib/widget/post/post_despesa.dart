@@ -100,16 +100,6 @@ class PostDespesa extends StatelessWidget {
             ],
           ),
           LabelValue(
-            label: DOCUMENT,
-            value: despesa.codDocumento,
-            emptyValue: NOT_INFORMED,
-          ),
-          LabelValue(
-            label: DOCUMENT_NUMBER,
-            value: despesa.numDocumento,
-            emptyValue: NOT_INFORMED,
-          ),
-          LabelValue(
             label: DOCUMENT_DATE,
             value: despesa.dataDocumento.formatDate(),
             emptyValue: NOT_INFORMED_FEMALE,
@@ -128,11 +118,6 @@ class PostDespesa extends StatelessWidget {
             label: PORTION,
             value: despesa.parcela == '0' ? IN_CASH : despesa.parcela,
             emptyValue: NOT_INFORMED_FEMALE,
-          ),
-          LabelValue(
-            label: TYPE_DOCUMENT_CODE,
-            value: despesa.codTipoDocumento,
-            emptyValue: NOT_INFORMED,
           ),
           LabelValue(
             label: PROVIDER_NAME,
