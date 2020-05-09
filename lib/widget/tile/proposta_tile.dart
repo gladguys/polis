@@ -79,21 +79,6 @@ class PropostaTile extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const SizedBox(height: 4),
-        TextRich(
-          children: [
-            const TextSpan(
-              text: '$SITUATION: ',
-              style: TextStyle(fontWeight: FontWeight.w500),
-            ),
-            TextSpan(
-              text: proposta.despacho ?? NOT_INFORMED_FEMALE,
-              style: TextStyle(
-                color: proposta.despacho == null ? Colors.grey[600] : null,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 2),
         if (proposta.descricaoTipo == PLENARY_AMENDMENT)
           Text('${proposta.descricaoTipo}')
         else
@@ -108,18 +93,6 @@ class PropostaTile extends StatelessWidget {
             ],
           ),
         const SizedBox(height: 4),
-        TextRich(
-          fontSize: 12,
-          color: Colors.grey[600],
-          children: [
-            const TextSpan(
-              text: '$TRAMITATION: ',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            TextSpan(text: proposta.descricaoTramitacao ?? NOT_INFORMED_FEMALE),
-          ],
-        ),
-        const SizedBox(height: 2),
         TextRich(
           fontSize: 12,
           color: Colors.grey[600],
