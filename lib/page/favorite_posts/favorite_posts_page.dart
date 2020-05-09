@@ -9,7 +9,7 @@ import '../../widget/empty_info.dart';
 import '../../widget/error_container.dart';
 import '../../widget/loading.dart';
 import '../../widget/text_title.dart';
-import '../timeline/widget/timeline.dart';
+import 'widget/favorites_post_list.dart';
 
 class FavoritePostsPage extends StatelessWidget {
   @override
@@ -40,10 +40,7 @@ class FavoritePostsPage extends StatelessWidget {
         const SizedBox(height: 8),
         posts.isNotEmpty
             ? Expanded(
-                child: Timeline(
-                  activities: posts,
-                  updatesCount: 0,
-                ),
+                child: FavoritesPostList(posts),
               )
             : Expanded(
                 child: EmptyInfo(
