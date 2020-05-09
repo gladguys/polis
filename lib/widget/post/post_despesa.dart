@@ -126,7 +126,7 @@ class PostDespesa extends StatelessWidget {
           ),
           LabelValue(
             label: PORTION,
-            value: despesa.parcela == 0 ? 'à vista' : despesa.parcela,
+            value: despesa.parcela == '0' ? IN_CASH : despesa.parcela,
             emptyValue: NOT_INFORMED_FEMALE,
           ),
           LabelValue(
