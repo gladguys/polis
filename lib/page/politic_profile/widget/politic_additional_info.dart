@@ -39,7 +39,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    FOLLOWERS,
+                    quantidadeSeguidores == 1 ? FOLLOWER : FOLLOWERS,
                     style: TextStyle(
                       color: Colors.grey[600],
                       fontSize: 12,
@@ -59,7 +59,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  PROPOSERS,
+                  totalProposicoes == 1 ? PROPOSER : PROPOSERS,
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 12,
