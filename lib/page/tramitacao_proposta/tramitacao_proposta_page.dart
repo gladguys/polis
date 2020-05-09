@@ -94,11 +94,6 @@ class TramitacaoPropostaPage extends StatelessWidget {
                 emptyValue: NOT_INFORMED,
               ),
               LabelValue(
-                label: DISPATCH,
-                value: tramitacao.despacho,
-                emptyValue: NOT_INFORMED,
-              ),
-              LabelValue(
                 label: REGIME,
                 value: tramitacao.regime,
                 emptyValue: NOT_INFORMED,

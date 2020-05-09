@@ -93,19 +93,12 @@ class PropostaTile extends StatelessWidget {
             ],
           ),
         const SizedBox(height: 4),
-        TextRich(
-          fontSize: 12,
-          color: Colors.grey[600],
-          children: [
-            const TextSpan(
-              text: '$DATE: ',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            TextSpan(
-              text:
-                  proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
-            ),
-          ],
+        Text(
+          proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
+          style: TextStyle(
+            fontSize: 12,
+            color: Colors.grey[600],
+          ),
         ),
         const SizedBox(height: 4),
       ],
