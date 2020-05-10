@@ -26,9 +26,23 @@ class PostPageConnected extends StatelessWidget {
         post: getPostMap(post),
         postRepository: context.repository<FirebasePostRepository>(),
         shareService: G<ShareService>(),
-      ),
+      )..add(
+          SetPostVisible(
+            userId: context.bloc<UserBloc>().user.userId,
+            postId: getPostId(post),
+          ),
+        ),
       page: PostPage(post: post, postType: postType),
     );
+  }
+
+  String getPostId(dynamic post) {
+    if (post is PropostaModel) {
+      return post.id;
+    } else if (post is DespesaModel) {
+      return post.id;
+    }
+    return null;
   }
 
   Map<String, dynamic> getPostMap(dynamic post) {
