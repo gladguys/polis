@@ -12,6 +12,8 @@ void main() {
   MockFirestore mockFirestore;
   MockCollectionReference mockPostsFavoritosCollectionReference;
   MockCollectionReference mockPostsFavoritosUsuarioSubcollectionReference;
+  MockCollectionReference mockTimelineReference;
+  MockCollectionReference mockAtividadesTimelineSubcollectionReference;
   MockDocumentReference mockUserDocumentReference;
   MockDocumentReference mockPostDocumentReference;
 
@@ -24,6 +26,8 @@ void main() {
       mockPostsFavoritosCollectionReference = MockCollectionReference();
       mockPostsFavoritosUsuarioSubcollectionReference =
           MockCollectionReference();
+      mockTimelineReference = MockCollectionReference();
+      mockAtividadesTimelineSubcollectionReference = MockCollectionReference();
       mockUserDocumentReference = MockDocumentReference();
       mockPostDocumentReference = MockDocumentReference();
     });
@@ -102,6 +106,37 @@ void main() {
             userId: '2',
           ),
         ).catchError((e) => expect(e, isA<ComunicationException>()));
+      });
+    });
+
+    group('setPostVisible', () {
+      test('work', () async {
+        when(mockFirestore.collection(TIMELINE_COLLECTION))
+            .thenReturn(mockTimelineReference);
+        when(mockTimelineReference.document('1'))
+            .thenReturn(mockUserDocumentReference);
+        when(mockUserDocumentReference
+                .collection(ATIVIDADES_TIMELINE_SUBCOLLECTION))
+            .thenReturn(mockAtividadesTimelineSubcollectionReference);
+        when(mockAtividadesTimelineSubcollectionReference.document('1'))
+            .thenReturn(mockPostDocumentReference);
+        await firebasePostRepository.setPostVisible(
+          userId: '1',
+          postId: '1',
+        );
+        verify(mockPostDocumentReference.updateData({VISUALIZADO_FIELD: true}))
+            .called(1);
+      });
+
+      test('should throw ComunicationException', () async {
+        when(mockFirestore.collection(TIMELINE_COLLECTION))
+            .thenThrow(Exception());
+        firebasePostRepository
+            .setPostVisible(
+              userId: '1',
+              postId: '1',
+            )
+            .catchError((e) => expect(e, isA<ComunicationException>()));
       });
     });
   });
