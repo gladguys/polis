@@ -14,6 +14,8 @@ class FirebasePostRepository implements PostRepository {
 
   CollectionReference get postsFavoritosRef =>
       firestore.collection(POSTS_FAVORITOS_COLLECTION);
+  CollectionReference get timelineRef =>
+      firestore.collection(TIMELINE_COLLECTION);
 
   @override
   Future<void> favoritePost({Map<String, dynamic> post, UserModel user}) async {
@@ -41,6 +43,19 @@ class FirebasePostRepository implements PostRepository {
           .collection(POSTS_FAVORITOS_USUARIO_SUBCOLLECTION)
           .document(post['id'])
           .delete();
+    } on Exception {
+      throw ComunicationException();
+    }
+  }
+
+  @override
+  Future<void> setPostVisible({String userId, String postId}) async {
+    try {
+      await timelineRef
+          .document(userId)
+          .collection(ATIVIDADES_TIMELINE_SUBCOLLECTION)
+          .document(postId)
+          .updateData({VISUALIZADO_FIELD: true});
     } on Exception {
       throw ComunicationException();
     }
