@@ -25,7 +25,8 @@ class PropostaModel extends Equatable {
       this.dataAtualizacao,
       this.tipoDocumento,
       this.sequencia,
-      this.status});
+      this.status,
+      this.visualizado});
 
   final String id;
   final String siglaTipo;
@@ -45,6 +46,7 @@ class PropostaModel extends Equatable {
   final String descricaoTramitacao;
   final String dataAtualizacao;
   final String status;
+  final bool visualizado;
   final int sequencia;
   final bool favorito;
 
@@ -72,6 +74,7 @@ class PropostaModel extends Equatable {
     String descricaoTramitacao,
     String dataAtualizacao,
     String status,
+    bool visualizado,
     String sequencia,
     bool favorito,
   }) {
@@ -94,6 +97,7 @@ class PropostaModel extends Equatable {
       descricaoSituacao: descricaoSituacao ?? this.descricaoSituacao,
       descricaoTramitacao: descricaoTramitacao ?? this.descricaoTramitacao,
       status: status ?? this.status,
+      visualizado: visualizado ?? this.visualizado,
       sequencia: sequencia ?? this.sequencia,
       favorito: favorito ?? this.favorito,
     );
@@ -104,6 +108,6 @@ class PropostaModel extends Equatable {
 
   @override
   String toString() {
-    return '''PropostaModel{id: $id, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, ementaDetalhada: $ementaDetalhada, despacho: $despacho, nomePolitico: $nomePolitico, idPoliticoAutor: $idPoliticoAutor, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataAtualizacao: $dataAtualizacao, status: $status, sequencia: $sequencia, favorito: $favorito}''';
+    return '''PropostaModel{id: $id, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, ementaDetalhada: $ementaDetalhada, despacho: $despacho, nomePolitico: $nomePolitico, idPoliticoAutor: $idPoliticoAutor, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataAtualizacao: $dataAtualizacao, status: $status, visualizado: $visualizado, sequencia: $sequencia, favorito: $favorito}''';
   }
 }
