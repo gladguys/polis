@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
@@ -10,6 +11,7 @@ import '../../extension/extensions.dart';
 import '../../i18n/i18n.dart';
 import '../../model/proposta_model.dart';
 import '../../page/pages.dart';
+import '../../page/theme/main_theme.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';
 import '../photo.dart';
@@ -24,16 +26,7 @@ class PropostaTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardBase(
-      slotLeft: InkWell(
-        borderRadius: BorderRadius.circular(24),
-        child: Photo(url: proposta.fotoPolitico),
-        onTap: () => clickableImage
-            ? SimpleRouter.forward(
-                PoliticProfilePageConnected(proposta.idPoliticoAutor),
-                name: POLITIC_PROFILE_PAGE,
-              )
-            : null,
-      ),
+      slotLeft: _buildLeftContent(),
       slotCenter: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -52,24 +45,51 @@ class PropostaTile extends StatelessWidget {
     );
   }
 
+  Widget _buildLeftContent() {
+    return InkWell(
+      borderRadius: BorderRadius.circular(24),
+      child: Photo(url: proposta.fotoPolitico),
+      onTap: () => clickableImage
+          ? SimpleRouter.forward(
+              PoliticProfilePageConnected(proposta.idPoliticoAutor),
+              name: POLITIC_PROFILE_PAGE,
+            )
+          : null,
+    );
+  }
+
   Widget _buildTopContent() {
-    return Wrap(
-      crossAxisAlignment: WrapCrossAlignment.end,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          proposta.nomePolitico,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              proposta.nomePolitico,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              '$POLITIC'
+              ' · ${proposta.siglaPartido}'
+              ' · ${proposta.estadoPolitico}',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.normal,
+                color: Colors.grey[600],
+              ),
+            ),
+          ],
         ),
-        Text(
-          ' · $POLITIC · ${proposta.siglaPartido} · ${proposta.estadoPolitico}',
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.normal,
-            color: Colors.grey[600],
+        if (!proposta.visualizado)
+          FaIcon(
+            FontAwesome5Solid.circle,
+            color: theme.primaryColor,
+            size: 5,
           ),
-        ),
       ],
     );
   }
@@ -92,15 +112,6 @@ class PropostaTile extends StatelessWidget {
               TextSpan(text: '${proposta.ementa}'),
             ],
           ),
-        const SizedBox(height: 4),
-        Text(
-          proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
-          style: TextStyle(
-            fontSize: 12,
-            color: Colors.grey[600],
-          ),
-        ),
-        const SizedBox(height: 4),
       ],
     );
   }
@@ -108,22 +119,25 @@ class PropostaTile extends StatelessWidget {
   Widget _buildActions(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
       builder: (_, state) => Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          ButtonActionCard(
-            icon: FontAwesomeIcons.shareAlt,
-            text: SHARE,
-            fontSize: 14,
-            onTap: () {},
+          Text(
+            proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.grey[600],
+            ),
           ),
-          const SizedBox(width: 16),
           ButtonActionCard(
+            isIconOnly: true,
             icon: context.bloc<PostBloc>().isPostFavorite
                 ? FontAwesomeIcons.solidBookmark
                 : FontAwesomeIcons.bookmark,
             iconColor:
                 context.bloc<PostBloc>().isPostFavorite ? Colors.amber : null,
-            text: context.bloc<PostBloc>().isPostFavorite ? SAVED : SAVE,
-            fontSize: 14,
+            //text: context.bloc<PostBloc>().isPostFavorite ? SAVED : SAVE,
+            // fontSize: 14,
             onTap: () => context.bloc<PostBloc>().add(
                   FavoritePostForUser(
                     post: proposta.toJson(),
