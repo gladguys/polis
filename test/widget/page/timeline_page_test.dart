@@ -61,6 +61,7 @@ void main() {
             tipoDespesa: 'tipoDespesa1',
             valorLiquido: '10.00',
             dataDocumento: '10-01-2020',
+            visualizado: false,
           ),
           DespesaModel(
             numDocumento: '2',
@@ -71,12 +72,14 @@ void main() {
             tipoDespesa: 'tipoDespesa2',
             valorLiquido: '20.00',
             dataDocumento: '20-01-2020',
+            visualizado: false,
           ),
           PropostaModel(
             id: '1',
             dataAtualizacao: '20-01-2020',
             nomePolitico: 'nome',
             fotoPolitico: 'foto',
+            visualizado: false,
           )
         ], postsCount: 3, updatesCount: 0),
       );
@@ -110,6 +113,7 @@ void main() {
               tipoDespesa: 'tipoDespesa1',
               valorLiquido: '10.00',
               dataDocumento: '10-01-2020',
+              visualizado: false,
             ),
             DespesaModel(
               numDocumento: '2',
@@ -120,12 +124,14 @@ void main() {
               tipoDespesa: 'tipoDespesa2',
               valorLiquido: '20.00',
               dataDocumento: '20-01-2020',
+              visualizado: false,
             ),
             PropostaModel(
               id: '1',
               dataAtualizacao: '20-01-2020',
               nomePolitico: 'nome',
               fotoPolitico: 'foto',
+              visualizado: false,
             )
           ],
         ),
@@ -159,6 +165,7 @@ void main() {
               tipoDespesa: 'tipoDespesa1',
               valorLiquido: '10.00',
               dataDocumento: '10-01-2020',
+              visualizado: false,
             ),
             DespesaModel(
               numDocumento: '2',
@@ -169,12 +176,14 @@ void main() {
               tipoDespesa: 'tipoDespesa2',
               valorLiquido: '20.00',
               dataDocumento: '20-01-2020',
+              visualizado: false,
             ),
             PropostaModel(
               id: '1',
               dataAtualizacao: '20-01-2020',
               nomePolitico: 'nome',
               fotoPolitico: 'foto',
+              visualizado: false,
             )
           ],
         ),
@@ -227,6 +236,7 @@ void main() {
               tipoDespesa: 'tipoDespesa1',
               valorLiquido: '10.00',
               dataDocumento: '10-01-2020',
+              visualizado: false,
             ),
             DespesaModel(
               numDocumento: '2',
@@ -237,12 +247,14 @@ void main() {
               tipoDespesa: 'tipoDespesa2',
               valorLiquido: '20.00',
               dataDocumento: '20-01-2020',
+              visualizado: false,
             ),
             PropostaModel(
               id: '1',
               dataAtualizacao: '20-01-2020',
               nomePolitico: 'nome',
               fotoPolitico: 'foto',
+              visualizado: false,
             )
           ],
           postsCount: 3,
@@ -288,6 +300,7 @@ void main() {
               tipoDespesa: 'tipoDespesa1',
               valorLiquido: '10.00',
               dataDocumento: '10-01-2020',
+              visualizado: false,
             ),
           ],
           postsCount: 1,
@@ -342,6 +355,7 @@ void main() {
               tipoDespesa: 'tipoDespesa1',
               valorLiquido: '10.00',
               dataDocumento: '10-01-2020',
+              visualizado: false,
             ),
             DespesaModel(
               numDocumento: '2',
@@ -352,6 +366,7 @@ void main() {
               tipoDespesa: 'tipoDespesa2',
               valorLiquido: '20.00',
               dataDocumento: '20-01-2020',
+              visualizado: false,
             ),
             DespesaModel(
               numDocumento: '2',
@@ -362,6 +377,7 @@ void main() {
               tipoDespesa: 'tipoDespesa2',
               valorLiquido: '20.00',
               dataDocumento: '20-01-2020',
+              visualizado: false,
             ),
             DespesaModel(
               numDocumento: '2',
@@ -372,12 +388,14 @@ void main() {
               tipoDespesa: 'tipoDespesa2',
               valorLiquido: '20.00',
               dataDocumento: '20-01-2020',
+              visualizado: false,
             ),
             PropostaModel(
               id: '1',
               dataAtualizacao: '20-01-2020',
               nomePolitico: 'nome',
               fotoPolitico: 'foto',
+              visualizado: false,
             )
           ],
           postsCount: 3,
@@ -401,7 +419,7 @@ void main() {
       expect(listview, findsOneWidget);
       await tester.drag(listview, const Offset(0, -3000));
       await tester.pump();
-      verify(mockTimelineBloc.add(FetchMorePosts('1', 278.0))).called(1);
+      verify(mockTimelineBloc.add(FetchMorePosts('1', 262.0))).called(1);
     });
   });
 }

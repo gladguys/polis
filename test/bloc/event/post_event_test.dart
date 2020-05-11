@@ -29,9 +29,9 @@ void main() {
 
     group('SetPostVisible', () {
       test('props', () {
-        final ev1 = SetPostVisible(userId: '1', postId: '1');
-        final ev2 = SetPostVisible(userId: '1', postId: '1');
-        final ev3 = SetPostVisible(userId: '2', postId: '2');
+        final ev1 = SetPostViewed(userId: '1', postId: '1');
+        final ev2 = SetPostViewed(userId: '1', postId: '1');
+        final ev3 = SetPostViewed(userId: '2', postId: '2');
 
         expect(ev1, ev2);
         expect(ev1 == ev3, false);

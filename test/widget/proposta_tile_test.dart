@@ -36,6 +36,7 @@ void main() {
         tipoDocumento: 'tipo',
         status: 'status',
         dataAtualizacao: '10-01-2020',
+        visualizado: false,
       );
     });
 
@@ -57,6 +58,7 @@ void main() {
         tipoDocumento: 'tipo',
         status: 'status',
         dataAtualizacao: '10-01-2020',
+        visualizado: false,
       );
       await tester.pumpWidget(
         connectedWidget(PropostaTileConnected(propostaDesc)),
@@ -72,21 +74,6 @@ void main() {
       final card = find.byKey(cardBaseContentKey);
       expect(card, findsOneWidget);
       await tester.tap(card);
-    });
-
-    testWidgets('should do something when click on share btn', (tester) async {
-      await tester.pumpWidget(
-        connectedWidget(PropostaTileConnected(proposta)),
-      );
-      final likeButton = find.byWidgetPredicate((widget) {
-        if (widget is ButtonActionCard &&
-            widget.icon == FontAwesomeIcons.shareAlt) {
-          return true;
-        }
-        return false;
-      });
-      expect(likeButton, findsOneWidget);
-      await tester.tap(likeButton);
     });
 
     testWidgets('should do something when click on bookmark btn',

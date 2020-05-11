@@ -27,9 +27,7 @@ void main() {
   });
 
   test('assert', () {
-    expect(() => FavoritesPostList(
-      null
-    ), throwsAssertionError);
+    expect(() => FavoritesPostList(null), throwsAssertionError);
   });
 
   group('FavoritePostsPage tests', () {
@@ -65,6 +63,7 @@ void main() {
             PropostaModel(
               nomePolitico: 'nome',
               dataAtualizacao: '10-01-2020',
+              visualizado: false,
             ),
             DespesaModel(
               numDocumento: '2',
@@ -75,6 +74,7 @@ void main() {
               tipoDespesa: 'tipoDespesa2',
               valorLiquido: '20.00',
               dataDocumento: '20-01-2020',
+              visualizado: false,
             ),
           ],
         ),

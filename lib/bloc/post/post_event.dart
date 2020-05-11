@@ -32,8 +32,8 @@ class SharePost extends PostEvent {
   List<Object> get props => [postImage];
 }
 
-class SetPostVisible extends PostEvent {
-  SetPostVisible({this.userId, this.postId});
+class SetPostViewed extends PostEvent {
+  SetPostViewed({this.userId, this.postId});
 
   final String userId;
   final String postId;

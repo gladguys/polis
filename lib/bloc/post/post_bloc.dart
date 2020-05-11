@@ -54,7 +54,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       final postImage = event.postImage;
       await shareService.shareFile(postImage, name: 'post.png');
     }
-    if (event is SetPostVisible) {
+    if (event is SetPostViewed) {
       await postRepository.setPostVisible(
         userId: event.userId,
         postId: event.postId,

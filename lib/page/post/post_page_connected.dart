@@ -27,7 +27,7 @@ class PostPageConnected extends StatelessWidget {
         postRepository: context.repository<FirebasePostRepository>(),
         shareService: G<ShareService>(),
       )..add(
-          SetPostVisible(
+          SetPostViewed(
             userId: context.bloc<UserBloc>().user.userId,
             postId: getPostId(post),
           ),
