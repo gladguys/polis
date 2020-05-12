@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../core/constants.dart';
-import '../extension/media_query_extensions.dart';
 import '../i18n/i18n.dart';
+import '../page/theme/main_theme.dart';
 
 class EmptyInfo extends StatelessWidget {
   EmptyInfo({this.imageName, this.icon, @required this.text})
@@ -18,12 +19,12 @@ class EmptyInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        top: context.screenHeight / 5,
-      ),
+    return Container(
+      alignment: Alignment.center,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           imageName != null
               ? Image.asset(
@@ -31,13 +32,18 @@ class EmptyInfo extends StatelessWidget {
                   height: 120,
                   width: 120,
                 )
-              : Icon(icon, size: 120),
-          const SizedBox(height: 18),
+              : FaIcon(
+                  icon,
+                  size: 80,
+                  color: theme.primaryColorLight,
+                ),
+          const SizedBox(height: 12),
           Text(
             text,
             textAlign: TextAlign.center,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
+              color: Colors.grey[600],
             ),
           ),
         ],
