@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../core/keys.dart';
 import '../../../model/models.dart';
-import '../../../widget/tile/despesa_tile_connected.dart';
-import '../../../widget/tile/proposta_tile_connected.dart';
+import '../../../widget/tile/favorite_despesa_tile_connected.dart';
+import '../../../widget/tile/favorite_proposta_tile_connected.dart';
 
 class FavoritesPostList extends StatelessWidget {
   FavoritesPostList(
@@ -20,9 +20,9 @@ class FavoritesPostList extends StatelessWidget {
       itemCount: activities.length,
       itemBuilder: (_, i) {
         if (activities[i] is DespesaModel) {
-          return DespesaTileConnected(activities[i]);
+          return FavoriteDespesaTileConnected(activities[i]);
         } else {
-          return PropostaTileConnected(activities[i] as PropostaModel);
+          return FavoritePropostaTileConnected(activities[i] as PropostaModel);
         }
       },
       separatorBuilder: (_, i) => const Divider(

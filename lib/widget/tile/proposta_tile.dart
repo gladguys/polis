@@ -35,13 +35,17 @@ class PropostaTile extends StatelessWidget {
         ],
       ),
       slotBottom: _buildActions(context),
-      onTap: () => SimpleRouter.forward(
-        PostPageConnected(
-          post: proposta,
-          postType: PostType.PROPOSICAO,
-        ),
-        name: POST_PAGE,
-      ),
+      onTap: () async {
+        await SimpleRouter.forward(
+          PostPageConnected(
+            post: proposta,
+            postType: PostType.PROPOSICAO,
+            timelineBloc: context.bloc<TimelineBloc>(),
+          ),
+          name: POST_PAGE,
+        );
+        context.bloc<TimelineBloc>().add(RefreshTimeline());
+      },
     );
   }
 

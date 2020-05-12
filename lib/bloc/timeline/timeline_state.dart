@@ -31,6 +31,15 @@ class TimelineUpdated extends TimelineState {
   List<Object> get props => [activities, postsCount, updatesCount];
 }
 
+class TimelineRefreshed extends TimelineState {
+  TimelineRefreshed({@required this.activities}) : assert(activities != null);
+
+  final List<dynamic> activities;
+
+  @override
+  List<Object> get props => [activities];
+}
+
 class FetchTimelineFailed extends TimelineState {
   @override
   List<Object> get props => [];

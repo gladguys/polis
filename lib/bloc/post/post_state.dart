@@ -27,3 +27,8 @@ class PostFavoritedFailed extends PostState {
   @override
   List<Object> get props => [];
 }
+
+class PostViewedFailed extends PostState {
+  @override
+  List<Object> get props => [];
+}

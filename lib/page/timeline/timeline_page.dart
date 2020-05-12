@@ -31,6 +31,11 @@ class TimelinePage extends StatelessWidget {
                 updatesCount: 0,
                 timelineStatus: TimelineStatus.loading,
               );
+            } else if (state is TimelineRefreshed) {
+              return Timeline(
+                activities: state.activities,
+                updatesCount: 0,
+              );
             } else if (state is NoPostsAvailable) {
               return Container(
                 child: Padding(

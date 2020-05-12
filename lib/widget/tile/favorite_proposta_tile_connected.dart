@@ -7,27 +7,26 @@ import '../../core/service/services.dart';
 import '../../model/models.dart';
 import '../../page/page_connected.dart';
 import '../../repository/concrete/repositories.dart';
-import 'despesa_tile.dart';
+import 'proposta_tile.dart';
 
-class DespesaTileConnected extends StatelessWidget {
-  const DespesaTileConnected(
-    this.despesa, {
+class FavoritePropostaTileConnected extends StatelessWidget {
+  const FavoritePropostaTileConnected(
+    this.proposta, {
     this.clickableImage = true,
   });
 
-  final DespesaModel despesa;
+  final PropostaModel proposta;
   final bool clickableImage;
 
   @override
   Widget build(BuildContext context) {
     return PageConnected<PostBloc>(
       bloc: PostBloc(
-        post: despesa.toJson(),
+        post: proposta.toJson(),
         postRepository: context.repository<FirebasePostRepository>(),
         shareService: G<ShareService>(),
-        timelineBloc: context.bloc<TimelineBloc>(),
       ),
-      page: DespesaTile(despesa, clickableImage: clickableImage),
+      page: PropostaTile(proposta, clickableImage: clickableImage),
     );
   }
 }
