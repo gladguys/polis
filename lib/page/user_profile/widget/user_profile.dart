@@ -43,8 +43,8 @@ class _UserProfileState extends State<UserProfile> {
         boxShadow: [
           const BoxShadow(
             color: Colors.black12,
-            blurRadius: 1,
-            offset: Offset(0, -3),
+            blurRadius: 2,
+            offset: Offset(0, -1),
           ),
         ],
         borderRadius: const BorderRadius.only(
@@ -79,17 +79,14 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   Widget _buildBody(BuildContext context) {
-    return Container(
-      height: context.screenHeight * 0.6,
-      child: Column(
-        children: <Widget>[
-          const SizedBox(height: 8),
-          LogoutButton(),
-          PersonalUserInfo(user: context.bloc<UserBloc>().user),
-          const SizedBox(height: 16),
-          PoliticsFollowingQuantity(politics: widget.politicsFollowing),
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        const SizedBox(height: 8),
+        LogoutButton(),
+        PersonalUserInfo(user: context.bloc<UserBloc>().user),
+        const SizedBox(height: 16),
+        PoliticsFollowingQuantity(politics: widget.politicsFollowing),
+      ],
     );
   }
 }
