@@ -130,5 +130,77 @@ void main() {
             title: anyNamed('title'), name: 'post.png', mimeType: 'image/png'),
       ).called(1),
     );
+
+    blocTest(
+      'Expects to set post as viewed',
+      build: () async {
+        final mockTimelineBloc = MockTimelineBloc();
+        when(mockTimelineBloc.timelinePosts).thenReturn([
+          DespesaModel(id: '1'),
+        ]);
+        when(
+          mockPostRepository.setPostVisible(
+            userId: '1',
+            postId: '1',
+          ),
+        ).thenAnswer((_) => Future.value());
+
+        return PostBloc(
+          post: {
+            'favorito': true,
+          },
+          postRepository: mockPostRepository,
+          shareService: mockShareService,
+          timelineBloc: mockTimelineBloc,
+        );
+      },
+      act: (postBloc) async => postBloc.add(
+        SetPostViewed(
+          userId: '1',
+          postId: '1',
+        ),
+      ),
+      expect: [],
+      verify: (postBloc) async => verify(
+        mockPostRepository.setPostVisible(userId: '1', postId: '1'),
+      ).called(1),
+    );
+
+    blocTest(
+      'Expects to yield PostViewedFailed when post as viewed failed',
+      build: () async {
+        final mockTimelineBloc = MockTimelineBloc();
+        when(mockTimelineBloc.timelinePosts).thenReturn([
+          DespesaModel(id: '1'),
+        ]);
+        when(
+          mockPostRepository.setPostVisible(
+            userId: '1',
+            postId: '1',
+          ),
+        ).thenThrow(Exception());
+
+        return PostBloc(
+          post: {
+            'favorito': true,
+          },
+          postRepository: mockPostRepository,
+          shareService: mockShareService,
+          timelineBloc: mockTimelineBloc,
+        );
+      },
+      act: (postBloc) async => postBloc.add(
+        SetPostViewed(
+          userId: '1',
+          postId: '1',
+        ),
+      ),
+      expect: [
+        PostViewedFailed(),
+      ],
+      verify: (postBloc) async => verify(
+        mockPostRepository.setPostVisible(userId: '1', postId: '1'),
+      ).called(1),
+    );
   });
 }

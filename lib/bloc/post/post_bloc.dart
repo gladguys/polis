@@ -42,7 +42,6 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         isPostFavorite = !isPostFavorite;
         yield PostFavoriteStatusChanged(isFavorite: isPostFavorite);
 
-        print(isPostFavorite);
         if (isPostFavorite) {
           await postRepository.favoritePost(post: event.post, user: event.user);
         } else {

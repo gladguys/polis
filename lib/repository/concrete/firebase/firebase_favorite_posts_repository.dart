@@ -29,10 +29,20 @@ class FirebaseFavoritePostsRepository implements FavoritePostsRepository {
       for (var document in documents) {
         if (isDocumentDespesa(document.data)) {
           final despesa = DespesaModel.fromJson(document.data);
-          posts.add(despesa.copyWith(favorito: true));
+          posts.add(
+            despesa.copyWith(
+              id: document.documentID,
+              favorito: true,
+            ),
+          );
         } else {
           final proposta = PropostaModel.fromJson(document.data);
-          posts.add(proposta.copyWith(favorito: true));
+          posts.add(
+            proposta.copyWith(
+              id: document.documentID,
+              favorito: true,
+            ),
+          );
         }
       }
       return posts;

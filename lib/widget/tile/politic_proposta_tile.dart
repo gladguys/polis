@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
@@ -11,7 +10,6 @@ import '../../extension/formatter_extensions.dart';
 import '../../i18n/i18n.dart';
 import '../../model/models.dart';
 import '../../page/pages.dart';
-import '../button_action_card.dart';
 import '../card_base.dart';
 import '../photo.dart';
 import '../text_rich.dart';
@@ -121,22 +119,6 @@ class PoliticPropostaTile extends StatelessWidget {
               fontSize: 12,
               color: Colors.grey[600],
             ),
-          ),
-          ButtonActionCard(
-            isIconOnly: true,
-            icon: context.bloc<PostBloc>().isPostFavorite
-                ? FontAwesomeIcons.solidBookmark
-                : FontAwesomeIcons.bookmark,
-            iconColor:
-                context.bloc<PostBloc>().isPostFavorite ? Colors.amber : null,
-            //text: context.bloc<PostBloc>().isPostFavorite ? SAVED : SAVE,
-            // fontSize: 14,
-            onTap: () => context.bloc<PostBloc>().add(
-                  FavoritePostForUser(
-                    post: proposta.toJson(),
-                    user: context.bloc<UserBloc>().user,
-                  ),
-                ),
           ),
         ],
       ),

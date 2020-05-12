@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/model/despesa_model.dart';
-import 'package:polis/page/page_connected.dart';
-import 'package:polis/widget/button_action_card.dart';
-import 'package:polis/widget/tile/despesa_tile_connected.dart';
+import 'package:polis/widget/tile/politic_despesa_tile_connected.dart';
 
 import '../mock.dart';
 import 'utils.dart';
@@ -27,7 +23,7 @@ void main() {
 
   DespesaModel despesa;
 
-  group('DespesaTile tests', () {
+  group('PoliticDespesaTile tests', () {
     setUp(() {
       despesa = DespesaModel(
         fotoPolitico: 'foto',
@@ -45,25 +41,17 @@ void main() {
     });
 
     testWidgets('should build without exploding', (tester) async {
-      final mockTimelineBloc = MockTimelineBloc();
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<TimelineBloc>(
-            bloc: mockTimelineBloc,
-            page: DespesaTileConnected(despesa),
-          ),
+          PoliticDespesaTileConnected(despesa),
         ),
       );
     });
 
     testWidgets('should do something when click on card', (tester) async {
-      final mockTimelineBloc = MockTimelineBloc();
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<TimelineBloc>(
-            bloc: mockTimelineBloc,
-            page: DespesaTileConnected(despesa),
-          ),
+          PoliticDespesaTileConnected(despesa),
         ),
       );
       final card = find.byKey(cardBaseContentKey);
@@ -71,37 +59,11 @@ void main() {
       await tester.tap(card);
     });
 
-    testWidgets('should do something when click on bookmark btn',
-        (tester) async {
-      final mockTimelineBloc = MockTimelineBloc();
-      await tester.pumpWidget(
-        connectedWidget(
-          PageConnected<TimelineBloc>(
-            bloc: mockTimelineBloc,
-            page: DespesaTileConnected(despesa),
-          ),
-        ),
-      );
-      final likeButton = find.byWidgetPredicate((widget) {
-        if (widget is ButtonActionCard &&
-            widget.icon == FontAwesomeIcons.bookmark) {
-          return true;
-        }
-        return false;
-      });
-      expect(likeButton, findsOneWidget);
-      await tester.tap(likeButton);
-    });
-
     testWidgets('should go to profile page when click on politic photo',
         (tester) async {
-      final mockTimelineBloc = MockTimelineBloc();
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<TimelineBloc>(
-            bloc: mockTimelineBloc,
-            page: DespesaTileConnected(despesa),
-          ),
+          PoliticDespesaTileConnected(despesa),
         ),
       );
       final politicPhoto = find.byType(ClipRRect);
