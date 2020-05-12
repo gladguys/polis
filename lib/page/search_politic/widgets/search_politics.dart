@@ -104,8 +104,8 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
 
   Widget _buildFilter() {
     return AnimatedContainer(
-      duration: 500.milliseconds,
-      width: 310,
+      duration: 300.milliseconds,
+      width: 321,
       height: isOpen ? 64 : 0,
       margin: isOpen ? const EdgeInsets.only(top: 8) : EdgeInsets.zero,
       child: Material(
@@ -115,24 +115,20 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
         clipBehavior: Clip.antiAlias,
         child: Row(
           children: <Widget>[
-            Expanded(
-              child: PartidoSelect(
-                partidos: widget.partidos,
-                initialValue: widget.searchPoliticBloc.partidoPicked,
-                onChange: (partido) => widget.searchPoliticBloc
-                    .add(ChangeSearchPoliticFilter(partido: partido)),
-              ),
+            PartidoSelect(
+              partidos: widget.partidos,
+              initialValue: widget.searchPoliticBloc.partidoPicked,
+              onChange: (partido) => widget.searchPoliticBloc
+                  .add(ChangeSearchPoliticFilter(partido: partido)),
             ),
             VerticalDivider(
               width: 1,
               color: Colors.grey[350],
             ),
-            Expanded(
-              child: EstadoSelect(
-                initialValue: widget.searchPoliticBloc.statePicked,
-                onChange: (estado) => widget.searchPoliticBloc
-                    .add(ChangeSearchPoliticFilter(estado: estado)),
-              ),
+            EstadoSelect(
+              initialValue: widget.searchPoliticBloc.statePicked,
+              onChange: (estado) => widget.searchPoliticBloc
+                  .add(ChangeSearchPoliticFilter(estado: estado)),
             ),
           ],
         ),
