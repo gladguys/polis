@@ -30,7 +30,8 @@ class DespesaModel extends Equatable {
       this.urlDocumento,
       this.valorDocumento,
       this.valorGlosa,
-      this.valorLiquido});
+      this.valorLiquido,
+      this.visualizado});
 
   @JsonKey(ignore: true)
   final String id;
@@ -58,6 +59,7 @@ class DespesaModel extends Equatable {
   final String valorGlosa;
   final String valorLiquido;
   final bool favorito;
+  final bool visualizado;
 
   factory DespesaModel.fromJson(Map<String, dynamic> json) =>
       _$DespesaModelFromJson(json);
@@ -90,6 +92,7 @@ class DespesaModel extends Equatable {
     String valorGlosa,
     String valorLiquido,
     bool favorito,
+    bool visualizado,
   }) {
     return DespesaModel(
       id: id ?? this.id,
@@ -117,6 +120,7 @@ class DespesaModel extends Equatable {
       valorGlosa: valorGlosa ?? this.valorGlosa,
       favorito: favorito ?? this.favorito,
       valorLiquido: valorLiquido ?? this.valorLiquido,
+      visualizado: visualizado ?? this.visualizado,
     );
   }
 
@@ -125,6 +129,6 @@ class DespesaModel extends Equatable {
 
   @override
   String toString() {
-    return '''DespesaModel{id: $id, ano: $ano, mes: $mes, cnpjCpfFornecedor: $cnpjCpfFornecedor, codDocumento: $codDocumento, codLote: $codLote, codTipoDocumento: $codTipoDocumento, fotoPolitico: $fotoPolitico, dataDocumento: $dataDocumento, estadoPolitico: $estadoPolitico, idPolitico: $idPolitico, nomeFornecedor: $nomeFornecedor, nomePolitico: $nomePolitico, numDocumento: $numDocumento, numRessarcimento: $numRessarcimento, parcela: $parcela, siglaPartido: $siglaPartido, tipoAtividade: $tipoAtividade, tipoDespesa: $tipoDespesa, tipoDocumento: $tipoDocumento, urlDocumento: $urlDocumento, valorDocumento: $valorDocumento, valorGlosa: $valorGlosa, valorLiquido: $valorLiquido, favorito: $favorito}''';
+    return '''DespesaModel{id: $id, ano: $ano, mes: $mes, cnpjCpfFornecedor: $cnpjCpfFornecedor, codDocumento: $codDocumento, codLote: $codLote, codTipoDocumento: $codTipoDocumento, fotoPolitico: $fotoPolitico, dataDocumento: $dataDocumento, estadoPolitico: $estadoPolitico, idPolitico: $idPolitico, nomeFornecedor: $nomeFornecedor, nomePolitico: $nomePolitico, numDocumento: $numDocumento, numRessarcimento: $numRessarcimento, parcela: $parcela, siglaPartido: $siglaPartido, tipoAtividade: $tipoAtividade, tipoDespesa: $tipoDespesa, tipoDocumento: $tipoDocumento, urlDocumento: $urlDocumento, valorDocumento: $valorDocumento, valorGlosa: $valorGlosa, valorLiquido: $valorLiquido, favorito: $favorito, visualizado: $visualizado}''';
   }
 }

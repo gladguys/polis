@@ -12,23 +12,44 @@ import '../page_connected.dart';
 import '../pages.dart';
 
 class PostPageConnected extends StatelessWidget {
-  PostPageConnected({@required this.post, @required this.postType})
+  PostPageConnected(
+      {@required this.post, @required this.postType, this.timelineBloc})
       : assert(post != null),
         assert(postType != null);
 
   final dynamic post;
   final PostType postType;
+  final TimelineBloc timelineBloc;
 
   @override
   Widget build(BuildContext context) {
+    final postBloc = PostBloc(
+      post: getPostMap(post),
+      postRepository: context.repository<FirebasePostRepository>(),
+      shareService: G<ShareService>(),
+      timelineBloc: timelineBloc,
+    );
+    if (timelineBloc != null) {
+      postBloc.add(
+        SetPostViewed(
+          userId: context.bloc<UserBloc>().user.userId,
+          postId: getPostId(post),
+        ),
+      );
+    }
     return PageConnected<PostBloc>(
-      bloc: PostBloc(
-        post: getPostMap(post),
-        postRepository: context.repository<FirebasePostRepository>(),
-        shareService: G<ShareService>(),
-      ),
+      bloc: postBloc,
       page: PostPage(post: post, postType: postType),
     );
+  }
+
+  String getPostId(dynamic post) {
+    if (post is PropostaModel) {
+      return post.id;
+    } else if (post is DespesaModel) {
+      return post.id;
+    }
+    return null;
   }
 
   Map<String, dynamic> getPostMap(dynamic post) {

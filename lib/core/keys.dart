@@ -34,5 +34,6 @@ const tramitationsIconKey = ValueKey('tramitations-icon');
 const currentPasswordFieldKey = ValueKey('current-password-field');
 const newPasswordFieldKey = ValueKey('new-password-field');
 const despesaImageIconKey = ValueKey('despesa-image-icon');
+const cardBaseKey = ValueKey('card-base');
 const newPasswordConfirmationFieldKey =
     ValueKey('new-password-confirmation-field');

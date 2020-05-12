@@ -25,6 +25,7 @@ class PropostaTileConnected extends StatelessWidget {
         post: proposta.toJson(),
         postRepository: context.repository<FirebasePostRepository>(),
         shareService: G<ShareService>(),
+        timelineBloc: context.bloc<TimelineBloc>(),
       ),
       page: PropostaTile(proposta, clickableImage: clickableImage),
     );

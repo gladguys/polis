@@ -7,10 +7,10 @@ import '../../core/service/services.dart';
 import '../../model/models.dart';
 import '../../page/page_connected.dart';
 import '../../repository/concrete/repositories.dart';
-import 'despesa_tile.dart';
+import 'politic_despesa_tile.dart';
 
-class DespesaTileConnected extends StatelessWidget {
-  const DespesaTileConnected(
+class PoliticDespesaTileConnected extends StatelessWidget {
+  const PoliticDespesaTileConnected(
     this.despesa, {
     this.clickableImage = true,
   });
@@ -25,9 +25,8 @@ class DespesaTileConnected extends StatelessWidget {
         post: despesa.toJson(),
         postRepository: context.repository<FirebasePostRepository>(),
         shareService: G<ShareService>(),
-        timelineBloc: context.bloc<TimelineBloc>(),
       ),
-      page: DespesaTile(despesa, clickableImage: clickableImage),
+      page: PoliticDespesaTile(despesa, clickableImage: clickableImage),
     );
   }
 }

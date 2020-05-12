@@ -31,3 +31,13 @@ class SharePost extends PostEvent {
   @override
   List<Object> get props => [postImage];
 }
+
+class SetPostViewed extends PostEvent {
+  SetPostViewed({this.userId, this.postId});
+
+  final String userId;
+  final String postId;
+
+  @override
+  List<Object> get props => [userId, postId];
+}

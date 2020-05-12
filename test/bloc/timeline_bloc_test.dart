@@ -401,5 +401,19 @@ void main() {
         FetchTimelineFailed(),
       ],
     );
+
+    blocTest(
+      '''Expects [TimelineRefreshed] when RefreshTimeline added''',
+      build: () async => timelineBloc,
+      act: (timelineBloc) {
+        timelineBloc.add(RefreshTimeline());
+        return;
+      },
+      expect: [
+        TimelineRefreshed(
+          activities: [],
+        ),
+      ],
+    );
   });
 }

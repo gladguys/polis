@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
-import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../enum/post_type.dart';
 import '../../extension/extensions.dart';
 import '../../i18n/i18n.dart';
 import '../../model/models.dart';
 import '../../page/pages.dart';
-import '../../page/theme/main_theme.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';
 import '../photo.dart';
 import '../text_rich.dart';
 
-class DespesaTile extends StatelessWidget {
-  DespesaTile(this.despesa, {this.clickableImage});
+class FavoriteDespesaTile extends StatelessWidget {
+  FavoriteDespesaTile(this.despesa, {this.clickableImage});
 
   final DespesaModel despesa;
   final bool clickableImage;
@@ -38,18 +35,13 @@ class DespesaTile extends StatelessWidget {
         ),
       ),
       slotBottom: _buildActions(context),
-      key: cardBaseKey,
-      onTap: () async {
-        await SimpleRouter.forward(
-          PostPageConnected(
-            post: despesa,
-            postType: PostType.DESPESA,
-            timelineBloc: context.bloc<TimelineBloc>(),
-          ),
-          name: POST_PAGE,
-        );
-        context.bloc<TimelineBloc>().add(RefreshTimeline());
-      },
+      onTap: () => SimpleRouter.forward(
+        PostPageConnected(
+          post: despesa,
+          postType: PostType.DESPESA,
+        ),
+        name: POST_PAGE,
+      ),
     );
   }
 
@@ -90,12 +82,6 @@ class DespesaTile extends StatelessWidget {
             ),
           ],
         ),
-        if (!despesa.visualizado)
-          FaIcon(
-            FontAwesome5Solid.circle,
-            color: theme.primaryColor,
-            size: 5,
-          ),
       ],
     );
   }

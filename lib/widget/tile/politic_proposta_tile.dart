@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
 import '../../enum/post_type.dart';
 import '../../extension/extensions.dart';
+import '../../extension/formatter_extensions.dart';
 import '../../i18n/i18n.dart';
-import '../../model/proposta_model.dart';
+import '../../model/models.dart';
 import '../../page/pages.dart';
-import '../../page/theme/main_theme.dart';
-import '../button_action_card.dart';
 import '../card_base.dart';
 import '../photo.dart';
 import '../text_rich.dart';
 
-class PropostaTile extends StatelessWidget {
-  PropostaTile(this.proposta, {this.clickableImage});
+class PoliticPropostaTile extends StatelessWidget {
+  PoliticPropostaTile(this.proposta, {this.clickableImage});
 
   final PropostaModel proposta;
   final bool clickableImage;
@@ -35,17 +32,13 @@ class PropostaTile extends StatelessWidget {
         ],
       ),
       slotBottom: _buildActions(context),
-      onTap: () async {
-        await SimpleRouter.forward(
-          PostPageConnected(
-            post: proposta,
-            postType: PostType.PROPOSICAO,
-            timelineBloc: context.bloc<TimelineBloc>(),
-          ),
-          name: POST_PAGE,
-        );
-        context.bloc<TimelineBloc>().add(RefreshTimeline());
-      },
+      onTap: () => SimpleRouter.forward(
+        PostPageConnected(
+          post: proposta,
+          postType: PostType.PROPOSICAO,
+        ),
+        name: POST_PAGE,
+      ),
     );
   }
 
@@ -88,12 +81,6 @@ class PropostaTile extends StatelessWidget {
             ),
           ],
         ),
-        if (!proposta.visualizado)
-          FaIcon(
-            FontAwesome5Solid.circle,
-            color: theme.primaryColor,
-            size: 5,
-          ),
       ],
     );
   }
@@ -132,22 +119,6 @@ class PropostaTile extends StatelessWidget {
               fontSize: 12,
               color: Colors.grey[600],
             ),
-          ),
-          ButtonActionCard(
-            isIconOnly: true,
-            icon: context.bloc<PostBloc>().isPostFavorite
-                ? FontAwesomeIcons.solidBookmark
-                : FontAwesomeIcons.bookmark,
-            iconColor:
-                context.bloc<PostBloc>().isPostFavorite ? Colors.amber : null,
-            //text: context.bloc<PostBloc>().isPostFavorite ? SAVED : SAVE,
-            // fontSize: 14,
-            onTap: () => context.bloc<PostBloc>().add(
-                  FavoritePostForUser(
-                    post: proposta.toJson(),
-                    user: context.bloc<UserBloc>().user,
-                  ),
-                ),
           ),
         ],
       ),

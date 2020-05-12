@@ -8,6 +8,8 @@ void main() {
       expect(TimelineUpdated(activities: [], postsCount: 0, updatesCount: 0),
           TimelineUpdated(activities: [], postsCount: 0, updatesCount: 0));
       expect(FetchTimelineFailed(), FetchTimelineFailed());
+      expect(
+          TimelineRefreshed(activities: []), TimelineRefreshed(activities: []));
     });
 
     test('asserts', () {
@@ -25,6 +27,7 @@ void main() {
           throwsAssertionError);
       expect(
           () => ReachedEndFetchingMore(activities: null), throwsAssertionError);
+      expect(() => TimelineRefreshed(activities: null), throwsAssertionError);
     });
   });
 }

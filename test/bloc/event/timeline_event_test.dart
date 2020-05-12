@@ -47,6 +47,15 @@ void main() {
       });
     });
 
+    group('RefreshTimeline', () {
+      test('props', () {
+        final ev1 = RefreshTimeline();
+        final ev2 = RefreshTimeline();
+
+        expect(ev1, ev2);
+      });
+    });
+
     group('NotifyTimelineFetchedOnce', () {
       test('props', () {
         final ev1 = NotifyTimelineFetchedOnce();

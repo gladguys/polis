@@ -9,6 +9,7 @@ void main() {
           PostFavoriteStatusChanged(isFavorite: true));
       expect(PostFavoritedSuccess(), PostFavoritedSuccess());
       expect(PostFavoritedFailed(), PostFavoritedFailed());
+      expect(PostViewedFailed(), PostViewedFailed());
     });
   });
 }

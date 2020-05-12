@@ -4,10 +4,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
+import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/models.dart';
+import 'package:polis/page/page_connected.dart';
 import 'package:polis/widget/button_action_card.dart';
 import 'package:polis/widget/tile/proposta_tile_connected.dart';
 
@@ -36,18 +38,26 @@ void main() {
         tipoDocumento: 'tipo',
         status: 'status',
         dataAtualizacao: '10-01-2020',
+        visualizado: false,
       );
     });
 
     testWidgets('should build without exploding', (tester) async {
+      final mockTimelineBloc = MockTimelineBloc();
       await tester.pumpWidget(
-        connectedWidget(PropostaTileConnected(proposta)),
+        connectedWidget(
+          PageConnected<TimelineBloc>(
+            bloc: mockTimelineBloc,
+            page: PropostaTileConnected(proposta),
+          ),
+        ),
       );
     });
 
     testWidgets(
         'should style diferent when descricaoTipo equals PLENARY_AMENDMENT',
         (tester) async {
+      final mockTimelineBloc = MockTimelineBloc();
       final propostaDesc = PropostaModel(
         fotoPolitico: 'foto',
         nomePolitico: 'nome',
@@ -57,42 +67,47 @@ void main() {
         tipoDocumento: 'tipo',
         status: 'status',
         dataAtualizacao: '10-01-2020',
+        visualizado: false,
       );
       await tester.pumpWidget(
-        connectedWidget(PropostaTileConnected(propostaDesc)),
+        connectedWidget(
+          PageConnected<TimelineBloc>(
+            bloc: mockTimelineBloc,
+            page: PropostaTileConnected(propostaDesc),
+          ),
+        ),
       );
       final text = find.text(PLENARY_AMENDMENT);
       expect(text, findsOneWidget);
     });
 
     testWidgets('should do something when click on card', (tester) async {
+      final mockTimelineBloc = MockTimelineBloc();
       await tester.pumpWidget(
-        connectedWidget(PropostaTileConnected(proposta)),
+        connectedWidget(
+          PageConnected<TimelineBloc>(
+            bloc: mockTimelineBloc,
+            page: PropostaTileConnected(proposta),
+          ),
+        ),
       );
       final card = find.byKey(cardBaseContentKey);
       expect(card, findsOneWidget);
       await tester.tap(card);
     });
 
-    testWidgets('should do something when click on share btn', (tester) async {
-      await tester.pumpWidget(
-        connectedWidget(PropostaTileConnected(proposta)),
-      );
-      final likeButton = find.byWidgetPredicate((widget) {
-        if (widget is ButtonActionCard &&
-            widget.icon == FontAwesomeIcons.shareAlt) {
-          return true;
-        }
-        return false;
-      });
-      expect(likeButton, findsOneWidget);
-      await tester.tap(likeButton);
-    });
-
     testWidgets('should do something when click on bookmark btn',
         (tester) async {
+      final mockTimelineBloc = MockTimelineBloc();
       await tester.pumpWidget(
-        connectedWidget(PropostaTileConnected(proposta)),
+        connectedWidget(
+          connectedWidget(
+            PageConnected<TimelineBloc>(
+              bloc: mockTimelineBloc,
+              page: PropostaTileConnected(proposta),
+            ),
+          ),
+        ),
       );
       final likeButton = find.byWidgetPredicate((widget) {
         if (widget is ButtonActionCard &&
@@ -107,9 +122,13 @@ void main() {
 
     testWidgets('should go to profile page when click on politic photo',
         (tester) async {
+      final mockTimelineBloc = MockTimelineBloc();
       await tester.pumpWidget(
         connectedWidget(
-          connectedWidget(PropostaTileConnected(proposta)),
+          PageConnected<TimelineBloc>(
+            bloc: mockTimelineBloc,
+            page: PropostaTileConnected(proposta),
+          ),
         ),
       );
       final politicPhoto = find.byType(ClipRRect);

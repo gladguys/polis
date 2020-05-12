@@ -125,6 +125,11 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
     if (event is NotifyTimelineFetchedOnce) {
       isTimelineFetchedOnce = true;
     }
+    if (event is RefreshTimeline) {
+      yield TimelineRefreshed(
+        activities: timelinePosts,
+      );
+    }
   }
 
   @override

@@ -73,6 +73,7 @@ void main() {
             descricaoTramitacao: 'descTra',
             descricaoSituacao: 'descSit',
             dataAtualizacao: '2020-02-05',
+            visualizado: false,
           ),
           DespesaModel(
             fotoPolitico: 'foto',
@@ -82,6 +83,7 @@ void main() {
             tipoDespesa: 'despesa',
             valorLiquido: '3.51',
             dataDocumento: '10-01-2020',
+            visualizado: false,
           ),
         ],
       );
@@ -128,6 +130,7 @@ void main() {
             descricaoTramitacao: 'descTra',
             descricaoSituacao: 'descSit',
             dataAtualizacao: '2020-02-05',
+            visualizado: false,
           ),
           PropostaModel(
             ementa: 'ementa',
@@ -135,6 +138,7 @@ void main() {
             descricaoTramitacao: 'descTra',
             descricaoSituacao: 'descSit',
             dataAtualizacao: '2020-02-05',
+            visualizado: false,
           ),
           PropostaModel(
             ementa: 'ementa',
@@ -142,6 +146,7 @@ void main() {
             descricaoTramitacao: 'descTra',
             descricaoSituacao: 'descSit',
             dataAtualizacao: '2020-02-05',
+            visualizado: false,
           ),
           PropostaModel(
             ementa: 'ementa',
@@ -149,6 +154,7 @@ void main() {
             descricaoTramitacao: 'descTra',
             descricaoSituacao: 'descSit',
             dataAtualizacao: '2020-02-05',
+            visualizado: false,
           ),
           DespesaModel(
             fotoPolitico: 'foto',
@@ -158,6 +164,57 @@ void main() {
             tipoDespesa: 'despesa',
             valorLiquido: '3.51',
             dataDocumento: '10-01-2020',
+            visualizado: false,
+          ),
+          DespesaModel(
+            fotoPolitico: 'foto',
+            nomePolitico: 'nome',
+            nomeFornecedor: 'fornecedor',
+            tipoAtividade: 'ativi',
+            tipoDespesa: 'despesa',
+            valorLiquido: '3.51',
+            dataDocumento: '10-01-2020',
+            visualizado: false,
+          ),
+          DespesaModel(
+            fotoPolitico: 'foto',
+            nomePolitico: 'nome',
+            nomeFornecedor: 'fornecedor',
+            tipoAtividade: 'ativi',
+            tipoDespesa: 'despesa',
+            valorLiquido: '3.51',
+            dataDocumento: '10-01-2020',
+            visualizado: false,
+          ),
+          DespesaModel(
+            fotoPolitico: 'foto',
+            nomePolitico: 'nome',
+            nomeFornecedor: 'fornecedor',
+            tipoAtividade: 'ativi',
+            tipoDespesa: 'despesa',
+            valorLiquido: '3.51',
+            dataDocumento: '10-01-2020',
+            visualizado: false,
+          ),
+          DespesaModel(
+            fotoPolitico: 'foto',
+            nomePolitico: 'nome',
+            nomeFornecedor: 'fornecedor',
+            tipoAtividade: 'ativi',
+            tipoDespesa: 'despesa',
+            valorLiquido: '3.51',
+            dataDocumento: '10-01-2020',
+            visualizado: false,
+          ),
+          DespesaModel(
+            fotoPolitico: 'foto',
+            nomePolitico: 'nome',
+            nomeFornecedor: 'fornecedor',
+            tipoAtividade: 'ativi',
+            tipoDespesa: 'despesa',
+            valorLiquido: '3.51',
+            dataDocumento: '10-01-2020',
+            visualizado: false,
           ),
         ],
       );
@@ -261,6 +318,7 @@ void main() {
             descricaoTramitacao: 'descTra',
             descricaoSituacao: 'descSit',
             dataAtualizacao: '2020-02-05',
+            visualizado: false,
           ),
           DespesaModel(
             fotoPolitico: 'foto',
@@ -270,6 +328,7 @@ void main() {
             tipoDespesa: 'despesa',
             valorLiquido: '3.51',
             dataDocumento: '10-01-2020',
+            visualizado: false,
           ),
         ],
       );
@@ -315,6 +374,7 @@ void main() {
             descricaoTramitacao: 'descTra',
             descricaoSituacao: 'descSit',
             dataAtualizacao: '2020-02-05',
+            visualizado: false,
           ),
           DespesaModel(
             fotoPolitico: 'foto',
@@ -324,6 +384,7 @@ void main() {
             tipoDespesa: 'despesa',
             valorLiquido: '3.51',
             dataDocumento: '10-01-2020',
+            visualizado: false,
           ),
         ],
       );

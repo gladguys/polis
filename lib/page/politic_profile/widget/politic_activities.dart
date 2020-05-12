@@ -7,8 +7,8 @@ import '../../../i18n/i18n.dart';
 import '../../../model/despesa_model.dart';
 import '../../../model/models.dart';
 import '../../../widget/not_found.dart';
-import '../../../widget/tile/despesa_tile_connected.dart';
-import '../../../widget/tile/proposta_tile_connected.dart';
+import '../../../widget/tile/politic_despesa_tile_connected.dart';
+import '../../../widget/tile/politic_proposta_tile_connected.dart';
 
 class PoliticActivities extends StatefulWidget {
   PoliticActivities(this.lastActivities) : assert(lastActivities != null);
@@ -54,10 +54,16 @@ class _PoliticActivitiesState extends State<PoliticActivities> {
           itemBuilder: (_, i) {
             final activity = widget.lastActivities[i];
             if (activity is DespesaModel) {
-              return DespesaTileConnected(activity, clickableImage: false);
+              return PoliticDespesaTileConnected(
+                activity,
+                clickableImage: false,
+              );
             } else {
               final proposicao = activity as PropostaModel;
-              return PropostaTileConnected(proposicao, clickableImage: false);
+              return PoliticPropostaTileConnected(
+                proposicao,
+                clickableImage: false,
+              );
             }
           },
           itemCount: widget.lastActivities.length,
