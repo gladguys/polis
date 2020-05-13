@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
@@ -148,6 +146,7 @@ class _InitialPageState extends State<InitialPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   RaisedButton(
+                    key: signinButtonKey,
                     child: const Text(
                       SIGNIN_WITH_EMAIL,
                       style: TextStyle(fontSize: 18),
@@ -183,6 +182,7 @@ class _InitialPageState extends State<InitialPage> {
                   ),
                   const SizedBox(height: 12),
                   OutlineButton(
+                    key: noAccountButtonKey,
                     child: Text(
                       NO_ACCOUNT,
                       style: TextStyle(

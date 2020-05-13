@@ -20,9 +20,9 @@ dependencies:
   hive: ^1.4.1+1
   hive_flutter: ^0.3.0+2
   get_it: ^4.0.2
-  shared_preferences: ^0.5.7+1
+  shared_preferences: ^0.5.7+2
   image_picker: ^0.6.6+1
-  url_launcher: ^5.4.5
+  url_launcher: ^5.4.7
   flutter_native_admob: ^2.1.0
 
   # Utils
@@ -34,7 +34,7 @@ dependencies:
 
   # Firebase
   cloud_firestore: ^0.13.5
-  google_sign_in: ^4.4.4
+  google_sign_in: ^4.4.6
   firebase_auth: ^0.16.0
   firebase_storage: ^3.1.5
   firebase_analytics: ^5.0.11
@@ -59,6 +59,8 @@ dependency_overrides:
 
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+  flutter_driver:
     sdk: flutter
 
   # Generators
