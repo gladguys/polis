@@ -42,9 +42,14 @@ class FirebasePoliticProfileRepository implements PoliticProfileRepository {
 
       final querySnapshot = await query.getDocuments();
       final activities = getActivitiesFromSnapshot(querySnapshot);
+      final lastDocument = querySnapshot.documents.isNotEmpty
+          ? querySnapshot.documents.last
+          : null;
 
       return Tuple2<List<dynamic>, DocumentSnapshot>(
-          activities, querySnapshot.documents?.last);
+        activities,
+        lastDocument,
+      );
     } on Exception {
       throw ComunicationException();
     }
@@ -65,7 +70,9 @@ class FirebasePoliticProfileRepository implements PoliticProfileRepository {
       final activities = getActivitiesFromSnapshot(querySnapshot);
 
       return Tuple2<List<dynamic>, DocumentSnapshot>(
-          activities, querySnapshot.documents?.last);
+        activities,
+        querySnapshot.documents?.last,
+      );
     } on Exception {
       throw ComunicationException();
     }
