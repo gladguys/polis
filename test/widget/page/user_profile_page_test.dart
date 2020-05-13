@@ -15,8 +15,8 @@ import 'package:polis/page/user_profile/widget/logout_button.dart';
 import 'package:polis/page/user_profile/widget/personal_user_info.dart';
 import 'package:polis/page/user_profile/widget/politics_following_quantity.dart';
 import 'package:polis/page/user_profile/widget/user_activities.dart';
+import 'package:polis/page/user_profile/widget/user_profile_skeleton.dart';
 import 'package:polis/widget/error_container.dart';
-import 'package:polis/widget/loading.dart';
 
 import '../../mock.dart';
 import '../utils.dart';
@@ -194,7 +194,7 @@ void main() {
             ),
           ),
         );
-        expect(find.byType(Loading), findsOneWidget);
+        expect(find.byType(UserProfileSkeleton), findsOneWidget);
       });
     });
 

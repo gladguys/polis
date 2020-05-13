@@ -44,9 +44,11 @@ class PoliticFollowersPage extends StatelessWidget {
                   itemCount: followers.length,
                 ),
               )
-            : EmptyInfo(
-                text: POLITIC_HAS_NO_FOLLOWER,
-                icon: MaterialCommunityIcons.account_question_outline,
+            : Expanded(
+                child: EmptyInfo(
+                  text: POLITIC_HAS_NO_FOLLOWER,
+                  icon: FontAwesome.user_times,
+                ),
               ),
       ],
     );

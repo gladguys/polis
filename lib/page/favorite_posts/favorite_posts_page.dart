@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
@@ -7,9 +8,9 @@ import '../../i18n/i18n.dart';
 import '../../widget/default_bottombar.dart';
 import '../../widget/empty_info.dart';
 import '../../widget/error_container.dart';
-import '../../widget/loading.dart';
 import '../../widget/text_title.dart';
 import 'widget/favorites_post_list.dart';
+import 'widget/favorites_posts_skeleton.dart';
 
 class FavoritePostsPage extends StatelessWidget {
   @override
@@ -22,7 +23,7 @@ class FavoritePostsPage extends StatelessWidget {
             if (state is FetchUserFavoritePostsSuccess) {
               return _buildList(state.posts, context);
             } else if (state is LoadingFavoritesPosts) {
-              return Loading();
+              return FavoritesPostsSkeleton();
             } else {
               return ErrorContainer();
             }
@@ -45,7 +46,7 @@ class FavoritePostsPage extends StatelessWidget {
             : Expanded(
                 child: EmptyInfo(
                   text: NO_FAVORITE_POST,
-                  imageName: 'empty.png',
+                  icon: FontAwesomeIcons.folderOpen,
                 ),
               ),
       ],
