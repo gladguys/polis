@@ -46,7 +46,7 @@ exports.onCreateFollower = functions.firestore
             .doc(followerId)
             .collection('atividadesTimeline');
 
-        const querySnapshotProposicao = await atividadesPoliticoRef.get();
+        const querySnapshotProposicao = await atividadesPoliticoRef.orderBy('dataAtualizacao').limit(10);
 
         querySnapshotProposicao.forEach(doc => {
             if (doc.exists) {
