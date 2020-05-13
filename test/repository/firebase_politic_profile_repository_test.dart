@@ -88,9 +88,12 @@ void main() {
         when(mockDocumentReference
                 .collection(ATIVIDADES_POLITICO_SUBCOLLECTION))
             .thenReturn(mockAtividadesSubcollectionReference);
-        when(mockAtividadesSubcollectionReference.orderBy(DATA_DOCUMENTO_FIELD,
-                descending: true))
-            .thenReturn(mockQuery);
+        when(
+          mockAtividadesSubcollectionReference.orderBy(
+            DATA_ATUALIZACAO_FIELD,
+            descending: true,
+          ),
+        ).thenReturn(mockQuery);
         when(mockQuery.limit(any)).thenReturn(mockQuery);
         when(mockQuery.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
@@ -141,9 +144,12 @@ void main() {
         when(mockDocumentReference
                 .collection(ATIVIDADES_POLITICO_SUBCOLLECTION))
             .thenReturn(mockAtividadesSubcollectionReference);
-        when(mockAtividadesSubcollectionReference.orderBy(DATA_DOCUMENTO_FIELD,
-                descending: true))
-            .thenReturn(mockQuery);
+        when(
+          mockAtividadesSubcollectionReference.orderBy(
+            DATA_ATUALIZACAO_FIELD,
+            descending: true,
+          ),
+        ).thenReturn(mockQuery);
         when(mockQuery.startAfterDocument(any)).thenReturn(mockQuery2);
         when(mockQuery2.limit(any)).thenReturn(mockQuery3);
         when(mockQuery3.getDocuments())
