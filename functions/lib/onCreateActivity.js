@@ -38,16 +38,7 @@ exports.onCreateActivity = functions.firestore
                             });
                         });
 
-                    if (atividade.tipoAtividade == 'DESPESA') {
-                        const increment = admin.firestore.FieldValue.increment(parseFloat(atividade.valorDocumento));
-
-                        admin
-                            .firestore()
-                            .collection('politicos')
-                            .doc(politicoId)
-                            .update({ "totalDespesas": increment });
-
-                    } else if (atividade.tipoAtividade == 'PROPOSICAO' && atividade.sequencia === 1) {
+                    if (atividade.tipoAtividade == 'PROPOSICAO' && atividade.sequencia === 1) {
                         const incrementByOne = admin.firestore.FieldValue.increment(1);
 
                         admin
