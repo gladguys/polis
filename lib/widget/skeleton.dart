@@ -12,7 +12,7 @@ class Skeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(24),
+      borderRadius: BorderRadius.circular(60),
       child: SkeletonAnimation(
         shimmerColor: Colors.grey[350].withOpacity(.5),
         gradientColor: Colors.grey[350].withOpacity(.1),

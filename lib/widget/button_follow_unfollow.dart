@@ -8,7 +8,7 @@ class ButtonFollowUnfollow extends StatelessWidget {
     @required this.onPressed,
     this.isOutline = true,
     this.width = 110,
-    this.height = 22,
+    this.height = 26,
     this.fontSize = 11,
     this.key,
   })  : assert(isFollow != null),
@@ -26,7 +26,9 @@ class ButtonFollowUnfollow extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color color = isFollow ? Colors.red : Colors.green;
 
-    return isOutline ? _buildOutlineButton(color) : _buildFlatButton(color);
+    return isOutline && isFollow
+        ? _buildOutlineButton(color)
+        : _buildFlatButton(color);
   }
 
   Widget _buildOutlineButton(Color color) {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smart_select/smart_select.dart';
 
@@ -27,17 +26,16 @@ class _PartidoSelectState extends State<PartidoSelect> {
     return Container(
       width: 160,
       child: SmartSelect<String>.single(
-        leading: Icon(AntDesign.flag),
-        title: PARTY,
         isTwoLine: true,
         dense: true,
         padding: const EdgeInsets.symmetric(horizontal: 8),
+        title: PARTY,
+        value: widget.initialValue,
         trailing: FaIcon(
-          FontAwesomeIcons.chevronCircleDown,
+          FontAwesomeIcons.flag,
           size: 18,
           color: Colors.grey[400],
         ),
-        value: widget.initialValue,
         options: _getOptions(),
         onChange: widget.onChange,
         modalType: SmartSelectModalType.popupDialog,

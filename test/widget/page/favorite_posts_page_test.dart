@@ -7,10 +7,10 @@ import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/favorite_posts/widget/favorites_post_list.dart';
+import 'package:polis/page/favorite_posts/widget/favorites_posts_skeleton.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
 import 'package:polis/widget/empty_info.dart';
-import 'package:polis/widget/loading.dart';
 
 import '../../mock.dart';
 import '../utils.dart';
@@ -104,7 +104,7 @@ void main() {
           ),
         ),
       );
-      expect(find.byType(Loading), findsOneWidget);
+      expect(find.byType(FavoritesPostsSkeleton), findsOneWidget);
     });
   });
 }

@@ -31,8 +31,8 @@ const SIGNIN_FAILED = 'Falha no login';
 const SIGNUP_FAILED = 'Falha no cadastro do usuário';
 const NO_ACTIVITY_FOR_POLITIC = 'Nenhuma atividade para o político.';
 const NO_RESULTS_FROM_SEARCH = 'Político não encontrado.';
-const NO_FAVORITE_POST = 'Você ainda não possui nenhum post favorito!';
-const POLITIC_HAS_NO_FOLLOWER = 'Este político não tem nenhum seguidor!';
+const NO_FAVORITE_POST = 'Você ainda não possui nenhum post salvo.';
+const POLITIC_HAS_NO_FOLLOWER = 'Este político não tem nenhum seguidor.';
 const OH_NO = 'Essa não!';
 
 const ERROR_CREATING_USER = 'Ocorreu um erro no cadastro do usuário';

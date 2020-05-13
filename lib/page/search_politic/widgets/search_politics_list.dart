@@ -30,7 +30,7 @@ class SearchPoliticsList extends StatelessWidget {
     return ListView.separated(
       key: politicsListKey,
       separatorBuilder: (_, i) => const Divider(
-        height: 1,
+        height: 8,
         indent: 8,
         endIndent: 8,
       ),
@@ -69,25 +69,28 @@ class SearchPoliticsList extends StatelessWidget {
   }
 
   Widget _buildCardContent(BuildContext context, PoliticoModel politico) {
-    return Wrap(
-      direction: Axis.vertical,
-      spacing: 2,
-      children: <Widget>[
-        Text(
-          politico.nomeEleitoral,
-          style: const TextStyle(
-            fontWeight: FontWeight.w500,
+    return Padding(
+      padding: const EdgeInsets.only(right: 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            politico.nomeEleitoral,
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+            ),
           ),
-        ),
-        Text(
-          '$POLITIC · ${politico.siglaPartido}'
-          ' · ${politico.siglaUf}',
-          style: TextStyle(
-            fontSize: 12,
-            color: Colors.grey[600],
+          const SizedBox(height: 2),
+          Text(
+            '$POLITIC · ${politico.siglaPartido}'
+            ' · ${politico.siglaUf}',
+            style: TextStyle(
+              fontSize: 11,
+              color: Colors.grey[600],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

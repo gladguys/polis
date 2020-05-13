@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../page/theme/main_theme.dart';
+
 class NotFound extends StatelessWidget {
   NotFound({@required this.msg}) : assert(msg != null);
 
@@ -13,14 +15,16 @@ class NotFound extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         FaIcon(
-          FontAwesomeIcons.meh,
-          size: 48,
+          FontAwesomeIcons.folderOpen,
+          size: 80,
+          color: theme.primaryColorLight
         ),
         const SizedBox(height: 12),
         Text(
           msg,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 16,
+            color: Colors.grey[600],
           ),
         ),
       ],

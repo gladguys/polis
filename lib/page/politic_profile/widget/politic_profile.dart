@@ -40,8 +40,8 @@ class _PoliticProfileState extends State<PoliticProfile> {
         boxShadow: [
           const BoxShadow(
             color: Colors.black12,
-            blurRadius: 1,
-            offset: Offset(0, -3),
+            blurRadius: 2,
+            offset: Offset(0, -1),
           ),
         ],
         borderRadius: const BorderRadius.only(
@@ -84,23 +84,20 @@ class _PoliticProfileState extends State<PoliticProfile> {
         ? state.isUserFollowingPolitic
         : bloc.isPoliticBeingFollowedByUser;
 
-    return Container(
-      height: context.screenHeight * 0.6,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          const SizedBox(height: 16),
-          PoliticPersonalInfo(politico),
-          const SizedBox(height: 16),
-          PoliticActionButtons(
-            politico: politico,
-            isBeingFollowedByUser: isPoliticBeingFollowedByUser,
-          ),
-          const SizedBox(height: 16),
-          PoliticAdditionalInfo(politico),
-          const SizedBox(height: 24),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        const SizedBox(height: 16),
+        PoliticPersonalInfo(politico),
+        const SizedBox(height: 16),
+        PoliticActionButtons(
+          politico: politico,
+          isBeingFollowedByUser: isPoliticBeingFollowedByUser,
+        ),
+        const SizedBox(height: 16),
+        PoliticAdditionalInfo(politico),
+        const SizedBox(height: 24),
+      ],
     );
   }
 }

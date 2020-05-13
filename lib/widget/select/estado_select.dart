@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smart_select/smart_select.dart';
 
@@ -23,17 +22,16 @@ class _EstadoSelectState extends State<EstadoSelect> {
     return Container(
       width: 160,
       child: SmartSelect<String>.single(
-        leading: Icon(MaterialCommunityIcons.map_search_outline),
-        title: STATE,
         isTwoLine: true,
         dense: true,
         padding: const EdgeInsets.symmetric(horizontal: 8),
+        title: STATE,
+        value: widget.initialValue,
         trailing: FaIcon(
-          FontAwesomeIcons.chevronCircleDown,
+          FontAwesomeIcons.mapMarkedAlt,
           size: 18,
           color: Colors.grey[400],
         ),
-        value: widget.initialValue,
         options: _getOptions(),
         onChange: widget.onChange,
         choiceConfig: SmartSelectChoiceConfig(

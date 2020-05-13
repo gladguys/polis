@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import '../page/theme/main_theme.dart';
+
 class Loading extends StatefulWidget {
   @override
   _LoadingState createState() => _LoadingState();
@@ -9,10 +11,10 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: SpinKitChasingDots(
-        color: Colors.amber,
-        size: 50.0,
+    return Center(
+      child: SpinKitDoubleBounce(
+        color: theme.primaryColor,
+        size: 60,
       ),
     );
   }

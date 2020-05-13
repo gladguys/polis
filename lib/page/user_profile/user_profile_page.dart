@@ -5,8 +5,8 @@ import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
 import '../../widget/default_bottombar.dart';
 import '../../widget/error_container.dart';
-import '../../widget/loading.dart';
 import 'widget/user_profile.dart';
+import 'widget/user_profile_skeleton.dart';
 
 class UserProfilePage extends StatelessWidget {
   @override
@@ -24,7 +24,7 @@ class UserProfilePage extends StatelessWidget {
                 userActions: userActions,
               );
             } else if (state is LoadingFetchUserInfo) {
-              return Loading();
+              return UserProfileSkeleton();
             } else {
               return ErrorContainer();
             }
