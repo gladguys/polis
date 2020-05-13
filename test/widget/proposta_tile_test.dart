@@ -39,6 +39,7 @@ void main() {
         status: 'status',
         dataAtualizacao: '10-01-2020',
         visualizado: false,
+        urlPartidoLogo: 'logo',
       );
     });
 
@@ -68,6 +69,7 @@ void main() {
         status: 'status',
         dataAtualizacao: '10-01-2020',
         visualizado: false,
+        urlPartidoLogo: 'logo',
       );
       await tester.pumpWidget(
         connectedWidget(

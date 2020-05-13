@@ -63,6 +63,7 @@ void main() {
           urlFoto: 'foto',
           nomeEleitoral: 'nomeE',
           siglaUf: 'CE',
+          urlPartidoLogo: 'logo',
         ),
       );
       when(mockPoliticProfileBloc.lastActivities).thenReturn(
@@ -120,6 +121,7 @@ void main() {
           urlFoto: 'foto',
           nomeEleitoral: 'nomeE',
           siglaUf: 'CE',
+          urlPartidoLogo: 'logo',
         ),
       );
       when(mockPoliticProfileBloc.lastActivities).thenReturn(
@@ -259,6 +261,7 @@ void main() {
           urlFoto: 'foto',
           nomeEleitoral: 'nomeE',
           siglaUf: 'CE',
+          urlPartidoLogo: 'logo',
         ),
       );
       when(mockPoliticProfileBloc.lastActivities).thenReturn([]);
@@ -308,6 +311,7 @@ void main() {
           urlFoto: 'foto',
           nomeEleitoral: 'nomeE',
           siglaUf: 'CE',
+          urlPartidoLogo: 'logo',
         ),
       );
       when(mockPoliticProfileBloc.lastActivities).thenReturn(
@@ -364,6 +368,7 @@ void main() {
           urlFoto: 'foto',
           nomeEleitoral: 'nomeE',
           siglaUf: 'CE',
+          urlPartidoLogo: 'logo',
         ),
       );
       when(mockPoliticProfileBloc.lastActivities).thenReturn(

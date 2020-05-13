@@ -41,6 +41,7 @@ void main() {
         dataDocumento: '10-01-2020',
         urlDocumento: 'urlDoc',
         visualizado: false,
+        urlPartidoLogo: 'logo',
       );
     });
 
