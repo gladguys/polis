@@ -25,6 +25,7 @@ class PoliticoModel extends HiveObject {
     this.escolaridade,
     this.totalDespesas,
     this.totalProposicoes,
+    this.urlPartidoLogo,
   });
 
   @HiveField(0)
@@ -75,6 +76,9 @@ class PoliticoModel extends HiveObject {
   @HiveField(15)
   final int totalProposicoes;
 
+  @HiveField(16)
+  final String urlPartidoLogo;
+
   factory PoliticoModel.fromJson(Map<String, dynamic> json) =>
       _$PoliticoModelFromJson(json);
 
@@ -97,6 +101,7 @@ class PoliticoModel extends HiveObject {
     String escolaridade,
     Double totalDespesas,
     int totalProposicoes,
+    String urlPartidoLogo,
   }) {
     return PoliticoModel(
       id: id ?? this.id,
@@ -115,6 +120,7 @@ class PoliticoModel extends HiveObject {
       escolaridade: escolaridade ?? this.escolaridade,
       totalDespesas: totalDespesas ?? this.totalDespesas,
       totalProposicoes: totalProposicoes ?? this.totalProposicoes,
+      urlPartidoLogo: urlPartidoLogo ?? this.urlPartidoLogo,
     );
   }
 
@@ -132,6 +138,6 @@ class PoliticoModel extends HiveObject {
 
   @override
   String toString() {
-    return '''PoliticoModel{id: $id, nomeCivil: $nomeCivil, siglaPartido: $siglaPartido, siglaUf: $siglaUf, urlFoto: $urlFoto, email: $email, nomeEleitoral: $nomeEleitoral, status: $status, condicaoEleitoral: $condicaoEleitoral, cpf: $cpf, sexo: $sexo, quantidadeSeguidores: $quantidadeSeguidores, dataNascimento: $dataNascimento, escolaridade: $escolaridade, totalDespesas: $totalDespesas, totalProposicoes: $totalProposicoes}''';
+    return '''PoliticoModel{id: $id, nomeCivil: $nomeCivil, siglaPartido: $siglaPartido, siglaUf: $siglaUf, urlFoto: $urlFoto, email: $email, nomeEleitoral: $nomeEleitoral, status: $status, condicaoEleitoral: $condicaoEleitoral, cpf: $cpf, sexo: $sexo, quantidadeSeguidores: $quantidadeSeguidores, dataNascimento: $dataNascimento, escolaridade: $escolaridade, totalDespesas: $totalDespesas, totalProposicoes: $totalProposicoes, urlPartidoLogo: $urlPartidoLogo}''';
   }
 }
