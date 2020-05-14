@@ -84,6 +84,11 @@ class TramitacaoPropostaPage extends StatelessWidget {
             runSpacing: 8,
             children: <Widget>[
               LabelValue(
+                label: DISPATCH,
+                value: tramitacao.despacho,
+                emptyValue: NOT_INFORMED,
+              ),
+              LabelValue(
                 label: AMBIT,
                 value: tramitacao.ambito,
                 emptyValue: NOT_INFORMED,
@@ -95,7 +100,8 @@ class TramitacaoPropostaPage extends StatelessWidget {
               ),
               LabelValue(
                 label: REGIME,
-                value: tramitacao.regime,
+                value:
+                    tramitacao.regime == '.' ? NOT_INFORMED : '',
                 emptyValue: NOT_INFORMED,
               ),
               Tooltip(
