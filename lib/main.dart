@@ -20,6 +20,7 @@ void main() async {
   await initHive();
   initLocator(await SharedPreferences.getInstance());
   G<CrashlyticsService>().initCrashlytics();
+  await G<MessageService>().initMessaging();
   FlutterError.onError = G<CrashlyticsService>().crashlytics.recordFlutterError;
   BlocSupervisor.delegate = FlutterBlocDelegate(
     analyticsService: G<AnalyticsService>(),
