@@ -78,6 +78,19 @@ dev_dependencies:
   # Linting
   effective_dart: ^1.2.1
 
+  # Helper
+  flutter_native_splash: ^0.1.9
+  flutter_launcher_icons: ^0.7.5
+
+flutter_native_splash:
+  image: assets/images/splash.png
+  color: '#000000'
+  fill: true
+
+flutter_icons:
+  android: 'launcher_icon'
+  image_path: 'assets/images/plogo.png'
+
 flutter:
   uses-material-design: true
   assets:
