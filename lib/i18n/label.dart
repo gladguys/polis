@@ -10,6 +10,7 @@ const INSERT_YOUR_DATA = 'Insira seus dados';
 const LOGOUT = 'Sair';
 const NAME = 'Nome';
 const NO_ACCOUNT = 'Não tenho conta';
+const NO_POSITION = 'Sem Posição';
 const POLIS = 'Pólis';
 const PROFILE = 'Perfil';
 const PASSWORD = 'Senha';
