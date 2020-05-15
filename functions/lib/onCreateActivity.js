@@ -38,7 +38,7 @@ exports.onCreateActivity = functions.firestore
                             });
                         });
 
-                    if (atividade.tipoAtividade == 'PROPOSICAO' && atividade.sequencia === 1) {
+                    if (atividade.tipoAtividade == 'PROPOSICAO' && atividade.sequencia === 1 && atividade.descricaoTipo === 'Projeto de Lei') {
                         const incrementByOne = admin.firestore.FieldValue.increment(1);
 
                         admin
