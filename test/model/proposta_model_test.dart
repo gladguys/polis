@@ -43,7 +43,7 @@ void main() {
     test('toString()', () {
       final modelToString = PropostaModel(id: '1').toString();
       final result =
-          '''PropostaModel{id: 1, siglaTipo: null, descricaoTipo: null, numero: null, ano: null, ementa: null, ementaDetalhada: null, despacho: null, nomePolitico: null, idPoliticoAutor: null, fotoPolitico: null, estadoPolitico: null, siglaPartido: null, tipoDocumento: null, descricaoSituacao: null, descricaoTramitacao: null, dataAtualizacao: null, status: null, visualizado: null, sequencia: null, favorito: null}''';
+          '''PropostaModel{id: 1, siglaTipo: null, descricaoTipo: null, numero: null, ano: null, ementa: null, ementaDetalhada: null, despacho: null, nomePolitico: null, idPoliticoAutor: null, fotoPolitico: null, estadoPolitico: null, siglaPartido: null, tipoDocumento: null, descricaoSituacao: null, descricaoTramitacao: null, dataAtualizacao: null, status: null, visualizado: null, sequencia: null, favorito: null, foiAtualizada: null}''';
       expect(modelToString == result, true);
     });
 
