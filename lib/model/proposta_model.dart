@@ -5,28 +5,30 @@ part 'proposta_model.g.dart';
 
 @JsonSerializable()
 class PropostaModel extends Equatable {
-  PropostaModel(
-      {this.id,
-      this.siglaTipo,
-      this.descricaoTipo,
-      this.numero,
-      this.ano,
-      this.ementa,
-      this.ementaDetalhada,
-      this.despacho,
-      this.fotoPolitico,
-      this.estadoPolitico,
-      this.nomePolitico,
-      this.idPoliticoAutor,
-      this.siglaPartido,
-      this.descricaoSituacao,
-      this.descricaoTramitacao,
-      this.favorito,
-      this.dataAtualizacao,
-      this.tipoDocumento,
-      this.sequencia,
-      this.status,
-      this.visualizado});
+  PropostaModel({
+    this.id,
+    this.siglaTipo,
+    this.descricaoTipo,
+    this.numero,
+    this.ano,
+    this.ementa,
+    this.ementaDetalhada,
+    this.despacho,
+    this.fotoPolitico,
+    this.estadoPolitico,
+    this.nomePolitico,
+    this.idPoliticoAutor,
+    this.siglaPartido,
+    this.descricaoSituacao,
+    this.descricaoTramitacao,
+    this.favorito,
+    this.dataAtualizacao,
+    this.tipoDocumento,
+    this.sequencia,
+    this.status,
+    this.visualizado,
+    this.foiAtualizada,
+  });
 
   final String id;
   final String siglaTipo;
@@ -49,6 +51,7 @@ class PropostaModel extends Equatable {
   final bool visualizado;
   final int sequencia;
   final bool favorito;
+  final bool foiAtualizada;
 
   factory PropostaModel.fromJson(Map<String, dynamic> json) =>
       _$PropostaModelFromJson(json);
@@ -77,6 +80,7 @@ class PropostaModel extends Equatable {
     bool visualizado,
     String sequencia,
     bool favorito,
+    bool foiAtualizada,
   }) {
     return PropostaModel(
       id: id ?? this.id,
@@ -100,6 +104,7 @@ class PropostaModel extends Equatable {
       visualizado: visualizado ?? this.visualizado,
       sequencia: sequencia ?? this.sequencia,
       favorito: favorito ?? this.favorito,
+      foiAtualizada: foiAtualizada ?? this.foiAtualizada,
     );
   }
 
@@ -108,6 +113,6 @@ class PropostaModel extends Equatable {
 
   @override
   String toString() {
-    return '''PropostaModel{id: $id, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, ementaDetalhada: $ementaDetalhada, despacho: $despacho, nomePolitico: $nomePolitico, idPoliticoAutor: $idPoliticoAutor, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataAtualizacao: $dataAtualizacao, status: $status, visualizado: $visualizado, sequencia: $sequencia, favorito: $favorito}''';
+    return '''PropostaModel{id: $id, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, ementaDetalhada: $ementaDetalhada, despacho: $despacho, nomePolitico: $nomePolitico, idPoliticoAutor: $idPoliticoAutor, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataAtualizacao: $dataAtualizacao, status: $status, visualizado: $visualizado, sequencia: $sequencia, favorito: $favorito, foiAtualizada: $foiAtualizada}''';
   }
 }

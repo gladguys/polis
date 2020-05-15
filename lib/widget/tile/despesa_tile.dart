@@ -17,6 +17,7 @@ import '../button_action_card.dart';
 import '../card_base.dart';
 import '../photo.dart';
 import '../text_rich.dart';
+import '../timeline_card_label.dart';
 
 class DespesaTile extends StatelessWidget {
   DespesaTile(this.despesa, {this.clickableImage});
@@ -56,7 +57,17 @@ class DespesaTile extends StatelessWidget {
   Widget _buildLeftContent() {
     return InkWell(
       borderRadius: BorderRadius.circular(24),
-      child: Photo(url: despesa.fotoPolitico),
+      child: Row(
+        children: <Widget>[
+          if (!despesa.visualizado)
+            FaIcon(
+              FontAwesome5Solid.circle,
+              color: theme.primaryColor,
+              size: 5,
+            ),
+          Photo(url: despesa.fotoPolitico),
+        ],
+      ),
       onTap: () => clickableImage
           ? SimpleRouter.forward(
               PoliticProfilePageConnected(despesa.idPolitico),
@@ -90,12 +101,17 @@ class DespesaTile extends StatelessWidget {
             ),
           ],
         ),
-        if (!despesa.visualizado)
-          FaIcon(
-            FontAwesome5Solid.circle,
-            color: theme.primaryColor,
-            size: 5,
+        TimelineCardLabel(
+          child: Center(
+            child: Text(
+              EXPENSE.toUpperCase(),
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.amber,
+              ),
+            ),
           ),
+        ),
       ],
     );
   }
