@@ -22,15 +22,9 @@ class MessageService {
   Future<void> initMessaging() async {
     final user = await sharedPreferencesService.getUser();
     firebaseMessaging.configure(
-      onMessage: (var message) async {
-        print("onMessage: $message");
-      },
-      onLaunch: (var message) async {
-        print("onLaunch: $message");
-      },
-      onResume: (var message) async {
-        print("onResume: $message");
-      },
+      onMessage: (var message) async {},
+      onLaunch: (var message) async {},
+      onResume: (var message) async {},
     );
     firebaseMessaging.onTokenRefresh.listen((token) async {
       if (user != null) {

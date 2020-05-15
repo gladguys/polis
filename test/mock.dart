@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_performance/firebase_performance.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -192,6 +193,8 @@ class MockDocumentReference extends Mock implements DocumentReference {}
 class MockDocumentSnapshot extends Mock implements DocumentSnapshot {}
 
 class MockFirebaseAnalytics extends Mock implements FirebaseAnalytics {}
+
+class MockFirebaseMessaging extends Mock implements FirebaseMessaging {}
 
 class MockCrashlytics extends Mock implements Crashlytics {}
 

@@ -17,8 +17,12 @@ void main() {
     MockAnalyticsService mockAnalyticsService;
     MockSharedPreferencesService mockSharedPreferencesService;
     MockMessageService mockMessageService;
-    user =
-        UserModel(name: 'polis', email: 'polis@gmail.com', password: 'random');
+    user = UserModel(
+      userId: '1',
+      name: 'polis',
+      email: 'polis@gmail.com',
+      password: 'random',
+    );
 
     setUp(() {
       mockSigninRepository = MockSigninRepository();
@@ -96,6 +100,7 @@ void main() {
         verify(mockAnalyticsService.logSignin(method: 'EMAIL_AND_PASSWORD'))
             .called(1);
         verify(mockSharedPreferencesService.setUser(user)).called(1);
+        verify(mockMessageService.saveUserToken(userId: '1')).called(1);
       },
       expect: [
         SigninLoading(),
