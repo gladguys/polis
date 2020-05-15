@@ -213,6 +213,8 @@ class MockPerformanceService extends Mock implements PerformanceService {}
 
 class MockShareService extends Mock implements ShareService {}
 
+class MockMessageService extends Mock implements MessageService {}
+
 class MockSharedPreferencesService extends Mock
     implements SharedPreferencesService {}
 

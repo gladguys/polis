@@ -16,6 +16,7 @@ void main() {
     MockSigninRepository mockSigninRepository;
     MockAnalyticsService mockAnalyticsService;
     MockSharedPreferencesService mockSharedPreferencesService;
+    MockMessageService mockMessageService;
     user =
         UserModel(name: 'polis', email: 'polis@gmail.com', password: 'random');
 
@@ -23,10 +24,12 @@ void main() {
       mockSigninRepository = MockSigninRepository();
       mockAnalyticsService = MockAnalyticsService();
       mockSharedPreferencesService = MockSharedPreferencesService();
+      mockMessageService = MockMessageService();
       signinBloc = SigninBloc(
         repository: mockSigninRepository,
         analyticsService: mockAnalyticsService,
         sharedPreferencesService: mockSharedPreferencesService,
+        messageService: mockMessageService,
       );
     });
 
@@ -40,6 +43,7 @@ void main() {
                 repository: mockSigninRepository,
                 analyticsService: null,
                 sharedPreferencesService: null,
+                messageService: null,
               ),
           throwsAssertionError);
       expect(
@@ -47,6 +51,7 @@ void main() {
                 repository: null,
                 analyticsService: mockAnalyticsService,
                 sharedPreferencesService: null,
+                messageService: null,
               ),
           throwsAssertionError);
       expect(
@@ -54,6 +59,15 @@ void main() {
                 repository: mockSigninRepository,
                 analyticsService: mockAnalyticsService,
                 sharedPreferencesService: null,
+                messageService: mockMessageService,
+              ),
+          throwsAssertionError);
+      expect(
+          () => SigninBloc(
+                repository: mockSigninRepository,
+                analyticsService: mockAnalyticsService,
+                sharedPreferencesService: mockSharedPreferencesService,
+                messageService: null,
               ),
           throwsAssertionError);
     });
