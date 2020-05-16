@@ -14,37 +14,55 @@ exports.onCreateActivity = functions.firestore
         let atividade = null;
         let id = null;
 
-        admin
-            .firestore()
-            .collection('atividades')
-            .doc(politicoId)
-            .collection('atividadesPolitico')
-            .doc(documentId).get().then(function (doc) {
-                if (doc.exists) {
-                    id = doc.id;
-                    atividade = doc.data();
-                    admin
-                        .firestore()
-                        .collection('usuarios_seguindo')
-                        .doc(politicoId)
-                        .collection('usuariosSeguindo')
-                        .get().then(function (querySnapshot) {
-                            querySnapshot.forEach(function (doc) {
-                                timelineRef.doc(doc.id).collection('atividadesTimeline').doc(id).create(atividade);
-                            });
-                        });
+        let docAtividadeCriada = getDocAtividadeCriada(politicoId, documentId);
+        if (docAtividadeCriada.exists) {
 
-                    if (atividade.tipoAtividade == 'PROPOSICAO' && atividade.sequencia === 1 && atividade.descricaoTipo === 'Projeto de Lei') {
-                        const incrementByOne = admin.firestore.FieldValue.increment(1);
+            atividade = await adicionaAtividadeTimelineUsuarios(docAtividadeCriada, politicoId, timelineRef);
+            
+            if (ehUmaProposicaoProjetoDeLei(atividade)) {
+                incrementarContadorProjetoDeLei(atividade);
+            }
+        }
 
-                        admin
-                            .firestore()
-                            .collection('politicos')
-                            .doc(politicoId)
-                            .update({ "totalProposicoes": incrementByOne });
-                    }
+    });
 
-                }
-            });
 
-    })
+function ehUmaProposicaoProjetoDeLei(atividade) {
+    return atividade.tipoAtividade == 'PROPOSICAO' && atividade.sequencia === 1 && atividade.descricaoTipo === 'Projeto de Lei';
+}
+
+function incrementarContadorProjetoDeLei(atividade) {
+    const incrementByOne = admin.firestore.FieldValue.increment(1);
+
+    admin
+        .firestore()
+        .collection('politicos')
+        .doc(politicoId)
+        .update({ "totalProposicoes": incrementByOne });
+}
+
+async function getDocAtividadeCriada(politicoId, documentId) {
+    return await admin
+        .firestore()
+        .collection('atividades')
+        .doc(politicoId)
+        .collection('atividadesPolitico')
+        .doc(documentId).get();
+}
+
+async function adicionaAtividadeTimelineUsuarios(docAtividadeCriada, politicoId, timelineRef) {
+    let id = docAtividadeCriada.id;
+    let atividade = docAtividadeCriada.data();
+    let queryUsuariosSeguindoPolitico = await admin
+        .firestore()
+        .collection('usuarios_seguindo')
+        .doc(politicoId)
+        .collection('usuariosSeguindo')
+        .get();
+
+    queryUsuariosSeguindoPolitico.forEach(function (docUsuario) {
+        timelineRef.doc(docUsuario.id).collection('atividadesTimeline').doc(id).create(atividade);
+    });
+
+    return atividade;
+}

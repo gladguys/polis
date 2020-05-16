@@ -11,29 +11,30 @@ exports.onUpdateActivity = functions.firestore
             .firestore()
             .collection('timeline');
 
-        let atividade = null;
-        let id = null;
-
-        admin
+        let docAtividadeAtualizada = await admin
             .firestore()
             .collection('atividades')
             .doc(politicoId)
             .collection('atividadesPolitico')
-            .doc(documentId).get().then(function (doc) {
-                if (doc.exists) {
-                    id = doc.id;
-                    atividade = doc.data();
-                    admin
-                        .firestore()
-                        .collection('usuarios_seguindo')
-                        .doc(politicoId)
-                        .collection('usuariosSeguindo')
-                        .get().then(function (querySnapshot) {
-                            querySnapshot.forEach(function (doc) {
-                                timelineRef.doc(doc.id).collection('atividadesTimeline').doc(id).update(atividade);
-                            });
-                        });
-                }
-            });
+            .doc(documentId).get();
 
+        if (docAtividadeAtualizada.exists) {
+            atualizaDocAtividadeEmTimelinesDeUsuarios(timelineRef, docAtividadeAtualizada);
+        }
     });
+
+function atualizaDocAtividadeEmTimelinesDeUsuarios(timelineRef, docAtividadeAtualizada) {
+    let id = docAtividadeAtualizada.id;
+    let atividade = docAtividadeAtualizada.data();
+
+    let querySnapshot = await admin
+        .firestore()
+        .collection('usuarios_seguindo')
+        .doc(politicoId)
+        .collection('usuariosSeguindo')
+        .get();
+
+    querySnapshot.forEach(function (doc) {
+        timelineRef.doc(doc.id).collection('atividadesTimeline').doc(id).update(atividade);
+    });
+}
