@@ -23,9 +23,9 @@ async function criarAcaoUsuarioDeixandoDeSeguirPolitico(politicoDocumentRef, pol
     const mm = String(todayDate.getMonth() + 1).padStart(2, '0');
     const yyyy = todayDate.getFullYear();
     const today = dd + '/' + mm + '/' + yyyy;
-    
+
     const p = await politicoDocumentRef.get();
-    
+
     const acao = {
         'tipo': 'DEIXAR_SEGUIR',
         'data': admin.firestore.Timestamp.fromDate(todayDate),
