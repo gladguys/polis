@@ -29,14 +29,17 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
   SigninBloc(
       {@required this.repository,
       @required this.analyticsService,
-      @required this.sharedPreferencesService})
+      @required this.sharedPreferencesService,
+      @required this.messageService})
       : assert(repository != null),
         assert(analyticsService != null),
-        assert(sharedPreferencesService != null);
+        assert(sharedPreferencesService != null),
+        assert(messageService != null);
 
   final SigninRepository repository;
   final AnalyticsService analyticsService;
   final SharedPreferencesService sharedPreferencesService;
+  final MessageService messageService;
 
   @override
   SigninState get initialState => InitialSignin();
@@ -87,7 +90,10 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
       await analyticsService.setUserProperties(userId: user.userId);
       await analyticsService.logSignin(method: _getSigninMethod(method));
       await sharedPreferencesService.setUser(user);
-      yield UserAuthenticated(user);
+      final fcmToken = await messageService.saveUserToken(userId: user.userId);
+      yield UserAuthenticated(
+        user.copyWith(fcmToken: fcmToken),
+      );
     } else {
       yield UserAuthenticationFailed(ERROR_AUTENTICATING_USER);
     }

@@ -7,14 +7,16 @@ part 'user_model.g.dart';
 
 @JsonSerializable()
 class UserModel extends Equatable {
-  UserModel(
-      {this.userId,
-      this.name,
-      this.email,
-      this.photoUrl,
-      this.password,
-      this.isFirstLoginDone,
-      this.authProvider});
+  UserModel({
+    this.userId,
+    this.name,
+    this.email,
+    this.photoUrl,
+    this.password,
+    this.isFirstLoginDone,
+    this.authProvider,
+    this.fcmToken,
+  });
 
   final String userId;
   final String name;
@@ -26,6 +28,7 @@ class UserModel extends Equatable {
 
   @JsonKey(ignore: true)
   final String password;
+  final String fcmToken;
 
   static AuthProvider _fromJsonAuth(String authProvider) =>
       authProvider == 'GOOGLE'
@@ -48,6 +51,7 @@ class UserModel extends Equatable {
     String password,
     bool isFirstLoginDone,
     AuthProvider authProvider,
+    String fcmToken,
   }) {
     return UserModel(
       userId: userId ?? this.userId,
@@ -57,6 +61,7 @@ class UserModel extends Equatable {
       password: password ?? this.password,
       isFirstLoginDone: isFirstLoginDone ?? this.isFirstLoginDone,
       authProvider: authProvider ?? this.authProvider,
+      fcmToken: fcmToken ?? this.fcmToken,
     );
   }
 
@@ -65,6 +70,6 @@ class UserModel extends Equatable {
 
   @override
   String toString() {
-    return '''UserModel{userId: $userId, name: $name, email: $email, photoUrl: $photoUrl, isFirstLoginDone: $isFirstLoginDone, authProvider: $authProvider, password: $password}''';
+    return '''UserModel{userId: $userId, name: $name, email: $email, photoUrl: $photoUrl, isFirstLoginDone: $isFirstLoginDone, authProvider: $authProvider, password: $password, fcmToken: $fcmToken}''';
   }
 }

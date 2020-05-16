@@ -29,6 +29,7 @@ const DATA_ACAO = 'data';
 const DATA_FAVORITADO_FIELD = 'dataFavoritado';
 const SEQUENCIA_FIELD = 'sequencia';
 const VISUALIZADO_FIELD = 'visualizado';
+const FCM_TOKEN = 'fcmToken';
 const HASH = 'hash';
 
 // References
