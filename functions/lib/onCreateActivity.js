@@ -14,18 +14,15 @@ exports.onCreateActivity = functions.firestore
         let atividade = null;
         let id = null;
 
-        let docAtividadeCriada = getDocAtividadeCriada(politicoId, documentId);
+        let docAtividadeCriada = await getDocAtividadeCriada(politicoId, documentId);
         if (docAtividadeCriada.exists) {
 
             atividade = await adicionaAtividadeTimelineUsuarios(docAtividadeCriada, politicoId, timelineRef);
-            
             if (ehUmaProposicaoProjetoDeLei(atividade)) {
                 incrementarContadorProjetoDeLei(atividade);
             }
         }
-
     });
-
 
 function ehUmaProposicaoProjetoDeLei(atividade) {
     return atividade.tipoAtividade == 'PROPOSICAO' && atividade.sequencia === 1 && atividade.descricaoTipo === 'Projeto de Lei';
@@ -42,7 +39,7 @@ function incrementarContadorProjetoDeLei(atividade) {
 }
 
 async function getDocAtividadeCriada(politicoId, documentId) {
-    return await admin
+    return admin
         .firestore()
         .collection('atividades')
         .doc(politicoId)

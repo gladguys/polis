@@ -23,7 +23,7 @@ exports.onUpdateActivity = functions.firestore
         }
     });
 
-function atualizaDocAtividadeEmTimelinesDeUsuarios(timelineRef, docAtividadeAtualizada) {
+async function atualizaDocAtividadeEmTimelinesDeUsuarios(timelineRef, docAtividadeAtualizada) {
     let id = docAtividadeAtualizada.id;
     let atividade = docAtividadeAtualizada.data();
 

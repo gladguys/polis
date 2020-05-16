@@ -12,7 +12,7 @@ exports.onUpdateUser = functions.firestore
     });
 
 
-function updateFotoUsuarioParaPoliticosSeguidos(userId, previousUser, newUser) {
+async function updateFotoUsuarioParaPoliticosSeguidos(userId, previousUser, newUser) {
     if (newUser.photoUrl !== previousUser.photoUrl) {
         const newPhotoUrl = newUser.photoUrl;
 
