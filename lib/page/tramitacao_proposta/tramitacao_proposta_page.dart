@@ -101,7 +101,7 @@ class TramitacaoPropostaPage extends StatelessWidget {
               LabelValue(
                 label: REGIME,
                 value:
-                    tramitacao.regime == '.' ? NOT_INFORMED : '',
+                    tramitacao.regime == '.' ? NOT_INFORMED : tramitacao.regime,
                 emptyValue: NOT_INFORMED,
               ),
               Tooltip(

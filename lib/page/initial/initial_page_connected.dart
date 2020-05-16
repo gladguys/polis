@@ -16,6 +16,7 @@ class InitialPageConnected extends StatelessWidget {
         repository: context.repository<FirebaseSigninRepository>(),
         analyticsService: G<AnalyticsService>(),
         sharedPreferencesService: G<SharedPreferencesService>(),
+        messageService: G<MessageService>(),
       ),
       page: InitialPage(),
     );
