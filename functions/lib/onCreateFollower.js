@@ -13,7 +13,7 @@ exports.onCreateFollower = functions.firestore
             .doc(politicoId);
 
         await incrementaNumeroSeguidoresDoPolitico(politicoDocumentRef);
-        await adicionarAtividadesPoliticoNaTimelineUsuario(politicoId, timelineRef);
+        await adicionarAtividadesPoliticoNaTimelineUsuario(politicoId);
         await criarAcaoSeguirPoliticoParaUsuario(politicoDocumentRef, politicoId, followerId);
     });
 
@@ -42,7 +42,7 @@ function buildAcao(todayDate,politico, politicoId) {
     };
 }
 
-async function adicionarAtividadesPoliticoNaTimelineUsuario(politicoId, timelineRef) {
+async function adicionarAtividadesPoliticoNaTimelineUsuario(politicoId) {
 
     const timelineRef = admin
     .firestore()
