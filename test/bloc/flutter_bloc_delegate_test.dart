@@ -16,6 +16,7 @@ void main() {
     MockAnalyticsService mockAnalyticsService;
     MockPerformanceService mockPerformanceService;
     MockSharedPreferencesService mockSharedPreferencesService;
+    MockMessageService mockMessageService;
 
     setUp(() {
       mockAnalyticsService = MockAnalyticsService();
@@ -26,10 +27,12 @@ void main() {
       );
       mockSigninRepository = MockSigninRepository();
       mockSharedPreferencesService = MockSharedPreferencesService();
+      mockMessageService = MockMessageService();
       signinBloc = SigninBloc(
         repository: mockSigninRepository,
         analyticsService: mockAnalyticsService,
         sharedPreferencesService: mockSharedPreferencesService,
+        messageService: mockMessageService,
       );
       timelineBloc = TimelineBloc(
         repository: MockTimelineRepository(),

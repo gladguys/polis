@@ -1,9 +1,6 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
-/**
- * Update a post to favorited when the users favorite a post
- */
 exports.onCreateFavoriteActivity = functions.firestore
     .document('/posts_favoritos/{userId}/postsFavoritosUsuario/{documentId}')
     .onCreate(async (snapshot, context) => {

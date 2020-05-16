@@ -16,17 +16,24 @@ void main() {
     MockSigninRepository mockSigninRepository;
     MockAnalyticsService mockAnalyticsService;
     MockSharedPreferencesService mockSharedPreferencesService;
-    user =
-        UserModel(name: 'polis', email: 'polis@gmail.com', password: 'random');
+    MockMessageService mockMessageService;
+    user = UserModel(
+      userId: '1',
+      name: 'polis',
+      email: 'polis@gmail.com',
+      password: 'random',
+    );
 
     setUp(() {
       mockSigninRepository = MockSigninRepository();
       mockAnalyticsService = MockAnalyticsService();
       mockSharedPreferencesService = MockSharedPreferencesService();
+      mockMessageService = MockMessageService();
       signinBloc = SigninBloc(
         repository: mockSigninRepository,
         analyticsService: mockAnalyticsService,
         sharedPreferencesService: mockSharedPreferencesService,
+        messageService: mockMessageService,
       );
     });
 
@@ -40,6 +47,7 @@ void main() {
                 repository: mockSigninRepository,
                 analyticsService: null,
                 sharedPreferencesService: null,
+                messageService: null,
               ),
           throwsAssertionError);
       expect(
@@ -47,6 +55,7 @@ void main() {
                 repository: null,
                 analyticsService: mockAnalyticsService,
                 sharedPreferencesService: null,
+                messageService: null,
               ),
           throwsAssertionError);
       expect(
@@ -54,6 +63,15 @@ void main() {
                 repository: mockSigninRepository,
                 analyticsService: mockAnalyticsService,
                 sharedPreferencesService: null,
+                messageService: mockMessageService,
+              ),
+          throwsAssertionError);
+      expect(
+          () => SigninBloc(
+                repository: mockSigninRepository,
+                analyticsService: mockAnalyticsService,
+                sharedPreferencesService: mockSharedPreferencesService,
+                messageService: null,
               ),
           throwsAssertionError);
     });
@@ -82,6 +100,7 @@ void main() {
         verify(mockAnalyticsService.logSignin(method: 'EMAIL_AND_PASSWORD'))
             .called(1);
         verify(mockSharedPreferencesService.setUser(user)).called(1);
+        verify(mockMessageService.saveUserToken(userId: '1')).called(1);
       },
       expect: [
         SigninLoading(),
