@@ -65,7 +65,7 @@ async function getTop10RecentesAtividadesDoPolitico(politicoId) {
         .doc(politicoId)
         .collection('atividadesPolitico');
 
-    return await atividadesPoliticoRef.orderBy('dataAtualizacao').limit(10).get();
+    return await atividadesPoliticoRef.orderBy('dataAtualizacao',"desc").limit(10).get();
 }
 
 async function incrementaNumeroSeguidoresDoPolitico(politicoDocumentRef) {
