@@ -1,9 +1,6 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
-/**
- * Update a post to unfavorited when the users unfavorite a post
- */
 exports.onDeleteFavoriteActivity = functions.firestore
     .document('/posts_favoritos/{userId}/postsFavoritosUsuario/{documentId}')
     .onDelete(async (snapshot, context) => {
