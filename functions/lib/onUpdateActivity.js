@@ -1,9 +1,9 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
-exports.onCreateActivity = functions.firestore
+exports.onUpdateActivity = functions.firestore
     .document('/atividades/{politicoId}/atividadesPolitico/{documentId}')
-    .onCreate(async (snapshot, context) => {
+    .onUpdate(async (snapshot, context) => {
         const politicoId = context.params.politicoId;
         const documentId = context.params.documentId;
 
@@ -30,21 +30,10 @@ exports.onCreateActivity = functions.firestore
                         .collection('usuariosSeguindo')
                         .get().then(function (querySnapshot) {
                             querySnapshot.forEach(function (doc) {
-                                timelineRef.doc(doc.id).collection('atividadesTimeline').doc(id).create(atividade);
+                                timelineRef.doc(doc.id).collection('atividadesTimeline').doc(id).update(atividade);
                             });
                         });
-
-                    if (atividade.tipoAtividade == 'PROPOSICAO' && atividade.sequencia === 1 && atividade.descricaoTipo === 'Projeto de Lei') {
-                        const incrementByOne = admin.firestore.FieldValue.increment(1);
-
-                        admin
-                            .firestore()
-                            .collection('politicos')
-                            .doc(politicoId)
-                            .update({ "totalProposicoes": incrementByOne });
-                    }
-
                 }
             });
 
-    })
+    });
