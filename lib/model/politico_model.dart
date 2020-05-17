@@ -26,6 +26,7 @@ class PoliticoModel extends HiveObject {
     this.totalDespesas,
     this.totalProposicoes,
     this.rankingPosDespesa,
+    this.urlPartidoLogo,
   });
 
   @HiveField(0)
@@ -79,6 +80,9 @@ class PoliticoModel extends HiveObject {
   @HiveField(16)
   final int rankingPosDespesa;
 
+  @HiveField(17)
+  final String urlPartidoLogo;
+
   factory PoliticoModel.fromJson(Map<String, dynamic> json) =>
       _$PoliticoModelFromJson(json);
 
@@ -102,6 +106,7 @@ class PoliticoModel extends HiveObject {
     Double totalDespesas,
     int totalProposicoes,
     int rankingPosDespesa,
+    String urlPartidoLogo,
   }) {
     return PoliticoModel(
       id: id ?? this.id,
@@ -121,6 +126,7 @@ class PoliticoModel extends HiveObject {
       totalDespesas: totalDespesas ?? this.totalDespesas,
       totalProposicoes: totalProposicoes ?? this.totalProposicoes,
       rankingPosDespesa: rankingPosDespesa ?? this.rankingPosDespesa,
+      urlPartidoLogo: urlPartidoLogo ?? this.urlPartidoLogo,
     );
   }
 
@@ -138,6 +144,6 @@ class PoliticoModel extends HiveObject {
 
   @override
   String toString() {
-    return '''PoliticoModel{id: $id, nomeCivil: $nomeCivil, siglaPartido: $siglaPartido, siglaUf: $siglaUf, urlFoto: $urlFoto, email: $email, nomeEleitoral: $nomeEleitoral, status: $status, condicaoEleitoral: $condicaoEleitoral, cpf: $cpf, sexo: $sexo, quantidadeSeguidores: $quantidadeSeguidores, dataNascimento: $dataNascimento, escolaridade: $escolaridade, totalDespesas: $totalDespesas, totalProposicoes: $totalProposicoes, rankingPosDespesa: $rankingPosDespesa}''';
+    return '''PoliticoModel{id: $id, nomeCivil: $nomeCivil, siglaPartido: $siglaPartido, siglaUf: $siglaUf, urlFoto: $urlFoto, email: $email, nomeEleitoral: $nomeEleitoral, status: $status, condicaoEleitoral: $condicaoEleitoral, cpf: $cpf, sexo: $sexo, quantidadeSeguidores: $quantidadeSeguidores, dataNascimento: $dataNascimento, escolaridade: $escolaridade, totalDespesas: $totalDespesas, totalProposicoes: $totalProposicoes, rankingPosDespesa: $rankingPosDespesa, urlPartidoLogo: $urlPartidoLogo}''';
   }
 }

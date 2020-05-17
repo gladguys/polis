@@ -1,3 +1,4 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../i18n/i18n.dart';
@@ -13,10 +14,20 @@ class PoliticPersonalInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Photo(
-          url: politic.urlFoto,
-          size: 120,
-          borderRadius: BorderRadius.circular(60),
+        Stack(
+          children: <Widget>[
+            Photo(
+              url: politic.urlFoto,
+              size: 120,
+              borderRadius: BorderRadius.circular(60),
+            ),
+            FancyShimmerImage(
+              imageUrl: politic.urlPartidoLogo,
+              height: 40,
+              width: 40,
+              boxFit: BoxFit.contain,
+            ),
+          ],
         ),
         const SizedBox(height: 8),
         Text(
