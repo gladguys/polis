@@ -64,6 +64,7 @@ void main() {
               nomePolitico: 'nome',
               dataAtualizacao: '10-01-2020',
               visualizado: false,
+              urlPartidoLogo: 'logo',
             ),
             DespesaModel(
               numDocumento: '2',
@@ -75,6 +76,7 @@ void main() {
               valorLiquido: '20.00',
               dataDocumento: '20-01-2020',
               visualizado: false,
+              urlPartidoLogo: 'logo',
             ),
           ],
         ),

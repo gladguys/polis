@@ -26,7 +26,8 @@ class PropostaModel extends Equatable {
       this.tipoDocumento,
       this.sequencia,
       this.status,
-      this.visualizado});
+      this.visualizado,
+      this.urlPartidoLogo});
 
   final String id;
   final String siglaTipo;
@@ -49,6 +50,7 @@ class PropostaModel extends Equatable {
   final bool visualizado;
   final int sequencia;
   final bool favorito;
+  final String urlPartidoLogo;
 
   factory PropostaModel.fromJson(Map<String, dynamic> json) =>
       _$PropostaModelFromJson(json);
@@ -77,6 +79,7 @@ class PropostaModel extends Equatable {
     bool visualizado,
     String sequencia,
     bool favorito,
+    String urlPartidoLogo,
   }) {
     return PropostaModel(
       id: id ?? this.id,
@@ -100,6 +103,7 @@ class PropostaModel extends Equatable {
       visualizado: visualizado ?? this.visualizado,
       sequencia: sequencia ?? this.sequencia,
       favorito: favorito ?? this.favorito,
+      urlPartidoLogo: urlPartidoLogo ?? this.urlPartidoLogo,
     );
   }
 
@@ -108,6 +112,6 @@ class PropostaModel extends Equatable {
 
   @override
   String toString() {
-    return '''PropostaModel{id: $id, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, ementaDetalhada: $ementaDetalhada, despacho: $despacho, nomePolitico: $nomePolitico, idPoliticoAutor: $idPoliticoAutor, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataAtualizacao: $dataAtualizacao, status: $status, visualizado: $visualizado, sequencia: $sequencia, favorito: $favorito}''';
+    return '''PropostaModel{id: $id, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, ementaDetalhada: $ementaDetalhada, despacho: $despacho, nomePolitico: $nomePolitico, idPoliticoAutor: $idPoliticoAutor, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataAtualizacao: $dataAtualizacao, status: $status, visualizado: $visualizado, sequencia: $sequencia, favorito: $favorito, urlPartidoLogo: $urlPartidoLogo}''';
   }
 }

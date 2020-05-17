@@ -1,3 +1,4 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -56,7 +57,18 @@ class DespesaTile extends StatelessWidget {
   Widget _buildLeftContent() {
     return InkWell(
       borderRadius: BorderRadius.circular(24),
-      child: Photo(url: despesa.fotoPolitico),
+      child: Column(
+        children: <Widget>[
+          Photo(url: despesa.fotoPolitico),
+          const SizedBox(height: 16),
+          FancyShimmerImage(
+            imageUrl: despesa.urlPartidoLogo,
+            width: 30,
+            height: 30,
+            boxFit: BoxFit.contain,
+          ),
+        ],
+      ),
       onTap: () => clickableImage
           ? SimpleRouter.forward(
               PoliticProfilePageConnected(despesa.idPolitico),
@@ -106,6 +118,7 @@ class DespesaTile extends StatelessWidget {
       children: <Widget>[
         const SizedBox(height: 4),
         TextRich(
+          maxLines: 4,
           children: [
             TextSpan(
               text: '${despesa.tipoAtividade.capitalizeUpperCase()}'
@@ -119,6 +132,13 @@ class DespesaTile extends StatelessWidget {
             ),
           ],
         ),
+        Text(
+          '${despesa.dataDocumento.formatDate()}',
+          style: TextStyle(
+            fontSize: 12,
+            color: Colors.grey[600],
+          ),
+        ),
       ],
     );
   }
@@ -127,15 +147,8 @@ class DespesaTile extends StatelessWidget {
     return BlocBuilder<PostBloc, PostState>(
       builder: (_, state) => Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          Text(
-            '${despesa.dataDocumento.formatDate()}',
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey[600],
-            ),
-          ),
           ButtonActionCard(
             isIconOnly: true,
             icon: context.bloc<PostBloc>().isPostFavorite
