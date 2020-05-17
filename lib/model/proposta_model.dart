@@ -28,6 +28,7 @@ class PropostaModel extends Equatable {
     this.status,
     this.visualizado,
     this.foiAtualizada,
+    this.urlPartidoLogo,
   });
 
   final String id;
@@ -52,6 +53,7 @@ class PropostaModel extends Equatable {
   final int sequencia;
   final bool favorito;
   final bool foiAtualizada;
+  final String urlPartidoLogo;
 
   factory PropostaModel.fromJson(Map<String, dynamic> json) =>
       _$PropostaModelFromJson(json);
@@ -81,6 +83,7 @@ class PropostaModel extends Equatable {
     String sequencia,
     bool favorito,
     bool foiAtualizada,
+    String urlPartidoLogo,
   }) {
     return PropostaModel(
       id: id ?? this.id,
@@ -105,6 +108,7 @@ class PropostaModel extends Equatable {
       sequencia: sequencia ?? this.sequencia,
       favorito: favorito ?? this.favorito,
       foiAtualizada: foiAtualizada ?? this.foiAtualizada,
+      urlPartidoLogo: urlPartidoLogo ?? this.urlPartidoLogo,
     );
   }
 
@@ -113,6 +117,6 @@ class PropostaModel extends Equatable {
 
   @override
   String toString() {
-    return '''PropostaModel{id: $id, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, ementaDetalhada: $ementaDetalhada, despacho: $despacho, nomePolitico: $nomePolitico, idPoliticoAutor: $idPoliticoAutor, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataAtualizacao: $dataAtualizacao, status: $status, visualizado: $visualizado, sequencia: $sequencia, favorito: $favorito, foiAtualizada: $foiAtualizada}''';
+    return '''PropostaModel{id: $id, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, ementaDetalhada: $ementaDetalhada, despacho: $despacho, nomePolitico: $nomePolitico, idPoliticoAutor: $idPoliticoAutor, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataAtualizacao: $dataAtualizacao, status: $status, visualizado: $visualizado, sequencia: $sequencia, favorito: $favorito, foiAtualizada: $foiAtualizada, urlPartidoLogo: $urlPartidoLogo}''';
   }
 }

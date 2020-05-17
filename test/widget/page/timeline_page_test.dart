@@ -62,6 +62,7 @@ void main() {
             valorLiquido: '10.00',
             dataDocumento: '10-01-2020',
             visualizado: false,
+            urlPartidoLogo: 'logo',
           ),
           DespesaModel(
             numDocumento: '2',
@@ -73,6 +74,7 @@ void main() {
             valorLiquido: '20.00',
             dataDocumento: '20-01-2020',
             visualizado: false,
+            urlPartidoLogo: 'logo',
           ),
           PropostaModel(
             id: '1',
@@ -80,6 +82,7 @@ void main() {
             nomePolitico: 'nome',
             fotoPolitico: 'foto',
             visualizado: false,
+            urlPartidoLogo: 'logo',
           )
         ], postsCount: 3, updatesCount: 0),
       );
@@ -114,6 +117,7 @@ void main() {
               valorLiquido: '10.00',
               dataDocumento: '10-01-2020',
               visualizado: false,
+              urlPartidoLogo: 'logo',
             ),
             DespesaModel(
               numDocumento: '2',
@@ -125,6 +129,7 @@ void main() {
               valorLiquido: '20.00',
               dataDocumento: '20-01-2020',
               visualizado: false,
+              urlPartidoLogo: 'logo',
             ),
             PropostaModel(
               id: '1',
@@ -133,6 +138,7 @@ void main() {
               fotoPolitico: 'foto',
               visualizado: false,
               foiAtualizada: true,
+              urlPartidoLogo: 'logo',
             )
           ],
         ),
@@ -167,6 +173,7 @@ void main() {
               valorLiquido: '10.00',
               dataDocumento: '10-01-2020',
               visualizado: false,
+              urlPartidoLogo: 'logo',
             ),
             DespesaModel(
               numDocumento: '2',
@@ -178,6 +185,7 @@ void main() {
               valorLiquido: '20.00',
               dataDocumento: '20-01-2020',
               visualizado: false,
+              urlPartidoLogo: 'logo',
             ),
             PropostaModel(
               id: '1',
@@ -185,6 +193,7 @@ void main() {
               nomePolitico: 'nome',
               fotoPolitico: 'foto',
               visualizado: false,
+              urlPartidoLogo: 'logo',
             )
           ],
         ),
@@ -219,6 +228,7 @@ void main() {
               valorLiquido: '10.00',
               dataDocumento: '10-01-2020',
               visualizado: false,
+              urlPartidoLogo: 'logo',
             ),
             DespesaModel(
               numDocumento: '2',
@@ -230,6 +240,7 @@ void main() {
               valorLiquido: '20.00',
               dataDocumento: '20-01-2020',
               visualizado: false,
+              urlPartidoLogo: 'logo',
             ),
             PropostaModel(
               id: '1',
@@ -237,6 +248,7 @@ void main() {
               nomePolitico: 'nome',
               fotoPolitico: 'foto',
               visualizado: false,
+              urlPartidoLogo: 'logo',
             )
           ],
         ),
@@ -290,6 +302,7 @@ void main() {
               valorLiquido: '10.00',
               dataDocumento: '10-01-2020',
               visualizado: false,
+              urlPartidoLogo: 'logo',
             ),
             DespesaModel(
               numDocumento: '2',
@@ -301,6 +314,7 @@ void main() {
               valorLiquido: '20.00',
               dataDocumento: '20-01-2020',
               visualizado: false,
+              urlPartidoLogo: 'logo',
             ),
             PropostaModel(
               id: '1',
@@ -308,6 +322,7 @@ void main() {
               nomePolitico: 'nome',
               fotoPolitico: 'foto',
               visualizado: false,
+              urlPartidoLogo: 'logo',
             )
           ],
           postsCount: 3,
@@ -354,6 +369,7 @@ void main() {
               valorLiquido: '10.00',
               dataDocumento: '10-01-2020',
               visualizado: false,
+              urlPartidoLogo: 'logo',
             ),
           ],
           postsCount: 1,
@@ -409,6 +425,7 @@ void main() {
               valorLiquido: '10.00',
               dataDocumento: '10-01-2020',
               visualizado: false,
+              urlPartidoLogo: 'logo',
             ),
             DespesaModel(
               numDocumento: '2',
@@ -420,6 +437,7 @@ void main() {
               valorLiquido: '20.00',
               dataDocumento: '20-01-2020',
               visualizado: false,
+              urlPartidoLogo: 'logo',
             ),
             DespesaModel(
               numDocumento: '2',
@@ -431,6 +449,7 @@ void main() {
               valorLiquido: '20.00',
               dataDocumento: '20-01-2020',
               visualizado: false,
+              urlPartidoLogo: 'logo',
             ),
             DespesaModel(
               numDocumento: '2',
@@ -442,6 +461,7 @@ void main() {
               valorLiquido: '20.00',
               dataDocumento: '20-01-2020',
               visualizado: false,
+              urlPartidoLogo: 'logo',
             ),
             PropostaModel(
               id: '1',
@@ -449,6 +469,7 @@ void main() {
               nomePolitico: 'nome',
               fotoPolitico: 'foto',
               visualizado: false,
+              urlPartidoLogo: 'logo',
             )
           ],
           postsCount: 3,
@@ -472,7 +493,7 @@ void main() {
       expect(listview, findsOneWidget);
       await tester.drag(listview, const Offset(0, -3000));
       await tester.pump();
-      verify(mockTimelineBloc.add(FetchMorePosts('1', 262.0))).called(1);
+      verify(mockTimelineBloc.add(FetchMorePosts('1', 20.0))).called(1);
     });
   });
 }

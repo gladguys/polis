@@ -1,3 +1,4 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -53,7 +54,9 @@ class PropostaTile extends StatelessWidget {
   Widget _buildLeftContent() {
     return InkWell(
       borderRadius: BorderRadius.circular(24),
-      child: Row(
+      child: Column(
+        children: <Widget>[
+          Row(
         children: <Widget>[
           if (!proposta.visualizado)
             FaIcon(
@@ -62,6 +65,14 @@ class PropostaTile extends StatelessWidget {
               size: 5,
             ),
           Photo(url: proposta.fotoPolitico),
+          ],),
+          const SizedBox(height: 16),
+          FancyShimmerImage(
+            imageUrl: proposta.urlPartidoLogo,
+            width: 30,
+            height: 30,
+            boxFit: BoxFit.contain,
+          ),
         ],
       ),
       onTap: () => clickableImage
@@ -140,6 +151,13 @@ class PropostaTile extends StatelessWidget {
               TextSpan(text: '${proposta.ementa}'),
             ],
           ),
+        Text(
+          proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
+          style: TextStyle(
+            fontSize: 12,
+            color: Colors.grey[600],
+          ),
+        ),
       ],
     );
   }
@@ -148,15 +166,8 @@ class PropostaTile extends StatelessWidget {
     return BlocBuilder<PostBloc, PostState>(
       builder: (_, state) => Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          Text(
-            proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey[600],
-            ),
-          ),
           ButtonActionCard(
             isIconOnly: true,
             icon: context.bloc<PostBloc>().isPostFavorite
