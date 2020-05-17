@@ -10,24 +10,54 @@
       "client_info": {
         "mobilesdk_app_id": "1:285525154806:android:f8973e03603952f0abc5d7",
         "android_client_info": {
-          "package_name": "com.example.polis"
+          "package_name": "com.gladguys.polis"
         }
       },
       "oauth_client": [
         {
-          "client_id": "285525154806-b5scfjc839rftv8dp914fqms66fj5oci.apps.googleusercontent.com",
+          "client_id": "285525154806-o5kh625rtprk3r1ibb3c1894driisddk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.polis",
-            "certificate_hash": "d5ff8abf6a4e2935a680dbd7e05b670c13627cae"
+            "package_name": "com.gladguys.polis",
+            "certificate_hash": "fe0b2b7721302a4c62da46d35f9abc198711027f"
           }
         },
         {
-          "client_id": "285525154806-2ka02g11s89s8onapp51jsn20s6cuuai.apps.googleusercontent.com",
+          "client_id": "285525154806-muhof46bstmn2hls306t0injqtq6hqfa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJvb3CJctS0G_Ekrje7V1FKkrPC6kXwCw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "285525154806-muhof46bstmn2hls306t0injqtq6hqfa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-5806526425473649~5721958482"
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285525154806:android:c3607571dd7be668abc5d7",
+        "android_client_info": {
+          "package_name": "com.gladguys.polis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "285525154806-b27cqm42nanbp2dvgdjaulhrmr5csghu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.polis",
-            "certificate_hash": "7bfe91110d2209e2492ee8c67b923c72a88b9e50"
+            "package_name": "com.gladguys.polis",
+            "certificate_hash": "fe0b2b7721302a4c62da46d35f9abc198711027f"
           }
         },
         {

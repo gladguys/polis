@@ -1,4 +1,4 @@
-package com.example.polis
+package com.gladguys.polis
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
