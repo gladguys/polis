@@ -1,3 +1,4 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,7 +46,7 @@ class SearchPoliticsList extends StatelessWidget {
     return CardBase(
       key: ValueKey(politico.id),
       crossAxisAlignment: CrossAxisAlignment.center,
-      slotLeft: Photo(url: politico.urlFoto),
+      slotLeft: _buildLeftContent(politico),
       slotCenter: _buildCardContent(context, politico),
       slotRight: ButtonFollowUnfollow(
         isFollow: bloc.isPoliticBeingFollowed(politico),
@@ -65,6 +66,25 @@ class SearchPoliticsList extends StatelessWidget {
         ),
         name: POLITIC_PROFILE_PAGE,
       ),
+    );
+  }
+
+  Widget _buildLeftContent(PoliticoModel politico) {
+    return Stack(
+      overflow: Overflow.visible,
+      children: <Widget>[
+        Photo(url: politico.urlFoto),
+        Positioned(
+          right: 0,
+          bottom: -10,
+          child: FancyShimmerImage(
+            imageUrl: politico.urlPartidoLogo,
+            width: 22,
+            height: 22,
+            boxFit: BoxFit.contain,
+          ),
+        ),
+      ],
     );
   }
 
