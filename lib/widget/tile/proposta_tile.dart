@@ -27,30 +27,39 @@ class PropostaTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CardBase(
-      withIndent: false,
-      paddingSlotCenter: EdgeInsets.zero,
-      slotLeft: _buildLeftContent(),
-      slotCenter: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _buildTag(),
-          _buildTopContent(),
-          _buildCenterContent(),
-        ],
-      ),
-      slotBottom: _buildActions(context),
-      onTap: () async {
-        await SimpleRouter.forward(
-          PostPageConnected(
-            post: proposta,
-            postType: PostType.PROPOSICAO,
-            timelineBloc: context.bloc<TimelineBloc>(),
+    return Stack(
+      children: <Widget>[
+        const Divider(height: 1),
+        CardBase(
+          withIndent: false,
+          paddingSlotCenter: EdgeInsets.zero,
+          slotLeft: _buildLeftContent(),
+          slotCenter: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _buildTopContent(),
+              _buildCenterContent(),
+            ],
           ),
-          name: POST_PAGE,
-        );
-        context.bloc<TimelineBloc>().add(RefreshTimeline());
-      },
+          slotBottom: _buildActions(context),
+          onTap: () async {
+            await SimpleRouter.forward(
+              PostPageConnected(
+                post: proposta,
+                postType: PostType.PROPOSICAO,
+                timelineBloc: context.bloc<TimelineBloc>(),
+              ),
+              name: POST_PAGE,
+            );
+            context.bloc<TimelineBloc>().add(RefreshTimeline());
+          },
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: _buildTag(),
+        ),
+      ],
     );
   }
 
@@ -126,6 +135,7 @@ class PropostaTile extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        const SizedBox(height: 14),
         Text(
           proposta.nomePolitico,
           style: const TextStyle(
