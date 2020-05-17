@@ -180,7 +180,7 @@ class _TimelineState extends State<Timeline> {
             color: Colors.grey[200],
             child: NativeAdmob(
               loading: Container(),
-              adUnitID: 'ca-app-pub-5806526425473649/2966344739',
+              adUnitID: 'ca-app-pub-5806526425473649/3495270844',
               controller: nativeAdmobController,
               type: NativeAdmobType.banner,
             ),

@@ -8,25 +8,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:552560355967:android:8bc87e21597e4d34abed4a",
+        "mobilesdk_app_id": "1:552560355967:android:f594f44714e646f9abed4a",
         "android_client_info": {
-          "package_name": "com.example.polis.dev"
+          "package_name": "com.gladguys.polis.dev"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "552560355967-7j7l4s96alkqh6do1685j4eo9dnb6rdk.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.polis.dev",
-            "certificate_hash": "e687be63342222f03369382d18f2299e0f7248d5"
-          }
-        },
-        {
-          "client_id": "552560355967-pap6jhd7iar50oja9iar9ubvgid8kk4u.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyAugDNBWXiPZLlUtFRIxMte7ITXXg6VfBg"
@@ -34,12 +21,26 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "552560355967-pap6jhd7iar50oja9iar9ubvgid8kk4u.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:552560355967:android:b338919157fe93ecabed4a",
+        "android_client_info": {
+          "package_name": "com.gladguys.polis.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAugDNBWXiPZLlUtFRIxMte7ITXXg6VfBg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
         }
       }
     }
