@@ -76,11 +76,11 @@ class SearchPoliticsList extends StatelessWidget {
         Photo(url: politico.urlFoto),
         Positioned(
           right: 0,
-          bottom: -10,
+          bottom: -4,
           child: FancyShimmerImage(
             imageUrl: politico.urlPartidoLogo,
-            width: 22,
-            height: 22,
+            width: 20,
+            height: 20,
             boxFit: BoxFit.contain,
           ),
         ),
