@@ -5,6 +5,7 @@ import '../../../core/routing/route_names.dart';
 import '../../../extension/extensions.dart';
 import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
+import '../../../widget/text_rich.dart';
 import '../../pages.dart';
 
 class PoliticAdditionalInfo extends StatelessWidget {
@@ -76,29 +77,6 @@ class PoliticAdditionalInfo extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(width: 16),
-              Column(
-                children: <Widget>[
-                  Text(
-                    position,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                  Container(
-                    width: 110,
-                    child: Text(
-                      EXPENSES_POSITION,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
         ),
@@ -109,12 +87,24 @@ class PoliticAdditionalInfo extends StatelessWidget {
           children: <Widget>[
             Column(
               children: <Widget>[
-                Text(
-                  totalDespesas.formatCurrency(),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
+                TextRich(
+                  children: [
+                    TextSpan(
+                      text: totalDespesas.formatCurrency(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    TextSpan(
+                      text: ' ($position)',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
                 ),
                 Text(
                   EXPENSES,
