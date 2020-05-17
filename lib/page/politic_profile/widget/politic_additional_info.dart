@@ -15,6 +15,8 @@ class PoliticAdditionalInfo extends StatelessWidget {
   int get quantidadeSeguidores => (politic.quantidadeSeguidores ?? 0).toInt();
   double get totalDespesas => (politic.totalDespesas ?? 0).toDouble();
   int get totalProposicoes => (politic.totalProposicoes ?? 0).toInt();
+  String get position =>
+      '${politic.rankingPosDespesa?.toString()}º' ?? NO_POSITION;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +61,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  totalProposicoes == 1 ? PROPOSER : PROPOSERS,
+                  PROPOSERS,
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 12,
@@ -73,7 +75,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
         Column(
           children: <Widget>[
             Text(
-              totalDespesas.formatCurrency(),
+              '${totalDespesas.formatCurrency()} ($position)',
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
