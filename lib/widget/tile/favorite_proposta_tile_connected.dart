@@ -7,7 +7,7 @@ import '../../core/service/services.dart';
 import '../../model/models.dart';
 import '../../page/page_connected.dart';
 import '../../repository/concrete/repositories.dart';
-import 'proposta_tile.dart';
+import 'favorite_proposta_tile.dart';
 
 class FavoritePropostaTileConnected extends StatelessWidget {
   const FavoritePropostaTileConnected(
@@ -26,7 +26,7 @@ class FavoritePropostaTileConnected extends StatelessWidget {
         postRepository: context.repository<FirebasePostRepository>(),
         shareService: G<ShareService>(),
       ),
-      page: PropostaTile(proposta, clickableImage: clickableImage),
+      page: FavoritePropostaTile(proposta, clickableImage: clickableImage),
     );
   }
 }

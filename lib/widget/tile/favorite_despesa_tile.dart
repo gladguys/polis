@@ -1,3 +1,4 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -46,15 +47,30 @@ class FavoriteDespesaTile extends StatelessWidget {
   }
 
   Widget _buildLeftContent() {
-    return InkWell(
-      borderRadius: BorderRadius.circular(24),
-      child: Photo(url: despesa.fotoPolitico),
-      onTap: () => clickableImage
-          ? SimpleRouter.forward(
-              PoliticProfilePageConnected(despesa.idPolitico),
-              name: POLITIC_PROFILE_PAGE,
-            )
-          : null,
+    return Stack(
+      overflow: Overflow.visible,
+      children: <Widget>[
+        InkWell(
+          borderRadius: BorderRadius.circular(24),
+          child: Photo(url: despesa.fotoPolitico),
+          onTap: () => clickableImage
+              ? SimpleRouter.forward(
+                  PoliticProfilePageConnected(despesa.idPolitico),
+                  name: POLITIC_PROFILE_PAGE,
+                )
+              : null,
+        ),
+        Positioned(
+          right: 0,
+          bottom: -10,
+          child: FancyShimmerImage(
+            imageUrl: despesa.urlPartidoLogo,
+            width: 22,
+            height: 22,
+            boxFit: BoxFit.contain,
+          ),
+        ),
+      ],
     );
   }
 
