@@ -39,6 +39,7 @@ class FavoritePostsPage extends StatelessWidget {
         const SizedBox(height: 8),
         TextTitle(FAVORITE_POSTS),
         const SizedBox(height: 8),
+        if (posts.isNotEmpty) const Divider(height: 1),
         posts.isNotEmpty
             ? Expanded(
                 child: FavoritesPostList(posts),

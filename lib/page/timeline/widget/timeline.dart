@@ -110,7 +110,7 @@ class _TimelineState extends State<Timeline> {
     return ListView.separated(
       controller: scrollController,
       key: timelineListKey,
-      padding: const EdgeInsets.only(top: 8, bottom: 16),
+      padding: const EdgeInsets.only(bottom: 16),
       itemCount: widget.activities.length,
       itemBuilder: (_, i) => Column(
         children: <Widget>[
@@ -131,9 +131,7 @@ class _TimelineState extends State<Timeline> {
         ],
       ),
       separatorBuilder: (_, i) => const Divider(
-        height: 16,
-        indent: 8,
-        endIndent: 8,
+        height: 1,
       ),
     );
   }

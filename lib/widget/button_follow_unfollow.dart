@@ -7,9 +7,9 @@ class ButtonFollowUnfollow extends StatelessWidget {
     @required this.isFollow,
     @required this.onPressed,
     this.isOutline = true,
-    this.width = 110,
+    this.width = 100,
     this.height = 26,
-    this.fontSize = 11,
+    this.fontSize = 12,
     this.key,
   })  : assert(isFollow != null),
         assert(onPressed != null);
@@ -40,7 +40,8 @@ class ButtonFollowUnfollow extends StatelessWidget {
         child: Text(
           isFollow ? STOP_FOLLOWING : FOLLOW,
           key: key,
-          style: TextStyle(fontSize: fontSize),
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: fontSize-1),
         ),
         textColor: color,
         highlightedBorderColor: color,

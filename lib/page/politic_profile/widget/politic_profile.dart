@@ -24,8 +24,13 @@ class PoliticProfile extends StatefulWidget {
 class _PoliticProfileState extends State<PoliticProfile> {
   @override
   Widget build(BuildContext context) {
+    var persistentContentHeight = context.screenHeight * 0.3;
+    if (context.screenHeight < 600) {
+      persistentContentHeight = context.screenHeight * 0.14;
+    }
+
     return ExpandableBottomSheet(
-      persistentContentHeight: context.screenHeight * 0.3,
+      persistentContentHeight: persistentContentHeight,
       persistentHeader: _buildHeader(),
       expandableContent: _buildPanel(context),
       background: _buildBody(context),

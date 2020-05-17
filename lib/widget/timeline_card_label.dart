@@ -8,13 +8,15 @@ class TimelineCardLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 80,
+      padding: const EdgeInsets.only(bottom: 2),
+      alignment: Alignment.center,
       decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.grey[200],
+        border: Border.all(color: Colors.grey[200]),
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(6),
         ),
       ),
-      height: 20,
-      width: 90,
       child: child,
     );
   }

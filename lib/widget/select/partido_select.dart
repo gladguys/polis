@@ -24,7 +24,7 @@ class _PartidoSelectState extends State<PartidoSelect> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 160,
+      width: 150,
       child: SmartSelect<String>.single(
         isTwoLine: true,
         dense: true,

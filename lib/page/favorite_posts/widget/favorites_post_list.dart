@@ -16,7 +16,7 @@ class FavoritesPostList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       key: timelineListKey,
-      padding: const EdgeInsets.only(top: 8, bottom: 16),
+      padding: const EdgeInsets.only(bottom: 16),
       itemCount: activities.length,
       itemBuilder: (_, i) {
         if (activities[i] is DespesaModel) {
@@ -25,11 +25,7 @@ class FavoritesPostList extends StatelessWidget {
           return FavoritePropostaTileConnected(activities[i] as PropostaModel);
         }
       },
-      separatorBuilder: (_, i) => const Divider(
-        height: 16,
-        indent: 8,
-        endIndent: 8,
-      ),
+      separatorBuilder: (_, i) => const Divider(height: 1),
     );
   }
 }

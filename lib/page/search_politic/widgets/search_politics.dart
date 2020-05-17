@@ -72,7 +72,7 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
             const SizedBox(width: 16),
             FieldRounded(
               hintText: SEARCH_HERE,
-              width: 280,
+              width: 240,
               iconPrefix: FontAwesomeIcons.search,
               onChanged: (term) => widget.searchPoliticBloc
                   .add(ChangeSearchPoliticFilter(term: term)),
@@ -105,7 +105,7 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
   Widget _buildFilter() {
     return AnimatedContainer(
       duration: 300.milliseconds,
-      width: 321,
+      width: 301,
       height: isOpen ? 64 : 0,
       margin: isOpen ? const EdgeInsets.only(top: 8) : EdgeInsets.zero,
       child: Material(
@@ -113,24 +113,27 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
         elevation: 3,
         color: Colors.white,
         clipBehavior: Clip.antiAlias,
-        child: Row(
-          children: <Widget>[
-            PartidoSelect(
-              partidos: widget.partidos,
-              initialValue: widget.searchPoliticBloc.partidoPicked,
-              onChange: (partido) => widget.searchPoliticBloc
-                  .add(ChangeSearchPoliticFilter(partido: partido)),
-            ),
-            VerticalDivider(
-              width: 1,
-              color: Colors.grey[350],
-            ),
-            EstadoSelect(
-              initialValue: widget.searchPoliticBloc.statePicked,
-              onChange: (estado) => widget.searchPoliticBloc
-                  .add(ChangeSearchPoliticFilter(estado: estado)),
-            ),
-          ],
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: <Widget>[
+              PartidoSelect(
+                partidos: widget.partidos,
+                initialValue: widget.searchPoliticBloc.partidoPicked,
+                onChange: (partido) => widget.searchPoliticBloc
+                    .add(ChangeSearchPoliticFilter(partido: partido)),
+              ),
+              VerticalDivider(
+                width: 1,
+                color: Colors.grey[350],
+              ),
+              EstadoSelect(
+                initialValue: widget.searchPoliticBloc.statePicked,
+                onChange: (estado) => widget.searchPoliticBloc
+                    .add(ChangeSearchPoliticFilter(estado: estado)),
+              ),
+            ],
+          ),
         ),
       ),
     );
