@@ -17,6 +17,7 @@ import '../button_action_card.dart';
 import '../card_base.dart';
 import '../photo.dart';
 import '../text_rich.dart';
+import '../timeline_card_label.dart';
 
 class PropostaTile extends StatelessWidget {
   PropostaTile(this.proposta, {this.clickableImage});
@@ -55,7 +56,16 @@ class PropostaTile extends StatelessWidget {
       borderRadius: BorderRadius.circular(24),
       child: Column(
         children: <Widget>[
+          Row(
+        children: <Widget>[
+          if (!proposta.visualizado)
+            FaIcon(
+              FontAwesome5Solid.circle,
+              color: theme.primaryColor,
+              size: 5,
+            ),
           Photo(url: proposta.fotoPolitico),
+          ],),
           const SizedBox(height: 16),
           FancyShimmerImage(
             imageUrl: proposta.urlPartidoLogo,
@@ -100,12 +110,25 @@ class PropostaTile extends StatelessWidget {
             ),
           ],
         ),
-        if (!proposta.visualizado)
-          FaIcon(
-            FontAwesome5Solid.circle,
-            color: theme.primaryColor,
-            size: 5,
+        TimelineCardLabel(
+          child: Center(
+            child: proposta.foiAtualizada ?? false
+                ? Text(
+                    UPDATE.toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.blue,
+                    ),
+                  )
+                : Text(
+                    NEW.toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.green,
+                    ),
+                  ),
           ),
+        ),
       ],
     );
   }

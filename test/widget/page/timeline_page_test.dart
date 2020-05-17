@@ -137,6 +137,7 @@ void main() {
               nomePolitico: 'nome',
               fotoPolitico: 'foto',
               visualizado: false,
+              foiAtualizada: true,
               urlPartidoLogo: 'logo',
             )
           ],

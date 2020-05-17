@@ -18,6 +18,7 @@ import '../button_action_card.dart';
 import '../card_base.dart';
 import '../photo.dart';
 import '../text_rich.dart';
+import '../timeline_card_label.dart';
 
 class DespesaTile extends StatelessWidget {
   DespesaTile(this.despesa, {this.clickableImage});
@@ -59,7 +60,16 @@ class DespesaTile extends StatelessWidget {
       borderRadius: BorderRadius.circular(24),
       child: Column(
         children: <Widget>[
+          Row(
+        children: <Widget>[
+          if (!despesa.visualizado)
+            FaIcon(
+              FontAwesome5Solid.circle,
+              color: theme.primaryColor,
+              size: 5,
+            ),
           Photo(url: despesa.fotoPolitico),
+          ],),
           const SizedBox(height: 16),
           FancyShimmerImage(
             imageUrl: despesa.urlPartidoLogo,
@@ -102,12 +112,17 @@ class DespesaTile extends StatelessWidget {
             ),
           ],
         ),
-        if (!despesa.visualizado)
-          FaIcon(
-            FontAwesome5Solid.circle,
-            color: theme.primaryColor,
-            size: 5,
+        TimelineCardLabel(
+          child: Center(
+            child: Text(
+              EXPENSE.toUpperCase(),
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.amber,
+              ),
+            ),
           ),
+        ),
       ],
     );
   }
