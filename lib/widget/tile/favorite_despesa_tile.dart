@@ -60,16 +60,18 @@ class FavoriteDespesaTile extends StatelessWidget {
                 )
               : null,
         ),
-        Positioned(
-          right: 0,
-          bottom: -10,
-          child: FancyShimmerImage(
-            imageUrl: despesa.urlPartidoLogo,
-            width: 22,
-            height: 22,
-            boxFit: BoxFit.contain,
-          ),
-        ),
+        despesa.urlPartidoLogo != null
+            ? Positioned(
+                right: 0,
+                bottom: -10,
+                child: FancyShimmerImage(
+                  imageUrl: despesa.urlPartidoLogo,
+                  width: 22,
+                  height: 22,
+                  boxFit: BoxFit.contain,
+                ),
+              )
+            : const SizedBox.shrink(),
       ],
     );
   }
