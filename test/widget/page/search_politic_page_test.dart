@@ -60,6 +60,7 @@ void main() {
             PoliticoModel(
               id: '1',
               nomeEleitoral: 'nome',
+              urlPartidoLogo: 'url',
             ),
           ],
         ),
@@ -90,6 +91,7 @@ void main() {
             PoliticoModel(
               id: '1',
               nomeEleitoral: 'nome',
+              urlPartidoLogo: 'url',
             ),
           ],
         ),
@@ -120,6 +122,7 @@ void main() {
             PoliticoModel(
               id: '1',
               nomeEleitoral: 'nome',
+              urlPartidoLogo: 'url',
             ),
           ],
         ),
@@ -160,6 +163,7 @@ void main() {
             PoliticoModel(
               id: '1',
               nomeEleitoral: 'nome',
+              urlPartidoLogo: 'url',
             ),
           ],
         ),
@@ -200,6 +204,7 @@ void main() {
             PoliticoModel(
               id: '1',
               nomeEleitoral: 'nome',
+              urlPartidoLogo: 'url',
             ),
           ],
         ),
@@ -215,7 +220,7 @@ void main() {
       expect(find.byType(SearchPolitics), findsOneWidget);
       final textfield = find.byType(TextField);
       await tester.enterText(textfield, 'a');
-      await tester.pumpAndSettle();
+      await tester.pump();
       verify(mockSearchPoliticBloc.add(ChangeSearchPoliticFilter(term: 'a')))
           .called(1);
     });
@@ -235,6 +240,7 @@ void main() {
               id: '1',
               nomeEleitoral: 'nome',
               urlFoto: 'foto',
+              urlPartidoLogo: 'url',
             ),
           ],
         ),
@@ -279,10 +285,12 @@ void main() {
             PoliticoModel(
               id: '1',
               nomeEleitoral: 'nome',
+              urlPartidoLogo: 'url',
             ),
             PoliticoModel(
               id: '2',
               nomeEleitoral: 'nome2',
+              urlPartidoLogo: 'url',
             ),
           ],
         ),

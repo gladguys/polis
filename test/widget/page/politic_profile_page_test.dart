@@ -85,6 +85,7 @@ void main() {
             valorLiquido: '3.51',
             dataDocumento: '10-01-2020',
             visualizado: false,
+            urlPartidoLogo: 'url',
           ),
         ],
       );
@@ -167,6 +168,7 @@ void main() {
             valorLiquido: '3.51',
             dataDocumento: '10-01-2020',
             visualizado: false,
+            urlPartidoLogo: 'url',
           ),
           DespesaModel(
             fotoPolitico: 'foto',
@@ -177,6 +179,7 @@ void main() {
             valorLiquido: '3.51',
             dataDocumento: '10-01-2020',
             visualizado: false,
+            urlPartidoLogo: 'url',
           ),
           DespesaModel(
             fotoPolitico: 'foto',
