@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../../core/routing/route_names.dart';
+import '../../../core/utils/date_utils.dart';
 import '../../../extension/extensions.dart';
 import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
@@ -81,43 +82,51 @@ class PoliticAdditionalInfo extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                TextRich(
-                  children: [
-                    TextSpan(
-                      text: totalDespesas.formatCurrency(),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+        Tooltip(
+          message: getMonthPhrase(),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  TextRich(
+                    children: [
+                      TextSpan(
+                        text: totalDespesas.formatCurrency(),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
                       ),
-                    ),
-                    TextSpan(
-                      text: ' ($position)',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                        color: Colors.grey[600],
+                      TextSpan(
+                        text: ' ($position)',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: Colors.grey[600],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                Text(
-                  EXPENSES,
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 12,
+                    ],
                   ),
-                ),
-              ],
-            ),
-          ],
+                  Text(
+                    EXPENSES,
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ],
     );
+  }
+
+  String getMonthPhrase() {
+    final now = DateTime.now();
+    return '''$UNTIL_THE_DAY ${getLastDayOfLastMonth()} $OF ${getLastMonthName()} $OF ${now.year}''';
   }
 }
