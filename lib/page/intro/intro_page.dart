@@ -60,7 +60,7 @@ class _IntroPageState extends State<IntroPage> {
             ),
           ],
           done: Text(
-            CONFIRM.toUpperCase(),
+            NEXT.toUpperCase(),
             key: doneButtonKey,
             style: const TextStyle(
               fontWeight: FontWeight.w600,

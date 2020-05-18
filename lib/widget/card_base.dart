@@ -9,6 +9,8 @@ class CardBase extends StatelessWidget {
     this.slotRight,
     this.slotBottom,
     this.crossAxisAlignment = CrossAxisAlignment.start,
+    this.paddingSlotCenter,
+    this.withIndent = true,
     this.key,
     this.onTap,
   }) : assert(slotCenter != null);
@@ -18,6 +20,8 @@ class CardBase extends StatelessWidget {
   final Widget slotRight;
   final Widget slotBottom;
   final CrossAxisAlignment crossAxisAlignment;
+  final EdgeInsets paddingSlotCenter;
+  final bool withIndent;
   final Key key;
   final Function onTap;
 
@@ -31,7 +35,7 @@ class CardBase extends StatelessWidget {
         key: key,
         child: Row(
           children: <Widget>[
-            const SizedBox(width: 8),
+            if (withIndent) const SizedBox(width: 8),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,7 +43,10 @@ class CardBase extends StatelessWidget {
                   InkWell(
                     onTap: onTap,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      padding: paddingSlotCenter ??
+                          const EdgeInsets.symmetric(
+                            vertical: 4,
+                          ),
                       child: _buildContent(),
                     ),
                   ),
@@ -55,7 +62,7 @@ class CardBase extends StatelessWidget {
               ),
             ),
             if (slotRight != null) slotRight,
-            const SizedBox(width: 8),
+            if (withIndent) const SizedBox(width: 8),
           ],
         ),
       ),

@@ -5,6 +5,7 @@ import '../../../core/routing/route_names.dart';
 import '../../../extension/extensions.dart';
 import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
+import '../../../widget/text_rich.dart';
 import '../../pages.dart';
 
 class PoliticAdditionalInfo extends StatelessWidget {
@@ -22,71 +23,97 @@ class PoliticAdditionalInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            InkWell(
-              borderRadius: BorderRadius.circular(5),
-              onTap: () => SimpleRouter.forward(
-                PoliticFollowersPageConnected(politic.id),
-                name: POLITIC_FOLLOWERS_PAGE,
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              InkWell(
+                borderRadius: BorderRadius.circular(5),
+                onTap: () => SimpleRouter.forward(
+                  PoliticFollowersPageConnected(politic.id),
+                  name: POLITIC_FOLLOWERS_PAGE,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      quantidadeSeguidores.toString(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    Text(
+                      quantidadeSeguidores == 1 ? FOLLOWER : FOLLOWERS,
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              child: Column(
+              const SizedBox(width: 16),
+              Column(
                 children: <Widget>[
                   Text(
-                    quantidadeSeguidores.toString(),
+                    totalProposicoes.toString(),
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
                   ),
-                  Text(
-                    quantidadeSeguidores == 1 ? FOLLOWER : FOLLOWERS,
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 12,
+                  Container(
+                    width: 90,
+                    child: Text(
+                      PROPOSERS,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 12,
+                      ),
                     ),
                   ),
                 ],
               ),
-            ),
-            const SizedBox(width: 16),
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
             Column(
               children: <Widget>[
-                Text(
-                  totalProposicoes.toString(),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
+                TextRich(
+                  children: [
+                    TextSpan(
+                      text: totalDespesas.formatCurrency(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    TextSpan(
+                      text: ' ($position)',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
                 ),
                 Text(
-                  PROPOSERS,
+                  EXPENSES,
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 12,
                   ),
                 ),
               ],
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        Column(
-          children: <Widget>[
-            Text(
-              '${totalDespesas.formatCurrency()} ($position)',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-            Text(
-              EXPENSES,
-              style: TextStyle(
-                color: Colors.grey[600],
-                fontSize: 12,
-              ),
             ),
           ],
         ),

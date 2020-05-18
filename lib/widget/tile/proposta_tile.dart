@@ -27,106 +27,129 @@ class PropostaTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CardBase(
-      slotLeft: _buildLeftContent(),
-      slotCenter: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _buildTopContent(),
-          _buildCenterContent(),
-        ],
-      ),
-      slotBottom: _buildActions(context),
-      onTap: () async {
-        await SimpleRouter.forward(
-          PostPageConnected(
-            post: proposta,
-            postType: PostType.PROPOSICAO,
-            timelineBloc: context.bloc<TimelineBloc>(),
+    return Stack(
+      children: <Widget>[
+        const Divider(height: 1),
+        CardBase(
+          withIndent: false,
+          paddingSlotCenter: EdgeInsets.zero,
+          slotLeft: _buildLeftContent(),
+          slotCenter: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _buildTopContent(),
+              _buildCenterContent(),
+            ],
           ),
-          name: POST_PAGE,
-        );
-        context.bloc<TimelineBloc>().add(RefreshTimeline());
-      },
+          slotBottom: _buildActions(context),
+          onTap: () async {
+            await SimpleRouter.forward(
+              PostPageConnected(
+                post: proposta,
+                postType: PostType.PROPOSICAO,
+                timelineBloc: context.bloc<TimelineBloc>(),
+              ),
+              name: POST_PAGE,
+            );
+            context.bloc<TimelineBloc>().add(RefreshTimeline());
+          },
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: _buildTag(),
+        ),
+      ],
     );
   }
 
   Widget _buildLeftContent() {
-    return InkWell(
-      borderRadius: BorderRadius.circular(24),
-      child: Column(
+    return Padding(
+      padding: const EdgeInsets.only(left: 8, top: 16),
+      child: Stack(
+        overflow: Overflow.visible,
         children: <Widget>[
-          Row(
-        children: <Widget>[
+          InkWell(
+            borderRadius: BorderRadius.circular(24),
+            child: Photo(url: proposta.fotoPolitico),
+            onTap: () => clickableImage
+                ? SimpleRouter.forward(
+                    PoliticProfilePageConnected(proposta.idPoliticoAutor),
+                    name: POLITIC_PROFILE_PAGE,
+                  )
+                : null,
+          ),
           if (!proposta.visualizado)
-            FaIcon(
-              FontAwesome5Solid.circle,
-              color: theme.primaryColor,
-              size: 5,
+            Positioned(
+              top: -4,
+              left: 0,
+              child: FaIcon(
+                FontAwesome5Solid.circle,
+                color: theme.primaryColor,
+                size: 5,
+              ),
             ),
-          Photo(url: proposta.fotoPolitico),
-          ],),
-          const SizedBox(height: 16),
-          FancyShimmerImage(
-            imageUrl: proposta.urlPartidoLogo,
-            width: 30,
-            height: 30,
-            boxFit: BoxFit.contain,
+          Positioned(
+            right: 0,
+            bottom: -10,
+            child: FancyShimmerImage(
+              imageUrl: proposta.urlPartidoLogo,
+              width: 22,
+              height: 22,
+              boxFit: BoxFit.contain,
+            ),
           ),
         ],
       ),
-      onTap: () => clickableImage
-          ? SimpleRouter.forward(
-              PoliticProfilePageConnected(proposta.idPoliticoAutor),
-              name: POLITIC_PROFILE_PAGE,
-            )
-          : null,
+    );
+  }
+
+  Widget _buildTag() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        TimelineCardLabel(
+          child: proposta.foiAtualizada ?? false
+              ? Text(
+                  UPDATE.toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 9,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.yellow[800],
+                  ),
+                )
+              : Text(
+                  NEW.toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 9,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.green,
+                  ),
+                ),
+        ),
+      ],
     );
   }
 
   Widget _buildTopContent() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              proposta.nomePolitico,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              '$POLITIC'
-              ' · ${proposta.siglaPartido}'
-              ' · ${proposta.estadoPolitico}',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.normal,
-                color: Colors.grey[600],
-              ),
-            ),
-          ],
+        const SizedBox(height: 14),
+        Text(
+          proposta.nomePolitico,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        TimelineCardLabel(
-          child: Center(
-            child: proposta.foiAtualizada ?? false
-                ? Text(
-                    UPDATE.toUpperCase(),
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.blue,
-                    ),
-                  )
-                : Text(
-                    NEW.toUpperCase(),
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.green,
-                    ),
-                  ),
+        Text(
+          '$POLITIC'
+          ' · ${proposta.siglaPartido}'
+          ' · ${proposta.estadoPolitico}',
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.normal,
+            color: Colors.grey[600],
           ),
         ),
       ],
@@ -141,50 +164,54 @@ class PropostaTile extends StatelessWidget {
         if (proposta.descricaoTipo == PLENARY_AMENDMENT)
           Text('${proposta.descricaoTipo}')
         else
-          TextRich(
-            maxLines: 4,
-            children: [
-              TextSpan(
-                text: '${proposta.descricaoTipo}: ',
-                style: const TextStyle(fontWeight: FontWeight.w500),
-              ),
-              TextSpan(text: '${proposta.ementa}'),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: TextRich(
+              maxLines: 4,
+              children: [
+                TextSpan(
+                  text: '${proposta.descricaoTipo}: ',
+                  style: const TextStyle(fontWeight: FontWeight.w500),
+                ),
+                TextSpan(text: '${proposta.ementa}'),
+              ],
+            ),
           ),
-        Text(
-          proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
-          style: TextStyle(
-            fontSize: 12,
-            color: Colors.grey[600],
-          ),
-        ),
       ],
     );
   }
 
   Widget _buildActions(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
-      builder: (_, state) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          ButtonActionCard(
-            isIconOnly: true,
-            icon: context.bloc<PostBloc>().isPostFavorite
-                ? FontAwesomeIcons.solidBookmark
-                : FontAwesomeIcons.bookmark,
-            iconColor:
-                context.bloc<PostBloc>().isPostFavorite ? Colors.amber : null,
-            //text: context.bloc<PostBloc>().isPostFavorite ? SAVED : SAVE,
-            // fontSize: 14,
-            onTap: () => context.bloc<PostBloc>().add(
-                  FavoritePostForUser(
-                    post: proposta.toJson(),
-                    user: context.bloc<UserBloc>().user,
+      builder: (_, state) => Padding(
+        padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey[600],
+              ),
+            ),
+            ButtonActionCard(
+              isIconOnly: true,
+              icon: context.bloc<PostBloc>().isPostFavorite
+                  ? FontAwesomeIcons.solidBookmark
+                  : FontAwesomeIcons.bookmark,
+              iconColor:
+                  context.bloc<PostBloc>().isPostFavorite ? Colors.amber : null,
+              onTap: () => context.bloc<PostBloc>().add(
+                    FavoritePostForUser(
+                      post: proposta.toJson(),
+                      user: context.bloc<UserBloc>().user,
+                    ),
                   ),
-                ),
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

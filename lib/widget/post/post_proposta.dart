@@ -55,8 +55,8 @@ class PostProposta extends StatelessWidget {
   }
 
   Widget _buildTopContent() {
-    return Wrap(
-      crossAxisAlignment: WrapCrossAlignment.end,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
           proposta.nomePolitico,
@@ -65,7 +65,7 @@ class PostProposta extends StatelessWidget {
           ),
         ),
         Text(
-          ' · $POLITIC · ${proposta.siglaPartido} · ${proposta.estadoPolitico}',
+          '$POLITIC · ${proposta.siglaPartido} · ${proposta.estadoPolitico}',
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.normal,
