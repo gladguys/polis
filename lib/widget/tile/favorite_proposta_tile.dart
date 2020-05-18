@@ -58,16 +58,18 @@ class FavoritePropostaTile extends StatelessWidget {
                 )
               : null,
         ),
-        Positioned(
-          right: 0,
-          bottom: -10,
-          child: FancyShimmerImage(
-            imageUrl: proposta.urlPartidoLogo,
-            width: 22,
-            height: 22,
-            boxFit: BoxFit.contain,
-          ),
-        ),
+        proposta.urlPartidoLogo != null
+            ? Positioned(
+                right: 0,
+                bottom: -10,
+                child: FancyShimmerImage(
+                  imageUrl: proposta.urlPartidoLogo,
+                  width: 22,
+                  height: 22,
+                  boxFit: BoxFit.contain,
+                ),
+              )
+            : const SizedBox.shrink(),
       ],
     );
   }
