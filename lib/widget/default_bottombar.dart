@@ -8,6 +8,7 @@ import '../core/keys.dart';
 import '../core/routing/route_names.dart';
 import '../i18n/i18n.dart';
 import '../page/pages.dart';
+import '../page/theme/main_theme.dart';
 import 'photo.dart';
 
 class DefaultBottombar extends StatelessWidget {
@@ -25,10 +26,11 @@ class DefaultBottombar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomAppBar(
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
             width: 80,
-            height: 56,
+            height: 48,
             alignment: Alignment.centerLeft,
             child: !withBack
                 ? const Padding(
@@ -49,51 +51,46 @@ class DefaultBottombar extends StatelessWidget {
                     onPressed: onPopCallback,
                   ),
           ),
-          Expanded(
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              spacing: 8,
-              children: <Widget>[
-                _buildButtonBottomAppBar(
-                  icon: FontAwesomeIcons.home,
-                  isSelected: routeName == TIMELINE_PAGE,
-                  onPressed: () => routeName != TIMELINE_PAGE
-                      ? SimpleRouter.forwardAndReplace(
-                          TimelinePageConnected(),
-                          name: TIMELINE_PAGE,
-                        )
-                      : VoidCallback,
-                ),
-                _buildButtonBottomAppBar(
-                  icon: FontAwesomeIcons.search,
-                  isSelected: routeName == SEARCH_POLITIC_PAGE,
-                  onPressed: () => routeName != SEARCH_POLITIC_PAGE
-                      ? SimpleRouter.forwardAndReplace(
-                          SearchPoliticPageConnected(),
-                          name: SEARCH_POLITIC_PAGE,
-                        )
-                      : VoidCallback,
-                ),
-                _buildButtonBottomAppBar(
-                  icon: FontAwesomeIcons.solidBookmark,
-                  isSelected: routeName == FAVORITE_POSTS_PAGE,
-                  onPressed: () => routeName != FAVORITE_POSTS_PAGE
-                      ? SimpleRouter.forwardAndReplace(
-                          FavoritePostsPageConnected(),
-                          name: FAVORITE_POSTS_PAGE,
-                        )
-                      : VoidCallback,
-                ),
-              ],
-            ),
+          const Spacer(),
+          _buildButtonBottomAppBar(
+            icon: FontAwesomeIcons.home,
+            isSelected: routeName == TIMELINE_PAGE,
+            onPressed: () => routeName != TIMELINE_PAGE
+                ? SimpleRouter.forwardAndReplace(
+                    TimelinePageConnected(),
+                    name: TIMELINE_PAGE,
+                  )
+                : VoidCallback,
           ),
+          const SizedBox(width: 4),
+          _buildButtonBottomAppBar(
+            icon: FontAwesomeIcons.search,
+            isSelected: routeName == SEARCH_POLITIC_PAGE,
+            onPressed: () => routeName != SEARCH_POLITIC_PAGE
+                ? SimpleRouter.forwardAndReplace(
+                    SearchPoliticPageConnected(),
+                    name: SEARCH_POLITIC_PAGE,
+                  )
+                : VoidCallback,
+          ),
+          const SizedBox(width: 4),
+          _buildButtonBottomAppBar(
+            icon: FontAwesomeIcons.solidBookmark,
+            isSelected: routeName == FAVORITE_POSTS_PAGE,
+            onPressed: () => routeName != FAVORITE_POSTS_PAGE
+                ? SimpleRouter.forwardAndReplace(
+                    FavoritePostsPageConnected(),
+                    name: FAVORITE_POSTS_PAGE,
+                  )
+                : VoidCallback,
+          ),
+          const Spacer(),
           Container(
             width: 80,
             height: 48,
             alignment: Alignment.centerRight,
             child: _buildUserButton(context, routeName),
           ),
-          const SizedBox(width: 4),
         ],
       ),
     );
@@ -102,34 +99,37 @@ class DefaultBottombar extends StatelessWidget {
   Widget _buildUserButton(BuildContext context, String routeName) {
     final user = context.bloc<UserBloc>().user;
 
-    return InkWell(
-      borderRadius: BorderRadius.circular(24),
-      child: Container(
-        width: 48,
-        height: 60,
+    return Padding(
+      padding: const EdgeInsets.only(right: 4),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(20),
         child: Container(
-          key: profileImageBottombarKey,
-          alignment: Alignment.center,
-          padding: const EdgeInsets.all(2),
-          child: BlocBuilder<UserBloc, UserState>(
-            builder: (_, state) => Photo(
-              url: state is CurrentUserUpdated
-                  ? state.user.photoUrl
-                  : user.photoUrl,
-              size: 40,
-              boxFit: BoxFit.cover,
-              iconColor: Colors.black,
-              iconKey: userPhotolessIconKey,
+          width: 40,
+          height: 40,
+          child: Container(
+            key: profileImageBottombarKey,
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(2),
+            child: BlocBuilder<UserBloc, UserState>(
+              builder: (_, state) => Photo(
+                url: state is CurrentUserUpdated
+                    ? state.user.photoUrl
+                    : user.photoUrl,
+                size: 32,
+                boxFit: BoxFit.cover,
+                iconColor: theme.accentColor,
+                iconKey: userPhotolessIconKey,
+              ),
             ),
           ),
         ),
+        onTap: () => routeName != USER_PROFILE_PAGE
+            ? SimpleRouter.forward(
+                UserProfilePageConnected(),
+                name: USER_PROFILE_PAGE,
+              )
+            : VoidCallback,
       ),
-      onTap: () => routeName != USER_PROFILE_PAGE
-          ? SimpleRouter.forward(
-              UserProfilePageConnected(),
-              name: USER_PROFILE_PAGE,
-            )
-          : VoidCallback,
     );
   }
 
@@ -142,11 +142,11 @@ class DefaultBottombar extends StatelessWidget {
     Key key,
   }) {
     return Container(
-      width: 48,
-      height: 48,
+      width: 40,
+      height: 40,
       child: FlatButton(
         key: key,
-        color: isSelected ? Colors.grey[300] : null,
+        color: isSelected ? theme.primaryColorLight.withOpacity(.7) : null,
         child: icon != null ? FaIcon(icon, size: iconSize) : child,
         padding: EdgeInsets.zero,
         onPressed: onPressed,

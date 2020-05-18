@@ -28,99 +28,121 @@ class DespesaTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CardBase(
-      slotLeft: _buildLeftContent(),
-      slotCenter: BlocBuilder<PostBloc, PostState>(
-        builder: (_, state) => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _buildTopContent(),
-            _buildCenterContent(),
-          ],
-        ),
-      ),
-      slotBottom: _buildActions(context),
-      key: cardBaseKey,
-      onTap: () async {
-        await SimpleRouter.forward(
-          PostPageConnected(
-            post: despesa,
-            postType: PostType.DESPESA,
-            timelineBloc: context.bloc<TimelineBloc>(),
+    return Stack(
+      children: <Widget>[
+        const Divider(height: 1),
+        CardBase(
+          withIndent: false,
+          paddingSlotCenter: EdgeInsets.zero,
+          slotLeft: _buildLeftContent(),
+          slotCenter: BlocBuilder<PostBloc, PostState>(
+            builder: (_, state) => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                _buildTopContent(),
+                _buildCenterContent(),
+              ],
+            ),
           ),
-          name: POST_PAGE,
-        );
-        context.bloc<TimelineBloc>().add(RefreshTimeline());
-      },
+          slotBottom: _buildActions(context),
+          key: cardBaseKey,
+          onTap: () async {
+            await SimpleRouter.forward(
+              PostPageConnected(
+                post: despesa,
+                postType: PostType.DESPESA,
+                timelineBloc: context.bloc<TimelineBloc>(),
+              ),
+              name: POST_PAGE,
+            );
+            context.bloc<TimelineBloc>().add(RefreshTimeline());
+          },
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: _buildTag(),
+        ),
+      ],
     );
   }
 
   Widget _buildLeftContent() {
-    return InkWell(
-      borderRadius: BorderRadius.circular(24),
-      child: Column(
+    return Padding(
+      padding: const EdgeInsets.only(left: 8, top: 16),
+      child: Stack(
+        overflow: Overflow.visible,
         children: <Widget>[
-          Row(
-        children: <Widget>[
+          InkWell(
+            borderRadius: BorderRadius.circular(24),
+            child: Photo(url: despesa.fotoPolitico),
+            onTap: () => clickableImage
+                ? SimpleRouter.forward(
+                    PoliticProfilePageConnected(despesa.idPolitico),
+                    name: POLITIC_PROFILE_PAGE,
+                  )
+                : null,
+          ),
           if (!despesa.visualizado)
-            FaIcon(
-              FontAwesome5Solid.circle,
-              color: theme.primaryColor,
-              size: 5,
+            Positioned(
+              top: -4,
+              left: 0,
+              child: FaIcon(
+                FontAwesome5Solid.circle,
+                color: theme.primaryColor,
+                size: 5,
+              ),
             ),
-          Photo(url: despesa.fotoPolitico),
-          ],),
-          const SizedBox(height: 16),
-          FancyShimmerImage(
-            imageUrl: despesa.urlPartidoLogo,
-            width: 30,
-            height: 30,
-            boxFit: BoxFit.contain,
+          Positioned(
+            right: 0,
+            bottom: -10,
+            child: FancyShimmerImage(
+              imageUrl: despesa.urlPartidoLogo,
+              width: 22,
+              height: 22,
+              boxFit: BoxFit.contain,
+            ),
           ),
         ],
       ),
-      onTap: () => clickableImage
-          ? SimpleRouter.forward(
-              PoliticProfilePageConnected(despesa.idPolitico),
-              name: POLITIC_PROFILE_PAGE,
-            )
-          : null,
+    );
+  }
+
+  Widget _buildTag() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        TimelineCardLabel(
+          child: Text(
+            EXPENSE.toUpperCase(),
+            style: TextStyle(
+              fontSize: 9,
+              fontWeight: FontWeight.w500,
+              color: Colors.blue,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   Widget _buildTopContent() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              despesa.nomePolitico,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              '$POLITIC · ${despesa.siglaPartido} · ${despesa.estadoPolitico}',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.normal,
-                color: Colors.grey[600],
-              ),
-            ),
-          ],
+        const SizedBox(height: 14),
+        Text(
+          despesa.nomePolitico,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        TimelineCardLabel(
-          child: Center(
-            child: Text(
-              EXPENSE.toUpperCase(),
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.amber,
-              ),
-            ),
+        Text(
+          '$POLITIC · ${despesa.siglaPartido} · ${despesa.estadoPolitico}',
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.normal,
+            color: Colors.grey[600],
           ),
         ),
       ],
@@ -132,26 +154,22 @@ class DespesaTile extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const SizedBox(height: 4),
-        TextRich(
-          maxLines: 4,
-          children: [
-            TextSpan(
-              text: '${despesa.tipoAtividade.capitalizeUpperCase()}'
-                  ' $WITH '
-                  '${despesa.tipoDespesa.toLowerCase().removeDot()}'
-                  ' $IN_THE_AMOUNT_OF ',
-            ),
-            TextSpan(
-              text: '${despesa.valorLiquido.formatCurrency()}.',
-              style: const TextStyle(fontWeight: FontWeight.w500),
-            ),
-          ],
-        ),
-        Text(
-          '${despesa.dataDocumento.formatDate()}',
-          style: TextStyle(
-            fontSize: 12,
-            color: Colors.grey[600],
+        Padding(
+          padding: const EdgeInsets.only(right: 8),
+          child: TextRich(
+            maxLines: 4,
+            children: [
+              TextSpan(
+                text: '${despesa.tipoAtividade.capitalizeUpperCase()}'
+                    ' $WITH '
+                    '${despesa.tipoDespesa.toLowerCase().removeDot()}'
+                    ' $IN_THE_AMOUNT_OF ',
+              ),
+              TextSpan(
+                text: '${despesa.valorLiquido.formatCurrency()}.',
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ],
           ),
         ),
       ],
@@ -160,28 +178,39 @@ class DespesaTile extends StatelessWidget {
 
   Widget _buildActions(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
-      builder: (_, state) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          ButtonActionCard(
-            isIconOnly: true,
-            icon: context.bloc<PostBloc>().isPostFavorite
-                ? FontAwesomeIcons.solidBookmark
-                : FontAwesomeIcons.bookmark,
-            iconColor:
-                context.bloc<PostBloc>().isPostFavorite ? Colors.yellow : null,
-            onTap: () => context.bloc<PostBloc>().add(
-                  FavoritePostForUser(
-                    post: {
-                      'id': despesa.id,
-                      ...despesa.toJson(),
-                    },
-                    user: context.bloc<UserBloc>().user,
+      builder: (_, state) => Padding(
+        padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              '${despesa.dataDocumento.formatDate()}',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey[600],
+              ),
+            ),
+            ButtonActionCard(
+              isIconOnly: true,
+              icon: context.bloc<PostBloc>().isPostFavorite
+                  ? FontAwesomeIcons.solidBookmark
+                  : FontAwesomeIcons.bookmark,
+              iconColor: context.bloc<PostBloc>().isPostFavorite
+                  ? Colors.yellow
+                  : null,
+              onTap: () => context.bloc<PostBloc>().add(
+                    FavoritePostForUser(
+                      post: {
+                        'id': despesa.id,
+                        ...despesa.toJson(),
+                      },
+                      user: context.bloc<UserBloc>().user,
+                    ),
                   ),
-                ),
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

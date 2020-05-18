@@ -57,8 +57,8 @@ class PostDespesa extends StatelessWidget {
   }
 
   Widget _buildTopContent() {
-    return Wrap(
-      crossAxisAlignment: WrapCrossAlignment.end,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
           despesa.nomePolitico,
@@ -67,7 +67,7 @@ class PostDespesa extends StatelessWidget {
           ),
         ),
         Text(
-          ' · $POLITIC · ${despesa.siglaPartido} · ${despesa.estadoPolitico}',
+          '$POLITIC · ${despesa.siglaPartido} · ${despesa.estadoPolitico}',
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.normal,

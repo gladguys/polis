@@ -44,8 +44,6 @@ class PoliticSuggested extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Text(
               politico.nomeEleitoral,
-              maxLines: 1,
-              overflow: TextOverflow.visible,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
@@ -53,7 +51,14 @@ class PoliticSuggested extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 4),
-          Text('${politico.siglaPartido} · ${politico.siglaUf}'),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Text(
+              '${politico.siglaPartido} · ${politico.siglaUf}',
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 11),
+            ),
+          ),
           const SizedBox(height: 2),
           Text(
             POLITIC,
@@ -62,7 +67,8 @@ class PoliticSuggested extends StatelessWidget {
               color: Colors.grey[600],
             ),
           ),
-          const SizedBox(height: 16),
+          const Spacer(),
+          const SizedBox(height: 8),
           Container(
             height: 28,
             width: 140,
@@ -79,6 +85,7 @@ class PoliticSuggested extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(height: 8),
         ],
       ),
     );

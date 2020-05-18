@@ -28,18 +28,18 @@ void main() {
   group('FavoriteDespesaTile tests', () {
     setUp(() {
       despesa = DespesaModel(
-        fotoPolitico: 'foto',
-        nomePolitico: 'nome',
-        nomeFornecedor: 'fornecedor',
-        tipoAtividade: 'ativi',
-        tipoDespesa: 'despesa',
-        valorLiquido: '3.51',
-        valorDocumento: '3.51',
-        valorGlosa: '3.51',
-        dataDocumento: '10-01-2020',
-        urlDocumento: 'urlDoc',
-        visualizado: false,
-      );
+          fotoPolitico: 'foto',
+          nomePolitico: 'nome',
+          nomeFornecedor: 'fornecedor',
+          tipoAtividade: 'ativi',
+          tipoDespesa: 'despesa',
+          valorLiquido: '3.51',
+          valorDocumento: '3.51',
+          valorGlosa: '3.51',
+          dataDocumento: '10-01-2020',
+          urlDocumento: 'urlDoc',
+          visualizado: false,
+          urlPartidoLogo: 'url');
     });
 
     testWidgets('should build without exploding', (tester) async {

@@ -15,17 +15,22 @@ class PoliticPersonalInfo extends StatelessWidget {
     return Column(
       children: <Widget>[
         Stack(
+          overflow: Overflow.visible,
           children: <Widget>[
             Photo(
               url: politic.urlFoto,
               size: 120,
               borderRadius: BorderRadius.circular(60),
             ),
-            FancyShimmerImage(
-              imageUrl: politic.urlPartidoLogo,
-              height: 40,
-              width: 40,
-              boxFit: BoxFit.contain,
+            Positioned(
+              bottom: -4,
+              right: -4,
+              child: FancyShimmerImage(
+                imageUrl: politic.urlPartidoLogo,
+                height: 40,
+                width: 40,
+                boxFit: BoxFit.contain,
+              ),
             ),
           ],
         ),
