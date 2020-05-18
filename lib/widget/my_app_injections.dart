@@ -10,7 +10,7 @@ import '../core/abstract/polis_google_auth_provider.dart';
 import '../repository/concrete/repositories.dart';
 
 const SCOPE_TYPE = 'email';
-const SCOPE_URL = 'https://www.googleapis.com/auth/contacts.readonly';
+const SCOPE_URL = 'https://www.googleapis.com/auth/userinfo.profile';
 
 class MyAppInjections extends StatelessWidget {
   MyAppInjections({this.child});
