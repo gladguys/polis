@@ -45,7 +45,7 @@ class PostProposta extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               _buildTopContent(),
-              _buildCenterContent(),
+              _buildCenterContent(context),
             ],
           ),
           slotBottom: _buildActions(context),
@@ -76,7 +76,7 @@ class PostProposta extends StatelessWidget {
     );
   }
 
-  Widget _buildCenterContent() {
+  Widget _buildCenterContent(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 4),
       child: Wrap(
@@ -117,6 +117,31 @@ class PostProposta extends StatelessWidget {
             value: proposta.dataAtualizacao.formatDate(),
             emptyValue: NOT_INFORMED_FEMALE,
           ),
+          proposta.urlInteiroTeor != null
+              ? Row(
+                  children: <Widget>[
+                    Container(
+                      height: 30,
+                      margin: const EdgeInsets.only(top: 4),
+                      child: OutlineButton.icon(
+                        key: seePropostaDocumentKey,
+                        icon: FaIcon(FontAwesomeIcons.newspaper, size: 18),
+                        label: Text(
+                          DOCUMENT.toUpperCase(),
+                          style: const TextStyle(fontSize: 13),
+                        ),
+                        color: theme.primaryColor,
+                        highlightedBorderColor: theme.primaryColorDark,
+                        borderSide: BorderSide(color: theme.primaryColor),
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        onPressed: () => context.bloc<DocumentBloc>().add(
+                              OpenDocumentImage(proposta.urlInteiroTeor),
+                            ),
+                      ),
+                    ),
+                  ],
+                )
+              : const SizedBox.shrink(),
           Row(
             children: <Widget>[
               Container(

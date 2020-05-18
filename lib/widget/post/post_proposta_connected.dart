@@ -4,14 +4,14 @@ import 'package:screenshot/screenshot.dart';
 import '../../bloc/blocs.dart';
 import '../../core/service/locator.dart';
 import '../../core/service/services.dart';
-import '../../model/despesa_model.dart';
+import '../../model/models.dart';
 import '../../page/page_connected.dart';
-import 'post_despesa.dart';
+import 'post_proposta.dart';
 
-class PostDespesaConnected extends StatelessWidget {
-  PostDespesaConnected(this.despesa);
+class PostPropostaConnected extends StatelessWidget {
+  PostPropostaConnected(this.proposta);
 
-  final DespesaModel despesa;
+  final PropostaModel proposta;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +19,8 @@ class PostDespesaConnected extends StatelessWidget {
       bloc: DocumentBloc(
         urlLaunchService: G<UrlLauncherService>(),
       ),
-      page: PostDespesa(
-        despesa,
+      page: PostProposta(
+        proposta,
         screenshotController: ScreenshotController(),
       ),
     );

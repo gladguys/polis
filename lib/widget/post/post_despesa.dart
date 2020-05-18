@@ -144,8 +144,8 @@ class PostDespesa extends StatelessWidget {
                     highlightedBorderColor: theme.primaryColorDark,
                     borderSide: BorderSide(color: theme.primaryColor),
                     padding: const EdgeInsets.symmetric(horizontal: 24),
-                    onPressed: () => context.bloc<DespesaImageBloc>().add(
-                          OpenDespesaImage(despesa.urlDocumento),
+                    onPressed: () => context.bloc<DocumentBloc>().add(
+                          OpenDocumentImage(despesa.urlDocumento),
                         ),
                   ),
                 )
