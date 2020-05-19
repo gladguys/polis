@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../../core/routing/route_names.dart';
@@ -12,6 +13,7 @@ import '../../pages.dart';
 class PoliticAdditionalInfo extends StatelessWidget {
   PoliticAdditionalInfo(this.politic);
 
+  final tooltipKey = GlobalKey();
   final PoliticoModel politic;
 
   int get quantidadeSeguidores => (politic.quantidadeSeguidores ?? 0).toInt();
@@ -82,44 +84,67 @@ class PoliticAdditionalInfo extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Tooltip(
-          message: getMonthPhrase(),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  TextRich(
-                    children: [
-                      TextSpan(
-                        text: totalDespesas.formatCurrency(),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                TextRich(
+                  children: [
+                    TextSpan(
+                      text: totalDespesas.formatCurrency(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
                       ),
-                      TextSpan(
-                        text: ' ($position)',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    EXPENSES,
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 12,
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                    TextSpan(
+                      text: ' ($position)',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(
+                      EXPENSES,
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 12,
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Tooltip(
+                      key: tooltipKey,
+                      verticalOffset: 12,
+                      message: getMonthPhrase(),
+                      child: Container(
+                        width: 18,
+                        height: 20,
+                        child: FlatButton(
+                          padding: EdgeInsets.zero,
+                          child: FaIcon(
+                            FontAwesomeIcons.infoCircle,
+                            size: 18,
+                            color: Colors.grey[500],
+                          ),
+                          onPressed: () {
+                            final dynamic tooltip = tooltipKey.currentState;
+                            tooltip.ensureTooltipVisible();
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
         ),
       ],
     );
@@ -127,6 +152,6 @@ class PoliticAdditionalInfo extends StatelessWidget {
 
   String getMonthPhrase() {
     final now = DateTime.now();
-    return '''$UNTIL_THE_DAY ${getLastDayOfLastMonth()} $OF ${getLastMonthName()} $OF ${now.year}''';
+    return '''$EXPENSES_UNTIL_THE_DAY ${getLastDayOfLastMonth()} $OF ${getLastMonthName()} $OF ${now.year}''';
   }
 }
