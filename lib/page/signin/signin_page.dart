@@ -8,6 +8,8 @@ import '../../bloc/blocs.dart';
 import '../../bloc/signin/signin_bloc.dart';
 import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
+import '../../core/service/locator.dart';
+import '../../core/service/services.dart';
 import '../../core/validators.dart';
 import '../../i18n/i18n.dart';
 import '../../widget/loading.dart';
@@ -51,7 +53,9 @@ class _SigninPageState extends State<SigninPage> {
 
           if (user.isFirstLoginDone) {
             SimpleRouter.forwardAndReplace(
-              TimelinePageConnected(),
+              TimelinePageConnected(
+                appUpdateService: G<AppUpdateService>(),
+              ),
               name: TIMELINE_PAGE,
             );
           } else {

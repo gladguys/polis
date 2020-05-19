@@ -6,6 +6,8 @@ import 'package:simple_router/simple_router.dart';
 import '../bloc/blocs.dart';
 import '../core/keys.dart';
 import '../core/routing/route_names.dart';
+import '../core/service/locator.dart';
+import '../core/service/services.dart';
 import '../i18n/i18n.dart';
 import '../page/pages.dart';
 import '../page/theme/main_theme.dart';
@@ -57,7 +59,9 @@ class DefaultBottombar extends StatelessWidget {
             isSelected: routeName == TIMELINE_PAGE,
             onPressed: () => routeName != TIMELINE_PAGE
                 ? SimpleRouter.forwardAndReplace(
-                    TimelinePageConnected(),
+                    TimelinePageConnected(
+                      appUpdateService: G<AppUpdateService>(),
+                    ),
                     name: TIMELINE_PAGE,
                   )
                 : VoidCallback,

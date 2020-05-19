@@ -1,13 +1,47 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
 import '../../bloc/timeline/timeline_bloc.dart';
+import '../../core/service/locator.dart';
+import '../../core/service/services.dart';
 import '../../repository/concrete/repositories.dart';
+import '../../widget/update_app_dialog.dart';
 import '../page_connected.dart';
 import '../pages.dart';
 
-class TimelinePageConnected extends StatelessWidget {
+class TimelinePageConnected extends StatefulWidget {
+  TimelinePageConnected({@required this.appUpdateService})
+      : assert(appUpdateService != null);
+
+  final AppUpdateService appUpdateService;
+
+  @override
+  _TimelinePageConnectedState createState() => _TimelinePageConnectedState();
+}
+
+class _TimelinePageConnectedState extends State<TimelinePageConnected> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+      print('-----------------------------------');
+      final appUpdateInfo = await widget.appUpdateService.checkForUpdate();
+      print(appUpdateInfo);
+      if (appUpdateInfo.updateAvailable) {
+        //if (true) {
+        showDialog(
+          context: context,
+          builder: (_) => UpdateAppDialog(
+            appUpdateService: G<AppUpdateService>(),
+          ),
+        );
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return PageConnected<TimelineBloc>(
