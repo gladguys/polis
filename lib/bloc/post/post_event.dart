@@ -41,3 +41,13 @@ class SetPostViewed extends PostEvent {
   @override
   List<Object> get props => [userId, postId];
 }
+
+class SetPostFavorited extends PostEvent {
+  SetPostFavorited({this.userId, this.postId});
+
+  final String userId;
+  final String postId;
+
+  @override
+  List<Object> get props => [userId, postId];
+}

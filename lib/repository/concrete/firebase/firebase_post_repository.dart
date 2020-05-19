@@ -60,4 +60,18 @@ class FirebasePostRepository implements PostRepository {
       throw ComunicationException();
     }
   }
+
+  @override
+  Future<bool> isPostFavorited({String userId, String postId}) async {
+    try {
+      final documentReference = await postsFavoritosRef
+          .document(userId)
+          .collection(POSTS_FAVORITOS_USUARIO_SUBCOLLECTION)
+          .document(postId);
+      final documentSnapshot = await documentReference.get();
+      return documentSnapshot.exists;
+    } on Exception {
+      throw ComunicationException();
+    }
+  }
 }
