@@ -79,9 +79,8 @@ class MockTimelineBloc extends MockBloc<TimelineEvent, TimelineState>
 class MockUserProfileBloc extends MockBloc<UserProfileEvent, UserProfileState>
     implements UserProfileBloc {}
 
-class MockDespesaImageBloc
-    extends MockBloc<DespesaImageEvent, DespesaImageState>
-    implements DespesaImageBloc {}
+class MockDocumentBloc extends MockBloc<DocumentEvent, DocumentState>
+    implements DocumentBloc {}
 
 class MockPoliticProfileBloc
     extends MockBloc<PoliticProfileEvent, PoliticProfileState>
