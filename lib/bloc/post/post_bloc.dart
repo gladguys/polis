@@ -80,5 +80,16 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         yield PostViewedFailed();
       }
     }
+    if (event is SetPostFavorited) {
+      try {
+        isPostFavorite = await postRepository.isPostFavorited(
+          userId: event.userId,
+          postId: event.postId,
+        );
+        yield PostFavoritedSuccess();
+      } on Exception {
+        yield PostFavoritedFailed();
+      }
+    }
   }
 }

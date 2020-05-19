@@ -37,6 +37,12 @@ class PostPageConnected extends StatelessWidget {
         ),
       );
     }
+    postBloc.add(
+      SetPostFavorited(
+        userId: context.bloc<UserBloc>().user.userId,
+        postId: getPostId(post),
+      ),
+    );
     return PageConnected<PostBloc>(
       bloc: postBloc,
       page: PostPage(post: post, postType: postType),
