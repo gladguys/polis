@@ -11,7 +11,7 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="Polis"
+        android:label="Pólis"
         android:icon="@mipmap/launcher_icon"
         android:roundIcon="@mipmap/launcher_icon">
 
