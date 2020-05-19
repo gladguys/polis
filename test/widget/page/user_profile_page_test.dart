@@ -280,6 +280,7 @@ void main() {
       expect(logoutButton, findsOneWidget);
       await tester.ensureVisible(logoutButton);
       await tester.tap(logoutButton);
+      lll
     });
   });
 }
