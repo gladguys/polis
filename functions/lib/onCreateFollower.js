@@ -25,19 +25,19 @@ async function criarAcaoSeguirPoliticoParaUsuario(politicoDocumentRef, politicoI
     const today = dd + '/' + mm + '/' + yyyy;
 
     const politico = await politicoDocumentRef.get();
-    const acao = buildAcao(todayDate, today, politico, politicoId);
+    const acao = buildAcao(todayDate, today, politicoDocumentRef, politicoId);
     admin.firestore().collection('acoes').doc(followerId).collection('acoesUsuario').add(acao);
 }
 
-function buildAcao(todayDate, politico, politicoId) {
+function buildAcao(todayDate, politicoDocumentRef, politicoId) {
     return {
         'tipo': 'SEGUIR',
         'data': admin.firestore.Timestamp.fromDate(todayDate),
-        'nomePolitico': politico.data().nomeEleitoral,
+        'nomePolitico': politicoDocumentRef.data().nomeEleitoral,
         'idPolitico': politicoId,
-        'mensagem': 'Segui o político ' + politico.data().nomeEleitoral + ' no dia ' + today,
-        'urlFotoPolitico': politico.data().urlFoto,
-        'sexoPolitico': politico.data().sexo
+        'mensagem': 'Segui o político ' + politicoDocumentRef.data().nomeEleitoral + ' no dia ' + today,
+        'urlFotoPolitico': politicoDocumentRef.data().urlFoto,
+        'sexoPolitico': politicoDocumentRef.data().sexo
     };
 }
 
