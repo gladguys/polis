@@ -106,3 +106,4 @@ const STATES_DOTS = 'Estados...';
 const IN_CASH = 'À vista';
 const NEXT = 'Próximo';
 const OF = 'de';
+const AFTER = 'Depois';

@@ -13,58 +13,30 @@ class UpdateAppDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoAlertDialog(
+    return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      title: Text(UPDATE_APP),
       content: Container(
         width: 200,
-        height: 200,
-        child: Column(
-          children: <Widget>[
-            const Padding(
-              padding: EdgeInsets.only(bottom: 12),
-              child: Text(
-                UPDATE_APP,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const Expanded(
-              child: Text(
-                UPDATE_APP_DESCRIPTION,
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            ),
-            const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                const FlatButton(
-                  onPressed: SimpleRouter.back,
-                  child: Text(
-                    NO,
-                    style: TextStyle(
-                      color: Colors.amber,
-                    ),
-                  ),
-                ),
-                RaisedButton(
-                  shape: const ContinuousRectangleBorder(),
-                  onPressed: () async => appUpdateService.startFlexibleUpdate(),
-                  child: Text(
-                    ACTION_UPDATE,
-                    style: TextStyle(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
+        height: 110,
+        child: Text(UPDATE_APP_DESCRIPTION),
       ),
+      actions: <Widget>[
+        const FlatButton(
+          child: Text(AFTER),
+          textColor: Colors.black,
+          highlightColor: Colors.black12,
+          splashColor: Colors.black26,
+          onPressed: SimpleRouter.back,
+        ),
+        RaisedButton(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          onPressed: () async => appUpdateService.startFlexibleUpdate(),
+          child: Text(ACTION_UPDATE),
+        ),
+      ],
     );
   }
 }
