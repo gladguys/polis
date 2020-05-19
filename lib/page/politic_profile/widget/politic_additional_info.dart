@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../../core/routing/route_names.dart';
+import '../../../core/utils/date_utils.dart';
 import '../../../extension/extensions.dart';
 import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
@@ -11,6 +13,7 @@ import '../../pages.dart';
 class PoliticAdditionalInfo extends StatelessWidget {
   PoliticAdditionalInfo(this.politic);
 
+  final tooltipKey = GlobalKey();
   final PoliticoModel politic;
 
   int get quantidadeSeguidores => (politic.quantidadeSeguidores ?? 0).toInt();
@@ -106,12 +109,38 @@ class PoliticAdditionalInfo extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text(
-                  EXPENSES,
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 12,
-                  ),
+                Row(
+                  children: <Widget>[
+                    Text(
+                      EXPENSES,
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 12,
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Tooltip(
+                      key: tooltipKey,
+                      verticalOffset: 12,
+                      message: getMonthPhrase(),
+                      child: Container(
+                        width: 18,
+                        height: 20,
+                        child: FlatButton(
+                          padding: EdgeInsets.zero,
+                          child: FaIcon(
+                            FontAwesomeIcons.infoCircle,
+                            size: 18,
+                            color: Colors.grey[500],
+                          ),
+                          onPressed: () {
+                            final dynamic tooltip = tooltipKey.currentState;
+                            tooltip.ensureTooltipVisible();
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -119,5 +148,10 @@ class PoliticAdditionalInfo extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String getMonthPhrase() {
+    final now = DateTime.now();
+    return '''$EXPENSES_UNTIL_THE_DAY ${getLastDayOfLastMonth()} $OF ${getLastMonthName()} $OF ${now.year}''';
   }
 }
