@@ -172,15 +172,15 @@ void main() {
 
     testWidgets('should open despesa image when clicked document icon',
         (tester) async {
-      final mockDespesaImageBloc = MockDespesaImageBloc();
+      final mockDocumentBloc = MockDocumentBloc();
       final mockPostBloc = MockPostBloc();
       when(mockPostBloc.isPostFavorite).thenReturn(false);
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<PostBloc>(
             bloc: mockPostBloc,
-            page: PageConnected<DespesaImageBloc>(
-              bloc: mockDespesaImageBloc,
+            page: PageConnected<DocumentBloc>(
+              bloc: mockDocumentBloc,
               page: PostDespesa(
                 despesa,
                 screenshotController: MockScreenshotController(),
@@ -192,7 +192,7 @@ void main() {
       final despesaIcon = find.byKey(despesaImageIconKey);
       expect(despesaIcon, findsOneWidget);
       await tester.tap(despesaIcon);
-      verify(mockDespesaImageBloc.add(OpenDespesaImage('urlDoc'))).called(1);
+      verify(mockDocumentBloc.add(OpenDocumentImage('urlDoc'))).called(1);
     });
   });
 }

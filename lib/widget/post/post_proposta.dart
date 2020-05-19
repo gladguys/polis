@@ -45,7 +45,7 @@ class PostProposta extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               _buildTopContent(),
-              _buildCenterContent(),
+              _buildCenterContent(context),
             ],
           ),
           slotBottom: _buildActions(context),
@@ -76,7 +76,7 @@ class PostProposta extends StatelessWidget {
     );
   }
 
-  Widget _buildCenterContent() {
+  Widget _buildCenterContent(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 4),
       child: Wrap(
@@ -117,29 +117,50 @@ class PostProposta extends StatelessWidget {
             value: proposta.dataAtualizacao.formatDate(),
             emptyValue: NOT_INFORMED_FEMALE,
           ),
-          Row(
-            children: <Widget>[
-              Container(
-                height: 30,
-                margin: const EdgeInsets.only(top: 4),
-                child: OutlineButton.icon(
-                  key: tramitationsIconKey,
-                  icon: FaIcon(FontAwesomeIcons.exchangeAlt, size: 18),
-                  label: Text(
-                    TRAMITATIONS.toUpperCase(),
-                    style: const TextStyle(fontSize: 13),
-                  ),
-                  color: theme.primaryColor,
-                  highlightedBorderColor: theme.primaryColorDark,
-                  borderSide: BorderSide(color: theme.primaryColor),
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  onPressed: () => SimpleRouter.forward(
-                    TramitacaoPropostaPageConnected(proposta),
-                    name: TRAMITACAO_PROPOSTA_PAGE,
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: <Widget>[
+                Container(
+                  height: 30,
+                  child: OutlineButton.icon(
+                    key: tramitationsIconKey,
+                    icon: FaIcon(FontAwesomeIcons.exchangeAlt, size: 18),
+                    label: Text(
+                      TRAMITATIONS.toUpperCase(),
+                      style: const TextStyle(fontSize: 13),
+                    ),
+                    color: theme.primaryColor,
+                    highlightedBorderColor: theme.primaryColorDark,
+                    borderSide: BorderSide(color: theme.primaryColor),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    onPressed: () => SimpleRouter.forward(
+                      TramitacaoPropostaPageConnected(proposta),
+                      name: TRAMITACAO_PROPOSTA_PAGE,
+                    ),
                   ),
                 ),
-              ),
-            ],
+                if (proposta.urlInteiroTeor != null)
+                  Container(
+                    height: 30,
+                    child: FlatButton.icon(
+                      key: seePropostaDocumentKey,
+                      icon: FaIcon(FontAwesomeIcons.file, size: 18),
+                      label: Text(
+                        DOCUMENT.toUpperCase(),
+                        style: const TextStyle(fontSize: 13),
+                      ),
+                      color: theme.primaryColor,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      onPressed: () => context.bloc<DocumentBloc>().add(
+                            OpenDocumentImage(proposta.urlInteiroTeor),
+                          ),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ],
       ),
