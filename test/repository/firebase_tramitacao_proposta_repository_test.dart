@@ -48,7 +48,8 @@ void main() {
         when(mockPropostaDocumentRef
                 .collection(TRAMITACOES_PROPOSICAO_SUBCOLLECTION))
             .thenReturn(mockTramitacoesSubcollectionRef);
-        when(mockTramitacoesSubcollectionRef.orderBy(SEQUENCIA_FIELD))
+        when(mockTramitacoesSubcollectionRef.orderBy(SEQUENCIA_FIELD,
+                descending: true))
             .thenReturn(mockQuery);
         when(mockQuery.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));

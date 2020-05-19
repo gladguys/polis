@@ -23,7 +23,7 @@ class FirebaseTramitacaoPropostaRepository
       final querySnapshot = await tramitacoesRef
           .document(propostaId)
           .collection(TRAMITACOES_PROPOSICAO_SUBCOLLECTION)
-          .orderBy(SEQUENCIA_FIELD)
+          .orderBy(SEQUENCIA_FIELD, descending: true)
           .getDocuments();
       final documents = querySnapshot.documents;
       return List.generate(documents.length,
