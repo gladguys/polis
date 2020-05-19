@@ -1,6 +1,9 @@
 const EMAIL_ALREADY_IN_USE = 'Email já esta em uso';
 const PASSWORD_IS_WEAK = 'Password é muito fraco';
 const EMAIL_IS_INVALID = 'O email é inválido';
+const UPDATE_APP = 'Atualizar o Aplicativo?';
+const UPDATE_APP_DESCRIPTION =
+    '''Temos uma nova versão disponível. Esta nova versão vem com algumas correções e muitas melhorias. Recomendamos que você atualize.''';
 const UNTIL_THE_DAY = 'Até o dia';
 const EXPENSES_UNTIL_THE_DAY = 'Despesas do mandato atual até o dia';
 const EMAIL_RESET_SEND =
