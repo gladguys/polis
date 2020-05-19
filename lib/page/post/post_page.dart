@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:screenshot/screenshot.dart';
 
 import '../../core/routing/route_names.dart';
 import '../../enum/post_type.dart';
 import '../../widget/default_bottombar.dart';
 import '../../widget/post/post_despesa_connected.dart';
-import '../../widget/post/post_proposta.dart';
+import '../../widget/post/post_proposta_connected.dart';
 
 class PostPage extends StatelessWidget {
   PostPage({@required this.post, @required this.postType})
@@ -26,10 +25,7 @@ class PostPage extends StatelessWidget {
             Expanded(
               child: postType == PostType.DESPESA
                   ? PostDespesaConnected(post)
-                  : PostProposta(
-                      post,
-                      screenshotController: ScreenshotController(),
-                    ),
+                  : PostPropostaConnected(post),
             ),
             /*
             ESCONDIDO ENQUANTO NÃO IMPLEMENTADO

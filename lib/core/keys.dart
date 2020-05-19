@@ -33,6 +33,7 @@ const profileImageBottombarKey = ValueKey('profile-image-bottombar');
 const userPhotolessIconKey = ValueKey('user-photoless-icon');
 const cardBaseContentKey = ValueKey('card-base-content');
 const tramitationsIconKey = ValueKey('tramitations-icon');
+const seePropostaDocumentKey = ValueKey('proposta-document');
 const currentPasswordFieldKey = ValueKey('current-password-field');
 const newPasswordFieldKey = ValueKey('new-password-field');
 const despesaImageIconKey = ValueKey('despesa-image-icon');
