@@ -24,16 +24,16 @@ async function criarAcaoUsuarioDeixandoDeSeguirPolitico(politicoDocumentRef, pol
     const yyyy = todayDate.getFullYear();
     const today = dd + '/' + mm + '/' + yyyy;
 
-    const p = await politicoDocumentRef.get();
+    const politico = await politicoDocumentRef.get();
 
     const acao = {
         'tipo': 'DEIXAR_SEGUIR',
         'data': admin.firestore.Timestamp.fromDate(todayDate),
-        'nomePolitico': p.data().nomeEleitoral,
+        'nomePolitico': politico.data().nomeEleitoral,
         'idPolitico': politicoId,
-        'mensagem': 'Deixei de seguir o político ' + p.data().nomeEleitoral + ' no dia ' + today,
-        'urlFotoPolitico': p.data().urlFoto,
-        'sexoPolitico': p.data().sexo
+        'mensagem': 'Deixei de seguir o político ' + politico.data().nomeEleitoral + ' no dia ' + today,
+        'urlFotoPolitico': politico.data().urlFoto,
+        'sexoPolitico': politico.data().sexo
     };
 
     admin.firestore().collection('acoes').doc(followerId).collection('acoesUsuario').add(acao);
