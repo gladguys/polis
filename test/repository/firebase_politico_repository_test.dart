@@ -13,8 +13,10 @@ void main() {
     MockCollectionReference mockPoliticosCollectionReference;
     MockQuerySnapshot mockQuerySnapshot;
     MockDocumentSnapshot mockDocumentSnapshot;
+    MockQuery mockQuery;
 
     setUp(() {
+      mockQuery = MockQuery();
       mockFirestore = MockFirestore();
       firebasePoliticoRepository = FirebasePoliticoRepository(
         firestore: mockFirestore,
@@ -36,7 +38,9 @@ void main() {
       test('get all the politicos', () async {
         when(mockFirestore.collection(POLITICOS_COLLECTION))
             .thenReturn(mockPoliticosCollectionReference);
-        when(mockPoliticosCollectionReference.getDocuments())
+        when(mockPoliticosCollectionReference.orderBy(NOME_ELEITORAL_FIELD))
+            .thenReturn(mockQuery);
+        when(mockQuery.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
         when(mockQuerySnapshot.documents).thenReturn([mockDocumentSnapshot]);
         when(mockDocumentSnapshot.data).thenReturn({'id': '1'});

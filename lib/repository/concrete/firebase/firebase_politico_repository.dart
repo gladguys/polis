@@ -18,7 +18,8 @@ class FirebasePoliticoRepository implements PoliticoRepository {
   @override
   Future<List<PoliticoModel>> getAllPoliticos() async {
     try {
-      final querySnapshot = await politicosRef.getDocuments();
+      final querySnapshot =
+          await politicosRef.orderBy(NOME_ELEITORAL_FIELD).getDocuments();
       final documents = querySnapshot.documents;
       return List.generate(
           documents.length, (i) => PoliticoModel.fromJson(documents[i].data));

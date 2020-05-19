@@ -23,6 +23,7 @@ const ACOES_USUARIO_SUBCOLLECTION = 'acoesUsuario';
 
 // Field
 const SIGLA_UF_FIELD = 'siglaUf';
+const NOME_ELEITORAL_FIELD = 'nomeEleitoral';
 const TIPO_ATIVIDADE_FIELD = 'tipoAtividade';
 const DATA_ATUALIZACAO_FIELD = 'dataAtualizacao';
 const DATA_ACAO = 'data';
