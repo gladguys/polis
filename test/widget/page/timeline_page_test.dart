@@ -45,7 +45,13 @@ void main() {
     });
 
     testWidgets('shoud build without exploding', (tester) async {
-      await tester.pumpWidget(connectedWidget(TimelinePageConnected()));
+      await tester.pumpWidget(
+        connectedWidget(
+          TimelinePageConnected(
+            appUpdateService: MockAppUpdateService(),
+          ),
+        ),
+      );
     });
 
     testWidgets('shoud build Timeline with activity', (tester) async {

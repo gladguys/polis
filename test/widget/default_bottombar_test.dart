@@ -33,7 +33,9 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePageConnected(),
+            child: TimelinePageConnected(
+              appUpdateService: MockAppUpdateService(),
+            ),
           ),
         ),
       );
@@ -51,7 +53,9 @@ void main() {
               analyticsService: MockAnalyticsService(),
               sharedPreferencesService: MockSharedPreferencesService(),
             ),
-            child: TimelinePageConnected(),
+            child: TimelinePageConnected(
+              appUpdateService: MockAppUpdateService(),
+            ),
           ),
         ),
       );
@@ -91,7 +95,9 @@ void main() {
               analyticsService: MockAnalyticsService(),
               sharedPreferencesService: MockSharedPreferencesService(),
             ),
-            child: TimelinePageConnected(),
+            child: TimelinePageConnected(
+              appUpdateService: MockAppUpdateService(),
+            ),
           ),
         ),
       );
@@ -109,7 +115,9 @@ void main() {
               analyticsService: MockAnalyticsService(),
               sharedPreferencesService: MockSharedPreferencesService(),
             ),
-            child: TimelinePageConnected(),
+            child: TimelinePageConnected(
+              appUpdateService: MockAppUpdateService(),
+            ),
           ),
         ),
       );
@@ -124,7 +132,9 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePageConnected(),
+            child: TimelinePageConnected(
+              appUpdateService: MockAppUpdateService(),
+            ),
           ),
         ),
       );
@@ -169,7 +179,9 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePageConnected(),
+            child: TimelinePageConnected(
+              appUpdateService: MockAppUpdateService(),
+            ),
           ),
         ),
       );
@@ -191,7 +203,9 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePageConnected(),
+            child: TimelinePageConnected(
+              appUpdateService: MockAppUpdateService(),
+            ),
           ),
         ),
       );
@@ -214,7 +228,9 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePageConnected(),
+            child: TimelinePageConnected(
+              appUpdateService: MockAppUpdateService(),
+            ),
           ),
         ),
       );
@@ -267,7 +283,9 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePageConnected(),
+            child: TimelinePageConnected(
+              appUpdateService: MockAppUpdateService(),
+            ),
           ),
         ),
       );
@@ -295,7 +313,9 @@ void main() {
               navigatorObservers: [
                 mockObserver,
               ],
-              home: TimelinePageConnected(),
+              home: TimelinePageConnected(
+                appUpdateService: MockAppUpdateService(),
+              ),
             ),
           ),
         ),
