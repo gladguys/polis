@@ -117,54 +117,50 @@ class PostProposta extends StatelessWidget {
             value: proposta.dataAtualizacao.formatDate(),
             emptyValue: NOT_INFORMED_FEMALE,
           ),
-          proposta.urlInteiroTeor != null
-              ? Row(
-                  children: <Widget>[
-                    Container(
-                      height: 30,
-                      margin: const EdgeInsets.only(top: 4),
-                      child: OutlineButton.icon(
-                        key: seePropostaDocumentKey,
-                        icon: FaIcon(FontAwesomeIcons.newspaper, size: 18),
-                        label: Text(
-                          DOCUMENT.toUpperCase(),
-                          style: const TextStyle(fontSize: 13),
-                        ),
-                        color: theme.primaryColor,
-                        highlightedBorderColor: theme.primaryColorDark,
-                        borderSide: BorderSide(color: theme.primaryColor),
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        onPressed: () => context.bloc<DocumentBloc>().add(
-                              OpenDocumentImage(proposta.urlInteiroTeor),
-                            ),
-                      ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: <Widget>[
+                Container(
+                  height: 30,
+                  child: OutlineButton.icon(
+                    key: tramitationsIconKey,
+                    icon: FaIcon(FontAwesomeIcons.exchangeAlt, size: 18),
+                    label: Text(
+                      TRAMITATIONS.toUpperCase(),
+                      style: const TextStyle(fontSize: 13),
                     ),
-                  ],
-                )
-              : const SizedBox.shrink(),
-          Row(
-            children: <Widget>[
-              Container(
-                height: 30,
-                margin: const EdgeInsets.only(top: 4),
-                child: OutlineButton.icon(
-                  key: tramitationsIconKey,
-                  icon: FaIcon(FontAwesomeIcons.exchangeAlt, size: 18),
-                  label: Text(
-                    TRAMITATIONS.toUpperCase(),
-                    style: const TextStyle(fontSize: 13),
-                  ),
-                  color: theme.primaryColor,
-                  highlightedBorderColor: theme.primaryColorDark,
-                  borderSide: BorderSide(color: theme.primaryColor),
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  onPressed: () => SimpleRouter.forward(
-                    TramitacaoPropostaPageConnected(proposta),
-                    name: TRAMITACAO_PROPOSTA_PAGE,
+                    color: theme.primaryColor,
+                    highlightedBorderColor: theme.primaryColorDark,
+                    borderSide: BorderSide(color: theme.primaryColor),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    onPressed: () => SimpleRouter.forward(
+                      TramitacaoPropostaPageConnected(proposta),
+                      name: TRAMITACAO_PROPOSTA_PAGE,
+                    ),
                   ),
                 ),
-              ),
-            ],
+                if (proposta.urlInteiroTeor != null)
+                  Container(
+                    height: 30,
+                    child: FlatButton.icon(
+                      key: seePropostaDocumentKey,
+                      icon: FaIcon(FontAwesomeIcons.file, size: 18),
+                      label: Text(
+                        DOCUMENT.toUpperCase(),
+                        style: const TextStyle(fontSize: 13),
+                      ),
+                      color: theme.primaryColor,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      onPressed: () => context.bloc<DocumentBloc>().add(
+                            OpenDocumentImage(proposta.urlInteiroTeor),
+                          ),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ],
       ),

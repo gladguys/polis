@@ -129,11 +129,13 @@ class PostDespesa extends StatelessWidget {
             value: despesa.cnpjCpfFornecedor,
             emptyValue: NOT_INFORMED,
           ),
-          despesa.urlDocumento != null
-              ? Container(
+          if (despesa.urlDocumento != null)
+            Row(
+              children: <Widget>[
+                Container(
                   height: 30,
-                  margin: const EdgeInsets.only(top: 4),
-                  child: OutlineButton.icon(
+                  margin: const EdgeInsets.only(top: 8),
+                  child: FlatButton.icon(
                     key: despesaImageIconKey,
                     icon: FaIcon(FontAwesomeIcons.file, size: 18),
                     label: Text(
@@ -141,15 +143,14 @@ class PostDespesa extends StatelessWidget {
                       style: const TextStyle(fontSize: 13),
                     ),
                     color: theme.primaryColor,
-                    highlightedBorderColor: theme.primaryColorDark,
-                    borderSide: BorderSide(color: theme.primaryColor),
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     onPressed: () => context.bloc<DocumentBloc>().add(
                           OpenDocumentImage(despesa.urlDocumento),
                         ),
                   ),
-                )
-              : const SizedBox.shrink(),
+                ),
+              ],
+            ),
         ],
       ),
     );
