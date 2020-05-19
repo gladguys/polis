@@ -1,4 +1,5 @@
 export 'analytics_service.dart';
+export 'app_update_service.dart';
 export 'crashlytics_service.dart';
 export 'message_service.dart';
 export 'orgao_service.dart';
