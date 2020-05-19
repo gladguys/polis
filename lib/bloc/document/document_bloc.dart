@@ -6,21 +6,21 @@ import 'package:flutter/material.dart';
 
 import '../../core/service/services.dart';
 
-part 'despesa_image_event.dart';
-part 'despesa_image_state.dart';
+part 'document_event.dart';
+part 'document_state.dart';
 
-class DespesaImageBloc extends Bloc<DespesaImageEvent, DespesaImageState> {
-  DespesaImageBloc({@required this.urlLaunchService})
+class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
+  DocumentBloc({@required this.urlLaunchService})
       : assert(urlLaunchService != null);
 
   final UrlLauncherService urlLaunchService;
 
   @override
-  DespesaImageState get initialState => InitialDespesaImageState();
+  DocumentState get initialState => InitialDocumentState();
 
   @override
-  Stream<DespesaImageState> mapEventToState(DespesaImageEvent event) async* {
-    if (event is OpenDespesaImage) {
+  Stream<DocumentState> mapEventToState(DocumentEvent event) async* {
+    if (event is OpenDocumentImage) {
       try {
         urlLaunchService.launchUrl(event.url);
       } on Exception {
