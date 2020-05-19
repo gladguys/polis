@@ -139,7 +139,7 @@ class PostDespesa extends StatelessWidget {
                     key: despesaImageIconKey,
                     icon: FaIcon(FontAwesomeIcons.file, size: 18),
                     label: Text(
-                      VIEW_DOCUMENT.toUpperCase(),
+                      DOCUMENT.toUpperCase(),
                       style: const TextStyle(fontSize: 13),
                     ),
                     color: theme.primaryColor,
