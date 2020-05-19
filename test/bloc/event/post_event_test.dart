@@ -37,5 +37,16 @@ void main() {
         expect(ev1 == ev3, false);
       });
     });
+
+    group('SetPostFavorited', () {
+      test('props', () {
+        final ev1 = SetPostFavorited(userId: '1', postId: '1');
+        final ev2 = SetPostFavorited(userId: '1', postId: '1');
+        final ev3 = SetPostFavorited(userId: '2', postId: '2');
+
+        expect(ev1, ev2);
+        expect(ev1 == ev3, false);
+      });
+    });
   });
 }

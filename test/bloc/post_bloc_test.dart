@@ -202,5 +202,79 @@ void main() {
         mockPostRepository.setPostVisible(userId: '1', postId: '1'),
       ).called(1),
     );
+
+    blocTest(
+      'Expects to set get isPostFavorite info',
+      build: () async {
+        final mockTimelineBloc = MockTimelineBloc();
+        when(mockTimelineBloc.timelinePosts).thenReturn([
+          DespesaModel(id: '1'),
+        ]);
+        when(
+          mockPostRepository.isPostFavorited(
+            userId: '1',
+            postId: '1',
+          ),
+        ).thenAnswer((_) => Future.value(true));
+
+        return PostBloc(
+          post: {
+            'favorito': true,
+          },
+          postRepository: mockPostRepository,
+          shareService: mockShareService,
+          timelineBloc: mockTimelineBloc,
+        );
+      },
+      act: (postBloc) async => postBloc.add(
+        SetPostFavorited(
+          userId: '1',
+          postId: '1',
+        ),
+      ),
+      expect: [
+        PostFavoritedSuccess(),
+      ],
+      verify: (postBloc) async => verify(
+        mockPostRepository.isPostFavorited(userId: '1', postId: '1'),
+      ).called(1),
+    );
+
+    blocTest(
+      'Expects to yield PostViewedFailed when getting isfavorite info',
+      build: () async {
+        final mockTimelineBloc = MockTimelineBloc();
+        when(mockTimelineBloc.timelinePosts).thenReturn([
+          DespesaModel(id: '1'),
+        ]);
+        when(
+          mockPostRepository.isPostFavorited(
+            userId: '1',
+            postId: '1',
+          ),
+        ).thenThrow(Exception());
+
+        return PostBloc(
+          post: {
+            'favorito': true,
+          },
+          postRepository: mockPostRepository,
+          shareService: mockShareService,
+          timelineBloc: mockTimelineBloc,
+        );
+      },
+      act: (postBloc) async => postBloc.add(
+        SetPostFavorited(
+          userId: '1',
+          postId: '1',
+        ),
+      ),
+      expect: [
+        PostFavoritedFailed(),
+      ],
+      verify: (postBloc) async => verify(
+        mockPostRepository.isPostFavorited(userId: '1', postId: '1'),
+      ).called(1),
+    );
   });
 }
