@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/keys.dart';
 import 'package:polis/i18n/i18n.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
@@ -34,6 +35,30 @@ void main() {
           ),
         ),
       );
+    });
+
+    testWidgets('should show tooltip when clicking on info expenses',
+        (tester) async {
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<PoliticProfileBloc>(
+            bloc: mockPoliticProfileBloc,
+            page: Scaffold(
+              body: PoliticAdditionalInfo(
+                PoliticoModel(
+                  id: '1',
+                  quantidadeSeguidores: 8.0,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      final expenseTooltipButton = find.byKey(expensesTooltipKey);
+      expect(expenseTooltipButton, findsOneWidget);
+      await tester.tap(expenseTooltipButton);
+      await tester.pump();
+      expect(find.byType(Tooltip), findsOneWidget);
     });
 
     testWidgets('should go to followers page when clicking qtd',
