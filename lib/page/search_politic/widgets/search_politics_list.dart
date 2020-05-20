@@ -61,7 +61,14 @@ class SearchPoliticsList extends StatelessWidget {
         BlocProvider.value(
           value: context.bloc<SearchPoliticBloc>().politicProfileBloc
             ..add(GetPoliticInfo(politico.id)),
-          child: PoliticProfilePage(),
+          child: PoliticProfilePage(
+            onUnfollowPolitic: () => bloc.add(
+              FollowUnfollowSearchPolitic(
+                user: context.bloc<UserBloc>().user,
+                politico: politico,
+              ),
+            ),
+          ),
         ),
         name: POLITIC_PROFILE_PAGE,
       ),

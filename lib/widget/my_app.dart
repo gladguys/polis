@@ -15,6 +15,11 @@ import '../page/theme/main_theme.dart';
 import '../repository/concrete/repositories.dart';
 
 class MyApp extends StatefulWidget {
+  MyApp({@required this.sharedPreferencesService})
+      : assert(sharedPreferencesService != null);
+
+  final SharedPreferencesService sharedPreferencesService;
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -22,11 +27,12 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   UserModel user;
   bool isUserLogged;
-  SharedPreferencesService sharedPreferencesService;
+
+  SharedPreferencesService get sharedPreferencesService =>
+      widget.sharedPreferencesService;
 
   @override
   void initState() {
-    sharedPreferencesService = G<SharedPreferencesService>();
     user = sharedPreferencesService.getUser();
     isUserLogged = sharedPreferencesService.isUserLogged();
 
