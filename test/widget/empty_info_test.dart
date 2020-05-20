@@ -50,7 +50,7 @@ void main() {
         connectedWidget(
           EmptyInfo(
             text: 'aaaa',
-            imageName: 'empty.png',
+            imageName: 'plogo.png',
           ),
         ),
       );
