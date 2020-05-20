@@ -9,6 +9,10 @@ import 'widget/politic_profile.dart';
 import 'widget/politic_profile_skeleton.dart';
 
 class PoliticProfilePage extends StatelessWidget {
+  PoliticProfilePage({this.onUnfollowPolitic});
+
+  final VoidCallback onUnfollowPolitic;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +25,10 @@ class PoliticProfilePage extends StatelessWidget {
           builder: (_, state) {
             if (state is GetPoliticInfoSuccess ||
                 state is UserFollowingPoliticChanged) {
-              return PoliticProfile(state);
+              return PoliticProfile(
+                state,
+                onUnfollowPolitic: onUnfollowPolitic,
+              );
             } else if (state is GetPoliticInfoFailed ||
                 state is FollowPoliticFailed) {
               return ErrorContainer();

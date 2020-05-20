@@ -13,9 +13,10 @@ import 'politic_additional_info.dart';
 import 'politic_personal_info.dart';
 
 class PoliticProfile extends StatefulWidget {
-  const PoliticProfile(this.politicProfileState);
+  const PoliticProfile(this.politicProfileState, {this.onUnfollowPolitic});
 
   final PoliticProfileState politicProfileState;
+  final VoidCallback onUnfollowPolitic;
 
   @override
   State<StatefulWidget> createState() => _PoliticProfileState();
@@ -98,6 +99,7 @@ class _PoliticProfileState extends State<PoliticProfile> {
         PoliticActionButtons(
           politico: politico,
           isBeingFollowedByUser: isPoliticBeingFollowedByUser,
+          onUnfollowPolitic: widget.onUnfollowPolitic,
         ),
         const SizedBox(height: 16),
         PoliticAdditionalInfo(politico),

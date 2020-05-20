@@ -38,5 +38,6 @@ const currentPasswordFieldKey = ValueKey('current-password-field');
 const newPasswordFieldKey = ValueKey('new-password-field');
 const despesaImageIconKey = ValueKey('despesa-image-icon');
 const cardBaseKey = ValueKey('card-base');
+const expensesTooltipKey = ValueKey('expenses-tooltip');
 const newPasswordConfirmationFieldKey =
     ValueKey('new-password-confirmation-field');

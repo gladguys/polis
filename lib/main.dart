@@ -31,7 +31,9 @@ void main() async {
   runZoned(() {
     runApp(
       MyAppInjections(
-        child: MyApp(),
+        child: MyApp(
+          sharedPreferencesService: G<SharedPreferencesService>(),
+        ),
       ),
     );
   }, onError: G<CrashlyticsService>().crashlytics.recordError);

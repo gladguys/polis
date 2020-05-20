@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_router/simple_router.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../core/keys.dart';
+import '../../../core/routing/route_names.dart';
 import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
 import '../../../widget/button_follow_unfollow.dart';
 import '../../../widget/card_base.dart';
 import '../../../widget/not_found.dart';
 import '../../../widget/photo.dart';
+import '../../pages.dart';
 
 class FollowingPoliticsList extends StatelessWidget {
   FollowingPoliticsList(this.politicos);
@@ -36,11 +39,24 @@ class FollowingPoliticsList extends StatelessWidget {
 
   Widget _buildListTile(BuildContext context, PoliticoModel politico) {
     final bloc = context.bloc<UserFollowingPoliticsBloc>();
-
     return CardBase(
       key: ValueKey(politico.id),
       crossAxisAlignment: CrossAxisAlignment.center,
-      slotLeft: Photo(url: politico.urlFoto),
+      slotLeft: GestureDetector(
+        child: Photo(url: politico.urlFoto),
+        onTap: () => SimpleRouter.forward(
+          PoliticProfilePageConnected(
+            politico.id,
+            onUnfollowPolitic: () => bloc.add(
+              FollowUnfollowPolitic(
+                user: context.bloc<UserBloc>().user,
+                politico: politico,
+              ),
+            ),
+          ),
+          name: POLITIC_PROFILE_PAGE,
+        ),
+      ),
       slotCenter: _buildSlotCenter(politico),
       slotRight: ButtonFollowUnfollow(
         isFollow: bloc.isPoliticBeingFollowed(politico),
