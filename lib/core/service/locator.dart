@@ -30,6 +30,9 @@ void initLocator([SharedPreferences sharedPreferences]) {
     ShareService(),
   );
   G.registerSingleton(
+    AppUpdateService(),
+  );
+  G.registerSingleton(
     MessageService(
       firebaseMessaging: FirebaseMessaging(),
       firestore: Firestore.instance,

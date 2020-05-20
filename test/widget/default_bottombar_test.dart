@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/keys.dart';
@@ -18,11 +19,18 @@ import 'utils.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  MockAppUpdateService mockAppUpdateService;
 
   setUpAll(() {
     const channel = MethodChannel('plugins.flutter.io/firebase_performance');
     channel.setMockMethodCallHandler((methodCall) async => true);
     initLocator(MockSharedPreferences());
+    mockAppUpdateService = MockAppUpdateService();
+    when(mockAppUpdateService.checkForUpdate()).thenAnswer(
+      (_) => Future.value(
+        AppUpdateInfo(false, false, false, 1),
+      ),
+    );
   });
 
   group('DefaultBottombar tests', () {
@@ -33,7 +41,9 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePageConnected(),
+            child: TimelinePageConnected(
+              appUpdateService: mockAppUpdateService,
+            ),
           ),
         ),
       );
@@ -51,7 +61,9 @@ void main() {
               analyticsService: MockAnalyticsService(),
               sharedPreferencesService: MockSharedPreferencesService(),
             ),
-            child: TimelinePageConnected(),
+            child: TimelinePageConnected(
+              appUpdateService: mockAppUpdateService,
+            ),
           ),
         ),
       );
@@ -91,7 +103,9 @@ void main() {
               analyticsService: MockAnalyticsService(),
               sharedPreferencesService: MockSharedPreferencesService(),
             ),
-            child: TimelinePageConnected(),
+            child: TimelinePageConnected(
+              appUpdateService: mockAppUpdateService,
+            ),
           ),
         ),
       );
@@ -109,7 +123,9 @@ void main() {
               analyticsService: MockAnalyticsService(),
               sharedPreferencesService: MockSharedPreferencesService(),
             ),
-            child: TimelinePageConnected(),
+            child: TimelinePageConnected(
+              appUpdateService: mockAppUpdateService,
+            ),
           ),
         ),
       );
@@ -124,7 +140,9 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePageConnected(),
+            child: TimelinePageConnected(
+              appUpdateService: mockAppUpdateService,
+            ),
           ),
         ),
       );
@@ -169,7 +187,9 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePageConnected(),
+            child: TimelinePageConnected(
+              appUpdateService: mockAppUpdateService,
+            ),
           ),
         ),
       );
@@ -191,7 +211,9 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePageConnected(),
+            child: TimelinePageConnected(
+              appUpdateService: mockAppUpdateService,
+            ),
           ),
         ),
       );
@@ -214,7 +236,9 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePageConnected(),
+            child: TimelinePageConnected(
+              appUpdateService: mockAppUpdateService,
+            ),
           ),
         ),
       );
@@ -267,7 +291,9 @@ void main() {
         connectedWidget(
           BlocProvider(
             create: (_) => mockUserBloc,
-            child: TimelinePageConnected(),
+            child: TimelinePageConnected(
+              appUpdateService: mockAppUpdateService,
+            ),
           ),
         ),
       );
@@ -295,7 +321,9 @@ void main() {
               navigatorObservers: [
                 mockObserver,
               ],
-              home: TimelinePageConnected(),
+              home: TimelinePageConnected(
+                appUpdateService: mockAppUpdateService,
+              ),
             ),
           ),
         ),

@@ -3,6 +3,8 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../core/routing/route_names.dart';
+import '../../core/service/locator.dart';
+import '../../core/service/services.dart';
 import '../../extension/extensions.dart';
 import '../../i18n/i18n.dart';
 import '../pages.dart';
@@ -113,7 +115,9 @@ class _CrunchingDataPageState extends State<CrunchingDataPage>
                             ),
                           ),
                           onPressed: () => SimpleRouter.forwardAndReplace(
-                            TimelinePageConnected(),
+                            TimelinePageConnected(
+                              appUpdateService: G<AppUpdateService>(),
+                            ),
                             name: TIMELINE_PAGE,
                           ),
                         ),

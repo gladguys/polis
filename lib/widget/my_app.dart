@@ -58,7 +58,11 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         theme: theme,
         navigatorKey: SimpleRouter.getKey(),
-        home: isUserLogged ? TimelinePageConnected() : InitialPageConnected(),
+        home: isUserLogged
+            ? TimelinePageConnected(
+                appUpdateService: G<AppUpdateService>(),
+              )
+            : InitialPageConnected(),
         navigatorObservers: [
           FirebaseAnalyticsObserver(analytics: G<AnalyticsService>().analytics),
           PolisRoutingObserver(),

@@ -226,6 +226,8 @@ class MockOrgaoService extends Mock implements OrgaoService {}
 
 class MockPoliticoService extends Mock implements PoliticoService {}
 
+class MockAppUpdateService extends Mock implements AppUpdateService {}
+
 class MockUrlLauncherService extends Mock implements UrlLauncherService {}
 
 // Other
