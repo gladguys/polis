@@ -25,12 +25,8 @@ class _TimelinePageConnectedState extends State<TimelinePageConnected> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-      print('-----------------------------------');
       final appUpdateInfo = await widget.appUpdateService.checkForUpdate();
-      print(appUpdateInfo);
       if (appUpdateInfo.updateAvailable) {
-        //if (true) {
         showDialog(
           context: context,
           builder: (_) => UpdateAppDialog(

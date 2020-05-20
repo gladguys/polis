@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
@@ -14,18 +15,24 @@ import 'package:polis/page/pages.dart';
 import 'package:polis/page/timeline/widget/timeline.dart';
 import 'package:polis/widget/text_rich.dart';
 import 'package:polis/widget/tile/despesa_tile.dart';
+import 'package:polis/widget/update_app_dialog.dart';
 
 import '../../mock.dart';
 import '../utils.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  MockAppUpdateService mockAppUpdateService;
 
   setUpAll(() {
     const channel = MethodChannel('plugins.flutter.io/firebase_performance');
     channel.setMockMethodCallHandler((methodCall) async => true);
     initLocator(MockSharedPreferences());
     initializeDateFormatting('pt_BR', null);
+  });
+
+  setUp(() {
+    mockAppUpdateService = MockAppUpdateService();
   });
 
   group('TimelinePage tests', () {
@@ -42,16 +49,84 @@ void main() {
                 updatesCount: null,
               ),
           throwsAssertionError);
+      expect(
+          () => TimelinePageConnected(
+                appUpdateService: null,
+              ),
+          throwsAssertionError);
     });
 
     testWidgets('shoud build without exploding', (tester) async {
+      when(mockAppUpdateService.checkForUpdate()).thenAnswer(
+        (_) => Future.value(
+          AppUpdateInfo(false, false, false, 1),
+        ),
+      );
       await tester.pumpWidget(
         connectedWidget(
           TimelinePageConnected(
-            appUpdateService: MockAppUpdateService(),
+            appUpdateService: mockAppUpdateService,
           ),
         ),
       );
+    });
+
+    testWidgets('shoud show update dialog when theres updates', (tester) async {
+      when(mockAppUpdateService.checkForUpdate()).thenAnswer(
+        (_) => Future.value(
+          AppUpdateInfo(true, false, false, 1),
+        ),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          TimelinePageConnected(
+            appUpdateService: mockAppUpdateService,
+          ),
+        ),
+      );
+      await tester.pump();
+      expect(find.byType(UpdateAppDialog), findsOneWidget);
+    });
+
+    testWidgets('shoud hide update dialog when click after', (tester) async {
+      when(mockAppUpdateService.checkForUpdate()).thenAnswer(
+        (_) => Future.value(
+          AppUpdateInfo(true, false, false, 1),
+        ),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          TimelinePageConnected(
+            appUpdateService: mockAppUpdateService,
+          ),
+        ),
+      );
+      await tester.pump();
+      expect(find.byType(UpdateAppDialog), findsOneWidget);
+      final afterBtn = find.text(AFTER);
+      await tester.tap(afterBtn);
+      await tester.pump();
+      expect(find.byType(UpdateAppDialog), findsNothing);
+    });
+
+    testWidgets('shoud call startFlexibleUpdate when click update',
+        (tester) async {
+      when(mockAppUpdateService.checkForUpdate()).thenAnswer(
+        (_) => Future.value(
+          AppUpdateInfo(true, false, false, 1),
+        ),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          TimelinePageConnected(
+            appUpdateService: mockAppUpdateService,
+          ),
+        ),
+      );
+      await tester.pump();
+      expect(find.byType(UpdateAppDialog), findsOneWidget);
+      final updateBtn = find.text(ACTION_UPDATE);
+      await tester.tap(updateBtn);
     });
 
     testWidgets('shoud build Timeline with activity', (tester) async {
