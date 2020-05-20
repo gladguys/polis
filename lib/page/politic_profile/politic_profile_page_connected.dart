@@ -9,9 +9,10 @@ import '../page_connected.dart';
 import '../pages.dart';
 
 class PoliticProfilePageConnected extends StatelessWidget {
-  PoliticProfilePageConnected(this.politicId);
+  PoliticProfilePageConnected(this.politicId, {this.onUnfollowPolitic});
 
   final String politicId;
+  final VoidCallback onUnfollowPolitic;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class PoliticProfilePageConnected extends StatelessWidget {
         followRepository: context.repository<FirebaseFollowRepository>(),
         urlLauncherService: G<UrlLauncherService>(),
       )..add(GetPoliticInfo(politicId)),
-      page: PoliticProfilePage(),
+      page: PoliticProfilePage(onUnfollowPolitic: onUnfollowPolitic),
     );
   }
 }

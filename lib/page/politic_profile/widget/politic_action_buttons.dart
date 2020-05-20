@@ -9,12 +9,15 @@ import '../../../widget/button_follow_unfollow.dart';
 
 class PoliticActionButtons extends StatelessWidget {
   PoliticActionButtons(
-      {@required this.politico, @required this.isBeingFollowedByUser})
+      {@required this.politico,
+      @required this.isBeingFollowedByUser,
+      this.onUnfollowPolitic})
       : assert(politico != null),
         assert(isBeingFollowedByUser != null);
 
   final PoliticoModel politico;
   final bool isBeingFollowedByUser;
+  final VoidCallback onUnfollowPolitic;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +37,9 @@ class PoliticActionButtons extends StatelessWidget {
                     isFollowing: isBeingFollowedByUser,
                   ),
                 );
+            if (onUnfollowPolitic != null) {
+              onUnfollowPolitic();
+            }
           },
         ),
         const SizedBox(width: 8),
