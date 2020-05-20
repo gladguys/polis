@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
@@ -46,6 +48,7 @@ class TramitacaoPropostaPage extends StatelessWidget {
             itemBuilder: (_, i) => _buildListTile(
               context: _,
               tramitacao: tramitacoes[i],
+              isFirst: i == 0,
               isLast: i == tramitacoes.length - 1,
             ),
           ),
@@ -57,6 +60,7 @@ class TramitacaoPropostaPage extends StatelessWidget {
   Widget _buildListTile({
     BuildContext context,
     TramitacaoPropostaModel tramitacao,
+    bool isFirst,
     bool isLast,
   }) {
     final orgao = context
@@ -64,60 +68,113 @@ class TramitacaoPropostaPage extends StatelessWidget {
         .orgaosMap[tramitacao.siglaOrgao]
         .nome;
 
-    return TimelineTile(
-      isLast: isLast,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            tramitacao.dataHora.formatDate(),
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        if (isFirst)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(6, 6, 0, 12),
+            child: Row(
+              children: <Widget>[
+                const Icon(
+                  FontAwesomeIcons.alignLeft,
+                  color: Colors.amber,
+                  size: 18,
+                ),
+                const SizedBox(width: 8),
+                const Text(
+                  START,
+                  style: TextStyle(
+                    color: Colors.amber,
+                    fontSize: 18,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
             ),
           ),
-          Text(
-            tramitacao.descricaoTramitacao,
-          ),
-          const SizedBox(height: 8),
-          Wrap(
-            spacing: 16,
-            runSpacing: 8,
+        TimelineTile(
+          isFirst: isFirst,
+          isLast: isLast,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              LabelValue(
-                label: DISPATCH,
-                value: tramitacao.despacho,
-                emptyValue: NOT_INFORMED,
-              ),
-              LabelValue(
-                label: AMBIT,
-                value: tramitacao.ambito,
-                emptyValue: NOT_INFORMED,
-              ),
-              LabelValue(
-                label: SITUATION,
-                value: tramitacao.descricaoSituacao,
-                emptyValue: NOT_INFORMED,
-              ),
-              LabelValue(
-                label: REGIME,
-                value:
-                    tramitacao.regime == '.' ? NOT_INFORMED : tramitacao.regime,
-                emptyValue: NOT_INFORMED,
-              ),
-              Tooltip(
-                child: LabelValue(
-                  label: ORGAN,
-                  value: tramitacao.siglaOrgao,
-                  emptyValue: NOT_INFORMED,
-                  isDotted: true,
+              Text(
+                tramitacao.dataHora.formatDate(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
                 ),
-                message: orgao,
               ),
+              Text(
+                tramitacao.descricaoTramitacao,
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 16,
+                runSpacing: 8,
+                children: <Widget>[
+                  LabelValue(
+                    label: DISPATCH,
+                    value: tramitacao.despacho,
+                    emptyValue: NOT_INFORMED,
+                  ),
+                  LabelValue(
+                    label: AMBIT,
+                    value: tramitacao.ambito,
+                    emptyValue: NOT_INFORMED,
+                  ),
+                  LabelValue(
+                    label: SITUATION,
+                    value: tramitacao.descricaoSituacao,
+                    emptyValue: NOT_INFORMED,
+                  ),
+                  LabelValue(
+                    label: REGIME,
+                    value: tramitacao.regime == '.'
+                        ? NOT_INFORMED
+                        : tramitacao.regime,
+                    emptyValue: NOT_INFORMED,
+                  ),
+                  Tooltip(
+                    child: LabelValue(
+                      label: ORGAN,
+                      value: tramitacao.siglaOrgao,
+                      emptyValue: NOT_INFORMED,
+                      isDotted: true,
+                    ),
+                    message: orgao,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
             ],
           ),
-          const SizedBox(height: 8),
-        ],
-      ),
+        ),
+        if (isLast)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(6, 0, 0, 6),
+            child: Row(
+              children: <Widget>[
+                const Icon(
+                  FontAwesomeIcons.alignRight,
+                  color: Colors.amber,
+                  size: 18,
+                ),
+                const SizedBox(width: 8),
+                const Text(
+                  END,
+                  style: TextStyle(
+                    color: Colors.amber,
+                    fontSize: 18,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+      ],
     );
   }
 }
