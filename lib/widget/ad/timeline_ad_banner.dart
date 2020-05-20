@@ -14,9 +14,9 @@ class TimelineAdBanner extends StatelessWidget {
     return Column(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: Container(
-            height: 100,
+            height: 60,
             color: context.baseBackgroundColor,
             child: NativeAdmob(
               loading: Container(),
