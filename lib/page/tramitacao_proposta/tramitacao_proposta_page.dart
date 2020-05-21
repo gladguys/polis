@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
@@ -11,6 +12,7 @@ import '../../widget/label_value.dart';
 import '../../widget/loading.dart';
 import '../../widget/text_title.dart';
 import '../../widget/timeline_tile.dart';
+import '../theme/main_theme.dart';
 
 class TramitacaoPropostaPage extends StatelessWidget {
   @override
@@ -46,6 +48,7 @@ class TramitacaoPropostaPage extends StatelessWidget {
             itemBuilder: (_, i) => _buildListTile(
               context: _,
               tramitacao: tramitacoes[i],
+              isFirst: i == 0,
               isLast: i == tramitacoes.length - 1,
             ),
           ),
@@ -57,6 +60,7 @@ class TramitacaoPropostaPage extends StatelessWidget {
   Widget _buildListTile({
     BuildContext context,
     TramitacaoPropostaModel tramitacao,
+    bool isFirst,
     bool isLast,
   }) {
     final orgao = context
@@ -65,15 +69,59 @@ class TramitacaoPropostaPage extends StatelessWidget {
         .nome;
 
     return TimelineTile(
+      isFirst: isFirst,
       isLast: isLast,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            tramitacao.dataHora.formatDate(),
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-            ),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            crossAxisAlignment: WrapCrossAlignment.end,
+            children: <Widget>[
+              Text(
+                tramitacao.dataHora.formatDate(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              if (isFirst)
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 2,
+                    horizontal: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: theme.primaryColor,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    LAST_UPDATE.toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                )
+              else if (isLast)
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 2,
+                    horizontal: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: theme.primaryColor,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    START.toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                )
+            ],
           ),
           Text(
             tramitacao.descricaoTramitacao,

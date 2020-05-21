@@ -17,11 +17,11 @@ class UpdateAppDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      title: Text(UPDATE_APP),
+      title: const Text(UPDATE_APP),
       content: Container(
         width: 200,
         height: 110,
-        child: Text(UPDATE_APP_DESCRIPTION),
+        child: const Text(UPDATE_APP_DESCRIPTION),
       ),
       actions: <Widget>[
         const FlatButton(
@@ -34,7 +34,7 @@ class UpdateAppDialog extends StatelessWidget {
         RaisedButton(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           onPressed: () async => appUpdateService.startFlexibleUpdate(),
-          child: Text(ACTION_UPDATE),
+          child: const Text(ACTION_UPDATE),
         ),
       ],
     );
