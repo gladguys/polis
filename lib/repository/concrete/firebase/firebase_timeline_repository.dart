@@ -98,7 +98,8 @@ class FirebaseTimelineRepository implements TimelineRepository {
         final despesaModel = DespesaModel.fromJson(document.data);
         activities.add(despesaModel.copyWith(id: document.documentID));
       } else {
-        activities.add(PropostaModel.fromJson(document.data));
+        final propostaModel = PropostaModel.fromJson(document.data);
+        activities.add(propostaModel.copyWith(id: document.documentID));
       }
     }
     return activities;
