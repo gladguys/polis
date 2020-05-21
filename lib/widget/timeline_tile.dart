@@ -7,11 +7,13 @@ class TimelineTile extends StatelessWidget {
   const TimelineTile({
     @required this.child,
     this.padding = const EdgeInsets.only(left: 12, bottom: 16),
+    this.isFirst = false,
     this.isLast = false,
   }) : assert(child != null);
 
   final EdgeInsets padding;
   final Widget child;
+  final bool isFirst;
   final bool isLast;
 
   @override
