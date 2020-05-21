@@ -118,7 +118,7 @@ class _TimelineState extends State<Timeline> {
             DespesaTileConnected(widget.activities[i])
           else
             PropostaTileConnected(widget.activities[i] as PropostaModel),
-          if ((i == 2) || (i > 2 && i % 5 == 0))
+          if ((i == 4) || (i > 10 && i % 10 == 0))
             TimelineAdBanner(nativeAdmobController),
           if (i == widget.activities.length - 1 &&
               widget.timelineStatus == TimelineStatus.loading)
