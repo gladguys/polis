@@ -145,7 +145,7 @@ class FavoritePropostaTile extends StatelessWidget {
                 ? FontAwesomeIcons.solidBookmark
                 : FontAwesomeIcons.bookmark,
             iconColor:
-                context.bloc<PostBloc>().isPostFavorite ? Colors.amber : null,
+                context.bloc<PostBloc>().isPostFavorite ? Colors.yellow : null,
             onTap: () => context.bloc<PostBloc>().add(
                   FavoritePostForUser(
                     post: proposta.toJson(),
