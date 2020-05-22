@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../theme/main_theme.dart';
 
+import '../../../extension/extensions.dart';
+
 class SearchingInfo extends StatelessWidget {
   SearchingInfo({@required this.icon, @required this.text})
       : assert(icon != null),
@@ -14,19 +16,20 @@ class SearchingInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: theme.scaffoldBackgroundColor,
-      width: 220,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          FaIcon(icon, size: 120),
-          const SizedBox(height: 16),
-          Text(
-            text,
-            style: const TextStyle(fontSize: 18),
-          ),
-        ],
+      color: context.baseBackgroundColor,
+      child: Center(
+        child: Column(
+          children: <Widget>[
+            Icon(icon, size: 180),
+            Text(
+              text,
+              style: const TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

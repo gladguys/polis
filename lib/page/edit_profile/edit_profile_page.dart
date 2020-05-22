@@ -10,6 +10,7 @@ import '../../core/abstract/polis_image_picker.dart';
 import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../enum/auth_provider.dart';
+import '../../extension/extensions.dart';
 import '../../i18n/i18n.dart';
 import '../../model/models.dart';
 import '../../widget/default_bottombar.dart';
@@ -198,7 +199,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         children: [
           FaIcon(
             FontAwesomeIcons.camera,
-            color: Theme.of(context).accentColor,
+            color: context.accentColor,
             size: 40,
           ),
           const SizedBox(height: 4),
@@ -207,7 +208,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 12,
-              color: Theme.of(context).accentColor,
+              color: context.accentColor,
             ),
           ),
           const SizedBox(height: 4),
