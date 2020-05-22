@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../core/routing/route_names.dart';
@@ -8,6 +8,7 @@ import '../../core/service/services.dart';
 import '../../extension/extensions.dart';
 import '../../i18n/i18n.dart';
 import '../pages.dart';
+import '../theme/main_theme.dart';
 import 'widget/searching_info.dart';
 
 class CrunchingDataPage extends StatefulWidget {
@@ -19,15 +20,8 @@ class _CrunchingDataPageState extends State<CrunchingDataPage>
     with TickerProviderStateMixin {
   AnimationController controller, controller2, controller3, controller4;
 
-  double get screenWidth => context.screenWidth;
-  double get kDistanceToLeft => 40;
-  double get kDistanceToTop => (context.screenHeight - kEndIconSize) / 2;
-  double get kDistanceEndToLeft =>
-      (screenWidth - kEndIconSize - kDistanceToLeft) / 2;
-
-  Duration kAnimationDuration = 3500.milliseconds;
-  double kEndIconSize = 180.0;
-
+  Duration kAnimationDuration = 3.seconds;
+  
   @override
   void initState() {
     controller = AnimationController(
@@ -87,78 +81,73 @@ class _CrunchingDataPageState extends State<CrunchingDataPage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Stack(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Positioned(
-              left: kDistanceEndToLeft,
-              top: kDistanceToTop,
-              child: Opacity(
-                opacity: controller4.value,
-                child: Container(
-                  color: context.baseBackgroundColor,
-                  child: Center(
-                    child: Column(
-                      children: <Widget>[
-                        Icon(
-                          AntDesign.checkcircleo,
-                          size: kEndIconSize,
-                          color: Colors.green,
+            const SizedBox(height: 1, width: double.maxFinite),
+            Stack(
+              children: <Widget>[
+                Opacity(
+                  opacity: controller4.value,
+                  child: Column(
+                    children: <Widget>[
+                      FaIcon(
+                        FontAwesomeIcons.check,
+                        size: 120,
+                        color: theme.accentColor,
+                      ),
+                      const SizedBox(height: 16),
+                      RaisedButton(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8,
+                          horizontal: 24,
                         ),
-                        const SizedBox(height: 32),
-                        RaisedButton(
-                          color: Colors.amber,
-                          child: const Text(
-                            ALL_SET_LETS_GO,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                            ),
-                          ),
-                          onPressed: () => SimpleRouter.forwardAndReplace(
-                            TimelinePageConnected(
-                              appUpdateService: G<AppUpdateService>(),
-                            ),
-                            name: TIMELINE_PAGE,
-                          ),
+                        child: const Text(
+                          ALL_SET_LETS_GO,
+                          style: TextStyle(fontSize: 16),
                         ),
-                      ],
+                        onPressed: () => SimpleRouter.forwardAndReplace(
+                          TimelinePageConnected(
+                            appUpdateService: G<AppUpdateService>(),
+                          ),
+                          name: TIMELINE_PAGE,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  child: Opacity(
+                    opacity: 1 - controller3.value,
+                    child: SearchingInfo(
+                      icon: FontAwesomeIcons.mapMarkedAlt,
+                      text: '$SEARCHING $STATES_DOTS',
                     ),
                   ),
                 ),
-              ),
-            ),
-            Positioned(
-              left: kDistanceToLeft,
-              top: kDistanceToTop,
-              child: Opacity(
-                opacity: 1 - controller3.value,
-                child: SearchingInfo(
-                  icon: MaterialCommunityIcons.map_search_outline,
-                  text: '$SEARCHING $STATES_DOTS',
+                Positioned(
+                  top: 0,
+                  child: Opacity(
+                    opacity: 1 - controller2.value,
+                    child: SearchingInfo(
+                      icon: FontAwesomeIcons.flag,
+                      text: '$SEARCHING $PARTIES_DOTS',
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Positioned(
-              left: kDistanceToLeft,
-              top: kDistanceToTop,
-              child: Opacity(
-                opacity: 1 - controller2.value,
-                child: SearchingInfo(
-                  icon: AntDesign.flag,
-                  text: '$SEARCHING $PARTIES_DOTS',
+                Positioned(
+                  top: 0,
+                  child: Opacity(
+                    opacity: 1 - controller.value,
+                    child: SearchingInfo(
+                      icon: FontAwesomeIcons.userTie,
+                      text: '$SEARCHING $POLITICS_DOTS',
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Positioned(
-              left: kDistanceToLeft,
-              top: kDistanceToTop,
-              child: Opacity(
-                opacity: 1 - controller.value,
-                child: SearchingInfo(
-                  icon: Foundation.torso_business,
-                  text: '$SEARCHING $POLITICS_DOTS',
-                ),
-              ),
+              ],
             ),
           ],
         ),
