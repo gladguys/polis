@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,6 +10,7 @@ import '../../../core/keys.dart';
 import '../../../enum/timeline_status.dart';
 import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
+import '../../../widget/ad/timeline_ad_banner.dart';
 import '../../../widget/text_rich.dart';
 import '../../../widget/tile/despesa_tile_connected.dart';
 import '../../../widget/tile/proposta_tile_connected.dart';
@@ -118,7 +118,8 @@ class _TimelineState extends State<Timeline> {
             DespesaTileConnected(widget.activities[i])
           else
             PropostaTileConnected(widget.activities[i] as PropostaModel),
-          if ((i == 2) || (i > 2 && i % 5 == 0)) _buildAdmobBanner(),
+          if ((i == 4) || (i > 10 && i % 10 == 0))
+            TimelineAdBanner(nativeAdmobController),
           if (i == widget.activities.length - 1 &&
               widget.timelineStatus == TimelineStatus.loading)
             Padding(
@@ -161,27 +162,6 @@ class _TimelineState extends State<Timeline> {
         ],
       ),
       onPressed: () => timelineBloc.add(ReloadTimeline(userId)),
-    );
-  }
-
-  Widget _buildAdmobBanner() {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Container(
-            height: 200,
-            margin: const EdgeInsets.symmetric(vertical: 24),
-            color: Colors.grey[200],
-            child: NativeAdmob(
-              loading: Container(),
-              adUnitID: 'ca-app-pub-5806526425473649/3495270844',
-              controller: nativeAdmobController,
-              type: NativeAdmobType.banner,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

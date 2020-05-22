@@ -95,7 +95,7 @@ class _CrunchingDataPageState extends State<CrunchingDataPage>
               child: Opacity(
                 opacity: controller4.value,
                 child: Container(
-                  color: Theme.of(context).scaffoldBackgroundColor,
+                  color: context.baseBackgroundColor,
                   child: Center(
                     child: Column(
                       children: <Widget>[

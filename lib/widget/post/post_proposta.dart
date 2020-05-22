@@ -31,7 +31,7 @@ class PostProposta extends StatelessWidget {
     return Screenshot(
       controller: screenshotController,
       child: Container(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: context.baseBackgroundColor,
         child: CardBase(
           slotLeft: InkWell(
             borderRadius: BorderRadius.circular(24),

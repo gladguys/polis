@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../extension/extensions.dart';
+
 class SearchingInfo extends StatelessWidget {
   SearchingInfo({@required this.icon, @required this.text})
       : assert(icon != null),
@@ -11,7 +13,7 @@ class SearchingInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
+      color: context.baseBackgroundColor,
       child: Center(
         child: Column(
           children: <Widget>[
