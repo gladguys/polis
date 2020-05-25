@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_monitor/flutter_bloc_monitor.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
@@ -35,15 +37,20 @@ class DefaultBottombar extends StatelessWidget {
             height: 48,
             alignment: Alignment.centerLeft,
             child: !withBack
-                ? const Padding(
-                    padding: EdgeInsets.only(left: 8),
-                    child: Text(
-                      POLIS,
-                      style: TextStyle(
-                        fontFamily: 'Philosopher',
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                ? GestureDetector(
+                    onDoubleTap: !kReleaseMode
+                        ? () => SimpleRouter.forward(FlutterBlocMonitorPage())
+                        : null,
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 8),
+                      child: Text(
+                        POLIS,
+                        style: TextStyle(
+                          fontFamily: 'Philosopher',
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   )

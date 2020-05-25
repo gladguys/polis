@@ -1,12 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc_monitor/flutter_bloc_monitor.dart';
 
 import '../core/service/analytics_service.dart';
 import '../core/service/services.dart';
 import 'blocs.dart';
 
-class FlutterBlocDelegate extends BlocDelegate {
+class FlutterBlocDelegate extends FlutterBlocMonitorDelegate {
   FlutterBlocDelegate(
       {@required this.analyticsService, @required this.performanceService})
       : assert(analyticsService != null),
@@ -41,15 +42,11 @@ class FlutterBlocDelegate extends BlocDelegate {
     } else {
       super.onEvent(bloc, event);
     }
-
-    print('[Bloc] Event: $event');
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    print('[Bloc] State Transition: '
-        '[${transition.currentState} => ${transition.nextState}]');
 
     analyticsService.logBloc(
       event: transition.event.toString(),
@@ -61,6 +58,5 @@ class FlutterBlocDelegate extends BlocDelegate {
   @override
   void onError(Bloc bloc, Object error, StackTrace stacktrace) {
     super.onError(bloc, error, stacktrace);
-    print(error);
   }
 }
