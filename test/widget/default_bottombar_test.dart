@@ -1,5 +1,4 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +11,7 @@ import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/model/models.dart';
 import 'package:polis/page/pages.dart';
+import 'package:polis/widget/image/photo_image.dart';
 import 'package:polis/widget/my_app_injections.dart';
 
 import '../mock.dart';
@@ -109,7 +109,7 @@ void main() {
           ),
         ),
       );
-      expect(find.byType(FancyShimmerImage), findsOneWidget);
+      expect(find.byType(PhotoImage), findsOneWidget);
     });
 
     testWidgets('shoud show default icon when user has no photo',

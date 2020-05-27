@@ -1,8 +1,8 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 
 import '../i18n/i18n.dart';
 import '../model/models.dart';
+import 'image/photo_image.dart';
 
 class PoliticSuggested extends StatelessWidget {
   PoliticSuggested({this.politico, this.isFollowing, this.onClickFollowButton});
@@ -32,11 +32,9 @@ class PoliticSuggested extends StatelessWidget {
           const SizedBox(height: 8),
           ClipRRect(
             borderRadius: BorderRadius.circular(40),
-            child: FancyShimmerImage(
-              imageUrl: politico.urlFoto,
-              width: 80,
-              height: 80,
-              boxFit: BoxFit.contain,
+            child: PhotoImage(
+              url: politico.urlFoto,
+              size: 80,
             ),
           ),
           const SizedBox(height: 8),

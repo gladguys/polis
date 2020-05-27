@@ -1,8 +1,8 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../i18n/i18n.dart';
 import '../../../model/models.dart';
+import '../../../widget/image/logo_partido_image.dart';
 import '../../../widget/photo.dart';
 
 class PoliticPersonalInfo extends StatelessWidget {
@@ -25,11 +25,9 @@ class PoliticPersonalInfo extends StatelessWidget {
             Positioned(
               bottom: -4,
               right: -4,
-              child: FancyShimmerImage(
-                imageUrl: politic.urlPartidoLogo,
-                height: 40,
-                width: 40,
-                boxFit: BoxFit.contain,
+              child: LogoPartidoImage(
+                logoPartido: politic.urlPartidoLogo,
+                size: 40,
               ),
             ),
           ],

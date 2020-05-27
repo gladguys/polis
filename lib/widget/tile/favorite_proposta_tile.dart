@@ -1,4 +1,3 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -13,6 +12,7 @@ import '../../model/proposta_model.dart';
 import '../../page/pages.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';
+import '../image/logo_partido_image.dart';
 import '../photo.dart';
 import '../text_rich.dart';
 
@@ -62,11 +62,9 @@ class FavoritePropostaTile extends StatelessWidget {
             ? Positioned(
                 right: 0,
                 bottom: -10,
-                child: FancyShimmerImage(
-                  imageUrl: proposta.urlPartidoLogo,
-                  width: 22,
-                  height: 22,
-                  boxFit: BoxFit.contain,
+                child: LogoPartidoImage(
+                  logoPartido: proposta.urlPartidoLogo,
+                  size: 22,
                 ),
               )
             : const SizedBox.shrink(),

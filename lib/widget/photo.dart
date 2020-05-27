@@ -1,6 +1,7 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'image/photo_image.dart';
 
 class Photo extends StatelessWidget {
   const Photo({
@@ -28,10 +29,9 @@ class Photo extends StatelessWidget {
       child: url != null
           ? Container(
               color: backgroundColor,
-              child: FancyShimmerImage(
-                imageUrl: url,
-                width: size,
-                height: size,
+              child: PhotoImage(
+                url: url,
+                size: size,
                 boxFit: boxFit,
               ),
             )

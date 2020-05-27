@@ -1,4 +1,3 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -16,6 +15,7 @@ import '../../page/pages.dart';
 import '../../page/theme/main_theme.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';
+import '../image/photo_image.dart';
 import '../photo.dart';
 import '../text_rich.dart';
 import '../timeline_card_label.dart';
@@ -96,11 +96,9 @@ class DespesaTile extends StatelessWidget {
           Positioned(
             right: 0,
             bottom: -10,
-            child: FancyShimmerImage(
-              imageUrl: despesa.urlPartidoLogo,
-              width: 22,
-              height: 22,
-              boxFit: BoxFit.contain,
+            child: PhotoImage(
+              url: despesa.urlPartidoLogo,
+              size: 22,
             ),
           ),
         ],
