@@ -29,8 +29,8 @@ const STOP_FOLLOW = 'Deixar de seguir';
 const YOU_DONT_FOLLOW_ANYONE_YET = 'Você ainda não segue nenhum politico!';
 const WELCOME = 'Bem vindo';
 const STOP_FOLLOWING = 'Deixar de seguir';
-const POLITICS_SUGGESTION_ON_YOUR_AREA =
-    'Sugestões de políticos em sua região:';
+const POLITICS_SUGGESTION_ON_PICKED_AREA =
+    'Sugestões de políticos da região escolhida:';
 const NO_RECENT_ACTIVITY = 'Nenhuma atividade recente.';
 const SIGNIN_FAILED = 'Falha no login';
 const SIGNUP_FAILED = 'Falha no cadastro do usuário';
