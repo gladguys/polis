@@ -170,6 +170,32 @@ void main() {
       verify(mockObserver.didPush(any, any));
     });
 
+    testWidgets('should open document when theres one', (tester) async {
+      final mockProposta = proposta.copyWith(
+        urlInteiroTeor: 'iqjdpoqpoq',
+      );
+      final mockDocumentBloc = MockDocumentBloc();
+      final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.isPostFavorite).thenReturn(true);
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<PostBloc>(
+            bloc: mockPostBloc,
+            page: PageConnected<DocumentBloc>(
+              bloc: mockDocumentBloc,
+              page: PostProposta(
+                mockProposta,
+                screenshotController: MockScreenshotController(),
+              ),
+            ),
+          ),
+        ),
+      );
+      final seeDocumentButton = find.byKey(seePropostaDocumentKey);
+      await tester.tap(seeDocumentButton);
+      verify(mockDocumentBloc.add(OpenDocumentImage('iqjdpoqpoq')));
+    });
+
     testWidgets('should go to tramitations page when click on icon',
         (tester) async {
       final mockPostBloc = MockPostBloc();

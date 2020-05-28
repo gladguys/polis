@@ -10,6 +10,7 @@ class PhotoImage extends FancyShimmerImage {
     Color iconColor,
     Key iconKey,
   })  : assert(url != null),
+        assert(size != null && size > 0),
         super(
           imageUrl: url,
           width: size,

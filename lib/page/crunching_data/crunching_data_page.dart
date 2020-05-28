@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:simple_router/simple_router.dart';
 
-import '../../core/routing/route_names.dart';
-import '../../core/service/locator.dart';
-import '../../core/service/services.dart';
 import '../../extension/extensions.dart';
 import '../../i18n/i18n.dart';
-import '../pages.dart';
 import '../theme/main_theme.dart';
+import 'widget/all_set_button.dart';
 import 'widget/searching_info.dart';
 
 class CrunchingDataPage extends StatefulWidget {
@@ -21,7 +17,7 @@ class _CrunchingDataPageState extends State<CrunchingDataPage>
   AnimationController controller, controller2, controller3, controller4;
 
   Duration kAnimationDuration = 3.seconds;
-  
+
   @override
   void initState() {
     controller = AnimationController(
@@ -98,22 +94,7 @@ class _CrunchingDataPageState extends State<CrunchingDataPage>
                         color: theme.accentColor,
                       ),
                       const SizedBox(height: 16),
-                      RaisedButton(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 8,
-                          horizontal: 24,
-                        ),
-                        child: const Text(
-                          ALL_SET_LETS_GO,
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        onPressed: () => SimpleRouter.forwardAndReplace(
-                          TimelinePageConnected(
-                            appUpdateService: G<AppUpdateService>(),
-                          ),
-                          name: TIMELINE_PAGE,
-                        ),
-                      ),
+                      AllSetButton(),
                     ],
                   ),
                 ),
