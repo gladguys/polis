@@ -23,7 +23,7 @@ class FirebaseTimelineRepository implements TimelineRepository {
       return timelineRef
           .document(userId)
           .collection(ATIVIDADES_TIMELINE_SUBCOLLECTION)
-          .orderBy(DATA_ATUALIZACAO_FIELD, descending: true)
+          .orderBy(DATA_PUBLICACAO_FIELD, descending: true)
           .snapshots()
           .map((snapshot) {
         var changes = 0;
@@ -47,7 +47,7 @@ class FirebaseTimelineRepository implements TimelineRepository {
       final query = await timelineRef
           .document(userId)
           .collection(ATIVIDADES_TIMELINE_SUBCOLLECTION)
-          .orderBy(DATA_ATUALIZACAO_FIELD, descending: true)
+          .orderBy(DATA_PUBLICACAO_FIELD, descending: true)
           .limit(count);
 
       final querySnapshot = await query.getDocuments();
@@ -70,7 +70,7 @@ class FirebaseTimelineRepository implements TimelineRepository {
       final query = await timelineRef
           .document(userId)
           .collection(ATIVIDADES_TIMELINE_SUBCOLLECTION)
-          .orderBy(DATA_ATUALIZACAO_FIELD, descending: true)
+          .orderBy(DATA_PUBLICACAO_FIELD, descending: true)
           .startAfterDocument(lastDocument)
           .limit(count);
 
