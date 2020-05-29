@@ -90,7 +90,7 @@ void main() {
             .thenReturn(mockAtividadesSubcollectionReference);
         when(
           mockAtividadesSubcollectionReference.orderBy(
-            DATA_ATUALIZACAO_FIELD,
+            DATA_PUBLICACAO_FIELD,
             descending: true,
           ),
         ).thenReturn(mockQuery);
@@ -146,7 +146,7 @@ void main() {
             .thenReturn(mockAtividadesSubcollectionReference);
         when(
           mockAtividadesSubcollectionReference.orderBy(
-            DATA_ATUALIZACAO_FIELD,
+            DATA_PUBLICACAO_FIELD,
             descending: true,
           ),
         ).thenReturn(mockQuery);
