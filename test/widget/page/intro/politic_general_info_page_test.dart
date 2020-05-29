@@ -5,19 +5,19 @@ import 'package:polis/page/pages.dart';
 import '../../utils.dart';
 
 void main() {
-  group('PolisInfoPage tests', () {
+  group('PoliticGeneralInfoPage tests', () {
     testWidgets('should build without exploding', (tester) async {
-      await tester.pumpWidget(connectedWidget(PolisInfoPage()));
+      await tester.pumpWidget(connectedWidget(PoliticGeneralInfoPage()));
     });
 
-    testWidgets('should goto to TimelineInfoPage when click on fab',
+    testWidgets('should goto to PickStatePage when click on fab',
         (tester) async {
-      await tester.pumpWidget(connectedWidget(PolisInfoPage()));
+      await tester.pumpWidget(connectedWidget(PoliticGeneralInfoPage()));
       final fab = find.byType(FloatingActionButton);
       expect(fab, findsOneWidget);
       await tester.tap(fab);
       await tester.pumpAndSettle();
-      expect(find.byType(TimelineInfoPage), findsOneWidget);
+      expect(find.byType(PickStatePage), findsOneWidget);
     });
   });
 }

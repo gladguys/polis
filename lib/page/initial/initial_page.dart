@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../intro/polis_info_page.dart';
 import 'package:simple_router/simple_router.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
@@ -48,8 +49,8 @@ class _InitialPageState extends State<InitialPage> {
             );
           } else {
             SimpleRouter.forwardAndReplace(
-              IntroPage(),
-              name: INTRO_PAGE,
+              PolisInfoPage(),
+              name: POLIS_INFO_PAGE,
             );
           }
         }
