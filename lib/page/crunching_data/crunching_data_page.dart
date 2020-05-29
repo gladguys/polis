@@ -124,7 +124,7 @@ class _CrunchingDataPageState extends State<CrunchingDataPage>
                     opacity: 1 - controller.value,
                     child: SearchingInfo(
                       icon: FontAwesomeIcons.userTie,
-                      text: '$SEARCHING $POLITICS_DOTS',
+                      text: '$SEARCHING $DEPUTES_DOTS',
                     ),
                   ),
                 ),
