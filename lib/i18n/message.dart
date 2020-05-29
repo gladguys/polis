@@ -23,6 +23,9 @@ const GO_FOLLOW_SOME_POLITICS =
     '''Siga alguns políticos para que as atividades deles apareçam na sua timeline.''';
 const ALL_SET_LETS_GO = 'Tudo pronto. Vamos lá!';
 const PICK_YOUR_STATE = 'Escolha seu estado';
+const POLIS_EXPLANATION_MESSAGE = '''Siga os deputados federais que você deseja acompanhar e receba notificações quando eles tiverem novas informações...''';
+const POLIS_TIMELINE_MESSAGE = '''Acompanhe as atualizações das informações dos deputados que você segue em tempo real na sua timeline...''';
+const POLIS_POLITIC_MESSAGE = '''Veja informações sobre propostas de lei e despesas dos políticos nos seus perfis...''';
 const STATE_MESSAGE = 'Qual o seu Estado?';
 const FOLLOW = 'Seguir';
 const STOP_FOLLOW = 'Deixar de seguir';
