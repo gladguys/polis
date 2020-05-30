@@ -98,6 +98,11 @@ class PostProposta extends StatelessWidget {
               ],
             ),
           LabelValue(
+            label: OTHER_AUTHORS,
+            value: proposta.outrosAutores,
+            emptyValue: NOT_INFORMED,
+          ),
+          LabelValue(
             label: TRAMITATION,
             value: proposta.descricaoTramitacao,
             emptyValue: NOT_INFORMED_FEMALE,
