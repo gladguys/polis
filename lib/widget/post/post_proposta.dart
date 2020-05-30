@@ -99,7 +99,8 @@ class PostProposta extends StatelessWidget {
             ),
           LabelValue(
             label: OTHER_AUTHORS,
-            value: proposta.outrosAutores,
+            value: proposta.nomesAutores
+                .fold('', (nome, nomes) => '$nomes, $nome'),
             emptyValue: NOT_INFORMED,
           ),
           LabelValue(

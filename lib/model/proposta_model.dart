@@ -30,7 +30,7 @@ class PropostaModel extends Equatable {
     this.foiAtualizada,
     this.urlPartidoLogo,
     this.urlInteiroTeor,
-    this.outrosAutores,
+    this.nomesAutores,
   });
 
   final String id;
@@ -57,7 +57,7 @@ class PropostaModel extends Equatable {
   final bool foiAtualizada;
   final String urlPartidoLogo;
   final String urlInteiroTeor;
-  final String outrosAutores;
+  final List<String> nomesAutores;
 
   factory PropostaModel.fromJson(Map<String, dynamic> json) =>
       _$PropostaModelFromJson(json);
@@ -89,7 +89,7 @@ class PropostaModel extends Equatable {
     bool foiAtualizada,
     String urlPartidoLogo,
     String urlInteiroTeor,
-    String outrosAutores,
+    String nomesAutores,
   }) {
     return PropostaModel(
       id: id ?? this.id,
@@ -116,7 +116,7 @@ class PropostaModel extends Equatable {
       foiAtualizada: foiAtualizada ?? this.foiAtualizada,
       urlPartidoLogo: urlPartidoLogo ?? this.urlPartidoLogo,
       urlInteiroTeor: urlInteiroTeor ?? this.urlInteiroTeor,
-      outrosAutores: outrosAutores ?? this.outrosAutores,
+      nomesAutores: nomesAutores ?? this.nomesAutores,
     );
   }
 
@@ -125,6 +125,6 @@ class PropostaModel extends Equatable {
 
   @override
   String toString() {
-    return '''PropostaModel{id: $id, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, ementaDetalhada: $ementaDetalhada, despacho: $despacho, nomePolitico: $nomePolitico, idPoliticoAutor: $idPoliticoAutor, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataAtualizacao: $dataAtualizacao, status: $status, visualizado: $visualizado, sequencia: $sequencia, favorito: $favorito, foiAtualizada: $foiAtualizada, urlPartidoLogo: $urlPartidoLogo, urlInteiroTeor: $urlInteiroTeor, outrosAutores: $outrosAutores}''';
+    return '''PropostaModel{id: $id, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, ementaDetalhada: $ementaDetalhada, despacho: $despacho, nomePolitico: $nomePolitico, idPoliticoAutor: $idPoliticoAutor, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataAtualizacao: $dataAtualizacao, status: $status, visualizado: $visualizado, sequencia: $sequencia, favorito: $favorito, foiAtualizada: $foiAtualizada, urlPartidoLogo: $urlPartidoLogo, urlInteiroTeor: $urlInteiroTeor, nomesAutores: $nomesAutores}''';
   }
 }
