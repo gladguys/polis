@@ -87,7 +87,10 @@ class FirebasePoliticProfileRepository implements PoliticProfileRepository {
         final despesaModel = DespesaModel.fromJson(document.data);
         activities.add(despesaModel.copyWith(id: document.documentID));
       } else {
-        activities.add(PropostaModel.fromJson(document.data));
+        final propostaModel = PropostaModel.fromJson(document.data);
+        activities.add(
+          propostaModel.copyWith(idPropostaPolitico: document.documentID),
+        );
       }
     }
     return activities;

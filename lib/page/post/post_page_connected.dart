@@ -51,7 +51,7 @@ class PostPageConnected extends StatelessWidget {
 
   String getPostId(dynamic post) {
     if (post is PropostaModel) {
-      return post.id;
+      return post.idPropostaPolitico;
     } else if (post is DespesaModel) {
       return post.id;
     }
