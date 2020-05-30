@@ -7,6 +7,7 @@ part 'proposta_model.g.dart';
 class PropostaModel extends Equatable {
   PropostaModel({
     this.id,
+    this.idPropostaPolitico,
     this.siglaTipo,
     this.descricaoTipo,
     this.numero,
@@ -34,6 +35,7 @@ class PropostaModel extends Equatable {
   });
 
   final String id;
+  final String idPropostaPolitico;
   final String siglaTipo;
   final String descricaoTipo;
   final String numero;
@@ -66,6 +68,7 @@ class PropostaModel extends Equatable {
 
   PropostaModel copyWith({
     String id,
+    String idPropostaPolitico,
     String siglaTipo,
     String descricaoTipo,
     String numero,
@@ -93,6 +96,7 @@ class PropostaModel extends Equatable {
   }) {
     return PropostaModel(
       id: id ?? this.id,
+      idPropostaPolitico: idPropostaPolitico ?? this.idPropostaPolitico,
       siglaTipo: siglaTipo ?? this.siglaTipo,
       descricaoTipo: descricaoTipo ?? this.descricaoTipo,
       numero: numero ?? this.numero,
@@ -125,6 +129,6 @@ class PropostaModel extends Equatable {
 
   @override
   String toString() {
-    return '''PropostaModel{id: $id, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, ementaDetalhada: $ementaDetalhada, despacho: $despacho, nomePolitico: $nomePolitico, idPoliticoAutor: $idPoliticoAutor, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataAtualizacao: $dataAtualizacao, status: $status, visualizado: $visualizado, sequencia: $sequencia, favorito: $favorito, foiAtualizada: $foiAtualizada, urlPartidoLogo: $urlPartidoLogo, urlInteiroTeor: $urlInteiroTeor, nomesAutores: $nomesAutores}''';
+    return '''PropostaModel{id: $id, idPropostaPolitico: $idPropostaPolitico, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, ementaDetalhada: $ementaDetalhada, despacho: $despacho, nomePolitico: $nomePolitico, idPoliticoAutor: $idPoliticoAutor, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataAtualizacao: $dataAtualizacao, status: $status, visualizado: $visualizado, sequencia: $sequencia, favorito: $favorito, foiAtualizada: $foiAtualizada, urlPartidoLogo: $urlPartidoLogo, urlInteiroTeor: $urlInteiroTeor, nomesAutores: $nomesAutores}''';
   }
 }
