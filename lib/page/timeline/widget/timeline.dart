@@ -6,10 +6,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../core/constants.dart';
+import '../../../core/domain/enum/timeline_status.dart';
+import '../../../core/domain/model/models.dart';
+import '../../../core/i18n/i18n.dart';
 import '../../../core/keys.dart';
-import '../../../enum/timeline_status.dart';
-import '../../../i18n/i18n.dart';
-import '../../../model/models.dart';
 import '../../../widget/ad/timeline_ad_banner.dart';
 import '../../../widget/text_rich.dart';
 import '../../../widget/tile/despesa_tile_connected.dart';

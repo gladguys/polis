@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../model/models.dart';
-import '../../repository/abstract/sync_log_repository.dart';
-import '../../repository/concrete/firebase/firebase_orgao_repository.dart';
-import '../../repository/concrete/hive/hive_orgao_repository.dart';
+import '../../core/domain/model/models.dart';
+import '../repository/abstract/sync_log_repository.dart';
+import '../repository/concrete/firebase/firebase_orgao_repository.dart';
+import '../repository/concrete/hive/hive_orgao_repository.dart';
 import 'services.dart';
 
 class OrgaoService {

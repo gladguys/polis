@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/i18n/i18n.dart';
-import 'package:polis/model/models.dart';
+import 'package:polis/core/domain/model/models.dart';
+import 'package:polis/core/i18n/i18n.dart';
 import 'package:polis/page/user_profile/widget/personal_user_info.dart';
 
-import 'utils.dart';
+import '../utils.dart';
 
 void main() {
   group('PersonalUserInfo tests', () {

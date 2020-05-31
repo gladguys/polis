@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/blocs.dart';
+import '../../../core/domain/model/models.dart';
+import '../../../core/i18n/i18n.dart';
 import '../../../core/keys.dart';
-import '../../../i18n/i18n.dart';
-import '../../../model/models.dart';
 import '../../../widget/button_follow_unfollow.dart';
 
 class PoliticActionButtons extends StatelessWidget {

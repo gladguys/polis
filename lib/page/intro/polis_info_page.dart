@@ -3,9 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
+import '../../core/extension/media_query_extensions.dart';
+import '../../core/i18n/i18n.dart';
 import '../../core/routing/route_names.dart';
-import '../../extension/media_query_extensions.dart';
-import '../../i18n/i18n.dart';
 import '../pages.dart';
 
 class PolisInfoPage extends StatelessWidget {

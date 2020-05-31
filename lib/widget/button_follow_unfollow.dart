@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../i18n/i18n.dart';
+import '../core/i18n/i18n.dart';
 
 class ButtonFollowUnfollow extends StatelessWidget {
   ButtonFollowUnfollow({
@@ -41,7 +41,7 @@ class ButtonFollowUnfollow extends StatelessWidget {
           isFollow ? STOP_FOLLOWING : FOLLOW,
           key: key,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: fontSize-1),
+          style: TextStyle(fontSize: fontSize - 1),
         ),
         textColor: color,
         highlightedBorderColor: color,

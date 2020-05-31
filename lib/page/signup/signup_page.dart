@@ -7,11 +7,11 @@ import 'package:sliding_panel/sliding_panel.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/abstract/polis_image_picker.dart';
+import '../../core/domain/model/models.dart';
+import '../../core/extension/extensions.dart';
+import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
 import '../../core/validators.dart';
-import '../../extension/extensions.dart';
-import '../../i18n/i18n.dart';
-import '../../model/models.dart';
 import '../../widget/loading.dart';
 import '../../widget/snackbar.dart';
 import '../theme/main_theme.dart';

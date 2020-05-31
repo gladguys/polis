@@ -9,9 +9,9 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bloc/flutter_bloc_delegate.dart';
+import 'core/domain/model/models.dart';
 import 'core/service/locator.dart';
 import 'core/service/services.dart';
-import 'model/models.dart';
 import 'widget/my_app.dart';
 import 'widget/my_app_injections.dart';
 

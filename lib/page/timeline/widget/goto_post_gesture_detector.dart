@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:simple_router/simple_router.dart';
 
+import '../../../core/domain/enum/post_type.dart';
 import '../../../core/routing/route_names.dart';
-import '../../../enum/post_type.dart';
 import '../../pages.dart';
 
 class GoToPostGestureDetector extends StatelessWidget {

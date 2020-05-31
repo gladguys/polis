@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
+import 'package:polis/core/domain/enum/post_type.dart';
+import 'package:polis/core/domain/model/despesa_model.dart';
 import 'package:polis/core/service/locator.dart';
-import 'package:polis/enum/post_type.dart';
-import 'package:polis/model/despesa_model.dart';
 import 'package:polis/page/timeline/widget/goto_post_gesture_detector.dart';
 
 import '../mock.dart';
-import 'utils.dart';
+import '../utils.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

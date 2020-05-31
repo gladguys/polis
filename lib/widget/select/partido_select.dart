@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smart_select/smart_select.dart';
 
-import '../../i18n/i18n.dart';
-import '../../model/models.dart';
+import '../../core/domain/model/models.dart';
+import '../../core/i18n/i18n.dart';
 import '../../page/theme/main_theme.dart';
 
 class PartidoSelect extends StatefulWidget {

@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
 import '../../bloc/timeline/timeline_bloc.dart';
+import '../../core/repository/concrete/repositories.dart';
 import '../../core/service/locator.dart';
 import '../../core/service/services.dart';
-import '../../repository/concrete/repositories.dart';
 import '../../widget/update_app_dialog.dart';
 import '../page_connected.dart';
 import '../pages.dart';

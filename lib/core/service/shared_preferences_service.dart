@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../model/models.dart';
+import '../../core/domain/model/models.dart';
 
 const USER_PREF = 'USER';
 const PARTIDO_HASH_PREF = 'PARTIDO_HASH';
