@@ -29,7 +29,7 @@ async function criarAcaoSeguirPoliticoParaUsuario(politicoDocumentRef, politicoI
     admin.firestore().collection('acoes').doc(followerId).collection('acoesUsuario').add(acao);
 }
 
-function buildAcao(todayDate, politicoDocumentRef, politicoId) {
+function buildAcao(todayDate, politico, politicoId) {
     return {
         'tipo': 'SEGUIR',
         'data': admin.firestore.Timestamp.fromDate(todayDate),

@@ -19,7 +19,7 @@ exports.onCreateActivity = functions.firestore
 
             atividade = await adicionaAtividadeTimelineUsuarios(docAtividadeCriada, politicoId, timelineRef);
             if (ehUmaProposicaoProjetoDeLei(atividade)) {
-                incrementarContadorProjetoDeLei(atividade);
+                incrementarContadorProjetoDeLei(atividade, politicoId);
             }
         }
     });
@@ -28,7 +28,7 @@ function ehUmaProposicaoProjetoDeLei(atividade) {
     return atividade.tipoAtividade == 'PROPOSICAO' && atividade.sequencia === 1 && atividade.descricaoTipo === 'Projeto de Lei';
 }
 
-function incrementarContadorProjetoDeLei(atividade) {
+function incrementarContadorProjetoDeLei(atividade, politicoId) {
     const incrementByOne = admin.firestore.FieldValue.increment(1);
 
     admin

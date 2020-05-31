@@ -19,11 +19,11 @@ exports.onUpdateActivity = functions.firestore
             .doc(documentId).get();
 
         if (docAtividadeAtualizada.exists) {
-            atualizaDocAtividadeEmTimelinesDeUsuarios(timelineRef, docAtividadeAtualizada);
+            atualizaDocAtividadeEmTimelinesDeUsuarios(timelineRef, politicoId, docAtividadeAtualizada);
         }
     });
 
-async function atualizaDocAtividadeEmTimelinesDeUsuarios(timelineRef, docAtividadeAtualizada) {
+async function atualizaDocAtividadeEmTimelinesDeUsuarios(timelineRef, politicoId, docAtividadeAtualizada) {
     let id = docAtividadeAtualizada.id;
     let atividade = docAtividadeAtualizada.data();
 
