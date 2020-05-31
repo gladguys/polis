@@ -16,6 +16,11 @@ final ThemeData theme = ThemeData(
       borderRadius: BorderRadius.circular(32),
     ),
   ),
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: Colors.amber,
+    foregroundColor: Colors.black,
+    splashColor: Colors.black38,
+  ),
   appBarTheme: AppBarTheme(
     elevation: 0,
     color: Colors.grey[50],

@@ -26,14 +26,14 @@ const PICK_YOUR_STATE = 'Escolha seu estado';
 const STATE_MESSAGE = 'Qual o seu Estado?';
 const FOLLOW = 'Seguir';
 const STOP_FOLLOW = 'Deixar de seguir';
-const YOU_DONT_FOLLOW_ANYONE_YET = 'Você ainda não segue nenhum politico!';
+const YOU_DONT_FOLLOW_ANYONE_YET = 'Você ainda não segue nenhum político!';
 
 const POLIS_INFO_MESSAGE =
-    '''Siga os deputados federais que você deseja acompanhar e receba notificações quando eles tiverem novas informações...''';
+    '''Siga Deputados Federais e receba notificações quando eles tiverem novas Propostas de Lei ou Despesas...''';
 const TIMELINE_INFO_MESSAGE =
-    '''Acompanhe as atualizações das informações dos deputados que você segue em tempo real na sua timeline...''';
+    '''Acompanhe atualizações das informações dos Deputados Federais que você segue em tempo real na sua timeline...''';
 const POLITIC_GENERAL_INFO_MESSAGE =
-    '''Veja informações sobre propostas de lei e despesas dos políticos nos seus perfis...''';
+    '''Veja informações sobre Propostas de Lei e Despesas dos Deputados Federais em seus perfis...''';
 
 const WELCOME = 'Bem vindo';
 const STOP_FOLLOWING = 'Deixar de seguir';
