@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
-import '../../i18n/i18n.dart';
 import '../label_value.dart';
 
 class ProposalAuthors extends StatefulWidget {
