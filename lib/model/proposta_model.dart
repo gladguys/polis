@@ -24,6 +24,7 @@ class PropostaModel extends Equatable {
     this.descricaoTramitacao,
     this.favorito,
     this.dataAtualizacao,
+    this.dataPublicacao,
     this.tipoDocumento,
     this.sequencia,
     this.status,
@@ -51,6 +52,7 @@ class PropostaModel extends Equatable {
   final String descricaoSituacao;
   final String descricaoTramitacao;
   final String dataAtualizacao;
+  final String dataPublicacao;
   final String status;
   final bool visualizado;
   final int sequencia;
@@ -83,6 +85,7 @@ class PropostaModel extends Equatable {
     String descricaoSituacao,
     String descricaoTramitacao,
     String dataAtualizacao,
+    String dataPublicacao,
     String status,
     bool visualizado,
     String sequencia,
@@ -107,6 +110,7 @@ class PropostaModel extends Equatable {
       estadoPolitico: estadoPolitico ?? this.estadoPolitico,
       siglaPartido: siglaPartido ?? this.siglaPartido,
       dataAtualizacao: dataAtualizacao ?? this.dataAtualizacao,
+      dataPublicacao: dataPublicacao ?? this.dataPublicacao,
       tipoDocumento: tipoDocumento ?? this.tipoDocumento,
       descricaoSituacao: descricaoSituacao ?? this.descricaoSituacao,
       descricaoTramitacao: descricaoTramitacao ?? this.descricaoTramitacao,
