@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:polis/core/keys.dart';
 import 'package:polis/widget/general/proposal_authors.dart';
 
-import '../utils.dart';
+import '../../utils.dart';
 
 void main() {
   group('ProposalAuthors', () {
