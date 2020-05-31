@@ -24,7 +24,7 @@ class FirebaseTramitacaoPropostaRepository
           .document(propostaId)
           .collection(TRAMITACOES_PROPOSICAO_SUBCOLLECTION)
           .orderBy(SEQUENCIA_FIELD, descending: true)
-          .getDocuments();
+          .getDocuments(source: Source.cache);
       final documents = querySnapshot.documents;
       return List.generate(documents.length,
           (i) => TramitacaoPropostaModel.fromJson(documents[i].data));

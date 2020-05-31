@@ -22,7 +22,8 @@ class FirebaseUserProfileRepository implements UserProfileRepository {
       final collectionRef = await politicosSeguidosRef
           .document(userId)
           .collection(POLITICOS_SEGUIDOS_SUBCOLLECTION);
-      final querySnapshot = await collectionRef.getDocuments();
+      final querySnapshot =
+          await collectionRef.getDocuments(source: Source.cache);
       final documents = querySnapshot.documents;
       return List.generate(
           documents.length, (i) => PoliticoModel.fromJson(documents[i].data));
@@ -38,10 +39,13 @@ class FirebaseUserProfileRepository implements UserProfileRepository {
           .document(userId)
           .collection(ACOES_USUARIO_SUBCOLLECTION)
           .orderBy(DATA_ACAO, descending: true);
-      final querySnapshot = await collectionRef.getDocuments();
+      final querySnapshot =
+          await collectionRef.getDocuments(source: Source.cache);
       final documents = querySnapshot.documents;
-      return List.generate(documents.length,
-          (i) => AcaoUsuarioModel.fromJson(documents[i].data));
+      return List.generate(
+        documents.length,
+        (i) => AcaoUsuarioModel.fromJson(documents[i].data),
+      );
     } on Exception {
       throw ComunicationException();
     }

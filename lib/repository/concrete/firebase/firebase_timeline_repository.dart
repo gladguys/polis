@@ -50,7 +50,7 @@ class FirebaseTimelineRepository implements TimelineRepository {
           .orderBy(DATA_ATUALIZACAO_FIELD, descending: true)
           .limit(count);
 
-      final querySnapshot = await query.getDocuments();
+      final querySnapshot = await query.getDocuments(source: Source.cache);
       final activities = getActivitiesFromSnapshot(querySnapshot);
       final documentsSnapshot = querySnapshot.documents;
 
@@ -74,7 +74,7 @@ class FirebaseTimelineRepository implements TimelineRepository {
           .startAfterDocument(lastDocument)
           .limit(count);
 
-      final querySnapshot = await query.getDocuments();
+      final querySnapshot = await query.getDocuments(source: Source.cache);
       final activities = getActivitiesFromSnapshot(querySnapshot);
       final documentsSnapshot = querySnapshot.documents;
 

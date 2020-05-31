@@ -22,7 +22,8 @@ class FirebasePoliticFollowersRepository implements PoliticFollowersRepository {
       final usuariosSeguindoCollectionRef = usuariosSeguindoRef
           .document(politicId)
           .collection(USUARIOS_SEGUINDO_SUBCOLLECTION);
-      final querySnapshot = await usuariosSeguindoCollectionRef.getDocuments();
+      final querySnapshot = await usuariosSeguindoCollectionRef.getDocuments(
+          source: Source.cache);
       final documents = querySnapshot.documents;
       return List.generate(documents.length,
           (i) => UsuarioSeguindoPolitico.fromJson(documents[i].data));

@@ -40,7 +40,7 @@ class FirebasePoliticProfileRepository implements PoliticProfileRepository {
           .orderBy(DATA_ATUALIZACAO_FIELD, descending: true)
           .limit(count);
 
-      final querySnapshot = await query.getDocuments();
+      final querySnapshot = await query.getDocuments(source: Source.cache);
       final activities = getActivitiesFromSnapshot(querySnapshot);
       final lastDocument = querySnapshot.documents.isNotEmpty
           ? querySnapshot.documents.last
@@ -66,7 +66,7 @@ class FirebasePoliticProfileRepository implements PoliticProfileRepository {
           .startAfterDocument(lastDocument)
           .limit(count);
 
-      final querySnapshot = await query.getDocuments();
+      final querySnapshot = await query.getDocuments(source: Source.cache);
       final activities = getActivitiesFromSnapshot(querySnapshot);
 
       return Tuple2<List<dynamic>, DocumentSnapshot>(

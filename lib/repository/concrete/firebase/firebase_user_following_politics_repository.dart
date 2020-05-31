@@ -21,7 +21,7 @@ class FirebaseUserFollowingPoliticsRepository
       final collection = politicosSeguindoRef
           .document(userId)
           .collection(POLITICOS_SEGUIDOS_SUBCOLLECTION);
-      final querySnapshot = await collection.getDocuments();
+      final querySnapshot = await collection.getDocuments(source: Source.cache);
       final documents = querySnapshot.documents;
       return List.generate(
           documents.length, (i) => PoliticoModel.fromJson(documents[i].data));
