@@ -83,7 +83,7 @@ void main() {
             ),
           ),
         );
-        final readyButton = find.text(READY);
+        final readyButton = find.text(READY.toUpperCase());
         expect(readyButton, findsOneWidget);
         await tester.tap(readyButton);
         verify(
