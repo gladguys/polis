@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../../bloc/blocs.dart';
+import '../../../core/i18n/i18n.dart';
 import '../../../core/validators.dart';
-import '../../../i18n/i18n.dart';
 
 class ResetPasswordForm extends StatefulWidget {
   @override

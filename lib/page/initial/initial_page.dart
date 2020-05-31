@@ -4,11 +4,11 @@ import 'package:simple_router/simple_router.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
 import '../../bloc/blocs.dart';
+import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../core/service/locator.dart';
 import '../../core/service/services.dart';
-import '../../i18n/i18n.dart';
 import '../../widget/loading.dart';
 import '../../widget/snackbar.dart';
 import '../pages.dart';

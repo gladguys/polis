@@ -6,7 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/constants.dart';
-import '../../repository/abstract/timeline_repository.dart';
+import '../../core/repository/abstract/repositories.dart';
 
 part 'timeline_event.dart';
 part 'timeline_state.dart';

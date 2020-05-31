@@ -4,11 +4,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
+import '../../core/domain/enum/post_type.dart';
+import '../../core/domain/model/proposta_model.dart';
+import '../../core/extension/extensions.dart';
+import '../../core/i18n/i18n.dart';
 import '../../core/routing/route_names.dart';
-import '../../enum/post_type.dart';
-import '../../extension/extensions.dart';
-import '../../i18n/i18n.dart';
-import '../../model/proposta_model.dart';
 import '../../page/pages.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';

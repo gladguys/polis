@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:polis/widget/button_action_card.dart';
 
-import 'utils.dart';
+import '../utils.dart';
 
 void main() {
   group('ButtonActionCard tests', () {

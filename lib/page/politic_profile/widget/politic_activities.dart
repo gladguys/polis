@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/blocs.dart';
-import '../../../extension/extensions.dart';
-import '../../../i18n/i18n.dart';
-import '../../../model/despesa_model.dart';
-import '../../../model/models.dart';
+import '../../../core/domain/model/despesa_model.dart';
+import '../../../core/domain/model/models.dart';
+import '../../../core/extension/extensions.dart';
+import '../../../core/i18n/i18n.dart';
 import '../../../widget/not_found.dart';
 import '../../../widget/tile/politic_despesa_tile_connected.dart';
 import '../../../widget/tile/politic_proposta_tile_connected.dart';

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
-import 'package:polis/i18n/i18n.dart';
+import 'package:polis/core/i18n/i18n.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/signin/widget/reset_password_form.dart';
 
 import '../mock.dart';
-import 'utils.dart';
+import '../utils.dart';
 
 void main() {
   group('ResetPasswordForm tests', () {

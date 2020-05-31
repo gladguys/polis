@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../i18n/message.dart';
+import '../core/i18n/message.dart';
 import '../page/theme/main_theme.dart';
 
 class ErrorContainer extends StatefulWidget {

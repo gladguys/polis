@@ -5,10 +5,9 @@ import 'package:diacritic/diacritic.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/domain/model/models.dart';
+import '../../core/repository/abstract/repositories.dart';
 import '../../core/service/services.dart';
-import '../../model/models.dart';
-import '../../repository/abstract/follow_repository.dart';
-import '../../repository/abstract/user_following_politics_repository.dart';
 import '../blocs.dart';
 
 part 'search_politic_event.dart';

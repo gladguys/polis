@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_driver/flutter_driver.dart';
-import 'package:polis/i18n/i18n.dart';
+import 'package:polis/core/i18n/i18n.dart';
 import 'package:test/test.dart';
 
 void main() {

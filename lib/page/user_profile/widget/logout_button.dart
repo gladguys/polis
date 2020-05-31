@@ -4,9 +4,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../../bloc/blocs.dart';
+import '../../../core/i18n/i18n.dart';
 import '../../../core/keys.dart';
 import '../../../core/routing/route_names.dart';
-import '../../../i18n/i18n.dart';
 import '../../pages.dart';
 
 class LogoutButton extends StatelessWidget {

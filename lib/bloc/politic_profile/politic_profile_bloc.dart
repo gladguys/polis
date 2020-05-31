@@ -7,11 +7,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/constants.dart';
+import '../../core/domain/model/models.dart';
+import '../../core/repository/abstract/repositories.dart';
 import '../../core/service/services.dart';
 import '../../core/validators.dart';
-import '../../model/models.dart';
-import '../../repository/abstract/follow_repository.dart';
-import '../../repository/abstract/politic_profile_repository.dart';
 
 part 'politic_profile_event.dart';
 part 'politic_profile_state.dart';

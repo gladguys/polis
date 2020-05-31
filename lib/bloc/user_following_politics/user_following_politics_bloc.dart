@@ -4,9 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import '../../model/models.dart';
-import '../../repository/abstract/follow_repository.dart';
-import '../../repository/abstract/user_following_politics_repository.dart';
+import '../../core/domain/model/models.dart';
+import '../../core/repository/abstract/repositories.dart';
 
 part 'user_following_politics_event.dart';
 part 'user_following_politics_state.dart';

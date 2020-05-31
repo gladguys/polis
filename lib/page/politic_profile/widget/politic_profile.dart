@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/blocs.dart';
-import '../../../extension/media_query_extensions.dart';
-import '../../../i18n/label.dart';
+import '../../../core/extension/media_query_extensions.dart';
+import '../../../core/i18n/label.dart';
 import '../../../widget/text_title.dart';
 import '../../theme/main_theme.dart';
 import 'politic_action_buttons.dart';

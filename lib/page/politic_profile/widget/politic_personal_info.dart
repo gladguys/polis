@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../i18n/i18n.dart';
-import '../../../model/models.dart';
+import '../../../core/domain/model/models.dart';
+import '../../../core/i18n/i18n.dart';
 import '../../../widget/image/logo_partido_image.dart';
 import '../../../widget/photo.dart';
 

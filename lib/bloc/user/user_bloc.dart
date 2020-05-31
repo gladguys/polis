@@ -4,10 +4,10 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/domain/model/models.dart';
 import '../../core/exception/exceptions.dart';
+import '../../core/repository/abstract/repositories.dart';
 import '../../core/service/services.dart';
-import '../../model/models.dart';
-import '../../repository/abstract/user_repository.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';

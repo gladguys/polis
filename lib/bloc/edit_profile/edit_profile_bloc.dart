@@ -5,8 +5,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import '../../model/models.dart';
-import '../../repository/abstract/edit_profile_repository.dart';
+import '../../core/domain/model/models.dart';
+import '../../core/repository/abstract/edit_profile_repository.dart';
 import '../blocs.dart';
 
 part 'edit_profile_event.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../extension/extensions.dart';
-import '../../i18n/i18n.dart';
+import '../../core/extension/extensions.dart';
+import '../../core/i18n/i18n.dart';
 import '../theme/main_theme.dart';
 import 'widget/all_set_button.dart';
 import 'widget/searching_info.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/change_password/change_password_bloc.dart';
-import '../../repository/concrete/repositories.dart';
+import '../../core/repository/concrete/repositories.dart';
 import '../page_connected.dart';
 import 'change_password_page.dart';
 

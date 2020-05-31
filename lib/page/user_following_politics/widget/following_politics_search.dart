@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/blocs.dart';
+import '../../../core/domain/model/models.dart';
+import '../../../core/i18n/label.dart';
 import '../../../core/keys.dart';
-import '../../../i18n/label.dart';
-import '../../../model/models.dart';
 import '../../../widget/field_rounded.dart';
 import 'following_politics_list.dart';
 

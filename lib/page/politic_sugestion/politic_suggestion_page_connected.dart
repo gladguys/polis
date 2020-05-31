@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
-import '../../repository/concrete/repositories.dart';
+import '../../core/repository/concrete/repositories.dart';
 import '../page_connected.dart';
 import '../pages.dart';
 import '../theme/main_theme.dart';
