@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:screenshot/screenshot.dart';
 
 import '../../bloc/blocs.dart';
+import '../../core/domain/model/models.dart';
 import '../../core/service/locator.dart';
 import '../../core/service/services.dart';
-import '../../model/models.dart';
 import '../../page/page_connected.dart';
 import 'post_proposta.dart';
 

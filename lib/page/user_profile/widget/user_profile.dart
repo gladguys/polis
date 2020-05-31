@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../bloc/user/user_bloc.dart';
-import '../../../extension/media_query_extensions.dart';
-import '../../../i18n/label.dart';
-import '../../../model/models.dart';
+import '../../../core/domain/model/models.dart';
+import '../../../core/extension/media_query_extensions.dart';
+import '../../../core/i18n/label.dart';
 import '../../../widget/text_title.dart';
 import '../../theme/main_theme.dart';
 import 'logout_button.dart';

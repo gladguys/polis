@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/blocs.dart';
-import '../../../i18n/i18n.dart';
+import '../../../core/i18n/i18n.dart';
 import 'politics_suggested_grid.dart';
 
 class PoliticsSuggestion extends StatelessWidget {

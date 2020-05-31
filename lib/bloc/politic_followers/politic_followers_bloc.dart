@@ -4,8 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import '../../model/models.dart';
-import '../../repository/abstract/politic_followers_repository.dart';
+import '../../core/domain/model/models.dart';
+import '../../core/repository/abstract/politic_followers_repository.dart';
 
 part 'politic_followers_event.dart';
 part 'politic_followers_state.dart';
@@ -24,15 +24,20 @@ class PoliticFollowersBloc
   Stream<PoliticFollowersState> mapEventToState(
       PoliticFollowersEvent event) async* {
     if (event is GetPoliticFollowers) {
-      try {
-        yield LoadingPoliticFollowers();
+      yield* _mapGetPoliticFollowersToState(event);
+    }
+  }
 
-        final followers =
-            await repository.getUsersFollowingPolitic(event.politicId);
-        yield GetPoliticFollowersSuccess(followers: followers);
-      } on Exception {
-        yield GetPoliticFollowersFailed();
-      }
+  Stream<PoliticFollowersState> _mapGetPoliticFollowersToState(
+      GetPoliticFollowers event) async* {
+    try {
+      yield LoadingPoliticFollowers();
+
+      final followers =
+          await repository.getUsersFollowingPolitic(event.politicId);
+      yield GetPoliticFollowersSuccess(followers: followers);
+    } on Exception {
+      yield GetPoliticFollowersFailed();
     }
   }
 }

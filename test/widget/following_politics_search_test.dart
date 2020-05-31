@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/keys.dart';
-import 'package:polis/model/models.dart';
 import 'package:polis/page/user_following_politics/widget/following_politics_search.dart';
 
 import '../mock.dart';
-import 'utils.dart';
+import '../utils.dart';
 
 void main() {
   group('FollowingPoliticsSearch tests', () {

@@ -1,13 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/user_following_politics/user_following_politics_bloc.dart';
-import 'package:polis/model/models.dart';
+import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/user_following_politics/widget/following_politics_list.dart';
 import 'package:polis/widget/photo.dart';
 
 import '../mock.dart';
-import 'utils.dart';
+import '../utils.dart';
 
 void main() {
   group('FollowingPoliticsList tests', () {

@@ -21,11 +21,16 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
   @override
   Stream<DocumentState> mapEventToState(DocumentEvent event) async* {
     if (event is OpenDocumentImage) {
-      try {
-        urlLaunchService.launchUrl(event.url);
-      } on Exception {
-        yield LaunchUrlFailed();
-      }
+      yield* _mapOpenDocumentImageToState(event);
+    }
+  }
+
+  Stream<DocumentState> _mapOpenDocumentImageToState(
+      OpenDocumentImage event) async* {
+    try {
+      urlLaunchService.launchUrl(event.url);
+    } on Exception {
+      yield LaunchUrlFailed();
     }
   }
 }

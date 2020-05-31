@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
+import 'package:polis/core/domain/model/despesa_model.dart';
 import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
-import 'package:polis/model/despesa_model.dart';
 import 'package:polis/widget/tile/politic_despesa_tile_connected.dart';
 
 import '../mock.dart';
-import 'utils.dart';
+import '../utils.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

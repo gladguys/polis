@@ -4,9 +4,9 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/domain/model/models.dart';
+import '../../core/repository/abstract/repositories.dart';
 import '../../core/service/services.dart';
-import '../../model/models.dart';
-import '../../repository/abstract/tramitacao_proposta_repository.dart';
 
 part 'tramitacao_proposta_event.dart';
 part 'tramitacao_proposta_state.dart';
@@ -31,17 +31,21 @@ class TramitacaoPropostaBloc
   Stream<TramitacaoPropostaState> mapEventToState(
       TramitacaoPropostaEvent event) async* {
     if (event is FetchTramitacoesProposicao) {
-      yield LoadingTramitacaoProposta();
+      yield* _mapFetchTramitacoesProposicaoToState(event);
+    }
+  }
 
-      orgaosMap = await orgaoService.getAllOrgaosMap();
-      try {
-        proposta = event.proposta;
-        final tramitacoes =
-            await repository.getTramitacoesProposta(proposta.id);
-        yield GetTramitacaoPropostaSuccess(tramitacoes);
-      } on Exception {
-        yield GetTramitacaoPropostaFailed();
-      }
+  Stream<TramitacaoPropostaState> _mapFetchTramitacoesProposicaoToState(
+      FetchTramitacoesProposicao event) async* {
+    yield LoadingTramitacaoProposta();
+
+    orgaosMap = await orgaoService.getAllOrgaosMap();
+    try {
+      proposta = event.proposta;
+      final tramitacoes = await repository.getTramitacoesProposta(proposta.id);
+      yield GetTramitacaoPropostaSuccess(tramitacoes);
+    } on Exception {
+      yield GetTramitacaoPropostaFailed();
     }
   }
 }

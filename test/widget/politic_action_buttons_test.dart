@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/keys.dart';
-import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/politic_profile/widget/politic_action_buttons.dart';
 import 'package:polis/widget/button_follow_unfollow.dart';
 
 import '../mock.dart';
-import 'utils.dart';
+import '../utils.dart';
 
 void main() {
   MockPoliticProfileBloc mockPoliticProfileBloc;

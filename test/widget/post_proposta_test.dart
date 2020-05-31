@@ -4,15 +4,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/domain/model/models.dart';
+import 'package:polis/core/i18n/i18n.dart';
 import 'package:polis/core/keys.dart';
-import 'package:polis/i18n/i18n.dart';
-import 'package:polis/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/widget/button_action_card.dart';
 import 'package:polis/widget/post/post_proposta.dart';
 
 import '../mock.dart';
-import 'utils.dart';
+import '../utils.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

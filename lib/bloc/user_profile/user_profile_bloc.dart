@@ -4,8 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import '../../model/models.dart';
-import '../../repository/abstract/user_profile_repository.dart';
+import '../../core/domain/model/models.dart';
+import '../../core/repository/abstract/repositories.dart';
 
 part 'user_profile_event.dart';
 part 'user_profile_state.dart';
@@ -23,19 +23,24 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   @override
   Stream<UserProfileState> mapEventToState(UserProfileEvent event) async* {
     if (event is FetchUserRelatedInfo) {
-      yield LoadingFetchUserInfo();
+      yield* _mapFetchUserRelatedInfoToState(event);
+    }
+  }
 
-      try {
-        politicsFollowing = await repository.getPoliticsFollowing(event.userId);
-        userActions = await repository.getUserActions(event.userId);
+  Stream<UserProfileState> _mapFetchUserRelatedInfoToState(
+      FetchUserRelatedInfo event) async* {
+    yield LoadingFetchUserInfo();
 
-        yield FetchUserRelatedInfoSuccess(
-          politicsFollowing: politicsFollowing,
-          userActions: userActions,
-        );
-      } on Exception {
-        yield FetchUserRelatedInfoFailed();
-      }
+    try {
+      politicsFollowing = await repository.getPoliticsFollowing(event.userId);
+      userActions = await repository.getUserActions(event.userId);
+
+      yield FetchUserRelatedInfoSuccess(
+        politicsFollowing: politicsFollowing,
+        userActions: userActions,
+      );
+    } on Exception {
+      yield FetchUserRelatedInfoFailed();
     }
   }
 }

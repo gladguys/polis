@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../enum/acao_type.dart';
-import '../../../extension/extensions.dart';
-import '../../../i18n/label.dart';
-import '../../../model/models.dart';
+import '../../../core/domain/enum/acao_type.dart';
+import '../../../core/domain/model/models.dart';
+import '../../../core/extension/extensions.dart';
+import '../../../core/i18n/label.dart';
 import '../../../widget/card_base.dart';
 import '../../../widget/photo.dart';
 import '../../../widget/text_rich.dart';

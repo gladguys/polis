@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:polis/widget/empty_info.dart';
 
-import 'utils.dart';
+import '../utils.dart';
 
 void main() {
   group('EmptyInfo tests', () {

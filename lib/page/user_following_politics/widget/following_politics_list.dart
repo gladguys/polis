@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../../bloc/blocs.dart';
+import '../../../core/domain/model/models.dart';
+import '../../../core/i18n/i18n.dart';
 import '../../../core/keys.dart';
 import '../../../core/routing/route_names.dart';
-import '../../../i18n/i18n.dart';
-import '../../../model/models.dart';
 import '../../../widget/button_follow_unfollow.dart';
 import '../../../widget/card_base.dart';
 import '../../../widget/not_found.dart';

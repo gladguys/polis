@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
-import '../../repository/concrete/firebase/firebase.dart';
 import '../exception/exceptions.dart';
+import '../repository/concrete/firebase/firebase.dart';
 import 'services.dart';
 
 class MessageService {

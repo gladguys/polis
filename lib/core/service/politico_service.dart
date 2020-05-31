@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../model/models.dart';
-import '../../repository/abstract/sync_log_repository.dart';
-import '../../repository/concrete/repositories.dart';
+import '../../core/domain/model/models.dart';
+import '../repository/abstract/sync_log_repository.dart';
+import '../repository/concrete/repositories.dart';
 import 'services.dart';
 
 class PoliticoService {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/domain/enum/post_type.dart';
 import '../../core/routing/route_names.dart';
-import '../../enum/post_type.dart';
 import '../../widget/default_bottombar.dart';
 import '../../widget/post/post_despesa_connected.dart';
 import '../../widget/post/post_proposta_connected.dart';

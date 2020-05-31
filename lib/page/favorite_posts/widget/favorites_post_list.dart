@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/domain/model/models.dart';
 import '../../../core/keys.dart';
-import '../../../model/models.dart';
 import '../../../widget/tile/favorite_despesa_tile_connected.dart';
 import '../../../widget/tile/favorite_proposta_tile_connected.dart';
 

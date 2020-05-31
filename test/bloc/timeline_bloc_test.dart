@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/constants.dart';
-import 'package:polis/model/despesa_model.dart';
+import 'package:polis/core/domain/model/despesa_model.dart';
 import 'package:tuple/tuple.dart';
 
 import '../mock.dart';
@@ -141,13 +141,14 @@ void main() {
         verify(mockTimelineRepository.getNewActivitiesCounter('1')).called(2);
         verify(mockTimelineRepository.getTimelineFirstPosts(
                 '1', kTimelinePageSize))
-            .called(1);
+            .called(2);
       },
       expect: [
         LoadingTimeline(),
         NoPostsAvailable(),
         TimelineUpdated(activities: [], postsCount: 0, updatesCount: 0),
         LoadingTimeline(),
+        NoPostsAvailable(),
       ],
     );
 
