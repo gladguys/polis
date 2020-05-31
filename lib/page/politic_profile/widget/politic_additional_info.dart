@@ -71,7 +71,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
                   Container(
                     width: 90,
                     child: Text(
-                      PROPOSERS,
+                      PROJECTS_PARTICIPATIONS,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.grey[600],

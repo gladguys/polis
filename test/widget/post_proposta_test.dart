@@ -30,6 +30,7 @@ void main() {
         tipoDocumento: 'tipo',
         status: 'status',
         dataAtualizacao: '10-01-2020',
+        nomesAutores: ['a', 'b', 'c'],
       );
     });
 
@@ -76,6 +77,7 @@ void main() {
         status: 'status',
         dataAtualizacao: '10-01-2020',
         descricaoTipo: PLENARY_AMENDMENT,
+        nomesAutores: ['a', 'b', 'c'],
       );
       final mockPostBloc = MockPostBloc();
       when(mockPostBloc.isPostFavorite).thenReturn(true);

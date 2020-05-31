@@ -24,6 +24,7 @@ class PropostaModel extends Equatable {
     this.descricaoTramitacao,
     this.favorito,
     this.dataAtualizacao,
+    this.dataPublicacao,
     this.tipoDocumento,
     this.sequencia,
     this.status,
@@ -31,6 +32,7 @@ class PropostaModel extends Equatable {
     this.foiAtualizada,
     this.urlPartidoLogo,
     this.urlInteiroTeor,
+    this.nomesAutores,
   });
 
   final String id;
@@ -51,6 +53,7 @@ class PropostaModel extends Equatable {
   final String descricaoSituacao;
   final String descricaoTramitacao;
   final String dataAtualizacao;
+  final String dataPublicacao;
   final String status;
   final bool visualizado;
   final int sequencia;
@@ -58,6 +61,7 @@ class PropostaModel extends Equatable {
   final bool foiAtualizada;
   final String urlPartidoLogo;
   final String urlInteiroTeor;
+  final List<String> nomesAutores;
 
   factory PropostaModel.fromJson(Map<String, dynamic> json) =>
       _$PropostaModelFromJson(json);
@@ -83,6 +87,7 @@ class PropostaModel extends Equatable {
     String descricaoSituacao,
     String descricaoTramitacao,
     String dataAtualizacao,
+    String dataPublicacao,
     String status,
     bool visualizado,
     String sequencia,
@@ -90,6 +95,7 @@ class PropostaModel extends Equatable {
     bool foiAtualizada,
     String urlPartidoLogo,
     String urlInteiroTeor,
+    String nomesAutores,
   }) {
     return PropostaModel(
       id: id ?? this.id,
@@ -107,6 +113,7 @@ class PropostaModel extends Equatable {
       estadoPolitico: estadoPolitico ?? this.estadoPolitico,
       siglaPartido: siglaPartido ?? this.siglaPartido,
       dataAtualizacao: dataAtualizacao ?? this.dataAtualizacao,
+      dataPublicacao: dataPublicacao ?? this.dataPublicacao,
       tipoDocumento: tipoDocumento ?? this.tipoDocumento,
       descricaoSituacao: descricaoSituacao ?? this.descricaoSituacao,
       descricaoTramitacao: descricaoTramitacao ?? this.descricaoTramitacao,
@@ -117,6 +124,7 @@ class PropostaModel extends Equatable {
       foiAtualizada: foiAtualizada ?? this.foiAtualizada,
       urlPartidoLogo: urlPartidoLogo ?? this.urlPartidoLogo,
       urlInteiroTeor: urlInteiroTeor ?? this.urlInteiroTeor,
+      nomesAutores: nomesAutores ?? this.nomesAutores,
     );
   }
 
@@ -125,6 +133,6 @@ class PropostaModel extends Equatable {
 
   @override
   String toString() {
-    return '''PropostaModel{id: $id, idPropostaPolitico: $idPropostaPolitico, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, ementaDetalhada: $ementaDetalhada, despacho: $despacho, nomePolitico: $nomePolitico, idPoliticoAutor: $idPoliticoAutor, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataAtualizacao: $dataAtualizacao, status: $status, visualizado: $visualizado, sequencia: $sequencia, favorito: $favorito, foiAtualizada: $foiAtualizada, urlPartidoLogo: $urlPartidoLogo, urlInteiroTeor: $urlInteiroTeor}''';
+    return '''PropostaModel{id: $id, idPropostaPolitico: $idPropostaPolitico, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, ementaDetalhada: $ementaDetalhada, despacho: $despacho, nomePolitico: $nomePolitico, idPoliticoAutor: $idPoliticoAutor, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataAtualizacao: $dataAtualizacao, status: $status, visualizado: $visualizado, sequencia: $sequencia, favorito: $favorito, foiAtualizada: $foiAtualizada, urlPartidoLogo: $urlPartidoLogo, urlInteiroTeor: $urlInteiroTeor, nomesAutores: $nomesAutores}''';
   }
 }

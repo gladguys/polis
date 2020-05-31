@@ -14,6 +14,7 @@ import '../../page/pages.dart';
 import '../../page/theme/main_theme.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';
+import '../general/proposal_authors.dart';
 import '../label_value.dart';
 import '../photo.dart';
 import '../text_rich.dart';
@@ -112,6 +113,7 @@ class PostProposta extends StatelessWidget {
             value: proposta.descricaoSituacao,
             emptyValue: NOT_INFORMED,
           ),
+          ProposalAuthors(proposta.nomesAutores),
           LabelValue(
             label: UPDATE_DATE,
             value: proposta.dataAtualizacao.formatDate(),

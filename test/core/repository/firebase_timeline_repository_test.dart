@@ -61,7 +61,7 @@ void main() {
                 .collection(ATIVIDADES_TIMELINE_SUBCOLLECTION))
             .thenReturn(mockAtividadesTimelineCollectionReference);
         when(mockAtividadesTimelineCollectionReference
-                .orderBy(DATA_ATUALIZACAO_FIELD, descending: true))
+                .orderBy(DATA_PUBLICACAO_FIELD, descending: true))
             .thenReturn(mockQuery);
         when(mockQuery.snapshots())
             .thenAnswer((_) => Stream.value(mockQuerySnapshot));
@@ -95,7 +95,7 @@ void main() {
                 .collection(ATIVIDADES_TIMELINE_SUBCOLLECTION))
             .thenReturn(mockAtividadesTimelineCollectionReference);
         when(mockAtividadesTimelineCollectionReference
-                .orderBy(DATA_ATUALIZACAO_FIELD, descending: true))
+                .orderBy(DATA_PUBLICACAO_FIELD, descending: true))
             .thenReturn(mockQuery);
         when(mockQuery.limit(kTimelinePageSize)).thenReturn(mockQueryLimit);
         when(mockQueryLimit.getDocuments())
@@ -134,7 +134,7 @@ void main() {
                 .collection(ATIVIDADES_TIMELINE_SUBCOLLECTION))
             .thenReturn(mockAtividadesTimelineCollectionReference);
         when(mockAtividadesTimelineCollectionReference
-                .orderBy(DATA_ATUALIZACAO_FIELD, descending: true))
+                .orderBy(DATA_PUBLICACAO_FIELD, descending: true))
             .thenReturn(mockQuery);
         when(mockQuery.startAfterDocument(any)).thenReturn(mockQueryPaginated);
         when(mockQueryPaginated.limit(kTimelinePageSize))
