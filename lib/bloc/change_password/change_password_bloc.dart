@@ -23,19 +23,24 @@ class ChangePasswordBloc
   Stream<ChangePasswordState> mapEventToState(
       ChangePasswordEvent event) async* {
     if (event is ChangeUserPassword) {
-      yield UserPasswordChanging();
+      yield* _mapChangeUserPasswordToState(event);
+    }
+  }
 
-      try {
-        await repository.changeUserPassword(
-          currentPassword: event.currentPassword,
-          newPassword: event.newPassword,
-        );
-        yield UserPasswordChangeSuccess();
-      } on WrongPasswordException {
-        yield UserWrongPasswordInformed();
-      } on Exception {
-        yield UserPasswordChangeFailed();
-      }
+  Stream<ChangePasswordState> _mapChangeUserPasswordToState(
+      ChangeUserPassword event) async* {
+    yield UserPasswordChanging();
+
+    try {
+      await repository.changeUserPassword(
+        currentPassword: event.currentPassword,
+        newPassword: event.newPassword,
+      );
+      yield UserPasswordChangeSuccess();
+    } on WrongPasswordException {
+      yield UserWrongPasswordInformed();
+    } on Exception {
+      yield UserPasswordChangeFailed();
     }
   }
 }

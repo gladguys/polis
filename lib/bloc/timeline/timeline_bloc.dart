@@ -32,104 +32,136 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
   @override
   Stream<TimelineState> mapEventToState(TimelineEvent event) async* {
     if (event is FetchUserTimeline) {
-      yield LoadingTimeline();
-
-      _timelineSubscription?.cancel();
-      try {
-        _timelineSubscription =
-            repository.getNewActivitiesCounter(event.userId).listen(
-          (count) {
-            if (isTimelineFetchedOnce) {
-              newActivitiesCount += count;
-              add(UpdateTimelineActivitiesCount(count: newActivitiesCount));
-            } else {
-              add(NotifyTimelineFetchedOnce());
-              isTimelineFetchedOnce = true;
-            }
-          },
-        );
-      } on Exception {
-        yield FetchTimelineFailed();
-      }
-
-      try {
-        final timelineFirstData = await repository.getTimelineFirstPosts(
-            event.userId, kTimelinePageSize);
-
-        final firstPosts = timelineFirstData.item1;
-
-        timelinePosts.addAll(firstPosts);
-        lastDocument = timelineFirstData.item2;
-
-        if (firstPosts.isNotEmpty) {
-          yield TimelineUpdated(
-            activities: timelinePosts,
-            postsCount: timelinePosts.length,
-            updatesCount: newActivitiesCount,
-          );
-        } else {
-          yield NoPostsAvailable();
-        }
-      } on Exception {
-        yield FetchTimelineFailed();
-      }
+      yield* _mapFetchUserTimelineToState(event);
     }
     if (event is FetchMorePosts) {
-      timelineCurrentPosition = event.timelineCurrentPosition;
-      try {
-        yield ReachedEndFetchingMore(
-          activities: timelinePosts,
-        );
-        final timelineData = await repository.getMorePosts(
-            event.userId, kTimelinePageSize, lastDocument);
-
-        timelinePosts.addAll(timelineData.item1);
-        lastDocument = timelineData.item2;
-
-        yield TimelineUpdated(
-          activities: timelinePosts,
-          postsCount: timelinePosts.length,
-          updatesCount: newActivitiesCount,
-        );
-      } on Exception {
-        yield FetchTimelineFailed();
-      }
+      yield* _mapFetchMorePostsToState(event);
     }
     if (event is ReloadTimeline) {
-      yield LoadingTimeline();
+      yield* _mapReloadTimelineToState(event);
+    }
+    if (event is UpdateTimelineActivitiesCount) {
+      yield* _mapUpdateTimelineActivitiesCountToState(event);
+    }
+    if (event is NotifyTimelineFetchedOnce) {
+      _notifyTimelineFetchedOnce();
+    }
+    if (event is RefreshTimeline) {
+      yield* _mapRefreshTimelineToState(event);
+    }
+  }
 
-      try {
-        final timelineFirstData = await repository.getTimelineFirstPosts(
-            event.userId, kTimelinePageSize);
+  Stream<TimelineState> _mapFetchUserTimelineToState(
+      FetchUserTimeline event) async* {
+    yield LoadingTimeline();
 
-        newActivitiesCount = 0;
-        timelinePosts = [...timelineFirstData.item1];
-        lastDocument = timelineFirstData.item2;
+    yield* _subscribeForNewActivitiesUpdates(event);
 
+    try {
+      final timelineFirstData = await repository.getTimelineFirstPosts(
+          event.userId, kTimelinePageSize);
+
+      final firstPosts = timelineFirstData.item1;
+
+      timelinePosts.addAll(firstPosts);
+      lastDocument = timelineFirstData.item2;
+
+      if (firstPosts.isNotEmpty) {
         yield TimelineUpdated(
           activities: timelinePosts,
           postsCount: timelinePosts.length,
           updatesCount: newActivitiesCount,
         );
-      } on Exception {
-        yield FetchTimelineFailed();
+      } else {
+        yield NoPostsAvailable();
       }
+    } on Exception {
+      yield FetchTimelineFailed();
     }
-    if (event is UpdateTimelineActivitiesCount) {
+  }
+
+  Stream<TimelineState> _subscribeForNewActivitiesUpdates(
+      FetchUserTimeline event) async* {
+    _timelineSubscription?.cancel();
+    try {
+      _timelineSubscription =
+          repository.getNewActivitiesCounter(event.userId).listen(
+        (count) {
+          if (isTimelineFetchedOnce) {
+            newActivitiesCount += count;
+            add(UpdateTimelineActivitiesCount(count: newActivitiesCount));
+          } else {
+            add(NotifyTimelineFetchedOnce());
+            isTimelineFetchedOnce = true;
+          }
+        },
+      );
+    } on Exception {
+      yield FetchTimelineFailed();
+    }
+  }
+
+  Stream<TimelineState> _mapFetchMorePostsToState(FetchMorePosts event) async* {
+    timelineCurrentPosition = event.timelineCurrentPosition;
+    try {
+      yield ReachedEndFetchingMore(
+        activities: timelinePosts,
+      );
+      final timelineData = await repository.getMorePosts(
+          event.userId, kTimelinePageSize, lastDocument);
+
+      timelinePosts.addAll(timelineData.item1);
+      lastDocument = timelineData.item2;
+
       yield TimelineUpdated(
         activities: timelinePosts,
         postsCount: timelinePosts.length,
         updatesCount: newActivitiesCount,
       );
+    } on Exception {
+      yield FetchTimelineFailed();
     }
-    if (event is NotifyTimelineFetchedOnce) {
-      isTimelineFetchedOnce = true;
-    }
-    if (event is RefreshTimeline) {
-      yield TimelineRefreshed(
+  }
+
+  Stream<TimelineState> _mapReloadTimelineToState(ReloadTimeline event) async* {
+    yield LoadingTimeline();
+
+    try {
+      final timelineFirstData = await repository.getTimelineFirstPosts(
+          event.userId, kTimelinePageSize);
+
+      newActivitiesCount = 0;
+      timelinePosts = [...timelineFirstData.item1];
+      lastDocument = timelineFirstData.item2;
+
+      yield TimelineUpdated(
         activities: timelinePosts,
+        postsCount: timelinePosts.length,
+        updatesCount: newActivitiesCount,
       );
+    } on Exception {
+      yield FetchTimelineFailed();
     }
+  }
+
+  Stream<TimelineState> _mapUpdateTimelineActivitiesCountToState(
+      UpdateTimelineActivitiesCount event) async* {
+    yield TimelineUpdated(
+      activities: timelinePosts,
+      postsCount: timelinePosts.length,
+      updatesCount: newActivitiesCount,
+    );
+  }
+
+  void _notifyTimelineFetchedOnce() {
+    isTimelineFetchedOnce = true;
+  }
+
+  Stream<TimelineState> _mapRefreshTimelineToState(
+      RefreshTimeline event) async* {
+    yield TimelineRefreshed(
+      activities: timelinePosts,
+    );
   }
 
   @override

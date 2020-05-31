@@ -23,19 +23,24 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   @override
   Stream<UserProfileState> mapEventToState(UserProfileEvent event) async* {
     if (event is FetchUserRelatedInfo) {
-      yield LoadingFetchUserInfo();
+      yield* _mapFetchUserRelatedInfoToState(event);
+    }
+  }
 
-      try {
-        politicsFollowing = await repository.getPoliticsFollowing(event.userId);
-        userActions = await repository.getUserActions(event.userId);
+  Stream<UserProfileState> _mapFetchUserRelatedInfoToState(
+      FetchUserRelatedInfo event) async* {
+    yield LoadingFetchUserInfo();
 
-        yield FetchUserRelatedInfoSuccess(
-          politicsFollowing: politicsFollowing,
-          userActions: userActions,
-        );
-      } on Exception {
-        yield FetchUserRelatedInfoFailed();
-      }
+    try {
+      politicsFollowing = await repository.getPoliticsFollowing(event.userId);
+      userActions = await repository.getUserActions(event.userId);
+
+      yield FetchUserRelatedInfoSuccess(
+        politicsFollowing: politicsFollowing,
+        userActions: userActions,
+      );
+    } on Exception {
+      yield FetchUserRelatedInfoFailed();
     }
   }
 }

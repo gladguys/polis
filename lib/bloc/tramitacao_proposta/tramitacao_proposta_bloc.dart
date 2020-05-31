@@ -31,17 +31,21 @@ class TramitacaoPropostaBloc
   Stream<TramitacaoPropostaState> mapEventToState(
       TramitacaoPropostaEvent event) async* {
     if (event is FetchTramitacoesProposicao) {
-      yield LoadingTramitacaoProposta();
+      yield* _mapFetchTramitacoesProposicaoToState(event);
+    }
+  }
 
-      orgaosMap = await orgaoService.getAllOrgaosMap();
-      try {
-        proposta = event.proposta;
-        final tramitacoes =
-            await repository.getTramitacoesProposta(proposta.id);
-        yield GetTramitacaoPropostaSuccess(tramitacoes);
-      } on Exception {
-        yield GetTramitacaoPropostaFailed();
-      }
+  Stream<TramitacaoPropostaState> _mapFetchTramitacoesProposicaoToState(
+      FetchTramitacoesProposicao event) async* {
+    yield LoadingTramitacaoProposta();
+
+    orgaosMap = await orgaoService.getAllOrgaosMap();
+    try {
+      proposta = event.proposta;
+      final tramitacoes = await repository.getTramitacoesProposta(proposta.id);
+      yield GetTramitacaoPropostaSuccess(tramitacoes);
+    } on Exception {
+      yield GetTramitacaoPropostaFailed();
     }
   }
 }

@@ -24,15 +24,20 @@ class PoliticFollowersBloc
   Stream<PoliticFollowersState> mapEventToState(
       PoliticFollowersEvent event) async* {
     if (event is GetPoliticFollowers) {
-      try {
-        yield LoadingPoliticFollowers();
+      yield* _mapGetPoliticFollowersToState(event);
+    }
+  }
 
-        final followers =
-            await repository.getUsersFollowingPolitic(event.politicId);
-        yield GetPoliticFollowersSuccess(followers: followers);
-      } on Exception {
-        yield GetPoliticFollowersFailed();
-      }
+  Stream<PoliticFollowersState> _mapGetPoliticFollowersToState(
+      GetPoliticFollowers event) async* {
+    try {
+      yield LoadingPoliticFollowers();
+
+      final followers =
+          await repository.getUsersFollowingPolitic(event.politicId);
+      yield GetPoliticFollowersSuccess(followers: followers);
+    } on Exception {
+      yield GetPoliticFollowersFailed();
     }
   }
 }

@@ -20,16 +20,19 @@ class FavoritePostsBloc extends Bloc<FavoritePostsEvent, FavoritePostsState> {
   @override
   Stream<FavoritePostsState> mapEventToState(FavoritePostsEvent event) async* {
     if (event is FetchUserFavoritePosts) {
-      yield LoadingFavoritesPosts();
+      yield* _mapFetchUserFavoritePostsToState(event);
+    }
+  }
 
-      try {
-        final favoritePosts =
-            await repository.getUserFavoritePosts(event.userId);
+  Stream<FavoritePostsState> _mapFetchUserFavoritePostsToState(
+      FetchUserFavoritePosts event) async* {
+    yield LoadingFavoritesPosts();
+    try {
+      final favoritePosts = await repository.getUserFavoritePosts(event.userId);
 
-        yield FetchUserFavoritePostsSuccess(favoritePosts);
-      } on Exception {
-        yield FetchUserFavoritePostsFailed();
-      }
+      yield FetchUserFavoritePostsSuccess(favoritePosts);
+    } on Exception {
+      yield FetchUserFavoritePostsFailed();
     }
   }
 }

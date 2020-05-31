@@ -35,23 +35,36 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   @override
   Stream<UserState> mapEventToState(UserEvent event) async* {
     if (event is StoreUser) {
-      user = event.user;
+      _mapStoreUser(event);
     }
     if (event is Logout) {
-      yield SignoutLoading();
-
-      try {
-        await analyticsService.logLogout(user.name);
-        await sharedPreferencesService.setUser(null);
-        await repository.signOut();
-        yield SignoutSucceded();
-      } on SignOutException {
-        yield SignoutFailed();
-      }
+      yield* _mapLogoutToState(event);
     }
     if (event is UpdateCurrentUser) {
-      user = event.user;
-      yield CurrentUserUpdated(event.user);
+      yield* _mapUpdateCurrentUserToState(event);
     }
+  }
+
+  void _mapStoreUser(StoreUser event) {
+    user = event.user;
+  }
+
+  Stream<UserState> _mapLogoutToState(Logout event) async* {
+    yield SignoutLoading();
+
+    try {
+      await analyticsService.logLogout(user.name);
+      await sharedPreferencesService.setUser(null);
+      await repository.signOut();
+      yield SignoutSucceded();
+    } on SignOutException {
+      yield SignoutFailed();
+    }
+  }
+
+  Stream<UserState> _mapUpdateCurrentUserToState(
+      UpdateCurrentUser event) async* {
+    user = event.user;
+    yield CurrentUserUpdated(event.user);
   }
 }

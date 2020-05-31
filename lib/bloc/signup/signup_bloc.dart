@@ -28,21 +28,25 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   @override
   Stream<SignupState> mapEventToState(SignupEvent event) async* {
     if (event is Signup) {
-      yield SignupLoading();
-      try {
-        await repository.createUserWithEmailAndPassword(
-            event.user, event.profilePhoto);
-        await analyticsService.logSignup();
-        yield UserCreated();
-      } on EmailAlreadyInUseException {
-        yield UserCreationFailed(EMAIL_ALREADY_IN_USE);
-      } on WeakPasswordException {
-        yield UserCreationFailed(PASSWORD_IS_WEAK);
-      } on InvalidEmailException {
-        yield UserCreationFailed(EMAIL_IS_INVALID);
-      } on Exception catch (_) {
-        yield SignupFailed(ERROR_CREATING_USER);
-      }
+      yield* _mapSignupToState(event);
+    }
+  }
+
+  Stream<SignupState> _mapSignupToState(Signup event) async* {
+    yield SignupLoading();
+    try {
+      await repository.createUserWithEmailAndPassword(
+          event.user, event.profilePhoto);
+      await analyticsService.logSignup();
+      yield UserCreated();
+    } on EmailAlreadyInUseException {
+      yield UserCreationFailed(EMAIL_ALREADY_IN_USE);
+    } on WeakPasswordException {
+      yield UserCreationFailed(PASSWORD_IS_WEAK);
+    } on InvalidEmailException {
+      yield UserCreationFailed(EMAIL_IS_INVALID);
+    } on Exception catch (_) {
+      yield SignupFailed(ERROR_CREATING_USER);
     }
   }
 }

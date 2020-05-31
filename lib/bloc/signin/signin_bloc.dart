@@ -47,40 +47,55 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
   @override
   Stream<SigninState> mapEventToState(SigninEvent event) async* {
     if (event is SigninWithEmailAndPassword) {
-      yield SigninLoading();
-      try {
-        final user = await repository.signInWithEmailAndPassword(
-            event.email, event.password);
-
-        yield* _tryToAuthUser(user, SigninMethod.emailAndPassword);
-      } on InvalidCredentialsException {
-        yield SigninFailed(ERROR_INVALID_CREDENTIALS);
-      } on EmailNotVerifiedException {
-        yield SigninFailed(ERROR_EMAIL_NOT_VERIFIED);
-      } on ComunicationException {
-        yield SigninFailed(ERROR_SIGNIN);
-      }
+      yield* _mapSigninWithEmailAndPasswordToState(event);
     }
     if (event is SigninWithGoogle) {
-      yield SigninLoading();
-      try {
-        final user = await repository.signInWithGoogle();
-
-        yield* _tryToAuthUser(user, SigninMethod.google);
-      } on InvalidCredentialsException {
-        yield SigninFailed(ERROR_INVALID_CREDENTIALS);
-      } on Exception {
-        yield SigninFailed(ERROR_SIGNIN);
-      }
+      yield* _mapSigninWithGoogleToState(event);
     }
     if (event is SendResetPasswordEmail) {
-      try {
-        yield SentingResetEmail();
-        await repository.sendResetEmail(event.email);
-        yield ResetEmailSentSuccess();
-      } on Exception {
-        yield ResetEmailSentFailed();
-      }
+      yield* _mapSendResetPasswordEmailToState(event);
+    }
+  }
+
+  Stream<SigninState> _mapSigninWithEmailAndPasswordToState(
+      SigninWithEmailAndPassword event) async* {
+    yield SigninLoading();
+    try {
+      final user = await repository.signInWithEmailAndPassword(
+          event.email, event.password);
+
+      yield* _tryToAuthUser(user, SigninMethod.emailAndPassword);
+    } on InvalidCredentialsException {
+      yield SigninFailed(ERROR_INVALID_CREDENTIALS);
+    } on EmailNotVerifiedException {
+      yield SigninFailed(ERROR_EMAIL_NOT_VERIFIED);
+    } on ComunicationException {
+      yield SigninFailed(ERROR_SIGNIN);
+    }
+  }
+
+  Stream<SigninState> _mapSigninWithGoogleToState(
+      SigninWithGoogle event) async* {
+    yield SigninLoading();
+    try {
+      final user = await repository.signInWithGoogle();
+
+      yield* _tryToAuthUser(user, SigninMethod.google);
+    } on InvalidCredentialsException {
+      yield SigninFailed(ERROR_INVALID_CREDENTIALS);
+    } on Exception {
+      yield SigninFailed(ERROR_SIGNIN);
+    }
+  }
+
+  Stream<SigninState> _mapSendResetPasswordEmailToState(
+      SendResetPasswordEmail event) async* {
+    try {
+      yield SentingResetEmail();
+      await repository.sendResetEmail(event.email);
+      yield ResetEmailSentSuccess();
+    } on Exception {
+      yield ResetEmailSentFailed();
     }
   }
 

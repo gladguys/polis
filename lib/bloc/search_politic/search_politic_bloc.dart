@@ -63,87 +63,16 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
   @override
   Stream<SearchPoliticState> mapEventToState(SearchPoliticEvent event) async* {
     if (event is FetchPolitics) {
-      yield LoadingFetchPolitics();
-
-      try {
-        allPartidos = await partidoService.getAllPartidos();
-        allPolitics = politics = await politicoService.getAllPoliticos();
-        followedPolitics = await userFollowingPoliticsRepository
-            .getFollowingPolitics(event.userId);
-        _initPoliticBeingFollowed();
-
-        yield FetchSearchPoliticsSuccess(politics);
-      } on Exception {
-        yield FetchSearchPoliticsFailed();
-      }
+      yield* _mapFetchPoliticsToState(event);
     }
     if (event is ChangeSearchPoliticFilter) {
-      statePicked = event.estado ?? statePicked;
-      partidoPicked = event.partido ?? partidoPicked;
-      searchTerm = event.term ?? searchTerm;
-
-      final politicsFiltereByEstado = statePicked != 'T'
-          ? allPolitics
-              .where((politic) => politic.siglaUf == statePicked)
-              .toList()
-          : allPolitics;
-
-      final politicsFilteredByPartido = partidoPicked != 'T'
-          ? politicsFiltereByEstado
-              .where((politic) => politic.siglaPartido == partidoPicked)
-              .toList()
-          : politicsFiltereByEstado;
-
-      final politicsFilteredByTerm = searchTerm != ''
-          ? politicsFilteredByPartido
-              .where((politic) =>
-                  removeDiacritics(politic.nomeEleitoral.toLowerCase())
-                      .contains(removeDiacritics(searchTerm.toLowerCase())))
-              .toList()
-          : politicsFilteredByPartido;
-
-      politics = [...politicsFilteredByTerm];
-      yield SearchPoliticFilterChanged(
-        politics: politics,
-        statePicked: statePicked,
-        partidoPicked: partidoPicked,
-        searchTerm: searchTerm,
-      );
+      yield* _mapChangeSearchPoliticFilterToState(event);
     }
     if (event is FollowUnfollowSearchPolitic) {
-      try {
-        final user = event.user;
-        final politico = event.politico;
-        final isBeingFollowed = isPoliticBeingFollowed(politico);
-
-        if (isBeingFollowed) {
-          await followRepository.unfollowPolitic(
-              user: user, politico: politico);
-        } else {
-          await followRepository.followPolitic(user: user, politico: politico);
-        }
-        isPoliticFollowed[politico.id] = !isBeingFollowed;
-
-        yield FollowedSearchPoliticsUpdated(
-          followedPolitics: [...politics],
-          politicoUpdated: politico,
-          isFollowing: isBeingFollowed,
-        );
-      } on Exception {
-        yield FollowUnfollowPoliticsFailed();
-      }
+      yield* _mapFollowUnfollowSearchPoliticToState(event);
     }
     if (event is ChangeFollowPoliticStatus) {
-      final politico = event.politico;
-      final isUserFollowingPolitic = event.isUserFollowingPolitic;
-
-      isPoliticFollowed[politico.id] = isUserFollowingPolitic;
-
-      yield FollowedSearchPoliticsUpdated(
-        followedPolitics: [...politics],
-        politicoUpdated: event.politico,
-        isFollowing: event.isUserFollowingPolitic,
-      );
+      yield* _mapChangeFollowPoliticStatusToState(event);
     }
   }
 
@@ -154,6 +83,96 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
     for (var politic in followedPolitics) {
       isPoliticFollowed[politic.id] = true;
     }
+  }
+
+  Stream<SearchPoliticState> _mapFetchPoliticsToState(
+      FetchPolitics event) async* {
+    yield LoadingFetchPolitics();
+
+    try {
+      allPartidos = await partidoService.getAllPartidos();
+      allPolitics = politics = await politicoService.getAllPoliticos();
+      followedPolitics = await userFollowingPoliticsRepository
+          .getFollowingPolitics(event.userId);
+      _initPoliticBeingFollowed();
+
+      yield FetchSearchPoliticsSuccess(politics);
+    } on Exception {
+      yield FetchSearchPoliticsFailed();
+    }
+  }
+
+  Stream<SearchPoliticState> _mapChangeSearchPoliticFilterToState(
+      ChangeSearchPoliticFilter event) async* {
+    statePicked = event.estado ?? statePicked;
+    partidoPicked = event.partido ?? partidoPicked;
+    searchTerm = event.term ?? searchTerm;
+
+    final politicsFiltereByEstado = statePicked != 'T'
+        ? allPolitics
+            .where((politic) => politic.siglaUf == statePicked)
+            .toList()
+        : allPolitics;
+
+    final politicsFilteredByPartido = partidoPicked != 'T'
+        ? politicsFiltereByEstado
+            .where((politic) => politic.siglaPartido == partidoPicked)
+            .toList()
+        : politicsFiltereByEstado;
+
+    final politicsFilteredByTerm = searchTerm != ''
+        ? politicsFilteredByPartido
+            .where((politic) =>
+                removeDiacritics(politic.nomeEleitoral.toLowerCase())
+                    .contains(removeDiacritics(searchTerm.toLowerCase())))
+            .toList()
+        : politicsFilteredByPartido;
+
+    politics = [...politicsFilteredByTerm];
+    yield SearchPoliticFilterChanged(
+      politics: politics,
+      statePicked: statePicked,
+      partidoPicked: partidoPicked,
+      searchTerm: searchTerm,
+    );
+  }
+
+  Stream<SearchPoliticState> _mapFollowUnfollowSearchPoliticToState(
+      FollowUnfollowSearchPolitic event) async* {
+    try {
+      final user = event.user;
+      final politico = event.politico;
+      final isBeingFollowed = isPoliticBeingFollowed(politico);
+
+      if (isBeingFollowed) {
+        await followRepository.unfollowPolitic(user: user, politico: politico);
+      } else {
+        await followRepository.followPolitic(user: user, politico: politico);
+      }
+      isPoliticFollowed[politico.id] = !isBeingFollowed;
+
+      yield FollowedSearchPoliticsUpdated(
+        followedPolitics: [...politics],
+        politicoUpdated: politico,
+        isFollowing: isBeingFollowed,
+      );
+    } on Exception {
+      yield FollowUnfollowPoliticsFailed();
+    }
+  }
+
+  Stream<SearchPoliticState> _mapChangeFollowPoliticStatusToState(
+      ChangeFollowPoliticStatus event) async* {
+    final politico = event.politico;
+    final isUserFollowingPolitic = event.isUserFollowingPolitic;
+
+    isPoliticFollowed[politico.id] = isUserFollowingPolitic;
+
+    yield FollowedSearchPoliticsUpdated(
+      followedPolitics: [...politics],
+      politicoUpdated: event.politico,
+      isFollowing: event.isUserFollowingPolitic,
+    );
   }
 
   @override

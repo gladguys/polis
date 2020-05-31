@@ -26,19 +26,24 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
   @override
   Stream<EditProfileState> mapEventToState(EditProfileEvent event) async* {
     if (event is UpdateUserInfo) {
-      yield UpdatingUser();
-      try {
-        final userUpdated = await repository.updateUserInfo(
-          currentUser: event.currentUser,
-          name: event.name,
-          email: event.email,
-          pickedPhoto: event.pickedPhoto,
-        );
-        userBloc.add(UpdateCurrentUser(userUpdated));
-        yield UserUpdateSuccess();
-      } on Exception {
-        yield UserUpdateFailed();
-      }
+      yield* _mapUpdateUserInfoToState(event);
+    }
+  }
+
+  Stream<EditProfileState> _mapUpdateUserInfoToState(
+      UpdateUserInfo event) async* {
+    yield UpdatingUser();
+    try {
+      final userUpdated = await repository.updateUserInfo(
+        currentUser: event.currentUser,
+        name: event.name,
+        email: event.email,
+        pickedPhoto: event.pickedPhoto,
+      );
+      userBloc.add(UpdateCurrentUser(userUpdated));
+      yield UserUpdateSuccess();
+    } on Exception {
+      yield UserUpdateFailed();
     }
   }
 }

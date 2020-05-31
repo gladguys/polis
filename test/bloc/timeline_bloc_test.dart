@@ -141,13 +141,14 @@ void main() {
         verify(mockTimelineRepository.getNewActivitiesCounter('1')).called(2);
         verify(mockTimelineRepository.getTimelineFirstPosts(
                 '1', kTimelinePageSize))
-            .called(1);
+            .called(2);
       },
       expect: [
         LoadingTimeline(),
         NoPostsAvailable(),
         TimelineUpdated(activities: [], postsCount: 0, updatesCount: 0),
         LoadingTimeline(),
+        NoPostsAvailable(),
       ],
     );
 
