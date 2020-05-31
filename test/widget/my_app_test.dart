@@ -21,49 +21,51 @@ void main() async {
   channel.setMockMethodCallHandler((methodCall) async => true);
   initLocator(await SharedPreferences.getInstance());
 
-  test('assert', () {
-    expect(
-        () => MyApp(
-              sharedPreferencesService: null,
-            ),
-        throwsAssertionError);
-  });
+  group('MyApp tests', () {
+    test('assert', () {
+      expect(
+          () => MyApp(
+                sharedPreferencesService: null,
+              ),
+          throwsAssertionError);
+    });
 
-  testWidgets('MyApp tests', (tester) async {
-    final mockSharedPreferencesService = MockSharedPreferencesService();
-    when(mockSharedPreferencesService.getUser()).thenReturn(
-      UserModel(
-        userId: '1',
-      ),
-    );
-    when(mockSharedPreferencesService.isUserLogged()).thenReturn(false);
-    await tester.pumpWidget(
-      MyAppInjections(
-        child: MyApp(
-          sharedPreferencesService: mockSharedPreferencesService,
+    testWidgets('MyApp tests', (tester) async {
+      final mockSharedPreferencesService = MockSharedPreferencesService();
+      when(mockSharedPreferencesService.getUser()).thenReturn(
+        UserModel(
+          userId: '1',
         ),
-      ),
-    );
-    final context = tester.element(find.byType(InitialPage));
-    expect(find.byType(MyApp), findsOneWidget);
-    expect(context.bloc<UserBloc>(), isNotNull);
-  });
+      );
+      when(mockSharedPreferencesService.isUserLogged()).thenReturn(false);
+      await tester.pumpWidget(
+        MyAppInjections(
+          child: MyApp(
+            sharedPreferencesService: mockSharedPreferencesService,
+          ),
+        ),
+      );
+      final context = tester.element(find.byType(InitialPage));
+      expect(find.byType(MyApp), findsOneWidget);
+      expect(context.bloc<UserBloc>(), isNotNull);
+    });
 
-  testWidgets('Should go to timeline when user is logged', (tester) async {
-    final mockSharedPreferencesService = MockSharedPreferencesService();
-    when(mockSharedPreferencesService.getUser()).thenReturn(
-      UserModel(
-        userId: '1',
-      ),
-    );
-    when(mockSharedPreferencesService.isUserLogged()).thenReturn(true);
-    await tester.pumpWidget(
-      MyAppInjections(
-        child: MyApp(
-          sharedPreferencesService: mockSharedPreferencesService,
+    testWidgets('Should go to timeline when user is logged', (tester) async {
+      final mockSharedPreferencesService = MockSharedPreferencesService();
+      when(mockSharedPreferencesService.getUser()).thenReturn(
+        UserModel(
+          userId: '1',
         ),
-      ),
-    );
-    expect(find.byType(TimelinePage), findsOneWidget);
+      );
+      when(mockSharedPreferencesService.isUserLogged()).thenReturn(true);
+      await tester.pumpWidget(
+        MyAppInjections(
+          child: MyApp(
+            sharedPreferencesService: mockSharedPreferencesService,
+          ),
+        ),
+      );
+      expect(find.byType(TimelinePage), findsOneWidget);
+    });
   });
 }

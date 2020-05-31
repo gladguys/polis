@@ -60,8 +60,8 @@ class _SigninPageState extends State<SigninPage> {
             );
           } else {
             SimpleRouter.forwardAndReplace(
-              IntroPage(),
-              name: INTRO_PAGE,
+              PickStatePage(),
+              name: PICK_STATE_PAGE,
             );
           }
         }

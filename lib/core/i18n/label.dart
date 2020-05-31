@@ -109,5 +109,6 @@ const PARTIES_DOTS = 'Partidos...';
 const STATES_DOTS = 'Estados...';
 const IN_CASH = 'À vista';
 const NEXT = 'Próximo';
+const PICK = 'Escolher';
 const OF = 'de';
 const AFTER = 'Depois';
