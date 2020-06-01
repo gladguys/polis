@@ -10,6 +10,7 @@ import '../../../core/keys.dart';
 import '../../../core/routing/route_names.dart';
 import '../../../widget/button_follow_unfollow.dart';
 import '../../../widget/card_base.dart';
+import '../../../widget/image/photo_image.dart';
 import '../../../widget/not_found.dart';
 import '../../../widget/photo.dart';
 import '../../pages.dart';
@@ -45,7 +46,7 @@ class SearchPoliticsList extends StatelessWidget {
     return CardBase(
       key: ValueKey(politico.id),
       crossAxisAlignment: CrossAxisAlignment.center,
-      slotLeft: Photo(url: politico.urlFoto),
+      slotLeft: _buildLeftContent(politico),
       slotCenter: _buildCardContent(context, politico),
       slotRight: ButtonFollowUnfollow(
         isFollow: bloc.isPoliticBeingFollowed(politico),
@@ -72,6 +73,23 @@ class SearchPoliticsList extends StatelessWidget {
         ),
         name: POLITIC_PROFILE_PAGE,
       ),
+    );
+  }
+
+  Widget _buildLeftContent(PoliticoModel politico) {
+    return Stack(
+      overflow: Overflow.visible,
+      children: <Widget>[
+        Photo(url: politico.urlFoto),
+        Positioned(
+          right: 0,
+          bottom: 0,
+          child: PhotoImage(
+            url: politico.urlPartidoLogo,
+            size: 18,
+          ),
+        ),
+      ],
     );
   }
 
