@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../core/i18n/i18n.dart';
-import '../../core/keys.dart';
+import '../../page/theme/main_theme.dart';
 import '../label_value.dart';
 
 class ProposalAuthors extends StatefulWidget {
@@ -22,62 +23,70 @@ class _ProposalAuthorsState extends State<ProposalAuthors> {
 
   @override
   Widget build(BuildContext context) {
-    return mostrarTodos
-        ? Stack(
-            children: <Widget>[
-              LabelValue(
-                label: AUTHORS,
-                value: _getAuthorsNamesFormatted(nomesAutores, ''),
-                emptyValue: NOT_INFORMED,
-              ),
-              Positioned(
-                right: 1,
-                child: GestureDetector(
-                  onTap: () => setState(() => mostrarTodos = false),
-                  child: Icon(
-                    Icons.keyboard_arrow_up,
-                    key: dontShowAllIconKey,
-                    size: 18,
-                  ),
+    return InkWell(
+      onTap: () => setState(() => mostrarTodos = !mostrarTodos),
+      child: mostrarTodos
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(width: double.maxFinite),
+                _buildLabelValue(),
+                const SizedBox(height: 2),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: _buildIndicatorSeeMore(),
                 ),
-              ),
-            ],
-          )
-        : Stack(
-            children: <Widget>[
-              LabelValue(
-                label: AUTHORS,
-                value: _getAuthorsNamesFormatted(
-                    _getMinimumAuthorsFromList(nomesAutores, quantidadeAutores),
-                    '...'),
-                emptyValue: NOT_INFORMED,
-              ),
-              Positioned(
-                right: 1,
-                child: GestureDetector(
-                  onTap: () => setState(() => mostrarTodos = true),
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 18),
-                    child: Icon(
-                      Icons.keyboard_arrow_down,
-                      key: doShowAllIconKey,
-                      size: 18,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          );
+              ],
+            )
+          : Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Expanded(child: _buildLabelValue()),
+                _buildIndicatorSeeMore(),
+              ],
+            ),
+    );
   }
 
-  List<String> _getMinimumAuthorsFromList(List<String> authors, int qtd) {
-    final authorsLength = authors.length;
-    if (authors.isEmpty) {
-      return [];
-    } else if (authorsLength >= qtd) {
-      return authors.sublist(0, qtd);
-    }
-    return authors.sublist(0, authorsLength);
+  Widget _buildLabelValue() {
+    return LabelValue(
+      label: AUTHORS,
+      value: _getAuthorsNamesFormatted(nomesAutores, ''),
+      emptyValue: NOT_INFORMED,
+      maxLines: mostrarTodos ? null : 2,
+    );
+  }
+
+  Widget _buildIndicatorSeeMore() {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        vertical: 2,
+        horizontal: 10,
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(color: theme.primaryColorLight),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          FaIcon(
+            mostrarTodos
+                ? FontAwesomeIcons.angleUp
+                : FontAwesomeIcons.angleDown,
+            size: 12,
+          ),
+          const SizedBox(width: 4),
+          Text(
+            mostrarTodos ? SEE_LESS.toUpperCase() : SEE_MORE.toUpperCase(),
+            style: const TextStyle(
+              fontSize: 9,
+              height: 1.1,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   String _getAuthorsNamesFormatted(List<String> authors, String replacement) {
