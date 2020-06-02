@@ -8,7 +8,6 @@ import '../../../core/i18n/i18n.dart';
 import '../../../core/keys.dart';
 import '../../../core/routing/route_names.dart';
 import '../../../core/utils/date_utils.dart';
-import '../../../widget/text_rich.dart';
 import '../../pages.dart';
 
 class PoliticAdditionalInfo extends StatelessWidget {
@@ -50,6 +49,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
                     ),
                     Text(
                       quantidadeSeguidores == 1 ? FOLLOWER : FOLLOWERS,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 12,
@@ -58,7 +58,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 8),
               Column(
                 children: <Widget>[
                   Text(
@@ -69,13 +69,38 @@ class PoliticAdditionalInfo extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    width: 90,
+                    width: 120,
                     child: Text(
                       PROJECTS_PARTICIPATIONS,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 12,
+                        height: 1,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(width: 8),
+              Column(
+                children: <Widget>[
+                  Text(
+                    '$position',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                  Container(
+                    width: 70,
+                    child: Text(
+                      WITH_LESS_EXPENSES,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 12,
+                        height: 1,
                       ),
                     ),
                   ),
@@ -85,67 +110,61 @@ class PoliticAdditionalInfo extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                TextRich(
-                  children: [
-                    TextSpan(
-                      text: totalDespesas.formatCurrency(),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  Text(
+                    totalDespesas.formatCurrency(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
-                    TextSpan(
-                      text: ' ($position)',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Text(
-                      EXPENSES,
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 12,
-                      ),
-                    ),
-                    const SizedBox(width: 6),
-                    Tooltip(
-                      key: tooltipKey,
-                      verticalOffset: 12,
-                      message: getMonthPhrase(),
-                      child: Container(
-                        width: 18,
-                        height: 20,
-                        child: FlatButton(
-                          key: expensesTooltipKey,
-                          child: FaIcon(
-                            FontAwesomeIcons.infoCircle,
-                            size: 18,
-                            color: Colors.grey[500],
-                          ),
-                          onPressed: () {
-                            final dynamic tooltip = tooltipKey.currentState;
-                            tooltip.ensureTooltipVisible();
-                          },
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        EXPENSES,
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 12,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+                      const SizedBox(width: 6),
+                      Tooltip(
+                        key: tooltipKey,
+                        verticalOffset: 12,
+                        message: getMonthPhrase(),
+                        child: Container(
+                          width: 18,
+                          height: 20,
+                          child: FlatButton(
+                            key: expensesTooltipKey,
+                            padding: EdgeInsets.zero,
+                            child: FaIcon(
+                              FontAwesomeIcons.infoCircle,
+                              size: 18,
+                              color: Colors.grey[500],
+                            ),
+                            onPressed: () {
+                              final dynamic tooltip = tooltipKey.currentState;
+                              tooltip.ensureTooltipVisible();
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ],
     );
