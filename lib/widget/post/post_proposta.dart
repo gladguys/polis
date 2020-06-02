@@ -84,6 +84,20 @@ class PostProposta extends StatelessWidget {
         spacing: 16,
         runSpacing: 8,
         children: <Widget>[
+          if (proposta.foiAtualizada)
+            Padding(
+              padding: const EdgeInsets.only(right: 8, bottom: 6),
+              child: TextRich(
+                maxLines: 4,
+                children: [
+                  const TextSpan(
+                    text: 'Atualização: ',
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                  TextSpan(text: '${proposta.despacho}'),
+                ],
+              ),
+            ),
           if (proposta.descricaoTipo == PLENARY_AMENDMENT)
             Row(children: [
               Text('${proposta.descricaoTipo}'),

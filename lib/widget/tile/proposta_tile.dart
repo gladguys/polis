@@ -16,8 +16,8 @@ import '../button_action_card.dart';
 import '../card_base.dart';
 import '../image/photo_image.dart';
 import '../photo.dart';
+import '../tag/tag_proposta.dart';
 import '../text_rich.dart';
-import '../timeline_card_label.dart';
 
 class PropostaTile extends StatelessWidget {
   PropostaTile(this.proposta, {this.clickableImage});
@@ -57,7 +57,7 @@ class PropostaTile extends StatelessWidget {
         Positioned(
           top: 0,
           right: 0,
-          child: _buildTag(),
+          child: TagProposta(proposta),
         ),
       ],
     );
@@ -102,33 +102,6 @@ class PropostaTile extends StatelessWidget {
     );
   }
 
-  Widget _buildTag() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        TimelineCardLabel(
-          child: proposta.foiAtualizada ?? false
-              ? Text(
-                  UPDATE.toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 9,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.yellow[800],
-                  ),
-                )
-              : Text(
-                  NEW.toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 9,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.green,
-                  ),
-                ),
-        ),
-      ],
-    );
-  }
-
   Widget _buildTopContent() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,6 +132,20 @@ class PropostaTile extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const SizedBox(height: 4),
+        if (proposta.foiAtualizada)
+          Padding(
+            padding: const EdgeInsets.only(right: 8, bottom: 6),
+            child: TextRich(
+              maxLines: 4,
+              children: [
+                const TextSpan(
+                  text: 'Atualização: ',
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
+                TextSpan(text: '${proposta.despacho}'),
+              ],
+            ),
+          ),
         if (proposta.descricaoTipo == PLENARY_AMENDMENT)
           Text('${proposta.descricaoTipo}')
         else
