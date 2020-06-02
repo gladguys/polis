@@ -47,15 +47,12 @@ class PoliticAdditionalInfo extends StatelessWidget {
                         fontSize: 20,
                       ),
                     ),
-                    Container(
-                      width: 160,
-                      child: Text(
-                        quantidadeSeguidores == 1 ? FOLLOWER : FOLLOWERS,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 12,
-                        ),
+                    Text(
+                      quantidadeSeguidores == 1 ? FOLLOWER : FOLLOWERS,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 12,
                       ),
                     ),
                   ],
@@ -75,6 +72,30 @@ class PoliticAdditionalInfo extends StatelessWidget {
                     width: 120,
                     child: Text(
                       PROJECTS_PARTICIPATIONS,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 12,
+                        height: 1,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(width: 8),
+              Column(
+                children: <Widget>[
+                  Text(
+                    '$position',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                  Container(
+                    width: 70,
+                    child: Text(
+                      WITH_LESS_EXPENSES,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.grey[600],
@@ -105,68 +126,40 @@ class PoliticAdditionalInfo extends StatelessWidget {
                       fontSize: 20,
                     ),
                   ),
-                  Container(
-                    width: 160,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          EXPENSES,
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: 12,
-                          ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        EXPENSES,
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 12,
                         ),
-                        const SizedBox(width: 6),
-                        Tooltip(
-                          key: tooltipKey,
-                          verticalOffset: 12,
-                          message: getMonthPhrase(),
-                          child: Container(
-                            width: 18,
-                            height: 20,
-                            child: FlatButton(
-                              key: expensesTooltipKey,
-                              padding: EdgeInsets.zero,
-                              child: FaIcon(
-                                FontAwesomeIcons.infoCircle,
-                                size: 18,
-                                color: Colors.grey[500],
-                              ),
-                              onPressed: () {
-                                final dynamic tooltip = tooltipKey.currentState;
-                                tooltip.ensureTooltipVisible();
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(width: 8),
-              Column(
-                children: <Widget>[
-                  Text(
-                    '$position',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                  Container(
-                    width: 100,
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      WITH_LESS_EXPENSES,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 12,
-                        height: 1,
                       ),
-                    ),
+                      const SizedBox(width: 6),
+                      Tooltip(
+                        key: tooltipKey,
+                        verticalOffset: 12,
+                        message: getMonthPhrase(),
+                        child: Container(
+                          width: 18,
+                          height: 20,
+                          child: FlatButton(
+                            key: expensesTooltipKey,
+                            padding: EdgeInsets.zero,
+                            child: FaIcon(
+                              FontAwesomeIcons.infoCircle,
+                              size: 18,
+                              color: Colors.grey[500],
+                            ),
+                            onPressed: () {
+                              final dynamic tooltip = tooltipKey.currentState;
+                              tooltip.ensureTooltipVisible();
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
