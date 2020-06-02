@@ -12,6 +12,7 @@ import '../../page/pages.dart';
 import '../card_base.dart';
 import '../photo.dart';
 import '../text_rich.dart';
+import '../timeline_card_label.dart';
 
 class PoliticPropostaTile extends StatelessWidget {
   PoliticPropostaTile(this.proposta, {this.clickableImage});
@@ -21,23 +22,32 @@ class PoliticPropostaTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CardBase(
-      slotLeft: _buildLeftContent(),
-      slotCenter: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _buildTopContent(),
-          _buildCenterContent(),
-        ],
-      ),
-      slotBottom: _buildActions(context),
-      onTap: () => SimpleRouter.forward(
-        PostPageConnected(
-          post: proposta,
-          postType: PostType.PROPOSICAO,
+    return Stack(
+      children: <Widget>[
+        CardBase(
+          slotLeft: _buildLeftContent(),
+          slotCenter: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _buildTopContent(),
+              _buildCenterContent(),
+            ],
+          ),
+          slotBottom: _buildActions(context),
+          onTap: () => SimpleRouter.forward(
+            PostPageConnected(
+              post: proposta,
+              postType: PostType.PROPOSICAO,
+            ),
+            name: POST_PAGE,
+          ),
         ),
-        name: POST_PAGE,
-      ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: _buildTag(),
+        ),
+      ],
     );
   }
 
@@ -79,6 +89,33 @@ class PoliticPropostaTile extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTag() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        TimelineCardLabel(
+          child: proposta.foiAtualizada ?? false
+              ? Text(
+            UPDATE.toUpperCase(),
+            style: TextStyle(
+              fontSize: 9,
+              fontWeight: FontWeight.w500,
+              color: Colors.yellow[800],
+            ),
+          )
+              : Text(
+            NEW.toUpperCase(),
+            style: TextStyle(
+              fontSize: 9,
+              fontWeight: FontWeight.w500,
+              color: Colors.green,
+            ),
+          ),
         ),
       ],
     );

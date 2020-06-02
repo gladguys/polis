@@ -12,6 +12,7 @@ import '../../page/pages.dart';
 import '../card_base.dart';
 import '../photo.dart';
 import '../text_rich.dart';
+import '../timeline_card_label.dart';
 
 class PoliticDespesaTile extends StatelessWidget {
   PoliticDespesaTile(this.despesa, {this.clickableImage});
@@ -21,25 +22,34 @@ class PoliticDespesaTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CardBase(
-      slotLeft: _buildLeftContent(),
-      slotCenter: BlocBuilder<PostBloc, PostState>(
-        builder: (_, state) => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _buildTopContent(),
-            _buildCenterContent(),
-          ],
+    return Stack(
+      children: <Widget>[
+        CardBase(
+          slotLeft: _buildLeftContent(),
+          slotCenter: BlocBuilder<PostBloc, PostState>(
+            builder: (_, state) => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                _buildTopContent(),
+                _buildCenterContent(),
+              ],
+            ),
+          ),
+          slotBottom: _buildActions(context),
+          onTap: () => SimpleRouter.forward(
+            PostPageConnected(
+              post: despesa,
+              postType: PostType.DESPESA,
+            ),
+            name: POST_PAGE,
+          ),
         ),
-      ),
-      slotBottom: _buildActions(context),
-      onTap: () => SimpleRouter.forward(
-        PostPageConnected(
-          post: despesa,
-          postType: PostType.DESPESA,
+        Positioned(
+          top: 0,
+          right: 0,
+          child: _buildTag(),
         ),
-        name: POST_PAGE,
-      ),
+      ],
     );
   }
 
@@ -79,6 +89,24 @@ class PoliticDespesaTile extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTag() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        TimelineCardLabel(
+          child: Text(
+            EXPENSE.toUpperCase(),
+            style: TextStyle(
+              fontSize: 9,
+              fontWeight: FontWeight.w500,
+              color: Colors.blue,
+            ),
+          ),
         ),
       ],
     );
