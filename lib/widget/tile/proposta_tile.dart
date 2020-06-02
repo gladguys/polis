@@ -139,7 +139,7 @@ class PropostaTile extends StatelessWidget {
               maxLines: 4,
               children: [
                 const TextSpan(
-                  text: 'Atualização: ',
+                  text: '$UPDATE: ',
                   style: TextStyle(fontWeight: FontWeight.w500),
                 ),
                 TextSpan(text: '${proposta.despacho}'),
