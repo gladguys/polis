@@ -66,7 +66,7 @@ class TramitacaoPropostaPage extends StatelessWidget {
     final orgao = context
         .bloc<TramitacaoPropostaBloc>()
         .orgaosMap[tramitacao.siglaOrgao]
-        .nome;
+        ?.nome;
 
     return TimelineTile(
       isFirst: isFirst,
@@ -152,15 +152,22 @@ class TramitacaoPropostaPage extends StatelessWidget {
                     tramitacao.regime == '.' ? NOT_INFORMED : tramitacao.regime,
                 emptyValue: NOT_INFORMED,
               ),
-              Tooltip(
-                child: LabelValue(
-                  label: ORGAN,
-                  value: tramitacao.siglaOrgao,
-                  emptyValue: NOT_INFORMED,
-                  isDotted: true,
-                ),
-                message: orgao,
-              ),
+              orgao != null
+                  ? Tooltip(
+                      child: LabelValue(
+                        label: ORGAN,
+                        value: tramitacao.siglaOrgao,
+                        emptyValue: NOT_INFORMED,
+                        isDotted: true,
+                      ),
+                      message: orgao,
+                    )
+                  : LabelValue(
+                      label: ORGAN,
+                      value: tramitacao.siglaOrgao,
+                      emptyValue: NOT_INFORMED,
+                      isDotted: false,
+                    ),
             ],
           ),
           const SizedBox(height: 8),
