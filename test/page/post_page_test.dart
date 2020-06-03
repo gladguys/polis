@@ -130,7 +130,7 @@ void main() {
               siglaPartido: 'PT',
               dataAtualizacao: '10-01-2020',
               nomesAutores: ['a', 'b', 'c'],
-              foiAtualizada: true
+              foiAtualizada: true,
               urlPartidoLogo: 'logo',
             ),
             postType: PostType.PROPOSICAO,
@@ -151,7 +151,7 @@ void main() {
               siglaPartido: 'PT',
               dataAtualizacao: '10-01-2020',
               nomesAutores: ['a', 'b', 'c'],
-              foiAtualizada: false
+              foiAtualizada: false,
               urlPartidoLogo: 'logo',
             ),
             postType: PostType.PROPOSICAO,
