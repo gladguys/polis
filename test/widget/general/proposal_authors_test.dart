@@ -42,11 +42,10 @@ void main() {
           ),
         ),
       );
-      final showIcon = find.byKey(doShowAllIconKey);
-      await tester.tap(showIcon);
+      final proposalAuthorsButton = find.byKey(proposalAuthorsVisibilityKey);
+      await tester.tap(proposalAuthorsButton);
       await tester.pumpAndSettle();
-      final hideIcon = find.byKey(dontShowAllIconKey);
-      await tester.tap(hideIcon);
+      await tester.tap(proposalAuthorsButton);
     });
   });
 }

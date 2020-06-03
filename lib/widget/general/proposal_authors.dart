@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../core/i18n/i18n.dart';
+import '../../core/keys.dart';
 import '../../page/theme/main_theme.dart';
 import '../label_value.dart';
 
@@ -25,6 +26,7 @@ class _ProposalAuthorsState extends State<ProposalAuthors> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => setState(() => mostrarTodos = !mostrarTodos),
+      key: proposalAuthorsVisibilityKey,
       child: mostrarTodos
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +43,9 @@ class _ProposalAuthorsState extends State<ProposalAuthors> {
           : Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                Expanded(child: _buildLabelValue()),
+                Expanded(
+                  child: _buildLabelValue(),
+                ),
                 _buildIndicatorSeeMore(),
               ],
             ),

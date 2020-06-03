@@ -64,6 +64,7 @@ void main() {
                 valorGlosa: '2.33',
                 numDocumento: '1',
                 fotoPolitico: 'foto',
+                urlPartidoLogo: 'logo',
               ),
             ),
           ),
