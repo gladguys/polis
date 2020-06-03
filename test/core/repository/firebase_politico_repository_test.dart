@@ -13,10 +13,10 @@ void main() {
     MockCollectionReference mockPoliticosCollectionReference;
     MockQuerySnapshot mockQuerySnapshot;
     MockDocumentSnapshot mockDocumentSnapshot;
-    MockQuery mockQuery;
+    MockDocumentSnapshot mockDocumentSnapshot2;
+    MockDocumentSnapshot mockDocumentSnapshot3;
 
     setUp(() {
-      mockQuery = MockQuery();
       mockFirestore = MockFirestore();
       firebasePoliticoRepository = FirebasePoliticoRepository(
         firestore: mockFirestore,
@@ -24,6 +24,8 @@ void main() {
       mockPoliticosCollectionReference = MockCollectionReference();
       mockQuerySnapshot = MockQuerySnapshot();
       mockDocumentSnapshot = MockDocumentSnapshot();
+      mockDocumentSnapshot2 = MockDocumentSnapshot();
+      mockDocumentSnapshot3 = MockDocumentSnapshot();
     });
 
     test('test asserts', () {
@@ -38,15 +40,42 @@ void main() {
       test('get all the politicos', () async {
         when(mockFirestore.collection(POLITICOS_COLLECTION))
             .thenReturn(mockPoliticosCollectionReference);
-        when(mockPoliticosCollectionReference.orderBy(NOME_ELEITORAL_FIELD))
-            .thenReturn(mockQuery);
-        when(mockQuery.getDocuments())
+        when(mockPoliticosCollectionReference.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
         when(mockQuerySnapshot.documents).thenReturn([mockDocumentSnapshot]);
         when(mockDocumentSnapshot.data).thenReturn({'id': '1'});
 
         final politicos = await firebasePoliticoRepository.getAllPoliticos();
         expect(politicos[0].id, '1');
+      });
+
+      test('get all the politicos with correct sorting', () async {
+        when(mockFirestore.collection(POLITICOS_COLLECTION))
+            .thenReturn(mockPoliticosCollectionReference);
+        when(mockPoliticosCollectionReference.getDocuments())
+            .thenAnswer((_) => Future.value(mockQuerySnapshot));
+        when(mockQuerySnapshot.documents).thenReturn([
+          mockDocumentSnapshot,
+          mockDocumentSnapshot2,
+          mockDocumentSnapshot3,
+        ]);
+        when(mockDocumentSnapshot.data).thenReturn({
+          'id': '1',
+          'nomeEleitoral': 'A',
+        });
+        when(mockDocumentSnapshot2.data).thenReturn({
+          'id': '2',
+          'nomeEleitoral': 'Á',
+        });
+        when(mockDocumentSnapshot3.data).thenReturn({
+          'id': '3',
+          'nomeEleitoral': 'Z',
+        });
+
+        final politicos = await firebasePoliticoRepository.getAllPoliticos();
+        expect(politicos[0].id, '1');
+        expect(politicos[1].id, '2');
+        expect(politicos[2].id, '3');
       });
 
       test('throws exception', () {
