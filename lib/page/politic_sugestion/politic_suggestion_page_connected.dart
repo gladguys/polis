@@ -18,6 +18,7 @@ class PoliticSuggestionPageConnected extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         systemNavigationBarColor: theme.scaffoldBackgroundColor,
+        systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
 
