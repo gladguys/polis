@@ -45,6 +45,8 @@ class _MyAppState extends State<MyApp> {
       SystemUiOverlayStyle(
         systemNavigationBarColor:
             isUserLogged ? theme.scaffoldBackgroundColor : Colors.black,
+        systemNavigationBarIconBrightness:
+            isUserLogged ? Brightness.dark : Brightness.light,
       ),
     );
     super.initState();
