@@ -6,10 +6,12 @@ class LabelValue extends StatelessWidget {
     this.value,
     this.emptyValue,
     this.isDotted = false,
+    this.maxLines,
   }) : assert(label != null);
 
   final String label, value, emptyValue;
   final bool isDotted;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +23,24 @@ class LabelValue extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.w500),
         ),
         if (value != null && value.isNotEmpty)
-          Text(
-            value,
-            style: isDotted ? TextStyle(
-              decoration: TextDecoration.underline,
-              decorationStyle: TextDecorationStyle.dotted,
-            ) : null,
-          )
+          if (maxLines != null)
+            Text(
+              value,
+              maxLines: maxLines,
+              overflow: TextOverflow.ellipsis,
+              style: isDotted ? TextStyle(
+                decoration: TextDecoration.underline,
+                decorationStyle: TextDecorationStyle.dotted,
+              ) : null,
+            )
+          else
+            Text(
+              value,
+              style: isDotted ? TextStyle(
+                decoration: TextDecoration.underline,
+                decorationStyle: TextDecorationStyle.dotted,
+              ) : null,
+            )
         else
           Text(
             emptyValue ?? '-',

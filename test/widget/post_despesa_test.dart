@@ -40,6 +40,7 @@ void main() {
         valorGlosa: '3.51',
         dataDocumento: '10-01-2020',
         urlDocumento: 'urlDoc',
+        urlPartidoLogo: 'logo',
       );
     });
 

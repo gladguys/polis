@@ -14,6 +14,7 @@ import '../../page/pages.dart';
 import '../../page/theme/main_theme.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';
+import '../image/photo_image.dart';
 import '../label_value.dart';
 import '../photo.dart';
 import '../text_rich.dart';
@@ -33,14 +34,7 @@ class PostDespesa extends StatelessWidget {
       child: Container(
         color: context.baseBackgroundColor,
         child: CardBase(
-          slotLeft: InkWell(
-            borderRadius: BorderRadius.circular(24),
-            child: Photo(url: despesa.fotoPolitico),
-            onTap: () => SimpleRouter.forward(
-              PoliticProfilePageConnected(despesa.idPolitico),
-              name: POLITIC_PROFILE_PAGE,
-            ),
-          ),
+          slotLeft: _buildLeftContent(),
           slotCenter: BlocBuilder<PostBloc, PostState>(
             builder: (_, state) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,6 +47,30 @@ class PostDespesa extends StatelessWidget {
           slotBottom: _buildActions(context),
         ),
       ),
+    );
+  }
+
+  Widget _buildLeftContent() {
+    return Stack(
+      overflow: Overflow.visible,
+      children: <Widget>[
+        InkWell(
+          borderRadius: BorderRadius.circular(24),
+          child: Photo(url: despesa.fotoPolitico),
+          onTap: () => SimpleRouter.forward(
+            PoliticProfilePageConnected(despesa.idPolitico),
+            name: POLITIC_PROFILE_PAGE,
+          ),
+        ),
+        Positioned(
+          right: 0,
+          bottom: -10,
+          child: PhotoImage(
+            url: despesa.urlPartidoLogo,
+            size: 22,
+          ),
+        ),
+      ],
     );
   }
 

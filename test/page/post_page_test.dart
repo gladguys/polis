@@ -124,13 +124,15 @@ void main() {
         connectedWidget(
           PostPageConnected(
             post: PropostaModel(
-                nomePolitico: 'politico',
-                tipoDocumento: 'PROPOSICAO',
-                fotoPolitico: 'foto',
-                siglaPartido: 'PT',
-                dataAtualizacao: '10-01-2020',
-                nomesAutores: ['a', 'b', 'c'],
-                foiAtualizada: true),
+              nomePolitico: 'politico',
+              tipoDocumento: 'PROPOSICAO',
+              fotoPolitico: 'foto',
+              siglaPartido: 'PT',
+              dataAtualizacao: '10-01-2020',
+              nomesAutores: ['a', 'b', 'c'],
+              foiAtualizada: true
+              urlPartidoLogo: 'logo',
+            ),
             postType: PostType.PROPOSICAO,
             timelineBloc: mockTimelineBloc,
           ),
@@ -143,13 +145,15 @@ void main() {
         connectedWidget(
           PostPageConnected(
             post: PropostaModel(
-                nomePolitico: 'politico',
-                tipoDocumento: 'PROPOSICAO',
-                fotoPolitico: 'foto',
-                siglaPartido: 'PT',
-                dataAtualizacao: '10-01-2020',
-                nomesAutores: ['a', 'b', 'c'],
-                foiAtualizada: false),
+              nomePolitico: 'politico',
+              tipoDocumento: 'PROPOSICAO',
+              fotoPolitico: 'foto',
+              siglaPartido: 'PT',
+              dataAtualizacao: '10-01-2020',
+              nomesAutores: ['a', 'b', 'c'],
+              foiAtualizada: false
+              urlPartidoLogo: 'logo',
+            ),
             postType: PostType.PROPOSICAO,
           ),
         ),

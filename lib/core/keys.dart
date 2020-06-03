@@ -39,7 +39,6 @@ const newPasswordFieldKey = ValueKey('new-password-field');
 const despesaImageIconKey = ValueKey('despesa-image-icon');
 const cardBaseKey = ValueKey('card-base');
 const expensesTooltipKey = ValueKey('expenses-tooltip');
-const doShowAllIconKey = ValueKey('do-show-all-icon');
-const dontShowAllIconKey = ValueKey('dont-show-all-icon');
+const proposalAuthorsVisibilityKey = ValueKey('proposal-authors-visibility');
 const newPasswordConfirmationFieldKey =
     ValueKey('new-password-confirmation-field');
