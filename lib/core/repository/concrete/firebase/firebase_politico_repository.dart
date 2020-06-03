@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/domain/model/models.dart';
@@ -18,11 +19,13 @@ class FirebasePoliticoRepository implements PoliticoRepository {
   @override
   Future<List<PoliticoModel>> getAllPoliticos() async {
     try {
-      final querySnapshot =
-          await politicosRef.orderBy(NOME_ELEITORAL_FIELD).getDocuments();
+      final querySnapshot = await politicosRef.getDocuments();
       final documents = querySnapshot.documents;
-      return List.generate(
+      final politicos = List.generate(
           documents.length, (i) => PoliticoModel.fromJson(documents[i].data));
+      politicos.sort((p1, p2) => removeDiacritics(p1.nomeEleitoral)
+          .compareTo(removeDiacritics(p2.nomeEleitoral)));
+      return politicos;
     } on Exception {
       throw ComunicationException();
     }
