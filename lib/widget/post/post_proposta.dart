@@ -15,6 +15,7 @@ import '../../page/theme/main_theme.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';
 import '../general/proposal_authors.dart';
+import '../image/photo_image.dart';
 import '../label_value.dart';
 import '../photo.dart';
 import '../text_rich.dart';
@@ -34,14 +35,7 @@ class PostProposta extends StatelessWidget {
       child: Container(
         color: context.baseBackgroundColor,
         child: CardBase(
-          slotLeft: InkWell(
-            borderRadius: BorderRadius.circular(24),
-            child: Photo(url: proposta.fotoPolitico),
-            onTap: () => SimpleRouter.forward(
-              PoliticProfilePageConnected(proposta.idPoliticoAutor),
-              name: POLITIC_PROFILE_PAGE,
-            ),
-          ),
+          slotLeft: _buildLeftContent(),
           slotCenter: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -52,6 +46,30 @@ class PostProposta extends StatelessWidget {
           slotBottom: _buildActions(context),
         ),
       ),
+    );
+  }
+
+  Widget _buildLeftContent() {
+    return Stack(
+      overflow: Overflow.visible,
+      children: <Widget>[
+        InkWell(
+          borderRadius: BorderRadius.circular(24),
+          child: Photo(url: proposta.fotoPolitico),
+          onTap: () => SimpleRouter.forward(
+            PoliticProfilePageConnected(proposta.idPoliticoAutor),
+            name: POLITIC_PROFILE_PAGE,
+          ),
+        ),
+        Positioned(
+          right: 0,
+          bottom: -10,
+          child: PhotoImage(
+            url: proposta.urlPartidoLogo,
+            size: 22,
+          ),
+        ),
+      ],
     );
   }
 
@@ -113,12 +131,12 @@ class PostProposta extends StatelessWidget {
             value: proposta.descricaoSituacao,
             emptyValue: NOT_INFORMED,
           ),
-          ProposalAuthors(proposta.nomesAutores),
           LabelValue(
             label: UPDATE_DATE,
             value: proposta.dataAtualizacao.formatDate(),
             emptyValue: NOT_INFORMED_FEMALE,
           ),
+          ProposalAuthors(proposta.nomesAutores),
           Padding(
             padding: const EdgeInsets.only(top: 8),
             child: Wrap(

@@ -113,3 +113,5 @@ const PICK = 'Escolher';
 const OF = 'de';
 const AFTER = 'Depois';
 const WITH_LESS_EXPENSES = 'Com menos despesas';
+const SEE_MORE = 'Ver mais';
+const SEE_LESS = 'Ver menos';
