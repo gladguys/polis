@@ -14,6 +14,7 @@ import '../button_action_card.dart';
 import '../card_base.dart';
 import '../image/logo_partido_image.dart';
 import '../photo.dart';
+import '../tag/tag_proposta.dart';
 import '../text_rich.dart';
 
 class FavoritePropostaTile extends StatelessWidget {
@@ -24,24 +25,31 @@ class FavoritePropostaTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CardBase(
-      slotLeft: _buildLeftContent(),
-      slotCenter: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _buildTopContent(),
-          _buildCenterContent(),
-        ],
-      ),
-      slotBottom: _buildActions(context),
-      onTap: () => SimpleRouter.forward(
-        PostPageConnected(
-          post: proposta,
-          postType: PostType.PROPOSICAO,
+    return Stack(children: [
+      CardBase(
+        slotLeft: _buildLeftContent(),
+        slotCenter: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _buildTopContent(),
+            _buildCenterContent(),
+          ],
         ),
-        name: POST_PAGE,
+        slotBottom: _buildActions(context),
+        onTap: () => SimpleRouter.forward(
+          PostPageConnected(
+            post: proposta,
+            postType: PostType.PROPOSICAO,
+          ),
+          name: POST_PAGE,
+        ),
       ),
-    );
+      Positioned(
+        top: 0,
+        right: 0,
+        child: TagProposta(proposta),
+      ),
+    ]);
   }
 
   Widget _buildLeftContent() {

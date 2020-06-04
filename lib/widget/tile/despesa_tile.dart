@@ -17,8 +17,8 @@ import '../button_action_card.dart';
 import '../card_base.dart';
 import '../image/photo_image.dart';
 import '../photo.dart';
+import '../tag/tag_despesa.dart';
 import '../text_rich.dart';
-import '../timeline_card_label.dart';
 
 class DespesaTile extends StatelessWidget {
   DespesaTile(this.despesa, {this.clickableImage});
@@ -61,7 +61,7 @@ class DespesaTile extends StatelessWidget {
         Positioned(
           top: 0,
           right: 0,
-          child: _buildTag(),
+          child: TagDespesa(),
         ),
       ],
     );
@@ -103,24 +103,6 @@ class DespesaTile extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildTag() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        TimelineCardLabel(
-          child: Text(
-            EXPENSE.toUpperCase(),
-            style: TextStyle(
-              fontSize: 9,
-              fontWeight: FontWeight.w500,
-              color: Colors.blue,
-            ),
-          ),
-        ),
-      ],
     );
   }
 

@@ -34,6 +34,7 @@ void main() {
         visualizado: false,
         urlPartidoLogo: 'url',
         dataAtualizacao: '10-01-2020',
+        foiAtualizada: false,
       );
     });
 
@@ -53,6 +54,7 @@ void main() {
         urlPartidoLogo: 'url',
         dataAtualizacao: '10-01-2020',
         descricaoTipo: PLENARY_AMENDMENT,
+        foiAtualizada: true,
       );
       await tester.pumpWidget(
         connectedWidget(

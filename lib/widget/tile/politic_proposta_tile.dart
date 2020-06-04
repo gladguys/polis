@@ -11,8 +11,8 @@ import '../../core/routing/route_names.dart';
 import '../../page/pages.dart';
 import '../card_base.dart';
 import '../photo.dart';
+import '../tag/tag_proposta.dart';
 import '../text_rich.dart';
-import '../timeline_card_label.dart';
 
 class PoliticPropostaTile extends StatelessWidget {
   PoliticPropostaTile(this.proposta, {this.clickableImage});
@@ -45,7 +45,7 @@ class PoliticPropostaTile extends StatelessWidget {
         Positioned(
           top: 0,
           right: 0,
-          child: _buildTag(),
+          child: TagProposta(proposta),
         ),
       ],
     );
@@ -94,33 +94,6 @@ class PoliticPropostaTile extends StatelessWidget {
     );
   }
 
-  Widget _buildTag() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        TimelineCardLabel(
-          child: proposta.foiAtualizada ?? false
-              ? Text(
-            UPDATE.toUpperCase(),
-            style: TextStyle(
-              fontSize: 9,
-              fontWeight: FontWeight.w500,
-              color: Colors.yellow[800],
-            ),
-          )
-              : Text(
-            NEW.toUpperCase(),
-            style: TextStyle(
-              fontSize: 9,
-              fontWeight: FontWeight.w500,
-              color: Colors.green,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget _buildCenterContent() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,6 +111,20 @@ class PoliticPropostaTile extends StatelessWidget {
               ),
               TextSpan(text: '${proposta.ementa}'),
             ],
+          ),
+        if (proposta.foiAtualizada)
+          Padding(
+            padding: const EdgeInsets.only(right: 8, top: 4),
+            child: TextRich(
+              maxLines: 4,
+              children: [
+                const TextSpan(
+                  text: 'Atualização: ',
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
+                TextSpan(text: '${proposta.despacho}'),
+              ],
+            ),
           ),
       ],
     );

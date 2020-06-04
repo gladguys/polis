@@ -27,7 +27,7 @@ class FirebasePostRepository implements PostRepository {
       await postsFavoritosRef
           .document(user.userId)
           .collection(POSTS_FAVORITOS_USUARIO_SUBCOLLECTION)
-          .document(post['id'])
+          .document(_getIdFromPost(post))
           .setData(postWithTimestamp);
     } on Exception {
       throw ComunicationException();
@@ -41,7 +41,7 @@ class FirebasePostRepository implements PostRepository {
       await postsFavoritosRef
           .document(user.userId)
           .collection(POSTS_FAVORITOS_USUARIO_SUBCOLLECTION)
-          .document(post['id'])
+          .document(_getIdFromPost(post))
           .delete();
     } on Exception {
       throw ComunicationException();
@@ -73,5 +73,9 @@ class FirebasePostRepository implements PostRepository {
     } on Exception {
       throw ComunicationException();
     }
+  }
+
+  String _getIdFromPost(Map<String, dynamic> post) {
+    return post['idPropostaPolitico'] ?? post['id'];
   }
 }

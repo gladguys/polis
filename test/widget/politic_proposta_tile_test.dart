@@ -35,6 +35,7 @@ void main() {
         status: 'status',
         dataAtualizacao: '10-01-2020',
         visualizado: false,
+        foiAtualizada: true,
       );
     });
 
@@ -84,6 +85,7 @@ void main() {
       status: 'status',
       dataAtualizacao: '10-01-2020',
       visualizado: false,
+      foiAtualizada: false,
     );
     await tester.pumpWidget(
       connectedWidget(

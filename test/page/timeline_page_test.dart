@@ -164,6 +164,7 @@ void main() {
             fotoPolitico: 'foto',
             visualizado: false,
             urlPartidoLogo: 'logo',
+            foiAtualizada: true,
           )
         ], postsCount: 3, updatesCount: 0),
       );
@@ -275,6 +276,7 @@ void main() {
               fotoPolitico: 'foto',
               visualizado: false,
               urlPartidoLogo: 'logo',
+              foiAtualizada: false,
             )
           ],
         ),
@@ -330,6 +332,7 @@ void main() {
               fotoPolitico: 'foto',
               visualizado: false,
               urlPartidoLogo: 'logo',
+              foiAtualizada: true,
             )
           ],
         ),
@@ -404,6 +407,7 @@ void main() {
               fotoPolitico: 'foto',
               visualizado: false,
               urlPartidoLogo: 'logo',
+              foiAtualizada: true,
             )
           ],
           postsCount: 3,
@@ -551,6 +555,7 @@ void main() {
               fotoPolitico: 'foto',
               visualizado: false,
               urlPartidoLogo: 'logo',
+              foiAtualizada: false,
             )
           ],
           postsCount: 3,

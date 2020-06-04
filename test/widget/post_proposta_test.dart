@@ -31,6 +31,7 @@ void main() {
         status: 'status',
         dataAtualizacao: '10-01-2020',
         nomesAutores: ['a', 'b', 'c'],
+        foiAtualizada: true,
         urlPartidoLogo: 'logo',
       );
     });
@@ -79,6 +80,7 @@ void main() {
         dataAtualizacao: '10-01-2020',
         descricaoTipo: PLENARY_AMENDMENT,
         nomesAutores: ['a', 'b', 'c'],
+        foiAtualizada: false,
         urlPartidoLogo: 'logo',
       );
       final mockPostBloc = MockPostBloc();

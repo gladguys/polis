@@ -116,6 +116,11 @@ class PostProposta extends StatelessWidget {
                 TextSpan(text: '${proposta.ementa ?? NOT_INFORMED_FEMALE}'),
               ],
             ),
+          if (proposta.foiAtualizada)
+            LabelValue(
+              label: UPDATE,
+              value: proposta.despacho,
+            ),
           LabelValue(
             label: TRAMITATION,
             value: proposta.descricaoTramitacao,

@@ -75,6 +75,7 @@ void main() {
             descricaoSituacao: 'descSit',
             dataAtualizacao: '2020-02-05',
             visualizado: false,
+            foiAtualizada: true,
           ),
           DespesaModel(
             fotoPolitico: 'foto',
@@ -134,6 +135,7 @@ void main() {
             descricaoSituacao: 'descSit',
             dataAtualizacao: '2020-02-05',
             visualizado: false,
+            foiAtualizada: false,
           ),
           PropostaModel(
             ementa: 'ementa',
@@ -142,6 +144,7 @@ void main() {
             descricaoSituacao: 'descSit',
             dataAtualizacao: '2020-02-05',
             visualizado: false,
+            foiAtualizada: true,
           ),
           PropostaModel(
             ementa: 'ementa',
@@ -150,6 +153,7 @@ void main() {
             descricaoSituacao: 'descSit',
             dataAtualizacao: '2020-02-05',
             visualizado: false,
+            foiAtualizada: true,
           ),
           PropostaModel(
             ementa: 'ementa',
@@ -158,6 +162,7 @@ void main() {
             descricaoSituacao: 'descSit',
             dataAtualizacao: '2020-02-05',
             visualizado: false,
+            foiAtualizada: false,
           ),
           DespesaModel(
             fotoPolitico: 'foto',
@@ -326,6 +331,7 @@ void main() {
             descricaoSituacao: 'descSit',
             dataAtualizacao: '2020-02-05',
             visualizado: false,
+            foiAtualizada: true,
           ),
           DespesaModel(
             fotoPolitico: 'foto',
@@ -383,6 +389,7 @@ void main() {
             descricaoSituacao: 'descSit',
             dataAtualizacao: '2020-02-05',
             visualizado: false,
+            foiAtualizada: false,
           ),
           DespesaModel(
             fotoPolitico: 'foto',
