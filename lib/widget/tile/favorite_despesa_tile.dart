@@ -2,6 +2,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../tag/tag_despesa.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
@@ -24,25 +25,34 @@ class FavoriteDespesaTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CardBase(
-      slotLeft: _buildLeftContent(),
-      slotCenter: BlocBuilder<PostBloc, PostState>(
-        builder: (_, state) => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _buildTopContent(),
-            _buildCenterContent(),
-          ],
+    return Stack(
+      children: <Widget>[
+        CardBase(
+          slotLeft: _buildLeftContent(),
+          slotCenter: BlocBuilder<PostBloc, PostState>(
+            builder: (_, state) => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                _buildTopContent(),
+                _buildCenterContent(),
+              ],
+            ),
+          ),
+          slotBottom: _buildActions(context),
+          onTap: () => SimpleRouter.forward(
+            PostPageConnected(
+              post: despesa,
+              postType: PostType.DESPESA,
+            ),
+            name: POST_PAGE,
+          ),
         ),
-      ),
-      slotBottom: _buildActions(context),
-      onTap: () => SimpleRouter.forward(
-        PostPageConnected(
-          post: despesa,
-          postType: PostType.DESPESA,
+        Positioned(
+          top: 0,
+          right: 0,
+          child: TagDespesa(),
         ),
-        name: POST_PAGE,
-      ),
+      ],
     );
   }
 
