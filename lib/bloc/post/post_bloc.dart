@@ -83,8 +83,13 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         postId: postId,
       );
       final posts = [...timelineBloc.timelinePosts];
-      final postToUpdateViewedIndex =
-          posts.indexWhere((post) => post.id == postId);
+      final postToUpdateViewedIndex = posts.indexWhere((post) {
+        if (post is PropostaModel) {
+          return post.idPropostaPolitico == postId;
+        } else {
+          return post.id == postId;
+        }
+      });
       final postFound = posts[postToUpdateViewedIndex];
       posts.removeAt(postToUpdateViewedIndex);
       posts.insert(
