@@ -12,10 +12,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/abstract/polis_google_auth_provider.dart';
-import 'package:polis/core/abstract/polis_image_picker.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/repository/abstract/repositories.dart';
 import 'package:polis/core/repository/concrete/repositories.dart';
@@ -226,7 +226,7 @@ class MockFile extends Mock implements File {}
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 
-class MockPolisImagePicker extends Mock implements PolisImagePicker {}
+class MockImagePicker extends Mock implements ImagePicker {}
 
 class MockPanelController extends Mock implements PanelController {}
 

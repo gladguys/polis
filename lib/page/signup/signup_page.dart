@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
 import '../../bloc/blocs.dart';
-import '../../core/abstract/polis_image_picker.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/extension/extensions.dart';
 import '../../core/i18n/i18n.dart';
@@ -23,7 +23,7 @@ class SignupPage extends StatefulWidget {
   })  : assert(imagePicker != null),
         assert(panelController != null);
 
-  final PolisImagePicker imagePicker;
+  final ImagePicker imagePicker;
   final PanelController panelController;
 
   @override
@@ -248,7 +248,9 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   Future<void> getImage() async {
-    var image = await widget.imagePicker.getImage();
+    var pickedImage =
+        await widget.imagePicker.getImage(source: ImageSource.camera);
+    final image = File(pickedImage.path);
     setState(() => _profilePhoto = image);
   }
 }
