@@ -24,6 +24,7 @@ class PoliticDespesaTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
+        const Divider(height: 1),
         CardBase(
           slotLeft: _buildLeftContent(),
           slotCenter: BlocBuilder<PostBloc, PostState>(
@@ -54,15 +55,18 @@ class PoliticDespesaTile extends StatelessWidget {
   }
 
   Widget _buildLeftContent() {
-    return InkWell(
-      borderRadius: BorderRadius.circular(24),
-      child: Photo(url: despesa.fotoPolitico),
-      onTap: () => clickableImage
-          ? SimpleRouter.forward(
-              PoliticProfilePageConnected(despesa.idPolitico),
-              name: POLITIC_PROFILE_PAGE,
-            )
-          : null,
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(24),
+        child: Photo(url: despesa.fotoPolitico),
+        onTap: () => clickableImage
+            ? SimpleRouter.forward(
+                PoliticProfilePageConnected(despesa.idPolitico),
+                name: POLITIC_PROFILE_PAGE,
+              )
+            : null,
+      ),
     );
   }
 
@@ -74,6 +78,7 @@ class PoliticDespesaTile extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            const SizedBox(height: 14),
             Text(
               despesa.nomePolitico,
               style: const TextStyle(
@@ -119,18 +124,21 @@ class PoliticDespesaTile extends StatelessWidget {
 
   Widget _buildActions(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
-      builder: (_, state) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
-            '${despesa.dataDocumento.formatDate()}',
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey[600],
+      builder: (_, state) => Padding(
+        padding: const EdgeInsets.only(right: 4, bottom: 16),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              '${despesa.dataDocumento.formatDate()}',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey[600],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

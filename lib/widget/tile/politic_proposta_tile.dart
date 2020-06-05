@@ -24,6 +24,7 @@ class PoliticPropostaTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
+        const Divider(height: 1),
         CardBase(
           slotLeft: _buildLeftContent(),
           slotCenter: Column(
@@ -52,15 +53,18 @@ class PoliticPropostaTile extends StatelessWidget {
   }
 
   Widget _buildLeftContent() {
-    return InkWell(
-      borderRadius: BorderRadius.circular(24),
-      child: Photo(url: proposta.fotoPolitico),
-      onTap: () => clickableImage
-          ? SimpleRouter.forward(
-              PoliticProfilePageConnected(proposta.idPoliticoAutor),
-              name: POLITIC_PROFILE_PAGE,
-            )
-          : null,
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(24),
+        child: Photo(url: proposta.fotoPolitico),
+        onTap: () => clickableImage
+            ? SimpleRouter.forward(
+                PoliticProfilePageConnected(proposta.idPoliticoAutor),
+                name: POLITIC_PROFILE_PAGE,
+              )
+            : null,
+      ),
     );
   }
 
@@ -72,6 +76,7 @@ class PoliticPropostaTile extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            const SizedBox(height: 14),
             Text(
               proposta.nomePolitico,
               style: const TextStyle(
@@ -132,18 +137,21 @@ class PoliticPropostaTile extends StatelessWidget {
 
   Widget _buildActions(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
-      builder: (_, state) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
-            proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey[600],
+      builder: (_, state) => Padding(
+        padding: const EdgeInsets.only(right: 4, bottom: 16),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey[600],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

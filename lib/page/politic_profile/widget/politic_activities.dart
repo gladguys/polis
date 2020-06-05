@@ -46,11 +46,10 @@ class _PoliticActivitiesState extends State<PoliticActivities> {
     if (widget.lastActivities.isNotEmpty) {
       return Container(
         height: context.screenHeight - 140,
-        child: ListView.separated(
+        child: ListView.builder(
           controller: scrollController,
           shrinkWrap: true,
           padding: const EdgeInsets.only(bottom: 24),
-          separatorBuilder: (_, i) => const Divider(indent: 8, endIndent: 8),
           itemBuilder: (_, i) {
             final activity = widget.lastActivities[i];
             if (activity is DespesaModel) {
