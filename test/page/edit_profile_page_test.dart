@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:image_test_utils/image_test_utils.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
@@ -36,7 +35,7 @@ void main() {
           PageConnected<EditProfileBloc>(
             bloc: mockEditProfileBloc,
             page: EditProfilePage(
-              imagePicker: MockPolisImagePicker(),
+              imagePicker: MockImagePicker(),
             ),
           ),
         ),
@@ -59,7 +58,7 @@ void main() {
           PageConnected<EditProfileBloc>(
             bloc: mockEditProfileBloc,
             page: EditProfilePage(
-              imagePicker: MockPolisImagePicker(),
+              imagePicker: MockImagePicker(),
             ),
           ),
         ),
@@ -85,7 +84,7 @@ void main() {
           PageConnected<EditProfileBloc>(
             bloc: mockEditProfileBloc,
             page: EditProfilePage(
-              imagePicker: MockPolisImagePicker(),
+              imagePicker: MockImagePicker(),
             ),
           ),
         ),
@@ -111,7 +110,7 @@ void main() {
               page: PageConnected<EditProfileBloc>(
                 bloc: mockEditProfileBloc,
                 page: EditProfilePage(
-                  imagePicker: MockPolisImagePicker(),
+                  imagePicker: MockImagePicker(),
                 ),
               ),
             ),
@@ -130,7 +129,7 @@ void main() {
           PageConnected<EditProfileBloc>(
             bloc: mockEditProfileBloc,
             page: EditProfilePage(
-              imagePicker: MockPolisImagePicker(),
+              imagePicker: MockImagePicker(),
             ),
           ),
         ),
@@ -141,9 +140,10 @@ void main() {
 
     testWidgets('should change image when camera called', (tester) async {
       final mockEditProfileBloc = MockEditProfileBloc();
-      final mockPolisImagePicker = MockPolisImagePicker();
-      when(mockPolisImagePicker.getImage())
-          .thenAnswer((_) => Future.value(File('assets/images/google.png')));
+      final mockPolisImagePicker = MockImagePicker();
+      when(mockPolisImagePicker.getImage(source: ImageSource.camera))
+          .thenAnswer(
+              (_) => Future.value(PickedFile('assets/images/google.png')));
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<EditProfileBloc>(
@@ -168,7 +168,7 @@ void main() {
           PageConnected<EditProfileBloc>(
             bloc: mockEditProfileBloc,
             page: EditProfilePage(
-              imagePicker: MockPolisImagePicker(),
+              imagePicker: MockImagePicker(),
             ),
           ),
         ),
@@ -212,9 +212,10 @@ void main() {
         ),
       );
       final mockEditProfileBloc = MockEditProfileBloc();
-      final mockPolisImagePicker = MockPolisImagePicker();
-      when(mockPolisImagePicker.getImage())
-          .thenAnswer((_) => Future.value(File('assets/images/google.png')));
+      final mockPolisImagePicker = MockImagePicker();
+      when(mockPolisImagePicker.getImage(source: ImageSource.camera))
+          .thenAnswer(
+              (_) => Future.value(PickedFile('assets/images/google.png')));
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<UserBloc>(
@@ -222,7 +223,7 @@ void main() {
             page: PageConnected<EditProfileBloc>(
               bloc: mockEditProfileBloc,
               page: EditProfilePage(
-                imagePicker: MockPolisImagePicker(),
+                imagePicker: MockImagePicker(),
               ),
             ),
           ),
@@ -246,9 +247,10 @@ void main() {
         ),
       );
       final mockEditProfileBloc = MockEditProfileBloc();
-      final mockPolisImagePicker = MockPolisImagePicker();
-      when(mockPolisImagePicker.getImage())
-          .thenAnswer((_) => Future.value(File('assets/images/google.png')));
+      final mockPolisImagePicker = MockImagePicker();
+      when(mockPolisImagePicker.getImage(source: ImageSource.camera))
+          .thenAnswer(
+              (_) => Future.value(PickedFile('assets/images/google.png')));
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<UserBloc>(
@@ -256,7 +258,7 @@ void main() {
             page: PageConnected<EditProfileBloc>(
               bloc: mockEditProfileBloc,
               page: EditProfilePage(
-                imagePicker: MockPolisImagePicker(),
+                imagePicker: MockImagePicker(),
               ),
             ),
           ),

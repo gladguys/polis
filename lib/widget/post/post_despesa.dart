@@ -200,8 +200,9 @@ class PostDespesa extends StatelessWidget {
               icon: context.bloc<PostBloc>().isPostFavorite
                   ? FontAwesomeIcons.solidBookmark
                   : FontAwesomeIcons.bookmark,
-              iconColor:
-                  context.bloc<PostBloc>().isPostFavorite ? Colors.amber : null,
+              iconColor: context.bloc<PostBloc>().isPostFavorite
+                  ? Colors.yellow
+                  : null,
               text: context.bloc<PostBloc>().isPostFavorite ? SAVED : SAVE,
               fontSize: 14,
               onTap: () => context.bloc<PostBloc>().add(

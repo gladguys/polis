@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
 import '../../bloc/blocs.dart';
-import '../../core/abstract/polis_image_picker.dart';
 import '../../core/repository/concrete/repositories.dart';
 import '../../core/service/locator.dart';
 import '../../core/service/services.dart';
@@ -25,7 +25,7 @@ class SignupPageConnected extends StatelessWidget {
         analyticsService: G<AnalyticsService>(),
       ),
       page: SignupPage(
-        imagePicker: PolisImagePicker(),
+        imagePicker: ImagePicker(),
         panelController: panelController,
       ),
     );

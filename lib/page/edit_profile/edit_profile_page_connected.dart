@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../bloc/blocs.dart';
-import '../../core/abstract/polis_image_picker.dart';
 import '../../core/repository/concrete/repositories.dart';
 import '../page_connected.dart';
 import '../pages.dart';
@@ -16,7 +16,7 @@ class EditProfilePageConnected extends StatelessWidget {
         userBloc: context.bloc<UserBloc>(),
       ),
       page: EditProfilePage(
-        imagePicker: PolisImagePicker(),
+        imagePicker: ImagePicker(),
       ),
     );
   }

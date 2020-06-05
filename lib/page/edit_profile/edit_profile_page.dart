@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
-import '../../core/abstract/polis_image_picker.dart';
 import '../../core/domain/enum/auth_provider.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/extension/extensions.dart';
@@ -22,7 +22,7 @@ import '../pages.dart';
 class EditProfilePage extends StatefulWidget {
   EditProfilePage({@required this.imagePicker}) : assert(imagePicker != null);
 
-  final PolisImagePicker imagePicker;
+  final ImagePicker imagePicker;
 
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
@@ -218,7 +218,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   Future<void> getImage() async {
-    var image = await widget.imagePicker.getImage();
+    final pickedFile =
+        await widget.imagePicker.getImage(source: ImageSource.camera);
+    var image = File(pickedFile.path);
     setState(() => pickedPhoto = image);
   }
 }

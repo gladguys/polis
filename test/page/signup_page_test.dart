@@ -1,12 +1,10 @@
-import 'dart:io';
-
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
-import 'package:polis/core/abstract/polis_image_picker.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/extension/extensions.dart';
 import 'package:polis/core/keys.dart';
@@ -50,7 +48,7 @@ void main() {
 
       expect(
           () => SignupPage(
-                imagePicker: MockPolisImagePicker(),
+                imagePicker: MockImagePicker(),
                 panelController: null,
               ),
           throwsAssertionError);
@@ -76,7 +74,7 @@ void main() {
             page: Scaffold(
               body: SignupPage(
                 panelController: mockPanelController,
-                imagePicker: PolisImagePicker(),
+                imagePicker: ImagePicker(),
               ),
             ),
           ),
@@ -123,7 +121,7 @@ void main() {
             page: Scaffold(
               body: SignupPage(
                 panelController: mockPanelController,
-                imagePicker: PolisImagePicker(),
+                imagePicker: ImagePicker(),
               ),
             ),
           ),
@@ -169,7 +167,7 @@ void main() {
             page: Scaffold(
               body: SignupPage(
                 panelController: mockPanelController,
-                imagePicker: PolisImagePicker(),
+                imagePicker: ImagePicker(),
               ),
             ),
           ),
@@ -191,7 +189,7 @@ void main() {
             page: Scaffold(
               body: SignupPage(
                 panelController: mockPanelController,
-                imagePicker: PolisImagePicker(),
+                imagePicker: ImagePicker(),
               ),
             ),
           ),
@@ -214,7 +212,7 @@ void main() {
             page: Scaffold(
               body: SignupPage(
                 panelController: mockPanelController,
-                imagePicker: PolisImagePicker(),
+                imagePicker: ImagePicker(),
               ),
             ),
           ),
@@ -238,7 +236,7 @@ void main() {
             page: Scaffold(
               body: SignupPage(
                 panelController: mockPanelController,
-                imagePicker: PolisImagePicker(),
+                imagePicker: ImagePicker(),
               ),
             ),
           ),
@@ -251,9 +249,10 @@ void main() {
     testWidgets('should change image when camera called', (tester) async {
       final mockSignupBloc = MockSignupBloc();
       when(mockSignupBloc.state).thenReturn(InitialSignup());
-      final mockPolisImagePicker = MockPolisImagePicker();
-      when(mockPolisImagePicker.getImage())
-          .thenAnswer((_) => Future.value(File('assets/images/google.png')));
+      final mockPolisImagePicker = MockImagePicker();
+      when(mockPolisImagePicker.getImage(source: ImageSource.camera))
+          .thenAnswer(
+              (_) => Future.value(PickedFile('assets/images/google.png')));
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<SignupBloc>(
