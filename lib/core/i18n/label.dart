@@ -51,6 +51,7 @@ const CHANGE_PASSWORD = 'Alterar senha';
 const CHANGE_YOUR_PROFILE = 'Altere sua senha';
 const EDIT_YOUR_PROFILE = 'Edite seu perfil';
 const FAVORITE_POSTS = 'Posts salvos';
+const POLITIC_PROPOSALS_PARTICIPATIONS = 'Participaões em Propostas de Lei';
 const MY_ACTIVITIES = 'Minhas atividades';
 const ACTIVITIES = 'Atividades';
 const FEDERAL_DEPUTY = 'Dep. Federal';
