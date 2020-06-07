@@ -19,7 +19,6 @@ class PoliticProposalsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(politico.id);
     return Scaffold(
       bottomNavigationBar: DefaultBottombar(
         SEARCH_POLITIC_PAGE,
@@ -42,7 +41,7 @@ class PoliticProposalsPage extends StatelessWidget {
     return Column(
       children: <Widget>[
         const SizedBox(height: 8),
-        TextTitle(POLITIC_PROPOSALS_PARTICIPATIONS),
+        TextTitle(PROJECTS_PARTICIPATIONS),
         const SizedBox(height: 8),
         propostas.isNotEmpty
             ? Expanded(
