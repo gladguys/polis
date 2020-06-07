@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import '../../../widget/skeleton.dart';
 
 class PoliticProposalsSkeleton extends StatelessWidget {
+  const PoliticProposalsSkeleton();
+
   @override
   Widget build(BuildContext context) {
     return Column(

@@ -26,7 +26,7 @@ class UserProfilePage extends StatelessWidget {
             } else if (state is LoadingFetchUserInfo) {
               return UserProfileSkeleton();
             } else {
-              return ErrorContainer();
+              return const ErrorContainer();
             }
           },
         ),

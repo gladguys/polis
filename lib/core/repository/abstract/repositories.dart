@@ -6,6 +6,7 @@ export 'orgao_repository.dart';
 export 'partido_repository.dart';
 export 'politic_followers_repository.dart';
 export 'politic_profile_repository.dart';
+export 'politic_proposals_repository.dart';
 export 'politic_suggestion_repository.dart';
 export 'politico_repository.dart';
 export 'post_repository.dart';

@@ -8,6 +8,7 @@ import '../../core/i18n/i18n.dart';
 import '../../core/routing/route_names.dart';
 import '../../widget/default_bottombar.dart';
 import '../../widget/empty_info.dart';
+import '../../widget/error_container.dart';
 import '../../widget/text_title.dart';
 import 'widget/politic_proposals_list.dart';
 import 'widget/politic_proposals_skeleton.dart';
@@ -29,8 +30,10 @@ class PoliticProposalsPage extends StatelessWidget {
           builder: (_, state) {
             if (state is GetPoliticProposalsSuccess) {
               return _buildList(state.proposals);
+            } else if (state is LoadingPoliticProposals) {
+              return const PoliticProposalsSkeleton();
             }
-            return PoliticProposalsSkeleton();
+            return const ErrorContainer();
           },
         ),
       ),

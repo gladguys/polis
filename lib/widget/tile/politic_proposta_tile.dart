@@ -131,7 +131,7 @@ class PoliticPropostaTile extends StatelessWidget {
               TextSpan(text: '${proposta.ementa}'),
             ],
           ),
-        if (proposta.foiAtualizada)
+        if (proposta.foiAtualizada ?? false)
           Padding(
             padding: const EdgeInsets.only(right: 8, top: 4),
             child: TextRich(

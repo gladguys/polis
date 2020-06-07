@@ -32,7 +32,7 @@ class UserFollowingPoliticsPage extends StatelessWidget {
             } else if (state is FollowedPoliticsUpdated) {
               return FollowingPoliticsSearch(state.followedPolitics);
             } else if (state is FetchPoliticsFailed) {
-              return ErrorContainer();
+              return const ErrorContainer();
             } else {
               return FollowingPoliticsSkeleton();
             }
