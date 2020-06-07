@@ -65,11 +65,15 @@ void main() {
             id: '1',
             nomePolitico: 'nome',
             dataAtualizacao: '10-01-2020',
+            fotoPolitico: 'foto',
+            urlPartidoLogo: 'logo',
           ),
           PropostaModel(
             id: '2',
             nomePolitico: 'nome',
             dataAtualizacao: '11-01-2020',
+            fotoPolitico: 'foto',
+            urlPartidoLogo: 'logo',
           )
         ]),
       );
