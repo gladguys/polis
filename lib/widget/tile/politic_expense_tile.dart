@@ -4,6 +4,7 @@ import '../../core/domain/model/models.dart';
 import '../../core/extension/extensions.dart';
 import '../../core/i18n/i18n.dart';
 import '../card_base.dart';
+import '../image/photo_image.dart';
 import '../photo.dart';
 import '../text_rich.dart';
 
@@ -14,28 +15,36 @@ class PoliticExpenseTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        const Divider(height: 1),
-        CardBase(
-          slotLeft: _buildLeftContent(),
-          slotCenter: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              _buildTopContent(),
-              _buildCenterContent(),
-            ],
-          ),
-          slotBottom: _buildActions(context),
-        ),
-      ],
+    return CardBase(
+      slotLeft: _buildLeftContent(),
+      slotCenter: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildTopContent(),
+          _buildCenterContent(),
+        ],
+      ),
+      slotBottom: _buildActions(context),
     );
   }
 
   Widget _buildLeftContent() {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
-      child: Photo(url: despesa.fotoPolitico),
+      child: Stack(
+        overflow: Overflow.visible,
+        children: <Widget>[
+          Photo(url: despesa.fotoPolitico),
+          Positioned(
+            right: 0,
+            bottom: -10,
+            child: PhotoImage(
+              url: despesa.urlPartidoLogo,
+              size: 22,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
