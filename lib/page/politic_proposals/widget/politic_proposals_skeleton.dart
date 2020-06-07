@@ -31,12 +31,12 @@ class PoliticProposalsSkeleton extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         const SizedBox(height: 4),
-                        const Skeleton(width: 180, height: 14),
+                        const Skeleton(width: 160, height: 14),
                         const SizedBox(height: 4),
                         const Skeleton(
-                          width: 280,
+                          width: 240,
                           height: 60,
-                          radius: 5.0,
+                          radius: 5,
                         ),
                         const SizedBox(height: 4),
                       ],
