@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import '../../../widget/skeleton.dart';
 
 class FavoritesPostsSkeleton extends StatelessWidget {
+  const FavoritesPostsSkeleton();
+
   @override
   Widget build(BuildContext context) {
     return Column(

@@ -23,9 +23,9 @@ class FavoritePostsPage extends StatelessWidget {
             if (state is FetchUserFavoritePostsSuccess) {
               return _buildList(state.posts, context);
             } else if (state is LoadingFavoritesPosts) {
-              return FavoritesPostsSkeleton();
+              return const FavoritesPostsSkeleton();
             } else {
-              return ErrorContainer();
+              return const ErrorContainer();
             }
           },
         ),

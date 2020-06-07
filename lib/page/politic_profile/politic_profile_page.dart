@@ -31,9 +31,9 @@ class PoliticProfilePage extends StatelessWidget {
               );
             } else if (state is GetPoliticInfoFailed ||
                 state is FollowPoliticFailed) {
-              return ErrorContainer();
+              return const ErrorContainer();
             } else {
-              return PoliticProfileSkeleton();
+              return const PoliticProfileSkeleton();
             }
           },
         ),

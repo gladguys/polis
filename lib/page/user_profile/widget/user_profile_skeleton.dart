@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import '../../../widget/skeleton.dart';
 
 class UserProfileSkeleton extends StatelessWidget {
+  const UserProfileSkeleton();
+
   @override
   Widget build(BuildContext context) {
     return Column(
