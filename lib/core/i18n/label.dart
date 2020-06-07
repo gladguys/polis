@@ -44,6 +44,7 @@ const ACTION_UPDATE = 'Atualizar';
 const NEW = 'Novo';
 const EXPENSE = 'Despesa';
 const EXPENSES = 'Despesas';
+const POLITIC_EXPENSES = 'Despesas do Político';
 const EXPENSES_POSITION = 'Posição no Ranking de Despesas';
 const CONFIRM = 'Confirmar';
 const EDIT_PROFILE = 'Editar perfil';
