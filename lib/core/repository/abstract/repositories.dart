@@ -4,6 +4,7 @@ export 'favorite_posts_repository.dart';
 export 'follow_repository.dart';
 export 'orgao_repository.dart';
 export 'partido_repository.dart';
+export 'politic_expenses_repository.dart';
 export 'politic_followers_repository.dart';
 export 'politic_profile_repository.dart';
 export 'politic_proposals_repository.dart';

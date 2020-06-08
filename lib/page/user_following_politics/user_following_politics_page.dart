@@ -34,7 +34,7 @@ class UserFollowingPoliticsPage extends StatelessWidget {
             } else if (state is FetchPoliticsFailed) {
               return const ErrorContainer();
             } else {
-              return FollowingPoliticsSkeleton();
+              return const FollowingPoliticsSkeleton();
             }
           },
         ),

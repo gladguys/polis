@@ -12,6 +12,8 @@ export 'intro/pick_state_page.dart';
 export 'intro/polis_info_page.dart';
 export 'intro/politic_general_info_page.dart';
 export 'intro/timeline_info_page.dart';
+export 'politic_expenses/politic_expenses_page.dart';
+export 'politic_expenses/politic_expenses_page_connected.dart';
 export 'politic_followers/politic_followers_page.dart';
 export 'politic_followers/politic_followers_page_connected.dart';
 export 'politic_profile/politic_profile_page.dart';
