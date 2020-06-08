@@ -13,6 +13,7 @@ const POLITIC_SUGGESTION_PAGE = 'PoliticSuggestionPage';
 const POLITIC_PROFILE_PAGE = 'PoliticProfilePage';
 const POLITIC_FOLLOWERS_PAGE = 'PoliticFollowersPage';
 const RESULTADOS_RANKING_PAGE = 'ResultadosRankingPage';
+const POLITIC_PROPOSALS_PAGE = 'PoliticProposalsPage';
 const USER_FOLLOWING_POLITICS_PAGE = 'UserFollowingPoliticsPage';
 const POST_PAGE = 'PostPage';
 const EDIT_PROFILE_PAGE = 'EditProfilePage';

@@ -4,6 +4,7 @@ export 'edit_profile/edit_profile_bloc.dart';
 export 'favorite_posts/favorite_posts_bloc.dart';
 export 'politic_followers/politic_followers_bloc.dart';
 export 'politic_profile/politic_profile_bloc.dart';
+export 'politic_proposals/politic_proposals_bloc.dart';
 export 'politic_suggestion/politic_suggestion_bloc.dart';
 export 'post/post_bloc.dart';
 export 'resultados_ranking/resultados_ranking_bloc.dart';

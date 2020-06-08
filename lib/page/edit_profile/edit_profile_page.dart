@@ -54,7 +54,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               Snackbar.success(_, USER_UPDATED_WITH_SUCCESS);
             }
             if (state is UserUpdateFailed) {
-              Snackbar.success(_, USER_UPDATE_FAILED);
+              Snackbar.error(_, USER_UPDATE_FAILED);
             }
           },
           builder: (_, state) {

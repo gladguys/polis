@@ -84,5 +84,30 @@ void main() {
       await tester.tap(followersCountButton);
       verify(mockObserver.didPush(any, any));
     });
+
+    testWidgets('should go to politic proposals page when clicking proposals',
+        (tester) async {
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<PoliticProfileBloc>(
+            bloc: mockPoliticProfileBloc,
+            page: Scaffold(
+              body: PoliticAdditionalInfo(
+                PoliticoModel(
+                  id: '1',
+                  quantidadeSeguidores: 8.0,
+                  totalProposicoes: 30,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      final proposalsCountButton = find.text(PROJECTS_PARTICIPATIONS);
+      expect(proposalsCountButton, findsOneWidget);
+      await tester.ensureVisible(proposalsCountButton);
+      await tester.tap(proposalsCountButton);
+      verify(mockObserver.didPush(any, any));
+    });
   });
 }
