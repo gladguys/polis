@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../widget/skeleton.dart';
 
 class FollowingPoliticsSkeleton extends StatelessWidget {
+  const FollowingPoliticsSkeleton();
+
   @override
   Widget build(BuildContext context) {
     return ListView.separated(

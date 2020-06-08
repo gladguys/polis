@@ -118,58 +118,65 @@ class PoliticAdditionalInfo extends StatelessWidget {
         const SizedBox(height: 8),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Text(
-                    totalDespesas.formatCurrency(),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        EXPENSES,
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 12,
-                        ),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(5),
+            onTap: () => SimpleRouter.forward(
+              PoliticExpensesPageConnected(politic),
+              name: POLITIC_EXPENSES_PAGE,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Text(
+                      totalDespesas.formatCurrency(),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
                       ),
-                      const SizedBox(width: 6),
-                      Tooltip(
-                        key: tooltipKey,
-                        verticalOffset: 12,
-                        message: getMonthPhrase(),
-                        child: Container(
-                          width: 18,
-                          height: 20,
-                          child: FlatButton(
-                            key: expensesTooltipKey,
-                            padding: EdgeInsets.zero,
-                            child: FaIcon(
-                              FontAwesomeIcons.infoCircle,
-                              size: 18,
-                              color: Colors.grey[500],
-                            ),
-                            onPressed: () {
-                              final dynamic tooltip = tooltipKey.currentState;
-                              tooltip.ensureTooltipVisible();
-                            },
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          EXPENSES,
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 12,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+                        const SizedBox(width: 6),
+                        Tooltip(
+                          key: tooltipKey,
+                          verticalOffset: 12,
+                          message: getMonthPhrase(),
+                          child: Container(
+                            width: 18,
+                            height: 20,
+                            child: FlatButton(
+                              key: expensesTooltipKey,
+                              padding: EdgeInsets.zero,
+                              child: FaIcon(
+                                FontAwesomeIcons.infoCircle,
+                                size: 18,
+                                color: Colors.grey[500],
+                              ),
+                              onPressed: () {
+                                final dynamic tooltip = tooltipKey.currentState;
+                                tooltip.ensureTooltipVisible();
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ],

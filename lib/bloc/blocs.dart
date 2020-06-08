@@ -2,6 +2,7 @@ export 'change_password/change_password_bloc.dart';
 export 'document/document_bloc.dart';
 export 'edit_profile/edit_profile_bloc.dart';
 export 'favorite_posts/favorite_posts_bloc.dart';
+export 'politic_expenses/politic_expenses_bloc.dart';
 export 'politic_followers/politic_followers_bloc.dart';
 export 'politic_profile/politic_profile_bloc.dart';
 export 'politic_proposals/politic_proposals_bloc.dart';

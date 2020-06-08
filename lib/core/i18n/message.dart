@@ -48,6 +48,7 @@ const NO_FAVORITE_POST = 'Você ainda não possui nenhum post salvo.';
 const NO_PROPOSALS =
     'O político não tem participação em nenhuma proposta de lei.';
 const POLITIC_HAS_NO_FOLLOWER = 'Este político não tem nenhum seguidor.';
+const POLITIC_HAS_NO_EXPENSE = 'Este político não tem nenhuma despesa.';
 const OH_NO = 'Essa não!';
 
 const ERROR_CREATING_USER = 'Ocorreu um erro no cadastro do usuário';

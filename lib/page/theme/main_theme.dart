@@ -102,6 +102,10 @@ final ThemeData theme = ThemeData(
   tooltipTheme: TooltipThemeData(
     showDuration: const Duration(seconds: 5),
     preferBelow: false,
+    padding: const EdgeInsets.symmetric(
+      vertical: 8,
+      horizontal: 12,
+    ),
     decoration: BoxDecoration(
       color: Colors.black.withOpacity(.8),
       borderRadius: BorderRadius.circular(20),

@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 
 import '../../../widget/skeleton.dart';
 
-class FavoritesPostsSkeleton extends StatelessWidget {
-  const FavoritesPostsSkeleton();
+class PoliticExpensesSkeleton extends StatelessWidget {
+  const PoliticExpensesSkeleton();
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class FavoritesPostsSkeleton extends StatelessWidget {
       children: <Widget>[
         const SizedBox(height: 8),
         const Center(
-          child: Skeleton(width: 120, height: 16),
+          child: Skeleton(width: 160, height: 16),
         ),
         const SizedBox(height: 8),
         Expanded(
@@ -35,23 +35,8 @@ class FavoritesPostsSkeleton extends StatelessWidget {
                         const SizedBox(height: 4),
                         const Skeleton(width: 180, height: 14),
                         const SizedBox(height: 4),
-                        const Skeleton(width: 240, height: 24),
+                        const Skeleton(width: 240, height: 36),
                         const SizedBox(height: 4),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            const Skeleton(width: 20, height: 20),
-                            const SizedBox(width: 16),
-                            const Skeleton(width: 20, height: 20),
-                            const SizedBox(width: 16),
-                            const Skeleton(width: 20, height: 20),
-                            const Spacer(flex: 1),
-                            const Skeleton(width: 20, height: 20),
-                            const SizedBox(width: 8),
-                            const Skeleton(width: 20, height: 20),
-                            const SizedBox(width: 8),
-                          ],
-                        ),
                       ],
                     ),
                   ),

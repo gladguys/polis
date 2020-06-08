@@ -33,7 +33,7 @@ class SearchPoliticPage extends StatelessWidget {
               );
             } else if (state is InitialSearchPoliticState ||
                 state is LoadingFetchPolitics) {
-              return SearchPoliticSkeleton();
+              return const SearchPoliticSkeleton();
             }
             return const ErrorContainer();
           },

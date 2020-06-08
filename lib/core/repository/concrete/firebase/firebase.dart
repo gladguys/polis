@@ -27,6 +27,7 @@ const NOME_ELEITORAL_FIELD = 'nomeEleitoral';
 const TIPO_ATIVIDADE_FIELD = 'tipoAtividade';
 const DESCRICAO_TIPO_FIELD = 'descricaoTipo';
 const DATA_ATUALIZACAO_FIELD = 'dataAtualizacao';
+const DATA_DOCUMENTO_FIELD = 'dataDocumento';
 const DATA_PUBLICACAO_FIELD = 'dataPublicacao';
 const DATA_ACAO = 'data';
 const DATA_FAVORITADO_FIELD = 'dataFavoritado';

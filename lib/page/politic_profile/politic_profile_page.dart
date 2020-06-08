@@ -33,7 +33,7 @@ class PoliticProfilePage extends StatelessWidget {
                 state is FollowPoliticFailed) {
               return const ErrorContainer();
             } else {
-              return PoliticProfileSkeleton();
+              return const PoliticProfileSkeleton();
             }
           },
         ),
