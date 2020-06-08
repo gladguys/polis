@@ -41,6 +41,10 @@ class MockFavoritePostsBloc
     extends MockBloc<FavoritePostsEvent, FavoritePostsState>
     implements FavoritePostsBloc {}
 
+class MockPoliticExpensesBloc
+    extends MockBloc<PoliticExpensesEvent, PoliticExpensesState>
+    implements PoliticExpensesBloc {}
+
 class MockUserFollowingPoliticsBloc
     extends MockBloc<UserFollowingPoliticsEvent, UserFollowingPoliticsState>
     implements UserFollowingPoliticsBloc {}
@@ -98,6 +102,9 @@ class MockPoliticProfileRepository extends Mock
 
 class MockPoliticFollowersRepository extends Mock
     implements PoliticFollowersRepository {}
+
+class MockPoliticExpensesRepository extends Mock
+    implements PoliticExpensesRepository {}
 
 class MockUserProfileRepository extends Mock implements UserProfileRepository {}
 
