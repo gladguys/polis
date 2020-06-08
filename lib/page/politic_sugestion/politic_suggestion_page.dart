@@ -23,12 +23,12 @@ class PoliticSuggestionPage extends StatelessWidget {
           },
           builder: (_, state) {
             if (state is LoadingFetch || state is LoadingSaveFollowPolitics) {
-              return Loading();
+              return const Loading();
             } else if (state is FetchSuggestedPoliticsSuccess ||
                 state is ChangedPoliticsFollowingStatus) {
               return PoliticsSuggestion();
             } else {
-              return Loading();
+              return const Loading();
             }
           },
         ),

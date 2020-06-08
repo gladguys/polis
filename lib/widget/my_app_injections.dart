@@ -145,6 +145,11 @@ class MyAppInjections extends StatelessWidget {
             firestore: Firestore.instance,
           ),
         ),
+        RepositoryProvider(
+          create: (_) => FirebaseResultadosRankingRepository(
+            firestore: Firestore.instance,
+          ),
+        ),
       ],
       child: child,
     );

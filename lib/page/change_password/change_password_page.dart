@@ -47,7 +47,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           }
         }, builder: (_, state) {
           if (state is UserPasswordChanging) {
-            return Loading();
+            return const Loading();
           } else {
             return Column(
               children: <Widget>[

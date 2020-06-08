@@ -4,6 +4,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../page/theme/main_theme.dart';
 
 class Loading extends StatefulWidget {
+  const Loading();
+
   @override
   _LoadingState createState() => _LoadingState();
 }

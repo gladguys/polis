@@ -93,7 +93,7 @@ class _SignupPageState extends State<SignupPage> {
                 padding: EdgeInsets.only(
                   top: context.screenHeight / 3,
                 ),
-                child: Loading(),
+                child: const Loading(),
               ),
             );
           }
