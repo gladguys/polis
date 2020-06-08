@@ -6,6 +6,7 @@ export 'politic_followers/politic_followers_bloc.dart';
 export 'politic_profile/politic_profile_bloc.dart';
 export 'politic_suggestion/politic_suggestion_bloc.dart';
 export 'post/post_bloc.dart';
+export 'resultados_ranking/resultados_ranking_bloc.dart';
 export 'search_politic/search_politic_bloc.dart';
 export 'signin/signin_bloc.dart';
 export 'signup/signup_bloc.dart';

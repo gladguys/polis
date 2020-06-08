@@ -11,6 +11,7 @@ const POLITICOS_SEGUIDOS_COLLECTION = 'politicos_seguidos';
 const USUARIOS_SEGUINDO_COLLECTION = 'usuarios_seguindo';
 const POSTS_FAVORITOS_COLLECTION = 'posts_favoritos';
 const SYNC_LOG_COLLECTION = 'sync_log';
+const RESULTADOS_RANKING_COLLECTION = 'resultados_ranking';
 
 // Subcollection
 const POLITICOS_SEGUIDOS_SUBCOLLECTION = 'politicosSeguidos';
@@ -38,3 +39,4 @@ const HASH = 'hash';
 const PARTIDO_SYNC = 'PARTIDOSYNC';
 const POLITICO_SYNC = 'POLITICOSYNC';
 const ORGAO_SYNC = 'ORGAOSYNC';
+const RANKING = 'ranking';

@@ -9,6 +9,7 @@ export 'politic_profile_repository.dart';
 export 'politic_suggestion_repository.dart';
 export 'politico_repository.dart';
 export 'post_repository.dart';
+export 'resultados_ranking_repository.dart';
 export 'signin_repository.dart';
 export 'signup_repository.dart';
 export 'sync_log_repository.dart';

@@ -9,6 +9,7 @@ export 'firebase/firebase_politic_profile_repository.dart';
 export 'firebase/firebase_politic_suggestion_repository.dart';
 export 'firebase/firebase_politico_repository.dart';
 export 'firebase/firebase_post_repository.dart';
+export 'firebase/firebase_resultados_ranking_repository.dart';
 export 'firebase/firebase_signin_repository.dart';
 export 'firebase/firebase_signup_repository.dart';
 export 'firebase/firebase_sync_log_repository.dart';
