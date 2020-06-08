@@ -27,7 +27,7 @@ class ResultadosRankingPage extends StatelessWidget {
               } else if (state is LoadingResultadosRanking) {
                 return const Loading();
               } else {
-                return ErrorContainer();
+                return const ErrorContainer();
               }
             },
           ),
