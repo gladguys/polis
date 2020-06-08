@@ -65,6 +65,10 @@ class MockTramitacaoPropostaBloc
 class MockTimelineBloc extends MockBloc<TimelineEvent, TimelineState>
     implements TimelineBloc {}
 
+class MockPoliticProposalsBloc
+    extends MockBloc<PoliticProposalsEvent, PoliticProposalsState>
+    implements PoliticProposalsBloc {}
+
 class MockUserProfileBloc extends MockBloc<UserProfileEvent, UserProfileState>
     implements UserProfileBloc {}
 
@@ -99,6 +103,9 @@ class MockPoliticSugestionRepository extends Mock
 
 class MockPoliticProfileRepository extends Mock
     implements PoliticProfileRepository {}
+
+class MockPoliticProposalsRepository extends Mock
+    implements PoliticProposalsRepository {}
 
 class MockPoliticFollowersRepository extends Mock
     implements PoliticFollowersRepository {}

@@ -36,6 +36,7 @@ void main() {
         dataAtualizacao: '10-01-2020',
         visualizado: false,
         foiAtualizada: true,
+        urlPartidoLogo: 'logo',
       );
     });
 
@@ -86,6 +87,7 @@ void main() {
       dataAtualizacao: '10-01-2020',
       visualizado: false,
       foiAtualizada: false,
+      urlPartidoLogo: 'logo',
     );
     await tester.pumpWidget(
       connectedWidget(

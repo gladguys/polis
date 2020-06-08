@@ -7,6 +7,7 @@ export 'firebase/firebase_partido_repository.dart';
 export 'firebase/firebase_politic_expenses_repository.dart';
 export 'firebase/firebase_politic_followers_repository.dart';
 export 'firebase/firebase_politic_profile_repository.dart';
+export 'firebase/firebase_politic_proposals_repository.dart';
 export 'firebase/firebase_politic_suggestion_repository.dart';
 export 'firebase/firebase_politico_repository.dart';
 export 'firebase/firebase_post_repository.dart';
