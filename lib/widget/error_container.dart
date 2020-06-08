@@ -5,6 +5,8 @@ import '../core/i18n/message.dart';
 import '../page/theme/main_theme.dart';
 
 class ErrorContainer extends StatefulWidget {
+  const ErrorContainer();
+
   @override
   _ErrorContainerState createState() => _ErrorContainerState();
 }

@@ -59,28 +59,34 @@ class PoliticAdditionalInfo extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              Column(
-                children: <Widget>[
-                  Text(
-                    totalProposicoes.toString(),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                  Container(
-                    width: 120,
-                    child: Text(
-                      PROJECTS_PARTICIPATIONS,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 12,
-                        height: 1,
+              InkWell(
+                onTap: () => SimpleRouter.forward(
+                  PoliticProposalsPageConnected(politic),
+                  name: POLITIC_PROPOSALS_PAGE,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      totalProposicoes.toString(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
                       ),
                     ),
-                  ),
-                ],
+                    Container(
+                      width: 120,
+                      child: Text(
+                        PROJECTS_PARTICIPATIONS,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 12,
+                          height: 1,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(width: 8),
               Column(

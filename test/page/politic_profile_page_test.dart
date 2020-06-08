@@ -76,6 +76,7 @@ void main() {
             dataAtualizacao: '2020-02-05',
             visualizado: false,
             foiAtualizada: true,
+            urlPartidoLogo: 'logo',
           ),
           DespesaModel(
             fotoPolitico: 'foto',
@@ -136,6 +137,7 @@ void main() {
             dataAtualizacao: '2020-02-05',
             visualizado: false,
             foiAtualizada: false,
+            urlPartidoLogo: 'logo',
           ),
           PropostaModel(
             ementa: 'ementa',
@@ -145,6 +147,7 @@ void main() {
             dataAtualizacao: '2020-02-05',
             visualizado: false,
             foiAtualizada: true,
+            urlPartidoLogo: 'logo',
           ),
           PropostaModel(
             ementa: 'ementa',
@@ -154,6 +157,7 @@ void main() {
             dataAtualizacao: '2020-02-05',
             visualizado: false,
             foiAtualizada: true,
+            urlPartidoLogo: 'logo',
           ),
           PropostaModel(
             ementa: 'ementa',
@@ -163,6 +167,7 @@ void main() {
             dataAtualizacao: '2020-02-05',
             visualizado: false,
             foiAtualizada: false,
+            urlPartidoLogo: 'logo',
           ),
           DespesaModel(
             fotoPolitico: 'foto',
@@ -332,6 +337,7 @@ void main() {
             dataAtualizacao: '2020-02-05',
             visualizado: false,
             foiAtualizada: true,
+            urlPartidoLogo: 'logo',
           ),
           DespesaModel(
             fotoPolitico: 'foto',
@@ -390,6 +396,7 @@ void main() {
             dataAtualizacao: '2020-02-05',
             visualizado: false,
             foiAtualizada: false,
+            urlPartidoLogo: 'logo',
           ),
           DespesaModel(
             fotoPolitico: 'foto',
@@ -400,6 +407,7 @@ void main() {
             valorLiquido: '3.51',
             dataDocumento: '10-01-2020',
             visualizado: false,
+            urlPartidoLogo: 'logo',
           ),
         ],
       );
