@@ -34,13 +34,13 @@ class PoliticWithExpensesInfo extends StatelessWidget {
           children: <Widget>[
             Text(
               nome,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
               '$FEDERAL_DEPUTY - $partido - $estado',
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 12,
               ),
