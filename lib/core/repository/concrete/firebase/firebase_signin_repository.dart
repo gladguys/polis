@@ -37,10 +37,6 @@ class FirebaseSigninRepository extends SigninRepository {
       final authResult = await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
 
-      if (!authResult.user.isEmailVerified) {
-        throw EmailNotVerifiedException();
-      }
-
       if (authResult != null) {
         return await getUserById(authResult.user.uid);
       }

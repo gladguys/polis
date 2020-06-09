@@ -266,28 +266,6 @@ void main() {
     );
 
     blocTest(
-      '''Expects [SigninLoading, SigninFailed] with 
-      ERROR_EMAIL_NOT_VERIFIED when user is not verified''',
-      build: () async {
-        when(mockSigninRepository.signInWithEmailAndPassword(any, any))
-            .thenThrow(EmailNotVerifiedException());
-        return signinBloc;
-      },
-      act: (signinBloc) {
-        signinBloc.add(SigninWithEmailAndPassword('', ''));
-        return;
-      },
-      verify: (signinBloc) async {
-        verify(mockSigninRepository.signInWithEmailAndPassword(any, any))
-            .called(1);
-      },
-      expect: [
-        SigninLoading(),
-        SigninFailed(ERROR_EMAIL_NOT_VERIFIED),
-      ],
-    );
-
-    blocTest(
       '''Expects [SigninLoading, UserAuthenticationFailed] with 
       ERROR_AUTENTICATING_USER when SigninWithGoogle added and theres an error''',
       build: () async {
