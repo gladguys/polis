@@ -15,22 +15,20 @@ class ResultadosRankingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Scaffold(
-        body: SafeArea(
-          child: BlocBuilder<ResultadosRankingBloc, ResultadosRankingState>(
-            builder: (_, state) {
-              if (state is GetRankingResultadosSuccess) {
-                return ResultadosRanking(
-                  politico: politico,
-                  resultadosRanking: state.resultadosRanking,
-                );
-              } else if (state is LoadingResultadosRanking) {
-                return const Loading();
-              } else {
-                return const ErrorContainer();
-              }
-            },
-          ),
+      body: SafeArea(
+        child: BlocBuilder<ResultadosRankingBloc, ResultadosRankingState>(
+          builder: (_, state) {
+            if (state is GetRankingResultadosSuccess) {
+              return ResultadosRanking(
+                politico: politico,
+                resultadosRanking: state.resultadosRanking,
+              );
+            } else if (state is LoadingResultadosRanking) {
+              return const Loading();
+            } else {
+              return const ErrorContainer();
+            }
+          },
         ),
       ),
     );

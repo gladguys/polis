@@ -119,4 +119,5 @@ const SEE_MORE = 'Ver mais';
 const SEE_LESS = 'Ver menos';
 const MORE_EXPENSE = 'Mais gastou';
 const LESS_EXPENSE = 'Menos gastou';
-const EXPENSES_AVERAGE = 'Média de despesas';
+const EXPENSES_AVERAGE_BETWEEN_POLITICIS = 
+  'Média de despesas entre todos os políticos';
