@@ -112,19 +112,6 @@ void main() {
         expect(user.userId == userJson['userId'], true);
       });
 
-      test('throw EmailNotVerifiedException when user is not verified',
-          () async {
-        when(mockFirebaseAuth.signInWithEmailAndPassword(
-                email: 'email', password: 'password'))
-            .thenAnswer((_) => Future.value(mockAuthResult));
-        when(mockAuthResult.user).thenReturn(mockFirebaseUser);
-        when(mockFirebaseUser.isEmailVerified).thenReturn(false);
-
-        firebaseSigninRepository
-            .signInWithEmailAndPassword('email', 'password')
-            .catchError((e) => expect(e, isA<EmailNotVerifiedException>()));
-      });
-
       test('return null when user doesn\'t exists', () async {
         when(mockFirebaseAuth.signInWithEmailAndPassword(
                 email: 'email', password: 'password'))
