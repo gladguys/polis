@@ -12,6 +12,7 @@ class PoliticWithExpensesInfo extends StatelessWidget {
     @required this.partido,
     @required this.estado,
     @required this.totalDespesas,
+    this.posicao,
     this.exibePosicao = true,
   })  : assert(nome != null),
         assert(foto != null),
@@ -24,6 +25,7 @@ class PoliticWithExpensesInfo extends StatelessWidget {
   final String partido;
   final String estado;
   final double totalDespesas;
+  final int posicao;
   final bool exibePosicao;
 
   @override
@@ -49,10 +51,10 @@ class PoliticWithExpensesInfo extends StatelessWidget {
         color: theme.primaryColorLight,
         borderRadius: BorderRadius.circular(23),
       ),
-      child: const Text(
-        '513º',
+      child: Text(
+        '$posicaoº',
         textAlign: TextAlign.center,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
         ),
