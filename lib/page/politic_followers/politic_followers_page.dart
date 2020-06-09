@@ -5,9 +5,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import '../../bloc/blocs.dart';
 import '../../core/domain/model/usuario_seguindo_politico_model.dart';
 import '../../core/i18n/i18n.dart';
-import '../../core/routing/route_names.dart';
 import '../../widget/card_base.dart';
-import '../../widget/default_bottombar.dart';
 import '../../widget/empty_info.dart';
 import '../../widget/loading.dart';
 import '../../widget/photo.dart';
@@ -17,7 +15,6 @@ class PoliticFollowersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: DefaultBottombar(SEARCH_POLITIC_PAGE),
       body: SafeArea(
         child: BlocBuilder<PoliticFollowersBloc, PoliticFollowersState>(
           builder: (_, state) {

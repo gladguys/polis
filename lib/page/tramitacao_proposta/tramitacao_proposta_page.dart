@@ -6,8 +6,6 @@ import '../../bloc/blocs.dart';
 import '../../core/domain/model/tramitacao_proposta_model.dart';
 import '../../core/extension/extensions.dart';
 import '../../core/i18n/label.dart';
-import '../../core/routing/route_names.dart';
-import '../../widget/default_bottombar.dart';
 import '../../widget/label_value.dart';
 import '../../widget/loading.dart';
 import '../../widget/text_title.dart';
@@ -18,7 +16,6 @@ class TramitacaoPropostaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: DefaultBottombar(TIMELINE_PAGE, withBack: true),
       body: SafeArea(
         child: BlocBuilder<TramitacaoPropostaBloc, TramitacaoPropostaState>(
           builder: (_, state) {
