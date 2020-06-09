@@ -8,8 +8,7 @@ const UNTIL_THE_DAY = 'Até o dia';
 const EXPENSES_UNTIL_THE_DAY = 'Despesas do mandato atual até o dia';
 const EMAIL_RESET_SEND =
     'Os passos para recuperar sua senha foram enviados para seu email';
-const USER_CREATED_WITH_SUCCESS =
-    'Usuário criado! Verifique seu email e confirme seu usuário.';
+const USER_CREATED_WITH_SUCCESS = 'Usuário criado com sucesso!';
 const USER_UPDATED_WITH_SUCCESS = 'Usuário editado com sucesso';
 const USER_UPDATE_FAILED = 'Falha ao editar o usuário';
 const USER_PASSWORD_UPDATED_WITH_SUCCESS =
