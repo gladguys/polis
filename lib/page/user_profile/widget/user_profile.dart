@@ -27,9 +27,9 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
-    var persistentContentHeight = context.screenHeight * 0.35;
+    var persistentContentHeight = context.screenHeight * 0.40;
     if (context.screenHeight < 600) {
-      persistentContentHeight = context.screenHeight * 0.21;
+      persistentContentHeight = context.screenHeight * 0.26;
     }
 
     return ExpandableBottomSheet(
