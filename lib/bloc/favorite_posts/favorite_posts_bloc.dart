@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:sealed_class/sealed_class.dart';
 
 import '../../core/repository/abstract/favorite_posts_repository.dart';
 
+part 'favorite_posts_bloc.g.dart';
 part 'favorite_posts_event.dart';
 part 'favorite_posts_state.dart';
 

@@ -1,5 +1,15 @@
 part of 'politic_suggestion_bloc.dart';
 
+@Sealed([
+  InitialPoliticSuggestionState,
+  FetchSuggestedPoliticsSuccess,
+  FetchSuggestedPoliticsFailed,
+  SavedSuggestedPolitics,
+  SaveSuggestedPoliticsFailed,
+  ChangedPoliticsFollowingStatus,
+  LoadingFetch,
+  LoadingSaveFollowPolitics,
+])
 abstract class PoliticSuggestionState extends Equatable {
   const PoliticSuggestionState();
 }

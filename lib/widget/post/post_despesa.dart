@@ -36,17 +36,29 @@ class PostDespesa extends StatelessWidget {
         child: CardBase(
           slotLeft: _buildLeftContent(),
           slotCenter: BlocBuilder<PostBloc, PostState>(
-            builder: (_, state) => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                _buildTopContent(),
-                _buildCenterContent(_),
-              ],
-            ),
+            builder: (_, state) {
+              return state.join(
+                (_) => _mapStateToWidget(state, context),
+                (_) => _mapStateToWidget(state, context),
+                (_) => _mapStateToWidget(state, context),
+                (_) => _mapStateToWidget(state, context),
+                (_) => _mapStateToWidget(state, context),
+              );
+            },
           ),
           slotBottom: _buildActions(context),
         ),
       ),
+    );
+  }
+
+  Widget _mapStateToWidget(state, BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        _buildTopContent(),
+        _buildCenterContent(context),
+      ],
     );
   }
 
@@ -176,47 +188,58 @@ class PostDespesa extends StatelessWidget {
 
   Widget _buildActions(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
-      builder: (_, state) => Container(
-        decoration: const BoxDecoration(
-          border: Border(
-            top: BorderSide(color: Colors.grey),
+      builder: (_, state) {
+        return state.join(
+          (_) => _mapActionsStateToWidget(state, context),
+          (_) => _mapActionsStateToWidget(state, context),
+          (_) => _mapActionsStateToWidget(state, context),
+          (_) => _mapActionsStateToWidget(state, context),
+          (_) => _mapActionsStateToWidget(state, context),
+        );
+      },
+    );
+  }
+
+  Widget _mapActionsStateToWidget(state, BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        border: Border(
+          top: BorderSide(color: Colors.grey),
+        ),
+      ),
+      margin: const EdgeInsets.symmetric(vertical: 16),
+      padding: const EdgeInsets.only(top: 4),
+      child: Row(
+        children: <Widget>[
+          ButtonActionCard(
+            icon: FontAwesomeIcons.shareAlt,
+            text: SHARE,
+            fontSize: 14,
+            onTap: () async {
+              final postImage = await screenshotController.capture();
+              context.bloc<PostBloc>().add(SharePost(postImage: postImage));
+            },
           ),
-        ),
-        margin: const EdgeInsets.symmetric(vertical: 16),
-        padding: const EdgeInsets.only(top: 4),
-        child: Row(
-          children: <Widget>[
-            ButtonActionCard(
-              icon: FontAwesomeIcons.shareAlt,
-              text: SHARE,
-              fontSize: 14,
-              onTap: () async {
-                final postImage = await screenshotController.capture();
-                context.bloc<PostBloc>().add(SharePost(postImage: postImage));
-              },
-            ),
-            const SizedBox(width: 16),
-            ButtonActionCard(
-              icon: context.bloc<PostBloc>().isPostFavorite
-                  ? FontAwesomeIcons.solidBookmark
-                  : FontAwesomeIcons.bookmark,
-              iconColor: context.bloc<PostBloc>().isPostFavorite
-                  ? Colors.yellow
-                  : null,
-              text: context.bloc<PostBloc>().isPostFavorite ? SAVED : SAVE,
-              fontSize: 14,
-              onTap: () => context.bloc<PostBloc>().add(
-                    FavoritePostForUser(
-                      post: {
-                        'id': despesa.id,
-                        ...despesa.toJson(),
-                      },
-                      user: context.bloc<UserBloc>().user,
-                    ),
+          const SizedBox(width: 16),
+          ButtonActionCard(
+            icon: context.bloc<PostBloc>().isPostFavorite
+                ? FontAwesomeIcons.solidBookmark
+                : FontAwesomeIcons.bookmark,
+            iconColor:
+                context.bloc<PostBloc>().isPostFavorite ? Colors.yellow : null,
+            text: context.bloc<PostBloc>().isPostFavorite ? SAVED : SAVE,
+            fontSize: 14,
+            onTap: () => context.bloc<PostBloc>().add(
+                  FavoritePostForUser(
+                    post: {
+                      'id': despesa.id,
+                      ...despesa.toJson(),
+                    },
+                    user: context.bloc<UserBloc>().user,
                   ),
-            ),
-          ],
-        ),
+                ),
+          ),
+        ],
       ),
     );
   }

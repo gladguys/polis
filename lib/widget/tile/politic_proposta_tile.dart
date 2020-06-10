@@ -35,7 +35,7 @@ class PoliticPropostaTile extends StatelessWidget {
               _buildCenterContent(),
             ],
           ),
-          slotBottom: _buildActions(context),
+          slotBottom: _buildActions(),
           onTap: () => SimpleRouter.forward(
             PostPageConnected(
               post: proposta,
@@ -149,23 +149,33 @@ class PoliticPropostaTile extends StatelessWidget {
     );
   }
 
-  Widget _buildActions(BuildContext context) {
+  Widget _buildActions() {
     return BlocBuilder<PostBloc, PostState>(
-      builder: (_, state) => Padding(
-        padding: const EdgeInsets.only(right: 4, bottom: 16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey[600],
-              ),
+      builder: (_, state) => state.join(
+        _mapActionsStateToWidget,
+        _mapActionsStateToWidget,
+        _mapActionsStateToWidget,
+        _mapActionsStateToWidget,
+        _mapActionsStateToWidget,
+      ),
+    );
+  }
+
+  Widget _mapActionsStateToWidget(state) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 4, bottom: 16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.grey[600],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

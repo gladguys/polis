@@ -35,59 +35,65 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       bottomNavigationBar: DefaultBottombar(USER_PROFILE_PAGE),
       body: SafeArea(
         child: BlocConsumer<ChangePasswordBloc, ChangePasswordState>(
-            listener: (_, state) {
-          if (state is UserPasswordChangeSuccess) {
-            Snackbar.success(_, USER_PASSWORD_UPDATED_WITH_SUCCESS);
-          }
-          if (state is UserPasswordChangeFailed) {
-            Snackbar.error(_, USER_UPDATE_PASSWORD_FAILED);
-          }
-          if (state is UserWrongPasswordInformed) {
-            Snackbar.error(_, USER_UPDATE_PASSWORD_WRONG_PASSWORD);
-          }
-        }, builder: (_, state) {
-          if (state is UserPasswordChanging) {
-            return Loading();
-          } else {
-            return Column(
-              children: <Widget>[
-                const SizedBox(height: 12),
-                Center(
-                  child: TextTitle(CHANGE_YOUR_PROFILE),
-                ),
-                const SizedBox(height: 22),
-                Padding(
-                  padding: const EdgeInsets.all(32),
-                  child: _getForm(),
-                ),
-                const SizedBox(height: 16),
-                Container(
-                  height: 40,
-                  width: 160,
-                  child: FlatButton(
-                    padding: EdgeInsets.zero,
-                    child: const Text(CONFIRM),
-                    color: Colors.amber,
-                    onPressed: () {
-                      final formState = _formKey.currentState;
-                      if (formState.validate()) {
-                        formState.save();
-                        changePasswordBloc.add(
-                          ChangeUserPassword(
-                            currentPassword: _currentPassword,
-                            newPassword: _newPassword,
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                ),
-              ],
-            );
-          }
-        }),
+          listener: (_, state) => state.continued(
+            (__) => {},
+            (__) => Snackbar.success(_, USER_PASSWORD_UPDATED_WITH_SUCCESS),
+            (__) => {},
+            (__) => Snackbar.error(_, USER_UPDATE_PASSWORD_WRONG_PASSWORD),
+            (__) => Snackbar.error(_, USER_UPDATE_PASSWORD_FAILED),
+          ),
+          builder: (_, state) => state.join(
+            _mapUserPasswordChangeToWidget,
+            _mapUserPasswordChangeToWidget,
+            _mapUserPasswordChangingToWidget,
+            _mapUserPasswordChangeToWidget,
+            _mapUserPasswordChangeToWidget,
+          ),
+        ),
       ),
     );
+  }
+
+  Widget _mapUserPasswordChangeToWidget(state) {
+    return Column(
+      children: <Widget>[
+        const SizedBox(height: 12),
+        Center(
+          child: TextTitle(CHANGE_YOUR_PROFILE),
+        ),
+        const SizedBox(height: 22),
+        Padding(
+          padding: const EdgeInsets.all(32),
+          child: _getForm(),
+        ),
+        const SizedBox(height: 16),
+        Container(
+          height: 40,
+          width: 160,
+          child: FlatButton(
+            padding: EdgeInsets.zero,
+            child: const Text(CONFIRM),
+            color: Colors.amber,
+            onPressed: () {
+              final formState = _formKey.currentState;
+              if (formState.validate()) {
+                formState.save();
+                changePasswordBloc.add(
+                  ChangeUserPassword(
+                    currentPassword: _currentPassword,
+                    newPassword: _newPassword,
+                  ),
+                );
+              }
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _mapUserPasswordChangingToWidget(state) {
+    return const Loading();
   }
 
   Widget _getForm() {

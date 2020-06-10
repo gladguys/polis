@@ -19,21 +19,19 @@ class FavoritePostsPage extends StatelessWidget {
       bottomNavigationBar: DefaultBottombar(FAVORITE_POSTS_PAGE),
       body: SafeArea(
         child: BlocBuilder<FavoritePostsBloc, FavoritePostsState>(
-          builder: (_, state) {
-            if (state is FetchUserFavoritePostsSuccess) {
-              return _buildList(state.posts);
-            } else if (state is LoadingFavoritesPosts) {
-              return const FavoritesPostsSkeleton();
-            } else {
-              return const ErrorContainer();
-            }
-          },
+          builder: (_, state) => state.join(
+            _mapLoadingFavoritesPostsToState,
+            _mapFetchUserFavoritePostsSuccessToState,
+            _mapLoadingFavoritesPostsToState,
+            _mapFetchUserFavoritePostsFailedToState,
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildList(List posts) {
+  Widget _mapFetchUserFavoritePostsSuccessToState(state) {
+    final posts = state.posts;
     return Column(
       children: <Widget>[
         const SizedBox(height: 8),
@@ -51,5 +49,13 @@ class FavoritePostsPage extends StatelessWidget {
               ),
       ],
     );
+  }
+
+  Widget _mapLoadingFavoritesPostsToState(state) {
+    return const FavoritesPostsSkeleton();
+  }
+
+  Widget _mapFetchUserFavoritePostsFailedToState(state) {
+    return const ErrorContainer();
   }
 }

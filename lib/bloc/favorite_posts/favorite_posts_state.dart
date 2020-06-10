@@ -1,5 +1,11 @@
 part of 'favorite_posts_bloc.dart';
 
+@Sealed([
+  InitialFavoritePostsState,
+  FetchUserFavoritePostsSuccess,
+  LoadingFavoritesPosts,
+  FetchUserFavoritePostsFailed,
+])
 abstract class FavoritePostsState extends Equatable {
   const FavoritePostsState();
 }
@@ -18,12 +24,12 @@ class FetchUserFavoritePostsSuccess extends FavoritePostsState {
   List<Object> get props => [posts];
 }
 
-class FetchUserFavoritePostsFailed extends FavoritePostsState {
+class LoadingFavoritesPosts extends FavoritePostsState {
   @override
   List<Object> get props => [];
 }
 
-class LoadingFavoritesPosts extends FavoritePostsState {
+class FetchUserFavoritePostsFailed extends FavoritePostsState {
   @override
   List<Object> get props => [];
 }

@@ -12,27 +12,42 @@ class PoliticSuggestionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocConsumer(
+        child: BlocConsumer<PoliticSuggestionBloc, PoliticSuggestionState>(
           bloc: context.bloc<PoliticSuggestionBloc>(),
           listener: (_, state) {
-            if (state is SavedSuggestedPolitics) {
-              SimpleRouter.forwardAndReplace(
-                CrunchingDataPage(),
-              );
-            }
+            state.continued(
+              (__) => {},
+              (__) => {},
+              (__) => {},
+              (__) => SimpleRouter.forwardAndReplace(CrunchingDataPage()),
+              (__) => {},
+              (__) => {},
+              (__) => {},
+              (__) => {},
+            );
           },
           builder: (_, state) {
-            if (state is LoadingFetch || state is LoadingSaveFollowPolitics) {
-              return Loading();
-            } else if (state is FetchSuggestedPoliticsSuccess ||
-                state is ChangedPoliticsFollowingStatus) {
-              return PoliticsSuggestion();
-            } else {
-              return Loading();
-            }
+            return state.join(
+              _mapLoadingToState,
+              _mapFetchSuggestedPoliticsSuccessToState,
+              _mapLoadingToState,
+              _mapLoadingToState,
+              _mapLoadingToState,
+              _mapFetchSuggestedPoliticsSuccessToState,
+              _mapLoadingToState,
+              _mapLoadingToState,
+            );
           },
         ),
       ),
     );
+  }
+
+  Widget _mapFetchSuggestedPoliticsSuccessToState(state) {
+    return PoliticsSuggestion();
+  }
+
+  Widget _mapLoadingToState(state) {
+    return const Loading();
   }
 }

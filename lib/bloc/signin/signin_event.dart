@@ -1,5 +1,13 @@
-part of 'signin_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:sealed_class/sealed_class.dart';
 
+part 'signin_event.g.dart';
+
+@Sealed([
+  SigninWithEmailAndPassword,
+  SigninWithGoogle,
+  SendResetPasswordEmail,
+])
 abstract class SigninEvent extends Equatable {}
 
 class SigninWithEmailAndPassword extends SigninEvent {

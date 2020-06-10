@@ -20,9 +20,7 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
 
   @override
   Stream<DocumentState> mapEventToState(DocumentEvent event) async* {
-    if (event is OpenDocumentImage) {
-      yield* _mapOpenDocumentImageToState(event);
-    }
+    yield* _mapOpenDocumentImageToState(event);
   }
 
   Stream<DocumentState> _mapOpenDocumentImageToState(

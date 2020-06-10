@@ -168,36 +168,45 @@ class PropostaTile extends StatelessWidget {
 
   Widget _buildActions(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
-      builder: (_, state) => Padding(
-        padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey[600],
-              ),
+      builder: (_, state) => state.join(
+        (_) => _mapActionsStateToWidget(state, context),
+        (_) => _mapActionsStateToWidget(state, context),
+        (_) => _mapActionsStateToWidget(state, context),
+        (_) => _mapActionsStateToWidget(state, context),
+        (_) => _mapActionsStateToWidget(state, context),
+      ),
+    );
+  }
+
+  Widget _mapActionsStateToWidget(state, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.grey[600],
             ),
-            ButtonActionCard(
-              isIconOnly: true,
-              icon: context.bloc<PostBloc>().isPostFavorite
-                  ? FontAwesomeIcons.solidBookmark
-                  : FontAwesomeIcons.bookmark,
-              iconColor: context.bloc<PostBloc>().isPostFavorite
-                  ? Colors.yellow
-                  : null,
-              onTap: () => context.bloc<PostBloc>().add(
-                    FavoritePostForUser(
-                      post: proposta.toJson(),
-                      user: context.bloc<UserBloc>().user,
-                    ),
+          ),
+          ButtonActionCard(
+            isIconOnly: true,
+            icon: context.bloc<PostBloc>().isPostFavorite
+                ? FontAwesomeIcons.solidBookmark
+                : FontAwesomeIcons.bookmark,
+            iconColor:
+                context.bloc<PostBloc>().isPostFavorite ? Colors.yellow : null,
+            onTap: () => context.bloc<PostBloc>().add(
+                  FavoritePostForUser(
+                    post: proposta.toJson(),
+                    user: context.bloc<UserBloc>().user,
                   ),
-            ),
-          ],
-        ),
+                ),
+          ),
+        ],
       ),
     );
   }

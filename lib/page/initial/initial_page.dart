@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../intro/polis_info_page.dart';
 import 'package:simple_router/simple_router.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
@@ -12,6 +11,7 @@ import '../../core/service/locator.dart';
 import '../../core/service/services.dart';
 import '../../widget/loading.dart';
 import '../../widget/snackbar.dart';
+import '../intro/polis_info_page.dart';
 import '../pages.dart';
 import '../theme/main_theme.dart';
 
@@ -36,65 +36,81 @@ class _InitialPageState extends State<InitialPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<SigninBloc, SigninState>(listener: (_, state) {
-        if (state is UserAuthenticated) {
-          final user = state.user;
-          context.bloc<UserBloc>().add(StoreUser(user));
-          if (user.isFirstLoginDone) {
-            SimpleRouter.forwardAndReplace(
-              TimelinePageConnected(
-                appUpdateService: G<AppUpdateService>(),
-              ),
-              name: TIMELINE_PAGE,
-            );
-          } else {
-            SimpleRouter.forwardAndReplace(
-              PolisInfoPage(),
-              name: POLIS_INFO_PAGE,
-            );
-          }
-        }
-        if (state is SigninFailed) {
-          Snackbar.error(context, state.errorMessage);
-        }
-        if (state is UserAuthenticationFailed) {
-          Snackbar.error(context, ERROR_AUTENTICATING_USER);
-        }
-      }, builder: (_, state) {
-        if (state is SigninLoading || state is UserAuthenticated) {
-          return Loading();
-        } else {
-          return SlidingPanel(
-            panelController: _panelController,
-            backPressBehavior: BackPressBehavior.CLOSE_PERSIST,
-            snapping: PanelSnapping.enabled,
-            decoration: PanelDecoration(
-              backgroundColor: Colors.white.withOpacity(.95),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(24),
-                topRight: Radius.circular(24),
-              ),
-            ),
-            size: PanelSize(
-              closedHeight: 0,
-              collapsedHeight: 0,
-              expandedHeight: _expandedHeight,
-            ),
-            content: PanelContent(
-              panelContent: _panel(),
-              bodyContent: _body(context),
-            ),
-            onPanelStateChanged: (panelState) {
-              if (panelState == PanelState.animating) {
-                setState(() {
-                  _expandedHeight = _isSigninPanel ? 0.55 : 0.85;
-                });
-              }
-            },
-          );
-        }
-      }),
+      body: BlocConsumer<SigninBloc, SigninState>(
+        listener: (_, state) => state.join(
+          (_) => {},
+          (_) => {},
+          (_) => {},
+          (userAuthenticatedState) {
+            final user = userAuthenticatedState.user;
+            context.bloc<UserBloc>().add(StoreUser(user));
+            if (user.isFirstLoginDone) {
+              SimpleRouter.forwardAndReplace(
+                TimelinePageConnected(
+                  appUpdateService: G<AppUpdateService>(),
+                ),
+                name: TIMELINE_PAGE,
+              );
+            } else {
+              SimpleRouter.forwardAndReplace(
+                PolisInfoPage(),
+                name: POLIS_INFO_PAGE,
+              );
+            }
+          },
+          (userAuthenticationFailed) =>
+              Snackbar.error(context, ERROR_AUTENTICATING_USER),
+          (signinFailed) => Snackbar.error(context, signinFailed.errorMessage),
+          (_) => {},
+          (_) => {},
+        ),
+        builder: (_, state) => state.join(
+          _mapStateToWidget,
+          _mapLoadingState,
+          _mapStateToWidget,
+          _mapLoadingState,
+          _mapStateToWidget,
+          _mapStateToWidget,
+          _mapStateToWidget,
+          _mapStateToWidget,
+        ),
+      ),
     );
+  }
+
+  Widget _mapStateToWidget(state) {
+    return SlidingPanel(
+      panelController: _panelController,
+      backPressBehavior: BackPressBehavior.CLOSE_PERSIST,
+      snapping: PanelSnapping.enabled,
+      decoration: PanelDecoration(
+        backgroundColor: Colors.white.withOpacity(.95),
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(24),
+          topRight: Radius.circular(24),
+        ),
+      ),
+      size: PanelSize(
+        closedHeight: 0,
+        collapsedHeight: 0,
+        expandedHeight: _expandedHeight,
+      ),
+      content: PanelContent(
+        panelContent: _panel(),
+        bodyContent: _body(context),
+      ),
+      onPanelStateChanged: (panelState) {
+        if (panelState == PanelState.animating) {
+          setState(() {
+            _expandedHeight = _isSigninPanel ? 0.55 : 0.85;
+          });
+        }
+      },
+    );
+  }
+
+  Widget _mapLoadingState(state) {
+    return const Loading();
   }
 
   List<Widget> _panel() {

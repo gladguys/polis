@@ -1,5 +1,12 @@
 part of 'change_password_bloc.dart';
 
+@Sealed([
+  InitialChangePasswordState,
+  UserPasswordChangeSuccess,
+  UserPasswordChanging,
+  UserWrongPasswordInformed,
+  UserPasswordChangeFailed,
+])
 abstract class ChangePasswordState extends Equatable {
   const ChangePasswordState();
 }
@@ -9,12 +16,12 @@ class InitialChangePasswordState extends ChangePasswordState {
   List<Object> get props => [];
 }
 
-class UserPasswordChanging extends ChangePasswordState {
+class UserPasswordChangeSuccess extends ChangePasswordState {
   @override
   List<Object> get props => [];
 }
 
-class UserPasswordChangeSuccess extends ChangePasswordState {
+class UserPasswordChanging extends ChangePasswordState {
   @override
   List<Object> get props => [];
 }

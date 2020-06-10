@@ -1,5 +1,15 @@
 part of 'politic_profile_bloc.dart';
 
+@Sealed([
+  GetPoliticInfoSuccess,
+  GetPoliticInfoFailed,
+  LoadingPoliticInfo,
+  PoliticMoreActivitiesSuccess,
+  UserFollowingPoliticChanged,
+  FollowPoliticFailed,
+  PoliticDontHaveValidEmail,
+  OpenEmailIntentFailed,
+])
 abstract class PoliticProfileState extends Equatable {
   const PoliticProfileState();
 }
@@ -29,16 +39,6 @@ class GetPoliticInfoSuccess extends PoliticProfileState {
   List<Object> get props => [politic, activitiesCount, isBeingFollowedByUser];
 }
 
-class PoliticMoreActivitiesSuccess extends PoliticProfileState {
-  PoliticMoreActivitiesSuccess({@required this.activities})
-      : assert(activities != null);
-
-  final List<dynamic> activities;
-
-  @override
-  List<Object> get props => [activities];
-}
-
 class GetPoliticInfoFailed extends PoliticProfileState {
   @override
   List<Object> get props => [];
@@ -47,6 +47,16 @@ class GetPoliticInfoFailed extends PoliticProfileState {
 class LoadingPoliticInfo extends PoliticProfileState {
   @override
   List<Object> get props => [];
+}
+
+class PoliticMoreActivitiesSuccess extends PoliticProfileState {
+  PoliticMoreActivitiesSuccess({@required this.activities})
+      : assert(activities != null);
+
+  final List<dynamic> activities;
+
+  @override
+  List<Object> get props => [activities];
 }
 
 class UserFollowingPoliticChanged extends PoliticProfileState {

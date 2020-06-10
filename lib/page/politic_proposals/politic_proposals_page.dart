@@ -27,20 +27,19 @@ class PoliticProposalsPage extends StatelessWidget {
       ),
       body: SafeArea(
         child: BlocBuilder<PoliticProposalsBloc, PoliticProposalsState>(
-          builder: (_, state) {
-            if (state is GetPoliticProposalsSuccess) {
-              return _buildList(state.proposals);
-            } else if (state is LoadingPoliticProposals) {
-              return const PoliticProposalsSkeleton();
-            }
-            return const ErrorContainer();
-          },
+          builder: (_, state) => state.join(
+            _mapLoadingPoliticProposalsToState,
+            _mapGetPoliticProposalsSuccessToState,
+            _mapLoadingPoliticProposalsToState,
+            _mapGetPoliticProposalsFailedToState,
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildList(List<PropostaModel> propostas) {
+  Widget _mapGetPoliticProposalsSuccessToState(state) {
+    final propostas = state.propostas;
     return Column(
       children: <Widget>[
         const SizedBox(height: 8),
@@ -58,5 +57,13 @@ class PoliticProposalsPage extends StatelessWidget {
               ),
       ],
     );
+  }
+
+  Widget _mapLoadingPoliticProposalsToState(state) {
+    return const PoliticProposalsSkeleton();
+  }
+
+  Widget _mapGetPoliticProposalsFailedToState(state) {
+    return const ErrorContainer();
   }
 }

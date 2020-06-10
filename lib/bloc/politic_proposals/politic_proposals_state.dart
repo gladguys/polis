@@ -1,5 +1,11 @@
 part of 'politic_proposals_bloc.dart';
 
+@Sealed([
+  InitialPoliticProposalsState,
+  GetPoliticProposalsSuccess,
+  LoadingPoliticProposals,
+  GetPoliticProposalsFailed,
+])
 abstract class PoliticProposalsState extends Equatable {
   const PoliticProposalsState();
 }
@@ -18,12 +24,12 @@ class GetPoliticProposalsSuccess extends PoliticProposalsState {
   List<Object> get props => [proposals];
 }
 
-class GetPoliticProposalsFailed extends PoliticProposalsState {
+class LoadingPoliticProposals extends PoliticProposalsState {
   @override
   List<Object> get props => [];
 }
 
-class LoadingPoliticProposals extends PoliticProposalsState {
+class GetPoliticProposalsFailed extends PoliticProposalsState {
   @override
   List<Object> get props => [];
 }

@@ -1,5 +1,20 @@
-part of 'signin_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:sealed_class/sealed_class.dart';
 
+import '../../core/domain/model/models.dart';
+
+part 'signin_state.g.dart';
+
+@Sealed([
+  InitialSignin,
+  SigninLoading,
+  SentingResetEmail,
+  UserAuthenticated,
+  UserAuthenticationFailed,
+  SigninFailed,
+  ResetEmailSentSuccess,
+  ResetEmailSentFailed,
+])
 abstract class SigninState extends Equatable {
   const SigninState();
 }

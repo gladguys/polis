@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:sealed_class/sealed_class.dart';
 
 import '../../core/domain/model/models.dart';
 import '../../core/repository/abstract/repositories.dart';
 
+part 'politic_suggestion_bloc.g.dart';
 part 'politic_suggestion_event.dart';
 part 'politic_suggestion_state.dart';
 
@@ -30,15 +32,11 @@ class PoliticSuggestionBloc
   @override
   Stream<PoliticSuggestionState> mapEventToState(
       PoliticSuggestionEvent event) async* {
-    if (event is FetchSuggestedPolitics) {
-      yield* _mapFetchSuggestedPoliticsToState(event);
-    }
-    if (event is FollowOrUnfollowPolitic) {
-      yield* _mapFollowOrUnfollowPoliticToState(event);
-    }
-    if (event is SavePoliticsToFollow) {
-      yield* _mapSavePoliticsToFollowToState(event);
-    }
+    yield* event.join(
+      _mapFetchSuggestedPoliticsToState,
+      _mapFollowOrUnfollowPoliticToState,
+      _mapSavePoliticsToFollowToState,
+    );
   }
 
   Stream<PoliticSuggestionState> _mapFetchSuggestedPoliticsToState(

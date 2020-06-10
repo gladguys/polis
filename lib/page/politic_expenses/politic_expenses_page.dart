@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../bloc/blocs.dart';
-import '../../core/domain/model/models.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/routing/route_names.dart';
 import '../../widget/default_bottombar.dart';
@@ -23,21 +22,19 @@ class PoliticExpensesPage extends StatelessWidget {
       ),
       body: SafeArea(
         child: BlocBuilder<PoliticExpensesBloc, PoliticExpensesState>(
-          builder: (_, state) {
-            if (state is GetPoliticExpensesSuccess) {
-              return _buildList(state.despesas);
-            } else if (state is LoadingPoliticExpenses) {
-              return const PoliticExpensesSkeleton();
-            } else {
-              return const ErrorContainer();
-            }
-          },
+          builder: (_, state) => state.join(
+            _mapLoadingPoliticExpensesToState,
+            _mapGetPoliticExpensesSuccessToState,
+            _mapLoadingPoliticExpensesToState,
+            _mapGetPoliticExpensesFailedToState,
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildList(List<DespesaModel> despesas) {
+  Widget _mapGetPoliticExpensesSuccessToState(GetPoliticExpensesSuccess state) {
+    final despesas = state.despesas;
     return Column(
       children: <Widget>[
         const SizedBox(height: 8),
@@ -57,5 +54,13 @@ class PoliticExpensesPage extends StatelessWidget {
               ),
       ],
     );
+  }
+
+  Widget _mapLoadingPoliticExpensesToState(state) {
+    return const PoliticExpensesSkeleton();
+  }
+
+  Widget _mapGetPoliticExpensesFailedToState(state) {
+    return const ErrorContainer();
   }
 }

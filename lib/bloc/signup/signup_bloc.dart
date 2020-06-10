@@ -1,18 +1,13 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/domain/model/models.dart';
 import '../../core/exception/exceptions.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/repository/abstract/repositories.dart';
 import '../../core/service/services.dart';
-
-part 'signup_event.dart';
-part 'signup_state.dart';
+import 'bloc.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
   SignupBloc({@required this.repository, @required this.analyticsService})

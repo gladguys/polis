@@ -23,21 +23,60 @@ class PoliticProfilePage extends StatelessWidget {
       body: SafeArea(
         child: BlocBuilder<PoliticProfileBloc, PoliticProfileState>(
           builder: (_, state) {
-            if (state is GetPoliticInfoSuccess ||
-                state is UserFollowingPoliticChanged) {
-              return PoliticProfile(
-                state,
-                onUnfollowPolitic: onUnfollowPolitic,
-              );
-            } else if (state is GetPoliticInfoFailed ||
-                state is FollowPoliticFailed) {
-              return const ErrorContainer();
-            } else {
-              return const PoliticProfileSkeleton();
-            }
+            return state.join(
+              _mapGetPoliticInfoSuccessToWidget,
+              _mapGetPoliticInfoFailedToWidget,
+              _mapLoadingPoliticInfoToWidget,
+              _mapPoliticMoreActivitiesSuccessToWidget,
+              _mapUserFollowingPoliticChangedToWidget,
+              _mapFollowPoliticFailedToWidget,
+              _mapPoliticDontHaveValidEmailToState,
+              _mapOpenEmailIntentFailedToState,
+            );
           },
         ),
       ),
     );
+  }
+
+  Widget _mapGetPoliticInfoSuccessToWidget(state) {
+    return PoliticProfile(
+      state,
+      onUnfollowPolitic: onUnfollowPolitic,
+    );
+  }
+
+  Widget _mapGetPoliticInfoFailedToWidget(state) {
+    return const ErrorContainer();
+  }
+
+  Widget _mapLoadingPoliticInfoToWidget(state) {
+    return const PoliticProfileSkeleton();
+  }
+
+  Widget _mapPoliticMoreActivitiesSuccessToWidget(state) {
+    return PoliticProfile(
+      state,
+      onUnfollowPolitic: onUnfollowPolitic,
+    );
+  }
+
+  Widget _mapUserFollowingPoliticChangedToWidget(state) {
+    return PoliticProfile(
+      state,
+      onUnfollowPolitic: onUnfollowPolitic,
+    );
+  }
+
+  Widget _mapFollowPoliticFailedToWidget(state) {
+    return const ErrorContainer();
+  }
+
+  Widget _mapPoliticDontHaveValidEmailToState(state) {
+    return const ErrorContainer();
+  }
+
+  Widget _mapOpenEmailIntentFailedToState(state) {
+    return const ErrorContainer();
   }
 }

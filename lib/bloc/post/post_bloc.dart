@@ -4,12 +4,14 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:sealed_class/sealed_class.dart';
 
 import '../../core/domain/model/models.dart';
 import '../../core/repository/abstract/repositories.dart';
 import '../../core/service/services.dart';
 import '../blocs.dart';
 
+part 'post_bloc.g.dart';
 part 'post_event.dart';
 part 'post_state.dart';
 

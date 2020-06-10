@@ -9,6 +9,7 @@ import '../../core/routing/route_names.dart';
 import '../../widget/card_base.dart';
 import '../../widget/default_bottombar.dart';
 import '../../widget/empty_info.dart';
+import '../../widget/error_container.dart';
 import '../../widget/loading.dart';
 import '../../widget/photo.dart';
 import '../../widget/text_title.dart';
@@ -20,16 +21,27 @@ class PoliticFollowersPage extends StatelessWidget {
       bottomNavigationBar: DefaultBottombar(SEARCH_POLITIC_PAGE),
       body: SafeArea(
         child: BlocBuilder<PoliticFollowersBloc, PoliticFollowersState>(
-          builder: (_, state) {
-            if (state is GetPoliticFollowersSuccess) {
-              return _buildList(state.followers);
-            } else {
-              return Loading();
-            }
-          },
+          builder: (_, state) => state.join(
+            _mapLoadingPoliticFollowersToState,
+            _mapGetPoliticFollowersSuccessToState,
+            _mapLoadingPoliticFollowersToState,
+            _mapGetPoliticFollowersFailedToState,
+          ),
         ),
       ),
     );
+  }
+
+  Widget _mapGetPoliticFollowersSuccessToState(state) {
+    return _buildList(state.followers);
+  }
+
+  Widget _mapLoadingPoliticFollowersToState(state) {
+    return const Loading();
+  }
+
+  Widget _mapGetPoliticFollowersFailedToState(state) {
+    return const ErrorContainer();
   }
 
   Widget _buildList(List<UsuarioSeguindoPolitico> followers) {

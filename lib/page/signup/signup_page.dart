@@ -81,28 +81,18 @@ class _SignupPageState extends State<SignupPage> {
       },
       child: BlocBuilder<SignupBloc, SignupState>(
         bloc: _signupBloc,
-        builder: (_, state) {
-          if (state is InitialSignup ||
-              state is UserCreationFailed ||
-              state is SignupFailed ||
-              state is UserCreated) {
-            return _signupForm();
-          } else {
-            return Center(
-              child: Padding(
-                padding: EdgeInsets.only(
-                  top: context.screenHeight / 3,
-                ),
-                child: Loading(),
-              ),
-            );
-          }
-        },
+        builder: (_, state) => state.join(
+          _mapStateToWidget,
+          _mapStateToWidget,
+          _mapStateToWidget,
+          _mapStateToWidget,
+          _mapLoadingStateToWidget,
+        ),
       ),
     );
   }
 
-  Widget _signupForm() {
+  Widget _mapStateToWidget(state) {
     void _validateAndSendForm() {
       final formState = _formKey.currentState;
       if (formState.validate()) {
@@ -243,6 +233,17 @@ class _SignupPageState extends State<SignupPage> {
             const SizedBox(height: 16),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _mapLoadingStateToWidget(state) {
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: context.screenHeight / 3,
+        ),
+        child: const Loading(),
       ),
     );
   }

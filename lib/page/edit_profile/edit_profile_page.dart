@@ -14,6 +14,7 @@ import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../widget/default_bottombar.dart';
+import '../../widget/error_container.dart';
 import '../../widget/loading.dart';
 import '../../widget/snackbar.dart';
 import '../../widget/text_title.dart';
@@ -49,93 +50,102 @@ class _EditProfilePageState extends State<EditProfilePage> {
       bottomNavigationBar: DefaultBottombar(USER_PROFILE_PAGE),
       body: SafeArea(
         child: BlocConsumer<EditProfileBloc, EditProfileState>(
-          listener: (_, state) {
-            if (state is UserUpdateSuccess) {
-              Snackbar.success(_, USER_UPDATED_WITH_SUCCESS);
-            }
-            if (state is UserUpdateFailed) {
-              Snackbar.error(_, USER_UPDATE_FAILED);
-            }
-          },
-          builder: (_, state) {
-            if (state is UpdatingUser) {
-              return Loading();
-            } else {
-              return Column(
-                children: <Widget>[
-                  const SizedBox(height: 12),
-                  Center(
-                    child: TextTitle(EDIT_YOUR_PROFILE),
-                  ),
-                  const SizedBox(height: 22),
-                  Container(
-                    height: 120,
-                    width: 120,
-                    child: Material(
-                      borderRadius: BorderRadius.circular(60),
-                      elevation: 1,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(60),
-                        child: Center(
-                          key: editProfileProfileContainerKey,
-                          child: getImageContainer(),
-                        ),
-                        onTap: getImage,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(32),
-                    child: _getForm(),
-                  ),
-                  const SizedBox(height: 16),
-                  Container(
-                    height: 40,
-                    width: 220,
-                    child: FlatButton(
-                      padding: EdgeInsets.zero,
-                      child: const Text(CONFIRM),
-                      color: Colors.amber,
-                      onPressed: () {
-                        final formState = _formKey.currentState;
-                        if (formState.validate()) {
-                          formState.save();
-                          editProfileBloc.add(
-                            UpdateUserInfo(
-                              currentUser: user,
-                              name: _name,
-                              email: _email,
-                              pickedPhoto: pickedPhoto,
-                            ),
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  user.authProvider == AuthProvider.emailAndPassword
-                      ? Container(
-                          height: 40,
-                          width: 220,
-                          child: OutlineButton.icon(
-                            padding: EdgeInsets.zero,
-                            icon: Icon(Icons.lock, size: 18),
-                            label: const Text(CHANGE_PASSWORD),
-                            highlightedBorderColor: Colors.grey,
-                            onPressed: () => SimpleRouter.forward(
-                              ChangePasswordPageConnected(),
-                              name: CHANGE_PASSWORD_PAGE,
-                            ),
-                          ),
-                        )
-                      : const SizedBox.shrink(),
-                ],
-              );
-            }
-          },
+          listener: (consumerContext, state) => state.continued(
+            (_) => {},
+            (_) => Snackbar.success(consumerContext, USER_UPDATED_WITH_SUCCESS),
+            (_) => {},
+            (_) => Snackbar.error(consumerContext, USER_UPDATE_FAILED),
+          ),
+          builder: (_, state) => state.join(
+            _mapStateToWidget,
+            _mapStateToWidget,
+            _mapUpdatingUserToWidget,
+            _mapUserUpdateFailedToWidget,
+          ),
         ),
       ),
     );
+  }
+
+  Widget _mapStateToWidget(state) {
+    return Column(
+      children: <Widget>[
+        const SizedBox(height: 12),
+        Center(
+          child: TextTitle(EDIT_YOUR_PROFILE),
+        ),
+        const SizedBox(height: 22),
+        Container(
+          height: 120,
+          width: 120,
+          child: Material(
+            borderRadius: BorderRadius.circular(60),
+            elevation: 1,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(60),
+              child: Center(
+                key: editProfileProfileContainerKey,
+                child: getImageContainer(),
+              ),
+              onTap: getImage,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(32),
+          child: _getForm(),
+        ),
+        const SizedBox(height: 16),
+        Container(
+          height: 40,
+          width: 220,
+          child: FlatButton(
+            padding: EdgeInsets.zero,
+            child: const Text(CONFIRM),
+            color: Colors.amber,
+            onPressed: () {
+              final formState = _formKey.currentState;
+              if (formState.validate()) {
+                formState.save();
+                editProfileBloc.add(
+                  UpdateUserInfo(
+                    currentUser: user,
+                    name: _name,
+                    email: _email,
+                    pickedPhoto: pickedPhoto,
+                  ),
+                );
+              }
+            },
+          ),
+        ),
+        const SizedBox(height: 12),
+        user.authProvider == AuthProvider.emailAndPassword
+            ? Container(
+                height: 40,
+                width: 220,
+                child: OutlineButton.icon(
+                  padding: EdgeInsets.zero,
+                  icon: Icon(Icons.lock, size: 18),
+                  label: const Text(CHANGE_PASSWORD),
+                  highlightedBorderColor: Colors.grey,
+                  onPressed: () => SimpleRouter.forward(
+                    ChangePasswordPageConnected(),
+                    name: CHANGE_PASSWORD_PAGE,
+                  ),
+                ),
+              )
+            : const SizedBox.shrink(),
+      ],
+    );
+  }
+
+  Widget _mapUpdatingUserToWidget(state) {
+    return const Loading();
+  }
+
+  Widget _mapUserUpdateFailedToWidget(state) {
+    return const ErrorContainer();
   }
 
   Widget _getForm() {

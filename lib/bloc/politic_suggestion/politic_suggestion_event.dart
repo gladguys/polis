@@ -1,5 +1,10 @@
 part of 'politic_suggestion_bloc.dart';
 
+@Sealed([
+  FetchSuggestedPolitics,
+  FollowOrUnfollowPolitic,
+  SavePoliticsToFollow,
+])
 abstract class PoliticSuggestionEvent extends Equatable {
   const PoliticSuggestionEvent();
 }

@@ -1,16 +1,13 @@
 part of 'post_bloc.dart';
 
+@Sealed([
+  FavoritePostForUser,
+  SharePost,
+  SetPostViewed,
+  SetPostFavorited,
+])
 abstract class PostEvent extends Equatable {
   const PostEvent();
-}
-
-class LikePost extends PostEvent {
-  LikePost(this.id);
-
-  final String id;
-
-  @override
-  List<Object> get props => [id];
 }
 
 class FavoritePostForUser extends PostEvent {

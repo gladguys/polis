@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:sealed_class/sealed_class.dart';
 
 import '../../core/domain/model/models.dart';
 import '../../core/repository/abstract/politic_proposals_repository.dart';
 
+part 'politic_proposals_bloc.g.dart';
 part 'politic_proposals_event.dart';
 part 'politic_proposals_state.dart';
 

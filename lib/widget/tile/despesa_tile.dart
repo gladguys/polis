@@ -36,12 +36,12 @@ class DespesaTile extends StatelessWidget {
           paddingSlotCenter: EdgeInsets.zero,
           slotLeft: _buildLeftContent(),
           slotCenter: BlocBuilder<PostBloc, PostState>(
-            builder: (_, state) => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                _buildTopContent(),
-                _buildCenterContent(),
-              ],
+            builder: (_, state) => state.join(
+              _mapStateToWidget,
+              _mapStateToWidget,
+              _mapStateToWidget,
+              _mapStateToWidget,
+              _mapStateToWidget,
             ),
           ),
           slotBottom: _buildActions(context),
@@ -63,6 +63,16 @@ class DespesaTile extends StatelessWidget {
           right: 0,
           child: TagDespesa(),
         ),
+      ],
+    );
+  }
+
+  Widget _mapStateToWidget(state) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        _buildTopContent(),
+        _buildCenterContent(),
       ],
     );
   }
@@ -158,39 +168,48 @@ class DespesaTile extends StatelessWidget {
 
   Widget _buildActions(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
-      builder: (_, state) => Padding(
-        padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              '${despesa.dataDocumento.formatDate()}',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey[600],
-              ),
+      builder: (_, state) => state.join(
+        (_) => _mapActionsStateToWidget(state, context),
+        (_) => _mapActionsStateToWidget(state, context),
+        (_) => _mapActionsStateToWidget(state, context),
+        (_) => _mapActionsStateToWidget(state, context),
+        (_) => _mapActionsStateToWidget(state, context),
+      ),
+    );
+  }
+
+  Widget _mapActionsStateToWidget(state, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            '${despesa.dataDocumento.formatDate()}',
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.grey[600],
             ),
-            ButtonActionCard(
-              isIconOnly: true,
-              icon: context.bloc<PostBloc>().isPostFavorite
-                  ? FontAwesomeIcons.solidBookmark
-                  : FontAwesomeIcons.bookmark,
-              iconColor: context.bloc<PostBloc>().isPostFavorite
-                  ? Colors.yellow
-                  : null,
-              onTap: () => context.bloc<PostBloc>().add(
-                    FavoritePostForUser(
-                      post: {
-                        'id': despesa.id,
-                        ...despesa.toJson(),
-                      },
-                      user: context.bloc<UserBloc>().user,
-                    ),
+          ),
+          ButtonActionCard(
+            isIconOnly: true,
+            icon: context.bloc<PostBloc>().isPostFavorite
+                ? FontAwesomeIcons.solidBookmark
+                : FontAwesomeIcons.bookmark,
+            iconColor:
+                context.bloc<PostBloc>().isPostFavorite ? Colors.yellow : null,
+            onTap: () => context.bloc<PostBloc>().add(
+                  FavoritePostForUser(
+                    post: {
+                      'id': despesa.id,
+                      ...despesa.toJson(),
+                    },
+                    user: context.bloc<UserBloc>().user,
                   ),
-            ),
-          ],
-        ),
+                ),
+          ),
+        ],
       ),
     );
   }

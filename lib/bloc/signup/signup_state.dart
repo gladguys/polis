@@ -1,5 +1,15 @@
-part of 'signup_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:sealed_class/sealed_class.dart';
 
+part 'signup_state.g.dart';
+
+@Sealed([
+  InitialSignup,
+  UserCreated,
+  UserCreationFailed,
+  SignupFailed,
+  SignupLoading,
+])
 abstract class SignupState extends Equatable {}
 
 class InitialSignup extends SignupState {
@@ -21,11 +31,6 @@ class UserCreationFailed extends SignupState {
   List<Object> get props => [statusMessage];
 }
 
-class SignupLoading extends SignupState {
-  @override
-  List<Object> get props => [];
-}
-
 class SignupFailed extends SignupState {
   SignupFailed(this.errorMessage);
 
@@ -33,4 +38,9 @@ class SignupFailed extends SignupState {
 
   @override
   List<Object> get props => [errorMessage];
+}
+
+class SignupLoading extends SignupState {
+  @override
+  List<Object> get props => [];
 }

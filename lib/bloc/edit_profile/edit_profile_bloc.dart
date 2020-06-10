@@ -4,11 +4,13 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:sealed_class/sealed_class.dart';
 
 import '../../core/domain/model/models.dart';
 import '../../core/repository/abstract/edit_profile_repository.dart';
 import '../blocs.dart';
 
+part 'edit_profile_bloc.g.dart';
 part 'edit_profile_event.dart';
 part 'edit_profile_state.dart';
 

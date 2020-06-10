@@ -1,5 +1,20 @@
-part of 'search_politic_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:sealed_class/sealed_class.dart';
 
+import '../../core/domain/model/models.dart';
+
+part 'search_politic_state.g.dart';
+
+@Sealed([
+  InitialSearchPoliticState,
+  FetchSearchPoliticsSuccess,
+  LoadingFetchPolitics,
+  FetchSearchPoliticsFailed,
+  SearchPoliticFilterChanged,
+  FollowedSearchPoliticsUpdated,
+  FollowUnfollowPoliticsFailed,
+])
 abstract class SearchPoliticState extends Equatable {
   const SearchPoliticState();
 }
