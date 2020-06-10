@@ -300,37 +300,5 @@ void main() {
         ),
       );
     });
-
-    testWidgets('should return to UserProfilePageConnected when click back',
-        (tester) async {
-      when(mockUserFollowingPoliticsBloc.state).thenReturn(
-        FollowedPoliticsUpdated(
-          followedPolitics: [],
-          politicoUpdated: PoliticoModel(),
-          isFollowing: true,
-        ),
-      );
-      await tester.pumpWidget(
-        connectedWidget(
-          BlocProvider(
-            create: (_) => UserBloc(
-              repository: MockUserRepository(),
-              user: UserModel(
-                userId: '1',
-              ),
-              analyticsService: MockAnalyticsService(),
-              sharedPreferencesService: MockSharedPreferencesService(),
-            ),
-            child: PageConnected<UserFollowingPoliticsBloc>(
-              bloc: mockUserFollowingPoliticsBloc,
-              page: UserFollowingPoliticsPage(),
-            ),
-          ),
-        ),
-      );
-      final backButton = find.byKey(arrowBackButtonKey);
-      expect(backButton, findsOneWidget);
-      await tester.tap(backButton);
-    });
   });
 }
