@@ -21,7 +21,7 @@ class PoliticFollowersPage extends StatelessWidget {
             if (state is GetPoliticFollowersSuccess) {
               return _buildList(state.followers);
             } else {
-              return Loading();
+              return const Loading();
             }
           },
         ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../intro/polis_info_page.dart';
 import 'package:simple_router/simple_router.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
@@ -12,6 +11,7 @@ import '../../core/service/locator.dart';
 import '../../core/service/services.dart';
 import '../../widget/loading.dart';
 import '../../widget/snackbar.dart';
+import '../intro/polis_info_page.dart';
 import '../pages.dart';
 import '../theme/main_theme.dart';
 
@@ -62,7 +62,7 @@ class _InitialPageState extends State<InitialPage> {
         }
       }, builder: (_, state) {
         if (state is SigninLoading || state is UserAuthenticated) {
-          return Loading();
+          return const Loading();
         } else {
           return SlidingPanel(
             panelController: _panelController,

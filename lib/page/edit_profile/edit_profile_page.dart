@@ -57,7 +57,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           },
           builder: (_, state) {
             if (state is UpdatingUser) {
-              return Loading();
+              return const Loading();
             } else {
               return Column(
                 children: <Widget>[

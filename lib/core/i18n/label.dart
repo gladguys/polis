@@ -51,6 +51,7 @@ const EDIT_PROFILE = 'Editar perfil';
 const CHANGE_PASSWORD = 'Alterar senha';
 const CHANGE_YOUR_PROFILE = 'Altere sua senha';
 const EDIT_YOUR_PROFILE = 'Edite seu perfil';
+const EXPENSES_COMPARATION = 'Comparativo de despesas';
 const FAVORITE_POSTS = 'Posts salvos';
 const MY_ACTIVITIES = 'Minhas atividades';
 const ACTIVITIES = 'Atividades';
@@ -116,3 +117,7 @@ const AFTER = 'Depois';
 const WITH_LESS_EXPENSES = 'Com menos despesas';
 const SEE_MORE = 'Ver mais';
 const SEE_LESS = 'Ver menos';
+const MORE_EXPENSE = 'Mais gastou';
+const LESS_EXPENSE = 'Menos gastou';
+const EXPENSES_AVERAGE_BETWEEN_POLITICIS = 
+  'Média de despesas entre todos os políticos';

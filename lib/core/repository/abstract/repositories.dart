@@ -1,4 +1,5 @@
 export 'change_password_repository.dart';
+export 'comparativo_ranking_despesas_repository.dart';
 export 'edit_profile_repository.dart';
 export 'favorite_posts_repository.dart';
 export 'follow_repository.dart';
