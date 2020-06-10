@@ -1,4 +1,5 @@
 export 'firebase/firebase_change_password_repository.dart';
+export 'firebase/firebase_comparativo_ranking_despesas_repository.dart';
 export 'firebase/firebase_edit_profile_repository.dart';
 export 'firebase/firebase_favorite_posts_repository.dart';
 export 'firebase/firebase_follow_repository.dart';
@@ -11,7 +12,6 @@ export 'firebase/firebase_politic_proposals_repository.dart';
 export 'firebase/firebase_politic_suggestion_repository.dart';
 export 'firebase/firebase_politico_repository.dart';
 export 'firebase/firebase_post_repository.dart';
-export 'firebase/firebase_resultados_ranking_repository.dart';
 export 'firebase/firebase_signin_repository.dart';
 export 'firebase/firebase_signup_repository.dart';
 export 'firebase/firebase_sync_log_repository.dart';

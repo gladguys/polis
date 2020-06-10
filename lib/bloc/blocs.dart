@@ -1,4 +1,5 @@
 export 'change_password/change_password_bloc.dart';
+export 'comparativo_ranking_despesas/comparativo_ranking_despesas_bloc.dart';
 export 'document/document_bloc.dart';
 export 'edit_profile/edit_profile_bloc.dart';
 export 'favorite_posts/favorite_posts_bloc.dart';
@@ -8,7 +9,6 @@ export 'politic_profile/politic_profile_bloc.dart';
 export 'politic_proposals/politic_proposals_bloc.dart';
 export 'politic_suggestion/politic_suggestion_bloc.dart';
 export 'post/post_bloc.dart';
-export 'resultados_ranking/resultados_ranking_bloc.dart';
 export 'search_politic/search_politic_bloc.dart';
 export 'signin/signin_bloc.dart';
 export 'signup/signup_bloc.dart';

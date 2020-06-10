@@ -92,7 +92,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
               InkWell(
                 borderRadius: BorderRadius.circular(5),
                 onTap: () => SimpleRouter.forward(
-                  ResultadosRankingPageConnected(politic),
+                  ComparativoRankingDespesasPageConnected(politic),
                   name: RESULTADOS_RANKING_PAGE,
                 ),
                 child: Column(
@@ -129,7 +129,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
             onTap: () => SimpleRouter.forward(
               PoliticExpensesPageConnected(politic),
-              name: POLITIC_EXPENSES_PAGE,
+              name: RANKING_EXPENSES_COMPARE_PAGE,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
