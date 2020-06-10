@@ -1,5 +1,11 @@
 part of 'politic_profile_bloc.dart';
 
+@Sealed([
+  GetPoliticInfo,
+  GetMoreActivities,
+  FollowUnfollowProfilePolitic,
+  SendEmailToPolitic,
+])
 abstract class PoliticProfileEvent extends Equatable {
   const PoliticProfileEvent();
 }

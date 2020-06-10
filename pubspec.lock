@@ -847,6 +847,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.1"
+  sealed_class:
+    dependency: "direct main"
+    description:
+      name: sealed_class
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
+  sealed_class_generator:
+    dependency: "direct dev"
+    description:
+      name: sealed_class_generator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   shared_preferences:
     dependency: "direct main"
     description:

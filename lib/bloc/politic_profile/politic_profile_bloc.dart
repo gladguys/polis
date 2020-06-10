@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:sealed_class/sealed_class.dart';
 
 import '../../core/constants.dart';
 import '../../core/domain/model/models.dart';
@@ -12,6 +13,7 @@ import '../../core/repository/abstract/repositories.dart';
 import '../../core/service/services.dart';
 import '../../core/validators.dart';
 
+part 'politic_profile_bloc.g.dart';
 part 'politic_profile_event.dart';
 part 'politic_profile_state.dart';
 
@@ -44,18 +46,12 @@ class PoliticProfileBloc
   @override
   Stream<PoliticProfileState> mapEventToState(
       PoliticProfileEvent event) async* {
-    if (event is GetPoliticInfo) {
-      yield* _mapGetPoliticInfoToState(event);
-    }
-    if (event is FollowUnfollowProfilePolitic) {
-      yield* _mapFollowUnfollowProfilePoliticToState(event);
-    }
-    if (event is SendEmailToPolitic) {
-      yield* _mapSendEmailToPoliticToState(event);
-    }
-    if (event is GetMoreActivities) {
-      yield* _mapGetMoreActivitiesToState(event);
-    }
+    yield* event.join(
+      _mapGetPoliticInfoToState,
+      _mapGetMoreActivitiesToState,
+      _mapFollowUnfollowProfilePoliticToState,
+      _mapSendEmailToPoliticToState,
+    );
   }
 
   Stream<PoliticProfileState> _mapGetPoliticInfoToState(
@@ -78,6 +74,27 @@ class PoliticProfileBloc
       lastActivities = activitiesData.item1;
       lastDocument = activitiesData.item2;
 
+      yield GetPoliticInfoSuccess(
+        politic: politico,
+        lastActivities: lastActivities,
+        activitiesCount: lastActivities.length,
+        isBeingFollowedByUser: isPoliticBeingFollowedByUser,
+      );
+    } on Exception {
+      yield GetPoliticInfoFailed();
+    }
+  }
+
+  Stream<PoliticProfileState> _mapGetMoreActivitiesToState(
+      GetMoreActivities event) async* {
+    try {
+      final activitiesData = await politicProfileRepository.getMoreActivities(
+        politicId: event.politicId,
+        count: kLastActivitiesQuantity,
+        lastDocument: lastDocument,
+      );
+      lastActivities.addAll(activitiesData.item1);
+      lastDocument = activitiesData.item2;
       yield GetPoliticInfoSuccess(
         politic: politico,
         lastActivities: lastActivities,
@@ -128,27 +145,6 @@ class PoliticProfileBloc
       }
     } else {
       yield PoliticDontHaveValidEmail();
-    }
-  }
-
-  Stream<PoliticProfileState> _mapGetMoreActivitiesToState(
-      GetMoreActivities event) async* {
-    try {
-      final activitiesData = await politicProfileRepository.getMoreActivities(
-        politicId: event.politicId,
-        count: kLastActivitiesQuantity,
-        lastDocument: lastDocument,
-      );
-      lastActivities.addAll(activitiesData.item1);
-      lastDocument = activitiesData.item2;
-      yield GetPoliticInfoSuccess(
-        politic: politico,
-        lastActivities: lastActivities,
-        activitiesCount: lastActivities.length,
-        isBeingFollowedByUser: isPoliticBeingFollowedByUser,
-      );
-    } on Exception {
-      yield GetPoliticInfoFailed();
     }
   }
 }

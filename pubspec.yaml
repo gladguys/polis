@@ -16,6 +16,7 @@ dependencies:
   bloc: ^4.0.0
   simple_router: ^0.1.0+1
   equatable: ^1.2.0
+  sealed_class: 3.0.0
   json_serializable: ^3.3.0
   hive: ^1.4.1+1
   hive_flutter: ^0.3.0+2
@@ -68,6 +69,7 @@ dev_dependencies:
   # Generators
   build_runner:
   hive_generator: ^0.7.0+2
+  sealed_class_generator: 3.0.0
 
   # Tests
   test: ^1.14.4
