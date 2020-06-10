@@ -5,8 +5,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../bloc/blocs.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/i18n/i18n.dart';
-import '../../core/routing/route_names.dart';
-import '../../widget/default_bottombar.dart';
 import '../../widget/empty_info.dart';
 import '../../widget/error_container.dart';
 import '../../widget/text_title.dart';
@@ -17,10 +15,6 @@ class PoliticExpensesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: DefaultBottombar(
-        SEARCH_POLITIC_PAGE,
-        withBack: true,
-      ),
       body: SafeArea(
         child: BlocBuilder<PoliticExpensesBloc, PoliticExpensesState>(
           builder: (_, state) {
