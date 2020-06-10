@@ -1,5 +1,5 @@
 import '../../domain/model/models.dart';
 
-abstract class ResultadosRankingRepository {
+abstract class ComparativoRankingDespesasRepository {
   Future<ResultadosRankingModel> getRankingResults();
 }

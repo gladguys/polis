@@ -6,9 +6,9 @@ import '../../../exception/exceptions.dart';
 import '../../abstract/repositories.dart';
 import 'firebase.dart';
 
-class FirebaseResultadosRankingRepository
-    implements ResultadosRankingRepository {
-  FirebaseResultadosRankingRepository({@required this.firestore})
+class FirebaseComparativoRankingDespesasRepository
+    implements ComparativoRankingDespesasRepository {
+  FirebaseComparativoRankingDespesasRepository({@required this.firestore})
       : assert(firestore != null);
 
   final Firestore firestore;

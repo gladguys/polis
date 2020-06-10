@@ -7,28 +7,30 @@ import 'package:flutter/material.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/repository/abstract/repositories.dart';
 
-part 'resultados_ranking_event.dart';
-part 'resultados_ranking_state.dart';
+part 'comparativo_ranking_despesas_event.dart';
+part 'comparativo_ranking_despesas_state.dart';
 
-class ResultadosRankingBloc
-    extends Bloc<ResultadosRankingEvent, ResultadosRankingState> {
-  ResultadosRankingBloc({@required this.repository})
+class ComparativoRankingDespesasBloc extends Bloc<
+    ComparativoRankingDespesasEvent, ComparativoRankingDespesasState> {
+  ComparativoRankingDespesasBloc({@required this.repository})
       : assert(repository != null);
 
-  final ResultadosRankingRepository repository;
+  final ComparativoRankingDespesasRepository repository;
 
   @override
-  ResultadosRankingState get initialState => InitialResultadosRankingState();
+  ComparativoRankingDespesasState get initialState =>
+      InitialComparativoRankingDespesasState();
 
   @override
-  Stream<ResultadosRankingState> mapEventToState(
-      ResultadosRankingEvent event) async* {
+  Stream<ComparativoRankingDespesasState> mapEventToState(
+      ComparativoRankingDespesasEvent event) async* {
     if (event is GetRankingResultados) {
       yield* _mapGetRankingResultadosToState();
     }
   }
 
-  Stream<ResultadosRankingState> _mapGetRankingResultadosToState() async* {
+  Stream<ComparativoRankingDespesasState>
+      _mapGetRankingResultadosToState() async* {
     yield LoadingResultadosRanking();
 
     try {

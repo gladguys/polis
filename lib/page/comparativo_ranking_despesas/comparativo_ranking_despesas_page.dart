@@ -7,8 +7,8 @@ import '../../widget/error_container.dart';
 import '../../widget/loading.dart';
 import 'widget/resultados_ranking.dart';
 
-class ResultadosRankingPage extends StatelessWidget {
-  ResultadosRankingPage(this.politico);
+class ComparativoRankingDespesasPage extends StatelessWidget {
+  ComparativoRankingDespesasPage(this.politico);
 
   final PoliticoModel politico;
 
@@ -16,7 +16,8 @@ class ResultadosRankingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<ResultadosRankingBloc, ResultadosRankingState>(
+        child: BlocBuilder<ComparativoRankingDespesasBloc,
+            ComparativoRankingDespesasState>(
           builder: (_, state) {
             if (state is GetRankingResultadosSuccess) {
               return ResultadosRanking(

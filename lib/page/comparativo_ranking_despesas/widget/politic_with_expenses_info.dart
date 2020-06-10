@@ -68,7 +68,7 @@ class PoliticWithExpensesInfo extends StatelessWidget {
       children: <Widget>[
         Photo(
           url: foto,
-          size: 70,
+          size: 60,
           borderRadius: BorderRadius.circular(35),
         ),
         const SizedBox(width: 4),
