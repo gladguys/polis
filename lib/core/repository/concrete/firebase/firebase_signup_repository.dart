@@ -59,7 +59,6 @@ class FirebaseSignupRepository extends SignupRepository {
             authProvider: AuthProvider.emailAndPassword,
           ),
         );
-        await authResult.user.sendEmailVerification();
         return;
       }
     } on Exception catch (e) {
