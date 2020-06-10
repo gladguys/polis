@@ -49,7 +49,7 @@ class ResultadosRanking extends StatelessWidget {
               estado: resultadosRanking.estadoPoliticoUltimo,
               partido: resultadosRanking.partidoPoliticoUltimo,
               totalDespesas: resultadosRanking.despesaPoliticoUltimo,
-              posicao: 1,
+              posicao: 513,
             ),
           ),
           _buildSeparator(),
@@ -78,7 +78,7 @@ class ResultadosRanking extends StatelessWidget {
                     totalDespesas:
                         resultadosRanking.despesasPoliticoPrimeiro[i],
                     exibePosicao: i == 1 ? false : true,
-                    posicao: 513,
+                    posicao: 1,
                   ),
                   const SizedBox(height: 8),
                 ],
