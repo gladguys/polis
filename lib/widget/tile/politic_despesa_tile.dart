@@ -10,6 +10,7 @@ import '../../core/i18n/i18n.dart';
 import '../../core/routing/route_names.dart';
 import '../../page/pages.dart';
 import '../card_base.dart';
+import '../image/photo_image.dart';
 import '../photo.dart';
 import '../tag/tag_despesa.dart';
 import '../text_rich.dart';
@@ -57,15 +58,28 @@ class PoliticDespesaTile extends StatelessWidget {
   Widget _buildLeftContent() {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(24),
-        child: Photo(url: despesa.fotoPolitico),
-        onTap: () => clickableImage
-            ? SimpleRouter.forward(
-                PoliticProfilePageConnected(despesa.idPolitico),
-                name: POLITIC_PROFILE_PAGE,
-              )
-            : null,
+      child: Stack(
+        overflow: Overflow.visible,
+        children: <Widget>[
+          InkWell(
+            borderRadius: BorderRadius.circular(24),
+            child: Photo(url: despesa.fotoPolitico),
+            onTap: () => clickableImage
+                ? SimpleRouter.forward(
+                    PoliticProfilePageConnected(despesa.idPolitico),
+                    name: POLITIC_PROFILE_PAGE,
+                  )
+                : null,
+          ),
+          Positioned(
+            right: 0,
+            bottom: -10,
+            child: PhotoImage(
+              url: despesa.urlPartidoLogo,
+              size: 22,
+            ),
+          ),
+        ],
       ),
     );
   }
