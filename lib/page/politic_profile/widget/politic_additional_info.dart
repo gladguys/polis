@@ -89,28 +89,35 @@ class PoliticAdditionalInfo extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              Column(
-                children: <Widget>[
-                  Text(
-                    '$position',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                  Container(
-                    width: 70,
-                    child: Text(
-                      WITH_LESS_EXPENSES,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 12,
-                        height: 1,
+              InkWell(
+                borderRadius: BorderRadius.circular(5),
+                onTap: () => SimpleRouter.forward(
+                  ComparativoRankingDespesasPageConnected(politic),
+                  name: RESULTADOS_RANKING_PAGE,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      '$position',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
                       ),
                     ),
-                  ),
-                ],
+                    Container(
+                      width: 70,
+                      child: Text(
+                        WITH_LESS_EXPENSES,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 12,
+                          height: 1,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -122,7 +129,7 @@ class PoliticAdditionalInfo extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
             onTap: () => SimpleRouter.forward(
               PoliticExpensesPageConnected(politic),
-              name: POLITIC_EXPENSES_PAGE,
+              name: RANKING_EXPENSES_COMPARE_PAGE,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -87,9 +87,9 @@ class _SigninPageState extends State<SigninPage> {
             return _form();
           }
           if (state is SigninLoading) {
-            return Center(
+            return const Center(
               child: Padding(
-                padding: const EdgeInsets.only(top: 72),
+                padding: EdgeInsets.only(top: 72),
                 child: Loading(),
               ),
             );

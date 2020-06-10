@@ -1,4 +1,5 @@
 export 'change_password/change_password_bloc.dart';
+export 'comparativo_ranking_despesas/comparativo_ranking_despesas_bloc.dart';
 export 'document/document_bloc.dart';
 export 'edit_profile/edit_profile_bloc.dart';
 export 'favorite_posts/favorite_posts_bloc.dart';

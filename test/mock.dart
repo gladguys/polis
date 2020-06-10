@@ -31,6 +31,10 @@ class MockSigninBloc extends MockBloc<SigninEvent, SigninState>
 class MockEditProfileBloc extends MockBloc<EditProfileEvent, EditProfileState>
     implements EditProfileBloc {}
 
+class MockComparativoRankingDespesasBloc extends MockBloc<
+        ComparativoRankingDespesasEvent, ComparativoRankingDespesasState>
+    implements ComparativoRankingDespesasBloc {}
+
 class MockChangePasswordBloc
     extends MockBloc<ChangePasswordEvent, ChangePasswordState>
     implements ChangePasswordBloc {}
@@ -100,6 +104,9 @@ class MockChangePasswordRepository extends Mock
 
 class MockPoliticSugestionRepository extends Mock
     implements PoliticSuggestionRepository {}
+
+class MockComparativoRankingDespesasRepository extends Mock
+    implements ComparativoRankingDespesasRepository {}
 
 class MockPoliticProfileRepository extends Mock
     implements PoliticProfileRepository {}

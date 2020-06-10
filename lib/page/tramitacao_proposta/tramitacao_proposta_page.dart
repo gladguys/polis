@@ -25,7 +25,7 @@ class TramitacaoPropostaPage extends StatelessWidget {
             if (state is GetTramitacaoPropostaSuccess) {
               return _buildList(state.tramitacoes, context);
             }
-            return Loading();
+            return const Loading();
           },
         ),
       ),
