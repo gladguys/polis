@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import '../../../core/constants.dart';
+import '../../theme/main_theme.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../core/domain/model/despesa_model.dart';
@@ -25,20 +28,48 @@ class _PoliticActivitiesState extends State<PoliticActivities> {
   double get currentPosition => scrollController.offset;
   double get maxScrollPosition => scrollController.position.maxScrollExtent;
   bool get isPositionInRange => !scrollController.position.outOfRange;
+  bool get scrollPositionPassedLimit =>
+      currentPosition >= maxScrollPosition - kBottomOffsetToLoadMore;
   PoliticProfileBloc get politicProfileBloc =>
       context.bloc<PoliticProfileBloc>();
+  
+  bool hasLoadedAlready;
+  int currentActivitiesLength;
+  int oldActivitiesLength;
+
+  void _onScrollListener() {
+    if (scrollPositionPassedLimit && isPositionInRange && !hasLoadedAlready) {
+      politicProfileBloc.add(GetMoreActivities(politicProfileBloc.politico.id));
+      hasLoadedAlready = true;
+    }
+  }
 
   @override
   void initState() {
+    hasLoadedAlready = false;
+    currentActivitiesLength = widget.lastActivities.length;
+    oldActivitiesLength = widget.lastActivities.length;
+
     scrollController = ScrollController();
     scrollController.addListener(_onScrollListener);
     super.initState();
   }
 
-  void _onScrollListener() {
-    if (currentPosition >= maxScrollPosition && isPositionInRange) {
-      politicProfileBloc.add(GetMoreActivities(politicProfileBloc.politico.id));
+  @override
+  void didUpdateWidget(PoliticActivities oldWidget) {
+    currentActivitiesLength = widget.lastActivities.length;
+
+    if (oldActivitiesLength != currentActivitiesLength) {
+      hasLoadedAlready = false;
+      oldActivitiesLength = widget.lastActivities.length;
     }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -52,6 +83,16 @@ class _PoliticActivitiesState extends State<PoliticActivities> {
           padding: const EdgeInsets.only(bottom: 24),
           itemBuilder: (_, i) {
             final activity = widget.lastActivities[i];
+            if (i == widget.lastActivities.length - 1) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: SpinKitThreeBounce(
+                  color: theme.primaryColor,
+                  size: 32,
+                ),
+              );
+            }
+
             if (activity is DespesaModel) {
               return PoliticDespesaTileConnected(
                 activity,
