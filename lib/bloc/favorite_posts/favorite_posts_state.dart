@@ -1,4 +1,7 @@
-part of 'favorite_posts_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:sealed_class/sealed_class.dart';
+
+part 'favorite_posts_state.g.dart';
 
 @Sealed([
   InitialFavoritePostsState,

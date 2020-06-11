@@ -8,6 +8,7 @@ import '../../widget/error_container.dart';
 import 'widgets/search_politic_skeleton.dart';
 import 'widgets/search_politics.dart';
 
+//TODO refactor bloc builder
 class SearchPoliticPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

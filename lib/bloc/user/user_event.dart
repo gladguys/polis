@@ -1,5 +1,15 @@
-part of 'user_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:sealed_class/sealed_class.dart';
 
+import '../../core/domain/model/models.dart';
+
+part 'user_event.g.dart';
+
+@Sealed([
+  StoreUser,
+  Logout,
+  UpdateCurrentUser,
+])
 abstract class UserEvent extends Equatable {
   const UserEvent();
 }

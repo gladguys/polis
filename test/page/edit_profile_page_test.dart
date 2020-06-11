@@ -100,6 +100,7 @@ void main() {
     testWidgets('should show photo from user model', (tester) async {
       provideMockedNetworkImages(() async {
         final mockUserBloc = MockUserBloc();
+        when(mockUserBloc.state).thenReturn(InitialUser());
         when(mockUserBloc.user).thenReturn(
           UserModel(
             photoUrl: 'photo',
@@ -211,6 +212,7 @@ void main() {
         '''should go to ChangePasswordPage when user is not from google and click btn''',
         (tester) async {
       final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.state).thenReturn(InitialUser());
       when(mockUserBloc.user).thenReturn(
         UserModel(
           userId: '1',
@@ -247,6 +249,7 @@ void main() {
         '''ChangePassword button should not appear when user from google''',
         (tester) async {
       final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.state).thenReturn(InitialUser());
       when(mockUserBloc.user).thenReturn(
         UserModel(
           userId: '1',

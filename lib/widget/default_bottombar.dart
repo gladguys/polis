@@ -108,8 +108,6 @@ class DefaultBottombar extends StatelessWidget {
   }
 
   Widget _buildUserButton(BuildContext context, String routeName) {
-    final user = context.bloc<UserBloc>().user;
-
     return Padding(
       padding: const EdgeInsets.only(right: 4),
       child: InkWell(
@@ -122,14 +120,12 @@ class DefaultBottombar extends StatelessWidget {
             alignment: Alignment.center,
             padding: const EdgeInsets.all(2),
             child: BlocBuilder<UserBloc, UserState>(
-              builder: (_, state) => Photo(
-                url: state is CurrentUserUpdated
-                    ? state.user.photoUrl
-                    : user.photoUrl,
-                size: 32,
-                boxFit: BoxFit.cover,
-                iconColor: theme.accentColor,
-                iconKey: userPhotolessIconKey,
+              builder: (_, state) => state.join(
+                (state) => _mapUserToWidget(state, context),
+                (state) => _mapUserToWidget(state, context),
+                (state) => _mapUserToWidget(state, context),
+                (state) => _mapUserToWidget(state, context),
+                _mapCurrentUserUpdatedToWidget,
               ),
             ),
           ),
@@ -141,6 +137,27 @@ class DefaultBottombar extends StatelessWidget {
               )
             : VoidCallback,
       ),
+    );
+  }
+
+  Widget _mapUserToWidget(state, BuildContext context) {
+    final user = context.bloc<UserBloc>().user;
+    return Photo(
+      url: user.photoUrl,
+      size: 32,
+      boxFit: BoxFit.cover,
+      iconColor: theme.accentColor,
+      iconKey: userPhotolessIconKey,
+    );
+  }
+
+  Widget _mapCurrentUserUpdatedToWidget(CurrentUserUpdated state) {
+    return Photo(
+      url: state.user.photoUrl,
+      size: 32,
+      boxFit: BoxFit.cover,
+      iconColor: theme.accentColor,
+      iconKey: userPhotolessIconKey,
     );
   }
 

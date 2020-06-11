@@ -79,6 +79,7 @@ void main() {
     testWidgets('shoud go to PoliticProfilePage when click on a politic',
         (tester) async {
       final mockPoliticProfileBloc = MockPoliticProfileBloc();
+      when(mockPoliticProfileBloc.state).thenReturn(LoadingPoliticInfo());
       final mockSearchPoliticBloc = MockSearchPoliticBloc();
       when(mockSearchPoliticBloc.politicProfileBloc)
           .thenAnswer((_) => mockPoliticProfileBloc);
@@ -120,11 +121,10 @@ void main() {
         FetchSearchPoliticsSuccess(
           [
             PoliticoModel(
-              id: '1',
-              nomeEleitoral: 'nome',
-              urlPartidoLogo: 'url',
-              urlFoto: 'url'
-            ),
+                id: '1',
+                nomeEleitoral: 'nome',
+                urlPartidoLogo: 'url',
+                urlFoto: 'url'),
           ],
         ),
       );
@@ -230,8 +230,9 @@ void main() {
         '''shoud add FollowUnfollowSearchPolitic event to bloc when click button''',
         (tester) async {
       final mockUserBloc = MockUserBloc();
-      final mockSearchPoliticBloc = MockSearchPoliticBloc();
+      when(mockUserBloc.state).thenReturn(InitialUser());
       when(mockUserBloc.user).thenReturn(UserModel(userId: '1'));
+      final mockSearchPoliticBloc = MockSearchPoliticBloc();
       when(mockSearchPoliticBloc.isPoliticBeingFollowed(any)).thenReturn(true);
       when(mockSearchPoliticBloc.allPartidos).thenReturn([]);
       when(mockSearchPoliticBloc.state).thenReturn(

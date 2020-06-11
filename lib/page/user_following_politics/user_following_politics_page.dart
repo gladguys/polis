@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
+import '../../bloc/utils.dart';
 import '../../core/routing/route_names.dart';
 import '../../widget/default_bottombar.dart';
-import '../../widget/error_container.dart';
 import '../pages.dart';
 import 'widget/following_politics_search.dart';
 import 'widget/following_politics_skeleton.dart';
@@ -22,23 +22,34 @@ class UserFollowingPoliticsPage extends StatelessWidget {
       ),
       body: SafeArea(
         child:
-            BlocConsumer<UserFollowingPoliticsBloc, UserFollowingPoliticsState>(
-          listener: (_, state) {},
-          builder: (_, state) {
-            if (state is FetchPoliticsSuccess) {
-              return FollowingPoliticsSearch(state.politics);
-            } else if (state is PoliticsFilteredByTerm) {
-              return FollowingPoliticsSearch(state.filteredPolitics);
-            } else if (state is FollowedPoliticsUpdated) {
-              return FollowingPoliticsSearch(state.followedPolitics);
-            } else if (state is FetchPoliticsFailed) {
-              return const ErrorContainer();
-            } else {
-              return const FollowingPoliticsSkeleton();
-            }
-          },
+            BlocBuilder<UserFollowingPoliticsBloc, UserFollowingPoliticsState>(
+          builder: (_, state) => state.join(
+            _mapLoadingPoliticsToWidget,
+            _mapFetchPoliticsSuccessToWidget,
+            _mapLoadingPoliticsToWidget,
+            mapErrorStateToWidget,
+            mapErrorStateToWidget,
+            _mapFollowedPoliticsUpdatedToWidget,
+            _mapPoliticsFilteredByTermToWidget,
+          ),
         ),
       ),
     );
+  }
+
+  Widget _mapFetchPoliticsSuccessToWidget(FetchPoliticsSuccess state) {
+    return FollowingPoliticsSearch(state.politics);
+  }
+
+  Widget _mapFollowedPoliticsUpdatedToWidget(FollowedPoliticsUpdated state) {
+    return FollowingPoliticsSearch(state.followedPolitics);
+  }
+
+  Widget _mapPoliticsFilteredByTermToWidget(PoliticsFilteredByTerm state) {
+    return FollowingPoliticsSearch(state.filteredPolitics);
+  }
+
+  Widget _mapLoadingPoliticsToWidget(state) {
+    return const FollowingPoliticsSkeleton();
   }
 }

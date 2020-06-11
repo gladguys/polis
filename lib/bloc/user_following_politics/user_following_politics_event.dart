@@ -1,5 +1,16 @@
-part of 'user_following_politics_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:sealed_class/sealed_class.dart';
 
+import '../../core/domain/model/models.dart';
+
+part 'user_following_politics_event.g.dart';
+
+@Sealed([
+  FetchFollowingPolitics,
+  SearchPoliticsByTerm,
+  FollowUnfollowPolitic,
+])
 abstract class UserFollowingPoliticsEvent extends Equatable {
   const UserFollowingPoliticsEvent();
 }

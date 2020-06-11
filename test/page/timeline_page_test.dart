@@ -371,6 +371,7 @@ void main() {
         '''shoud build Timeline with update button when there are new updates''',
         (tester) async {
       final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.state).thenReturn(InitialUser());
       when(mockUserBloc.user).thenReturn(UserModel(userId: '1'));
       final mockTimelineBloc = MockTimelineBloc();
       when(mockTimelineBloc.state).thenReturn(
@@ -439,6 +440,7 @@ void main() {
         '''shoud build Timeline with string activity when only one update is pending''',
         (tester) async {
       final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.state).thenReturn(InitialUser());
       when(mockUserBloc.user).thenReturn(UserModel(userId: '1'));
       final mockTimelineBloc = MockTimelineBloc();
       when(mockTimelineBloc.state).thenReturn(
@@ -495,6 +497,7 @@ void main() {
 
     testWidgets('should bring more posts on swipe down', (tester) async {
       final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.state).thenReturn(InitialUser());
       when(mockUserBloc.user).thenReturn(UserModel(userId: '1'));
       final mockTimelineBloc = MockTimelineBloc();
       when(mockTimelineBloc.state).thenReturn(

@@ -20,6 +20,8 @@ void main() {
     });
 
     testWidgets('should build without exploding', (tester) async {
+      when(mockPoliticFollowersBloc.state)
+          .thenReturn(InitialPoliticFollowersState());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<PoliticFollowersBloc>(

@@ -40,6 +40,7 @@ void main() {
     testWidgets('''shuld call SigninBloc event when signin with google''',
         (tester) async {
       final mockSigninBloc = MockSigninBloc();
+      when(mockSigninBloc.state).thenReturn(InitialSignin());
       when(mockSigninBloc.add(SigninWithGoogle()))
           .thenAnswer((_) => Future.value());
       await tester.pumpWidget(
@@ -59,6 +60,7 @@ void main() {
         '''should navigate to PoliticSugestionPage when user auths and has not yet done signin''',
         (tester) async {
       final mockSigninBloc = MockSigninBloc();
+      when(mockSigninBloc.state).thenReturn(InitialSignin());
       whenListen(
         mockSigninBloc,
         Stream<SigninState>.fromIterable([
@@ -84,6 +86,7 @@ void main() {
         'should navigate to Timeline when user auths and has yet done signin',
         (tester) async {
       final mockSigninBloc = MockSigninBloc();
+      when(mockSigninBloc.state).thenReturn(InitialSignin());
       whenListen(
         mockSigninBloc,
         Stream<SigninState>.fromIterable([
@@ -111,6 +114,7 @@ void main() {
     testWidgets('should show error message when google signin failed',
         (tester) async {
       final mockSigninBloc = MockSigninBloc();
+      when(mockSigninBloc.state).thenReturn(InitialSignin());
       whenListen(
         mockSigninBloc,
         Stream<SigninState>.fromIterable(
@@ -133,6 +137,7 @@ void main() {
     testWidgets('should show error message when google user auth fails failed',
         (tester) async {
       final mockSigninBloc = MockSigninBloc();
+      when(mockSigninBloc.state).thenReturn(InitialSignin());
       whenListen(
         mockSigninBloc,
         Stream<SigninState>.fromIterable([
@@ -156,9 +161,13 @@ void main() {
 
     testWidgets('should show loading', (tester) async {
       final mockSigninBloc = MockSigninBloc();
+      when(mockSigninBloc.state).thenReturn(InitialSignin());
       whenListen(
         mockSigninBloc,
-        Stream<SigninState>.fromIterable([InitialSignin(), SigninLoading()]),
+        Stream<SigninState>.fromIterable([
+          InitialSignin(),
+          SigninLoading(),
+        ]),
       );
       await tester.pumpWidget(
         connectedWidget(

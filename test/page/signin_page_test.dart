@@ -37,6 +37,11 @@ void main() {
         '''should navigate to PoliticSugestionPage when user auths and has not yet done signin''',
         (tester) async {
       final mockSigninBloc = MockSigninBloc();
+      when(mockSigninBloc.state).thenReturn(
+        UserAuthenticated(
+          UserModel(userId: '1', isFirstLoginDone: false),
+        ),
+      );
       whenListen(
         mockSigninBloc,
         Stream<SigninState>.fromIterable([

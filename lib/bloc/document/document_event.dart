@@ -1,4 +1,4 @@
-part of 'document_bloc.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class DocumentEvent extends Equatable {
   const DocumentEvent();

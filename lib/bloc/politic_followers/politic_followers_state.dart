@@ -1,4 +1,9 @@
-part of 'politic_followers_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:sealed_class/sealed_class.dart';
+
+import '../../core/domain/model/models.dart';
+
+part 'politic_followers_state.g.dart';
 
 @Sealed([
   InitialPoliticFollowersState,

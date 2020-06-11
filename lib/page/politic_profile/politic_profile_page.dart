@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
+import '../../bloc/utils.dart';
 import '../../core/routing/route_names.dart';
 import '../../widget/default_bottombar.dart';
-import '../../widget/error_container.dart';
 import 'widget/politic_profile.dart';
 import 'widget/politic_profile_skeleton.dart';
 
@@ -22,18 +22,17 @@ class PoliticProfilePage extends StatelessWidget {
       ),
       body: SafeArea(
         child: BlocBuilder<PoliticProfileBloc, PoliticProfileState>(
-          builder: (_, state) {
-            return state.join(
-              _mapGetPoliticInfoSuccessToWidget,
-              _mapGetPoliticInfoFailedToWidget,
-              _mapLoadingPoliticInfoToWidget,
-              _mapPoliticMoreActivitiesSuccessToWidget,
-              _mapUserFollowingPoliticChangedToWidget,
-              _mapFollowPoliticFailedToWidget,
-              _mapPoliticDontHaveValidEmailToState,
-              _mapOpenEmailIntentFailedToState,
-            );
-          },
+          builder: (_, state) => state.join(
+            _mapLoadingPoliticInfoToWidget,
+            _mapGetPoliticInfoSuccessToWidget,
+            mapErrorStateToWidget,
+            _mapLoadingPoliticInfoToWidget,
+            _mapPoliticMoreActivitiesSuccessToWidget,
+            _mapUserFollowingPoliticChangedToWidget,
+            mapErrorStateToWidget,
+            mapErrorStateToWidget,
+            mapErrorStateToWidget,
+          ),
         ),
       ),
     );
@@ -44,10 +43,6 @@ class PoliticProfilePage extends StatelessWidget {
       state,
       onUnfollowPolitic: onUnfollowPolitic,
     );
-  }
-
-  Widget _mapGetPoliticInfoFailedToWidget(state) {
-    return const ErrorContainer();
   }
 
   Widget _mapLoadingPoliticInfoToWidget(state) {
@@ -66,17 +61,5 @@ class PoliticProfilePage extends StatelessWidget {
       state,
       onUnfollowPolitic: onUnfollowPolitic,
     );
-  }
-
-  Widget _mapFollowPoliticFailedToWidget(state) {
-    return const ErrorContainer();
-  }
-
-  Widget _mapPoliticDontHaveValidEmailToState(state) {
-    return const ErrorContainer();
-  }
-
-  Widget _mapOpenEmailIntentFailedToState(state) {
-    return const ErrorContainer();
   }
 }

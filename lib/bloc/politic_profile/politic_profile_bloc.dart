@@ -3,19 +3,14 @@ import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:sealed_class/sealed_class.dart';
 
 import '../../core/constants.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/repository/abstract/repositories.dart';
 import '../../core/service/services.dart';
 import '../../core/validators.dart';
-
-part 'politic_profile_bloc.g.dart';
-part 'politic_profile_event.dart';
-part 'politic_profile_state.dart';
+import '../blocs.dart';
 
 class PoliticProfileBloc
     extends Bloc<PoliticProfileEvent, PoliticProfileState> {

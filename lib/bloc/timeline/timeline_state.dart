@@ -1,5 +1,18 @@
-part of 'timeline_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:sealed_class/sealed_class.dart';
 
+part 'timeline_state.g.dart';
+
+@Sealed([
+  InitialTimelineState,
+  NoPostsAvailable,
+  TimelineUpdated,
+  TimelineRefreshed,
+  FetchTimelineFailed,
+  ReachedEndFetchingMore,
+  LoadingTimeline
+])
 abstract class TimelineState extends Equatable {
   const TimelineState();
 }

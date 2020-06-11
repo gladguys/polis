@@ -1,5 +1,16 @@
-part of 'timeline_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:sealed_class/sealed_class.dart';
 
+part 'timeline_event.g.dart';
+
+@Sealed([
+  FetchUserTimeline,
+  FetchMorePosts,
+  NotifyTimelineFetchedOnce,
+  ReloadTimeline,
+  RefreshTimeline,
+  UpdateTimelineActivitiesCount,
+])
 abstract class TimelineEvent extends Equatable {
   const TimelineEvent();
 }

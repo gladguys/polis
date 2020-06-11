@@ -1,4 +1,8 @@
-part of 'politic_profile_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:sealed_class/sealed_class.dart';
+
+part 'politic_profile_event.g.dart';
 
 @Sealed([
   GetPoliticInfo,

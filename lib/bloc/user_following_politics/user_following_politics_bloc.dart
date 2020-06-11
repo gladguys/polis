@@ -1,14 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/domain/model/models.dart';
 import '../../core/repository/abstract/repositories.dart';
-
-part 'user_following_politics_event.dart';
-part 'user_following_politics_state.dart';
+import '../blocs.dart';
 
 class UserFollowingPoliticsBloc
     extends Bloc<UserFollowingPoliticsEvent, UserFollowingPoliticsState> {
@@ -32,15 +29,11 @@ class UserFollowingPoliticsBloc
   @override
   Stream<UserFollowingPoliticsState> mapEventToState(
       UserFollowingPoliticsEvent event) async* {
-    if (event is FetchFollowingPolitics) {
-      yield* _mapFetchFollowingPoliticsToState(event);
-    }
-    if (event is SearchPoliticsByTerm) {
-      yield* _mapSearchPoliticsByTermToState(event);
-    }
-    if (event is FollowUnfollowPolitic) {
-      yield* _mapFollowUnfollowPoliticToState(event);
-    }
+    yield* event.join(
+      _mapFetchFollowingPoliticsToState,
+      _mapSearchPoliticsByTermToState,
+      _mapFollowUnfollowPoliticToState,
+    );
   }
 
   bool isPoliticBeingFollowed(PoliticoModel politico) =>

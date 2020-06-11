@@ -1,13 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/service/services.dart';
-
-part 'document_event.dart';
-part 'document_state.dart';
+import '../blocs.dart';
 
 class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
   DocumentBloc({@required this.urlLaunchService})

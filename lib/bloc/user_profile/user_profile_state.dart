@@ -1,5 +1,17 @@
-part of 'user_profile_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:sealed_class/sealed_class.dart';
 
+import '../../core/domain/model/models.dart';
+
+part 'user_profile_state.g.dart';
+
+@Sealed([
+  InitialUserProfileState,
+  FetchUserRelatedInfoSuccess,
+  LoadingFetchUserInfo,
+  FetchUserRelatedInfoFailed,
+])
 abstract class UserProfileState extends Equatable {
   const UserProfileState();
 }
@@ -22,12 +34,12 @@ class FetchUserRelatedInfoSuccess extends UserProfileState {
   List<Object> get props => [politicsFollowing, userActions];
 }
 
-class FetchUserRelatedInfoFailed extends UserProfileState {
+class LoadingFetchUserInfo extends UserProfileState {
   @override
   List<Object> get props => [];
 }
 
-class LoadingFetchUserInfo extends UserProfileState {
+class FetchUserRelatedInfoFailed extends UserProfileState {
   @override
   List<Object> get props => [];
 }

@@ -1,4 +1,5 @@
-part of 'change_password_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 abstract class ChangePasswordEvent extends Equatable {
   const ChangePasswordEvent();

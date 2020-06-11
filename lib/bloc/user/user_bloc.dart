@@ -1,16 +1,13 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/domain/model/models.dart';
 import '../../core/exception/exceptions.dart';
 import '../../core/repository/abstract/repositories.dart';
 import '../../core/service/services.dart';
-
-part 'user_event.dart';
-part 'user_state.dart';
+import '../blocs.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc(
@@ -34,19 +31,16 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   @override
   Stream<UserState> mapEventToState(UserEvent event) async* {
-    if (event is StoreUser) {
-      _mapStoreUser(event);
-    }
-    if (event is Logout) {
-      yield* _mapLogoutToState(event);
-    }
-    if (event is UpdateCurrentUser) {
-      yield* _mapUpdateCurrentUserToState(event);
-    }
+    yield* event.join(
+      _mapStoreUser,
+      _mapLogoutToState,
+      _mapUpdateCurrentUserToState,
+    );
   }
 
-  void _mapStoreUser(StoreUser event) {
+  Stream<UserState> _mapStoreUser(StoreUser event) async* {
     user = event.user;
+    yield UserStoredSuccess();
   }
 
   Stream<UserState> _mapLogoutToState(Logout event) async* {

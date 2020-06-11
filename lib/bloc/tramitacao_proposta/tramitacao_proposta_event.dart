@@ -1,4 +1,6 @@
-part of 'tramitacao_proposta_bloc.dart';
+import 'package:equatable/equatable.dart';
+
+import '../../core/domain/model/models.dart';
 
 abstract class TramitacaoPropostaEvent extends Equatable {
   const TramitacaoPropostaEvent();

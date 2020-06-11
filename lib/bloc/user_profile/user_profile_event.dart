@@ -1,4 +1,4 @@
-part of 'user_profile_bloc.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class UserProfileEvent extends Equatable {
   const UserProfileEvent();

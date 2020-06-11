@@ -156,9 +156,13 @@ void main() {
 
     testWidgets('should go to InitialPage when user created', (tester) async {
       final mockSignupBloc = MockSignupBloc();
+      when(mockSignupBloc.state).thenReturn(InitialSignup());
       whenListen(
         mockSignupBloc,
-        Stream<SignupState>.fromIterable([InitialSignup(), UserCreated()]),
+        Stream<SignupState>.fromIterable([
+          InitialSignup(),
+          UserCreated(),
+        ]),
       );
       await tester.pumpWidget(
         connectedWidget(
@@ -200,10 +204,13 @@ void main() {
 
     testWidgets('should show error when signup failed', (tester) async {
       final mockSignupBloc = MockSignupBloc();
+      when(mockSignupBloc.state).thenReturn(InitialSignup());
       whenListen(
         mockSignupBloc,
-        Stream<SignupState>.fromIterable(
-            [InitialSignup(), SignupFailed('fail')]),
+        Stream<SignupState>.fromIterable([
+          InitialSignup(),
+          SignupFailed('fail'),
+        ]),
       );
       await tester.pumpWidget(
         connectedWidget(
@@ -224,10 +231,13 @@ void main() {
 
     testWidgets('should show error when user creation failed', (tester) async {
       final mockSignupBloc = MockSignupBloc();
+      when(mockSignupBloc.state).thenReturn(InitialSignup());
       whenListen(
         mockSignupBloc,
-        Stream<SignupState>.fromIterable(
-            [InitialSignup(), UserCreationFailed('fail create')]),
+        Stream<SignupState>.fromIterable([
+          InitialSignup(),
+          UserCreationFailed('fail create'),
+        ]),
       );
       await tester.pumpWidget(
         connectedWidget(

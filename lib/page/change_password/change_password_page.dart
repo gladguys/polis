@@ -35,13 +35,17 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       bottomNavigationBar: DefaultBottombar(USER_PROFILE_PAGE),
       body: SafeArea(
         child: BlocConsumer<ChangePasswordBloc, ChangePasswordState>(
-          listener: (_, state) => state.continued(
-            (__) => {},
-            (__) => Snackbar.success(_, USER_PASSWORD_UPDATED_WITH_SUCCESS),
-            (__) => {},
-            (__) => Snackbar.error(_, USER_UPDATE_PASSWORD_WRONG_PASSWORD),
-            (__) => Snackbar.error(_, USER_UPDATE_PASSWORD_FAILED),
-          ),
+          listener: (_, state) {
+            if (state is UserPasswordChangeSuccess) {
+              Snackbar.success(_, USER_PASSWORD_UPDATED_WITH_SUCCESS);
+            }
+            if (state is UserWrongPasswordInformed) {
+              Snackbar.error(_, USER_UPDATE_PASSWORD_WRONG_PASSWORD);
+            }
+            if (state is UserPasswordChangeFailed) {
+              Snackbar.error(_, USER_UPDATE_PASSWORD_FAILED);
+            }
+          },
           builder: (_, state) => state.join(
             _mapUserPasswordChangeToWidget,
             _mapUserPasswordChangeToWidget,

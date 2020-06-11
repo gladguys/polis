@@ -44,6 +44,8 @@ void main() {
 
     testWidgets('should show snackbar when success', (tester) async {
       final mockChangePasswordBloc = MockChangePasswordBloc();
+      when(mockChangePasswordBloc.state)
+          .thenReturn(InitialChangePasswordState());
       whenListen(
         mockChangePasswordBloc,
         Stream.fromIterable(
@@ -68,6 +70,8 @@ void main() {
 
     testWidgets('should show snackbar when fail', (tester) async {
       final mockChangePasswordBloc = MockChangePasswordBloc();
+      when(mockChangePasswordBloc.state)
+          .thenReturn(InitialChangePasswordState());
       whenListen(
         mockChangePasswordBloc,
         Stream.fromIterable(
@@ -93,6 +97,8 @@ void main() {
     testWidgets('should show snackbar when wrong password is given',
         (tester) async {
       final mockChangePasswordBloc = MockChangePasswordBloc();
+      when(mockChangePasswordBloc.state)
+          .thenReturn(InitialChangePasswordState());
       whenListen(
         mockChangePasswordBloc,
         Stream.fromIterable(
@@ -117,6 +123,8 @@ void main() {
 
     testWidgets('should validate and save the form', (tester) async {
       final mockChangePasswordBloc = MockChangePasswordBloc();
+      when(mockChangePasswordBloc.state)
+          .thenReturn(InitialChangePasswordState());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<ChangePasswordBloc>(
@@ -158,6 +166,8 @@ void main() {
         'should validate form when passwords confirmations are not equal',
         (tester) async {
       final mockChangePasswordBloc = MockChangePasswordBloc();
+      when(mockChangePasswordBloc.state)
+          .thenReturn(InitialChangePasswordState());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<ChangePasswordBloc>(
@@ -198,6 +208,8 @@ void main() {
     testWidgets('should validate form when passwords is not 6 caracters long',
         (tester) async {
       final mockChangePasswordBloc = MockChangePasswordBloc();
+      when(mockChangePasswordBloc.state)
+          .thenReturn(InitialChangePasswordState());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<ChangePasswordBloc>(

@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import '../../../widget/skeleton.dart';
 
 class TimelineSkeleton extends StatelessWidget {
+  const TimelineSkeleton();
+
   @override
   Widget build(BuildContext context) {
     return ListView.separated(

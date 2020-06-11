@@ -3,14 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 import '../../bloc/blocs.dart';
+import '../../bloc/utils.dart';
 import '../../core/domain/model/usuario_seguindo_politico_model.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/routing/route_names.dart';
 import '../../widget/card_base.dart';
 import '../../widget/default_bottombar.dart';
 import '../../widget/empty_info.dart';
-import '../../widget/error_container.dart';
-import '../../widget/loading.dart';
 import '../../widget/photo.dart';
 import '../../widget/text_title.dart';
 
@@ -22,29 +21,19 @@ class PoliticFollowersPage extends StatelessWidget {
       body: SafeArea(
         child: BlocBuilder<PoliticFollowersBloc, PoliticFollowersState>(
           builder: (_, state) => state.join(
-            _mapLoadingPoliticFollowersToState,
+            mapLoadingStateToWidget,
             _mapGetPoliticFollowersSuccessToState,
-            _mapLoadingPoliticFollowersToState,
-            _mapGetPoliticFollowersFailedToState,
+            mapLoadingStateToWidget,
+            mapErrorStateToWidget,
           ),
         ),
       ),
     );
   }
 
-  Widget _mapGetPoliticFollowersSuccessToState(state) {
-    return _buildList(state.followers);
-  }
-
-  Widget _mapLoadingPoliticFollowersToState(state) {
-    return const Loading();
-  }
-
-  Widget _mapGetPoliticFollowersFailedToState(state) {
-    return const ErrorContainer();
-  }
-
-  Widget _buildList(List<UsuarioSeguindoPolitico> followers) {
+  Widget _mapGetPoliticFollowersSuccessToState(
+      GetPoliticFollowersSuccess state) {
+    final followers = state.followers;
     return Column(
       children: <Widget>[
         const SizedBox(height: 8),

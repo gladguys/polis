@@ -38,6 +38,7 @@ void main() {
     });
 
     testWidgets('should build without exploding', (tester) async {
+      when(mockUserProfileBloc.state).thenReturn(InitialUserProfileState());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<UserBloc>(
@@ -228,6 +229,7 @@ void main() {
 
     testWidgets('should build with logout button', (tester) async {
       final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.state).thenReturn(InitialUser());
       when(mockUserBloc.user).thenReturn(
         UserModel(
           name: 'name',

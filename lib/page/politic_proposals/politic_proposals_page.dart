@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../bloc/blocs.dart';
+import '../../bloc/utils.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/routing/route_names.dart';
 import '../../widget/default_bottombar.dart';
 import '../../widget/empty_info.dart';
-import '../../widget/error_container.dart';
 import '../../widget/text_title.dart';
 import 'widget/politic_proposals_list.dart';
 import 'widget/politic_proposals_skeleton.dart';
@@ -31,7 +31,7 @@ class PoliticProposalsPage extends StatelessWidget {
             _mapLoadingPoliticProposalsToState,
             _mapGetPoliticProposalsSuccessToState,
             _mapLoadingPoliticProposalsToState,
-            _mapGetPoliticProposalsFailedToState,
+            mapErrorStateToWidget,
           ),
         ),
       ),
@@ -62,9 +62,5 @@ class PoliticProposalsPage extends StatelessWidget {
 
   Widget _mapLoadingPoliticProposalsToState(state) {
     return const PoliticProposalsSkeleton();
-  }
-
-  Widget _mapGetPoliticProposalsFailedToState(state) {
-    return const ErrorContainer();
   }
 }

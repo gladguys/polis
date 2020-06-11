@@ -1,4 +1,7 @@
-part of 'edit_profile_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:sealed_class/sealed_class.dart';
+
+part 'edit_profile_state.g.dart';
 
 @Sealed([
   InitialEditProfileState,

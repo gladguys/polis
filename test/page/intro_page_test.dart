@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/core/keys.dart';
+import 'package:polis/page/intro/intro_base.dart';
 import 'package:polis/page/pages.dart';
 import 'package:polis/widget/select/selects.dart';
 
@@ -32,6 +34,25 @@ void main() {
       await tester.tap(doneButton);
       await tester.pump();
       verify(mockObserver.didPush(any, any));
+    });
+
+    test('assert', () {
+      expect(
+        () => IntroBase(
+          onPressed: null,
+          centerWidget: Container(),
+          msg: 'a',
+        ),
+        throwsAssertionError,
+      );
+      expect(
+        () => IntroBase(
+          onPressed: () {},
+          centerWidget: null,
+          msg: null,
+        ),
+        throwsAssertionError,
+      );
     });
   });
 }

@@ -1,4 +1,7 @@
-part of 'change_password_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:sealed_class/sealed_class.dart';
+
+part 'change_password_state.g.dart';
 
 @Sealed([
   InitialChangePasswordState,

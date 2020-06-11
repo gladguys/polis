@@ -1,4 +1,10 @@
-part of 'politic_suggestion_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:sealed_class/sealed_class.dart';
+
+import '../../core/domain/model/models.dart';
+
+part 'politic_suggestion_event.g.dart';
 
 @Sealed([
   FetchSuggestedPolitics,

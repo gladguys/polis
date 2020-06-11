@@ -15,16 +15,9 @@ class PoliticSuggestionPage extends StatelessWidget {
         child: BlocConsumer<PoliticSuggestionBloc, PoliticSuggestionState>(
           bloc: context.bloc<PoliticSuggestionBloc>(),
           listener: (_, state) {
-            state.continued(
-              (__) => {},
-              (__) => {},
-              (__) => {},
-              (__) => SimpleRouter.forwardAndReplace(CrunchingDataPage()),
-              (__) => {},
-              (__) => {},
-              (__) => {},
-              (__) => {},
-            );
+            if (state is SavedSuggestedPolitics) {
+              SimpleRouter.forwardAndReplace(CrunchingDataPage());
+            }
           },
           builder: (_, state) {
             return state.join(

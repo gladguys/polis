@@ -1,15 +1,21 @@
-part of 'tramitacao_proposta_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:sealed_class/sealed_class.dart';
 
+import '../../core/domain/model/models.dart';
+
+part 'tramitacao_proposta_state.g.dart';
+
+@Sealed([
+  InitialTramitacaoPropostaState,
+  GetTramitacaoPropostaSuccess,
+  LoadingTramitacaoProposta,
+  GetTramitacaoPropostaFailed,
+])
 abstract class TramitacaoPropostaState extends Equatable {
   const TramitacaoPropostaState();
 }
 
 class InitialTramitacaoPropostaState extends TramitacaoPropostaState {
-  @override
-  List<Object> get props => [];
-}
-
-class LoadingTramitacaoProposta extends TramitacaoPropostaState {
   @override
   List<Object> get props => [];
 }
@@ -21,6 +27,11 @@ class GetTramitacaoPropostaSuccess extends TramitacaoPropostaState {
 
   @override
   List<Object> get props => [tramitacoes];
+}
+
+class LoadingTramitacaoProposta extends TramitacaoPropostaState {
+  @override
+  List<Object> get props => [];
 }
 
 class GetTramitacaoPropostaFailed extends TramitacaoPropostaState {

@@ -50,12 +50,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
       bottomNavigationBar: DefaultBottombar(USER_PROFILE_PAGE),
       body: SafeArea(
         child: BlocConsumer<EditProfileBloc, EditProfileState>(
-          listener: (consumerContext, state) => state.continued(
-            (_) => {},
-            (_) => Snackbar.success(consumerContext, USER_UPDATED_WITH_SUCCESS),
-            (_) => {},
-            (_) => Snackbar.error(consumerContext, USER_UPDATE_FAILED),
-          ),
+          listener: (_, state) {
+            if (state is UserUpdateSuccess) {
+              Snackbar.success(_, USER_UPDATED_WITH_SUCCESS);
+            }
+            if (state is UserUpdateFailed) {
+              Snackbar.error(_, USER_UPDATE_FAILED);
+            }
+          },
           builder: (_, state) => state.join(
             _mapStateToWidget,
             _mapStateToWidget,

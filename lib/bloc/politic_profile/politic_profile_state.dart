@@ -1,6 +1,13 @@
-part of 'politic_profile_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:sealed_class/sealed_class.dart';
+
+import '../../core/domain/model/models.dart';
+
+part 'politic_profile_state.g.dart';
 
 @Sealed([
+  InitialPoliticProfileState,
   GetPoliticInfoSuccess,
   GetPoliticInfoFailed,
   LoadingPoliticInfo,

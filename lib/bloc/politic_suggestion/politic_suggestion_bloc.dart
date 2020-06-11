@@ -1,16 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:sealed_class/sealed_class.dart';
 
 import '../../core/domain/model/models.dart';
 import '../../core/repository/abstract/repositories.dart';
-
-part 'politic_suggestion_bloc.g.dart';
-part 'politic_suggestion_event.dart';
-part 'politic_suggestion_state.dart';
+import '../blocs.dart';
 
 class PoliticSuggestionBloc
     extends Bloc<PoliticSuggestionEvent, PoliticSuggestionState> {

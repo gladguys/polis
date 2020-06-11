@@ -2,14 +2,11 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/constants.dart';
 import '../../core/repository/abstract/repositories.dart';
-
-part 'timeline_event.dart';
-part 'timeline_state.dart';
+import '../blocs.dart';
 
 class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
   TimelineBloc({@required this.repository}) : assert(repository != null);
@@ -31,24 +28,17 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
 
   @override
   Stream<TimelineState> mapEventToState(TimelineEvent event) async* {
-    if (event is FetchUserTimeline) {
-      yield* _mapFetchUserTimelineToState(event);
-    }
-    if (event is FetchMorePosts) {
-      yield* _mapFetchMorePostsToState(event);
-    }
-    if (event is ReloadTimeline) {
-      yield* _mapReloadTimelineToState(event);
-    }
-    if (event is UpdateTimelineActivitiesCount) {
-      yield* _mapUpdateTimelineActivitiesCountToState(event);
-    }
-    if (event is NotifyTimelineFetchedOnce) {
-      _notifyTimelineFetchedOnce();
-    }
-    if (event is RefreshTimeline) {
-      yield* _mapRefreshTimelineToState(event);
-    }
+    yield* event.join(
+      _mapFetchUserTimelineToState,
+      _mapFetchMorePostsToState,
+      (notifyTimelineFetchedOnce) {
+        _notifyTimelineFetchedOnce();
+        return;
+      },
+      _mapReloadTimelineToState,
+      _mapRefreshTimelineToState,
+      _mapUpdateTimelineActivitiesCountToState,
+    );
   }
 
   Stream<TimelineState> _mapFetchUserTimelineToState(

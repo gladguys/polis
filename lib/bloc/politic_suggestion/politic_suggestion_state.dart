@@ -1,4 +1,9 @@
-part of 'politic_suggestion_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:sealed_class/sealed_class.dart';
+
+import '../../core/domain/model/models.dart';
+
+part 'politic_suggestion_state.g.dart';
 
 @Sealed([
   InitialPoliticSuggestionState,

@@ -1,5 +1,20 @@
-part of 'user_following_politics_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:sealed_class/sealed_class.dart';
 
+import '../../core/domain/model/models.dart';
+
+part 'user_following_politics_state.g.dart';
+
+@Sealed([
+  InitialUserFollowingPoliticsState,
+  FetchPoliticsSuccess,
+  LoadingPolitics,
+  FetchPoliticsFailed,
+  FollowUnfollowFailed,
+  FollowedPoliticsUpdated,
+  PoliticsFilteredByTerm,
+])
 abstract class UserFollowingPoliticsState extends Equatable {
   const UserFollowingPoliticsState();
 }
@@ -18,17 +33,17 @@ class FetchPoliticsSuccess extends UserFollowingPoliticsState {
   List<Object> get props => [politics];
 }
 
+class LoadingPolitics extends UserFollowingPoliticsState {
+  @override
+  List<Object> get props => [];
+}
+
 class FetchPoliticsFailed extends UserFollowingPoliticsState {
   @override
   List<Object> get props => [];
 }
 
 class FollowUnfollowFailed extends UserFollowingPoliticsState {
-  @override
-  List<Object> get props => [];
-}
-
-class LoadingPolitics extends UserFollowingPoliticsState {
   @override
   List<Object> get props => [];
 }

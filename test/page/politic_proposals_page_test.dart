@@ -52,6 +52,14 @@ void main() {
       );
     });
 
+    testWidgets('should build connected without exploding', (tester) async {
+      await tester.pumpWidget(
+        connectedWidget(
+          PoliticProposalsPageConnected(politico),
+        ),
+      );
+    });
+
     testWidgets('should show followers', (tester) async {
       when(mockPoliticProposalsBloc.state).thenReturn(
         GetPoliticProposalsSuccess(proposals: [

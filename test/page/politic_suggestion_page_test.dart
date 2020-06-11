@@ -196,6 +196,8 @@ void main() {
     testWidgets('should go to timeline when SavedSuggestedPolitics state',
         (tester) async {
       final mockPoliticSuggestionBloc = MockPoliticSuggestionBloc();
+      when(mockPoliticSuggestionBloc.state)
+          .thenReturn(InitialPoliticSuggestionState());
       whenListen(
         mockPoliticSuggestionBloc,
         Stream.fromIterable(
