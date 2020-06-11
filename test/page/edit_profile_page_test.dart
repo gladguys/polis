@@ -30,6 +30,7 @@ void main() {
 
     testWidgets('should build without exploding', (tester) async {
       final mockEditProfileBloc = MockEditProfileBloc();
+      when(mockEditProfileBloc.state).thenReturn(InitialEditProfileState());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<EditProfileBloc>(
@@ -44,6 +45,7 @@ void main() {
 
     testWidgets('should show snackbar when success', (tester) async {
       final mockEditProfileBloc = MockEditProfileBloc();
+      when(mockEditProfileBloc.state).thenReturn(UserUpdateSuccess());
       whenListen(
         mockEditProfileBloc,
         Stream.fromIterable(
@@ -70,6 +72,7 @@ void main() {
 
     testWidgets('should show snackbar when fails', (tester) async {
       final mockEditProfileBloc = MockEditProfileBloc();
+      when(mockEditProfileBloc.state).thenReturn(UserUpdateFailed());
       whenListen(
         mockEditProfileBloc,
         Stream.fromIterable(
@@ -103,6 +106,7 @@ void main() {
           ),
         );
         final mockEditProfileBloc = MockEditProfileBloc();
+        when(mockEditProfileBloc.state).thenReturn(InitialEditProfileState());
         await tester.pumpWidget(
           connectedWidget(
             PageConnected<UserBloc>(
@@ -140,6 +144,7 @@ void main() {
 
     testWidgets('should change image when camera called', (tester) async {
       final mockEditProfileBloc = MockEditProfileBloc();
+      when(mockEditProfileBloc.state).thenReturn(InitialEditProfileState());
       final mockPolisImagePicker = MockImagePicker();
       when(mockPolisImagePicker.getImage(source: ImageSource.camera))
           .thenAnswer(
@@ -163,6 +168,7 @@ void main() {
 
     testWidgets('should validate and save the form', (tester) async {
       final mockEditProfileBloc = MockEditProfileBloc();
+      when(mockEditProfileBloc.state).thenReturn(InitialEditProfileState());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<EditProfileBloc>(
@@ -212,6 +218,7 @@ void main() {
         ),
       );
       final mockEditProfileBloc = MockEditProfileBloc();
+      when(mockEditProfileBloc.state).thenReturn(InitialEditProfileState());
       final mockPolisImagePicker = MockImagePicker();
       when(mockPolisImagePicker.getImage(source: ImageSource.camera))
           .thenAnswer(
@@ -247,6 +254,7 @@ void main() {
         ),
       );
       final mockEditProfileBloc = MockEditProfileBloc();
+      when(mockEditProfileBloc.state).thenReturn(InitialEditProfileState());
       final mockPolisImagePicker = MockImagePicker();
       when(mockPolisImagePicker.getImage(source: ImageSource.camera))
           .thenAnswer(

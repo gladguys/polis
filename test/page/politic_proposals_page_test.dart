@@ -40,20 +40,14 @@ void main() {
     });
 
     testWidgets('should build without exploding', (tester) async {
+      when(mockPoliticProposalsBloc.state)
+          .thenReturn(InitialPoliticProposalsState());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<PoliticProposalsBloc>(
             bloc: mockPoliticProposalsBloc,
             page: PoliticProposalsPage(politico),
           ),
-        ),
-      );
-    });
-
-    testWidgets('should build connected without exploding', (tester) async {
-      await tester.pumpWidget(
-        connectedWidget(
-          PoliticProposalsPageConnected(politico),
         ),
       );
     });

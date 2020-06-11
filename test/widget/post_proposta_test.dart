@@ -53,6 +53,7 @@ void main() {
 
     testWidgets('should build without exploding', (tester) async {
       final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.state).thenReturn(InitialPostState());
       when(mockPostBloc.isPostFavorite).thenReturn(true);
       await tester.pumpWidget(
         connectedWidget(
@@ -84,6 +85,7 @@ void main() {
         urlPartidoLogo: 'logo',
       );
       final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.state).thenReturn(InitialPostState());
       when(mockPostBloc.isPostFavorite).thenReturn(true);
       await tester.pumpWidget(
         connectedWidget(
@@ -105,6 +107,7 @@ void main() {
       when(mockScreenshotController.capture())
           .thenAnswer((_) => Future.value(mockFile));
       final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.state).thenReturn(InitialPostState());
       when(mockPostBloc.isPostFavorite).thenReturn(true);
       await tester.pumpWidget(
         connectedWidget(
@@ -132,6 +135,7 @@ void main() {
     testWidgets('should do something when click on bookmark btn',
         (tester) async {
       final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.state).thenReturn(InitialPostState());
       when(mockPostBloc.isPostFavorite).thenReturn(false);
       await tester.pumpWidget(
         connectedWidget(
@@ -158,6 +162,7 @@ void main() {
     testWidgets('should go to profile page when click on politic photo',
         (tester) async {
       final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.state).thenReturn(InitialPostState());
       when(mockPostBloc.isPostFavorite).thenReturn(true);
       await tester.pumpWidget(
         connectedWidget(
@@ -182,6 +187,7 @@ void main() {
       );
       final mockDocumentBloc = MockDocumentBloc();
       final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.state).thenReturn(InitialPostState());
       when(mockPostBloc.isPostFavorite).thenReturn(true);
       await tester.pumpWidget(
         connectedWidget(
@@ -205,6 +211,7 @@ void main() {
     testWidgets('should go to tramitations page when click on icon',
         (tester) async {
       final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.state).thenReturn(InitialPostState());
       when(mockPostBloc.isPostFavorite).thenReturn(true);
       await tester.pumpWidget(
         connectedWidget(

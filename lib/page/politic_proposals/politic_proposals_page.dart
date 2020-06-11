@@ -38,8 +38,9 @@ class PoliticProposalsPage extends StatelessWidget {
     );
   }
 
-  Widget _mapGetPoliticProposalsSuccessToState(state) {
-    final propostas = state.propostas;
+  Widget _mapGetPoliticProposalsSuccessToState(
+      GetPoliticProposalsSuccess state) {
+    final propostas = state.proposals;
     return Column(
       children: <Widget>[
         const SizedBox(height: 8),
