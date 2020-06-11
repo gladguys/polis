@@ -57,7 +57,7 @@ dependencies:
   expandable_bottom_sheet: ^0.2.1+1
 
 dependency_overrides:
-  dartx: ^0.3.0
+  dartx: ^0.4.1
 
 dev_dependencies:
   flutter_test:
