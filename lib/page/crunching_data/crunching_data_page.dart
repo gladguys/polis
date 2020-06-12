@@ -81,7 +81,10 @@ class _CrunchingDataPageState extends State<CrunchingDataPage>
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const SizedBox(height: 1, width: double.maxFinite),
+            SizedBox(
+              height: 1,
+              width: context.screenWidth,
+            ),
             Stack(
               children: <Widget>[
                 Opacity(

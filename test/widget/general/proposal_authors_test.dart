@@ -23,7 +23,6 @@ void main() {
           Scaffold(
             body: ProposalAuthors(
               ['a', 'b'],
-              quantidadeAutores: 3,
             ),
           ),
         ),
@@ -37,7 +36,6 @@ void main() {
           Scaffold(
             body: ProposalAuthors(
               ['a', 'b', 'c', 'd', 'e', 'f'],
-              quantidadeAutores: 3,
             ),
           ),
         ),

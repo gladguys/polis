@@ -16,6 +16,7 @@ void main() {
   MockCollectionReference mockAtividadesTimelineSubcollectionReference;
   MockDocumentReference mockUserDocumentReference;
   MockDocumentReference mockPostDocumentReference;
+  MockDocumentSnapshot mockDocumentSnapshot;
 
   group('FirebasePostRepository tests', () {
     setUp(() {
@@ -30,6 +31,7 @@ void main() {
       mockAtividadesTimelineSubcollectionReference = MockCollectionReference();
       mockUserDocumentReference = MockDocumentReference();
       mockPostDocumentReference = MockDocumentReference();
+      mockDocumentSnapshot = MockDocumentSnapshot();
     });
 
     test('test asserts', () {
@@ -133,6 +135,40 @@ void main() {
             .thenThrow(Exception());
         firebasePostRepository
             .setPostVisible(
+              userId: '1',
+              postId: '1',
+            )
+            .catchError((e) => expect(e, isA<ComunicationException>()));
+      });
+    });
+
+    group('isPostFavorite', () {
+      test('should return bool indicating if post is already favorited',
+          () async {
+        when(mockFirestore.collection(POSTS_FAVORITOS_COLLECTION))
+            .thenReturn(mockPostsFavoritosCollectionReference);
+        when(mockPostsFavoritosCollectionReference.document('1'))
+            .thenReturn(mockUserDocumentReference);
+        when(mockUserDocumentReference
+                .collection(POSTS_FAVORITOS_USUARIO_SUBCOLLECTION))
+            .thenReturn(mockPostsFavoritosUsuarioSubcollectionReference);
+        when(mockPostsFavoritosUsuarioSubcollectionReference.document('1'))
+            .thenReturn(mockPostDocumentReference);
+        when(mockPostDocumentReference.get())
+            .thenAnswer((_) => Future.value(mockDocumentSnapshot));
+        when(mockDocumentSnapshot.exists).thenReturn(true);
+        final exists = await firebasePostRepository.isPostFavorited(
+          userId: '1',
+          postId: '1',
+        );
+        expect(exists, true);
+      });
+
+      test('should throw ComunicationException when fail', () async {
+        when(mockFirestore.collection(POSTS_FAVORITOS_COLLECTION))
+            .thenThrow(Exception());
+        firebasePostRepository
+            .isPostFavorited(
               userId: '1',
               postId: '1',
             )

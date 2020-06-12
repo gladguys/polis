@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -76,6 +77,52 @@ void main() {
         ),
       );
       expect(find.byType(TimelineTile), findsNWidgets(2));
+    });
+
+    testWidgets('shoud not show tooltip when orgao is not mapped',
+        (tester) async {
+      final mockTramitacaoPropostaBloc = MockTramitacaoPropostaBloc();
+      when(mockTramitacaoPropostaBloc.proposta).thenReturn(
+        PropostaModel(
+          sequencia: 1,
+          dataAtualizacao: '10-01-2020',
+        ),
+      );
+      when(mockTramitacaoPropostaBloc.orgaosMap).thenReturn({
+        'T': OrgaoModel(
+          id: '1',
+          sigla: 'T',
+          nome: 'Teste',
+          apelido: 'Teste',
+        )
+      });
+      when(mockTramitacaoPropostaBloc.state).thenReturn(
+        GetTramitacaoPropostaSuccess(
+          [
+            TramitacaoPropostaModel(
+              descricaoTramitacao: 'descricao1',
+              sequencia: 1,
+              dataHora: '10-01-2020',
+              siglaOrgao: 'A',
+            ),
+            TramitacaoPropostaModel(
+              descricaoTramitacao: 'descricao2',
+              sequencia: 2,
+              dataHora: '10-01-2020',
+              siglaOrgao: 'A',
+            ),
+          ],
+        ),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<TramitacaoPropostaBloc>(
+            bloc: mockTramitacaoPropostaBloc,
+            page: TramitacaoPropostaPage(),
+          ),
+        ),
+      );
+      expect(find.byType(Tooltip), findsNothing);
     });
   });
 }

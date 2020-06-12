@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/core/keys.dart';
+import 'package:polis/page/intro/intro_base.dart';
 import 'package:polis/page/pages.dart';
 import 'package:polis/widget/select/selects.dart';
 
@@ -8,6 +10,23 @@ import '../utils.dart';
 
 void main() {
   group('PickStatePage tests', () {
+    test('assert', () {
+      expect(
+          () => IntroBase(
+                onPressed: null,
+                msg: 'msg',
+                centerWidget: Container(),
+              ),
+          throwsAssertionError);
+      expect(
+          () => IntroBase(
+                onPressed: () {},
+                msg: null,
+                centerWidget: null,
+              ),
+          throwsAssertionError);
+    });
+
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(connectedWidget(PickStatePage()));
     });

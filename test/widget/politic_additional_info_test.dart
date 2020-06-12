@@ -109,5 +109,56 @@ void main() {
       await tester.tap(proposalsCountButton);
       verify(mockObserver.didPush(any, any));
     });
+
+    testWidgets(
+        'should go to politic comparativo ranking page when clicking position',
+        (tester) async {
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<PoliticProfileBloc>(
+            bloc: mockPoliticProfileBloc,
+            page: Scaffold(
+              body: PoliticAdditionalInfo(
+                PoliticoModel(
+                  id: '1',
+                  quantidadeSeguidores: 8.0,
+                  totalProposicoes: 30,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      final positionButton = find.text(WITH_LESS_EXPENSES);
+      expect(positionButton, findsOneWidget);
+      await tester.ensureVisible(positionButton);
+      await tester.tap(positionButton);
+      verify(mockObserver.didPush(any, any));
+    });
+
+    testWidgets('should go to politic expenses page when clicking position',
+        (tester) async {
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<PoliticProfileBloc>(
+            bloc: mockPoliticProfileBloc,
+            page: Scaffold(
+              body: PoliticAdditionalInfo(
+                PoliticoModel(
+                  id: '1',
+                  quantidadeSeguidores: 8.0,
+                  totalProposicoes: 30,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      final expensesButton = find.text(EXPENSES);
+      expect(expensesButton, findsOneWidget);
+      await tester.ensureVisible(expensesButton);
+      await tester.tap(expensesButton);
+      verify(mockObserver.didPush(any, any));
+    });
   });
 }

@@ -132,11 +132,46 @@ void main() {
     );
 
     blocTest(
-      'Expects to set post as viewed',
+      'Expects to set despesa post as viewed',
       build: () async {
         final mockTimelineBloc = MockTimelineBloc();
         when(mockTimelineBloc.timelinePosts).thenReturn([
           DespesaModel(id: '1'),
+        ]);
+        when(
+          mockPostRepository.setPostVisible(
+            userId: '1',
+            postId: '1',
+          ),
+        ).thenAnswer((_) => Future.value());
+
+        return PostBloc(
+          post: {
+            'favorito': true,
+          },
+          postRepository: mockPostRepository,
+          shareService: mockShareService,
+          timelineBloc: mockTimelineBloc,
+        );
+      },
+      act: (postBloc) async => postBloc.add(
+        SetPostViewed(
+          userId: '1',
+          postId: '1',
+        ),
+      ),
+      expect: [],
+      verify: (postBloc) async => verify(
+        mockPostRepository.setPostVisible(userId: '1', postId: '1'),
+      ).called(1),
+    );
+
+    blocTest(
+      'Expects to set proposta post as viewed',
+      build: () async {
+        final mockTimelineBloc = MockTimelineBloc();
+        when(mockTimelineBloc.timelinePosts).thenReturn([
+          PropostaModel(id: '1'),
         ]);
         when(
           mockPostRepository.setPostVisible(

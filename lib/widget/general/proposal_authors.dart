@@ -7,10 +7,9 @@ import '../../page/theme/main_theme.dart';
 import '../label_value.dart';
 
 class ProposalAuthors extends StatefulWidget {
-  ProposalAuthors(this.nomesAutores, {this.quantidadeAutores = 3});
+  ProposalAuthors(this.nomesAutores);
 
   final List<String> nomesAutores;
-  final int quantidadeAutores;
 
   @override
   _ProposalAuthorsState createState() => _ProposalAuthorsState();
@@ -18,7 +17,6 @@ class ProposalAuthors extends StatefulWidget {
 
 class _ProposalAuthorsState extends State<ProposalAuthors> {
   List<String> get nomesAutores => widget.nomesAutores;
-  int get quantidadeAutores => widget.quantidadeAutores;
 
   bool mostrarTodos = false;
 
