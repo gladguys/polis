@@ -1,6 +1,7 @@
 import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../core/extension/media_query_extensions.dart';
@@ -57,16 +58,13 @@ class _PoliticProfileState extends State<PoliticProfile> {
       ),
       child: Column(
         children: <Widget>[
-          const SizedBox(height: 6),
-          Container(
-            width: 40,
-            height: 4,
-            decoration: BoxDecoration(
-              color: theme.accentColor.withOpacity(.25),
-              borderRadius: BorderRadius.circular(4),
-            ),
+          const SizedBox(height: 2),
+          FaIcon(
+            FontAwesomeIcons.chevronUp,
+            size: 16,
+            color: theme.accentColor.withOpacity(.25),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 4),
           TextTitle(ACTIVITIES, fontSize: 15),
           const SizedBox(height: 8),
         ],
