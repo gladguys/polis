@@ -1,7 +1,7 @@
 name: polis
 description: A new Flutter project.
 
-version: 1.0.0+11
+version: 1.0.0+13
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
@@ -12,7 +12,7 @@ dependencies:
 
   # Core
   intl: ^0.16.1
-  flutter_bloc: ^4.0.0
+  flutter_bloc: ^4.0.1
   bloc: ^4.0.0
   simple_router: ^0.1.0+1
   equatable: ^1.2.0
@@ -27,7 +27,7 @@ dependencies:
 
   # Utils
   diacritic: ^0.1.1
-  uuid: ^2.0.4
+  uuid: ^2.1.0
   tuple: ^1.0.3
   screenshot: ^0.2.0
   esys_flutter_share: ^1.0.2
