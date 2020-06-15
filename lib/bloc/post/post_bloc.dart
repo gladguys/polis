@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/domain/model/models.dart';
 import '../../core/repository/abstract/repositories.dart';
+import '../../core/repository/concrete/firebase/firebase.dart';
 import '../../core/service/services.dart';
 import '../blocs.dart';
 
@@ -23,7 +24,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     assert(post != null);
     assert(postRepository != null);
     assert(shareService != null);
-    isPostFavorite = post['favorito'] ?? false;
+    isPostFavorite = post[FAVORITO_FIELD] ?? false;
   }
 
   final PostRepository postRepository;
@@ -64,7 +65,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       } else {
         post = {
           ...post,
-          'favorito': isPostFavorite,
+          FAVORITO_FIELD: isPostFavorite,
         };
       }
 
