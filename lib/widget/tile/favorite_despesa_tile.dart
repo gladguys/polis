@@ -2,7 +2,6 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../tag/tag_despesa.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
@@ -15,26 +14,27 @@ import '../../page/pages.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';
 import '../photo.dart';
+import '../tag/tag_despesa.dart';
 import '../text_rich.dart';
 
 class FavoriteDespesaTile extends StatelessWidget {
-  FavoriteDespesaTile(this.despesa, {this.clickableImage});
+  FavoriteDespesaTile({this.clickableImage});
 
-  final DespesaModel despesa;
   final bool clickableImage;
 
   @override
   Widget build(BuildContext context) {
+    final despesa = DespesaModel.fromJson(context.bloc<PostBloc>().post);
     return Stack(
       children: <Widget>[
         CardBase(
-          slotLeft: _buildLeftContent(),
+          slotLeft: _buildLeftContent(context),
           slotCenter: BlocBuilder<PostBloc, PostState>(
             builder: (_, state) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                _buildTopContent(),
-                _buildCenterContent(),
+                _buildTopContent(context),
+                _buildCenterContent(context),
               ],
             ),
           ),
@@ -56,7 +56,8 @@ class FavoriteDespesaTile extends StatelessWidget {
     );
   }
 
-  Widget _buildLeftContent() {
+  Widget _buildLeftContent(BuildContext context) {
+    final despesa = DespesaModel.fromJson(context.bloc<PostBloc>().post);
     return Stack(
       overflow: Overflow.visible,
       children: <Widget>[
@@ -86,7 +87,8 @@ class FavoriteDespesaTile extends StatelessWidget {
     );
   }
 
-  Widget _buildTopContent() {
+  Widget _buildTopContent(BuildContext context) {
+    final despesa = DespesaModel.fromJson(context.bloc<PostBloc>().post);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,7 +116,8 @@ class FavoriteDespesaTile extends StatelessWidget {
     );
   }
 
-  Widget _buildCenterContent() {
+  Widget _buildCenterContent(BuildContext context) {
+    final despesa = DespesaModel.fromJson(context.bloc<PostBloc>().post);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -139,36 +142,38 @@ class FavoriteDespesaTile extends StatelessWidget {
 
   Widget _buildActions(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
-      builder: (_, state) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
-            '${despesa.dataDocumento.formatDate()}',
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey[600],
+      builder: (_, state) {
+        final despesa = DespesaModel.fromJson(context.bloc<PostBloc>().post);
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              '${despesa.dataDocumento.formatDate()}',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey[600],
+              ),
             ),
-          ),
-          ButtonActionCard(
-            isIconOnly: true,
-            icon: context.bloc<PostBloc>().isPostFavorite
-                ? FontAwesomeIcons.solidBookmark
-                : FontAwesomeIcons.bookmark,
-            iconColor:
-                context.bloc<PostBloc>().isPostFavorite ? Colors.yellow : null,
-            onTap: () => context.bloc<PostBloc>().add(
-                  FavoritePostForUser(
-                    post: {
-                      'id': despesa.id,
-                      ...despesa.toJson(),
-                    },
-                    user: context.bloc<UserBloc>().user,
+            ButtonActionCard(
+              isIconOnly: true,
+              icon: (despesa.favorito ?? false)
+                  ? FontAwesomeIcons.solidBookmark
+                  : FontAwesomeIcons.bookmark,
+              iconColor: (despesa.favorito ?? false) ? Colors.yellow : null,
+              onTap: () => context.bloc<PostBloc>().add(
+                    FavoritePostForUser(
+                      post: {
+                        'id': despesa.id,
+                        ...despesa.toJson(),
+                      },
+                      user: context.bloc<UserBloc>().user,
+                    ),
                   ),
-                ),
-          ),
-        ],
-      ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

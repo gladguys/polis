@@ -173,12 +173,10 @@ class DespesaTile extends StatelessWidget {
             ),
             ButtonActionCard(
               isIconOnly: true,
-              icon: context.bloc<PostBloc>().isPostFavorite
+              icon: (despesa.favorito ?? false)
                   ? FontAwesomeIcons.solidBookmark
                   : FontAwesomeIcons.bookmark,
-              iconColor: context.bloc<PostBloc>().isPostFavorite
-                  ? Colors.yellow
-                  : null,
+              iconColor: (despesa.favorito ?? false) ? Colors.yellow : null,
               onTap: () => context.bloc<PostBloc>().add(
                     FavoritePostForUser(
                       post: {

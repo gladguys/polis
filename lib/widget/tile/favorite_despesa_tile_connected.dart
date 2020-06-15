@@ -26,7 +26,7 @@ class FavoriteDespesaTileConnected extends StatelessWidget {
         postRepository: context.repository<FirebasePostRepository>(),
         shareService: G<ShareService>(),
       ),
-      page: FavoriteDespesaTile(despesa, clickableImage: clickableImage),
+      page: FavoriteDespesaTile(clickableImage: clickableImage),
     );
   }
 }
