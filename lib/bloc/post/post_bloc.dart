@@ -69,8 +69,6 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         };
       }
 
-      print(post);
-      print(isPostFavorite);
       yield PostFavoriteStatusChanged(post: post, isFavorite: isPostFavorite);
 
       if (isPostFavorite) {
