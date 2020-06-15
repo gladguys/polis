@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../core/i18n/i18n.dart';
 
-class ButtonFollowUnfollow extends StatelessWidget {
+class ButtonFollowUnfollow extends StatefulWidget {
   ButtonFollowUnfollow({
     @required this.isFollow,
     @required this.onPressed,
@@ -23,47 +23,89 @@ class ButtonFollowUnfollow extends StatelessWidget {
   final Function onPressed;
 
   @override
-  Widget build(BuildContext context) {
-    final Color color = isFollow ? Colors.red : Colors.green;
+  _ButtonFollowUnfollowState createState() => _ButtonFollowUnfollowState();
+}
 
-    return isOutline && isFollow
-        ? _buildOutlineButton(color)
-        : _buildFlatButton(color);
+class _ButtonFollowUnfollowState extends State<ButtonFollowUnfollow>
+    with SingleTickerProviderStateMixin {
+  AnimationController _controller;
+  Animation<Size> _myAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
+    _myAnimation = Tween<Size>(
+      begin: Size(widget.width, widget.height),
+      end: Size(widget.width + 30, widget.height + 10),
+    ).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInSine),
+    );
+    _controller.addListener(() => setState(() {}));
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _controller.reverse();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final Color color = widget.isFollow ? Colors.red : Colors.green;
+    return AnimatedBuilder(
+      animation: _myAnimation,
+      builder: (ctx, ch) => Container(
+        width: _myAnimation.value.width,
+        height: _myAnimation.value.height,
+        child: widget.isOutline && widget.isFollow
+            ? _buildOutlineButton(color)
+            : _buildFlatButton(color),
+      ),
+    );
   }
 
   Widget _buildOutlineButton(Color color) {
     return Container(
-      width: width,
-      height: height,
+      width: widget.width,
+      height: widget.height,
       child: OutlineButton(
         padding: EdgeInsets.zero,
         child: Text(
-          isFollow ? STOP_FOLLOWING : FOLLOW,
-          key: key,
+          widget.isFollow ? STOP_FOLLOWING : FOLLOW,
+          key: widget.key,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: fontSize - 1),
+          style: TextStyle(fontSize: widget.fontSize - 1),
         ),
         textColor: color,
         highlightedBorderColor: color,
-        onPressed: onPressed,
+        onPressed: () {
+          _controller.forward();
+          widget.onPressed();
+        },
       ),
     );
   }
 
   Widget _buildFlatButton(Color color) {
     return Container(
-      width: width,
-      height: height,
+      width: widget.width,
+      height: widget.height,
       child: FlatButton(
-        key: key,
+        key: widget.key,
         padding: EdgeInsets.zero,
         child: Text(
-          isFollow ? STOP_FOLLOWING : FOLLOW,
-          style: TextStyle(fontSize: fontSize),
+          widget.isFollow ? STOP_FOLLOWING : FOLLOW,
+          style: TextStyle(fontSize: widget.fontSize),
         ),
         textColor: Colors.white,
         color: color,
-        onPressed: onPressed,
+        onPressed: () {
+          _controller.forward();
+          widget.onPressed();
+        },
       ),
     );
   }
