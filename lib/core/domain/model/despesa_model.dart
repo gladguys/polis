@@ -35,7 +35,6 @@ class DespesaModel extends Equatable {
       this.visualizado,
       this.urlPartidoLogo});
 
-  @JsonKey(ignore: true)
   final String id;
   final String ano;
   final String mes;
