@@ -77,33 +77,8 @@ void main() {
       act: (postBloc) async =>
           postBloc.add(FavoritePostForUser(post: {}, user: UserModel())),
       expect: [
-        PostFavoriteStatusChanged(isFavorite: false),
+        PostFavoriteStatusChanged(post: {'favorito': false}, isFavorite: false),
         PostFavoritedSuccess()
-      ],
-      verify: (postBloc) async => verify(mockPostRepository.unfavoritePost(
-              post: anyNamed('post'), user: anyNamed('user')))
-          .called(1),
-    );
-
-    blocTest(
-      '''Expects [PostFavoriteStatusChanged, PostFavoritedSuccess] when FavoritePostForUser added''',
-      build: () async {
-        when(mockPostRepository.unfavoritePost(
-                post: anyNamed('post'), user: anyNamed('user')))
-            .thenThrow(Exception());
-        return PostBloc(
-          post: {
-            'favorito': true,
-          },
-          postRepository: mockPostRepository,
-          shareService: mockShareService,
-        );
-      },
-      act: (postBloc) async =>
-          postBloc.add(FavoritePostForUser(post: {}, user: UserModel())),
-      expect: [
-        PostFavoriteStatusChanged(isFavorite: false),
-        PostFavoritedFailed()
       ],
       verify: (postBloc) async => verify(mockPostRepository.unfavoritePost(
               post: anyNamed('post'), user: anyNamed('user')))
