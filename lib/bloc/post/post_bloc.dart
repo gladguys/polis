@@ -26,10 +26,10 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     isPostFavorite = post['favorito'] ?? false;
   }
 
-  final Map<String, dynamic> post;
   final PostRepository postRepository;
   final ShareService shareService;
   final TimelineBloc timelineBloc;
+  Map<String, dynamic> post;
   bool isPostFavorite;
 
   @override
@@ -55,7 +55,22 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       FavoritePostForUser event) async* {
     try {
       isPostFavorite = !isPostFavorite;
-      yield PostFavoriteStatusChanged(isFavorite: isPostFavorite);
+
+      if (timelineBloc != null) {
+        _updatePostOnTimeline(
+          postUpdated: event.post,
+          favoriteStatus: isPostFavorite,
+        );
+      } else {
+        post = {
+          ...post,
+          'favorito': isPostFavorite,
+        };
+      }
+
+      print(post);
+      print(isPostFavorite);
+      yield PostFavoriteStatusChanged(post: post, isFavorite: isPostFavorite);
 
       if (isPostFavorite) {
         await postRepository.favoritePost(post: event.post, user: event.user);
@@ -67,6 +82,25 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     } on Exception {
       yield PostFavoritedFailed();
     }
+  }
+
+  void _updatePostOnTimeline({dynamic postUpdated, bool favoriteStatus}) {
+    final posts = [...timelineBloc.timelinePosts];
+    final postToUpdateViewedIndex = posts.indexWhere((post) {
+      if (post is PropostaModel) {
+        return post.idPropostaPolitico == postUpdated['idPropostaPolitico'];
+      } else {
+        return post.id == postUpdated['id'];
+      }
+    });
+    final postFound = posts[postToUpdateViewedIndex];
+    posts.removeAt(postToUpdateViewedIndex);
+    posts.insert(
+      postToUpdateViewedIndex,
+      postFound.copyWith(favorito: favoriteStatus),
+    );
+    timelineBloc.timelinePosts = [...posts];
+    timelineBloc.add(RefreshTimeline());
   }
 
   void _mapSharePost(SharePost event) async {
