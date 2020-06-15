@@ -29,7 +29,7 @@ class ButtonFollowUnfollow extends StatefulWidget {
 class _ButtonFollowUnfollowState extends State<ButtonFollowUnfollow>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
-  Animation<Size> _myAnimation;
+  Animation<Size> _animation;
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _ButtonFollowUnfollowState extends State<ButtonFollowUnfollow>
       vsync: this,
       duration: const Duration(milliseconds: 200),
     );
-    _myAnimation = Tween<Size>(
+    _animation = Tween<Size>(
       begin: Size(widget.width, widget.height),
       end: Size(widget.width + 30, widget.height + 10),
     ).animate(
@@ -53,13 +53,19 @@ class _ButtonFollowUnfollowState extends State<ButtonFollowUnfollow>
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Color color = widget.isFollow ? Colors.red : Colors.green;
     return AnimatedBuilder(
-      animation: _myAnimation,
+      animation: _animation,
       builder: (ctx, ch) => Container(
-        width: _myAnimation.value.width,
-        height: _myAnimation.value.height,
+        width: _animation.value.width,
+        height: _animation.value.height,
         child: widget.isOutline && widget.isFollow
             ? _buildOutlineButton(color)
             : _buildFlatButton(color),
