@@ -18,21 +18,21 @@ import '../tag/tag_proposta.dart';
 import '../text_rich.dart';
 
 class FavoritePropostaTile extends StatelessWidget {
-  FavoritePropostaTile(this.proposta, {this.clickableImage});
+  FavoritePropostaTile({this.clickableImage});
 
-  final PropostaModel proposta;
   final bool clickableImage;
 
   @override
   Widget build(BuildContext context) {
+    final proposta = PropostaModel.fromJson(context.bloc<PostBloc>().post);
     return Stack(children: [
       CardBase(
-        slotLeft: _buildLeftContent(),
+        slotLeft: _buildLeftContent(context),
         slotCenter: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _buildTopContent(),
-            _buildCenterContent(),
+            _buildTopContent(context),
+            _buildCenterContent(context),
           ],
         ),
         slotBottom: _buildActions(context),
@@ -52,7 +52,8 @@ class FavoritePropostaTile extends StatelessWidget {
     ]);
   }
 
-  Widget _buildLeftContent() {
+  Widget _buildLeftContent(BuildContext context) {
+    final proposta = PropostaModel.fromJson(context.bloc<PostBloc>().post);
     return Stack(
       overflow: Overflow.visible,
       children: <Widget>[
@@ -80,7 +81,8 @@ class FavoritePropostaTile extends StatelessWidget {
     );
   }
 
-  Widget _buildTopContent() {
+  Widget _buildTopContent(BuildContext context) {
+    final proposta = PropostaModel.fromJson(context.bloc<PostBloc>().post);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,7 +112,8 @@ class FavoritePropostaTile extends StatelessWidget {
     );
   }
 
-  Widget _buildCenterContent() {
+  Widget _buildCenterContent(BuildContext context) {
+    final proposta = PropostaModel.fromJson(context.bloc<PostBloc>().post);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -134,33 +137,35 @@ class FavoritePropostaTile extends StatelessWidget {
 
   Widget _buildActions(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
-      builder: (_, state) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
-            proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey[600],
+      builder: (_, state) {
+        final proposta = PropostaModel.fromJson(context.bloc<PostBloc>().post);
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey[600],
+              ),
             ),
-          ),
-          ButtonActionCard(
-            isIconOnly: true,
-            icon: context.bloc<PostBloc>().isPostFavorite
-                ? FontAwesomeIcons.solidBookmark
-                : FontAwesomeIcons.bookmark,
-            iconColor:
-                context.bloc<PostBloc>().isPostFavorite ? Colors.yellow : null,
-            onTap: () => context.bloc<PostBloc>().add(
-                  FavoritePostForUser(
-                    post: proposta.toJson(),
-                    user: context.bloc<UserBloc>().user,
+            ButtonActionCard(
+              isIconOnly: true,
+              icon: (proposta.favorito ?? false)
+                  ? FontAwesomeIcons.solidBookmark
+                  : FontAwesomeIcons.bookmark,
+              iconColor: (proposta.favorito ?? false) ? Colors.yellow : null,
+              onTap: () => context.bloc<PostBloc>().add(
+                    FavoritePostForUser(
+                      post: proposta.toJson(),
+                      user: context.bloc<UserBloc>().user,
+                    ),
                   ),
-                ),
-          ),
-        ],
-      ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

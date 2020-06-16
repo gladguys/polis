@@ -102,12 +102,11 @@ void main() {
 
     testWidgets('should do something when click on bookmark btn',
         (tester) async {
-      final mockTimelineBloc = MockTimelineBloc();
       await tester.pumpWidget(
         connectedWidget(
           connectedWidget(
             PageConnected<TimelineBloc>(
-              bloc: mockTimelineBloc,
+              bloc: null,
               page: PropostaTileConnected(proposta),
             ),
           ),

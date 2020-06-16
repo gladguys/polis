@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/domain/model/models.dart';
+import 'package:polis/core/repository/concrete/firebase/firebase.dart';
 
 import '../mock.dart';
 
@@ -69,7 +70,7 @@ void main() {
       '''Expects [PostFavoriteStatusChanged, PostFavoritedSuccess] when FavoritePostForUser added''',
       build: () async => PostBloc(
         post: {
-          'favorito': true,
+          FAVORITO_FIELD: true,
         },
         postRepository: mockPostRepository,
         shareService: mockShareService,
@@ -77,33 +78,13 @@ void main() {
       act: (postBloc) async =>
           postBloc.add(FavoritePostForUser(post: {}, user: UserModel())),
       expect: [
-        PostFavoriteStatusChanged(isFavorite: false),
-        PostFavoritedSuccess()
-      ],
-      verify: (postBloc) async => verify(mockPostRepository.unfavoritePost(
-              post: anyNamed('post'), user: anyNamed('user')))
-          .called(1),
-    );
-
-    blocTest(
-      '''Expects [PostFavoriteStatusChanged, PostFavoritedSuccess] when FavoritePostForUser added''',
-      build: () async {
-        when(mockPostRepository.unfavoritePost(
-                post: anyNamed('post'), user: anyNamed('user')))
-            .thenThrow(Exception());
-        return PostBloc(
+        PostFavoriteStatusChanged(
           post: {
-            'favorito': true,
+            FAVORITO_FIELD: false,
           },
-          postRepository: mockPostRepository,
-          shareService: mockShareService,
-        );
-      },
-      act: (postBloc) async =>
-          postBloc.add(FavoritePostForUser(post: {}, user: UserModel())),
-      expect: [
-        PostFavoriteStatusChanged(isFavorite: false),
-        PostFavoritedFailed()
+          isFavorite: false,
+        ),
+        PostFavoritedSuccess()
       ],
       verify: (postBloc) async => verify(mockPostRepository.unfavoritePost(
               post: anyNamed('post'), user: anyNamed('user')))
@@ -117,7 +98,7 @@ void main() {
             .thenAnswer((_) => Future.value());
         return PostBloc(
           post: {
-            'favorito': true,
+            FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           shareService: mockShareService,
@@ -147,7 +128,7 @@ void main() {
 
         return PostBloc(
           post: {
-            'favorito': true,
+            FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           shareService: mockShareService,
@@ -182,7 +163,7 @@ void main() {
 
         return PostBloc(
           post: {
-            'favorito': true,
+            FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           shareService: mockShareService,
@@ -217,7 +198,7 @@ void main() {
 
         return PostBloc(
           post: {
-            'favorito': true,
+            FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           shareService: mockShareService,
@@ -254,7 +235,7 @@ void main() {
 
         return PostBloc(
           post: {
-            'favorito': true,
+            FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           shareService: mockShareService,
@@ -291,7 +272,7 @@ void main() {
 
         return PostBloc(
           post: {
-            'favorito': true,
+            FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           shareService: mockShareService,

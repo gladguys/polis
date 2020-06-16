@@ -10,12 +10,13 @@ class InitialPostState extends PostState {
 }
 
 class PostFavoriteStatusChanged extends PostState {
-  PostFavoriteStatusChanged({this.isFavorite});
+  PostFavoriteStatusChanged({this.post, this.isFavorite});
 
+  final dynamic post;
   final bool isFavorite;
 
   @override
-  List<Object> get props => [isFavorite];
+  List<Object> get props => [post, isFavorite];
 }
 
 class PostFavoritedSuccess extends PostState {
