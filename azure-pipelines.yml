@@ -1,0 +1,21 @@
+# Flutter build
+
+trigger:
+- develop
+jobs:
+  - job: Android
+    pool:
+      vmImage: 'vs2017-win2016'
+    steps:
+    - task: FlutterInstall@0
+      inputs:
+        channel: 'stable'
+        version: 'latest'
+
+    - task: CmdLine@2
+      inputs:
+        script: 'flutter pub run build_runner build --delete-conflicting-outputs'
+
+    - task: FlutterBuild@0
+      inputs:
+        target: apk
