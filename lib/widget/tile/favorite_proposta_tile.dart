@@ -47,7 +47,10 @@ class FavoritePropostaTile extends StatelessWidget {
       Positioned(
         top: 0,
         right: 0,
-        child: TagProposta(proposta),
+        child: TagProposta(
+          proposta,
+          showStatus: false,
+        ),
       ),
     ]);
   }

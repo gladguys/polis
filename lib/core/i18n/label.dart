@@ -38,6 +38,7 @@ const FOLLOWING = 'Seguindo';
 const FOLLOWER = 'Seguidor';
 const FOLLOWERS = 'Seguidores';
 const PROPOSER = 'PL Apresentado';
+const PROPOSAL = 'Proposição';
 const PROJECTS_PARTICIPATIONS = 'Participações em Projetos de Lei';
 const UPDATE = 'Atualização';
 const ACTION_UPDATE = 'Atualizar';
@@ -119,5 +120,5 @@ const SEE_MORE = 'Ver mais';
 const SEE_LESS = 'Ver menos';
 const MORE_EXPENSE = 'Mais gastou';
 const LESS_EXPENSE = 'Menos gastou';
-const EXPENSES_AVERAGE_BETWEEN_POLITICIS = 
-  'Média de despesas entre todos os políticos';
+const EXPENSES_AVERAGE_BETWEEN_POLITICIS =
+    'Média de despesas entre todos os políticos';
