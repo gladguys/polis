@@ -1,5 +1,4 @@
 # Flutter build
-
 trigger:
 - develop
 jobs:
@@ -11,7 +10,7 @@ jobs:
       inputs:
         channel: 'stable'
         version: 'latest'
-    
+
     - task: CmdLine@2
       inputs:
         script: 'C:\hostedtoolcache\windows\Flutter\1.17.3-stable\windows\flutter\bin\flutter.bat pub get'
