@@ -18,8 +18,12 @@ jobs:
     - task: CmdLine@2
       inputs:
         script: 'C:\hostedtoolcache\windows\Flutter\1.17.3-stable\windows\flutter\bin\flutter.bat pub run build_runner build --delete-conflicting-outputs'
-
-
-    - task: FlutterBuild@0
+    - task: CmdLine@2
       inputs:
-        target: apk
+        script: 'C:\hostedtoolcache\windows\Flutter\1.17.3-stable\windows\flutter\bin\flutter.bat build aot'
+    - task: CmdLine@2
+      inputs:
+        script: 'C:\hostedtoolcache\windows\Flutter\1.17.3-stable\windows\flutter\bin\flutter.bat analyze'
+    - task: CmdLine@2
+      inputs:
+        script: 'C:\hostedtoolcache\windows\Flutter\1.17.3-stable\windows\flutter\bin\flutter.bat test --coverage'
