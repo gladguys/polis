@@ -13,16 +13,16 @@ jobs:
 
     - task: CmdLine@2
       inputs:
-        script: 'C:\hostedtoolcache\windows\Flutter\1.17.3-stable\windows\flutter\bin\flutter.bat pub get'
+        script: 'C:\hostedtoolcache\windows\Flutter\1.17.4-stable\windows\flutter\bin\flutter.bat pub get'
     - task: CmdLine@2
       inputs:
-        script: 'C:\hostedtoolcache\windows\Flutter\1.17.3-stable\windows\flutter\bin\flutter.bat pub run build_runner build --delete-conflicting-outputs'
+        script: 'C:\hostedtoolcache\windows\Flutter\1.17.4-stable\windows\flutter\bin\flutter.bat pub run build_runner build --delete-conflicting-outputs'
     - task: CmdLine@2
       inputs:
-        script: 'C:\hostedtoolcache\windows\Flutter\1.17.3-stable\windows\flutter\bin\flutter.bat build aot'
+        script: 'C:\hostedtoolcache\windows\Flutter\1.17.4-stable\windows\flutter\bin\flutter.bat build aot'
     - task: CmdLine@2
       inputs:
-        script: 'C:\hostedtoolcache\windows\Flutter\1.17.3-stable\windows\flutter\bin\flutter.bat analyze'
+        script: 'C:\hostedtoolcache\windows\Flutter\1.17.4-stable\windows\flutter\bin\flutter.bat analyze'
     - task: CmdLine@2
       inputs:
-        script: 'C:\hostedtoolcache\windows\Flutter\1.17.3-stable\windows\flutter\bin\flutter.bat test --coverage'
+        script: 'C:\hostedtoolcache\windows\Flutter\1.17.4-stable\windows\flutter\bin\flutter.bat test --coverage'
