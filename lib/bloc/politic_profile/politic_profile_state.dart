@@ -1,27 +1,78 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+part of 'politic_profile_bloc.dart';
 
-import '../../core/domain/model/models.dart';
+abstract class PoliticProfileState extends Equatable {
+  const PoliticProfileState();
+}
 
-part 'politic_profile_state.freezed.dart';
+class InitialPoliticProfileState extends PoliticProfileState {
+  @override
+  List<Object> get props => [];
+}
 
-@freezed
-abstract class PoliticProfileState with _$PoliticProfileState {
-  factory PoliticProfileState.initial() = InitialPoliticProfileState;
-  factory PoliticProfileState.getPoliticInfoSuccess({
-    @required PoliticoModel politic,
-    @required List<dynamic> lastActivities,
-    @required int activitiesCount,
-    @required bool isBeingFollowedByUser,
-  }) = GetPoliticInfoSuccess;
-  factory PoliticProfileState.politicMoreActivitiesSuccess(
-      {@required List<dynamic> activities}) = PoliticMoreActivitiesSuccess;
-  factory PoliticProfileState.getPoliticInfoFailed() = GetPoliticInfoFailed;
-  factory PoliticProfileState.loadingPoliticInfo() = LoadingPoliticInfo;
-  factory PoliticProfileState.userFollowingPoliticChanged(
-      {@required PoliticoModel politico,
-      @required bool isUserFollowingPolitic}) = UserFollowingPoliticChanged;
-  factory PoliticProfileState.followPoliticFailed() = FollowPoliticFailed;
-  factory PoliticProfileState.politicDontHaveValidEmail() =
-      PoliticDontHaveValidEmail;
-  factory PoliticProfileState.openEmailIntentFailed() = OpenEmailIntentFailed;
+class GetPoliticInfoSuccess extends PoliticProfileState {
+  GetPoliticInfoSuccess({
+    @required this.politic,
+    @required this.lastActivities,
+    @required this.activitiesCount,
+    @required this.isBeingFollowedByUser,
+  })  : assert(politic != null),
+        assert(lastActivities != null),
+        assert(activitiesCount != null),
+        assert(isBeingFollowedByUser != null);
+
+  final PoliticoModel politic;
+  final List<dynamic> lastActivities;
+  final int activitiesCount;
+  final bool isBeingFollowedByUser;
+
+  @override
+  List<Object> get props => [politic, activitiesCount, isBeingFollowedByUser];
+}
+
+class PoliticMoreActivitiesSuccess extends PoliticProfileState {
+  PoliticMoreActivitiesSuccess({@required this.activities})
+      : assert(activities != null);
+
+  final List<dynamic> activities;
+
+  @override
+  List<Object> get props => [activities];
+}
+
+class GetPoliticInfoFailed extends PoliticProfileState {
+  @override
+  List<Object> get props => [];
+}
+
+class LoadingPoliticInfo extends PoliticProfileState {
+  @override
+  List<Object> get props => [];
+}
+
+class UserFollowingPoliticChanged extends PoliticProfileState {
+  UserFollowingPoliticChanged(
+      {@required this.politico, @required this.isUserFollowingPolitic})
+      : assert(politico != null),
+        assert(isUserFollowingPolitic != null);
+
+  final PoliticoModel politico;
+  final bool isUserFollowingPolitic;
+
+  @override
+  List<Object> get props => [politico, isUserFollowingPolitic];
+}
+
+class FollowPoliticFailed extends PoliticProfileState {
+  @override
+  List<Object> get props => [];
+}
+
+class PoliticDontHaveValidEmail extends PoliticProfileState {
+  @override
+  List<Object> get props => [];
+}
+
+class OpenEmailIntentFailed extends PoliticProfileState {
+  @override
+  List<Object> get props => [];
 }

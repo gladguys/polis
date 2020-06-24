@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
-import '../../bloc/commom_bloc.dart';
 import '../../core/domain/model/models.dart';
+import '../../widget/error_container.dart';
+import '../../widget/loading.dart';
 import 'widget/resultados_ranking.dart';
 
 class ComparativoRankingDespesasPage extends StatelessWidget {
@@ -17,20 +18,20 @@ class ComparativoRankingDespesasPage extends StatelessWidget {
       body: SafeArea(
         child: BlocBuilder<ComparativoRankingDespesasBloc,
             ComparativoRankingDespesasState>(
-          builder: (_, state) => state.maybeMap(
-            getRankingResultadosSuccess: _mapSuccessToWidget,
-            loadingResultadosRanking: mapLoadingStateToWidget,
-            orElse: mapErrorToWidget,
-          ),
+          builder: (_, state) {
+            if (state is GetRankingResultadosSuccess) {
+              return ResultadosRanking(
+                politico: politico,
+                resultadosRanking: state.resultadosRanking,
+              );
+            } else if (state is LoadingResultadosRanking) {
+              return const Loading();
+            } else {
+              return const ErrorContainer();
+            }
+          },
         ),
       ),
-    );
-  }
-
-  Widget _mapSuccessToWidget(GetRankingResultadosSuccess state) {
-    return ResultadosRanking(
-      politico: politico,
-      resultadosRanking: state.resultadosRanking,
     );
   }
 }

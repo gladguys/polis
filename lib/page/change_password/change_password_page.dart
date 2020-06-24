@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
-import '../../bloc/commom_bloc.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
+import '../../widget/loading.dart';
 import '../../widget/snackbar.dart';
 import '../../widget/text_title.dart';
 
@@ -32,59 +32,58 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     return Scaffold(
       body: SafeArea(
         child: BlocConsumer<ChangePasswordBloc, ChangePasswordState>(
-          listener: (_, state) => state.maybeWhen(
-            userPasswordChangeSuccess: () =>
-                Snackbar.success(_, USER_PASSWORD_UPDATED_WITH_SUCCESS),
-            userPasswordChangeFailed: () =>
-                Snackbar.success(_, USER_UPDATE_PASSWORD_FAILED),
-            userWrongPasswordInformed: () =>
-                Snackbar.success(_, USER_UPDATE_PASSWORD_WRONG_PASSWORD),
-            orElse: () => {},
-          ),
-          builder: (_, state) => state.maybeMap(
-            userPasswordChanging: mapLoadingStateToWidget,
-            orElse: _mapStateToWidget,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _mapStateToWidget() {
-    return Column(
-      children: <Widget>[
-        const SizedBox(height: 12),
-        Center(
-          child: TextTitle(CHANGE_YOUR_PROFILE),
-        ),
-        const SizedBox(height: 22),
-        Padding(
-          padding: const EdgeInsets.all(32),
-          child: _getForm(),
-        ),
-        const SizedBox(height: 16),
-        Container(
-          height: 40,
-          width: 160,
-          child: FlatButton(
-            padding: EdgeInsets.zero,
-            child: const Text(CONFIRM),
-            color: Colors.amber,
-            onPressed: () {
-              final formState = _formKey.currentState;
-              if (formState.validate()) {
-                formState.save();
-                changePasswordBloc.add(
-                  ChangePasswordEvent.changeUserPassword(
-                    currentPassword: _currentPassword,
-                    newPassword: _newPassword,
+            listener: (_, state) {
+          if (state is UserPasswordChangeSuccess) {
+            Snackbar.success(_, USER_PASSWORD_UPDATED_WITH_SUCCESS);
+          }
+          if (state is UserPasswordChangeFailed) {
+            Snackbar.error(_, USER_UPDATE_PASSWORD_FAILED);
+          }
+          if (state is UserWrongPasswordInformed) {
+            Snackbar.error(_, USER_UPDATE_PASSWORD_WRONG_PASSWORD);
+          }
+        }, builder: (_, state) {
+          if (state is UserPasswordChanging) {
+            return const Loading();
+          } else {
+            return Column(
+              children: <Widget>[
+                const SizedBox(height: 12),
+                Center(
+                  child: TextTitle(CHANGE_YOUR_PROFILE),
+                ),
+                const SizedBox(height: 22),
+                Padding(
+                  padding: const EdgeInsets.all(32),
+                  child: _getForm(),
+                ),
+                const SizedBox(height: 16),
+                Container(
+                  height: 40,
+                  width: 160,
+                  child: FlatButton(
+                    padding: EdgeInsets.zero,
+                    child: const Text(CONFIRM),
+                    color: Colors.amber,
+                    onPressed: () {
+                      final formState = _formKey.currentState;
+                      if (formState.validate()) {
+                        formState.save();
+                        changePasswordBloc.add(
+                          ChangeUserPassword(
+                            currentPassword: _currentPassword,
+                            newPassword: _newPassword,
+                          ),
+                        );
+                      }
+                    },
                   ),
-                );
-              }
-            },
-          ),
-        ),
-      ],
+                ),
+              ],
+            );
+          }
+        }),
+      ),
     );
   }
 

@@ -37,7 +37,6 @@ void main() {
         '''should navigate to PoliticSugestionPage when user auths and has not yet done signin''',
         (tester) async {
       final mockSigninBloc = MockSigninBloc();
-      when(mockSigninBloc.state).thenReturn(InitialSignin());
       whenListen(
         mockSigninBloc,
         Stream<SigninState>.fromIterable([
@@ -63,7 +62,6 @@ void main() {
         'should navigate to Timeline when user auths and has yet done signin',
         (tester) async {
       final mockSigninBloc = MockSigninBloc();
-      when(mockSigninBloc.state).thenReturn(InitialSignin());
       whenListen(
         mockSigninBloc,
         Stream<SigninState>.fromIterable([
@@ -154,7 +152,6 @@ void main() {
 
     testWidgets('should show error message when signin failed', (tester) async {
       final mockSigninBloc = MockSigninBloc();
-      when(mockSigninBloc.state).thenReturn(InitialSignin());
       whenListen(
         mockSigninBloc,
         Stream<SigninState>.fromIterable(
@@ -176,7 +173,6 @@ void main() {
 
     testWidgets('should show loading', (tester) async {
       final mockSigninBloc = MockSigninBloc();
-      when(mockSigninBloc.state).thenReturn(InitialSignin());
       whenListen(
         mockSigninBloc,
         Stream<SigninState>.fromIterable([InitialSignin(), SigninLoading()]),
@@ -198,7 +194,6 @@ void main() {
     testWidgets('should show error message when reset email failed',
         (tester) async {
       final mockSigninBloc = MockSigninBloc();
-      when(mockSigninBloc.state).thenReturn(InitialSignin());
       whenListen(
         mockSigninBloc,
         Stream<SigninState>.fromIterable(
@@ -220,7 +215,6 @@ void main() {
 
     testWidgets('should show message when reset email success', (tester) async {
       final mockSigninBloc = MockSigninBloc();
-      when(mockSigninBloc.state).thenReturn(InitialSignin());
       whenListen(
         mockSigninBloc,
         Stream<SigninState>.fromIterable(
@@ -243,7 +237,6 @@ void main() {
     testWidgets('should show error message when signin auth failed',
         (tester) async {
       final mockSigninBloc = MockSigninBloc();
-      when(mockSigninBloc.state).thenReturn(InitialSignin());
       whenListen(
         mockSigninBloc,
         Stream<SigninState>.fromIterable(

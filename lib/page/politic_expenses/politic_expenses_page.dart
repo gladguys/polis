@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../bloc/blocs.dart';
-import '../../bloc/commom_bloc.dart';
+import '../../core/domain/model/models.dart';
 import '../../core/i18n/i18n.dart';
 import '../../widget/empty_info.dart';
+import '../../widget/error_container.dart';
 import '../../widget/text_title.dart';
 import '../../widget/tile/politic_expense_tile.dart';
 import 'widget/politic_expenses_skeleton.dart';
@@ -16,18 +17,21 @@ class PoliticExpensesPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: BlocBuilder<PoliticExpensesBloc, PoliticExpensesState>(
-          builder: (_, state) => state.maybeMap(
-            getPoliticExpensesSuccess: _mapSuccessStateToWidget,
-            loadingPoliticExpenses: _mapLoadingToWidget,
-            orElse: mapErrorToWidget,
-          ),
+          builder: (_, state) {
+            if (state is GetPoliticExpensesSuccess) {
+              return _buildList(state.despesas);
+            } else if (state is LoadingPoliticExpenses) {
+              return const PoliticExpensesSkeleton();
+            } else {
+              return const ErrorContainer();
+            }
+          },
         ),
       ),
     );
   }
 
-  Widget _mapSuccessStateToWidget(GetPoliticExpensesSuccess state) {
-    final despesas = state.despesas;
+  Widget _buildList(List<DespesaModel> despesas) {
     return Column(
       children: <Widget>[
         const SizedBox(height: 8),
@@ -47,9 +51,5 @@ class PoliticExpensesPage extends StatelessWidget {
               ),
       ],
     );
-  }
-
-  Widget _mapLoadingToWidget(state) {
-    return const PoliticExpensesSkeleton();
   }
 }

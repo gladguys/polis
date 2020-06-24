@@ -37,8 +37,6 @@ void main() {
     });
 
     testWidgets('should build without exploding', (tester) async {
-      when(mockPoliticProfileBloc.state)
-          .thenReturn(InitialPoliticProfileState());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<PoliticProfileBloc>(

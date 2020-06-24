@@ -5,7 +5,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
-import '../../bloc/commom_bloc.dart';
 import '../../bloc/signin/signin_bloc.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
@@ -48,60 +47,68 @@ class _SigninPageState extends State<SigninPage> {
   Widget build(BuildContext context) {
     return BlocListener<SigninBloc, SigninState>(
       listener: (context, state) {
-        state.maybeWhen(
-          userAuthenticated: (user) {
-            context.bloc<UserBloc>().add(StoreUser(user));
+        if (state is UserAuthenticated) {
+          final user = state.user;
+          context.bloc<UserBloc>().add(StoreUser(user));
 
-            if (user.isFirstLoginDone) {
-              SimpleRouter.forwardAndReplace(
-                TimelinePageConnected(
-                  appUpdateService: G<AppUpdateService>(),
-                ),
-                name: TIMELINE_PAGE,
-              );
-            } else {
-              SimpleRouter.forwardAndReplace(
-                PickStatePage(),
-                name: PICK_STATE_PAGE,
-              );
-            }
-          },
-          signinFailed: (errorMessage) => Snackbar.error(context, errorMessage),
-          userAuthenticationFailed: (_) =>
-              Snackbar.error(context, ERROR_AUTENTICATING_USER),
-          resetEmailSentSuccess: () =>
-              Snackbar.success(context, EMAIL_RESET_SEND),
-          resetEmailSentFailed: () =>
-              Snackbar.success(context, ERROR_SENTING_RESET_PASSWORD_EMAIL),
-          orElse: () {},
-        );
+          if (user.isFirstLoginDone) {
+            SimpleRouter.forwardAndReplace(
+              TimelinePageConnected(
+                appUpdateService: G<AppUpdateService>(),
+              ),
+              name: TIMELINE_PAGE,
+            );
+          } else {
+            SimpleRouter.forwardAndReplace(
+              PickStatePage(),
+              name: PICK_STATE_PAGE,
+            );
+          }
+        }
+        if (state is SigninFailed) {
+          Snackbar.error(context, state.errorMessage);
+        }
+        if (state is UserAuthenticationFailed) {
+          Snackbar.error(context, ERROR_AUTENTICATING_USER);
+        }
+        if (state is ResetEmailSentSuccess) {
+          Snackbar.success(context, EMAIL_RESET_SEND);
+        }
+        if (state is ResetEmailSentFailed) {
+          Snackbar.error(context, ERROR_SENTING_RESET_PASSWORD_EMAIL);
+        }
       },
       child: BlocBuilder<SigninBloc, SigninState>(
-        builder: (_, state) => state.map(
-          initial: _mapStateToWidget,
-          signinLoading: (state) => const Center(
-            child: Padding(
-              padding: EdgeInsets.only(top: 72),
-              child: Loading(),
-            ),
-          ),
-          sentingResetEmail: (state) => const Center(
-            child: Padding(
-              padding: EdgeInsets.only(top: 72),
-              child: CircularProgressIndicator(),
-            ),
-          ),
-          userAuthenticated: (state) => const SizedBox.shrink(),
-          userAuthenticationFailed: _mapStateToWidget,
-          signinFailed: _mapStateToWidget,
-          resetEmailSentSuccess: _mapStateToWidget,
-          resetEmailSentFailed: mapErrorStateToWidget,
-        ),
+        builder: (_, state) {
+          if (state is InitialSignin ||
+              state is ResetEmailSentSuccess ||
+              state is SigninFailed ||
+              state is UserAuthenticationFailed) {
+            return _form();
+          }
+          if (state is SigninLoading) {
+            return const Center(
+              child: Padding(
+                padding: EdgeInsets.only(top: 72),
+                child: Loading(),
+              ),
+            );
+          }
+          if (state is SentingResetEmail) {
+            return const Center(
+              child: Padding(
+                padding: EdgeInsets.only(top: 72),
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+          return const SizedBox.shrink();
+        },
       ),
     );
   }
 
-  Widget _mapStateToWidget(state) {
+  Widget _form() {
     void _validateAndSendForm() {
       final formState = _formKey.currentState;
       if (formState.validate()) {

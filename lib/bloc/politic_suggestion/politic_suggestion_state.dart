@@ -1,24 +1,54 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+part of 'politic_suggestion_bloc.dart';
 
-import '../../core/domain/model/models.dart';
+abstract class PoliticSuggestionState extends Equatable {
+  const PoliticSuggestionState();
+}
 
-part 'politic_suggestion_state.freezed.dart';
+class InitialPoliticSuggestionState extends PoliticSuggestionState {
+  @override
+  List<Object> get props => [];
+}
 
-@freezed
-abstract class PoliticSuggestionState with _$PoliticSuggestionState {
-  factory PoliticSuggestionState.initial() = InitialPoliticSuggestionState;
-  factory PoliticSuggestionState.fetchSuggestedPoliticsSuccess(
-      List<PoliticoModel> politicos) = FetchSuggestedPoliticsSuccess;
-  factory PoliticSuggestionState.fetchSuggestedPoliticsFailed() =
-      FetchSuggestedPoliticsFailed;
-  factory PoliticSuggestionState.savedSuggestedPolitics() =
-      SavedSuggestedPolitics;
-  factory PoliticSuggestionState.saveSuggestedPoliticsFailed() =
-      SaveSuggestedPoliticsFailed;
-  factory PoliticSuggestionState.changedPoliticsFollowingStatus(
-      PoliticoModel politico,
-      {bool isFollowing}) = ChangedPoliticsFollowingStatus;
-  factory PoliticSuggestionState.loadingFetch() = LoadingFetch;
-  factory PoliticSuggestionState.loadingSaveFollowPolitics() =
-      LoadingSaveFollowPolitics;
+class FetchSuggestedPoliticsSuccess extends PoliticSuggestionState {
+  FetchSuggestedPoliticsSuccess(this.politicos);
+
+  final List<PoliticoModel> politicos;
+
+  @override
+  List<Object> get props => [politicos];
+}
+
+class FetchSuggestedPoliticsFailed extends PoliticSuggestionState {
+  @override
+  List<Object> get props => [];
+}
+
+class SavedSuggestedPolitics extends PoliticSuggestionState {
+  @override
+  List<Object> get props => [];
+}
+
+class SaveSuggestedPoliticsFailed extends PoliticSuggestionState {
+  @override
+  List<Object> get props => [];
+}
+
+class ChangedPoliticsFollowingStatus extends PoliticSuggestionState {
+  ChangedPoliticsFollowingStatus(this.politico, {this.isFollowing});
+
+  final PoliticoModel politico;
+  final bool isFollowing;
+
+  @override
+  List<Object> get props => [politico, isFollowing];
+}
+
+class LoadingFetch extends PoliticSuggestionState {
+  @override
+  List<Object> get props => [];
+}
+
+class LoadingSaveFollowPolitics extends PoliticSuggestionState {
+  @override
+  List<Object> get props => [];
 }

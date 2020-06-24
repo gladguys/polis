@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/exception/exceptions.dart';
 import '../../core/repository/abstract/change_password_repository.dart';
-import 'change_password_event.dart';
-import 'change_password_state.dart';
+
+part 'change_password_event.dart';
+part 'change_password_state.dart';
 
 class ChangePasswordBloc
     extends Bloc<ChangePasswordEvent, ChangePasswordState> {
@@ -15,30 +17,30 @@ class ChangePasswordBloc
   final ChangePasswordRepository repository;
 
   @override
-  ChangePasswordState get initialState => ChangePasswordState.initial();
+  ChangePasswordState get initialState => InitialChangePasswordState();
 
   @override
   Stream<ChangePasswordState> mapEventToState(
       ChangePasswordEvent event) async* {
-    yield* event.map(
-      changeUserPassword: _mapChangeUserPasswordToState,
-    );
+    if (event is ChangeUserPassword) {
+      yield* _mapChangeUserPasswordToState(event);
+    }
   }
 
   Stream<ChangePasswordState> _mapChangeUserPasswordToState(
-      ChangePasswordEvent event) async* {
-    yield ChangePasswordState.userPasswordChanging();
+      ChangeUserPassword event) async* {
+    yield UserPasswordChanging();
 
     try {
       await repository.changeUserPassword(
         currentPassword: event.currentPassword,
         newPassword: event.newPassword,
       );
-      yield ChangePasswordState.userPasswordChangeSuccess();
+      yield UserPasswordChangeSuccess();
     } on WrongPasswordException {
-      yield ChangePasswordState.userWrongPasswordInformed();
+      yield UserWrongPasswordInformed();
     } on Exception {
-      yield ChangePasswordState.userPasswordChangeFailed();
+      yield UserPasswordChangeFailed();
     }
   }
 }

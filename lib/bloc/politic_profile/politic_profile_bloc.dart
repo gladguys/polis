@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/constants.dart';
@@ -10,8 +11,9 @@ import '../../core/domain/model/models.dart';
 import '../../core/repository/abstract/repositories.dart';
 import '../../core/service/services.dart';
 import '../../core/validators.dart';
-import 'politic_profile_event.dart';
-import 'politic_profile_state.dart';
+
+part 'politic_profile_event.dart';
+part 'politic_profile_state.dart';
 
 class PoliticProfileBloc
     extends Bloc<PoliticProfileEvent, PoliticProfileState> {
@@ -42,12 +44,18 @@ class PoliticProfileBloc
   @override
   Stream<PoliticProfileState> mapEventToState(
       PoliticProfileEvent event) async* {
-    yield* event.map(
-      getPoliticInfo: _mapGetPoliticInfoToState,
-      getMoreActivities: _mapGetMoreActivitiesToState,
-      followUnfollowProfilePolitic: _mapFollowUnfollowProfilePoliticToState,
-      sendEmailToPolitic: _mapSendEmailToPoliticToState,
-    );
+    if (event is GetPoliticInfo) {
+      yield* _mapGetPoliticInfoToState(event);
+    }
+    if (event is FollowUnfollowProfilePolitic) {
+      yield* _mapFollowUnfollowProfilePoliticToState(event);
+    }
+    if (event is SendEmailToPolitic) {
+      yield* _mapSendEmailToPoliticToState(event);
+    }
+    if (event is GetMoreActivities) {
+      yield* _mapGetMoreActivitiesToState(event);
+    }
   }
 
   Stream<PoliticProfileState> _mapGetPoliticInfoToState(

@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../core/domain/model/models.dart';
 import '../../core/repository/abstract/politic_expenses_repository.dart';
-import 'politic_expenses_event.dart';
-import 'politic_expenses_state.dart';
+
+part 'politic_expenses_event.dart';
+part 'politic_expenses_state.dart';
 
 class PoliticExpensesBloc
     extends Bloc<PoliticExpensesEvent, PoliticExpensesState> {
@@ -20,17 +22,17 @@ class PoliticExpensesBloc
   @override
   Stream<PoliticExpensesState> mapEventToState(
       PoliticExpensesEvent event) async* {
-    event.map(
-      getPoliticExpenses: _mapGetPoliticExpensesToState,
-    );
+    if (event is GetPoliticExpenses) {
+      yield* _mapGetPoliticExpensesToState(event.politicoId);
+    }
   }
 
   Stream<PoliticExpensesState> _mapGetPoliticExpensesToState(
-      PoliticExpensesEvent event) async* {
+      String politicoId) async* {
     yield LoadingPoliticExpenses();
 
     try {
-      final expenses = await repository.getPoliticExpenses(event.politicoId);
+      final expenses = await repository.getPoliticExpenses(politicoId);
       yield GetPoliticExpensesSuccess(expenses);
     } on Exception {
       yield GetPoliticExpensesFailed();

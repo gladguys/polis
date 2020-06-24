@@ -1,13 +1,38 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+part of 'politic_profile_bloc.dart';
 
-part 'politic_profile_event.freezed.dart';
+abstract class PoliticProfileEvent extends Equatable {
+  const PoliticProfileEvent();
+}
 
-@freezed
-abstract class PoliticProfileEvent with _$PoliticProfileEvent {
-  factory PoliticProfileEvent.getPoliticInfo(String politicId) = GetPoliticInfo;
-  factory PoliticProfileEvent.getMoreActivities(String politicId) =
-      GetMoreActivities;
-  factory PoliticProfileEvent.followUnfollowProfilePolitic(
-      {@required bool isFollowing}) = FollowUnfollowProfilePolitic;
-  factory PoliticProfileEvent.sendEmailToPolitic() = SendEmailToPolitic;
+class GetPoliticInfo extends PoliticProfileEvent {
+  GetPoliticInfo(this.politicId);
+
+  final String politicId;
+
+  @override
+  List<Object> get props => [politicId];
+}
+
+class GetMoreActivities extends PoliticProfileEvent {
+  GetMoreActivities(this.politicId);
+
+  final String politicId;
+
+  @override
+  List<Object> get props => [politicId];
+}
+
+class FollowUnfollowProfilePolitic extends PoliticProfileEvent {
+  FollowUnfollowProfilePolitic({@required this.isFollowing})
+      : assert(isFollowing != null);
+
+  final bool isFollowing;
+
+  @override
+  List<Object> get props => [isFollowing];
+}
+
+class SendEmailToPolitic extends PoliticProfileEvent {
+  @override
+  List<Object> get props => [];
 }

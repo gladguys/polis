@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/domain/model/models.dart';
@@ -8,8 +10,9 @@ import '../../core/repository/abstract/repositories.dart';
 import '../../core/repository/concrete/firebase/firebase.dart';
 import '../../core/service/services.dart';
 import '../blocs.dart';
-import 'post_event.dart';
-import 'post_state.dart';
+
+part 'post_event.dart';
+part 'post_state.dart';
 
 class PostBloc extends Bloc<PostEvent, PostState> {
   PostBloc({
@@ -35,16 +38,19 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
   @override
   Stream<PostState> mapEventToState(PostEvent event) async* {
-    yield* event.map(
-      likePost: _mapLikePostToState,
-      favoritePostForUser: _mapFavoritePostForUserToState,
-      sharePost: _mapSharePost,
-      setPostViewed: _mapSetPostViewedToState,
-      setPostFavorited: _mapSetPostFavoritedToState,
-    );
+    if (event is FavoritePostForUser) {
+      yield* _mapFavoritePostForUserToState(event);
+    }
+    if (event is SharePost) {
+      _mapSharePost(event);
+    }
+    if (event is SetPostViewed) {
+      yield* _mapSetPostViewedToState(event);
+    }
+    if (event is SetPostFavorited) {
+      yield* _mapSetPostFavoritedToState(event);
+    }
   }
-
-  Stream<PostState> _mapLikePostToState(LikePost event) async* {}
 
   Stream<PostState> _mapFavoritePostForUserToState(
       FavoritePostForUser event) async* {
@@ -96,14 +102,9 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     timelineBloc.add(RefreshTimeline());
   }
 
-  Stream<PostState> _mapSharePost(SharePost event) async* {
+  void _mapSharePost(SharePost event) async {
     final postImage = event.postImage;
-    try {
-      await shareService.shareFile(postImage, name: 'post.png');
-      yield PostSharedSuccess();
-    } on Exception {
-      yield PostSharedFailed();
-    }
+    await shareService.shareFile(postImage, name: 'post.png');
   }
 
   Stream<PostState> _mapSetPostViewedToState(SetPostViewed event) async* {

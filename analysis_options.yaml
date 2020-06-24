@@ -12,6 +12,3 @@ linter:
 analyzer:
   errors:
     prefer_const_constructors: error
-  exclude:
-    - '**/*.g.dart'
-    - '**/*.freezed.dart'

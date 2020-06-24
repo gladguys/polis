@@ -1,17 +1,17 @@
-import 'dart:io';
+part of 'edit_profile_bloc.dart';
 
-import 'package:freezed_annotation/freezed_annotation.dart';
+abstract class EditProfileEvent extends Equatable {
+  const EditProfileEvent();
+}
 
-import '../../core/domain/model/models.dart';
+class UpdateUserInfo extends EditProfileEvent {
+  UpdateUserInfo({this.currentUser, this.name, this.email, this.pickedPhoto});
 
-part 'edit_profile_event.freezed.dart';
+  final UserModel currentUser;
+  final String name;
+  final String email;
+  final File pickedPhoto;
 
-@freezed
-abstract class EditProfileEvent with _$EditProfileEvent {
-  const factory EditProfileEvent.updateUserInfo({
-    UserModel currentUser,
-    String name,
-    String email,
-    File pickedPhoto,
-  }) = UpdateUserInfo;
+  @override
+  List<Object> get props => [currentUser, name, email, pickedPhoto];
 }

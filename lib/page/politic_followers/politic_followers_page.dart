@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 import '../../bloc/blocs.dart';
-import '../../bloc/commom_bloc.dart';
 import '../../core/domain/model/usuario_seguindo_politico_model.dart';
 import '../../core/i18n/i18n.dart';
 import '../../widget/card_base.dart';
 import '../../widget/empty_info.dart';
+import '../../widget/loading.dart';
 import '../../widget/photo.dart';
 import '../../widget/text_title.dart';
 
@@ -17,17 +17,19 @@ class PoliticFollowersPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: BlocBuilder<PoliticFollowersBloc, PoliticFollowersState>(
-          builder: (_, state) => state.maybeWhen(
-            getPoliticFollowersSuccess: _mapSuccessStateToWidget,
-            loadingPoliticFollowers: mapLoadingToWidget,
-            orElse: mapErrorToWidget,
-          ),
+          builder: (_, state) {
+            if (state is GetPoliticFollowersSuccess) {
+              return _buildList(state.followers);
+            } else {
+              return const Loading();
+            }
+          },
         ),
       ),
     );
   }
 
-  Widget _mapSuccessStateToWidget(List<UsuarioSeguindoPolitico> followers) {
+  Widget _buildList(List<UsuarioSeguindoPolitico> followers) {
     return Column(
       children: <Widget>[
         const SizedBox(height: 8),

@@ -1,16 +1,29 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+part of 'politic_followers_bloc.dart';
 
-import '../../core/domain/model/models.dart';
+abstract class PoliticFollowersState extends Equatable {
+  const PoliticFollowersState();
+}
 
-part 'politic_followers_state.freezed.dart';
+class InitialPoliticFollowersState extends PoliticFollowersState {
+  @override
+  List<Object> get props => [];
+}
 
-@freezed
-abstract class PoliticFollowersState with _$PoliticFollowersState {
-  factory PoliticFollowersState.initial() = InitialPoliticFollowersState;
-  factory PoliticFollowersState.getPoliticFollowersSuccess(
-      {List<UsuarioSeguindoPolitico> followers}) = GetPoliticFollowersSuccess;
-  factory PoliticFollowersState.getPoliticFollowersFailed() =
-      GetPoliticFollowersFailed;
-  factory PoliticFollowersState.loadingPoliticFollowers() =
-      LoadingPoliticFollowers;
+class GetPoliticFollowersSuccess extends PoliticFollowersState {
+  GetPoliticFollowersSuccess({this.followers});
+
+  final List<UsuarioSeguindoPolitico> followers;
+
+  @override
+  List<Object> get props => [followers];
+}
+
+class GetPoliticFollowersFailed extends PoliticFollowersState {
+  @override
+  List<Object> get props => [];
+}
+
+class LoadingPoliticFollowers extends PoliticFollowersState {
+  @override
+  List<Object> get props => [];
 }

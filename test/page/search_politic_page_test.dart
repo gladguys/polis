@@ -79,8 +79,6 @@ void main() {
     testWidgets('shoud go to PoliticProfilePage when click on a politic',
         (tester) async {
       final mockPoliticProfileBloc = MockPoliticProfileBloc();
-      when(mockPoliticProfileBloc.state)
-          .thenReturn(InitialPoliticProfileState());
       final mockSearchPoliticBloc = MockSearchPoliticBloc();
       when(mockSearchPoliticBloc.politicProfileBloc)
           .thenAnswer((_) => mockPoliticProfileBloc);
@@ -122,10 +120,11 @@ void main() {
         FetchSearchPoliticsSuccess(
           [
             PoliticoModel(
-                id: '1',
-                nomeEleitoral: 'nome',
-                urlPartidoLogo: 'url',
-                urlFoto: 'url'),
+              id: '1',
+              nomeEleitoral: 'nome',
+              urlPartidoLogo: 'url',
+              urlFoto: 'url'
+            ),
           ],
         ),
       );

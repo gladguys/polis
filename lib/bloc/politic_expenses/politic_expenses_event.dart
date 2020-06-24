@@ -1,9 +1,14 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+part of 'politic_expenses_bloc.dart';
 
-part 'politic_expenses_event.freezed.dart';
+abstract class PoliticExpensesEvent extends Equatable {
+  const PoliticExpensesEvent();
+}
 
-@freezed
-abstract class PoliticExpensesEvent with _$PoliticExpensesEvent {
-  factory PoliticExpensesEvent.getPoliticExpenses(String politicoId) =
-      GetPoliticExpenses;
+class GetPoliticExpenses extends PoliticExpensesEvent {
+  GetPoliticExpenses(this.politicoId);
+
+  final String politicoId;
+
+  @override
+  List<Object> get props => [politicoId];
 }
