@@ -94,16 +94,18 @@ void main() {
     );
 
     blocTest(
-      'Expects [CurrentUserUpdated] when UpdateCurrentUser added',
-      build: () async => userBloc,
-      act: (userBloc) {
-        userBloc.add(UpdateCurrentUser(UserModel()));
-        return;
-      },
-      expect: [
-        CurrentUserUpdated(UserModel()),
-      ],
-    );
+        '''Expects [CurrentUserUpdated] when UpdateCurrentUser added and set user to shared preferences''',
+        build: () async => userBloc,
+        act: (userBloc) {
+          userBloc.add(UpdateCurrentUser(UserModel()));
+          return;
+        },
+        expect: [
+          CurrentUserUpdated(UserModel()),
+        ],
+        verify: (userBloc) async {
+          verify(mockSharedPreferencesService.setUser(UserModel())).called(1);
+        });
 
     blocTest(
       'Expects [SignoutLoading, SignoutFailed] when Logout fails',
