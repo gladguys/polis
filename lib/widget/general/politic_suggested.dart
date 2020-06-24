@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../core/domain/model/models.dart';
-import '../core/i18n/i18n.dart';
-import 'image/photo_image.dart';
+import '../../core/domain/model/models.dart';
+import '../../core/i18n/i18n.dart';
+import '../image/photo_image.dart';
 
 class PoliticSuggested extends StatelessWidget {
   PoliticSuggested({this.politico, this.isFollowing, this.onClickFollowButton});

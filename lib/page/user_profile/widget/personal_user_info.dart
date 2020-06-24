@@ -4,7 +4,7 @@ import 'package:simple_router/simple_router.dart';
 import '../../../core/domain/model/models.dart';
 import '../../../core/i18n/i18n.dart';
 import '../../../core/routing/route_names.dart';
-import '../../../widget/photo.dart';
+import '../../../widget/general/photo.dart';
 import '../../pages.dart';
 
 class PersonalUserInfo extends StatelessWidget {

@@ -10,7 +10,7 @@ import 'package:polis/page/favorite_posts/widget/favorites_post_list.dart';
 import 'package:polis/page/favorite_posts/widget/favorites_posts_skeleton.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
-import 'package:polis/widget/empty_info.dart';
+import 'package:polis/widget/general/empty_info.dart';
 
 import '../mock.dart';
 import '../utils.dart';

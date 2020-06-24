@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../bloc/blocs.dart';
 import '../../../core/extension/media_query_extensions.dart';
 import '../../../core/i18n/label.dart';
-import '../../../widget/text_title.dart';
+import '../../../widget/general/text_title.dart';
 import '../../theme/main_theme.dart';
 import 'politic_action_buttons.dart';
 import 'politic_activities.dart';

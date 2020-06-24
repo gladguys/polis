@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/domain/model/models.dart';
 import '../../../core/i18n/i18n.dart';
-import '../../../widget/not_found.dart';
+import '../../../widget/general/not_found.dart';
 import 'activities_list.dart';
 
 class UserActions extends StatelessWidget {

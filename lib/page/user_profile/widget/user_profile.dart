@@ -8,7 +8,7 @@ import '../../../bloc/user/user_bloc.dart';
 import '../../../core/domain/model/models.dart';
 import '../../../core/extension/media_query_extensions.dart';
 import '../../../core/i18n/label.dart';
-import '../../../widget/text_title.dart';
+import '../../../widget/general/text_title.dart';
 import '../../theme/main_theme.dart';
 import 'logout_button.dart';
 import 'personal_user_info.dart';

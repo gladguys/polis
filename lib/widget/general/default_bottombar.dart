@@ -5,14 +5,14 @@ import 'package:flutter_bloc_monitor/flutter_bloc_monitor.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../bloc/blocs.dart';
-import '../core/i18n/i18n.dart';
-import '../core/keys.dart';
-import '../core/routing/route_names.dart';
-import '../core/service/locator.dart';
-import '../core/service/services.dart';
-import '../page/pages.dart';
-import '../page/theme/main_theme.dart';
+import '../../bloc/blocs.dart';
+import '../../core/i18n/i18n.dart';
+import '../../core/keys.dart';
+import '../../core/routing/route_names.dart';
+import '../../core/service/locator.dart';
+import '../../core/service/services.dart';
+import '../../page/pages.dart';
+import '../../page/theme/main_theme.dart';
 import 'photo.dart';
 
 class DefaultBottombar extends StatelessWidget {

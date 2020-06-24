@@ -5,9 +5,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../bloc/blocs.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/i18n/i18n.dart';
-import '../../widget/empty_info.dart';
-import '../../widget/error_container.dart';
-import '../../widget/text_title.dart';
+import '../../widget/general/empty_info.dart';
+import '../../widget/general/error_container.dart';
+import '../../widget/general/text_title.dart';
 import 'widget/politic_proposals_list.dart';
 import 'widget/politic_proposals_skeleton.dart';
 

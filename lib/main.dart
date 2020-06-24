@@ -12,8 +12,8 @@ import 'bloc/flutter_bloc_delegate.dart';
 import 'core/domain/model/models.dart';
 import 'core/service/locator.dart';
 import 'core/service/services.dart';
-import 'widget/my_app.dart';
-import 'widget/my_app_injections.dart';
+import 'widget/general/my_app.dart';
+import 'widget/general/my_app_injections.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -6,7 +6,7 @@ import 'package:polis/page/politic_proposals/widget/politic_proposals_skeleton.d
 import 'package:polis/page/search_politic/widgets/search_politic_skeleton.dart';
 import 'package:polis/page/user_following_politics/widget/following_politics_skeleton.dart';
 import 'package:polis/page/user_profile/widget/user_profile_skeleton.dart';
-import 'package:polis/widget/skeleton.dart';
+import 'package:polis/widget/general/skeleton.dart';
 
 void main() {
   group('Skeleton tests', () {

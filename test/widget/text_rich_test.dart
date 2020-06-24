@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:polis/widget/text_rich.dart';
+import 'package:polis/widget/general/text_rich.dart';
 
 void main() {
   group('TextRich tests', () {

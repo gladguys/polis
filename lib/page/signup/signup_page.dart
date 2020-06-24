@@ -12,8 +12,8 @@ import '../../core/extension/extensions.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
 import '../../core/validators.dart';
-import '../../widget/loading.dart';
-import '../../widget/snackbar.dart';
+import '../../widget/general/loading.dart';
+import '../../widget/general/snackbar.dart';
 import '../theme/main_theme.dart';
 
 class SignupPage extends StatefulWidget {

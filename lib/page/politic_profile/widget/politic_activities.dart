@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import '../../../core/constants.dart';
-import '../../theme/main_theme.dart';
 
 import '../../../bloc/blocs.dart';
+import '../../../core/constants.dart';
 import '../../../core/domain/model/despesa_model.dart';
 import '../../../core/domain/model/models.dart';
 import '../../../core/extension/extensions.dart';
 import '../../../core/i18n/i18n.dart';
-import '../../../widget/not_found.dart';
+import '../../../widget/general/not_found.dart';
 import '../../../widget/tile/politic_despesa_tile_connected.dart';
 import '../../../widget/tile/politic_proposta_tile_connected.dart';
+import '../../theme/main_theme.dart';
 
 class PoliticActivities extends StatefulWidget {
   PoliticActivities(this.lastActivities) : assert(lastActivities != null);
@@ -32,7 +32,7 @@ class _PoliticActivitiesState extends State<PoliticActivities> {
       currentPosition >= maxScrollPosition - kBottomOffsetToLoadMore;
   PoliticProfileBloc get politicProfileBloc =>
       context.bloc<PoliticProfileBloc>();
-  
+
   bool hasLoadedAlready;
   int currentActivitiesLength;
   int oldActivitiesLength;

@@ -6,8 +6,8 @@ import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/keys.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
-import 'package:polis/widget/card_base.dart';
-import 'package:polis/widget/error_container.dart';
+import 'package:polis/widget/general/card_base.dart';
+import 'package:polis/widget/general/error_container.dart';
 
 import '../mock.dart';
 import '../utils.dart';

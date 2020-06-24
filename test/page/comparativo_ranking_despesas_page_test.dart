@@ -8,8 +8,8 @@ import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/comparativo_ranking_despesas/widget/resultados_ranking.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
-import 'package:polis/widget/error_container.dart';
-import 'package:polis/widget/loading.dart';
+import 'package:polis/widget/general/error_container.dart';
+import 'package:polis/widget/general/loading.dart';
 
 import '../mock.dart';
 import '../utils.dart';

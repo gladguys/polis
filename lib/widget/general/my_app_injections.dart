@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
 
-import '../core/abstract/polis_google_auth_provider.dart';
-import '../core/repository/concrete/repositories.dart';
+import '../../core/abstract/polis_google_auth_provider.dart';
+import '../../core/repository/concrete/repositories.dart';
 
 const SCOPE_TYPE = 'email';
 const SCOPE_URL = 'https://www.googleapis.com/auth/userinfo.profile';

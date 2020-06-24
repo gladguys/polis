@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
-import '../../widget/error_container.dart';
+import '../../widget/general/error_container.dart';
 import 'widget/user_profile.dart';
 import 'widget/user_profile_skeleton.dart';
 

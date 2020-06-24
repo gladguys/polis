@@ -8,7 +8,7 @@ import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
-import 'package:polis/widget/timeline_tile.dart';
+import 'package:polis/widget/general/timeline_tile.dart';
 
 import '../mock.dart';
 import '../utils.dart';

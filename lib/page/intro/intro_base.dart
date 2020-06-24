@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../core/i18n/i18n.dart';
-import '../../widget/logo.dart';
+import '../../widget/general/logo.dart';
 
 class IntroBase extends StatelessWidget {
   const IntroBase({

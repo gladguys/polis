@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:polis/widget/button_action_card.dart';
+import 'package:polis/widget/general/button_action_card.dart';
 
 import '../utils.dart';
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/domain/model/models.dart';
 import '../../core/i18n/i18n.dart';
-import '../timeline_card_label.dart';
+import '../general/timeline_card_label.dart';
 
 class TagProposta extends StatelessWidget {
   TagProposta(this.proposta, {this.showStatus = true});

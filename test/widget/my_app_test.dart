@@ -6,8 +6,8 @@ import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/pages.dart';
-import 'package:polis/widget/my_app.dart';
-import 'package:polis/widget/my_app_injections.dart';
+import 'package:polis/widget/general/my_app.dart';
+import 'package:polis/widget/general/my_app_injections.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../mock.dart';

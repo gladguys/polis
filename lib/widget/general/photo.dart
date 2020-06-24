@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'image/photo_image.dart';
+import '../image/photo_image.dart';
 
 class Photo extends StatelessWidget {
   const Photo({

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:polis/widget/field_rounded.dart';
+import 'package:polis/widget/general/field_rounded.dart';
 
 import '../utils.dart';
 

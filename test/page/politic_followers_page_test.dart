@@ -4,9 +4,9 @@ import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
-import 'package:polis/widget/card_base.dart';
-import 'package:polis/widget/empty_info.dart';
-import 'package:polis/widget/loading.dart';
+import 'package:polis/widget/general/card_base.dart';
+import 'package:polis/widget/general/empty_info.dart';
+import 'package:polis/widget/general/loading.dart';
 
 import '../mock.dart';
 import '../utils.dart';

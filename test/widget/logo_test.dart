@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:polis/widget/logo.dart';
+import 'package:polis/widget/general/logo.dart';
 
 void main() {
   group('Logo tests', () {

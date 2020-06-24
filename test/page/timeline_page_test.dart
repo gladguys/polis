@@ -13,9 +13,9 @@ import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
 import 'package:polis/page/timeline/widget/timeline.dart';
-import 'package:polis/widget/text_rich.dart';
+import 'package:polis/widget/general/text_rich.dart';
+import 'package:polis/widget/general/update_app_dialog.dart';
 import 'package:polis/widget/tile/despesa_tile.dart';
-import 'package:polis/widget/update_app_dialog.dart';
 
 import '../mock.dart';
 import '../utils.dart';

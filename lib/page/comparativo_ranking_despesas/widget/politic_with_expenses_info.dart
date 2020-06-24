@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/extension/extensions.dart';
 import '../../../core/i18n/i18n.dart';
-import '../../../widget/photo.dart';
+import '../../../widget/general/photo.dart';
 import '../../theme/main_theme.dart';
 
 class PoliticWithExpensesInfo extends StatelessWidget {

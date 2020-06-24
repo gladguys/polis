@@ -13,8 +13,12 @@ void main() {
     MockPostRepository mockPostRepository;
     MockShareService mockShareService;
     MockFile mockFile;
+    MockTimelineBloc mockTimelineBloc;
+    DespesaModel despesa;
+    PropostaModel proposta;
 
     setUp(() {
+      mockTimelineBloc = MockTimelineBloc();
       mockPostRepository = MockPostRepository();
       mockShareService = MockShareService();
       mockFile = MockFile();
@@ -22,6 +26,14 @@ void main() {
         post: {},
         postRepository: mockPostRepository,
         shareService: mockShareService,
+      );
+      despesa = DespesaModel(
+        id: '1',
+        favorito: true,
+      );
+      proposta = PropostaModel(
+        idPropostaPolitico: '1',
+        favorito: true,
       );
     });
 
@@ -89,6 +101,156 @@ void main() {
       verify: (postBloc) async => verify(mockPostRepository.unfavoritePost(
               post: anyNamed('post'), user: anyNamed('user')))
           .called(1),
+    );
+
+    blocTest(
+      '''Expects [PostFavoriteStatusChanged, PostFavoritedSuccess] when FavoritePostForUser added''',
+      build: () async {
+        when(mockPostRepository.unfavoritePost(
+                post: anyNamed('post'), user: anyNamed('user')))
+            .thenThrow(Exception());
+        return PostBloc(
+          post: {
+            FAVORITO_FIELD: true,
+          },
+          postRepository: mockPostRepository,
+          shareService: mockShareService,
+        );
+      },
+      act: (postBloc) async =>
+          postBloc.add(FavoritePostForUser(post: {}, user: UserModel())),
+      expect: [
+        PostFavoriteStatusChanged(
+          post: {
+            FAVORITO_FIELD: false,
+          },
+          isFavorite: false,
+        ),
+        PostFavoritedFailed()
+      ],
+      verify: (postBloc) async => verify(mockPostRepository.unfavoritePost(
+              post: anyNamed('post'), user: anyNamed('user')))
+          .called(1),
+    );
+
+    blocTest(
+      '''Expects [PostFavoriteStatusChanged, PostFavoritedSuccess] when FavoritePostForUser added for despesa and update timeline''',
+      build: () async {
+        when(mockTimelineBloc.timelinePosts).thenReturn([
+          despesa,
+        ]);
+        return PostBloc(
+          post: {
+            'id': '1',
+            FAVORITO_FIELD: true,
+          },
+          postRepository: mockPostRepository,
+          shareService: mockShareService,
+          timelineBloc: mockTimelineBloc,
+        );
+      },
+      act: (postBloc) async => postBloc.add(
+        FavoritePostForUser(
+          post: despesa.toJson(),
+          user: UserModel(),
+        ),
+      ),
+      expect: [
+        PostFavoriteStatusChanged(
+          post: {
+            'id': '1',
+            FAVORITO_FIELD: true,
+          },
+          isFavorite: false,
+        ),
+        PostFavoritedSuccess()
+      ],
+      verify: (postBloc) async {
+        verify(mockPostRepository.unfavoritePost(
+                post: anyNamed('post'), user: anyNamed('user')))
+            .called(1);
+        verify(mockTimelineBloc.add(RefreshTimeline())).called(1);
+      },
+    );
+
+    blocTest(
+      '''Expects [PostFavoriteStatusChanged, PostFavoritedSuccess] when FavoritePostForUser added and update timeline''',
+      build: () async {
+        when(mockTimelineBloc.timelinePosts).thenReturn([
+          proposta,
+        ]);
+        return PostBloc(
+          post: {
+            'idPropostaPolitico': '1',
+            FAVORITO_FIELD: true,
+          },
+          postRepository: mockPostRepository,
+          shareService: mockShareService,
+          timelineBloc: mockTimelineBloc,
+        );
+      },
+      act: (postBloc) async => postBloc.add(
+        FavoritePostForUser(
+          post: proposta.toJson(),
+          user: UserModel(),
+        ),
+      ),
+      expect: [
+        PostFavoriteStatusChanged(
+          post: {
+            'idPropostaPolitico': '1',
+            FAVORITO_FIELD: true,
+          },
+          isFavorite: false,
+        ),
+        PostFavoritedSuccess()
+      ],
+      verify: (postBloc) async {
+        verify(mockPostRepository.unfavoritePost(
+                post: anyNamed('post'), user: anyNamed('user')))
+            .called(1);
+        verify(mockTimelineBloc.add(RefreshTimeline())).called(1);
+      },
+    );
+
+    blocTest(
+      '''Expects [PostFavoriteStatusChanged, PostFavoritedSuccess] when FavoritePostForUser added and update timeline''',
+      build: () async {
+        when(mockTimelineBloc.timelinePosts).thenReturn([
+          despesa,
+        ]);
+        return PostBloc(
+          post: {
+            'id': '1',
+            FAVORITO_FIELD: true,
+          },
+          postRepository: mockPostRepository,
+          shareService: mockShareService,
+          timelineBloc: mockTimelineBloc,
+        );
+      },
+      act: (postBloc) async => postBloc.add(
+        FavoritePostForUser(
+          post: despesa.toJson(),
+          user: UserModel(),
+        ),
+      ),
+      expect: [
+        PostFavoriteStatusChanged(
+          post: {
+            'id': '1',
+            FAVORITO_FIELD: true,
+          },
+          isFavorite: false,
+        ),
+        PostFavoritedSuccess()
+      ],
+      verify: (postBloc) async {
+        verify(mockPostRepository.unfavoritePost(
+                post: anyNamed('post'), user: anyNamed('user')))
+            .called(1);
+        verify(mockTimelineBloc.add(RefreshTimeline())).called(1);
+      },
     );
 
     blocTest(

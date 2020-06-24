@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../widget/skeleton.dart';
+import '../../../widget/general/skeleton.dart';
 
 class SearchPoliticSkeleton extends StatelessWidget {
   const SearchPoliticSkeleton();

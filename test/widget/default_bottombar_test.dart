@@ -9,10 +9,12 @@ import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/keys.dart';
+import 'package:polis/core/routing/route_names.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/pages.dart';
+import 'package:polis/widget/general/default_bottombar.dart';
+import 'package:polis/widget/general/my_app_injections.dart';
 import 'package:polis/widget/image/photo_image.dart';
-import 'package:polis/widget/my_app_injections.dart';
 
 import '../mock.dart';
 import '../utils.dart';
@@ -47,6 +49,23 @@ void main() {
           ),
         ),
       );
+    });
+
+    testWidgets('shoud build without exploding with back button',
+        (tester) async {
+      final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.user).thenReturn(UserModel());
+      await tester.pumpWidget(
+        connectedWidget(
+          DefaultBottombar(
+            TIMELINE_PAGE,
+            withBack: true,
+          ),
+          withScaffold: true,
+        ),
+      );
+      final backButton = find.byKey(arrowBackButtonKey);
+      await tester.tap(backButton);
     });
 
     testWidgets('shoud build icons on bottombar', (tester) async {

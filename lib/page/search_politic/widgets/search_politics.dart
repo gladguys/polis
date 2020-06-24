@@ -7,7 +7,7 @@ import '../../../core/domain/model/models.dart';
 import '../../../core/extension/extensions.dart';
 import '../../../core/i18n/label.dart';
 import '../../../core/keys.dart';
-import '../../../widget/field_rounded.dart';
+import '../../../widget/general/field_rounded.dart';
 import '../../../widget/select/selects.dart';
 import '../../theme/main_theme.dart';
 import 'search_politics_list.dart';

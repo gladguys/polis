@@ -9,7 +9,7 @@ import 'package:polis/core/domain/model/despesa_model.dart';
 import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/page_connected.dart';
-import 'package:polis/widget/button_action_card.dart';
+import 'package:polis/widget/general/button_action_card.dart';
 import 'package:polis/widget/post/post_despesa.dart';
 
 import '../mock.dart';

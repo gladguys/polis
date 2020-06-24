@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../core/domain/model/models.dart';
 import '../../../core/i18n/i18n.dart';
+import '../../../widget/general/photo.dart';
 import '../../../widget/image/logo_partido_image.dart';
-import '../../../widget/photo.dart';
 
 class PoliticPersonalInfo extends StatelessWidget {
   PoliticPersonalInfo(this.politic);

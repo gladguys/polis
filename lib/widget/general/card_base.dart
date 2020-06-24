@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../core/keys.dart';
+import '../../core/keys.dart';
 
 class CardBase extends StatelessWidget {
   const CardBase({

@@ -13,8 +13,8 @@ import 'package:polis/page/politic_profile/widget/politic_action_buttons.dart';
 import 'package:polis/page/politic_profile/widget/politic_activities.dart';
 import 'package:polis/page/politic_profile/widget/politic_additional_info.dart';
 import 'package:polis/page/politic_profile/widget/politic_personal_info.dart';
-import 'package:polis/widget/error_container.dart';
-import 'package:polis/widget/not_found.dart';
+import 'package:polis/widget/general/error_container.dart';
+import 'package:polis/widget/general/not_found.dart';
 
 import '../mock.dart';
 import '../utils.dart';

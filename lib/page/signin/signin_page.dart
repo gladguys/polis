@@ -12,8 +12,8 @@ import '../../core/routing/route_names.dart';
 import '../../core/service/locator.dart';
 import '../../core/service/services.dart';
 import '../../core/validators.dart';
-import '../../widget/loading.dart';
-import '../../widget/snackbar.dart';
+import '../../widget/general/loading.dart';
+import '../../widget/general/snackbar.dart';
 import '../pages.dart';
 import 'widget/reset_password_form.dart';
 

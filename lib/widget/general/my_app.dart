@@ -4,15 +4,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../bloc/blocs.dart';
-import '../core/domain/model/models.dart';
-import '../core/i18n/i18n.dart';
-import '../core/repository/concrete/repositories.dart';
-import '../core/routing/polis_routing_observer.dart';
-import '../core/service/locator.dart';
-import '../core/service/services.dart';
-import '../page/pages.dart';
-import '../page/theme/main_theme.dart';
+import '../../bloc/blocs.dart';
+import '../../core/domain/model/models.dart';
+import '../../core/i18n/i18n.dart';
+import '../../core/repository/concrete/repositories.dart';
+import '../../core/routing/polis_routing_observer.dart';
+import '../../core/service/locator.dart';
+import '../../core/service/services.dart';
+import '../../page/pages.dart';
+import '../../page/theme/main_theme.dart';
 
 class MyApp extends StatefulWidget {
   MyApp({@required this.sharedPreferencesService})

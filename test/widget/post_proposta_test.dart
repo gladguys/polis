@@ -8,7 +8,7 @@ import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/i18n/i18n.dart';
 import 'package:polis/core/keys.dart';
 import 'package:polis/page/page_connected.dart';
-import 'package:polis/widget/button_action_card.dart';
+import 'package:polis/widget/general/button_action_card.dart';
 import 'package:polis/widget/post/post_proposta.dart';
 
 import '../mock.dart';

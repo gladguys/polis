@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../core/domain/model/models.dart';
 import '../../../core/extension/extensions.dart';
 import '../../../core/i18n/i18n.dart';
-import '../../../widget/text_title.dart';
+import '../../../widget/general/text_title.dart';
 import '../../theme/main_theme.dart';
 import 'politic_with_expenses_info.dart';
 

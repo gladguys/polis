@@ -12,13 +12,13 @@ import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../page/pages.dart';
 import '../../page/theme/main_theme.dart';
-import '../button_action_card.dart';
-import '../card_base.dart';
+import '../general/button_action_card.dart';
+import '../general/card_base.dart';
+import '../general/label_value.dart';
+import '../general/photo.dart';
 import '../general/proposal_authors.dart';
+import '../general/text_rich.dart';
 import '../image/photo_image.dart';
-import '../label_value.dart';
-import '../photo.dart';
-import '../text_rich.dart';
 
 class PostProposta extends StatelessWidget {
   PostProposta(this.proposta, {@required this.screenshotController})

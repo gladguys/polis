@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:polis/widget/text_title.dart';
+import 'package:polis/widget/general/text_title.dart';
 
 void main() {
   group('TextTitle tests', () {

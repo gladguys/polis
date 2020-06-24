@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../core/i18n/i18n.dart';
 
-import '../timeline_card_label.dart';
+import '../../core/i18n/i18n.dart';
+import '../general/timeline_card_label.dart';
 
 class TagDespesa extends StatelessWidget {
   @override

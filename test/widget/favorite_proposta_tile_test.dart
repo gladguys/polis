@@ -8,7 +8,7 @@ import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/i18n/i18n.dart';
 import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
-import 'package:polis/widget/button_action_card.dart';
+import 'package:polis/widget/general/button_action_card.dart';
 import 'package:polis/widget/tile/favorite_proposta_tile_connected.dart';
 
 import '../mock.dart';

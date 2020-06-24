@@ -9,11 +9,11 @@ import '../../core/extension/extensions.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/routing/route_names.dart';
 import '../../page/pages.dart';
-import '../card_base.dart';
+import '../general/card_base.dart';
+import '../general/photo.dart';
+import '../general/text_rich.dart';
 import '../image/photo_image.dart';
-import '../photo.dart';
 import '../tag/tag_proposta.dart';
-import '../text_rich.dart';
 
 class PoliticPropostaTile extends StatelessWidget {
   PoliticPropostaTile(this.proposta, {this.clickableImage});

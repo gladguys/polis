@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../page/theme/main_theme.dart';
+
+import '../../page/theme/main_theme.dart';
 
 class Snackbar {
   Snackbar(

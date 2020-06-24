@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
 import '../../page/theme/main_theme.dart';
-import '../label_value.dart';
+import 'label_value.dart';
 
 class ProposalAuthors extends StatefulWidget {
   ProposalAuthors(this.nomesAutores);

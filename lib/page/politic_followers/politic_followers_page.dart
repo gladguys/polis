@@ -5,11 +5,11 @@ import 'package:flutter_icons/flutter_icons.dart';
 import '../../bloc/blocs.dart';
 import '../../core/domain/model/usuario_seguindo_politico_model.dart';
 import '../../core/i18n/i18n.dart';
-import '../../widget/card_base.dart';
-import '../../widget/empty_info.dart';
-import '../../widget/loading.dart';
-import '../../widget/photo.dart';
-import '../../widget/text_title.dart';
+import '../../widget/general/card_base.dart';
+import '../../widget/general/empty_info.dart';
+import '../../widget/general/loading.dart';
+import '../../widget/general/photo.dart';
+import '../../widget/general/text_title.dart';
 
 class PoliticFollowersPage extends StatelessWidget {
   @override

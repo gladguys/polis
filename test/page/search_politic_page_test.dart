@@ -11,8 +11,8 @@ import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
 import 'package:polis/page/search_politic/widgets/search_politic_skeleton.dart';
 import 'package:polis/page/search_politic/widgets/search_politics.dart';
-import 'package:polis/widget/error_container.dart';
-import 'package:polis/widget/field_rounded.dart';
+import 'package:polis/widget/general/error_container.dart';
+import 'package:polis/widget/general/field_rounded.dart';
 import 'package:polis/widget/select/selects.dart';
 
 import '../mock.dart';
@@ -120,11 +120,10 @@ void main() {
         FetchSearchPoliticsSuccess(
           [
             PoliticoModel(
-              id: '1',
-              nomeEleitoral: 'nome',
-              urlPartidoLogo: 'url',
-              urlFoto: 'url'
-            ),
+                id: '1',
+                nomeEleitoral: 'nome',
+                urlPartidoLogo: 'url',
+                urlFoto: 'url'),
           ],
         ),
       );

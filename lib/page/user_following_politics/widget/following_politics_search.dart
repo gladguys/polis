@@ -6,7 +6,7 @@ import '../../../bloc/blocs.dart';
 import '../../../core/domain/model/models.dart';
 import '../../../core/i18n/label.dart';
 import '../../../core/keys.dart';
-import '../../../widget/field_rounded.dart';
+import '../../../widget/general/field_rounded.dart';
 import 'following_politics_list.dart';
 
 class FollowingPoliticsSearch extends StatelessWidget {

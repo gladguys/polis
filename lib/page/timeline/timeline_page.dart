@@ -7,7 +7,7 @@ import '../../bloc/blocs.dart';
 import '../../core/domain/enum/timeline_status.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/routing/route_names.dart';
-import '../../widget/default_bottombar.dart';
+import '../../widget/general/default_bottombar.dart';
 import '../pages.dart';
 import '../theme/main_theme.dart';
 import 'widget/timeline.dart';

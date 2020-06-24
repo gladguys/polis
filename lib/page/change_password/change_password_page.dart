@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/blocs.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
-import '../../widget/loading.dart';
-import '../../widget/snackbar.dart';
-import '../../widget/text_title.dart';
+import '../../widget/general/loading.dart';
+import '../../widget/general/snackbar.dart';
+import '../../widget/general/text_title.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   @override

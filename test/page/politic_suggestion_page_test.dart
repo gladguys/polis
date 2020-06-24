@@ -11,8 +11,8 @@ import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
 import 'package:polis/page/politic_sugestion/widget/politics_suggested_grid.dart';
-import 'package:polis/widget/loading.dart';
-import 'package:polis/widget/politic_suggested.dart';
+import 'package:polis/widget/general/loading.dart';
+import 'package:polis/widget/general/politic_suggested.dart';
 
 import '../mock.dart';
 import '../utils.dart';

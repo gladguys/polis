@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../core/constants.dart';
-import '../core/i18n/i18n.dart';
-import '../page/theme/main_theme.dart';
+import '../../core/constants.dart';
+import '../../core/i18n/i18n.dart';
+import '../../page/theme/main_theme.dart';
 
 class EmptyInfo extends StatelessWidget {
   EmptyInfo({this.imageName, this.icon, @required this.text})

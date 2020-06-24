@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/domain/model/models.dart';
-import '../../widget/error_container.dart';
-import '../../widget/loading.dart';
+import '../../widget/general/error_container.dart';
+import '../../widget/general/loading.dart';
 import 'widget/resultados_ranking.dart';
 
 class ComparativoRankingDespesasPage extends StatelessWidget {

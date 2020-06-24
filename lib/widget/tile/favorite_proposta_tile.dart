@@ -10,12 +10,12 @@ import '../../core/extension/extensions.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/routing/route_names.dart';
 import '../../page/pages.dart';
-import '../button_action_card.dart';
-import '../card_base.dart';
+import '../general/button_action_card.dart';
+import '../general/card_base.dart';
+import '../general/photo.dart';
+import '../general/text_rich.dart';
 import '../image/logo_partido_image.dart';
-import '../photo.dart';
 import '../tag/tag_proposta.dart';
-import '../text_rich.dart';
 
 class FavoritePropostaTile extends StatelessWidget {
   FavoritePropostaTile({this.clickableImage});

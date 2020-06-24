@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:polis/widget/snackbar.dart';
+import 'package:polis/widget/general/snackbar.dart';
 
 import '../utils.dart';
 

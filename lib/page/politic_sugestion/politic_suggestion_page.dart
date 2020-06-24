@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
-import '../../widget/loading.dart';
+import '../../widget/general/loading.dart';
 import '../pages.dart';
 import 'widget/politics_sugestion.dart';
 

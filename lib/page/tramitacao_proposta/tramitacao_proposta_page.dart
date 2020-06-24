@@ -6,10 +6,10 @@ import '../../bloc/blocs.dart';
 import '../../core/domain/model/tramitacao_proposta_model.dart';
 import '../../core/extension/extensions.dart';
 import '../../core/i18n/label.dart';
-import '../../widget/label_value.dart';
-import '../../widget/loading.dart';
-import '../../widget/text_title.dart';
-import '../../widget/timeline_tile.dart';
+import '../../widget/general/label_value.dart';
+import '../../widget/general/loading.dart';
+import '../../widget/general/text_title.dart';
+import '../../widget/general/timeline_tile.dart';
 import '../theme/main_theme.dart';
 
 class TramitacaoPropostaPage extends StatelessWidget {

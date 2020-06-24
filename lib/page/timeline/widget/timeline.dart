@@ -11,7 +11,7 @@ import '../../../core/domain/model/models.dart';
 import '../../../core/i18n/i18n.dart';
 import '../../../core/keys.dart';
 import '../../../widget/ad/timeline_ad_banner.dart';
-import '../../../widget/text_rich.dart';
+import '../../../widget/general/text_rich.dart';
 import '../../../widget/tile/despesa_tile_connected.dart';
 import '../../../widget/tile/proposta_tile_connected.dart';
 import '../../theme/main_theme.dart';

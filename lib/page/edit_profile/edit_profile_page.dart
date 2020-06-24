@@ -13,9 +13,9 @@ import '../../core/extension/extensions.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
-import '../../widget/loading.dart';
-import '../../widget/snackbar.dart';
-import '../../widget/text_title.dart';
+import '../../widget/general/loading.dart';
+import '../../widget/general/snackbar.dart';
+import '../../widget/general/text_title.dart';
 import '../pages.dart';
 
 class EditProfilePage extends StatefulWidget {

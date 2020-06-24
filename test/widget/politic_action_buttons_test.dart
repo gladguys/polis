@@ -6,7 +6,7 @@ import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/keys.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/politic_profile/widget/politic_action_buttons.dart';
-import 'package:polis/widget/button_follow_unfollow.dart';
+import 'package:polis/widget/general/button_follow_unfollow.dart';
 
 import '../mock.dart';
 import '../utils.dart';
