@@ -1,30 +1,18 @@
-part of 'comparativo_ranking_despesas_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-abstract class ComparativoRankingDespesasState extends Equatable {
-  const ComparativoRankingDespesasState();
-}
+import '../../core/domain/model/models.dart';
 
-class InitialComparativoRankingDespesasState
-    extends ComparativoRankingDespesasState {
-  @override
-  List<Object> get props => [];
-}
+part 'comparativo_ranking_despesas_state.freezed.dart';
 
-class GetRankingResultadosSuccess extends ComparativoRankingDespesasState {
-  GetRankingResultadosSuccess(this.resultadosRanking);
-
-  final ResultadosRankingModel resultadosRanking;
-
-  @override
-  List<Object> get props => [resultadosRanking];
-}
-
-class LoadingResultadosRanking extends ComparativoRankingDespesasState {
-  @override
-  List<Object> get props => [];
-}
-
-class GetRankingResultadosFailed extends ComparativoRankingDespesasState {
-  @override
-  List<Object> get props => [];
+@freezed
+abstract class ComparativoRankingDespesasState
+    with _$ComparativoRankingDespesasState {
+  factory ComparativoRankingDespesasState.initial() =
+      InitialComparativoRankingDespesasState;
+  factory ComparativoRankingDespesasState.getRankingResultadosSuccess(
+      ResultadosRankingModel resultadosRanking) = GetRankingResultadosSuccess;
+  factory ComparativoRankingDespesasState.loadingResultadosRanking() =
+      LoadingResultadosRanking;
+  factory ComparativoRankingDespesasState.getRankingResultadosFailed() =
+      GetRankingResultadosFailed;
 }

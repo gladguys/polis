@@ -1,16 +1,12 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/domain/model/models.dart';
 import '../../core/repository/abstract/edit_profile_repository.dart';
-import '../blocs.dart';
-
-part 'edit_profile_event.dart';
-part 'edit_profile_state.dart';
+import '../user/user_bloc.dart';
+import 'edit_profile_event.dart';
+import 'edit_profile_state.dart';
 
 class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
   EditProfileBloc({@required this.repository, @required this.userBloc})
@@ -25,13 +21,13 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
 
   @override
   Stream<EditProfileState> mapEventToState(EditProfileEvent event) async* {
-    if (event is UpdateUserInfo) {
-      yield* _mapUpdateUserInfoToState(event);
-    }
+    yield* event.map(
+      updateUserInfo: _mapUpdateUserInfoToState,
+    );
   }
 
   Stream<EditProfileState> _mapUpdateUserInfoToState(
-      UpdateUserInfo event) async* {
+      EditProfileEvent event) async* {
     yield UpdatingUser();
     try {
       final userUpdated = await repository.updateUserInfo(

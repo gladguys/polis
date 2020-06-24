@@ -163,7 +163,7 @@ class PostDespesa extends StatelessWidget {
                     color: theme.primaryColor,
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     onPressed: () => context.bloc<DocumentBloc>().add(
-                          OpenDocumentImage(despesa.urlDocumento),
+                          DocumentEvent.openDocumentImage(despesa.urlDocumento),
                         ),
                   ),
                 ),

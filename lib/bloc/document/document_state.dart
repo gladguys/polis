@@ -1,15 +1,9 @@
-part of 'document_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-abstract class DocumentState extends Equatable {
-  const DocumentState();
-}
+part 'document_state.freezed.dart';
 
-class InitialDocumentState extends DocumentState {
-  @override
-  List<Object> get props => [];
-}
-
-class LaunchUrlFailed extends DocumentState {
-  @override
-  List<Object> get props => [];
+@freezed
+abstract class DocumentState with _$DocumentState {
+  factory DocumentState.initial() = InitialDocumentState;
+  factory DocumentState.launchUrlFailed() = LaunchUrlFailed;
 }

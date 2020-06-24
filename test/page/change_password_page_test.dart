@@ -30,7 +30,8 @@ void main() {
 
     testWidgets('should show loading', (tester) async {
       final mockChangePasswordBloc = MockChangePasswordBloc();
-      when(mockChangePasswordBloc.state).thenReturn(UserPasswordChanging());
+      when(mockChangePasswordBloc.state)
+          .thenReturn(ChangePasswordState.userPasswordChanging());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<ChangePasswordBloc>(
@@ -44,12 +45,14 @@ void main() {
 
     testWidgets('should show snackbar when success', (tester) async {
       final mockChangePasswordBloc = MockChangePasswordBloc();
+      when(mockChangePasswordBloc.state)
+          .thenReturn(ChangePasswordState.initial());
       whenListen(
         mockChangePasswordBloc,
         Stream.fromIterable(
           [
-            UserWrongPasswordInformed(),
-            UserPasswordChangeSuccess(),
+            ChangePasswordState.userWrongPasswordInformed(),
+            ChangePasswordState.userPasswordChangeSuccess(),
           ],
         ),
       );
@@ -68,12 +71,14 @@ void main() {
 
     testWidgets('should show snackbar when fail', (tester) async {
       final mockChangePasswordBloc = MockChangePasswordBloc();
+      when(mockChangePasswordBloc.state)
+          .thenReturn(ChangePasswordState.initial());
       whenListen(
         mockChangePasswordBloc,
         Stream.fromIterable(
           [
-            UserWrongPasswordInformed(),
-            UserPasswordChangeFailed(),
+            ChangePasswordState.userWrongPasswordInformed(),
+            ChangePasswordState.userPasswordChangeFailed(),
           ],
         ),
       );
@@ -93,12 +98,14 @@ void main() {
     testWidgets('should show snackbar when wrong password is given',
         (tester) async {
       final mockChangePasswordBloc = MockChangePasswordBloc();
+      when(mockChangePasswordBloc.state)
+          .thenReturn(ChangePasswordState.initial());
       whenListen(
         mockChangePasswordBloc,
         Stream.fromIterable(
           [
-            UserPasswordChangeFailed(),
-            UserWrongPasswordInformed(),
+            ChangePasswordState.userPasswordChangeFailed(),
+            ChangePasswordState.userWrongPasswordInformed(),
           ],
         ),
       );
@@ -117,6 +124,8 @@ void main() {
 
     testWidgets('should validate and save the form', (tester) async {
       final mockChangePasswordBloc = MockChangePasswordBloc();
+      when(mockChangePasswordBloc.state)
+          .thenReturn(ChangePasswordState.initial());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<ChangePasswordBloc>(
@@ -158,6 +167,8 @@ void main() {
         'should validate form when passwords confirmations are not equal',
         (tester) async {
       final mockChangePasswordBloc = MockChangePasswordBloc();
+      when(mockChangePasswordBloc.state)
+          .thenReturn(ChangePasswordState.initial());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<ChangePasswordBloc>(
@@ -198,6 +209,8 @@ void main() {
     testWidgets('should validate form when passwords is not 6 caracters long',
         (tester) async {
       final mockChangePasswordBloc = MockChangePasswordBloc();
+      when(mockChangePasswordBloc.state)
+          .thenReturn(ChangePasswordState.initial());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<ChangePasswordBloc>(

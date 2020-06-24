@@ -1,30 +1,15 @@
-part of 'change_password_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-abstract class ChangePasswordState extends Equatable {
-  const ChangePasswordState();
-}
+part 'change_password_state.freezed.dart';
 
-class InitialChangePasswordState extends ChangePasswordState {
-  @override
-  List<Object> get props => [];
-}
-
-class UserPasswordChanging extends ChangePasswordState {
-  @override
-  List<Object> get props => [];
-}
-
-class UserPasswordChangeSuccess extends ChangePasswordState {
-  @override
-  List<Object> get props => [];
-}
-
-class UserWrongPasswordInformed extends ChangePasswordState {
-  @override
-  List<Object> get props => [];
-}
-
-class UserPasswordChangeFailed extends ChangePasswordState {
-  @override
-  List<Object> get props => [];
+@freezed
+abstract class ChangePasswordState with _$ChangePasswordState {
+  factory ChangePasswordState.initial() = InitialChangePasswordState;
+  factory ChangePasswordState.userPasswordChanging() = UserPasswordChanging;
+  factory ChangePasswordState.userPasswordChangeSuccess() =
+      UserPasswordChangeSuccess;
+  factory ChangePasswordState.userWrongPasswordInformed() =
+      UserWrongPasswordInformed;
+  factory ChangePasswordState.userPasswordChangeFailed() =
+      UserPasswordChangeFailed;
 }

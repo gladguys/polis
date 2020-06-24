@@ -1,33 +1,15 @@
-part of 'politic_suggestion_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-abstract class PoliticSuggestionEvent extends Equatable {
-  const PoliticSuggestionEvent();
-}
+import '../../core/domain/model/models.dart';
 
-class FetchSuggestedPolitics extends PoliticSuggestionEvent {
-  FetchSuggestedPolitics(this.stateOption)
-      : assert(stateOption != null && stateOption != '');
+part 'politic_suggestion_event.freezed.dart';
 
-  final String stateOption;
-
-  @override
-  List<Object> get props => [stateOption];
-}
-
-class FollowOrUnfollowPolitic extends PoliticSuggestionEvent {
-  FollowOrUnfollowPolitic(this.politico);
-
-  final PoliticoModel politico;
-
-  @override
-  List<Object> get props => [politico];
-}
-
-class SavePoliticsToFollow extends PoliticSuggestionEvent {
-  SavePoliticsToFollow({@required this.user}) : assert(user != null);
-
-  final UserModel user;
-
-  @override
-  List<Object> get props => [user];
+@freezed
+abstract class PoliticSuggestionEvent with _$PoliticSuggestionEvent {
+  factory PoliticSuggestionEvent.fetchSuggestedPolitics(String stateOption) =
+      FetchSuggestedPolitics;
+  factory PoliticSuggestionEvent.followOrUnfollowPolitic(
+      PoliticoModel politico) = FollowOrUnfollowPolitic;
+  factory PoliticSuggestionEvent.savePoliticsToFollow(
+      {@required UserModel user}) = SavePoliticsToFollow;
 }

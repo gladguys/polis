@@ -1,35 +1,15 @@
-part of 'post_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-abstract class PostState extends Equatable {
-  const PostState();
-}
+part 'post_state.freezed.dart';
 
-class InitialPostState extends PostState {
-  @override
-  List<Object> get props => [];
-}
-
-class PostFavoriteStatusChanged extends PostState {
-  PostFavoriteStatusChanged({this.post, this.isFavorite});
-
-  final dynamic post;
-  final bool isFavorite;
-
-  @override
-  List<Object> get props => [post, isFavorite];
-}
-
-class PostFavoritedSuccess extends PostState {
-  @override
-  List<Object> get props => [];
-}
-
-class PostFavoritedFailed extends PostState {
-  @override
-  List<Object> get props => [];
-}
-
-class PostViewedFailed extends PostState {
-  @override
-  List<Object> get props => [];
+@freezed
+abstract class PostState with _$PostState {
+  factory PostState.initial() = InitialPostState;
+  factory PostState.postFavoriteStatusChanged({dynamic post, bool isFavorite}) =
+      PostFavoriteStatusChanged;
+  factory PostState.postFavoritedSuccess() = PostFavoritedSuccess;
+  factory PostState.postFavoritedFailed() = PostFavoritedFailed;
+  factory PostState.postSharedSuccess() = PostSharedSuccess;
+  factory PostState.postSharedFailed() = PostSharedFailed;
+  factory PostState.postViewedFailed() = PostViewedFailed;
 }
