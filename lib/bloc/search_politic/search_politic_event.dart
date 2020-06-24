@@ -1,50 +1,18 @@
-part of 'search_politic_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-abstract class SearchPoliticEvent extends Equatable {
-  const SearchPoliticEvent();
-}
+import '../../core/domain/model/models.dart';
 
-class FetchPolitics extends SearchPoliticEvent {
-  FetchPolitics(this.userId);
+part 'search_politic_event.freezed.dart';
 
-  final String userId;
-
-  @override
-  List<Object> get props => [userId];
-}
-
-class ChangeSearchPoliticFilter extends SearchPoliticEvent {
-  ChangeSearchPoliticFilter({this.estado, this.partido, this.term});
-
-  final String estado;
-  final String partido;
-  final String term;
-
-  @override
-  List<Object> get props => [estado, partido, term];
-}
-
-class FollowUnfollowSearchPolitic extends SearchPoliticEvent {
-  FollowUnfollowSearchPolitic({@required this.user, @required this.politico})
-      : assert(user != null),
-        assert(politico != null);
-
-  final UserModel user;
-  final PoliticoModel politico;
-
-  @override
-  List<Object> get props => [user, politico];
-}
-
-class ChangeFollowPoliticStatus extends SearchPoliticEvent {
-  ChangeFollowPoliticStatus(
-      {@required this.politico, @required this.isUserFollowingPolitic})
-      : assert(politico != null),
-        assert(isUserFollowingPolitic != null);
-
-  final PoliticoModel politico;
-  final bool isUserFollowingPolitic;
-
-  @override
-  List<Object> get props => [politico, isUserFollowingPolitic];
+@freezed
+abstract class SearchPoliticEvent with _$SearchPoliticEvent {
+  factory SearchPoliticEvent.fetchPolitics(String userId) = FetchPolitics;
+  factory SearchPoliticEvent.changeSearchPoliticFilter(
+      {String estado, String partido, String term}) = ChangeSearchPoliticFilter;
+  factory SearchPoliticEvent.followUnfollowSearchPolitic(
+      {@required UserModel user,
+      @required PoliticoModel politico}) = FollowUnfollowSearchPolitic;
+  factory SearchPoliticEvent.changeFollowPoliticStatus(
+      {@required PoliticoModel politico,
+      @required bool isUserFollowingPolitic}) = ChangeFollowPoliticStatus;
 }

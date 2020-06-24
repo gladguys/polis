@@ -6,6 +6,8 @@ import '../../../core/i18n/i18n.dart';
 import 'politics_suggested_grid.dart';
 
 class PoliticsSuggestion extends StatelessWidget {
+  const PoliticsSuggestion();
+
   @override
   Widget build(BuildContext context) {
     return Padding(

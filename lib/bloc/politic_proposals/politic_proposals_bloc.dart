@@ -1,14 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/domain/model/models.dart';
 import '../../core/repository/abstract/politic_proposals_repository.dart';
-
-part 'politic_proposals_event.dart';
-part 'politic_proposals_state.dart';
+import 'politic_proposals_event.dart';
+import 'politic_proposals_state.dart';
 
 class PoliticProposalsBloc
     extends Bloc<PoliticProposalsEvent, PoliticProposalsState> {
@@ -23,17 +20,17 @@ class PoliticProposalsBloc
   @override
   Stream<PoliticProposalsState> mapEventToState(
       PoliticProposalsEvent event) async* {
-    if (event is GetPoliticProposals) {
-      yield* _mapGetPoliticProposalsToState(event.politicId);
-    }
+    yield* event.map(
+      getPoliticProposals: _mapGetPoliticProposalsToState,
+    );
   }
 
   Stream<PoliticProposalsState> _mapGetPoliticProposalsToState(
-      String politicId) async* {
+      PoliticProposalsEvent event) async* {
     yield LoadingPoliticProposals();
 
     try {
-      final proposals = await repository.getPoliticProposals(politicId);
+      final proposals = await repository.getPoliticProposals(event.politicId);
       yield GetPoliticProposalsSuccess(proposals: proposals);
     } on Exception {
       yield GetPoliticProposalsFailed();

@@ -105,7 +105,9 @@ void main() {
         );
       },
       act: (postBloc) async => postBloc.add(SharePost(postImage: mockFile)),
-      expect: [],
+      expect: [
+        PostSharedSuccess(),
+      ],
       verify: (postBloc) async => verify(
         mockShareService.shareFile(mockFile,
             title: anyNamed('title'), name: 'post.png', mimeType: 'image/png'),

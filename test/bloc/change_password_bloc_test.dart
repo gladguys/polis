@@ -27,7 +27,7 @@ void main() {
     });
 
     test('''Expects InitialChangePasswordState to be the initial state''', () {
-      expect(changePasswordBloc.state, equals(InitialChangePasswordState()));
+      expect(changePasswordBloc.state, equals(ChangePasswordState.initial()));
     });
 
     blocTest(

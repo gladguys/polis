@@ -1,29 +1,16 @@
-part of 'politic_proposals_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-abstract class PoliticProposalsState extends Equatable {
-  const PoliticProposalsState();
-}
+import '../../core/domain/model/models.dart';
 
-class InitialPoliticProposalsState extends PoliticProposalsState {
-  @override
-  List<Object> get props => [];
-}
+part 'politic_proposals_state.freezed.dart';
 
-class GetPoliticProposalsSuccess extends PoliticProposalsState {
-  GetPoliticProposalsSuccess({this.proposals});
-
-  final List<PropostaModel> proposals;
-
-  @override
-  List<Object> get props => [proposals];
-}
-
-class GetPoliticProposalsFailed extends PoliticProposalsState {
-  @override
-  List<Object> get props => [];
-}
-
-class LoadingPoliticProposals extends PoliticProposalsState {
-  @override
-  List<Object> get props => [];
+@freezed
+abstract class PoliticProposalsState with _$PoliticProposalsState {
+  factory PoliticProposalsState.initial() = InitialPoliticProposalsState;
+  factory PoliticProposalsState.getPoliticProposalsSuccess(
+      {List<PropostaModel> proposals}) = GetPoliticProposalsSuccess;
+  factory PoliticProposalsState.getPoliticProposalsFailed() =
+      GetPoliticProposalsFailed;
+  factory PoliticProposalsState.loadingPoliticProposals() =
+      LoadingPoliticProposals;
 }

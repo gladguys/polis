@@ -1,57 +1,18 @@
-part of 'signin_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-abstract class SigninState extends Equatable {
-  const SigninState();
-}
+import '../../core/domain/model/models.dart';
 
-class InitialSignin extends SigninState {
-  @override
-  List<Object> get props => [];
-}
+part 'signin_state.freezed.dart';
 
-class SigninLoading extends SigninState {
-  @override
-  List<Object> get props => [];
-}
-
-class SentingResetEmail extends SigninState {
-  @override
-  List<Object> get props => [];
-}
-
-class UserAuthenticated extends SigninState {
-  UserAuthenticated(this.user);
-
-  final UserModel user;
-
-  @override
-  List<Object> get props => [user];
-}
-
-class UserAuthenticationFailed extends SigninState {
-  UserAuthenticationFailed(this.statusMessage);
-
-  final String statusMessage;
-
-  @override
-  List<Object> get props => [statusMessage];
-}
-
-class SigninFailed extends SigninState {
-  SigninFailed(this.errorMessage);
-
-  final String errorMessage;
-
-  @override
-  List<Object> get props => [errorMessage];
-}
-
-class ResetEmailSentSuccess extends SigninState {
-  @override
-  List<Object> get props => [];
-}
-
-class ResetEmailSentFailed extends SigninState {
-  @override
-  List<Object> get props => [];
+@freezed
+abstract class SigninState with _$SigninState {
+  factory SigninState.initial() = InitialSignin;
+  factory SigninState.signinLoading() = SigninLoading;
+  factory SigninState.sentingResetEmail() = SentingResetEmail;
+  factory SigninState.userAuthenticated(UserModel user) = UserAuthenticated;
+  factory SigninState.userAuthenticationFailed(String statusMessage) =
+      UserAuthenticationFailed;
+  factory SigninState.signinFailed(String errorMessage) = SigninFailed;
+  factory SigninState.resetEmailSentSuccess() = ResetEmailSentSuccess;
+  factory SigninState.resetEmailSentFailed() = ResetEmailSentFailed;
 }

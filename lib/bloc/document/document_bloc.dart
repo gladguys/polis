@@ -1,13 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/service/services.dart';
-
-part 'document_event.dart';
-part 'document_state.dart';
+import 'document_event.dart';
+import 'document_state.dart';
 
 class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
   DocumentBloc({@required this.urlLaunchService})
@@ -16,21 +14,21 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
   final UrlLauncherService urlLaunchService;
 
   @override
-  DocumentState get initialState => InitialDocumentState();
+  DocumentState get initialState => DocumentState.initial();
 
   @override
   Stream<DocumentState> mapEventToState(DocumentEvent event) async* {
-    if (event is OpenDocumentImage) {
-      yield* _mapOpenDocumentImageToState(event);
-    }
+    yield* event.map(
+      openDocumentImage: _mapOpenDocumentImageToState,
+    );
   }
 
   Stream<DocumentState> _mapOpenDocumentImageToState(
-      OpenDocumentImage event) async* {
+      DocumentEvent event) async* {
     try {
       urlLaunchService.launchUrl(event.url);
     } on Exception {
-      yield LaunchUrlFailed();
+      yield DocumentState.launchUrlFailed();
     }
   }
 }

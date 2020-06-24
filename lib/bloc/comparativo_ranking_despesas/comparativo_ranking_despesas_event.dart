@@ -1,10 +1,10 @@
-part of 'comparativo_ranking_despesas_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-abstract class ComparativoRankingDespesasEvent extends Equatable {
-  const ComparativoRankingDespesasEvent();
-}
+part 'comparativo_ranking_despesas_event.freezed.dart';
 
-class GetRankingResultados extends ComparativoRankingDespesasEvent {
-  @override
-  List<Object> get props => [];
+@freezed
+abstract class ComparativoRankingDespesasEvent
+    with _$ComparativoRankingDespesasEvent {
+  factory ComparativoRankingDespesasEvent.getRankingResultados() =
+      GetRankingResultados;
 }

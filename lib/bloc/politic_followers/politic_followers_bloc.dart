@@ -1,14 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/domain/model/models.dart';
 import '../../core/repository/abstract/politic_followers_repository.dart';
-
-part 'politic_followers_event.dart';
-part 'politic_followers_state.dart';
+import 'politic_followers_event.dart';
+import 'politic_followers_state.dart';
 
 class PoliticFollowersBloc
     extends Bloc<PoliticFollowersEvent, PoliticFollowersState> {
@@ -23,13 +20,13 @@ class PoliticFollowersBloc
   @override
   Stream<PoliticFollowersState> mapEventToState(
       PoliticFollowersEvent event) async* {
-    if (event is GetPoliticFollowers) {
-      yield* _mapGetPoliticFollowersToState(event);
-    }
+    yield* event.map(
+      getPoliticFollowers: _mapGetPoliticFollowersToState,
+    );
   }
 
   Stream<PoliticFollowersState> _mapGetPoliticFollowersToState(
-      GetPoliticFollowers event) async* {
+      PoliticFollowersEvent event) async* {
     try {
       yield LoadingPoliticFollowers();
 

@@ -2,16 +2,14 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:diacritic/diacritic.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/domain/model/models.dart';
 import '../../core/repository/abstract/repositories.dart';
 import '../../core/service/services.dart';
 import '../blocs.dart';
-
-part 'search_politic_event.dart';
-part 'search_politic_state.dart';
+import 'search_politic_event.dart';
+import 'search_politic_state.dart';
 
 class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
   SearchPoliticBloc({
@@ -61,18 +59,12 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
 
   @override
   Stream<SearchPoliticState> mapEventToState(SearchPoliticEvent event) async* {
-    if (event is FetchPolitics) {
-      yield* _mapFetchPoliticsToState(event);
-    }
-    if (event is ChangeSearchPoliticFilter) {
-      yield* _mapChangeSearchPoliticFilterToState(event);
-    }
-    if (event is FollowUnfollowSearchPolitic) {
-      yield* _mapFollowUnfollowSearchPoliticToState(event);
-    }
-    if (event is ChangeFollowPoliticStatus) {
-      yield* _mapChangeFollowPoliticStatusToState(event);
-    }
+    yield* event.map(
+      fetchPolitics: _mapFetchPoliticsToState,
+      changeSearchPoliticFilter: _mapChangeSearchPoliticFilterToState,
+      followUnfollowSearchPolitic: _mapFollowUnfollowSearchPoliticToState,
+      changeFollowPoliticStatus: _mapChangeFollowPoliticStatusToState,
+    );
   }
 
   bool isPoliticBeingFollowed(PoliticoModel politico) =>
