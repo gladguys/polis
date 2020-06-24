@@ -110,9 +110,11 @@ void main() {
       );
       verify(
         mockAnalyticsService.logBloc(
-          event: 'SigninWithEmailAndPassword',
-          currentState: 'InitialSignin',
-          nextState: 'UserAuthenticated',
+          event:
+              '''SigninEvent.signinWithEmailAndPassword(email: email, password: pass)''',
+          currentState: 'SigninState.initial()',
+          nextState:
+              '''SigninState.userAuthenticated(user: UserModel{userId: null, name: null, email: null, photoUrl: null, isFirstLoginDone: null, authProvider: null, password: null, fcmToken: null})''',
         ),
       );
     });
