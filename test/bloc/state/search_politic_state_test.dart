@@ -36,29 +36,5 @@ void main() {
 
       expect(FollowUnfollowPoliticsFailed(), FollowUnfollowPoliticsFailed());
     });
-
-    test('asserts', () {
-      expect(
-          () => FollowedSearchPoliticsUpdated(
-                politicoUpdated: null,
-                followedPolitics: [],
-                isFollowing: true,
-              ),
-          throwsAssertionError);
-      expect(
-          () => FollowedSearchPoliticsUpdated(
-                politicoUpdated: PoliticoModel(),
-                followedPolitics: null,
-                isFollowing: true,
-              ),
-          throwsAssertionError);
-      expect(
-          () => FollowedSearchPoliticsUpdated(
-                politicoUpdated: PoliticoModel(),
-                followedPolitics: [],
-                isFollowing: null,
-              ),
-          throwsAssertionError);
-    });
   });
 }

@@ -20,7 +20,7 @@ class PoliticExpensesBloc
   @override
   Stream<PoliticExpensesState> mapEventToState(
       PoliticExpensesEvent event) async* {
-    event.map(
+    yield* event.map(
       getPoliticExpenses: _mapGetPoliticExpensesToState,
     );
   }

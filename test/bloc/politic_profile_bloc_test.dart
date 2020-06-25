@@ -526,15 +526,21 @@ void main() {
           when(mockFollowRepository.isPoliticBeingFollowed(
                   user: anyNamed('user'), politicId: anyNamed('politicId')))
               .thenAnswer((_) async => true);
-          when(mockPoliticProfileRepository.getMoreActivities(
-                  politicId: '1',
-                  count: 5,
-                  lastDocument: MockDocumentSnapshot()))
-              .thenAnswer(
-            (_) => Future.value(Tuple2(
-              [PoliticoModel(id: '1', email: 'email@gmail')],
-              MockDocumentSnapshot(),
-            )),
+          when(
+            mockPoliticProfileRepository.getMoreActivities(
+              politicId: '1',
+              count: 5,
+              lastDocument: MockDocumentSnapshot(),
+            ),
+          ).thenAnswer(
+            (_) => Future.value(
+              Tuple2(
+                [
+                  PoliticoModel(id: '1', email: 'email@gmail'),
+                ],
+                MockDocumentSnapshot(),
+              ),
+            ),
           );
           when(mockFollowRepository.isPoliticBeingFollowed(
                   user: anyNamed('user'), politicId: anyNamed('politicId')))
@@ -546,7 +552,9 @@ void main() {
               .thenAnswer(
             (_) => Future.value(
               Tuple2<List<dynamic>, DocumentSnapshot>(
-                [PropostaModel(id: '8')],
+                [
+                  PropostaModel(id: '8'),
+                ],
                 mockDocumentSnapshot,
               ),
             ),
@@ -562,16 +570,19 @@ void main() {
           GetPoliticInfoSuccess(
             politic: PoliticoModel(
               id: '1',
-              quantidadeSeguidores: 5,
+              email: 'aNotValidEmail@gmail',
             ),
-            lastActivities: [DespesaModel(codDocumento: '1111')],
+            lastActivities: [
+              DespesaModel(codDocumento: '1111'),
+              PropostaModel(id: '8'),
+            ],
             activitiesCount: 1,
             isBeingFollowedByUser: true,
           ),
           GetPoliticInfoSuccess(
             politic: PoliticoModel(
               id: '1',
-              quantidadeSeguidores: 5,
+              email: 'aNotValidEmail@gmail',
             ),
             lastActivities: [
               DespesaModel(codDocumento: '1111'),
