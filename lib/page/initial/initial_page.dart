@@ -4,12 +4,12 @@ import 'package:simple_router/simple_router.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
 import '../../bloc/blocs.dart';
-import '../../bloc/commom_bloc.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../core/service/locator.dart';
 import '../../core/service/services.dart';
+import '../../widget/loading.dart';
 import '../../widget/snackbar.dart';
 import '../intro/polis_info_page.dart';
 import '../pages.dart';
@@ -36,69 +36,64 @@ class _InitialPageState extends State<InitialPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<SigninBloc, SigninState>(
-        listener: (_, state) {
-          state.maybeWhen(
-            userAuthenticated: (user) {
-              context.bloc<UserBloc>().add(StoreUser(user));
-              if (user.isFirstLoginDone) {
-                SimpleRouter.forwardAndReplace(
-                  TimelinePageConnected(
-                    appUpdateService: G<AppUpdateService>(),
-                  ),
-                  name: TIMELINE_PAGE,
-                );
-              } else {
-                SimpleRouter.forwardAndReplace(
-                  PolisInfoPage(),
-                  name: POLIS_INFO_PAGE,
-                );
+      body: BlocConsumer<SigninBloc, SigninState>(listener: (_, state) {
+        if (state is UserAuthenticated) {
+          final user = state.user;
+          context.bloc<UserBloc>().add(StoreUser(user));
+          if (user.isFirstLoginDone) {
+            SimpleRouter.forwardAndReplace(
+              TimelinePageConnected(
+                appUpdateService: G<AppUpdateService>(),
+              ),
+              name: TIMELINE_PAGE,
+            );
+          } else {
+            SimpleRouter.forwardAndReplace(
+              PolisInfoPage(),
+              name: POLIS_INFO_PAGE,
+            );
+          }
+        }
+        if (state is SigninFailed) {
+          Snackbar.error(context, state.errorMessage);
+        }
+        if (state is UserAuthenticationFailed) {
+          Snackbar.error(context, ERROR_AUTENTICATING_USER);
+        }
+      }, builder: (_, state) {
+        if (state is SigninLoading || state is UserAuthenticated) {
+          return const Loading();
+        } else {
+          return SlidingPanel(
+            panelController: _panelController,
+            backPressBehavior: BackPressBehavior.CLOSE_PERSIST,
+            snapping: PanelSnapping.enabled,
+            decoration: PanelDecoration(
+              backgroundColor: Colors.white.withOpacity(.95),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(24),
+                topRight: Radius.circular(24),
+              ),
+            ),
+            size: PanelSize(
+              closedHeight: 0,
+              collapsedHeight: 0,
+              expandedHeight: _expandedHeight,
+            ),
+            content: PanelContent(
+              panelContent: _panel(),
+              bodyContent: _body(context),
+            ),
+            onPanelStateChanged: (panelState) {
+              if (panelState == PanelState.animating) {
+                setState(() {
+                  _expandedHeight = _isSigninPanel ? 0.55 : 0.85;
+                });
               }
             },
-            signinFailed: (errorMessage) =>
-                Snackbar.error(context, errorMessage),
-            userAuthenticationFailed: (_) =>
-                Snackbar.error(context, ERROR_AUTENTICATING_USER),
-            orElse: () {},
           );
-        },
-        builder: (_, state) => state.maybeWhen(
-          signinLoading: mapLoadingToWidget,
-          userAuthenticated: mapLoadingStateToWidget,
-          orElse: _mapStateToWidget,
-        ),
-      ),
-    );
-  }
-
-  Widget _mapStateToWidget() {
-    return SlidingPanel(
-      panelController: _panelController,
-      backPressBehavior: BackPressBehavior.CLOSE_PERSIST,
-      snapping: PanelSnapping.enabled,
-      decoration: PanelDecoration(
-        backgroundColor: Colors.white.withOpacity(.95),
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
-        ),
-      ),
-      size: PanelSize(
-        closedHeight: 0,
-        collapsedHeight: 0,
-        expandedHeight: _expandedHeight,
-      ),
-      content: PanelContent(
-        panelContent: _panel(),
-        bodyContent: _body(context),
-      ),
-      onPanelStateChanged: (panelState) {
-        if (panelState == PanelState.animating) {
-          setState(() {
-            _expandedHeight = _isSigninPanel ? 0.55 : 0.85;
-          });
         }
-      },
+      }),
     );
   }
 

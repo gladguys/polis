@@ -1,11 +1,25 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+part of 'edit_profile_bloc.dart';
 
-part 'edit_profile_state.freezed.dart';
+abstract class EditProfileState extends Equatable {
+  const EditProfileState();
+}
 
-@freezed
-abstract class EditProfileState with _$EditProfileState {
-  factory EditProfileState.initial() = InitialEditProfileState;
-  factory EditProfileState.updatingUser() = UpdatingUser;
-  factory EditProfileState.userUpdateSuccess() = UserUpdateSuccess;
-  factory EditProfileState.userUpdateFailed() = UserUpdateFailed;
+class InitialEditProfileState extends EditProfileState {
+  @override
+  List<Object> get props => [];
+}
+
+class UpdatingUser extends EditProfileState {
+  @override
+  List<Object> get props => [];
+}
+
+class UserUpdateSuccess extends EditProfileState {
+  @override
+  List<Object> get props => [];
+}
+
+class UserUpdateFailed extends EditProfileState {
+  @override
+  List<Object> get props => [];
 }

@@ -1,11 +1,18 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+part of 'change_password_bloc.dart';
 
-part 'change_password_event.freezed.dart';
+abstract class ChangePasswordEvent extends Equatable {
+  const ChangePasswordEvent();
+}
 
-@freezed
-abstract class ChangePasswordEvent with _$ChangePasswordEvent {
-  factory ChangePasswordEvent.changeUserPassword({
-    @required String currentPassword,
-    @required String newPassword,
-  }) = ChangeUserPassword;
+class ChangeUserPassword extends ChangePasswordEvent {
+  ChangeUserPassword(
+      {@required this.currentPassword, @required this.newPassword})
+      : assert(currentPassword != null),
+        assert(newPassword != null);
+
+  final String currentPassword;
+  final String newPassword;
+
+  @override
+  List<Object> get props => [currentPassword, newPassword];
 }

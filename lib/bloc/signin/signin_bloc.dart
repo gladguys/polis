@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/domain/model/models.dart';
@@ -8,8 +9,9 @@ import '../../core/exception/exceptions.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/repository/abstract/repositories.dart';
 import '../../core/service/services.dart';
-import 'signin_event.dart';
-import 'signin_state.dart';
+
+part 'signin_event.dart';
+part 'signin_state.dart';
 
 enum SigninMethod { emailAndPassword, google }
 
@@ -44,11 +46,15 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
 
   @override
   Stream<SigninState> mapEventToState(SigninEvent event) async* {
-    yield* event.map(
-      signinWithEmailAndPassword: _mapSigninWithEmailAndPasswordToState,
-      signinWithGoogle: _mapSigninWithGoogleToState,
-      sendResetPasswordEmail: _mapSendResetPasswordEmailToState,
-    );
+    if (event is SigninWithEmailAndPassword) {
+      yield* _mapSigninWithEmailAndPasswordToState(event);
+    }
+    if (event is SigninWithGoogle) {
+      yield* _mapSigninWithGoogleToState(event);
+    }
+    if (event is SendResetPasswordEmail) {
+      yield* _mapSendResetPasswordEmailToState(event);
+    }
   }
 
   Stream<SigninState> _mapSigninWithEmailAndPasswordToState(

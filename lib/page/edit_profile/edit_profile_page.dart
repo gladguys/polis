@@ -7,13 +7,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
-import '../../bloc/commom_bloc.dart';
 import '../../core/domain/enum/auth_provider.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/extension/extensions.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
+import '../../widget/loading.dart';
 import '../../widget/snackbar.dart';
 import '../../widget/text_title.dart';
 import '../pages.dart';
@@ -47,91 +47,92 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return Scaffold(
       body: SafeArea(
         child: BlocConsumer<EditProfileBloc, EditProfileState>(
-          listener: (_, state) => state.maybeWhen(
-            userUpdateSuccess: () =>
-                Snackbar.success(_, USER_UPDATED_WITH_SUCCESS),
-            userUpdateFailed: () => Snackbar.error(_, USER_UPDATE_FAILED),
-            orElse: () => {},
-          ),
-          builder: (_, state) => state.maybeMap(
-            updatingUser: mapLoadingStateToWidget,
-            orElse: _mapStateToWidget,
-          ),
+          listener: (_, state) {
+            if (state is UserUpdateSuccess) {
+              Snackbar.success(_, USER_UPDATED_WITH_SUCCESS);
+            }
+            if (state is UserUpdateFailed) {
+              Snackbar.error(_, USER_UPDATE_FAILED);
+            }
+          },
+          builder: (_, state) {
+            if (state is UpdatingUser) {
+              return const Loading();
+            } else {
+              return Column(
+                children: <Widget>[
+                  const SizedBox(height: 12),
+                  Center(
+                    child: TextTitle(EDIT_YOUR_PROFILE),
+                  ),
+                  const SizedBox(height: 22),
+                  Container(
+                    height: 120,
+                    width: 120,
+                    child: Material(
+                      borderRadius: BorderRadius.circular(60),
+                      elevation: 1,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(60),
+                        child: Center(
+                          key: editProfileProfileContainerKey,
+                          child: getImageContainer(),
+                        ),
+                        onTap: getImage,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(32),
+                    child: _getForm(),
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    height: 40,
+                    width: 220,
+                    child: FlatButton(
+                      padding: EdgeInsets.zero,
+                      child: const Text(CONFIRM),
+                      color: Colors.amber,
+                      onPressed: () {
+                        final formState = _formKey.currentState;
+                        if (formState.validate()) {
+                          formState.save();
+                          editProfileBloc.add(
+                            UpdateUserInfo(
+                              currentUser: user,
+                              name: _name,
+                              email: _email,
+                              pickedPhoto: pickedPhoto,
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  user.authProvider == AuthProvider.emailAndPassword
+                      ? Container(
+                          height: 40,
+                          width: 220,
+                          child: OutlineButton.icon(
+                            padding: EdgeInsets.zero,
+                            icon: Icon(Icons.lock, size: 18),
+                            label: const Text(CHANGE_PASSWORD),
+                            highlightedBorderColor: Colors.grey,
+                            onPressed: () => SimpleRouter.forward(
+                              ChangePasswordPageConnected(),
+                              name: CHANGE_PASSWORD_PAGE,
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                ],
+              );
+            }
+          },
         ),
       ),
-    );
-  }
-
-  Widget _mapStateToWidget() {
-    return Column(
-      children: <Widget>[
-        const SizedBox(height: 12),
-        Center(
-          child: TextTitle(EDIT_YOUR_PROFILE),
-        ),
-        const SizedBox(height: 22),
-        Container(
-          height: 120,
-          width: 120,
-          child: Material(
-            borderRadius: BorderRadius.circular(60),
-            elevation: 1,
-            child: InkWell(
-              borderRadius: BorderRadius.circular(60),
-              child: Center(
-                key: editProfileProfileContainerKey,
-                child: getImageContainer(),
-              ),
-              onTap: getImage,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(32),
-          child: _getForm(),
-        ),
-        const SizedBox(height: 16),
-        Container(
-          height: 40,
-          width: 220,
-          child: FlatButton(
-            padding: EdgeInsets.zero,
-            child: const Text(CONFIRM),
-            color: Colors.amber,
-            onPressed: () {
-              final formState = _formKey.currentState;
-              if (formState.validate()) {
-                formState.save();
-                editProfileBloc.add(
-                  UpdateUserInfo(
-                    currentUser: user,
-                    name: _name,
-                    email: _email,
-                    pickedPhoto: pickedPhoto,
-                  ),
-                );
-              }
-            },
-          ),
-        ),
-        const SizedBox(height: 12),
-        user.authProvider == AuthProvider.emailAndPassword
-            ? Container(
-                height: 40,
-                width: 220,
-                child: OutlineButton.icon(
-                  padding: EdgeInsets.zero,
-                  icon: Icon(Icons.lock, size: 18),
-                  label: const Text(CHANGE_PASSWORD),
-                  highlightedBorderColor: Colors.grey,
-                  onPressed: () => SimpleRouter.forward(
-                    ChangePasswordPageConnected(),
-                    name: CHANGE_PASSWORD_PAGE,
-                  ),
-                ),
-              )
-            : const SizedBox.shrink(),
-      ],
     );
   }
 

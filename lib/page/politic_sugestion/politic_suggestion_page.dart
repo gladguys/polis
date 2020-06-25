@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
-import '../../bloc/commom_bloc.dart';
+import '../../widget/loading.dart';
 import '../pages.dart';
 import 'widget/politics_sugestion.dart';
 
@@ -12,27 +12,27 @@ class PoliticSuggestionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocConsumer<PoliticSuggestionBloc, PoliticSuggestionState>(
+        child: BlocConsumer(
+          bloc: context.bloc<PoliticSuggestionBloc>(),
           listener: (_, state) {
-            state.maybeWhen(
-              savedSuggestedPolitics: () =>
-                  SimpleRouter.forwardAndReplace(CrunchingDataPage()),
-              orElse: () => {},
-            );
+            if (state is SavedSuggestedPolitics) {
+              SimpleRouter.forwardAndReplace(
+                CrunchingDataPage(),
+              );
+            }
           },
-          builder: (_, state) => state.maybeMap(
-            fetchSuggestedPoliticsSuccess: _mapStateToWidget,
-            changedPoliticsFollowingStatus: _mapStateToWidget,
-            loadingFetch: mapLoadingStateToWidget,
-            loadingSaveFollowPolitics: mapLoadingStateToWidget,
-            orElse: mapErrorToWidget,
-          ),
+          builder: (_, state) {
+            if (state is LoadingFetch || state is LoadingSaveFollowPolitics) {
+              return const Loading();
+            } else if (state is FetchSuggestedPoliticsSuccess ||
+                state is ChangedPoliticsFollowingStatus) {
+              return PoliticsSuggestion();
+            } else {
+              return const Loading();
+            }
+          },
         ),
       ),
     );
-  }
-
-  Widget _mapStateToWidget(state) {
-    return const PoliticsSuggestion();
   }
 }

@@ -25,20 +25,12 @@ void main() {
 
   group('InitialPage tests', () {
     testWidgets('should build without exploding', (tester) async {
-      await tester.pumpWidget(
-        connectedWidget(
-          InitialPageConnected(),
-        ),
-      );
+      await tester.pumpWidget(connectedWidget(InitialPageConnected()));
     });
 
     testWidgets('shuld go to signin page when click the button',
         (tester) async {
-      await tester.pumpWidget(
-        connectedWidget(
-          InitialPageConnected(),
-        ),
-      );
+      await tester.pumpWidget(connectedWidget(InitialPageConnected()));
       final signinWithEmailButton = find.text(SIGNIN_WITH_EMAIL);
       await tester.tap(signinWithEmailButton);
       await tester.pumpAndSettle();
@@ -48,7 +40,6 @@ void main() {
     testWidgets('''shuld call SigninBloc event when signin with google''',
         (tester) async {
       final mockSigninBloc = MockSigninBloc();
-      when(mockSigninBloc.state).thenReturn(InitialSignin());
       when(mockSigninBloc.add(SigninWithGoogle()))
           .thenAnswer((_) => Future.value());
       await tester.pumpWidget(
@@ -68,7 +59,6 @@ void main() {
         '''should navigate to PoliticSugestionPage when user auths and has not yet done signin''',
         (tester) async {
       final mockSigninBloc = MockSigninBloc();
-      when(mockSigninBloc.state).thenReturn(InitialSignin());
       whenListen(
         mockSigninBloc,
         Stream<SigninState>.fromIterable([
@@ -94,7 +84,6 @@ void main() {
         'should navigate to Timeline when user auths and has yet done signin',
         (tester) async {
       final mockSigninBloc = MockSigninBloc();
-      when(mockSigninBloc.state).thenReturn(InitialSignin());
       whenListen(
         mockSigninBloc,
         Stream<SigninState>.fromIterable([
@@ -122,13 +111,10 @@ void main() {
     testWidgets('should show error message when google signin failed',
         (tester) async {
       final mockSigninBloc = MockSigninBloc();
-      when(mockSigninBloc.state).thenReturn(InitialSignin());
       whenListen(
         mockSigninBloc,
-        Stream<SigninState>.fromIterable([
-          InitialSignin(),
-          SigninFailed(ERROR_INVALID_CREDENTIALS),
-        ]),
+        Stream<SigninState>.fromIterable(
+            [InitialSignin(), SigninFailed(ERROR_INVALID_CREDENTIALS)]),
       );
       await tester.pumpWidget(
         connectedWidget(
@@ -147,7 +133,6 @@ void main() {
     testWidgets('should show error message when google user auth fails failed',
         (tester) async {
       final mockSigninBloc = MockSigninBloc();
-      when(mockSigninBloc.state).thenReturn(InitialSignin());
       whenListen(
         mockSigninBloc,
         Stream<SigninState>.fromIterable([
@@ -171,13 +156,9 @@ void main() {
 
     testWidgets('should show loading', (tester) async {
       final mockSigninBloc = MockSigninBloc();
-      when(mockSigninBloc.state).thenReturn(InitialSignin());
       whenListen(
         mockSigninBloc,
-        Stream<SigninState>.fromIterable([
-          InitialSignin(),
-          SigninLoading(),
-        ]),
+        Stream<SigninState>.fromIterable([InitialSignin(), SigninLoading()]),
       );
       await tester.pumpWidget(
         connectedWidget(
@@ -195,11 +176,7 @@ void main() {
 
     testWidgets('shuld go to signup page when click on no account button',
         (tester) async {
-      await tester.pumpWidget(
-        connectedWidget(
-          InitialPageConnected(),
-        ),
-      );
+      await tester.pumpWidget(connectedWidget(InitialPageConnected()));
       final noAccountButton = find.text(NO_ACCOUNT);
       await tester.tap(noAccountButton);
       await tester.pumpAndSettle();

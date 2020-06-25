@@ -1,19 +1,53 @@
-import 'dart:io';
+part of 'post_bloc.dart';
 
-import 'package:freezed_annotation/freezed_annotation.dart';
+abstract class PostEvent extends Equatable {
+  const PostEvent();
+}
 
-import '../../core/domain/model/models.dart';
+class LikePost extends PostEvent {
+  LikePost(this.id);
 
-part 'post_event.freezed.dart';
+  final String id;
 
-@freezed
-abstract class PostEvent with _$PostEvent {
-  factory PostEvent.likePost(String id) = LikePost;
-  factory PostEvent.favoritePostForUser(
-      {Map<String, dynamic> post, UserModel user}) = FavoritePostForUser;
-  factory PostEvent.sharePost({File postImage}) = SharePost;
-  factory PostEvent.setPostViewed({String userId, String postId}) =
-      SetPostViewed;
-  factory PostEvent.setPostFavorited({String userId, String postId}) =
-      SetPostFavorited;
+  @override
+  List<Object> get props => [id];
+}
+
+class FavoritePostForUser extends PostEvent {
+  FavoritePostForUser({this.post, this.user});
+
+  final Map<String, dynamic> post;
+  final UserModel user;
+
+  @override
+  List<Object> get props => [post, user];
+}
+
+class SharePost extends PostEvent {
+  SharePost({this.postImage});
+
+  final File postImage;
+
+  @override
+  List<Object> get props => [postImage];
+}
+
+class SetPostViewed extends PostEvent {
+  SetPostViewed({this.userId, this.postId});
+
+  final String userId;
+  final String postId;
+
+  @override
+  List<Object> get props => [userId, postId];
+}
+
+class SetPostFavorited extends PostEvent {
+  SetPostFavorited({this.userId, this.postId});
+
+  final String userId;
+  final String postId;
+
+  @override
+  List<Object> get props => [userId, postId];
 }

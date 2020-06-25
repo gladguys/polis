@@ -1,16 +1,29 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+part of 'politic_expenses_bloc.dart';
 
-import '../../core/domain/model/models.dart';
+abstract class PoliticExpensesState extends Equatable {
+  const PoliticExpensesState();
+}
 
-part 'politic_expenses_state.freezed.dart';
+class InitialPoliticExpensesState extends PoliticExpensesState {
+  @override
+  List<Object> get props => [];
+}
 
-@freezed
-abstract class PoliticExpensesState with _$PoliticExpensesState {
-  factory PoliticExpensesState.initial() = InitialPoliticExpensesState;
-  factory PoliticExpensesState.getPoliticExpensesSuccess(
-      List<DespesaModel> despesas) = GetPoliticExpensesSuccess;
-  factory PoliticExpensesState.getPoliticExpensesFailed() =
-      GetPoliticExpensesFailed;
-  factory PoliticExpensesState.loadingPoliticExpenses() =
-      LoadingPoliticExpenses;
+class GetPoliticExpensesSuccess extends PoliticExpensesState {
+  GetPoliticExpensesSuccess(this.despesas);
+
+  final List<DespesaModel> despesas;
+
+  @override
+  List<Object> get props => [despesas];
+}
+
+class GetPoliticExpensesFailed extends PoliticExpensesState {
+  @override
+  List<Object> get props => [];
+}
+
+class LoadingPoliticExpenses extends PoliticExpensesState {
+  @override
+  List<Object> get props => [];
 }

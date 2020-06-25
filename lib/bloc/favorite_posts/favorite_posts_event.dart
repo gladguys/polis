@@ -1,9 +1,14 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+part of 'favorite_posts_bloc.dart';
 
-part 'favorite_posts_event.freezed.dart';
+abstract class FavoritePostsEvent extends Equatable {
+  const FavoritePostsEvent();
+}
 
-@freezed
-abstract class FavoritePostsEvent with _$FavoritePostsEvent {
-  factory FavoritePostsEvent.fetchUserFavoritePosts({@required String userId}) =
-      FetchUserFavoritePosts;
+class FetchUserFavoritePosts extends FavoritePostsEvent {
+  FetchUserFavoritePosts({@required this.userId}) : assert(userId != null);
+
+  final String userId;
+
+  @override
+  List<Object> get props => [userId];
 }

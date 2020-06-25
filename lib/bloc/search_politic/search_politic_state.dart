@@ -1,27 +1,64 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+part of 'search_politic_bloc.dart';
 
-import '../../core/domain/model/models.dart';
+abstract class SearchPoliticState extends Equatable {
+  const SearchPoliticState();
+}
 
-part 'search_politic_state.freezed.dart';
+class InitialSearchPoliticState extends SearchPoliticState {
+  @override
+  List<Object> get props => [];
+}
 
-@freezed
-abstract class SearchPoliticState with _$SearchPoliticState {
-  factory SearchPoliticState.initial() = InitialSearchPoliticState;
-  factory SearchPoliticState.fetchSearchPoliticsSuccess(
-      List<PoliticoModel> politics) = FetchSearchPoliticsSuccess;
-  factory SearchPoliticState.loadingFetchPolitics() = LoadingFetchPolitics;
-  factory SearchPoliticState.fetchSearchPoliticsFailed() =
-      FetchSearchPoliticsFailed;
-  factory SearchPoliticState.searchPoliticFilterChanged(
-      {List<PoliticoModel> politics,
-      String statePicked,
-      String partidoPicked,
-      String searchTerm}) = SearchPoliticFilterChanged;
-  factory SearchPoliticState.followedSearchPoliticsUpdated({
-    List<PoliticoModel> followedPolitics,
-    PoliticoModel politicoUpdated,
-    bool isFollowing,
-  }) = FollowedSearchPoliticsUpdated;
-  factory SearchPoliticState.followUnfollowPoliticsFailed() =
-      FollowUnfollowPoliticsFailed;
+class FetchSearchPoliticsSuccess extends SearchPoliticState {
+  FetchSearchPoliticsSuccess(this.politics);
+
+  final List<PoliticoModel> politics;
+
+  @override
+  List<Object> get props => [politics];
+}
+
+class LoadingFetchPolitics extends SearchPoliticState {
+  @override
+  List<Object> get props => [];
+}
+
+class FetchSearchPoliticsFailed extends SearchPoliticState {
+  @override
+  List<Object> get props => [];
+}
+
+class SearchPoliticFilterChanged extends SearchPoliticState {
+  SearchPoliticFilterChanged(
+      {this.politics, this.statePicked, this.partidoPicked, this.searchTerm});
+
+  final List<PoliticoModel> politics;
+  final String statePicked;
+  final String partidoPicked;
+  final String searchTerm;
+
+  @override
+  List<Object> get props => [politics, statePicked, partidoPicked, searchTerm];
+}
+
+class FollowedSearchPoliticsUpdated extends SearchPoliticState {
+  FollowedSearchPoliticsUpdated(
+      {@required this.followedPolitics,
+      @required this.politicoUpdated,
+      @required this.isFollowing})
+      : assert(followedPolitics != null),
+        assert(politicoUpdated != null),
+        assert(isFollowing != null);
+
+  final List<PoliticoModel> followedPolitics;
+  final PoliticoModel politicoUpdated;
+  final bool isFollowing;
+
+  @override
+  List<Object> get props => [followedPolitics, politicoUpdated, isFollowing];
+}
+
+class FollowUnfollowPoliticsFailed extends SearchPoliticState {
+  @override
+  List<Object> get props => [];
 }
