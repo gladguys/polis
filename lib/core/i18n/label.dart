@@ -5,6 +5,7 @@ const FAIL = 'Falha';
 const NO = 'Não';
 const START = 'Início';
 const LAST_UPDATE = 'Última atualização';
+const ANSWERS = 'Respostas';
 const END = 'Fim';
 const GOOGLE = 'Google';
 const CURRENT_PASSWORD = 'Senha atual';
