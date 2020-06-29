@@ -160,6 +160,9 @@ class MyAppInjections extends StatelessWidget {
             firestore: Firestore.instance,
           ),
         ),
+        RepositoryProvider(
+          create: (_) => HttpCommentRepository(),
+        ),
       ],
       child: child,
     );
