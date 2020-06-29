@@ -39,11 +39,11 @@ class NewCommentAdded extends CommentState {
 }
 
 class NewReplyCommentAdded extends CommentState {
-  NewReplyCommentAdded({this.comment, this.numberOfComments});
+  NewReplyCommentAdded({this.comment, this.numberOfReplies});
 
   final CommentModel comment;
-  final int numberOfComments;
+  final int numberOfReplies;
 
   @override
-  List<Object> get props => [comment, numberOfComments];
+  List<Object> get props => [comment, numberOfReplies];
 }

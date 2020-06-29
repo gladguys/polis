@@ -66,7 +66,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
 
       yield NewReplyCommentAdded(
         comment: comment,
-        numberOfComments: postComments.length,
+        numberOfReplies: replies.length,
       );
     }
   }

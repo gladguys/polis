@@ -53,12 +53,14 @@ class CommentRepliesBloc
         ...oldCommentReplies,
         newComment,
       ];
+
       commentBloc.add(
         UpdateCommentReplies(
           comment: comment,
           replies: commentReplies,
         ),
       );
+
       yield AddedReplyCommentSuccess(
         replyCommentAdded: newComment,
         numberOfReplies: commentReplies.length,
