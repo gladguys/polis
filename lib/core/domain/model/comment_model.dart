@@ -6,34 +6,34 @@ class CommentModel extends Equatable {
     this.userId,
     this.texto,
     this.data,
-    this.comentariosFilhos,
+    this.respostas,
   });
 
   final String id;
   final String userId;
   final String texto;
   final String data;
-  final List<CommentModel> comentariosFilhos;
+  final List<CommentModel> respostas;
 
   CommentModel copyWith({
     String id,
     String userId,
     String texto,
     String data,
-    List<CommentModel> comentariosFilhos,
+    List<CommentModel> respostas,
   }) {
     return CommentModel(
       id: id ?? this.id,
       userId: userId ?? this.userId,
       texto: texto ?? this.texto,
       data: data ?? this.data,
-      comentariosFilhos: comentariosFilhos ?? this.comentariosFilhos,
+      respostas: respostas ?? this.respostas,
     );
   }
 
   @override
   String toString() {
-    return '''CommentModel{id: $id, userId: $userId, texto: $texto, data: $data, comentariosFilhos: $comentariosFilhos}''';
+    return '''CommentModel{id: $id, userId: $userId, texto: $texto, data: $data, respostas: $respostas}''';
   }
 
   @override

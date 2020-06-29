@@ -60,10 +60,9 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       final replies = event.replies;
       final indexOfComment = postComments
           .indexWhere((postComment) => postComment.id == comment.id);
-      postComments[indexOfComment] =
-          postComments[indexOfComment].copyWith(comentariosFilhos: [
-        ...replies,
-      ]);
+      postComments[indexOfComment] = postComments[indexOfComment].copyWith(
+        respostas: [...replies],
+      );
 
       yield NewReplyCommentAdded(
         comment: comment,

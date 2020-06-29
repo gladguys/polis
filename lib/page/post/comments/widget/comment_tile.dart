@@ -35,9 +35,9 @@ class CommentTile extends StatelessWidget {
                   Icon(Icons.comment),
                   const SizedBox(width: 8),
                   Text(
-                    comment.comentariosFilhos == null
+                    comment.respostas == null
                         ? '0'
-                        : comment.comentariosFilhos.length.toString(),
+                        : comment.respostas.length.toString(),
                   )
                 ],
               ),

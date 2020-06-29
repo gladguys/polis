@@ -24,7 +24,7 @@ class CommentRepliesBloc
     assert(commentBloc != null);
     assert(repository != null);
 
-    commentReplies = comment.comentariosFilhos ?? [];
+    commentReplies = comment.respostas ?? [];
   }
 
   final dynamic post;

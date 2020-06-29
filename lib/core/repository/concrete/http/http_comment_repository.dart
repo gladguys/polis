@@ -6,7 +6,7 @@ class HttpCommentRepository implements CommentRepository {
   Future<List<CommentModel>> getPostComments({String postId}) {
     final comments = [
       CommentModel(id: '1', texto: 'Apoio esse projeto de lei!!!'),
-      CommentModel(id: '2', texto: 'Palhaçada geral!', comentariosFilhos: [
+      CommentModel(id: '2', texto: 'Palhaçada geral!', respostas: [
         CommentModel(id: '3', texto: 'Palhaço é você meu amigo!'),
         CommentModel(id: '4', texto: 'Respeita teu pai!'),
       ]),
