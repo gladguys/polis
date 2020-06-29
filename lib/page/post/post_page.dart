@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/domain/enum/post_type.dart';
 import '../../widget/post/post_despesa_connected.dart';
 import '../../widget/post/post_proposta_connected.dart';
+import '../pages.dart';
 
 class PostPage extends StatelessWidget {
   PostPage({@required this.post, @required this.postType})
@@ -24,23 +25,11 @@ class PostPage extends StatelessWidget {
                   ? PostDespesaConnected(post)
                   : PostPropostaConnected(post),
             ),
-            /*
-            ESCONDIDO ENQUANTO NÃO IMPLEMENTADO
-            const Divider(color: Colors.grey, height: 1),
-            const SizedBox(height: 12),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: FieldRounded(
-                hintText: COMMENT_HERE,
-                width: 360,
-                textSuffix: SEND,
-                widthSuffix: 70,
-                keySuffix: const ValueKey('comment-button'),
-                onPressedSuffix: () {},
+            Expanded(
+              child: PostCommentsConnected(
+                post: post,
               ),
             ),
-            const SizedBox(height: 12),
-            */
           ],
         ),
       ),
