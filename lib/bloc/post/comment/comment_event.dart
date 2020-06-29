@@ -1,0 +1,33 @@
+part of 'comment_bloc.dart';
+
+abstract class CommentEvent extends Equatable {
+  const CommentEvent();
+}
+
+class GetPostComments extends CommentEvent {
+  GetPostComments({@required this.postId});
+
+  final String postId;
+
+  @override
+  List<Object> get props => [postId];
+}
+
+class AddComment extends CommentEvent {
+  AddComment({this.text});
+
+  final String text;
+
+  @override
+  List<Object> get props => [text];
+}
+
+class UpdateCommentReplies extends CommentEvent {
+  UpdateCommentReplies({this.comment, this.replies});
+
+  final CommentModel comment;
+  final List<CommentModel> replies;
+
+  @override
+  List<Object> get props => [comment, replies];
+}
