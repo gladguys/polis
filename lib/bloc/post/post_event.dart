@@ -5,12 +5,25 @@ abstract class PostEvent extends Equatable {
 }
 
 class LikePost extends PostEvent {
-  LikePost(this.id);
+  LikePost({this.user, this.postId, this.politicoId});
 
-  final String id;
+  final UserModel user;
+  final String postId;
+  final String politicoId;
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [user, postId, politicoId];
+}
+
+class UnlikePost extends PostEvent {
+  UnlikePost({this.user, this.postId, this.politicoId});
+
+  final UserModel user;
+  final String postId;
+  final String politicoId;
+
+  @override
+  List<Object> get props => [user, postId, politicoId];
 }
 
 class FavoritePostForUser extends PostEvent {

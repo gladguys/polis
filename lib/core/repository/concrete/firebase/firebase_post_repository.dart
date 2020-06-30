@@ -16,6 +16,9 @@ class FirebasePostRepository implements PostRepository {
       firestore.collection(POSTS_FAVORITOS_COLLECTION);
   CollectionReference get timelineRef =>
       firestore.collection(TIMELINE_COLLECTION);
+  CollectionReference get atividadesRef =>
+      firestore.collection(ATIVIDADES_COLLECTION);
+  CollectionReference get usersRef => firestore.collection(USERS_COLLECTION);
 
   @override
   Future<void> favoritePost({Map<String, dynamic> post, UserModel user}) async {
@@ -77,5 +80,65 @@ class FirebasePostRepository implements PostRepository {
 
   String _getIdFromPost(Map<String, dynamic> post) {
     return post['idPropostaPolitico'] ?? post['id'];
+  }
+
+  @override
+  Future<Map<String, bool>> likePost(
+      {String userId, String postId, String politicoId}) async {
+    try {
+      final documentReference = await atividadesRef
+          .document(politicoId)
+          .collection(ATIVIDADES_POLITICO_SUBCOLLECTION)
+          .document(postId);
+      final documentSnapshot = await documentReference.get();
+      final actualLikesCount = documentSnapshot.data[QTD_CURTIDAS_FIELD] ?? 0;
+      await documentReference.updateData({
+        QTD_CURTIDAS_FIELD: actualLikesCount + 1,
+      });
+
+      final userDocumentReference = usersRef.document(userId);
+      final userDocumentSnapshot = await userDocumentReference.get();
+      final userLikes = Map<String, bool>.from(
+          userDocumentSnapshot.data[USER_LIKES_FIELD] ?? {});
+      userLikes[postId] = true;
+      await userDocumentReference.updateData({
+        USER_LIKES_FIELD: {
+          ...userLikes,
+        }
+      });
+      return userLikes;
+    } on Exception {
+      throw ComunicationException();
+    }
+  }
+
+  @override
+  Future<Map<String, bool>> unlikePost(
+      {String userId, String postId, String politicoId}) async {
+    try {
+      final documentReference = await atividadesRef
+          .document(politicoId)
+          .collection(ATIVIDADES_POLITICO_SUBCOLLECTION)
+          .document(postId);
+      final documentSnapshot = await documentReference.get();
+      final actualUnlikesCount =
+          documentSnapshot.data[QTD_NAO_CURTIDAS_FIELD] ?? 0;
+      await documentReference.updateData({
+        QTD_NAO_CURTIDAS_FIELD: actualUnlikesCount + 1,
+      });
+
+      final userDocumentReference = usersRef.document(userId);
+      final userDocumentSnapshot = await userDocumentReference.get();
+      final userUnlikes = Map<String, bool>.from(
+          userDocumentSnapshot.data[USER_UNLIKES_FIELD] ?? {});
+      userUnlikes[postId] = true;
+
+      await userDocumentReference.updateData({
+        USER_UNLIKES_FIELD: userUnlikes,
+      });
+      return userUnlikes;
+    } on Exception {
+      throw ComunicationException();
+    }
   }
 }

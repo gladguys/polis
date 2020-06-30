@@ -19,16 +19,19 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     @required this.post,
     @required this.postRepository,
     @required this.shareService,
+    @required this.userBloc,
     this.timelineBloc,
   }) {
     assert(post != null);
     assert(postRepository != null);
     assert(shareService != null);
+    assert(userBloc != null);
     isPostFavorite = post[FAVORITO_FIELD] ?? false;
   }
 
   final PostRepository postRepository;
   final ShareService shareService;
+  final UserBloc userBloc;
   final TimelineBloc timelineBloc;
   Map<String, dynamic> post;
   bool isPostFavorite;
@@ -49,6 +52,12 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     }
     if (event is SetPostFavorited) {
       yield* _mapSetPostFavoritedToState(event);
+    }
+    if (event is LikePost) {
+      yield* _mapLikePostToState(event);
+    }
+    if (event is UnlikePost) {
+      yield* _mapUnlikePostPostToState(event);
     }
   }
 
@@ -144,6 +153,58 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       yield PostFavoritedSuccess();
     } on Exception {
       yield PostFavoritedFailed();
+    }
+  }
+
+  Stream<PostState> _mapLikePostToState(LikePost event) async* {
+    try {
+      final userLikes = await postRepository.likePost(
+        userId: event.user.userId,
+        postId: event.postId,
+        politicoId: event.politicoId,
+      );
+      post = {
+        ...post,
+        QTD_CURTIDAS_FIELD: (post[QTD_CURTIDAS_FIELD] ?? 0) + 1,
+      };
+      userBloc.add(
+        UpdateCurrentUser(
+          userBloc.user.copyWith(
+            userLikes: userLikes,
+          ),
+        ),
+      );
+      yield PostLikedSuccess(
+        postId: event.postId,
+      );
+    } on Exception {
+      yield PostLikedFailed();
+    }
+  }
+
+  Stream<PostState> _mapUnlikePostPostToState(UnlikePost event) async* {
+    try {
+      final userUnlikes = await postRepository.unlikePost(
+        userId: event.user.userId,
+        postId: event.postId,
+        politicoId: event.politicoId,
+      );
+      post = {
+        ...post,
+        QTD_NAO_CURTIDAS_FIELD: (post[QTD_NAO_CURTIDAS_FIELD] ?? 0) + 1,
+      };
+      userBloc.add(
+        UpdateCurrentUser(
+          userBloc.user.copyWith(
+            userUnlikes: userUnlikes,
+          ),
+        ),
+      );
+      yield PostUnlikedSuccess(
+        postId: event.postId,
+      );
+    } on Exception {
+      yield PostUnlikedFailed();
     }
   }
 }
