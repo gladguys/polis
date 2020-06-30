@@ -1,10 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences_monitor/shared_preferences_monitor.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/domain/enum/timeline_status.dart';
+import '../../core/extension/extensions.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/routing/route_names.dart';
 import '../../widget/default_bottombar.dart';
@@ -84,6 +88,13 @@ class TimelinePage extends StatelessWidget {
           },
         ),
       ),
+      floatingActionButton: !kReleaseMode
+          ? FloatingActionButton(
+              backgroundColor: context.primaryColorLight,
+              onPressed: SharedPreferencesMonitor.showPage,
+              child: Icon(Entypo.info),
+            )
+          : null,
     );
   }
 }
