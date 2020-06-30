@@ -8,6 +8,7 @@ class ButtonActionCard extends StatelessWidget {
     this.text,
     this.fontSize = 12,
     this.iconColor,
+    this.textColor = Colors.black,
     this.isIconOnly = false,
   })  : assert(icon != null),
         assert(onTap != null);
@@ -16,6 +17,7 @@ class ButtonActionCard extends StatelessWidget {
   final String text;
   final double fontSize;
   final Color iconColor;
+  final Color textColor;
   final bool isIconOnly;
   final Function onTap;
 
@@ -59,7 +61,7 @@ class ButtonActionCard extends StatelessWidget {
               ),
               Text(
                 text ?? '',
-                style: TextStyle(fontSize: fontSize),
+                style: TextStyle(fontSize: fontSize, color: textColor),
               ),
             ],
           ),
