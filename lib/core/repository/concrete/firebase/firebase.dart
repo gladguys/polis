@@ -23,6 +23,9 @@ const POSTS_FAVORITOS_USUARIO_SUBCOLLECTION = 'postsFavoritosUsuario';
 const ACOES_USUARIO_SUBCOLLECTION = 'acoesUsuario';
 
 // Field
+const ID_FIELD = 'id';
+const ID_PROPOSTA_POLITICO_FIELD = 'idPropostaPolitico';
+const COD_DOCUMENTO_FIELD = 'codDocumento';
 const SIGLA_UF_FIELD = 'siglaUf';
 const FAVORITO_FIELD = 'favorito';
 const NOME_ELEITORAL_FIELD = 'nomeEleitoral';

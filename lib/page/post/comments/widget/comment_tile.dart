@@ -55,7 +55,7 @@ class CommentTile extends StatelessWidget {
                         comment.respostas == null
                             ? '0'
                             : comment.respostas.length.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       )

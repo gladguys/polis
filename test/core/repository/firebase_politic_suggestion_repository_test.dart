@@ -50,14 +50,14 @@ void main() {
         when(mockCollectionReference.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
         final politicoJson = {
-          'id': '1',
+          ID_FIELD: '1',
         };
         when(mockQuerySnapshot.documents).thenReturn(mockDocumentSnapshotList);
         when(mockDocumentSnapshot.data).thenReturn(politicoJson);
         final suggestedPolitics =
             await firebasePoliticSuggestionRepository.getSuggestedPolitics('T');
         expect(suggestedPolitics.length, 1);
-        expect(suggestedPolitics[0].id, politicoJson['id']);
+        expect(suggestedPolitics[0].id, politicoJson[ID_FIELD]);
         verify(mockCollectionReference.getDocuments()).called(1);
       });
 
@@ -66,10 +66,14 @@ void main() {
           () async {
         when(mockFirestore.collection(POLITICOS_COLLECTION))
             .thenReturn(mockCollectionReference);
-        when(mockCollectionReference.where('siglaUf', isEqualTo: 'CE'))
-            .thenReturn(refFiltered);
+        when(
+          mockCollectionReference.where(
+            SIGLA_UF_FIELD,
+            isEqualTo: 'CE',
+          ),
+        ).thenReturn(refFiltered);
         final politicoJson = {
-          'id': '1',
+          ID_FIELD: '1',
         };
         when(refFiltered.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
@@ -78,8 +82,8 @@ void main() {
         final suggestedPolitics = await firebasePoliticSuggestionRepository
             .getSuggestedPolitics('CE');
         expect(suggestedPolitics.length, 1);
-        expect(suggestedPolitics[0].id, politicoJson['id']);
-        verify(mockCollectionReference.where('siglaUf', isEqualTo: 'CE'))
+        expect(suggestedPolitics[0].id, politicoJson[ID_FIELD]);
+        verify(mockCollectionReference.where(SIGLA_UF_FIELD, isEqualTo: 'CE'))
             .called(1);
       });
 

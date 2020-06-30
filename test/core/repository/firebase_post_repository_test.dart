@@ -52,7 +52,7 @@ void main() {
             .thenReturn(mockPostDocumentReference);
         await firebasePostRepository.favoritePost(
           post: {
-            'id': '1',
+            ID_FIELD: '1',
           },
           user: UserModel(
             userId: '2',
@@ -66,7 +66,7 @@ void main() {
             .thenThrow(Exception());
         firebasePostRepository.favoritePost(
           post: {
-            'id': '1',
+            ID_FIELD: '1',
           },
           user: UserModel(
             userId: '2',
@@ -88,7 +88,7 @@ void main() {
             .thenReturn(mockPostDocumentReference);
         await firebasePostRepository.unfavoritePost(
           post: {
-            'id': '1',
+            ID_FIELD: '1',
           },
           user: UserModel(
             userId: '2',
@@ -102,7 +102,7 @@ void main() {
             .thenThrow(Exception());
         firebasePostRepository.unfavoritePost(
           post: {
-            'id': '1',
+            ID_FIELD: '1',
           },
           user: UserModel(
             userId: '2',

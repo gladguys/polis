@@ -76,6 +76,6 @@ class FirebasePostRepository implements PostRepository {
   }
 
   String _getIdFromPost(Map<String, dynamic> post) {
-    return post['idPropostaPolitico'] ?? post['id'];
+    return post[ID_PROPOSTA_POLITICO_FIELD] ?? post[ID_FIELD];
   }
 }

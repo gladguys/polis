@@ -43,7 +43,9 @@ void main() {
         when(mockPoliticosCollectionReference.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
         when(mockQuerySnapshot.documents).thenReturn([mockDocumentSnapshot]);
-        when(mockDocumentSnapshot.data).thenReturn({'id': '1'});
+        when(mockDocumentSnapshot.data).thenReturn({
+          ID_FIELD: '1',
+        });
 
         final politicos = await firebasePoliticoRepository.getAllPoliticos();
         expect(politicos[0].id, '1');
@@ -60,16 +62,16 @@ void main() {
           mockDocumentSnapshot3,
         ]);
         when(mockDocumentSnapshot.data).thenReturn({
-          'id': '1',
-          'nomeEleitoral': 'A',
+          ID_FIELD: '1',
+          NOME_ELEITORAL_FIELD: 'A',
         });
         when(mockDocumentSnapshot2.data).thenReturn({
-          'id': '2',
-          'nomeEleitoral': 'Á',
+          ID_FIELD: '2',
+          NOME_ELEITORAL_FIELD: 'Á',
         });
         when(mockDocumentSnapshot3.data).thenReturn({
-          'id': '3',
-          'nomeEleitoral': 'Z',
+          ID_FIELD: '3',
+          NOME_ELEITORAL_FIELD: 'Z',
         });
 
         final politicos = await firebasePoliticoRepository.getAllPoliticos();
