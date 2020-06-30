@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:polis/core/keys.dart';
 
 import '../../../bloc/post/comment/comment_bloc.dart';
 import '../../../core/i18n/i18n.dart';
+import '../../../core/keys.dart';
 import '../../../widget/error_container.dart';
 import '../../../widget/field_rounded.dart';
 import '../../../widget/loading.dart';
