@@ -33,6 +33,7 @@ dependencies:
   esys_flutter_share: ^1.0.2
   in_app_update: ^1.1.11
   flutter_bloc_monitor: ^1.0.0+1
+  shared_preferences_monitor: ^1.0.1+2
 
   # Firebase
   cloud_firestore: ^0.13.7

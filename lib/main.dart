@@ -7,6 +7,8 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences_monitor/shared_preferences_monitor.dart';
+import 'package:simple_router/simple_router.dart';
 
 import 'bloc/flutter_bloc_delegate.dart';
 import 'core/domain/model/models.dart';
@@ -17,6 +19,8 @@ import 'widget/my_app_injections.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SharedPreferencesMonitor.init();
+  SharedPreferencesMonitor.setKey(SimpleRouter.getKey());
   await initHive();
   initLocator(await SharedPreferences.getInstance());
   G<CrashlyticsService>().initCrashlytics();

@@ -868,6 +868,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.1+6"
+  shared_preferences_monitor:
+    dependency: "direct main"
+    description:
+      name: shared_preferences_monitor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1+2"
   shared_preferences_platform_interface:
     dependency: transitive
     description:
