@@ -88,18 +88,6 @@ void main() {
     });
 
     blocTest(
-      'mapEventToState',
-      build: () async => postBloc,
-      act: (postBloc) async => postBloc.add(
-        LikePost(
-          user: UserModel(),
-          postId: '1',
-        ),
-      ),
-      expect: [],
-    );
-
-    blocTest(
       '''Expects [PostFavoriteStatusChanged, PostFavoritedSuccess] when FavoritePostForUser added''',
       build: () async => PostBloc(
         post: {
