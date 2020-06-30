@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -6,10 +7,13 @@ import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/domain/enum/post_type.dart';
+import '../../core/domain/model/models.dart';
 import '../../core/domain/model/proposta_model.dart';
 import '../../core/extension/extensions.dart';
 import '../../core/i18n/i18n.dart';
+import '../../core/repository/concrete/firebase/firebase.dart';
 import '../../core/routing/route_names.dart';
+import '../../core/utils/general_utils.dart';
 import '../../page/pages.dart';
 import '../../page/theme/main_theme.dart';
 import '../button_action_card.dart';
@@ -39,6 +43,14 @@ class PropostaTile extends StatelessWidget {
             children: <Widget>[
               _buildTopContent(),
               _buildCenterContent(),
+              const SizedBox(height: 8),
+              Text(
+                proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey[600],
+                ),
+              ),
             ],
           ),
           slotBottom: _buildActions(context),
@@ -168,35 +180,96 @@ class PropostaTile extends StatelessWidget {
 
   Widget _buildActions(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
-      builder: (_, state) => Padding(
-        padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey[600],
-              ),
-            ),
-            ButtonActionCard(
-              isIconOnly: true,
-              icon: proposta.favorito ?? false
-                  ? FontAwesomeIcons.solidBookmark
-                  : FontAwesomeIcons.bookmark,
-              iconColor: (proposta.favorito ?? false) ? Colors.yellow : null,
-              onTap: () => context.bloc<PostBloc>().add(
-                    FavoritePostForUser(
-                      post: proposta.toJson(),
-                      user: context.bloc<UserBloc>().user,
-                    ),
+      builder: (_, state) {
+        final postLiked =
+            isPostLikedForUser(context, postId: proposta.idPropostaPolitico);
+        final postUnliked =
+            isPostUnlikedForUser(context, postId: proposta.idPropostaPolitico);
+        return Padding(
+          padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  ButtonActionCard(
+                    icon: AntDesign.like2,
+                    iconColor: postLiked ? Colors.green : Colors.black,
+                    text:
+                        '''${context.bloc<PostBloc>().post[QTD_CURTIDAS_FIELD] ?? 0}''',
+                    textColor: postLiked ? Colors.green : Colors.black,
+                    onTap: () => context.bloc<PostBloc>().add(
+                          LikePost(
+                            user: context.bloc<UserBloc>().user,
+                            postId: proposta.idPropostaPolitico,
+                            politicoId: proposta.idPoliticoAutor,
+                          ),
+                        ),
                   ),
-            ),
-          ],
-        ),
-      ),
+                  ButtonActionCard(
+                    icon: AntDesign.dislike2,
+                    iconColor: postUnliked ? Colors.red : Colors.black,
+                    text:
+                        '''${context.bloc<PostBloc>().post[QTD_NAO_CURTIDAS_FIELD] ?? 0}''',
+                    textColor: postUnliked ? Colors.red : Colors.black,
+                    onTap: () => context.bloc<PostBloc>().add(
+                          UnlikePost(
+                            user: context.bloc<UserBloc>().user,
+                            postId: proposta.idPropostaPolitico,
+                            politicoId: proposta.idPoliticoAutor,
+                          ),
+                        ),
+                  ),
+                  ButtonActionCard(
+                    icon: FontAwesomeIcons.comment,
+                    text: '120',
+                    onTap: () {},
+                  ),
+                  ButtonActionCard(
+                    isIconOnly: true,
+                    icon: proposta.favorito ?? false
+                        ? FontAwesomeIcons.solidBookmark
+                        : FontAwesomeIcons.bookmark,
+                    iconColor:
+                        (proposta.favorito ?? false) ? Colors.yellow : null,
+                    onTap: () => context.bloc<PostBloc>().add(
+                          FavoritePostForUser(
+                            post: proposta.toJson(),
+                            user: context.bloc<UserBloc>().user,
+                          ),
+                        ),
+                  ),
+                ],
+              ),
+              _buildPostStatusForUser(context),
+            ],
+          ),
+        );
+      },
     );
+  }
+
+  Widget _buildPostStatusForUser(BuildContext context) {
+    if (isPostLikedForUser(context, postId: proposta.idPropostaPolitico)) {
+      return Text(
+        'Você curtiu esse projeto de lei',
+        style: TextStyle(
+          color: Colors.green,
+        ),
+        textAlign: TextAlign.start,
+      );
+    } else if (isPostUnlikedForUser(context,
+        postId: proposta.idPropostaPolitico)) {
+      return Text(
+        'Você não curtiu esse projeto de lei',
+        style: TextStyle(
+          color: Colors.red,
+        ),
+        textAlign: TextAlign.start,
+      );
+    }
+    return const SizedBox.shrink();
   }
 }

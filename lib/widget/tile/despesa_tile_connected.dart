@@ -25,6 +25,7 @@ class DespesaTileConnected extends StatelessWidget {
         post: despesa.toJson(),
         postRepository: context.repository<FirebasePostRepository>(),
         shareService: G<ShareService>(),
+        userBloc: context.bloc<UserBloc>(),
         timelineBloc: context.bloc<TimelineBloc>(),
       ),
       page: DespesaTile(despesa, clickableImage: clickableImage),

@@ -25,6 +25,7 @@ class PoliticPropostaTileConnected extends StatelessWidget {
         post: proposta.toJson(),
         postRepository: context.repository<FirebasePostRepository>(),
         shareService: G<ShareService>(),
+        userBloc: context.bloc<UserBloc>(),
       ),
       page: PoliticPropostaTile(proposta, clickableImage: clickableImage),
     );

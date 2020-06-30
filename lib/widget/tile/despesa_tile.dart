@@ -10,7 +10,9 @@ import '../../core/domain/model/models.dart';
 import '../../core/extension/extensions.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
+import '../../core/repository/concrete/firebase/firebase.dart';
 import '../../core/routing/route_names.dart';
+import '../../core/utils/general_utils.dart';
 import '../../page/pages.dart';
 import '../../page/theme/main_theme.dart';
 import '../button_action_card.dart';
@@ -41,6 +43,14 @@ class DespesaTile extends StatelessWidget {
               children: <Widget>[
                 _buildTopContent(),
                 _buildCenterContent(),
+                const SizedBox(height: 8),
+                Text(
+                  '${despesa.dataDocumento.formatDate()}',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                  ),
+                ),
               ],
             ),
           ),
@@ -158,38 +168,96 @@ class DespesaTile extends StatelessWidget {
 
   Widget _buildActions(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
-      builder: (_, state) => Padding(
-        padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      builder: (_, state) {
+        final postLiked = isPostLikedForUser(context, postId: despesa.id);
+        final postUnliked = isPostUnlikedForUser(context, postId: despesa.id);
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              '${despesa.dataDocumento.formatDate()}',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey[600],
+            Padding(
+              padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  ButtonActionCard(
+                    icon: AntDesign.like2,
+                    iconColor: postLiked ? Colors.green : Colors.black,
+                    text:
+                        '''${context.bloc<PostBloc>().post[QTD_CURTIDAS_FIELD] ?? 0}''',
+                    textColor: postLiked ? Colors.green : Colors.black,
+                    onTap: () => context.bloc<PostBloc>().add(
+                          LikePost(
+                            user: context.bloc<UserBloc>().user,
+                            postId: despesa.id,
+                            politicoId: despesa.idPolitico,
+                          ),
+                        ),
+                  ),
+                  ButtonActionCard(
+                    icon: AntDesign.dislike2,
+                    iconColor: postUnliked ? Colors.red : Colors.black,
+                    text:
+                        '''${context.bloc<PostBloc>().post[QTD_NAO_CURTIDAS_FIELD] ?? 0}''',
+                    textColor: postUnliked ? Colors.red : Colors.black,
+                    onTap: () => context.bloc<PostBloc>().add(
+                          UnlikePost(
+                            user: context.bloc<UserBloc>().user,
+                            postId: despesa.id,
+                            politicoId: despesa.idPolitico,
+                          ),
+                        ),
+                  ),
+                  ButtonActionCard(
+                    icon: FontAwesomeIcons.comment,
+                    text: '120',
+                    onTap: () {},
+                  ),
+                  ButtonActionCard(
+                    isIconOnly: true,
+                    icon: (despesa.favorito ?? false)
+                        ? FontAwesomeIcons.solidBookmark
+                        : FontAwesomeIcons.bookmark,
+                    iconColor:
+                        (despesa.favorito ?? false) ? Colors.yellow : null,
+                    onTap: () => context.bloc<PostBloc>().add(
+                          FavoritePostForUser(
+                            post: {
+                              'id': despesa.id,
+                              ...despesa.toJson(),
+                            },
+                            user: context.bloc<UserBloc>().user,
+                          ),
+                        ),
+                  ),
+                ],
               ),
             ),
-            ButtonActionCard(
-              isIconOnly: true,
-              icon: (despesa.favorito ?? false)
-                  ? FontAwesomeIcons.solidBookmark
-                  : FontAwesomeIcons.bookmark,
-              iconColor: (despesa.favorito ?? false) ? Colors.yellow : null,
-              onTap: () => context.bloc<PostBloc>().add(
-                    FavoritePostForUser(
-                      post: {
-                        'id': despesa.id,
-                        ...despesa.toJson(),
-                      },
-                      user: context.bloc<UserBloc>().user,
-                    ),
-                  ),
-            ),
+            _buildPostStatusForUser(context),
           ],
-        ),
-      ),
+        );
+      },
     );
+  }
+
+  Widget _buildPostStatusForUser(BuildContext context) {
+    if (isPostLikedForUser(context, postId: despesa.id)) {
+      return Text(
+        'Você curtiu essa despesa',
+        style: TextStyle(
+          color: Colors.green,
+        ),
+        textAlign: TextAlign.start,
+      );
+    } else if (isPostUnlikedForUser(context, postId: despesa.id)) {
+      return Text(
+        'Você não curtiu essa despesa',
+        style: TextStyle(
+          color: Colors.red,
+        ),
+        textAlign: TextAlign.start,
+      );
+    }
+    return const SizedBox.shrink();
   }
 }

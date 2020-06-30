@@ -25,6 +25,7 @@ class FavoritePropostaTileConnected extends StatelessWidget {
         post: proposta.toJson(),
         postRepository: context.repository<FirebasePostRepository>(),
         shareService: G<ShareService>(),
+        userBloc: context.bloc<UserBloc>(),
       ),
       page: FavoritePropostaTile(clickableImage: clickableImage),
     );

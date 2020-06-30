@@ -14,6 +14,7 @@ void main() {
     MockShareService mockShareService;
     MockFile mockFile;
     MockTimelineBloc mockTimelineBloc;
+    MockUserBloc mockUserBloc;
     DespesaModel despesa;
     PropostaModel proposta;
 
@@ -27,6 +28,7 @@ void main() {
         idPropostaPolitico: '1',
         favorito: true,
       );
+      mockUserBloc = MockUserBloc();
       mockTimelineBloc = MockTimelineBloc();
       mockPostRepository = MockPostRepository();
       mockShareService = MockShareService();
@@ -35,6 +37,7 @@ void main() {
         post: {},
         postRepository: mockPostRepository,
         shareService: mockShareService,
+        userBloc: mockUserBloc,
       );
     });
 
@@ -48,6 +51,7 @@ void main() {
                 post: null,
                 postRepository: mockPostRepository,
                 shareService: mockShareService,
+                userBloc: mockUserBloc,
               ),
           throwsAssertionError);
 
@@ -56,6 +60,7 @@ void main() {
                 post: {},
                 postRepository: null,
                 shareService: mockShareService,
+                userBloc: mockUserBloc,
               ),
           throwsAssertionError);
 
@@ -64,6 +69,16 @@ void main() {
                 post: {},
                 postRepository: mockPostRepository,
                 shareService: null,
+                userBloc: mockUserBloc,
+              ),
+          throwsAssertionError);
+
+      expect(
+          () => PostBloc(
+                post: {},
+                postRepository: mockPostRepository,
+                shareService: mockShareService,
+                userBloc: null,
               ),
           throwsAssertionError);
     });
@@ -75,7 +90,12 @@ void main() {
     blocTest(
       'mapEventToState',
       build: () async => postBloc,
-      act: (postBloc) async => postBloc.add(LikePost('1')),
+      act: (postBloc) async => postBloc.add(
+        LikePost(
+          user: UserModel(),
+          postId: '1',
+        ),
+      ),
       expect: [],
     );
 
@@ -87,6 +107,7 @@ void main() {
         },
         postRepository: mockPostRepository,
         shareService: mockShareService,
+        userBloc: mockUserBloc,
       ),
       act: (postBloc) async =>
           postBloc.add(FavoritePostForUser(post: {}, user: UserModel())),
@@ -120,6 +141,7 @@ void main() {
           },
           postRepository: mockPostRepository,
           shareService: mockShareService,
+          userBloc: mockUserBloc,
         );
       },
       act: (postBloc) async =>
@@ -149,6 +171,7 @@ void main() {
           postRepository: mockPostRepository,
           shareService: mockShareService,
           timelineBloc: mockTimelineBloc,
+          userBloc: mockUserBloc,
         );
       },
       act: (postBloc) async => postBloc
@@ -190,6 +213,7 @@ void main() {
           postRepository: mockPostRepository,
           shareService: mockShareService,
           timelineBloc: mockTimelineBloc,
+          userBloc: mockUserBloc,
         );
       },
       act: (postBloc) async => postBloc
@@ -224,6 +248,7 @@ void main() {
           },
           postRepository: mockPostRepository,
           shareService: mockShareService,
+          userBloc: mockUserBloc,
         );
       },
       act: (postBloc) async => postBloc.add(SharePost(postImage: mockFile)),
@@ -255,6 +280,7 @@ void main() {
           postRepository: mockPostRepository,
           shareService: mockShareService,
           timelineBloc: mockTimelineBloc,
+          userBloc: mockUserBloc,
         );
       },
       act: (postBloc) async => postBloc.add(
@@ -290,6 +316,7 @@ void main() {
           postRepository: mockPostRepository,
           shareService: mockShareService,
           timelineBloc: mockTimelineBloc,
+          userBloc: mockUserBloc,
         );
       },
       act: (postBloc) async => postBloc.add(
@@ -324,6 +351,7 @@ void main() {
           },
           postRepository: mockPostRepository,
           shareService: mockShareService,
+          userBloc: mockUserBloc,
           timelineBloc: mockTimelineBloc,
         );
       },
@@ -361,6 +389,7 @@ void main() {
           },
           postRepository: mockPostRepository,
           shareService: mockShareService,
+          userBloc: mockUserBloc,
           timelineBloc: mockTimelineBloc,
         );
       },
@@ -398,6 +427,7 @@ void main() {
           },
           postRepository: mockPostRepository,
           shareService: mockShareService,
+          userBloc: mockUserBloc,
           timelineBloc: mockTimelineBloc,
         );
       },

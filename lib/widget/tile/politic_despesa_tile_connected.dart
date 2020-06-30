@@ -25,6 +25,7 @@ class PoliticDespesaTileConnected extends StatelessWidget {
         post: despesa.toJson(),
         postRepository: context.repository<FirebasePostRepository>(),
         shareService: G<ShareService>(),
+        userBloc: context.bloc<UserBloc>(),
       ),
       page: PoliticDespesaTile(despesa, clickableImage: clickableImage),
     );
