@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:polis/core/keys.dart';
 
 import '../../../bloc/post/comment/comment_bloc.dart';
 import '../../../core/i18n/i18n.dart';
@@ -52,7 +53,7 @@ class _PostCommentsState extends State<PostComments> {
                   width: 360,
                   textSuffix: SEND,
                   widthSuffix: 70,
-                  keySuffix: const ValueKey('comment-button'),
+                  keySuffix: commentButtonKey,
                   controller: commentInputController,
                   onPressedSuffix: () {
                     context.bloc<CommentBloc>().add(

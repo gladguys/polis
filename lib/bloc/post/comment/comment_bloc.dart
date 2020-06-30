@@ -19,7 +19,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
   final dynamic post;
   final CommentRepository repository;
 
-  List<CommentModel> postComments;
+  List<CommentModel> postComments = [];
 
   @override
   CommentState get initialState => InitialCommentState();
@@ -43,7 +43,6 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
         ...postComments,
       ];
       final newComment = CommentModel(
-        id: '1',
         texto: event.text,
       );
       postComments = [

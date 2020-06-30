@@ -28,6 +28,13 @@ import 'package:sliding_panel/sliding_panel.dart';
 class MockSigninBloc extends MockBloc<SigninEvent, SigninState>
     implements SigninBloc {}
 
+class MockCommentRepliesBloc
+    extends MockBloc<CommentRepliesEvent, CommentRepliesState>
+    implements CommentRepliesBloc {}
+
+class MockCommentBloc extends MockBloc<CommentEvent, CommentState>
+    implements CommentBloc {}
+
 class MockEditProfileBloc extends MockBloc<EditProfileEvent, EditProfileState>
     implements EditProfileBloc {}
 
@@ -98,6 +105,8 @@ class MockEditProfileRepository extends Mock implements EditProfileRepository {}
 
 class MockTramitacaoPropostaRepository extends Mock
     implements TramitacaoPropostaRepository {}
+
+class MockCommentRepository extends Mock implements CommentRepository {}
 
 class MockChangePasswordRepository extends Mock
     implements ChangePasswordRepository {}

@@ -6,6 +6,7 @@ import 'package:simple_router/simple_router.dart';
 import '../../../../bloc/blocs.dart';
 import '../../../../core/domain/model/comment_model.dart';
 import '../../../../core/extension/extensions.dart';
+import '../../../../core/keys.dart';
 import '../../../../core/routing/route_names.dart';
 import '../../../pages.dart';
 
@@ -45,6 +46,7 @@ class CommentTile extends StatelessWidget {
                     name: COMMENT_REPLIES_PAGE,
                   ),
                   child: Row(
+                    key: commentsKey,
                     children: <Widget>[
                       FaIcon(
                         FontAwesomeIcons.comment,

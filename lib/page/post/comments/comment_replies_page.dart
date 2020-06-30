@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../core/i18n/i18n.dart';
+import '../../../core/keys.dart';
 import '../../../widget/field_rounded.dart';
 import 'widget/comments_reply_list.dart';
 
@@ -51,7 +52,7 @@ class _CommentRepliesPageState extends State<CommentRepliesPage> {
                 width: 360,
                 textSuffix: SEND,
                 widthSuffix: 70,
-                keySuffix: const ValueKey('comment-button'),
+                keySuffix: commentButtonKey,
                 controller: commentInputController,
                 onPressedSuffix: () {
                   context.bloc<CommentRepliesBloc>().add(

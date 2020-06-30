@@ -1,4 +1,5 @@
 export 'acao_usuario_model.dart';
+export 'comment_model.dart';
 export 'despesa_model.dart';
 export 'orgao_model.dart';
 export 'partido_model.dart';

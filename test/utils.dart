@@ -9,7 +9,7 @@ import 'mock.dart';
 
 final MockNavigatorObserver mockObserver = MockNavigatorObserver();
 
-Widget connectedWidget(Widget widget) {
+Widget connectedWidget(Widget widget, {bool withScaffold = false}) {
   SimpleRouter.setKey(GlobalKey<NavigatorState>());
   return MyAppInjections(
     child: BlocProvider<UserBloc>(
@@ -26,7 +26,11 @@ Widget connectedWidget(Widget widget) {
           mockObserver,
         ],
         navigatorKey: SimpleRouter.getKey(),
-        home: widget,
+        home: withScaffold
+            ? Scaffold(
+                body: widget,
+              )
+            : widget,
       ),
     ),
   );
