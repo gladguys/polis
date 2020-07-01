@@ -18,17 +18,28 @@ class LikePostButton extends StatelessWidget {
       post: post,
       user: context.bloc<UserBloc>().user,
     );
+    final postUnliked = isPostUnlikedForUser(
+      post: post,
+      user: context.bloc<UserBloc>().user,
+    );
     return ButtonActionCard(
       icon: AntDesign.like2,
       iconColor: postLiked ? Colors.green : Colors.black,
       text: '''${context.bloc<PostBloc>().post[QTD_CURTIDAS_FIELD] ?? 0}''',
       textColor: postLiked ? Colors.green : Colors.black,
       onTap: () => context.bloc<PostBloc>().add(
-            LikePost(
-              user: context.bloc<UserBloc>().user,
-              postId: getPostId(post),
-              politicoId: getPoliticoIdFromPost(post),
-            ),
+            postLiked
+                ? StopLikingPost(
+                    user: context.bloc<UserBloc>().user,
+                    postId: getPostId(post),
+                    politicoId: getPoliticoIdFromPost(post),
+                  )
+                : LikePost(
+                    user: context.bloc<UserBloc>().user,
+                    postId: getPostId(post),
+                    politicoId: getPoliticoIdFromPost(post),
+                    isUnliked: postUnliked,
+                  ),
           ),
     );
   }

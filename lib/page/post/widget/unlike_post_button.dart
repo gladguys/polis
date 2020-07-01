@@ -24,11 +24,17 @@ class UnlikePostButton extends StatelessWidget {
       text: '''${context.bloc<PostBloc>().post[QTD_NAO_CURTIDAS_FIELD] ?? 0}''',
       textColor: postUnliked ? Colors.red : Colors.black,
       onTap: () => context.bloc<PostBloc>().add(
-            UnlikePost(
-              user: context.bloc<UserBloc>().user,
-              postId: getPostId(post),
-              politicoId: getPoliticoIdFromPost(post),
-            ),
+            postUnliked
+                ? StopUnlikingPost(
+                    user: context.bloc<UserBloc>().user,
+                    postId: getPostId(post),
+                    politicoId: getPoliticoIdFromPost(post),
+                  )
+                : UnlikePost(
+                    user: context.bloc<UserBloc>().user,
+                    postId: getPostId(post),
+                    politicoId: getPoliticoIdFromPost(post),
+                  ),
           ),
     );
   }

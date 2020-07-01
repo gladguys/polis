@@ -5,7 +5,19 @@ abstract class PostEvent extends Equatable {
 }
 
 class LikePost extends PostEvent {
-  LikePost({this.user, this.postId, this.politicoId});
+  LikePost({this.user, this.postId, this.politicoId, this.isUnliked});
+
+  final UserModel user;
+  final String postId;
+  final String politicoId;
+  final bool isUnliked;
+
+  @override
+  List<Object> get props => [user, postId, politicoId, isUnliked];
+}
+
+class StopLikingPost extends PostEvent {
+  StopLikingPost({this.user, this.postId, this.politicoId});
 
   final UserModel user;
   final String postId;
@@ -16,7 +28,19 @@ class LikePost extends PostEvent {
 }
 
 class UnlikePost extends PostEvent {
-  UnlikePost({this.user, this.postId, this.politicoId});
+  UnlikePost({this.user, this.postId, this.politicoId, this.isLiked});
+
+  final UserModel user;
+  final String postId;
+  final String politicoId;
+  final bool isLiked;
+
+  @override
+  List<Object> get props => [user, postId, politicoId, isLiked];
+}
+
+class StopUnlikingPost extends PostEvent {
+  StopUnlikingPost({this.user, this.postId, this.politicoId});
 
   final UserModel user;
   final String postId;

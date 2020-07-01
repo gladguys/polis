@@ -56,8 +56,14 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     if (event is LikePost) {
       yield* _mapLikePostToState(event);
     }
+    if (event is StopLikingPost) {
+      yield* _mapStopLikingPostToState(event);
+    }
     if (event is UnlikePost) {
-      yield* _mapUnlikePostPostToState(event);
+      yield* _mapUnlikePostToState(event);
+    }
+    if (event is StopUnlikingPost) {
+      yield* _mapStopUnlikingPostToState(event);
     }
   }
 
@@ -158,20 +164,23 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
   Stream<PostState> _mapLikePostToState(LikePost event) async* {
     try {
-      final userLikes = await postRepository.likePost(
+      final isUnliked = event.isUnliked ?? false;
+      final likes = await postRepository.likePost(
         userId: event.user.userId,
         postId: event.postId,
         politicoId: event.politicoId,
+        isUnliked: isUnliked,
       );
       post = {
         ...post,
         QTD_CURTIDAS_FIELD: (post[QTD_CURTIDAS_FIELD] ?? 0) + 1,
+        QTD_NAO_CURTIDAS_FIELD:
+            (post[QTD_NAO_CURTIDAS_FIELD] ?? 0) - (isUnliked ? 1 : 0),
       };
       userBloc.add(
         UpdateCurrentUser(
-          userBloc.user.copyWith(
-            userLikes: userLikes,
-          ),
+          userBloc.user
+              .copyWith(userLikes: likes.item1, userUnlikes: likes.item2),
         ),
       );
       yield PostLikedSuccess(
@@ -182,21 +191,51 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     }
   }
 
-  Stream<PostState> _mapUnlikePostPostToState(UnlikePost event) async* {
+  Stream<PostState> _mapStopLikingPostToState(StopLikingPost event) async* {
     try {
-      final userUnlikes = await postRepository.unlikePost(
+      final userLikes = await postRepository.stopLikingPost(
         userId: event.user.userId,
         postId: event.postId,
         politicoId: event.politicoId,
       );
       post = {
         ...post,
+        QTD_CURTIDAS_FIELD: (post[QTD_CURTIDAS_FIELD] ?? 0) - 1,
+      };
+      userBloc.add(
+        UpdateCurrentUser(
+          userBloc.user.copyWith(
+            userLikes: userLikes,
+          ),
+        ),
+      );
+      yield StoppedLikingPostSuccess(
+        postId: event.postId,
+      );
+    } on Exception {
+      yield StoppedLikingPostFailed();
+    }
+  }
+
+  Stream<PostState> _mapUnlikePostToState(UnlikePost event) async* {
+    try {
+      final isLiked = event.isLiked ?? false;
+      final likes = await postRepository.unlikePost(
+        userId: event.user.userId,
+        postId: event.postId,
+        politicoId: event.politicoId,
+        isLiked: isLiked,
+      );
+      post = {
+        ...post,
+        QTD_CURTIDAS_FIELD: (post[QTD_CURTIDAS_FIELD] ?? 0) - (isLiked ? 1 : 0),
         QTD_NAO_CURTIDAS_FIELD: (post[QTD_NAO_CURTIDAS_FIELD] ?? 0) + 1,
       };
       userBloc.add(
         UpdateCurrentUser(
           userBloc.user.copyWith(
-            userUnlikes: userUnlikes,
+            userLikes: likes.item1,
+            userUnlikes: likes.item2,
           ),
         ),
       );
@@ -205,6 +244,32 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       );
     } on Exception {
       yield PostUnlikedFailed();
+    }
+  }
+
+  Stream<PostState> _mapStopUnlikingPostToState(StopUnlikingPost event) async* {
+    try {
+      final userUnlikes = await postRepository.stopUnlikingPost(
+        userId: event.user.userId,
+        postId: event.postId,
+        politicoId: event.politicoId,
+      );
+      post = {
+        ...post,
+        QTD_NAO_CURTIDAS_FIELD: (post[QTD_NAO_CURTIDAS_FIELD] ?? 0) - 1,
+      };
+      userBloc.add(
+        UpdateCurrentUser(
+          userBloc.user.copyWith(
+            userUnlikes: userUnlikes,
+          ),
+        ),
+      );
+      yield StoppedUnlikingPostSuccess(
+        postId: event.postId,
+      );
+    } on Exception {
+      yield StoppedUnlikingPostFailed();
     }
   }
 }
