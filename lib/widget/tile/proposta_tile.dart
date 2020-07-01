@@ -11,10 +11,11 @@ import '../../core/domain/model/models.dart';
 import '../../core/domain/model/proposta_model.dart';
 import '../../core/extension/extensions.dart';
 import '../../core/i18n/i18n.dart';
-import '../../core/repository/concrete/firebase/firebase.dart';
 import '../../core/routing/route_names.dart';
-import '../../core/utils/general_utils.dart';
 import '../../page/pages.dart';
+import '../../page/post/widget/like_post_button.dart';
+import '../../page/post/widget/post_like_status.dart';
+import '../../page/post/widget/unlike_post_button.dart';
 import '../../page/theme/main_theme.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';
@@ -181,10 +182,6 @@ class PropostaTile extends StatelessWidget {
   Widget _buildActions(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
       builder: (_, state) {
-        final postLiked =
-            isPostLikedForUser(context, postId: proposta.idPropostaPolitico);
-        final postUnliked =
-            isPostUnlikedForUser(context, postId: proposta.idPropostaPolitico);
         return Padding(
           padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
           child: Column(
@@ -194,34 +191,8 @@ class PropostaTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  ButtonActionCard(
-                    icon: AntDesign.like2,
-                    iconColor: postLiked ? Colors.green : Colors.black,
-                    text:
-                        '''${context.bloc<PostBloc>().post[QTD_CURTIDAS_FIELD] ?? 0}''',
-                    textColor: postLiked ? Colors.green : Colors.black,
-                    onTap: () => context.bloc<PostBloc>().add(
-                          LikePost(
-                            user: context.bloc<UserBloc>().user,
-                            postId: proposta.idPropostaPolitico,
-                            politicoId: proposta.idPoliticoAutor,
-                          ),
-                        ),
-                  ),
-                  ButtonActionCard(
-                    icon: AntDesign.dislike2,
-                    iconColor: postUnliked ? Colors.red : Colors.black,
-                    text:
-                        '''${context.bloc<PostBloc>().post[QTD_NAO_CURTIDAS_FIELD] ?? 0}''',
-                    textColor: postUnliked ? Colors.red : Colors.black,
-                    onTap: () => context.bloc<PostBloc>().add(
-                          UnlikePost(
-                            user: context.bloc<UserBloc>().user,
-                            postId: proposta.idPropostaPolitico,
-                            politicoId: proposta.idPoliticoAutor,
-                          ),
-                        ),
-                  ),
+                  LikePostButton(post: proposta),
+                  UnlikePostButton(post: proposta),
                   ButtonActionCard(
                     icon: FontAwesomeIcons.comment,
                     text: '120',
@@ -243,33 +214,11 @@ class PropostaTile extends StatelessWidget {
                   ),
                 ],
               ),
-              _buildPostStatusForUser(context),
+              PostLikeStatus(post: proposta),
             ],
           ),
         );
       },
     );
-  }
-
-  Widget _buildPostStatusForUser(BuildContext context) {
-    if (isPostLikedForUser(context, postId: proposta.idPropostaPolitico)) {
-      return Text(
-        'Você curtiu esse projeto de lei',
-        style: TextStyle(
-          color: Colors.green,
-        ),
-        textAlign: TextAlign.start,
-      );
-    } else if (isPostUnlikedForUser(context,
-        postId: proposta.idPropostaPolitico)) {
-      return Text(
-        'Você não curtiu esse projeto de lei',
-        style: TextStyle(
-          color: Colors.red,
-        ),
-        textAlign: TextAlign.start,
-      );
-    }
-    return const SizedBox.shrink();
   }
 }

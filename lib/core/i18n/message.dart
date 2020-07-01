@@ -66,3 +66,8 @@ const ASSERT_ATLEAST_IMAGE_OR_ICON =
     'You have to pass at least an image or an icon';
 const ASSERT_IMAGE_AND_ICON_NOT_PRESENT =
     'You must not pass both an image and an icon';
+
+const LIKED_PROPOSAL = 'Você curtiu esse projeto de lei';
+const NOT_LIKED_PROPOSAL = 'Você não curtiu esse projeto de lei';
+const LIKED_EXPENSE = 'Você curtiu essa despesa';
+const NOT_LIKED_EXPENSE = 'Você não curtiu essa despesa';
