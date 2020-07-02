@@ -8,14 +8,18 @@ import '../../../domain/model/models.dart';
 import '../../../exception/exceptions.dart';
 import '../../../extension/extensions.dart';
 import '../../../i18n/i18n.dart';
+import '../../../service/politico_service.dart';
 import '../../abstract/repositories.dart';
 import 'firebase.dart';
 
 class FirebaseActionRepository implements ActionRepository {
-  FirebaseActionRepository({@required this.firestore})
-      : assert(firestore != null);
+  FirebaseActionRepository(
+      {@required this.firestore, @required this.politicoService})
+      : assert(firestore != null),
+        assert(politicoService != null);
 
   final Firestore firestore;
+  final PoliticoService politicoService;
 
   CollectionReference get actionsRef => firestore.collection(ACOES_COLLECTION);
   CollectionReference get politicosRef =>
@@ -25,9 +29,7 @@ class FirebaseActionRepository implements ActionRepository {
   Future<void> saveUserAction({UserModel user, AcaoUsuarioModel acao}) async {
     try {
       final politicoId = acao.idPolitico;
-      final politicoDocumentSnapshot =
-          await politicosRef.document(politicoId).get();
-      final politico = PoliticoModel.fromJson(politicoDocumentSnapshot.data);
+      final politico = await politicoService.getPoliticoById(politicoId);
 
       final nomePolitico = acao.nomePolitico;
       final actionTypeDesc =
