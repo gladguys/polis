@@ -11,6 +11,7 @@ void main() {
   group('PostBloc tests', () {
     PostBloc postBloc;
     MockPostRepository mockPostRepository;
+    MockActionRepository mockActionRepository;
     MockShareService mockShareService;
     MockFile mockFile;
     MockTimelineBloc mockTimelineBloc;
@@ -31,11 +32,13 @@ void main() {
       mockUserBloc = MockUserBloc();
       mockTimelineBloc = MockTimelineBloc();
       mockPostRepository = MockPostRepository();
+      mockActionRepository = MockActionRepository();
       mockShareService = MockShareService();
       mockFile = MockFile();
       postBloc = PostBloc(
         post: {},
         postRepository: mockPostRepository,
+        actionRepository: mockActionRepository,
         shareService: mockShareService,
         userBloc: mockUserBloc,
       );
@@ -50,6 +53,7 @@ void main() {
           () => PostBloc(
                 post: null,
                 postRepository: mockPostRepository,
+                actionRepository: mockActionRepository,
                 shareService: mockShareService,
                 userBloc: mockUserBloc,
               ),
@@ -59,6 +63,7 @@ void main() {
           () => PostBloc(
                 post: {},
                 postRepository: null,
+                actionRepository: mockActionRepository,
                 shareService: mockShareService,
                 userBloc: mockUserBloc,
               ),
@@ -68,6 +73,17 @@ void main() {
           () => PostBloc(
                 post: {},
                 postRepository: mockPostRepository,
+                actionRepository: null,
+                shareService: mockShareService,
+                userBloc: mockUserBloc,
+              ),
+          throwsAssertionError);
+
+      expect(
+          () => PostBloc(
+                post: {},
+                postRepository: mockPostRepository,
+                actionRepository: mockActionRepository,
                 shareService: null,
                 userBloc: mockUserBloc,
               ),
@@ -77,6 +93,7 @@ void main() {
           () => PostBloc(
                 post: {},
                 postRepository: mockPostRepository,
+                actionRepository: mockActionRepository,
                 shareService: mockShareService,
                 userBloc: null,
               ),
@@ -94,6 +111,7 @@ void main() {
           FAVORITO_FIELD: true,
         },
         postRepository: mockPostRepository,
+        actionRepository: mockActionRepository,
         shareService: mockShareService,
         userBloc: mockUserBloc,
       ),
@@ -128,6 +146,7 @@ void main() {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
+          actionRepository: mockActionRepository,
           shareService: mockShareService,
           userBloc: mockUserBloc,
         );
@@ -157,6 +176,7 @@ void main() {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
+          actionRepository: mockActionRepository,
           shareService: mockShareService,
           timelineBloc: mockTimelineBloc,
           userBloc: mockUserBloc,
@@ -199,6 +219,7 @@ void main() {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
+          actionRepository: mockActionRepository,
           shareService: mockShareService,
           timelineBloc: mockTimelineBloc,
           userBloc: mockUserBloc,
@@ -235,6 +256,7 @@ void main() {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
+          actionRepository: mockActionRepository,
           shareService: mockShareService,
           userBloc: mockUserBloc,
         );
@@ -266,6 +288,7 @@ void main() {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
+          actionRepository: mockActionRepository,
           shareService: mockShareService,
           timelineBloc: mockTimelineBloc,
           userBloc: mockUserBloc,
@@ -302,6 +325,7 @@ void main() {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
+          actionRepository: mockActionRepository,
           shareService: mockShareService,
           timelineBloc: mockTimelineBloc,
           userBloc: mockUserBloc,
@@ -338,6 +362,7 @@ void main() {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
+          actionRepository: mockActionRepository,
           shareService: mockShareService,
           userBloc: mockUserBloc,
           timelineBloc: mockTimelineBloc,
@@ -376,6 +401,7 @@ void main() {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
+          actionRepository: mockActionRepository,
           shareService: mockShareService,
           userBloc: mockUserBloc,
           timelineBloc: mockTimelineBloc,
@@ -414,6 +440,7 @@ void main() {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
+          actionRepository: mockActionRepository,
           shareService: mockShareService,
           userBloc: mockUserBloc,
           timelineBloc: mockTimelineBloc,
