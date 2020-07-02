@@ -14,6 +14,10 @@ class UnlikePostButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final postLiked = isPostLikedForUser(
+      post: post,
+      user: context.bloc<UserBloc>().user,
+    );
     final postUnliked = isPostUnlikedForUser(
       post: post,
       user: context.bloc<UserBloc>().user,
@@ -34,6 +38,7 @@ class UnlikePostButton extends StatelessWidget {
                     user: context.bloc<UserBloc>().user,
                     postId: getPostId(post),
                     politicoId: getPoliticoIdFromPost(post),
+                    isLiked: postLiked,
                   ),
           ),
     );

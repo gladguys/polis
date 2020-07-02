@@ -43,7 +43,7 @@ class PoliticPersonalInfo extends StatelessWidget {
         const SizedBox(height: 4),
         Text('${politic.siglaPartido} · ${politic.siglaUf}'),
         Text(
-          politic.sexo == 'M' ? POLITIC_MALE : POLITIC_FEMALE,
+          politic.sexo == MALE ? POLITIC_MALE : POLITIC_FEMALE,
           style: TextStyle(
             fontSize: 12,
             color: Colors.grey[600],
