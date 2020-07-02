@@ -2,7 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
+import '../domain/enum/post_type.dart';
 import '../domain/model/models.dart';
+
+PostType getPostType(dynamic post) {
+  if (post is PropostaModel) {
+    return PostType.PROPOSICAO;
+  } else {
+    return PostType.DESPESA;
+  }
+}
 
 bool isPostProposal(dynamic post) {
   return post is PropostaModel;
@@ -41,9 +50,10 @@ bool isPostByIdUnlikedForUser(BuildContext context, {String postId}) {
 String getPostId(dynamic post) {
   if (post is PropostaModel) {
     return post.idPropostaPolitico;
-  } else {
+  } else if (post is DespesaModel) {
     return post.id;
   }
+  return null;
 }
 
 String getPoliticoIdFromPost(dynamic post) {
@@ -53,4 +63,20 @@ String getPoliticoIdFromPost(dynamic post) {
     return post.idPolitico;
   }
   return null;
+}
+
+PostType getPostTypeFromJson(dynamic post) {
+  if (post['tipoAtividade'] == 'DESPESA') {
+    return PostType.DESPESA;
+  } else {
+    return PostType.PROPOSICAO;
+  }
+}
+
+String getPostIdFromJson(dynamic post) {
+  return post['idPropostaPolitico'] ?? post['id'];
+}
+
+String getPoliticoIdFromPostJson(dynamic post) {
+  return post['idPoliticoAutor'] ?? post['idPolitico'];
 }
