@@ -17,6 +17,7 @@ class FollowUnfollowActionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO do navigation to the politic page when click on the action
     return CardBase(
       crossAxisAlignment: CrossAxisAlignment.center,
       slotLeft: Photo(url: action.urlFotoPolitico),

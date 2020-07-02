@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../bloc/blocs.dart';
 import '../../../core/domain/enum/acao_type.dart';
 import '../../../core/domain/enum/post_type.dart';
 import '../../../core/domain/model/acao_usuario_model.dart';
@@ -54,6 +56,13 @@ class LikeUnlikeActionTile extends StatelessWidget {
           ),
         ],
       ),
+      onTap: () => context.bloc<UserProfileBloc>().add(
+            GetPostInfo(
+              postId: action.idPost,
+              politicId: action.idPolitico,
+              postType: action.tipoPost,
+            ),
+          ),
     );
   }
 }
