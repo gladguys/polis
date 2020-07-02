@@ -26,6 +26,7 @@ class PostPageConnected extends StatelessWidget {
     final postBloc = PostBloc(
       post: getPostMap(post),
       postRepository: context.repository<FirebasePostRepository>(),
+      actionRepository: context.repository<FirebaseActionRepository>(),
       shareService: G<ShareService>(),
       userBloc: context.bloc<UserBloc>(),
       timelineBloc: timelineBloc,

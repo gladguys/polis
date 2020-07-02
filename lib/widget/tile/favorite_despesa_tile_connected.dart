@@ -24,6 +24,7 @@ class FavoriteDespesaTileConnected extends StatelessWidget {
       bloc: PostBloc(
         post: despesa.toJson(),
         postRepository: context.repository<FirebasePostRepository>(),
+        actionRepository: context.repository<FirebaseActionRepository>(),
         shareService: G<ShareService>(),
         userBloc: context.bloc<UserBloc>(),
       ),
