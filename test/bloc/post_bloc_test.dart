@@ -654,5 +654,282 @@ void main() {
         ).called(1);
       },
     );
+
+    blocTest(
+      'Expects to yield PostUnlikedFailed when unlike is failed',
+      build: () async {
+        when(mockUserBloc.user).thenReturn(UserModel());
+        when(mockPostRepository.unlikePost(
+                userId: '1', postId: '1', politicoId: '1', isLiked: true))
+            .thenThrow(Exception());
+        final mockTimelineBloc = MockTimelineBloc();
+        when(mockTimelineBloc.timelinePosts).thenReturn([
+          DespesaModel(id: '1'),
+        ]);
+
+        return PostBloc(
+          post: {
+            FAVORITO_FIELD: true,
+          },
+          postRepository: mockPostRepository,
+          actionRepository: mockActionRepository,
+          shareService: mockShareService,
+          userBloc: mockUserBloc,
+          timelineBloc: mockTimelineBloc,
+        );
+      },
+      act: (postBloc) async => postBloc.add(
+        UnlikePost(
+          user: UserModel(
+            userId: '1',
+          ),
+          postId: '1',
+          politicoId: '1',
+          isLiked: true,
+        ),
+      ),
+      expect: [
+        PostUnlikedFailed(),
+      ],
+    );
+
+    blocTest(
+      'Expects to yield PostUnlikedFailed when unlike save action is failed',
+      build: () async {
+        when(mockUserBloc.user).thenReturn(UserModel());
+        when(mockPostRepository.unlikePost(
+                userId: '1', postId: '1', politicoId: '1', isLiked: true))
+            .thenAnswer(
+          (_) => Future.value(
+            const Tuple2(
+              {'1': true},
+              {'2': false},
+            ),
+          ),
+        );
+        when(
+          mockActionRepository.saveUserAction(
+            user: anyNamed('user'),
+            acao: anyNamed('acao'),
+          ),
+        ).thenThrow(Exception());
+        final mockTimelineBloc = MockTimelineBloc();
+        when(mockTimelineBloc.timelinePosts).thenReturn([
+          DespesaModel(id: '1'),
+        ]);
+
+        return PostBloc(
+          post: {
+            FAVORITO_FIELD: true,
+          },
+          postRepository: mockPostRepository,
+          actionRepository: mockActionRepository,
+          shareService: mockShareService,
+          userBloc: mockUserBloc,
+          timelineBloc: mockTimelineBloc,
+        );
+      },
+      act: (postBloc) async => postBloc.add(
+        UnlikePost(
+          user: UserModel(
+            userId: '1',
+          ),
+          postId: '1',
+          politicoId: '1',
+          isLiked: true,
+        ),
+      ),
+      expect: [
+        PostUnlikedFailed(),
+      ],
+    );
+
+    blocTest(
+      'Expects to yield StoppedLikingPostSuccess when success',
+      build: () async {
+        when(mockUserBloc.user).thenReturn(
+          UserModel(),
+        );
+        when(
+          mockPostRepository.stopLikingPost(
+            userId: '1',
+            postId: '1',
+            politicoId: '1',
+          ),
+        ).thenAnswer(
+          (_) => Future.value({
+            '1': true,
+          }),
+        );
+        final mockTimelineBloc = MockTimelineBloc();
+        when(mockTimelineBloc.timelinePosts).thenReturn([
+          DespesaModel(id: '1'),
+        ]);
+
+        return PostBloc(
+          post: {
+            FAVORITO_FIELD: true,
+          },
+          postRepository: mockPostRepository,
+          actionRepository: mockActionRepository,
+          shareService: mockShareService,
+          userBloc: mockUserBloc,
+          timelineBloc: mockTimelineBloc,
+        );
+      },
+      act: (postBloc) async => postBloc.add(
+        StopLikingPost(
+          user: UserModel(
+            userId: '1',
+          ),
+          postId: '1',
+          politicoId: '1',
+        ),
+      ),
+      expect: [
+        StoppedLikingPostSuccess(
+          postId: '1',
+        ),
+      ],
+    );
+
+    blocTest(
+      'Expects to yield StoppedLikingPostFailed when failed',
+      build: () async {
+        when(mockUserBloc.user).thenReturn(
+          UserModel(),
+        );
+        when(
+          mockPostRepository.stopLikingPost(
+            userId: '1',
+            postId: '1',
+            politicoId: '1',
+          ),
+        ).thenThrow(
+          Exception(),
+        );
+        final mockTimelineBloc = MockTimelineBloc();
+        when(mockTimelineBloc.timelinePosts).thenReturn([
+          DespesaModel(id: '1'),
+        ]);
+
+        return PostBloc(
+          post: {
+            FAVORITO_FIELD: true,
+          },
+          postRepository: mockPostRepository,
+          actionRepository: mockActionRepository,
+          shareService: mockShareService,
+          userBloc: mockUserBloc,
+          timelineBloc: mockTimelineBloc,
+        );
+      },
+      act: (postBloc) async => postBloc.add(
+        StopLikingPost(
+          user: UserModel(
+            userId: '1',
+          ),
+          postId: '1',
+          politicoId: '1',
+        ),
+      ),
+      expect: [
+        StoppedLikingPostFailed(),
+      ],
+    );
+
+    blocTest(
+      'Expects to yield StoppedUnlikingPostSuccess when success',
+      build: () async {
+        when(mockUserBloc.user).thenReturn(
+          UserModel(),
+        );
+        when(
+          mockPostRepository.stopUnlikingPost(
+            userId: '1',
+            postId: '1',
+            politicoId: '1',
+          ),
+        ).thenAnswer(
+          (_) => Future.value({
+            '1': true,
+          }),
+        );
+        final mockTimelineBloc = MockTimelineBloc();
+        when(mockTimelineBloc.timelinePosts).thenReturn([
+          DespesaModel(id: '1'),
+        ]);
+
+        return PostBloc(
+          post: {
+            FAVORITO_FIELD: true,
+          },
+          postRepository: mockPostRepository,
+          actionRepository: mockActionRepository,
+          shareService: mockShareService,
+          userBloc: mockUserBloc,
+          timelineBloc: mockTimelineBloc,
+        );
+      },
+      act: (postBloc) async => postBloc.add(
+        StopUnlikingPost(
+          user: UserModel(
+            userId: '1',
+          ),
+          postId: '1',
+          politicoId: '1',
+        ),
+      ),
+      expect: [
+        StoppedUnlikingPostSuccess(
+          postId: '1',
+        ),
+      ],
+    );
+
+    blocTest(
+      'Expects to yield StoppedUnlikingPostFailed when failed',
+      build: () async {
+        when(mockUserBloc.user).thenReturn(
+          UserModel(),
+        );
+        when(
+          mockPostRepository.stopUnlikingPost(
+            userId: '1',
+            postId: '1',
+            politicoId: '1',
+          ),
+        ).thenThrow(
+          Exception(),
+        );
+        final mockTimelineBloc = MockTimelineBloc();
+        when(mockTimelineBloc.timelinePosts).thenReturn([
+          DespesaModel(id: '1'),
+        ]);
+
+        return PostBloc(
+          post: {
+            FAVORITO_FIELD: true,
+          },
+          postRepository: mockPostRepository,
+          actionRepository: mockActionRepository,
+          shareService: mockShareService,
+          userBloc: mockUserBloc,
+          timelineBloc: mockTimelineBloc,
+        );
+      },
+      act: (postBloc) async => postBloc.add(
+        StopUnlikingPost(
+          user: UserModel(
+            userId: '1',
+          ),
+          postId: '1',
+          politicoId: '1',
+        ),
+      ),
+      expect: [
+        StoppedUnlikingPostFailed(),
+      ],
+    );
   });
 }

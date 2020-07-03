@@ -1,7 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../bloc/blocs.dart';
 import '../domain/enum/post_type.dart';
 import '../domain/model/models.dart';
 
@@ -34,16 +30,6 @@ bool isPostUnlikedForUser({dynamic post, UserModel user}) {
   } else {
     postId = post.id;
   }
-  return user.userUnlikes != null ? (user.userUnlikes[postId] ?? false) : false;
-}
-
-bool isPostByIdLikedForUser(BuildContext context, {String postId}) {
-  final user = context.bloc<UserBloc>().user;
-  return user.userLikes != null ? (user.userLikes[postId] ?? false) : false;
-}
-
-bool isPostByIdUnlikedForUser(BuildContext context, {String postId}) {
-  final user = context.bloc<UserBloc>().user;
   return user.userUnlikes != null ? (user.userUnlikes[postId] ?? false) : false;
 }
 
