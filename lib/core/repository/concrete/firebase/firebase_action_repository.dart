@@ -49,7 +49,8 @@ class FirebaseActionRepository implements ActionRepository {
                 mensagem: mensagem,
               )
               .toJson());
-    } on Exception {
+    } on Exception catch (e) {
+      print(e);
       throw ComunicationException();
     }
   }

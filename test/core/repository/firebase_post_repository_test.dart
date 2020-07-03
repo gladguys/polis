@@ -14,6 +14,10 @@ void main() {
   MockCollectionReference mockPostsFavoritosUsuarioSubcollectionReference;
   MockCollectionReference mockTimelineReference;
   MockCollectionReference mockAtividadesTimelineSubcollectionReference;
+  MockCollectionReference mockAtividadesCollectionReference;
+  MockCollectionReference mockAtividadesPoliticSubcollectionReference;
+  MockCollectionReference mockUsersCollectionReference;
+  MockDocumentReference mockPoliticoDocumentReference;
   MockDocumentReference mockUserDocumentReference;
   MockDocumentReference mockPostDocumentReference;
   MockDocumentSnapshot mockDocumentSnapshot;
@@ -24,11 +28,15 @@ void main() {
       firebasePostRepository = FirebasePostRepository(
         firestore: mockFirestore,
       );
+      mockAtividadesCollectionReference = MockCollectionReference();
+      mockUsersCollectionReference = MockCollectionReference();
       mockPostsFavoritosCollectionReference = MockCollectionReference();
+      mockAtividadesPoliticSubcollectionReference = MockCollectionReference();
       mockPostsFavoritosUsuarioSubcollectionReference =
           MockCollectionReference();
       mockTimelineReference = MockCollectionReference();
       mockAtividadesTimelineSubcollectionReference = MockCollectionReference();
+      mockPoliticoDocumentReference = MockDocumentReference();
       mockUserDocumentReference = MockDocumentReference();
       mockPostDocumentReference = MockDocumentReference();
       mockDocumentSnapshot = MockDocumentSnapshot();
@@ -171,6 +179,352 @@ void main() {
             .isPostFavorited(
               userId: '1',
               postId: '1',
+            )
+            .catchError((e) => expect(e, isA<ComunicationException>()));
+      });
+    });
+
+    group('likePost', () {
+      test('should work when unliked', () async {
+        final mockAtividadeDocumentReference = MockDocumentReference();
+        final mockAtividadeDocumentSnapshot = MockDocumentSnapshot();
+        final mockUserDocumentReference = MockDocumentReference();
+        final mockUserDocumentSnapshot = MockDocumentSnapshot();
+        when(mockFirestore.collection(ATIVIDADES_COLLECTION))
+            .thenReturn(mockAtividadesCollectionReference);
+        when(mockAtividadesCollectionReference.document('1'))
+            .thenReturn(mockPoliticoDocumentReference);
+        when(mockPoliticoDocumentReference
+                .collection(ATIVIDADES_POLITICO_SUBCOLLECTION))
+            .thenReturn(mockAtividadesPoliticSubcollectionReference);
+        when(mockAtividadesPoliticSubcollectionReference.document('1'))
+            .thenReturn(mockAtividadeDocumentReference);
+        when(mockAtividadeDocumentReference.get())
+            .thenAnswer((_) => Future.value(mockAtividadeDocumentSnapshot));
+        when(mockAtividadeDocumentSnapshot.data).thenReturn({
+          QTD_CURTIDAS_FIELD: 0,
+          QTD_NAO_CURTIDAS_FIELD: 0,
+        });
+        when(mockFirestore.collection(USERS_COLLECTION))
+            .thenReturn(mockUsersCollectionReference);
+        when(mockUsersCollectionReference.document('1'))
+            .thenReturn(mockUserDocumentReference);
+        when(mockUserDocumentReference.get())
+            .thenAnswer((_) => Future.value(mockUserDocumentSnapshot));
+        when(mockUserDocumentSnapshot.data).thenReturn({
+          USER_LIKES_FIELD: {},
+          USER_UNLIKES_FIELD: {},
+        });
+
+        final likes = await firebasePostRepository.likePost(
+          userId: '1',
+          postId: '1',
+          politicoId: '1',
+          isUnliked: true,
+        );
+        expect(likes.item1, {
+          '1': true,
+        });
+        expect(likes.item2, {
+          '1': false,
+        });
+      });
+
+      test('should work when not unliked', () async {
+        final mockAtividadeDocumentReference = MockDocumentReference();
+        final mockAtividadeDocumentSnapshot = MockDocumentSnapshot();
+        final mockUserDocumentReference = MockDocumentReference();
+        final mockUserDocumentSnapshot = MockDocumentSnapshot();
+        when(mockFirestore.collection(ATIVIDADES_COLLECTION))
+            .thenReturn(mockAtividadesCollectionReference);
+        when(mockAtividadesCollectionReference.document('1'))
+            .thenReturn(mockPoliticoDocumentReference);
+        when(mockPoliticoDocumentReference
+                .collection(ATIVIDADES_POLITICO_SUBCOLLECTION))
+            .thenReturn(mockAtividadesPoliticSubcollectionReference);
+        when(mockAtividadesPoliticSubcollectionReference.document('1'))
+            .thenReturn(mockAtividadeDocumentReference);
+        when(mockAtividadeDocumentReference.get())
+            .thenAnswer((_) => Future.value(mockAtividadeDocumentSnapshot));
+        when(mockAtividadeDocumentSnapshot.data).thenReturn({
+          QTD_CURTIDAS_FIELD: 0,
+          QTD_NAO_CURTIDAS_FIELD: 0,
+        });
+        when(mockFirestore.collection(USERS_COLLECTION))
+            .thenReturn(mockUsersCollectionReference);
+        when(mockUsersCollectionReference.document('1'))
+            .thenReturn(mockUserDocumentReference);
+        when(mockUserDocumentReference.get())
+            .thenAnswer((_) => Future.value(mockUserDocumentSnapshot));
+        when(mockUserDocumentSnapshot.data).thenReturn({
+          USER_LIKES_FIELD: {},
+          USER_UNLIKES_FIELD: {},
+        });
+
+        final likes = await firebasePostRepository.likePost(
+          userId: '1',
+          postId: '1',
+          politicoId: '1',
+          isUnliked: false,
+        );
+        expect(likes.item1, {
+          '1': true,
+        });
+        expect(likes.item2, {
+          '1': false,
+        });
+      });
+
+      test('should fail', () async {
+        final mockAtividadeDocumentReference = MockDocumentReference();
+        final mockAtividadeDocumentSnapshot = MockDocumentSnapshot();
+        final mockUserDocumentReference = MockDocumentReference();
+        final mockUserDocumentSnapshot = MockDocumentSnapshot();
+        when(mockFirestore.collection(ATIVIDADES_COLLECTION))
+            .thenReturn(mockAtividadesCollectionReference);
+        when(mockAtividadesCollectionReference.document('1'))
+            .thenReturn(mockPoliticoDocumentReference);
+        when(mockPoliticoDocumentReference
+                .collection(ATIVIDADES_POLITICO_SUBCOLLECTION))
+            .thenReturn(mockAtividadesPoliticSubcollectionReference);
+        when(mockAtividadesPoliticSubcollectionReference.document('1'))
+            .thenReturn(mockAtividadeDocumentReference);
+        when(mockAtividadeDocumentReference.get())
+            .thenAnswer((_) => Future.value(mockAtividadeDocumentSnapshot));
+        when(mockAtividadeDocumentSnapshot.data).thenReturn({
+          QTD_CURTIDAS_FIELD: 0,
+          QTD_NAO_CURTIDAS_FIELD: 0,
+        });
+        when(mockFirestore.collection(USERS_COLLECTION))
+            .thenReturn(mockUsersCollectionReference);
+        when(mockUsersCollectionReference.document('1'))
+            .thenReturn(mockUserDocumentReference);
+        when(mockUserDocumentReference.get()).thenThrow(Exception());
+        when(mockUserDocumentSnapshot.data).thenReturn({
+          USER_LIKES_FIELD: {},
+          USER_UNLIKES_FIELD: {},
+        });
+
+        firebasePostRepository
+            .likePost(
+              userId: '1',
+              postId: '1',
+              politicoId: '1',
+              isUnliked: false,
+            )
+            .catchError((e) => expect(e, isA<ComunicationException>()));
+      });
+    });
+
+    group('unlikePost', () {
+      test('should work when liked', () async {
+        final mockAtividadeDocumentReference = MockDocumentReference();
+        final mockAtividadeDocumentSnapshot = MockDocumentSnapshot();
+        final mockUserDocumentReference = MockDocumentReference();
+        final mockUserDocumentSnapshot = MockDocumentSnapshot();
+        when(mockFirestore.collection(ATIVIDADES_COLLECTION))
+            .thenReturn(mockAtividadesCollectionReference);
+        when(mockAtividadesCollectionReference.document('1'))
+            .thenReturn(mockPoliticoDocumentReference);
+        when(mockPoliticoDocumentReference
+                .collection(ATIVIDADES_POLITICO_SUBCOLLECTION))
+            .thenReturn(mockAtividadesPoliticSubcollectionReference);
+        when(mockAtividadesPoliticSubcollectionReference.document('1'))
+            .thenReturn(mockAtividadeDocumentReference);
+        when(mockAtividadeDocumentReference.get())
+            .thenAnswer((_) => Future.value(mockAtividadeDocumentSnapshot));
+        when(mockAtividadeDocumentSnapshot.data).thenReturn({
+          QTD_CURTIDAS_FIELD: 0,
+          QTD_NAO_CURTIDAS_FIELD: 0,
+        });
+        when(mockFirestore.collection(USERS_COLLECTION))
+            .thenReturn(mockUsersCollectionReference);
+        when(mockUsersCollectionReference.document('1'))
+            .thenReturn(mockUserDocumentReference);
+        when(mockUserDocumentReference.get())
+            .thenAnswer((_) => Future.value(mockUserDocumentSnapshot));
+        when(mockUserDocumentSnapshot.data).thenReturn({
+          USER_LIKES_FIELD: {},
+          USER_UNLIKES_FIELD: {},
+        });
+
+        final likes = await firebasePostRepository.unlikePost(
+          userId: '1',
+          postId: '1',
+          politicoId: '1',
+          isLiked: true,
+        );
+        expect(likes.item1, {
+          '1': false,
+        });
+        expect(likes.item2, {
+          '1': true,
+        });
+      });
+
+      test('should work when not liked', () async {
+        final mockAtividadeDocumentReference = MockDocumentReference();
+        final mockAtividadeDocumentSnapshot = MockDocumentSnapshot();
+        final mockUserDocumentReference = MockDocumentReference();
+        final mockUserDocumentSnapshot = MockDocumentSnapshot();
+        when(mockFirestore.collection(ATIVIDADES_COLLECTION))
+            .thenReturn(mockAtividadesCollectionReference);
+        when(mockAtividadesCollectionReference.document('1'))
+            .thenReturn(mockPoliticoDocumentReference);
+        when(mockPoliticoDocumentReference
+                .collection(ATIVIDADES_POLITICO_SUBCOLLECTION))
+            .thenReturn(mockAtividadesPoliticSubcollectionReference);
+        when(mockAtividadesPoliticSubcollectionReference.document('1'))
+            .thenReturn(mockAtividadeDocumentReference);
+        when(mockAtividadeDocumentReference.get())
+            .thenAnswer((_) => Future.value(mockAtividadeDocumentSnapshot));
+        when(mockAtividadeDocumentSnapshot.data).thenReturn({
+          QTD_CURTIDAS_FIELD: 0,
+          QTD_NAO_CURTIDAS_FIELD: 0,
+        });
+        when(mockFirestore.collection(USERS_COLLECTION))
+            .thenReturn(mockUsersCollectionReference);
+        when(mockUsersCollectionReference.document('1'))
+            .thenReturn(mockUserDocumentReference);
+        when(mockUserDocumentReference.get())
+            .thenAnswer((_) => Future.value(mockUserDocumentSnapshot));
+        when(mockUserDocumentSnapshot.data).thenReturn({
+          USER_LIKES_FIELD: {},
+          USER_UNLIKES_FIELD: {},
+        });
+
+        final likes = await firebasePostRepository.unlikePost(
+          userId: '1',
+          postId: '1',
+          politicoId: '1',
+          isLiked: false,
+        );
+        expect(likes.item1, {
+          '1': false,
+        });
+        expect(likes.item2, {
+          '1': true,
+        });
+      });
+
+      test('should fail', () async {
+        when(mockFirestore.collection(ATIVIDADES_COLLECTION))
+            .thenThrow(Exception());
+
+        firebasePostRepository
+            .unlikePost(
+              userId: '1',
+              postId: '1',
+              politicoId: '1',
+              isLiked: true,
+            )
+            .catchError((e) => expect(e, isA<ComunicationException>()));
+      });
+    });
+
+    group('stopLikingPost', () {
+      test('should work', () async {
+        final mockAtividadeDocumentReference = MockDocumentReference();
+        final mockAtividadeDocumentSnapshot = MockDocumentSnapshot();
+        final mockUserDocumentReference = MockDocumentReference();
+        final mockUserDocumentSnapshot = MockDocumentSnapshot();
+        when(mockFirestore.collection(ATIVIDADES_COLLECTION))
+            .thenReturn(mockAtividadesCollectionReference);
+        when(mockAtividadesCollectionReference.document('1'))
+            .thenReturn(mockPoliticoDocumentReference);
+        when(mockPoliticoDocumentReference
+                .collection(ATIVIDADES_POLITICO_SUBCOLLECTION))
+            .thenReturn(mockAtividadesPoliticSubcollectionReference);
+        when(mockAtividadesPoliticSubcollectionReference.document('1'))
+            .thenReturn(mockAtividadeDocumentReference);
+        when(mockAtividadeDocumentReference.get())
+            .thenAnswer((_) => Future.value(mockAtividadeDocumentSnapshot));
+        when(mockAtividadeDocumentSnapshot.data).thenReturn({
+          QTD_CURTIDAS_FIELD: 0,
+          QTD_NAO_CURTIDAS_FIELD: 0,
+        });
+        when(mockFirestore.collection(USERS_COLLECTION))
+            .thenReturn(mockUsersCollectionReference);
+        when(mockUsersCollectionReference.document('1'))
+            .thenReturn(mockUserDocumentReference);
+        when(mockUserDocumentReference.get())
+            .thenAnswer((_) => Future.value(mockUserDocumentSnapshot));
+        when(mockUserDocumentSnapshot.data).thenReturn({
+          USER_LIKES_FIELD: {},
+          USER_UNLIKES_FIELD: {},
+        });
+
+        final likes = await firebasePostRepository.stopLikingPost(
+          userId: '1',
+          postId: '1',
+          politicoId: '1',
+        );
+        expect(likes['1'], false);
+      });
+
+      test('should not work', () async {
+        when(mockFirestore.collection(ATIVIDADES_COLLECTION))
+            .thenThrow(Exception());
+
+        firebasePostRepository
+            .stopLikingPost(
+              userId: '1',
+              postId: '1',
+              politicoId: '1',
+            )
+            .catchError((e) => expect(e, isA<ComunicationException>()));
+      });
+    });
+
+    group('stopLikingPost', () {
+      test('should work', () async {
+        final mockAtividadeDocumentReference = MockDocumentReference();
+        final mockAtividadeDocumentSnapshot = MockDocumentSnapshot();
+        final mockUserDocumentReference = MockDocumentReference();
+        final mockUserDocumentSnapshot = MockDocumentSnapshot();
+        when(mockFirestore.collection(ATIVIDADES_COLLECTION))
+            .thenReturn(mockAtividadesCollectionReference);
+        when(mockAtividadesCollectionReference.document('1'))
+            .thenReturn(mockPoliticoDocumentReference);
+        when(mockPoliticoDocumentReference
+                .collection(ATIVIDADES_POLITICO_SUBCOLLECTION))
+            .thenReturn(mockAtividadesPoliticSubcollectionReference);
+        when(mockAtividadesPoliticSubcollectionReference.document('1'))
+            .thenReturn(mockAtividadeDocumentReference);
+        when(mockAtividadeDocumentReference.get())
+            .thenAnswer((_) => Future.value(mockAtividadeDocumentSnapshot));
+        when(mockAtividadeDocumentSnapshot.data).thenReturn({
+          QTD_CURTIDAS_FIELD: 0,
+          QTD_NAO_CURTIDAS_FIELD: 0,
+        });
+        when(mockFirestore.collection(USERS_COLLECTION))
+            .thenReturn(mockUsersCollectionReference);
+        when(mockUsersCollectionReference.document('1'))
+            .thenReturn(mockUserDocumentReference);
+        when(mockUserDocumentReference.get())
+            .thenAnswer((_) => Future.value(mockUserDocumentSnapshot));
+        when(mockUserDocumentSnapshot.data).thenReturn({
+          USER_LIKES_FIELD: {},
+          USER_UNLIKES_FIELD: {},
+        });
+
+        final likes = await firebasePostRepository.stopUnlikingPost(
+          userId: '1',
+          postId: '1',
+          politicoId: '1',
+        );
+        expect(likes['1'], false);
+      });
+
+      test('should not work', () async {
+        when(mockFirestore.collection(ATIVIDADES_COLLECTION))
+            .thenThrow(Exception());
+
+        firebasePostRepository
+            .stopUnlikingPost(
+              userId: '1',
+              postId: '1',
+              politicoId: '1',
             )
             .catchError((e) => expect(e, isA<ComunicationException>()));
       });

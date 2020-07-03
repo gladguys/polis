@@ -24,7 +24,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     @required this.shareService,
     @required this.userBloc,
     this.timelineBloc,
-  }) {
+  }) : super(InitialPostState()) {
     assert(post != null);
     assert(postRepository != null);
     assert(actionRepository != null);
@@ -40,9 +40,6 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   final TimelineBloc timelineBloc;
   Map<String, dynamic> post;
   bool isPostFavorite;
-
-  @override
-  PostState get initialState => InitialPostState();
 
   @override
   Stream<PostState> mapEventToState(PostEvent event) async* {

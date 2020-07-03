@@ -12,14 +12,13 @@ part 'user_profile_event.dart';
 part 'user_profile_state.dart';
 
 class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
-  UserProfileBloc({@required this.repository}) : assert(repository != null);
+  UserProfileBloc({@required this.repository})
+      : assert(repository != null),
+        super(InitialUserProfileState());
 
   final UserProfileRepository repository;
   List<PoliticoModel> politicsFollowing;
   List<AcaoUsuarioModel> userActions;
-
-  @override
-  UserProfileState get initialState => InitialUserProfileState();
 
   @override
   Stream<UserProfileState> mapEventToState(UserProfileEvent event) async* {

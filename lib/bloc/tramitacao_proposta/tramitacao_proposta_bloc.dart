@@ -16,16 +16,14 @@ class TramitacaoPropostaBloc
   TramitacaoPropostaBloc(
       {@required this.repository, @required this.orgaoService})
       : assert(repository != null),
-        assert(orgaoService != null);
+        assert(orgaoService != null),
+        super(InitialTramitacaoPropostaState());
 
   final TramitacaoPropostaRepository repository;
   final OrgaoService orgaoService;
 
   PropostaModel proposta;
   Map<String, OrgaoModel> orgaosMap = {};
-
-  @override
-  TramitacaoPropostaState get initialState => InitialTramitacaoPropostaState();
 
   @override
   Stream<TramitacaoPropostaState> mapEventToState(

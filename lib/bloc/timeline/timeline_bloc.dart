@@ -12,7 +12,9 @@ part 'timeline_event.dart';
 part 'timeline_state.dart';
 
 class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
-  TimelineBloc({@required this.repository}) : assert(repository != null);
+  TimelineBloc({@required this.repository})
+      : assert(repository != null),
+        super(InitialTimelineState());
 
   final TimelineRepository repository;
 
@@ -25,9 +27,6 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
   /// We just want to track the changes, so we don't need to make use of the
   /// the first values emitted onto the stream
   bool isTimelineFetchedOnce = false;
-
-  @override
-  TimelineState get initialState => InitialTimelineState();
 
   @override
   Stream<TimelineState> mapEventToState(TimelineEvent event) async* {

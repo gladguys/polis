@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_monitor/shared_preferences_monitor.dart';
 import 'package:simple_router/simple_router.dart';
 
-import 'bloc/flutter_bloc_delegate.dart';
+import 'bloc/flutter_bloc_observer.dart';
 import 'core/domain/model/models.dart';
 import 'core/service/locator.dart';
 import 'core/service/services.dart';
@@ -26,7 +26,7 @@ void main() async {
   G<CrashlyticsService>().initCrashlytics();
   await G<MessageService>().initMessaging();
   FlutterError.onError = G<CrashlyticsService>().crashlytics.recordFlutterError;
-  BlocSupervisor.delegate = FlutterBlocDelegate(
+  Bloc.observer = FlutterBlocObserver(
     analyticsService: G<AnalyticsService>(),
     performanceService: G<PerformanceService>(),
   );

@@ -202,21 +202,26 @@ class FirebasePostRepository implements PostRepository {
     String politicoId,
     bool isLiking,
   }) async {
-    final postInfo = await _getPostInfo(postId: postId, politicoId: politicoId);
+    try {
+      final postInfo =
+          await _getPostInfo(postId: postId, politicoId: politicoId);
 
-    final postData = postInfo.item1;
-    final postDoc = postInfo.item2;
+      final postData = postInfo.item1;
+      final postDoc = postInfo.item2;
 
-    if (isLiking) {
-      final actualLikesCount = postData[QTD_CURTIDAS_FIELD] ?? 0;
-      await postDoc.updateData({
-        QTD_CURTIDAS_FIELD: actualLikesCount - 1,
-      });
-    } else {
-      final actualUnlikesCount = postData[QTD_NAO_CURTIDAS_FIELD] ?? 0;
-      await postDoc.updateData({
-        QTD_NAO_CURTIDAS_FIELD: actualUnlikesCount - 1,
-      });
+      if (isLiking) {
+        final actualLikesCount = postData[QTD_CURTIDAS_FIELD] ?? 0;
+        await postDoc.updateData({
+          QTD_CURTIDAS_FIELD: actualLikesCount - 1,
+        });
+      } else {
+        final actualUnlikesCount = postData[QTD_NAO_CURTIDAS_FIELD] ?? 0;
+        await postDoc.updateData({
+          QTD_NAO_CURTIDAS_FIELD: actualUnlikesCount - 1,
+        });
+      }
+    } on Exception {
+      rethrow;
     }
   }
 
@@ -225,29 +230,34 @@ class FirebasePostRepository implements PostRepository {
     String postId,
     bool isLiking,
   }) async {
-    final userInfo = await _getUserInfo(userId: userId);
+    try {
+      final userInfo = await _getUserInfo(userId: userId);
 
-    final userData = userInfo.item1;
-    final userLikes = Map<String, bool>.from(userData[USER_LIKES_FIELD] ?? {});
-    final userUnlikes =
-        Map<String, bool>.from(userData[USER_UNLIKES_FIELD] ?? {});
-    userLikes[postId] = isLiking;
-    userUnlikes[postId] = !isLiking;
+      final userData = userInfo.item1;
+      final userLikes =
+          Map<String, bool>.from(userData[USER_LIKES_FIELD] ?? {});
+      final userUnlikes =
+          Map<String, bool>.from(userData[USER_UNLIKES_FIELD] ?? {});
+      userLikes[postId] = isLiking;
+      userUnlikes[postId] = !isLiking;
 
-    final userDoc = userInfo.item2;
-    await userDoc.updateData({
-      USER_LIKES_FIELD: {
-        ...userLikes,
-      },
-      USER_UNLIKES_FIELD: {
-        ...userUnlikes,
-      }
-    });
+      final userDoc = userInfo.item2;
+      await userDoc.updateData({
+        USER_LIKES_FIELD: {
+          ...userLikes,
+        },
+        USER_UNLIKES_FIELD: {
+          ...userUnlikes,
+        }
+      });
 
-    return Tuple2<Map<String, bool>, Map<String, bool>>(
-      userLikes,
-      userUnlikes,
-    );
+      return Tuple2<Map<String, bool>, Map<String, bool>>(
+        userLikes,
+        userUnlikes,
+      );
+    } on Exception {
+      rethrow;
+    }
   }
 
   Future<Map<String, bool>> _updateUserLikesInfoWhenStop({
@@ -255,29 +265,33 @@ class FirebasePostRepository implements PostRepository {
     String postId,
     bool isLiking,
   }) async {
-    final userInfo = await _getUserInfo(userId: userId);
-    final userData = userInfo.item1;
-    final userDoc = userInfo.item2;
+    try {
+      final userInfo = await _getUserInfo(userId: userId);
+      final userData = userInfo.item1;
+      final userDoc = userInfo.item2;
 
-    if (isLiking) {
-      final userLikes =
-          Map<String, bool>.from(userData[USER_LIKES_FIELD] ?? {});
-      userLikes[postId] = false;
-      await userDoc.updateData({
-        USER_LIKES_FIELD: {
-          ...userLikes,
-        }
-      });
-      return userLikes;
-    } else {
-      final userUnlikes =
-          Map<String, bool>.from(userData[USER_UNLIKES_FIELD] ?? {});
-      userUnlikes[postId] = false;
+      if (isLiking) {
+        final userLikes =
+            Map<String, bool>.from(userData[USER_LIKES_FIELD] ?? {});
+        userLikes[postId] = false;
+        await userDoc.updateData({
+          USER_LIKES_FIELD: {
+            ...userLikes,
+          }
+        });
+        return userLikes;
+      } else {
+        final userUnlikes =
+            Map<String, bool>.from(userData[USER_UNLIKES_FIELD] ?? {});
+        userUnlikes[postId] = false;
 
-      await userDoc.updateData({
-        USER_UNLIKES_FIELD: userUnlikes,
-      });
-      return userUnlikes;
+        await userDoc.updateData({
+          USER_UNLIKES_FIELD: userUnlikes,
+        });
+        return userUnlikes;
+      }
+    } on Exception {
+      rethrow;
     }
   }
 

@@ -21,16 +21,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       : assert(user != null),
         assert(repository != null),
         assert(analyticsService != null),
-        assert(sharedPreferencesService != null);
+        assert(sharedPreferencesService != null),
+        super(InitialUser());
 
   final UserRepository repository;
   final AnalyticsService analyticsService;
   final SharedPreferencesService sharedPreferencesService;
 
   UserModel user;
-
-  @override
-  UserState get initialState => InitialUser();
 
   @override
   Stream<UserState> mapEventToState(UserEvent event) async* {
