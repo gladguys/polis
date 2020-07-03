@@ -24,6 +24,7 @@ import '../utils.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   MockUserProfileBloc mockUserProfileBloc;
+  List<PoliticoModel> politicsFollowing;
 
   setUpAll(() {
     const channel = MethodChannel('plugins.flutter.io/firebase_performance');
@@ -34,6 +35,13 @@ void main() {
 
   group('UserProfilePage tests', () {
     setUp(() {
+      politicsFollowing = [
+        PoliticoModel(
+          id: '1',
+          nomeCivil: 'nome',
+          urlFoto: 'foto',
+        )
+      ];
       mockUserProfileBloc = MockUserProfileBloc();
     });
 
@@ -78,15 +86,12 @@ void main() {
         when(mockUserProfileBloc.state).thenReturn(
           FetchUserRelatedInfoSuccess(
             userActions: [],
-            politicsFollowing: [
-              PoliticoModel(
-                id: '1',
-                nomeCivil: 'nome',
-                urlFoto: 'foto',
-              )
-            ],
+            politicsFollowing: politicsFollowing,
           ),
         );
+        when(mockUserProfileBloc.userActions).thenReturn([]);
+        when(mockUserProfileBloc.politicsFollowing)
+            .thenReturn(politicsFollowing);
         await tester.pumpWidget(
           connectedWidget(
             BlocProvider(
@@ -135,15 +140,31 @@ void main() {
                 urlFotoPolitico: 'foto',
               ),
             ],
-            politicsFollowing: [
-              PoliticoModel(
-                id: '1',
-                nomeCivil: 'nome',
-                urlFoto: 'foto',
-              )
-            ],
+            politicsFollowing: politicsFollowing,
           ),
         );
+        when(mockUserProfileBloc.userActions).thenReturn(
+          [
+            AcaoUsuarioModel(
+              idPolitico: '1',
+              mensagem: 'mensagem',
+              tipo: AcaoType.follow,
+              data: DateTime.now(),
+              nomePolitico: 'Nome',
+              urlFotoPolitico: 'foto',
+            ),
+            AcaoUsuarioModel(
+              idPolitico: '1',
+              mensagem: 'mensagem',
+              tipo: AcaoType.unfollow,
+              data: DateTime.now(),
+              nomePolitico: 'Nome',
+              urlFotoPolitico: 'foto',
+            ),
+          ],
+        );
+        when(mockUserProfileBloc.politicsFollowing)
+            .thenReturn(politicsFollowing);
         await tester.pumpWidget(
           connectedWidget(
             BlocProvider(
@@ -256,15 +277,30 @@ void main() {
               urlFotoPolitico: 'foto',
             ),
           ],
-          politicsFollowing: [
-            PoliticoModel(
-              id: '1',
-              nomeCivil: 'nome',
-              urlFoto: 'foto',
-            )
-          ],
+          politicsFollowing: politicsFollowing,
         ),
       );
+      when(mockUserProfileBloc.userActions).thenReturn(
+        [
+          AcaoUsuarioModel(
+            idPolitico: '1',
+            mensagem: 'mensagem',
+            tipo: AcaoType.follow,
+            data: DateTime.now(),
+            nomePolitico: 'Nome',
+            urlFotoPolitico: 'foto',
+          ),
+          AcaoUsuarioModel(
+            idPolitico: '1',
+            mensagem: 'mensagem',
+            tipo: AcaoType.unfollow,
+            data: DateTime.now(),
+            nomePolitico: 'Nome',
+            urlFotoPolitico: 'foto',
+          ),
+        ],
+      );
+      when(mockUserProfileBloc.politicsFollowing).thenReturn(politicsFollowing);
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<UserBloc>(
