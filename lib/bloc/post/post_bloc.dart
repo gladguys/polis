@@ -183,14 +183,12 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         QTD_NAO_CURTIDAS_FIELD:
             (post[QTD_NAO_CURTIDAS_FIELD] ?? 0) - (isUnliked ? 1 : 0),
       };
-
       userBloc.add(
         UpdateCurrentUser(
           userBloc.user
               .copyWith(userLikes: likes.item1, userUnlikes: likes.item2),
         ),
       );
-
       await _saveUserAction(
         user: user,
         post: post,
@@ -245,6 +243,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         QTD_CURTIDAS_FIELD: (post[QTD_CURTIDAS_FIELD] ?? 0) - (isLiked ? 1 : 0),
         QTD_NAO_CURTIDAS_FIELD: (post[QTD_NAO_CURTIDAS_FIELD] ?? 0) + 1,
       };
+
       userBloc.add(
         UpdateCurrentUser(
           userBloc.user.copyWith(
