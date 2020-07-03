@@ -307,7 +307,7 @@ class FirebasePostRepository implements PostRepository {
       final documentSnapshot = await documentReference.get();
       return Tuple2(documentSnapshot.data, documentReference);
     } on Exception {
-      throw ComunicationException();
+      rethrow;
     }
   }
 
