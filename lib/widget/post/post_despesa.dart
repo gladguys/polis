@@ -11,6 +11,8 @@ import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../page/pages.dart';
+import '../../page/post/widget/like_post_button.dart';
+import '../../page/post/widget/unlike_post_button.dart';
 import '../../page/theme/main_theme.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';
@@ -186,6 +188,9 @@ class PostDespesa extends StatelessWidget {
         padding: const EdgeInsets.only(top: 4),
         child: Row(
           children: <Widget>[
+            LikePostButton(post: despesa),
+            const SizedBox(width: 16),
+            UnlikePostButton(post: despesa),
             ButtonActionCard(
               icon: FontAwesomeIcons.shareAlt,
               text: SHARE,

@@ -13,7 +13,6 @@ import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../page/pages.dart';
 import '../../page/post/widget/like_post_button.dart';
-import '../../page/post/widget/post_like_status.dart';
 import '../../page/post/widget/unlike_post_button.dart';
 import '../../page/theme/main_theme.dart';
 import '../button_action_card.dart';
@@ -204,7 +203,6 @@ class DespesaTile extends StatelessWidget {
               ],
             ),
           ),
-          PostLikeStatus(post: despesa),
         ],
       ),
     );
