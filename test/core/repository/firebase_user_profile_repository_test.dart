@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:polis/core/domain/enum/post_type.dart';
+import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/exception/exceptions.dart';
 import 'package:polis/core/repository/concrete/firebase/firebase.dart';
 import 'package:polis/core/repository/concrete/repositories.dart';
@@ -18,6 +20,8 @@ void main() {
     MockCollectionReference mockAcoesCollectionReference;
     MockCollectionReference mockAcoesUsuarioSubcollectionReference;
     MockCollectionReference mockPoliticsFollowingCollectionReference;
+    MockCollectionReference mockAtividadesReference;
+    MockCollectionReference mockAtividadesPoliticoSubcollectionReference;
     MockQuery mockQuery;
 
     setUp(() {
@@ -32,6 +36,8 @@ void main() {
       mockAcoesCollectionReference = MockCollectionReference();
       mockAcoesUsuarioSubcollectionReference = MockCollectionReference();
       mockPoliticsFollowingCollectionReference = MockCollectionReference();
+      mockAtividadesReference = MockCollectionReference();
+      mockAtividadesPoliticoSubcollectionReference = MockCollectionReference();
       mockQuery = MockQuery();
     });
 
@@ -93,6 +99,66 @@ void main() {
         when(mockFirestore.collection(ACOES_COLLECTION)).thenThrow(Exception());
         firebaseUserProfileRepository
             .getUserActions('1')
+            .catchError((e) => expect(e, isA<ComunicationException>()));
+      });
+    });
+
+    group('getPostInfo tests', () {
+      test('return proposta', () async {
+        final mockPoliticoDocumentReference = MockDocumentReference();
+        final mockPostDocumentReference = MockDocumentReference();
+        when(mockFirestore.collection(ATIVIDADES_COLLECTION))
+            .thenReturn(mockAtividadesReference);
+        when(mockAtividadesReference.document('1'))
+            .thenReturn(mockPoliticoDocumentReference);
+        when(mockPoliticoDocumentReference
+                .collection(ATIVIDADES_POLITICO_SUBCOLLECTION))
+            .thenReturn(mockAtividadesPoliticoSubcollectionReference);
+        when(mockAtividadesPoliticoSubcollectionReference.document('1'))
+            .thenReturn(mockPostDocumentReference);
+        when(mockPostDocumentReference.get())
+            .thenAnswer((_) => Future.value(mockDocumentSnapshot));
+        when(mockDocumentSnapshot.data).thenReturn({});
+        final post = await firebaseUserProfileRepository.getPostInfo(
+          postId: '1',
+          politicoId: '1',
+          postType: PostType.PROPOSICAO,
+        );
+        expect(post, isA<PropostaModel>());
+      });
+
+      test('return despesa', () async {
+        final mockPoliticoDocumentReference = MockDocumentReference();
+        final mockPostDocumentReference = MockDocumentReference();
+        when(mockFirestore.collection(ATIVIDADES_COLLECTION))
+            .thenReturn(mockAtividadesReference);
+        when(mockAtividadesReference.document('1'))
+            .thenReturn(mockPoliticoDocumentReference);
+        when(mockPoliticoDocumentReference
+                .collection(ATIVIDADES_POLITICO_SUBCOLLECTION))
+            .thenReturn(mockAtividadesPoliticoSubcollectionReference);
+        when(mockAtividadesPoliticoSubcollectionReference.document('1'))
+            .thenReturn(mockPostDocumentReference);
+        when(mockPostDocumentReference.get())
+            .thenAnswer((_) => Future.value(mockDocumentSnapshot));
+        when(mockDocumentSnapshot.data).thenReturn({});
+        final post = await firebaseUserProfileRepository.getPostInfo(
+          postId: '1',
+          politicoId: '1',
+          postType: PostType.DESPESA,
+        );
+        expect(post, isA<DespesaModel>());
+      });
+
+      test('fail', () async {
+        when(mockFirestore.collection(ATIVIDADES_COLLECTION))
+            .thenThrow(Exception());
+        firebaseUserProfileRepository
+            .getPostInfo(
+              postId: '1',
+              politicoId: '1',
+              postType: PostType.DESPESA,
+            )
             .catchError((e) => expect(e, isA<ComunicationException>()));
       });
     });

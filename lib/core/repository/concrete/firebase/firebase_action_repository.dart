@@ -22,8 +22,6 @@ class FirebaseActionRepository implements ActionRepository {
   final PoliticoService politicoService;
 
   CollectionReference get actionsRef => firestore.collection(ACOES_COLLECTION);
-  CollectionReference get politicosRef =>
-      firestore.collection(POLITICOS_COLLECTION);
 
   @override
   Future<void> saveUserAction({UserModel user, AcaoUsuarioModel acao}) async {
@@ -49,8 +47,7 @@ class FirebaseActionRepository implements ActionRepository {
                 mensagem: mensagem,
               )
               .toJson());
-    } on Exception catch (e) {
-      print(e);
+    } on Exception {
       throw ComunicationException();
     }
   }

@@ -1,3 +1,4 @@
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -6,6 +7,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/domain/enum/acao_type.dart';
+import 'package:polis/core/domain/enum/post_type.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/page_connected.dart';
@@ -161,6 +163,22 @@ void main() {
               nomePolitico: 'Nome',
               urlFotoPolitico: 'foto',
             ),
+            AcaoUsuarioModel(
+              idPolitico: '1',
+              mensagem: 'mensagem',
+              tipo: AcaoType.like,
+              data: DateTime.now(),
+              nomePolitico: 'Nome',
+              urlFotoPolitico: 'foto',
+            ),
+            AcaoUsuarioModel(
+              idPolitico: '1',
+              mensagem: 'mensagem',
+              tipo: AcaoType.unlike,
+              data: DateTime.now(),
+              nomePolitico: 'Nome',
+              urlFotoPolitico: 'foto',
+            ),
           ],
         );
         when(mockUserProfileBloc.politicsFollowing)
@@ -216,6 +234,59 @@ void main() {
           ),
         );
         expect(find.byType(UserProfileSkeleton), findsOneWidget);
+      });
+    });
+
+    testWidgets('should navigate to post page when GetPostInfoSuccess',
+        (tester) async {
+      provideMockedNetworkImages(() async {
+        when(mockUserProfileBloc.state).thenReturn(InitialUserProfileState());
+        whenListen(
+          mockUserProfileBloc,
+          Stream.fromIterable(
+            [
+              InitialUserProfileState(),
+              GetPostInfoSuccess(
+                post: DespesaModel(
+                  id: '1',
+                  urlPartidoLogo: 'logo',
+                  idPolitico: '1',
+                  nomePolitico: 'nome',
+                  qtdCurtidas: 1,
+                  qtdNaoCurtidas: 0,
+                  tipoAtividade: 'tipo',
+                  tipoDespesa: 'tipoDespesa',
+                  dataDocumento: '20-10-2020',
+                  valorDocumento: '129.85',
+                  valorGlosa: '0',
+                  valorLiquido: '129.85',
+                ),
+                postType: PostType.DESPESA,
+              ),
+            ],
+          ),
+        );
+        await tester.pumpWidget(
+          connectedWidget(
+            BlocProvider(
+              create: (_) => UserBloc(
+                repository: MockUserRepository(),
+                user: UserModel(
+                  name: 'name',
+                  email: 'email',
+                  photoUrl: 'photo',
+                ),
+                analyticsService: MockAnalyticsService(),
+                sharedPreferencesService: MockSharedPreferencesService(),
+              ),
+              child: PageConnected<UserProfileBloc>(
+                bloc: mockUserProfileBloc,
+                page: UserProfilePage(),
+              ),
+            ),
+          ),
+        );
+        verify(mockObserver.didPush(any, any));
       });
     });
 

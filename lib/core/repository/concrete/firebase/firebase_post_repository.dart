@@ -177,23 +177,28 @@ class FirebasePostRepository implements PostRepository {
     bool isLiked,
     bool isUnliked,
   }) async {
-    final postInfo = await _getPostInfo(postId: postId, politicoId: politicoId);
+    try {
+      final postInfo =
+          await _getPostInfo(postId: postId, politicoId: politicoId);
 
-    final postData = postInfo.item1;
-    final actualLikesCount = postData[QTD_CURTIDAS_FIELD] ?? 0;
-    final actualUnlikesCount = postData[QTD_NAO_CURTIDAS_FIELD] ?? 0;
+      final postData = postInfo.item1;
+      final actualLikesCount = postData[QTD_CURTIDAS_FIELD] ?? 0;
+      final actualUnlikesCount = postData[QTD_NAO_CURTIDAS_FIELD] ?? 0;
 
-    final docPost = postInfo.item2;
-    if (isLiking) {
-      await docPost.updateData({
-        QTD_CURTIDAS_FIELD: actualLikesCount + 1,
-        QTD_NAO_CURTIDAS_FIELD: actualUnlikesCount - (isUnliked ? 1 : 0)
-      });
-    } else {
-      await docPost.updateData({
-        QTD_CURTIDAS_FIELD: actualLikesCount - (isLiked ? 1 : 0),
-        QTD_NAO_CURTIDAS_FIELD: actualUnlikesCount + 1,
-      });
+      final docPost = postInfo.item2;
+      if (isLiking) {
+        await docPost.updateData({
+          QTD_CURTIDAS_FIELD: actualLikesCount + 1,
+          QTD_NAO_CURTIDAS_FIELD: actualUnlikesCount - (isUnliked ? 1 : 0)
+        });
+      } else {
+        await docPost.updateData({
+          QTD_CURTIDAS_FIELD: actualLikesCount - (isLiked ? 1 : 0),
+          QTD_NAO_CURTIDAS_FIELD: actualUnlikesCount + 1,
+        });
+      }
+    } on Exception {
+      rethrow;
     }
   }
 
