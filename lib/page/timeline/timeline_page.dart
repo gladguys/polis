@@ -9,7 +9,6 @@ import '../../core/i18n/i18n.dart';
 import '../../core/routing/route_names.dart';
 import '../../widget/default_bottombar.dart';
 import '../pages.dart';
-import '../theme/main_theme.dart';
 import 'widget/timeline.dart';
 import 'widget/timeline_skeleton.dart';
 
@@ -47,7 +46,7 @@ class TimelinePage extends StatelessWidget {
                     FaIcon(
                       FontAwesomeIcons.folderOpen,
                       size: 96,
-                      color: theme.primaryColorLight,
+                      color: Theme.of(context).primaryColorLight,
                     ),
                     const SizedBox(height: 16),
                     const Text(

@@ -32,3 +32,28 @@ class CurrentUserUpdated extends UserState {
   @override
   List<Object> get props => [user];
 }
+
+class CurrentUserConfigUpdated extends UserState {
+  CurrentUserConfigUpdated({this.user, this.config, this.value});
+
+  final UserModel user;
+  final String config;
+  final dynamic value;
+
+  @override
+  List<Object> get props => [user, config, value];
+}
+
+class UpdateUserConfigFailed extends UserState {
+  @override
+  List<Object> get props => [];
+}
+
+class UserStoredLocally extends UserState {
+  UserStoredLocally({this.user});
+
+  final UserModel user;
+
+  @override
+  List<Object> get props => [user];
+}

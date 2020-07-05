@@ -5,7 +5,6 @@ import '../../../core/domain/model/models.dart';
 import '../../../core/extension/extensions.dart';
 import '../../../core/i18n/i18n.dart';
 import '../../../widget/text_title.dart';
-import '../../theme/main_theme.dart';
 import 'politic_with_expenses_info.dart';
 
 class ResultadosRanking extends StatelessWidget {
@@ -16,6 +15,7 @@ class ResultadosRanking extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -53,7 +53,7 @@ class ResultadosRanking extends StatelessWidget {
                 posicao: 513,
               ),
             ),
-            _buildSeparator(),
+            _buildSeparator(theme),
             _buildBorder(
               child: PoliticWithExpensesInfo(
                 nome: politico.nomeEleitoral,
@@ -64,7 +64,7 @@ class ResultadosRanking extends StatelessWidget {
                 posicao: politico.rankingPosDespesa,
               ),
             ),
-            _buildSeparator(),
+            _buildSeparator(theme),
             _buildBorder(
               child: Column(
                 children: <Widget>[
@@ -137,7 +137,7 @@ class ResultadosRanking extends StatelessWidget {
     );
   }
 
-  Widget _buildSeparator() {
+  Widget _buildSeparator(ThemeData theme) {
     return Container(
       width: 72,
       alignment: Alignment.center,
@@ -149,7 +149,7 @@ class ResultadosRanking extends StatelessWidget {
     );
   }
 
-  Widget _buildBorder({Widget child}) {
+  Widget _buildBorder({Widget child, ThemeData theme}) {
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 8,

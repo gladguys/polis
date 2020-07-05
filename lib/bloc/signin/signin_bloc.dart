@@ -104,6 +104,8 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
       await analyticsService.logSignin(method: _getSigninMethod(method));
       await sharedPreferencesService.setUser(user);
       final fcmToken = await messageService.saveUserToken(userId: user.userId);
+      print('----------------------');
+      print(user);
       yield UserAuthenticated(
         user.copyWith(fcmToken: fcmToken),
       );

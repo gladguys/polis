@@ -14,7 +14,6 @@ import '../../core/keys.dart';
 import '../../core/validators.dart';
 import '../../widget/loading.dart';
 import '../../widget/snackbar.dart';
-import '../theme/main_theme.dart';
 
 class SignupPage extends StatefulWidget {
   SignupPage({
@@ -151,7 +150,7 @@ class _SignupPageState extends State<SignupPage> {
                             children: [
                               FaIcon(
                                 FontAwesomeIcons.camera,
-                                color: theme.accentColor,
+                                color: Theme.of(context).accentColor,
                                 size: 40,
                               ),
                               const SizedBox(height: 4),
@@ -160,7 +159,7 @@ class _SignupPageState extends State<SignupPage> {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: theme.accentColor,
+                                  color: Theme.of(context).accentColor,
                                 ),
                               ),
                               const SizedBox(height: 4),

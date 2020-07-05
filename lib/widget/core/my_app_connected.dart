@@ -1,30 +1,26 @@
-import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:simple_router/simple_router.dart';
 
-import '../bloc/blocs.dart';
-import '../core/domain/model/models.dart';
-import '../core/i18n/i18n.dart';
-import '../core/repository/concrete/repositories.dart';
-import '../core/routing/polis_routing_observer.dart';
-import '../core/service/locator.dart';
-import '../core/service/services.dart';
-import '../page/pages.dart';
-import '../page/theme/main_theme.dart';
+import '../../bloc/blocs.dart';
+import '../../core/domain/model/models.dart';
+import '../../core/repository/concrete/repositories.dart';
+import '../../core/service/locator.dart';
+import '../../core/service/services.dart';
+import '../../page/theme/light_theme.dart';
+import 'my_app.dart';
 
-class MyApp extends StatefulWidget {
-  MyApp({@required this.sharedPreferencesService})
+class MyAppConnected extends StatefulWidget {
+  MyAppConnected({@required this.sharedPreferencesService})
       : assert(sharedPreferencesService != null);
 
   final SharedPreferencesService sharedPreferencesService;
 
   @override
-  _MyAppState createState() => _MyAppState();
+  _MyAppConnectedState createState() => _MyAppConnectedState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppConnectedState extends State<MyAppConnected> {
   UserModel user;
   bool isUserLogged;
 
@@ -44,7 +40,7 @@ class _MyAppState extends State<MyApp> {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         systemNavigationBarColor:
-            isUserLogged ? theme.scaffoldBackgroundColor : Colors.black,
+            isUserLogged ? lightTheme.scaffoldBackgroundColor : Colors.black,
         systemNavigationBarIconBrightness:
             isUserLogged ? Brightness.dark : Brightness.light,
       ),
@@ -61,20 +57,9 @@ class _MyAppState extends State<MyApp> {
         analyticsService: G<AnalyticsService>(),
         sharedPreferencesService: G<SharedPreferencesService>(),
       ),
-      child: MaterialApp(
-        title: POLIS,
-        debugShowCheckedModeBanner: false,
-        theme: theme,
-        navigatorKey: SimpleRouter.getKey(),
-        home: isUserLogged
-            ? TimelinePageConnected(
-                appUpdateService: G<AppUpdateService>(),
-              )
-            : InitialPageConnected(),
-        navigatorObservers: [
-          FirebaseAnalyticsObserver(analytics: G<AnalyticsService>().analytics),
-          PolisRoutingObserver(),
-        ],
+      child: MyApp(
+        user: user,
+        isUserLogged: isUserLogged,
       ),
     );
   }

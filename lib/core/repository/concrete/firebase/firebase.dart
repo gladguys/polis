@@ -37,6 +37,7 @@ const SEQUENCIA_FIELD = 'sequencia';
 const VISUALIZADO_FIELD = 'visualizado';
 const FCM_TOKEN = 'fcmToken';
 const HASH = 'hash';
+const USER_CONFIGS_FIELD = 'userConfigs';
 
 // References
 const PARTIDO_SYNC = 'PARTIDOSYNC';

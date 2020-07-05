@@ -12,7 +12,7 @@ import 'bloc/flutter_bloc_delegate.dart';
 import 'core/domain/model/models.dart';
 import 'core/service/locator.dart';
 import 'core/service/services.dart';
-import 'widget/my_app.dart';
+import 'widget/core/my_app_connected.dart';
 import 'widget/my_app_injections.dart';
 
 void main() async {
@@ -31,12 +31,16 @@ void main() async {
   runZoned(() {
     runApp(
       MyAppInjections(
-        child: MyApp(
+        child: MyAppConnected(
           sharedPreferencesService: G<SharedPreferencesService>(),
         ),
       ),
     );
-  }, onError: G<CrashlyticsService>().crashlytics.recordError);
+  }, onError: (_, __) {
+    print(_);
+    print(__);
+    G<CrashlyticsService>().crashlytics.recordError(_, __);
+  });
 }
 
 Future<void> initHive() async {

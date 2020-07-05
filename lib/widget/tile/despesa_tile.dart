@@ -12,7 +12,6 @@ import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../page/pages.dart';
-import '../../page/theme/main_theme.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';
 import '../image/photo_image.dart';
@@ -34,7 +33,7 @@ class DespesaTile extends StatelessWidget {
         CardBase(
           withIndent: false,
           paddingSlotCenter: EdgeInsets.zero,
-          slotLeft: _buildLeftContent(),
+          slotLeft: _buildLeftContent(context),
           slotCenter: BlocBuilder<PostBloc, PostState>(
             builder: (_, state) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +66,7 @@ class DespesaTile extends StatelessWidget {
     );
   }
 
-  Widget _buildLeftContent() {
+  Widget _buildLeftContent(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 8, top: 16),
       child: Stack(
@@ -89,7 +88,7 @@ class DespesaTile extends StatelessWidget {
               left: 0,
               child: FaIcon(
                 FontAwesome5Solid.circle,
-                color: theme.primaryColor,
+                color: Theme.of(context).primaryColor,
                 size: 5,
               ),
             ),

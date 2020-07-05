@@ -14,7 +14,6 @@ import '../../../widget/ad/timeline_ad_banner.dart';
 import '../../../widget/text_rich.dart';
 import '../../../widget/tile/despesa_tile_connected.dart';
 import '../../../widget/tile/proposta_tile_connected.dart';
-import '../../theme/main_theme.dart';
 
 class Timeline extends StatefulWidget {
   Timeline({
@@ -125,7 +124,7 @@ class _TimelineState extends State<Timeline> {
             Padding(
               padding: const EdgeInsets.only(top: 16),
               child: SpinKitThreeBounce(
-                color: theme.primaryColor,
+                color: Theme.of(context).primaryColor,
                 size: 32,
               ),
             )

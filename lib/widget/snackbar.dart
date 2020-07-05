@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../page/theme/main_theme.dart';
 
 class Snackbar {
   Snackbar(
@@ -20,7 +19,7 @@ class Snackbar {
     this.context,
     this.message,
   ) {
-    _buildSnackbar(backgroundColor: theme.errorColor);
+    _buildSnackbar(backgroundColor: Theme.of(context).errorColor);
   }
 
   Snackbar.warning(

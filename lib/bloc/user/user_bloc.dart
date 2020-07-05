@@ -43,10 +43,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     if (event is UpdateCurrentUser) {
       yield* _mapUpdateCurrentUserToState(event);
     }
+    if (event is ChangeUserConfig) {
+      yield* _mapChangeUserConfigToState(event);
+    }
   }
 
-  void _mapStoreUser(StoreUser event) {
+  Stream<UserState> _mapStoreUser(StoreUser event) async* {
     user = event.user;
+    //yield UserStoredLocally(user: user);
   }
 
   Stream<UserState> _mapLogoutToState(Logout event) async* {
@@ -65,6 +69,35 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   Stream<UserState> _mapUpdateCurrentUserToState(
       UpdateCurrentUser event) async* {
     user = event.user;
+    //await sharedPreferencesService.setUser(user);
     yield CurrentUserUpdated(event.user);
+  }
+
+  Stream<UserState> _mapChangeUserConfigToState(ChangeUserConfig event) async* {
+    try {
+      final currentUser = event.user;
+      final configName = event.configName;
+      final userConfigs = currentUser.userConfigs;
+      final configValue = !(userConfigs[event.configName] ?? false);
+
+      userConfigs[configName] = configValue;
+
+      user = user.copyWith(
+        userConfigs: {
+          ...userConfigs,
+        },
+      );
+
+      await sharedPreferencesService.setUser(user);
+      await repository.updateUserConfigs(user);
+
+      yield CurrentUserConfigUpdated(
+        user: user,
+        config: configName,
+        value: configValue,
+      );
+    } on Exception {
+      yield UpdateUserConfigFailed();
+    }
   }
 }

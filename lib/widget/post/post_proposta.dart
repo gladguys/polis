@@ -11,7 +11,6 @@ import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../page/pages.dart';
-import '../../page/theme/main_theme.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';
 import '../general/proposal_authors.dart';
@@ -157,9 +156,10 @@ class PostProposta extends StatelessWidget {
                       TRAMITATIONS.toUpperCase(),
                       style: const TextStyle(fontSize: 13),
                     ),
-                    color: theme.primaryColor,
-                    highlightedBorderColor: theme.primaryColorDark,
-                    borderSide: BorderSide(color: theme.primaryColor),
+                    color: Theme.of(context).primaryColor,
+                    highlightedBorderColor: Theme.of(context).primaryColorDark,
+                    borderSide:
+                        BorderSide(color: Theme.of(context).primaryColor),
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     onPressed: () => SimpleRouter.forward(
                       TramitacaoPropostaPageConnected(proposta),
@@ -177,7 +177,7 @@ class PostProposta extends StatelessWidget {
                         DOCUMENT.toUpperCase(),
                         style: const TextStyle(fontSize: 13),
                       ),
-                      color: theme.primaryColor,
+                      color: Theme.of(context).primaryColor,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       onPressed: () => context.bloc<DocumentBloc>().add(
                             OpenDocumentImage(proposta.urlInteiroTeor),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../page/theme/main_theme.dart';
-
 class TimelineTile extends StatelessWidget {
   const TimelineTile({
     @required this.child,
@@ -37,7 +35,7 @@ class TimelineTile extends StatelessWidget {
           child: FaIcon(
             FontAwesomeIcons.solidCircle,
             size: 14,
-            color: theme.primaryColor,
+            color: Theme.of(context).primaryColor,
           ),
         ),
       ],

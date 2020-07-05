@@ -11,7 +11,6 @@ import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../page/pages.dart';
-import '../../page/theme/main_theme.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';
 import '../image/photo_image.dart';
@@ -160,7 +159,7 @@ class PostDespesa extends StatelessWidget {
                       DOCUMENT.toUpperCase(),
                       style: const TextStyle(fontSize: 13),
                     ),
-                    color: theme.primaryColor,
+                    color: Theme.of(context).primaryColor,
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     onPressed: () => context.bloc<DocumentBloc>().add(
                           OpenDocumentImage(despesa.urlDocumento),
