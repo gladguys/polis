@@ -28,11 +28,20 @@ class UpdateCurrentUser extends UserEvent {
 }
 
 class ChangeUserConfig extends UserEvent {
-  ChangeUserConfig({this.user, this.configName});
+  ChangeUserConfig({this.user, this.config});
 
   final UserModel user;
-  final String configName;
+  final Configuracao config;
 
   @override
-  List<Object> get props => [user, configName];
+  List<Object> get props => [user, config];
+}
+
+class SetUserPickedTheme extends UserEvent {
+  SetUserPickedTheme(this.user);
+
+  final UserModel user;
+
+  @override
+  List<Object> get props => [user];
 }

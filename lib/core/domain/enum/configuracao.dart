@@ -30,19 +30,31 @@ String configToStringKey(Configuracao configuracao) {
   return null;
 }
 
+dynamic getConfigDefaultValue(Configuracao configuracao) {
+  switch (configuracao) {
+    case Configuracao.isNotificationEnabled:
+      return true;
+    case Configuracao.isActivityInfoEnabled:
+      return true;
+    case Configuracao.isDarkModeEnabled:
+      return false;
+  }
+  return null;
+}
+
 String getConfigValueForUser({Configuracao configuracao, UserModel user}) {
   final configString = configToStringKey(configuracao);
   final userConfigs = user.userConfigs ?? {};
   return userConfigs[configString];
 }
 
-String stringToConfigDescription(String configString) {
-  switch (configString) {
-    case 'isNotificationEnabled':
+String configToDescription(Configuracao configuracao) {
+  switch (configuracao) {
+    case Configuracao.isNotificationEnabled:
       return 'Habilitar notificações?';
-    case 'isActivityInfoEnabled':
+    case Configuracao.isActivityInfoEnabled:
       return 'Habilitar visualização de suas informações?';
-    case 'isDarkModeEnabled':
+    case Configuracao.isDarkModeEnabled:
       return 'Usar modo escuro?';
   }
   return null;

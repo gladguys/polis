@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/domain/enum/configuracao.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/exception/exceptions.dart';
 import '../../core/repository/abstract/repositories.dart';
@@ -46,11 +47,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     if (event is ChangeUserConfig) {
       yield* _mapChangeUserConfigToState(event);
     }
+    if (event is SetUserPickedTheme) {
+      yield* _mapSetUserPickedThemeToState(event);
+    }
   }
 
-  Stream<UserState> _mapStoreUser(StoreUser event) async* {
+  void _mapStoreUser(StoreUser event) {
     user = event.user;
-    //yield UserStoredLocally(user: user);
   }
 
   Stream<UserState> _mapLogoutToState(Logout event) async* {
@@ -69,16 +72,20 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   Stream<UserState> _mapUpdateCurrentUserToState(
       UpdateCurrentUser event) async* {
     user = event.user;
-    //await sharedPreferencesService.setUser(user);
+    await sharedPreferencesService.setUser(user);
     yield CurrentUserUpdated(event.user);
   }
 
   Stream<UserState> _mapChangeUserConfigToState(ChangeUserConfig event) async* {
     try {
+      final config = event.config;
       final currentUser = event.user;
-      final configName = event.configName;
-      final userConfigs = currentUser.userConfigs;
-      final configValue = !(userConfigs[event.configName] ?? false);
+
+      final configName = configToStringKey(config);
+      final userConfigs = currentUser.userConfigs ?? {};
+
+      final configValue =
+          !(userConfigs[configName] ?? getConfigDefaultValue(config));
 
       userConfigs[configName] = configValue;
 
@@ -95,6 +102,17 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         user: user,
         config: configName,
         value: configValue,
+      );
+    } on Exception {
+      yield UpdateUserConfigFailed();
+    }
+  }
+
+  Stream<UserState> _mapSetUserPickedThemeToState(
+      SetUserPickedTheme event) async* {
+    try {
+      yield CurrentUserConfigUpdated(
+        user: event.user,
       );
     } on Exception {
       yield UpdateUserConfigFailed();

@@ -28,19 +28,18 @@ void main() async {
   );
   initializeDateFormatting('pt_BR', null);
 
-  runZoned(() {
-    runApp(
-      MyAppInjections(
-        child: MyAppConnected(
-          sharedPreferencesService: G<SharedPreferencesService>(),
+  runZoned(
+    () {
+      runApp(
+        MyAppInjections(
+          child: MyAppConnected(
+            sharedPreferencesService: G<SharedPreferencesService>(),
+          ),
         ),
-      ),
-    );
-  }, onError: (_, __) {
-    print(_);
-    print(__);
-    G<CrashlyticsService>().crashlytics.recordError(_, __);
-  });
+      );
+    },
+    onError: G<CrashlyticsService>().crashlytics.recordError,
+  );
 }
 
 Future<void> initHive() async {

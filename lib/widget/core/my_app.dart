@@ -26,9 +26,9 @@ class MyApp extends StatelessWidget {
       condition: (previous, current) =>
           current is InitialUser ||
           current is CurrentUserConfigUpdated ||
-          current is UserStoredLocally,
+          current is UserStoredLocally ||
+          current is CurrentUserConfigUpdated,
       builder: (_, state) {
-        print(state);
         var choosedTheme = lightTheme;
         if (state is CurrentUserConfigUpdated &&
             stringToConfig(state.config) == Configuracao.isDarkModeEnabled) {
@@ -37,6 +37,12 @@ class MyApp extends StatelessWidget {
           }
         }
         if (state is UserStoredLocally) {
+          choosedTheme = state.user.userConfigs[
+                  configToStringKey(Configuracao.isDarkModeEnabled)]
+              ? darkTheme
+              : lightTheme;
+        }
+        if (state is CurrentUserConfigUpdated) {
           choosedTheme = state.user.userConfigs[
                   configToStringKey(Configuracao.isDarkModeEnabled)]
               ? darkTheme

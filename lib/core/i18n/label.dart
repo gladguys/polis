@@ -2,6 +2,7 @@ const CONGRATULATIONS = 'Parabéns!!!';
 const CREATE_ACCOUNT = 'Crie sua conta';
 const EMAIL = 'E-mail';
 const FAIL = 'Falha';
+const YES = 'Sim';
 const NO = 'Não';
 const START = 'Início';
 const LAST_UPDATE = 'Última atualização';

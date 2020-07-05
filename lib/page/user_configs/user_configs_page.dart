@@ -12,7 +12,9 @@ class UserConfigsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final userBloc = context.bloc<UserBloc>();
     final user = userBloc.user;
-    final configs = user.userConfigs.keys.toList();
+    final userConfigs = user.userConfigs ?? {};
+    final allConfigs = Configuracao.values;
+    print(Theme.of(context).primaryColor);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -28,11 +30,12 @@ class UserConfigsPage extends StatelessWidget {
               ListView.separated(
                 shrinkWrap: true,
                 itemBuilder: (_, i) => ListTile(
-                  title: Text(stringToConfigDescription(configs[i])),
+                  title: Text(configToDescription(allConfigs[i])),
                   trailing: LiteRollingSwitch(
-                    value: user.userConfigs[configs[i]],
-                    textOn: 'Sim',
-                    textOff: 'Não',
+                    value: userConfigs[configToStringKey(allConfigs[i])] ??
+                        getConfigDefaultValue(allConfigs[i]),
+                    textOn: YES,
+                    textOff: NO,
                     colorOn: Colors.greenAccent[700],
                     colorOff: Colors.redAccent[700],
                     iconOn: Icons.done,
@@ -41,14 +44,14 @@ class UserConfigsPage extends StatelessWidget {
                     onTap: () => userBloc.add(
                       ChangeUserConfig(
                         user: user,
-                        configName: configs[i],
+                        config: allConfigs[i],
                       ),
                     ),
                     onChanged: (value) {},
                   ),
                 ),
                 separatorBuilder: (_, i) => const Divider(),
-                itemCount: configs.length,
+                itemCount: allConfigs.length,
               ),
             ],
           ),

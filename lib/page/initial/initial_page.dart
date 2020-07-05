@@ -39,8 +39,8 @@ class _InitialPageState extends State<InitialPage> {
       body: BlocConsumer<SigninBloc, SigninState>(listener: (_, state) {
         if (state is UserAuthenticated) {
           final user = state.user;
-          print(user);
           context.bloc<UserBloc>().add(StoreUser(user));
+          context.bloc<UserBloc>().add(SetUserPickedTheme(user));
           if (user.isFirstLoginDone) {
             SimpleRouter.forwardAndReplace(
               TimelinePageConnected(
