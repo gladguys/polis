@@ -20,13 +20,11 @@ void main() {
   MockPoliticoService mockPoliticoService;
   MockCollectionReference mockActionsCollectionReference;
   MockCollectionReference mockUserActionsSubcollectionReference;
-  MockCollectionReference mockPoliticosCollectionReference;
   MockDocumentReference mockUserDocumentReference;
 
   group('FirebaseActionRepository tests', () {
     setUp(() {
       mockActionsCollectionReference = MockCollectionReference();
-      mockPoliticosCollectionReference = MockCollectionReference();
       mockUserActionsSubcollectionReference = MockCollectionReference();
       mockUserDocumentReference = MockDocumentReference();
       mockFirestore = MockFirestore();
