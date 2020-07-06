@@ -147,8 +147,10 @@ class _FancySwitcherState extends State<FancySwitcher>
                   height: 40,
                   width: 40,
                   alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.white),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
                   child: Stack(
                     children: <Widget>[
                       Center(
@@ -162,13 +164,15 @@ class _FancySwitcherState extends State<FancySwitcher>
                         ),
                       ),
                       Center(
-                          child: Opacity(
-                              opacity: value.clamp(0.0, 1.0),
-                              child: Icon(
-                                widget.iconOn,
-                                size: 21,
-                                color: transitionColor,
-                              ))),
+                        child: Opacity(
+                          opacity: value.clamp(0.0, 1.0),
+                          child: Icon(
+                            widget.iconOn,
+                            size: 21,
+                            color: transitionColor,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

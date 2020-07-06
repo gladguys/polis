@@ -92,7 +92,7 @@ class PoliticWithExpensesInfo extends StatelessWidget {
             const SizedBox(height: 2),
             Text(
               totalDespesas.formatCurrency(),
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Colors.green,
                 fontSize: 16,
