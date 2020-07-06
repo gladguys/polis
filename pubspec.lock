@@ -665,13 +665,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.0"
-  lite_rolling_switch:
-    dependency: "direct main"
-    description:
-      name: lite_rolling_switch
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.1"
   logging:
     dependency: transitive
     description:
