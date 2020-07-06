@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../core/repository/concrete/firebase/firebase.dart';
@@ -23,10 +23,12 @@ class LikePostButton extends StatelessWidget {
       user: context.bloc<UserBloc>().user,
     );
     return ButtonActionCard(
-      icon: AntDesign.like2,
-      iconColor: postLiked ? Colors.green : Colors.black,
+      icon: postLiked
+          ? FontAwesomeIcons.solidThumbsUp
+          : FontAwesomeIcons.thumbsUp,
+      iconColor: postLiked ? Colors.green : Colors.grey[700],
       text: '''${context.bloc<PostBloc>().post[QTD_CURTIDAS_FIELD] ?? 0}''',
-      textColor: postLiked ? Colors.green : Colors.black,
+      textColor: postLiked ? Colors.green : Colors.grey[700],
       onTap: () => context.bloc<PostBloc>().add(
             postLiked
                 ? StopLikingPost(

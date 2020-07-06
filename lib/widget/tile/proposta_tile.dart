@@ -188,22 +188,27 @@ class PropostaTile extends StatelessWidget {
             children: <Widget>[
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   LikePostButton(post: proposta),
+                  const SizedBox(width: 24),
                   UnlikePostButton(post: proposta),
+                  const SizedBox(width: 24),
                   ButtonActionCard(
                     icon: FontAwesomeIcons.comment,
+                    iconColor: Colors.grey[700],
                     text: '120',
+                    textColor: Colors.grey[700],
                     onTap: () {},
                   ),
+                  const Spacer(),
                   ButtonActionCard(
                     isIconOnly: true,
                     icon: proposta.favorito ?? false
                         ? FontAwesomeIcons.solidBookmark
                         : FontAwesomeIcons.bookmark,
-                    iconColor:
-                        (proposta.favorito ?? false) ? Colors.yellow : null,
+                    iconColor: (proposta.favorito ?? false)
+                        ? Colors.yellow
+                        : Colors.grey[700],
                     onTap: () => context.bloc<PostBloc>().add(
                           FavoritePostForUser(
                             post: proposta.toJson(),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../core/repository/concrete/firebase/firebase.dart';
@@ -23,10 +23,12 @@ class UnlikePostButton extends StatelessWidget {
       user: context.bloc<UserBloc>().user,
     );
     return ButtonActionCard(
-      icon: AntDesign.dislike2,
-      iconColor: postUnliked ? Colors.red : Colors.black,
+      icon: postUnliked
+          ? FontAwesomeIcons.solidThumbsDown
+          : FontAwesomeIcons.thumbsDown,
+      iconColor: postUnliked ? Colors.red : Colors.grey[700],
       text: '''${context.bloc<PostBloc>().post[QTD_NAO_CURTIDAS_FIELD] ?? 0}''',
-      textColor: postUnliked ? Colors.red : Colors.black,
+      textColor: postUnliked ? Colors.red : Colors.grey[700],
       onTap: () => context.bloc<PostBloc>().add(
             postUnliked
                 ? StopUnlikingPost(

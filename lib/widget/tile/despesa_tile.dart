@@ -178,18 +178,25 @@ class DespesaTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 LikePostButton(post: despesa),
+                const SizedBox(width: 24),
                 UnlikePostButton(post: despesa),
+                const SizedBox(width: 24),
                 ButtonActionCard(
                   icon: FontAwesomeIcons.comment,
+                  iconColor: Colors.grey[700],
+                  textColor: Colors.grey[700],
                   text: '120',
                   onTap: () {},
                 ),
+                const Spacer(),
                 ButtonActionCard(
                   isIconOnly: true,
                   icon: (despesa.favorito ?? false)
                       ? FontAwesomeIcons.solidBookmark
                       : FontAwesomeIcons.bookmark,
-                  iconColor: (despesa.favorito ?? false) ? Colors.yellow : null,
+                  iconColor: (despesa.favorito ?? false)
+                      ? Colors.yellow
+                      : Colors.grey[700],
                   onTap: () => context.bloc<PostBloc>().add(
                         FavoritePostForUser(
                           post: {

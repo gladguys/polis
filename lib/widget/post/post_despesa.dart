@@ -189,27 +189,27 @@ class PostDespesa extends StatelessWidget {
         child: Row(
           children: <Widget>[
             LikePostButton(post: despesa),
-            const SizedBox(width: 16),
+            const SizedBox(width: 24),
             UnlikePostButton(post: despesa),
+            const Spacer(),
             ButtonActionCard(
+              isIconOnly: true,
               icon: FontAwesomeIcons.shareAlt,
-              text: SHARE,
-              fontSize: 14,
+              iconColor: Colors.grey[700],
               onTap: () async {
                 final postImage = await screenshotController.capture();
                 context.bloc<PostBloc>().add(SharePost(postImage: postImage));
               },
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 8),
             ButtonActionCard(
+              isIconOnly: true,
               icon: context.bloc<PostBloc>().isPostFavorite
                   ? FontAwesomeIcons.solidBookmark
                   : FontAwesomeIcons.bookmark,
               iconColor: context.bloc<PostBloc>().isPostFavorite
                   ? Colors.yellow
-                  : null,
-              text: context.bloc<PostBloc>().isPostFavorite ? SAVED : SAVE,
-              fontSize: 14,
+                  : Colors.grey[700],
               onTap: () => context.bloc<PostBloc>().add(
                     FavoritePostForUser(
                       post: {
