@@ -79,13 +79,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   Stream<UserState> _mapChangeUserConfigToState(ChangeUserConfig event) async* {
     try {
       final config = event.config;
+      final configValue = event.value;
       final currentUser = event.user;
 
       final configName = configToStringKey(config);
       final userConfigs = currentUser.userConfigs ?? {};
-
-      final configValue =
-          !(userConfigs[configName] ?? getConfigDefaultValue(config));
 
       userConfigs[configName] = configValue;
 

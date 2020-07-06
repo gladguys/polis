@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/domain/enum/configuracao.dart';
 import '../../core/i18n/i18n.dart';
 import '../../widget/text_title.dart';
+import 'fancy_switcher.dart';
 
 class UserConfigsPage extends StatelessWidget {
   @override
@@ -31,7 +31,7 @@ class UserConfigsPage extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (_, i) => ListTile(
                   title: Text(configToDescription(allConfigs[i])),
-                  trailing: LiteRollingSwitch(
+                  trailing: FancySwitcher(
                     value: userConfigs[configToStringKey(allConfigs[i])] ??
                         getConfigDefaultValue(allConfigs[i]),
                     textOn: YES,
@@ -41,13 +41,13 @@ class UserConfigsPage extends StatelessWidget {
                     iconOn: Icons.done,
                     iconOff: Icons.remove,
                     textSize: 16.0,
-                    onTap: () => userBloc.add(
+                    onChanged: (value) => userBloc.add(
                       ChangeUserConfig(
                         user: user,
                         config: allConfigs[i],
+                        value: value,
                       ),
                     ),
-                    onChanged: (value) {},
                   ),
                 ),
                 separatorBuilder: (_, i) => const Divider(),
