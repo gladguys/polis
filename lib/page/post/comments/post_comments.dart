@@ -40,11 +40,13 @@ class _PostCommentsState extends State<PostComments> {
           return Column(
             children: <Widget>[
               const Divider(color: Colors.grey, height: 1),
+              const SizedBox(height: 12),
               Expanded(
                 child: CommentsList(
                   comments: comments,
                 ),
               ),
+              const Divider(color: Colors.grey, height: 1),
               const SizedBox(height: 12),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),

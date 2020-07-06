@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../core/keys.dart';
 
 class CardBase extends StatelessWidget {
+
   const CardBase({
     @required this.slotCenter,
     this.slotLeft,
@@ -10,6 +11,7 @@ class CardBase extends StatelessWidget {
     this.slotBottom,
     this.crossAxisAlignment = CrossAxisAlignment.start,
     this.paddingSlotCenter,
+    this.slotBottomWithIndent = true,
     this.withIndent = true,
     this.key,
     this.onTap,
@@ -21,6 +23,7 @@ class CardBase extends StatelessWidget {
   final Widget slotBottom;
   final CrossAxisAlignment crossAxisAlignment;
   final EdgeInsets paddingSlotCenter;
+  final bool slotBottomWithIndent;
   final bool withIndent;
   final Key key;
   final Function onTap;
@@ -54,7 +57,8 @@ class CardBase extends StatelessWidget {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        const SizedBox(width: 56),
+                        if (slotBottomWithIndent)
+                          const SizedBox(width: 56),
                         Expanded(child: slotBottom),
                       ],
                     )

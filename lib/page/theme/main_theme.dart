@@ -24,13 +24,6 @@ final ThemeData theme = ThemeData(
   appBarTheme: AppBarTheme(
     elevation: 0,
     color: Colors.grey[50],
-    textTheme: const TextTheme(
-      headline6: TextStyle(
-        fontFamily: 'Philosopher',
-        fontSize: 30,
-        color: Colors.black,
-      ),
-    ),
   ),
   bottomAppBarTheme: BottomAppBarTheme(
     color: Colors.grey[50],

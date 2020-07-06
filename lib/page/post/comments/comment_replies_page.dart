@@ -37,7 +37,6 @@ class _CommentRepliesPageState extends State<CommentRepliesPage> {
       body: BlocBuilder<CommentRepliesBloc, CommentRepliesState>(
         builder: (_, state) => Column(
           children: [
-            const Divider(color: Colors.grey, height: 1),
             Expanded(
               child: CommentsReplyList(
                 comments: context.bloc<CommentRepliesBloc>().commentReplies,
