@@ -26,3 +26,21 @@ class UpdateCurrentUser extends UserEvent {
   @override
   List<Object> get props => [user];
 }
+
+class AddCommentToUser extends UserEvent {
+  AddCommentToUser(this.comment);
+
+  final CommentModel comment;
+
+  @override
+  List<Object> get props => [comment];
+}
+
+class DeleteCommentToUser extends UserEvent {
+  DeleteCommentToUser(this.comment);
+
+  final CommentModel comment;
+
+  @override
+  List<Object> get props => [comment];
+}

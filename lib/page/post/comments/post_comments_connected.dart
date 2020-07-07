@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../bloc/blocs.dart';
 import '../../../bloc/post/comment/comment_bloc.dart';
 import '../../../core/repository/concrete/http/http_comment_repository.dart';
 import '../../../core/repository/utils.dart';
@@ -18,6 +19,7 @@ class PostCommentsConnected extends StatelessWidget {
       bloc: CommentBloc(
         post: post,
         repository: context.repository<HttpCommentRepository>(),
+        userBloc: context.bloc<UserBloc>(),
       )..add(GetPostComments(postId: getIdFromPost(post))),
       page: PostComments(),
     );

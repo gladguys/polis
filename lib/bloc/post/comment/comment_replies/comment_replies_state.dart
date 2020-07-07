@@ -9,6 +9,20 @@ class InitialCommentRepliesState extends CommentRepliesState {
   List<Object> get props => [];
 }
 
+class GetCommentSubCommentsSuccess extends CommentRepliesState {
+  GetCommentSubCommentsSuccess(this.subComments);
+
+  final List<CommentModel> subComments;
+
+  @override
+  List<Object> get props => [subComments];
+}
+
+class GetCommentSubCommentsFailed extends CommentRepliesState {
+  @override
+  List<Object> get props => [];
+}
+
 class AddedReplyCommentSuccess extends CommentRepliesState {
   AddedReplyCommentSuccess({this.replyCommentAdded, this.numberOfReplies});
 

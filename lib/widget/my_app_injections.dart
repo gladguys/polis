@@ -7,6 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
 
 import '../core/abstract/polis_google_auth_provider.dart';
+import '../core/repository/concrete/http/dio_utils.dart';
 import '../core/repository/concrete/repositories.dart';
 
 const SCOPE_TYPE = 'email';
@@ -161,7 +162,9 @@ class MyAppInjections extends StatelessWidget {
           ),
         ),
         RepositoryProvider(
-          create: (_) => HttpCommentRepository(),
+          create: (_) => HttpCommentRepository(
+            client: getDefaultClient(),
+          ),
         ),
       ],
       child: child,

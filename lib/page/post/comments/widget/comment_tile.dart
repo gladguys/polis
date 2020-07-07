@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../../../bloc/blocs.dart';
+import '../../../../core/domain/enum/comment_option.dart';
 import '../../../../core/domain/model/comment_model.dart';
 import '../../../../core/extension/extensions.dart';
 import '../../../../core/keys.dart';
@@ -20,6 +21,8 @@ class CommentTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = context.bloc<UserBloc>().user;
+    final userComments = user.userComments ?? {};
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
       child: Bubble(
@@ -31,7 +34,48 @@ class CommentTile extends StatelessWidget {
         child: CardBase(
           slotBottomWithIndent: false,
           paddingSlotCenter: const EdgeInsets.only(bottom: 4),
-          slotCenter: Text(comment.texto),
+          slotCenter: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(comment.texto),
+              (userComments[comment.id] ?? false)
+                  ? PopupMenuButton<CommentOption>(
+                      itemBuilder: (_) => [
+                        CommentOption.edit,
+                        CommentOption.delete,
+                      ]
+                          .map(
+                            (option) => PopupMenuItem(
+                              child: Row(
+                                children: <Widget>[
+                                  Icon(
+                                    option == CommentOption.edit
+                                        ? Icons.edit
+                                        : Icons.delete,
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    commentOptionToString(option),
+                                  )
+                                ],
+                              ),
+                              value: option,
+                            ),
+                          )
+                          .toList(),
+                      onSelected: (option) {
+                        if (option == CommentOption.edit) {
+                        } else if (option == CommentOption.delete) {
+                          context
+                              .bloc<CommentBloc>()
+                              .add(DeleteComment(comment));
+                        }
+                      },
+                      icon: Icon(Icons.menu),
+                    )
+                  : const SizedBox.shrink(),
+            ],
+          ),
           slotBottom: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -57,9 +101,7 @@ class CommentTile extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        comment.respostas == null
-                            ? '0'
-                            : comment.respostas.length.toString(),
+                        '0',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,

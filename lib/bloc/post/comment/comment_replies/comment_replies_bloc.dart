@@ -23,8 +23,6 @@ class CommentRepliesBloc
     assert(comment != null);
     assert(commentBloc != null);
     assert(repository != null);
-
-    commentReplies = comment.respostas ?? [];
   }
 
   final dynamic post;
@@ -40,31 +38,51 @@ class CommentRepliesBloc
   @override
   Stream<CommentRepliesState> mapEventToState(
       CommentRepliesEvent event) async* {
-    if (event is AddReplyComment) {
-      final text = event.text;
-      final newComment = CommentModel(
-        texto: text,
-        data: DateTime.now().toString(),
-      );
-      final oldCommentReplies = [
-        ...commentReplies,
-      ];
-      commentReplies = [
-        ...oldCommentReplies,
-        newComment,
-      ];
-
-      commentBloc.add(
-        UpdateCommentReplies(
-          comment: comment,
-          replies: commentReplies,
-        ),
-      );
-
-      yield AddedReplyCommentSuccess(
-        replyCommentAdded: newComment,
-        numberOfReplies: commentReplies.length,
-      );
+    if (event is GetCommentSubComments) {
+      yield* _mapGetCommentSubCommentsToState(event);
     }
+    if (event is AddReplyComment) {
+      yield* _mapAddReplyCommentToState(event);
+    }
+  }
+
+  Stream<CommentRepliesState> _mapGetCommentSubCommentsToState(
+      GetCommentSubComments event) async* {
+    final commentId = event.commentId;
+    try {
+      commentReplies =
+          await repository.getCommentSubComments(commentId: commentId);
+      yield GetCommentSubCommentsSuccess(commentReplies);
+    } on Exception {
+      yield GetCommentSubCommentsFailed();
+    }
+  }
+
+  Stream<CommentRepliesState> _mapAddReplyCommentToState(
+      AddReplyComment event) async* {
+    final text = event.text;
+    final newComment = CommentModel(
+      texto: text,
+      diaHora: DateTime.now().toString(),
+    );
+    final oldCommentReplies = [
+      ...commentReplies,
+    ];
+    commentReplies = [
+      ...oldCommentReplies,
+      newComment,
+    ];
+
+    commentBloc.add(
+      UpdateCommentReplies(
+        comment: comment,
+        replies: commentReplies,
+      ),
+    );
+
+    yield AddedReplyCommentSuccess(
+      replyCommentAdded: newComment,
+      numberOfReplies: commentReplies.length,
+    );
   }
 }

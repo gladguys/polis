@@ -4,6 +4,15 @@ abstract class CommentRepliesEvent extends Equatable {
   const CommentRepliesEvent();
 }
 
+class GetCommentSubComments extends CommentRepliesEvent {
+  GetCommentSubComments({this.commentId});
+
+  final String commentId;
+
+  @override
+  List<Object> get props => [commentId];
+}
+
 class AddReplyComment extends CommentRepliesEvent {
   AddReplyComment({this.commentReplied, this.text});
 

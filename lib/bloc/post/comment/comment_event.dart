@@ -22,6 +22,15 @@ class AddComment extends CommentEvent {
   List<Object> get props => [text];
 }
 
+class DeleteComment extends CommentEvent {
+  DeleteComment(this.comment);
+
+  final CommentModel comment;
+
+  @override
+  List<Object> get props => [comment];
+}
+
 class UpdateCommentReplies extends CommentEvent {
   UpdateCommentReplies({this.comment, this.replies});
 

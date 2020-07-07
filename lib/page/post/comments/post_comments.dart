@@ -35,6 +35,7 @@ class _PostCommentsState extends State<PostComments> {
       builder: (_, state) {
         if (state is GetPostCommentsSuccess ||
             state is NewCommentAdded ||
+            state is CommentDeletedSuccess ||
             state is NewReplyCommentAdded) {
           final comments = context.bloc<CommentBloc>().postComments;
           return Column(

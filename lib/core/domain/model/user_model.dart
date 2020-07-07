@@ -16,6 +16,7 @@ class UserModel extends Equatable {
     this.isFirstLoginDone,
     this.authProvider,
     this.fcmToken,
+    this.userComments,
   });
 
   final String userId;
@@ -29,6 +30,7 @@ class UserModel extends Equatable {
   @JsonKey(ignore: true)
   final String password;
   final String fcmToken;
+  final Map<String, bool> userComments;
 
   static AuthProvider _fromJsonAuth(String authProvider) =>
       authProvider == 'GOOGLE'
@@ -52,6 +54,7 @@ class UserModel extends Equatable {
     bool isFirstLoginDone,
     AuthProvider authProvider,
     String fcmToken,
+    Map<String, bool> userComments,
   }) {
     return UserModel(
       userId: userId ?? this.userId,
@@ -62,6 +65,7 @@ class UserModel extends Equatable {
       isFirstLoginDone: isFirstLoginDone ?? this.isFirstLoginDone,
       authProvider: authProvider ?? this.authProvider,
       fcmToken: fcmToken ?? this.fcmToken,
+      userComments: userComments ?? this.userComments,
     );
   }
 
@@ -70,6 +74,6 @@ class UserModel extends Equatable {
 
   @override
   String toString() {
-    return '''UserModel{userId: $userId, name: $name, email: $email, photoUrl: $photoUrl, isFirstLoginDone: $isFirstLoginDone, authProvider: $authProvider, password: $password, fcmToken: $fcmToken}''';
+    return '''UserModel{userId: $userId, name: $name, email: $email, photoUrl: $photoUrl, isFirstLoginDone: $isFirstLoginDone, authProvider: $authProvider, password: $password, fcmToken: $fcmToken, $userComments: userComments}''';
   }
 }

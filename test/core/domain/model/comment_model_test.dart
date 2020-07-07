@@ -9,26 +9,5 @@ void main() {
           '''CommentModel{id: 1, userId: null, username: null, userPhoto: null, texto: null, data: null, respostas: null}''';
       expect(modelToString == result, true);
     });
-
-    test('copyWith()', () {
-      final comment = CommentModel(respostas: []);
-      final commentCopy = comment.copyWith(
-        respostas: [
-          CommentModel(
-            id: '1',
-          ),
-        ],
-      );
-      final commentCopyOriginalQtd = comment.copyWith(
-        respostas: [],
-      );
-      expect(comment, commentCopy);
-      expect(commentCopy.respostas, [
-        CommentModel(
-          id: '1',
-        ),
-      ]);
-      expect(commentCopyOriginalQtd.respostas, []);
-    });
   });
 }

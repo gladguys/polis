@@ -40,6 +40,7 @@ const SEQUENCIA_FIELD = 'sequencia';
 const VISUALIZADO_FIELD = 'visualizado';
 const FCM_TOKEN = 'fcmToken';
 const HASH = 'hash';
+const USER_COMMENTS_FIELD = 'userComments';
 
 // References
 const PARTIDO_SYNC = 'PARTIDOSYNC';

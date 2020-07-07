@@ -22,7 +22,6 @@ void main() {
         ),
         comment: CommentModel(
           id: '1',
-          respostas: [],
         ),
         commentBloc: mockCommentBloc,
         repository: mockCommentRepository,
@@ -80,7 +79,6 @@ void main() {
           text: 'a reply',
           commentReplied: CommentModel(
             id: '1',
-            respostas: [],
           ),
         ),
       ),

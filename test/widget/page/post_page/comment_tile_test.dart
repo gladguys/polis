@@ -25,7 +25,6 @@ void main() {
             CommentModel(
               id: '1',
               texto: 'texto',
-              respostas: [],
             ),
           ),
           withScaffold: true,
@@ -49,7 +48,6 @@ void main() {
               CommentModel(
                 id: '1',
                 texto: 'texto',
-                respostas: [],
               ),
             ),
           ),

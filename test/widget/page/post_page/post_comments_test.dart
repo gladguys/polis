@@ -23,16 +23,10 @@ void main() {
   group('PostComments tests', () {
     testWidgets('should show post comments', (tester) async {
       final mockComments = [
-        CommentModel(id: '1', texto: 'first text', respostas: [
-          CommentModel(
-            id: '3',
-            texto: 'reply 1',
-          ),
-          CommentModel(
-            id: '4',
-            texto: 'reply 2',
-          ),
-        ]),
+        CommentModel(
+          id: '1',
+          texto: 'first text',
+        ),
         CommentModel(
           id: '2',
           texto: 'second text',
