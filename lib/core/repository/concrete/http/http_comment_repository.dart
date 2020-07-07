@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -14,9 +16,14 @@ class HttpCommentRepository implements CommentRepository {
   @override
   Future<List<CommentModel>> getPostComments({String postId}) async {
     try {
-      final response = await client.get(COMENTARIOS);
+      final response = await client.get(
+        COMENTARIOS,
+        queryParameters: {
+          POST_ID_PARAM: postId,
+        },
+      );
       if (response.statusCode == HTTP_STATUS_OK) {
-        final decodedResponse = response.data as List<Map<String, dynamic>>;
+        final decodedResponse = response.data as List;
         return List.generate(
           decodedResponse.length,
           (i) => CommentModel.fromJson(decodedResponse[i]),
@@ -32,7 +39,7 @@ class HttpCommentRepository implements CommentRepository {
   @override
   Future<List<CommentModel>> getCommentSubComments({String commentId}) async {
     try {
-      final response = await client.get('$commentId/$SUBS');
+      final response = await client.get('$COMENTARIOS/$commentId/$SUBS');
       if (response.statusCode == HTTP_STATUS_OK) {
         final decodedResponse = response.data as List<Map<String, dynamic>>;
         return List.generate(
@@ -48,8 +55,29 @@ class HttpCommentRepository implements CommentRepository {
   }
 
   @override
-  Future<CommentModel> saveComment({String postId, CommentModel comment}) {
-    throw UnimplementedError();
+  Future<CommentModel> saveComment(CommentModel comment) async {
+    print('qqqqqqqqqqqqqqq');
+    print(comment);
+    try {
+      final response = await client.post(
+        COMENTARIOS,
+        data: {
+          COMENTARIO_PARAM: jsonEncode(comment.toJson()),
+        },
+      );
+      print(response.statusCode);
+      print(response.statusMessage);
+      print(response.data);
+      if (response.statusCode == HTTP_STATUS_OK) {
+        final decodedResponse = response.data;
+        return CommentModel.fromJson(decodedResponse);
+      } else {
+        throw Exception();
+      }
+    } on Exception catch (e) {
+      print(e);
+      rethrow;
+    }
   }
 
   @override

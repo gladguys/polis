@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../core/i18n/message.dart';
-import '../page/theme/main_theme.dart';
+import '../../../../core/i18n/i18n.dart';
+import '../../../theme/main_theme.dart';
 
-class ErrorContainer extends StatelessWidget {
-  const ErrorContainer();
+class NoCommentForPost extends StatelessWidget {
+  const NoCommentForPost();
 
   @override
   Widget build(BuildContext context) {
@@ -13,15 +14,18 @@ class ErrorContainer extends StatelessWidget {
       body: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          FaIcon(
-            FontAwesomeIcons.exclamationCircle,
-            size: 80,
-            color: theme.primaryColorLight,
+          Center(
+            child: FaIcon(
+              FontAwesome5.comments,
+              size: 80,
+              color: theme.primaryColorLight,
+            ),
           ),
           const SizedBox(height: 12),
           Text(
-            UNEXPECTED_ERROR_HAPPENED,
+            THIS_POST_HAS_NO_COMMENTS,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 18,

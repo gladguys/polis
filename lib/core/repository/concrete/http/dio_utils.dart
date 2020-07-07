@@ -4,7 +4,8 @@ const HTTP_STATUS_OK = 200;
 
 BaseOptions _getDefaultOptions() {
   return BaseOptions(
-    baseUrl: 'http://3.128.107.25:8080/api/',
+    contentType: 'application/json',
+    baseUrl: 'http://192.168.0.22:8080/api/',
   );
 }
 

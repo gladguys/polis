@@ -62,6 +62,18 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     final oldComments = [
       ...postComments,
     ];
+
+    final commentToSave = CommentModel(
+      postId: getIdFromPost(post),
+      texto: event.text,
+      usuarioId: userBloc.user.userId,
+      usuarioNome: userBloc.user.name,
+      diaHora: DateTime.now().toString(),
+    );
+    print(commentToSave);
+    final a = await repository.saveComment(commentToSave);
+    print(a);
+
     final newComment = CommentModel(
       // TODO: save the comment on the polis-api
       // TODO: this should match the id create on the server for the comment
@@ -71,6 +83,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     );
 
     userBloc.add(AddCommentToUser(newComment));
+    print('pppppppppppppp');
 
     postComments = [
       newComment,

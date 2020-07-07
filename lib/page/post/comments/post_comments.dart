@@ -8,6 +8,7 @@ import '../../../widget/error_container.dart';
 import '../../../widget/field_rounded.dart';
 import '../../../widget/loading.dart';
 import 'widget/comments_list.dart';
+import 'widget/no_comment_for_post.dart';
 
 class PostComments extends StatefulWidget {
   @override
@@ -43,9 +44,11 @@ class _PostCommentsState extends State<PostComments> {
               const Divider(color: Colors.grey, height: 1),
               const SizedBox(height: 12),
               Expanded(
-                child: CommentsList(
-                  comments: comments,
-                ),
+                child: comments.isNotEmpty
+                    ? CommentsList(
+                        comments: comments,
+                      )
+                    : const NoCommentForPost(),
               ),
               const Divider(color: Colors.grey, height: 1),
               const SizedBox(height: 12),

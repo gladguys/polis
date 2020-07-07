@@ -61,6 +61,7 @@ const ERROR_FETCHING_USER_INFO = 'Erro ao buscar informações do usuário';
 const ERROR_FETCHING_POLITIC_INFO = 'Erro ao buscar informações do político';
 const UNEXPECTED_ERROR_HAPPENED =
     'Um erro inesperado ocorreu. Por favor tente novamente mais tarde.';
+const THIS_POST_HAS_NO_COMMENTS = 'Esse post não tem nenhum comentário.';
 
 const ASSERT_ATLEAST_IMAGE_OR_ICON =
     'You have to pass at least an image or an icon';
