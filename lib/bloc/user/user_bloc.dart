@@ -82,7 +82,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       final userWithComments = user.copyWith(
         userComments: {
           ...userComments,
-          comment.id: true,
+          '${comment.id}': true,
         },
       );
       user = userWithComments;

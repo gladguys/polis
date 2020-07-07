@@ -41,7 +41,7 @@ void main() {
           .thenAnswer((_) => mockCommentBloc);
       when(mockCommentRepliesBloc.commentReplies).thenReturn([
         CommentModel(
-          id: '1',
+          id: 1,
           texto: 'a reply',
         ),
       ]);
@@ -61,12 +61,12 @@ void main() {
       when(mockCommentRepliesBloc.commentBloc)
           .thenAnswer((_) => mockCommentBloc);
       when(mockCommentRepliesBloc.comment).thenReturn(CommentModel(
-        id: '1',
+        id: 1,
         texto: 'a comment',
       ));
       when(mockCommentRepliesBloc.commentReplies).thenReturn([
         CommentModel(
-          id: '2',
+          id: 2,
           texto: 'a reply',
         ),
       ]);
@@ -88,7 +88,7 @@ void main() {
         mockCommentRepliesBloc.add(
           AddReplyComment(
             commentReplied: CommentModel(
-              id: '1',
+              id: 1,
               texto: 'a comment',
             ),
             text: '',

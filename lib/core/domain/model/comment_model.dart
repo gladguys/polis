@@ -14,7 +14,7 @@ class CommentModel extends Equatable {
     this.diaHora,
   });
 
-  final String id;
+  final int id;
   final String usuarioId;
   final String usuarioNome;
   final String postId;
@@ -22,7 +22,7 @@ class CommentModel extends Equatable {
   final String diaHora;
 
   CommentModel copyWith({
-    String id,
+    int id,
     String usuarioId,
     String usuarioNome,
     String postId,

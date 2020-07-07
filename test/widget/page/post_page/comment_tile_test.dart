@@ -23,7 +23,7 @@ void main() {
         connectedWidget(
           CommentTile(
             CommentModel(
-              id: '1',
+              id: 1,
               texto: 'texto',
             ),
           ),
@@ -46,7 +46,7 @@ void main() {
             bloc: mockCommentBloc,
             page: CommentTile(
               CommentModel(
-                id: '1',
+                id: 1,
                 texto: 'texto',
               ),
             ),

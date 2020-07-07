@@ -24,11 +24,11 @@ void main() {
     testWidgets('should show post comments', (tester) async {
       final mockComments = [
         CommentModel(
-          id: '1',
+          id: 1,
           texto: 'first text',
         ),
         CommentModel(
-          id: '2',
+          id: 2,
           texto: 'second text',
         ),
       ];
@@ -54,7 +54,7 @@ void main() {
     testWidgets('should write a comment on the text field', (tester) async {
       final mockComments = [
         CommentModel(
-          id: '1',
+          id: 1,
           texto: 'first text',
         ),
       ];

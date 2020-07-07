@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -56,26 +54,23 @@ class HttpCommentRepository implements CommentRepository {
 
   @override
   Future<CommentModel> saveComment(CommentModel comment) async {
-    print('qqqqqqqqqqqqqqq');
-    print(comment);
     try {
       final response = await client.post(
         COMENTARIOS,
-        data: {
-          COMENTARIO_PARAM: jsonEncode(comment.toJson()),
-        },
+        data: comment.toJson(),
       );
-      print(response.statusCode);
-      print(response.statusMessage);
-      print(response.data);
       if (response.statusCode == HTTP_STATUS_OK) {
         final decodedResponse = response.data;
-        return CommentModel.fromJson(decodedResponse);
+        try {
+          return CommentModel.fromJson(decodedResponse);
+        } catch (e) {
+          print(e);
+          throw Exception();
+        }
       } else {
         throw Exception();
       }
-    } on Exception catch (e) {
-      print(e);
+    } on Exception {
       rethrow;
     }
   }

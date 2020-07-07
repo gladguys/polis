@@ -21,7 +21,7 @@ void main() {
           idPropostaPolitico: '1',
         ),
         comment: CommentModel(
-          id: '1',
+          id: 1,
         ),
         commentBloc: mockCommentBloc,
         repository: mockCommentRepository,
@@ -78,7 +78,7 @@ void main() {
         AddReplyComment(
           text: 'a reply',
           commentReplied: CommentModel(
-            id: '1',
+            id: 1,
           ),
         ),
       ),
@@ -95,7 +95,7 @@ void main() {
           mockCommentBloc.add(
             UpdateCommentReplies(
               comment: CommentModel(
-                id: '1',
+                id: 1,
               ),
               replies: [CommentModel(texto: 'a reply')],
             ),
