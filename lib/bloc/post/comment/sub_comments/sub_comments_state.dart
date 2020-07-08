@@ -47,3 +47,18 @@ class AddedSubCommentFailed extends SubCommentsState {
   @override
   List<Object> get props => [];
 }
+
+class DeletedSubCommentSuccess extends SubCommentsState {
+  DeletedSubCommentSuccess({this.subCommentDeleted, this.numberOfReplies});
+
+  final SubCommentModel subCommentDeleted;
+  final int numberOfReplies;
+
+  @override
+  List<Object> get props => [subCommentDeleted, numberOfReplies];
+}
+
+class DeletedSubCommentFailed extends SubCommentsState {
+  @override
+  List<Object> get props => [];
+}

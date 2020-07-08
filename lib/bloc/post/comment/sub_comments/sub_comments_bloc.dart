@@ -44,6 +44,9 @@ class SubCommentsBloc extends Bloc<SubCommentsEvent, SubCommentsState> {
     if (event is AddSubComment) {
       yield* _mapAddSubCommentToState(event);
     }
+    if (event is DeleteSubComment) {
+      yield* _mapDeleteSubCommentToState(event);
+    }
   }
 
   Stream<SubCommentsState> _mapGetCommentSubCommentsToState(
@@ -51,8 +54,9 @@ class SubCommentsBloc extends Bloc<SubCommentsEvent, SubCommentsState> {
     yield CommentSubCommentsLoading();
     final commentId = event.commentId;
     try {
-      subComments =
-          await repository.getCommentSubComments(commentId: commentId);
+      subComments = List.unmodifiable(
+          await repository.getCommentSubComments(commentId: commentId));
+
       yield GetCommentSubCommentsSuccess(subComments);
     } on Exception {
       yield GetCommentSubCommentsFailed();
@@ -61,41 +65,69 @@ class SubCommentsBloc extends Bloc<SubCommentsEvent, SubCommentsState> {
 
   Stream<SubCommentsState> _mapAddSubCommentToState(
       AddSubComment event) async* {
-    final text = event.text;
-    final user = commentBloc.user;
+    try {
+      final text = event.text;
+      final user = commentBloc.user;
 
-    final subCommentToSave = SubCommentModel(
-      postId: getIdFromPost(post),
-      texto: text,
-      usuarioId: user.userId,
-      usuarioNome: user.name,
-      diaHora: DateTime.now().toString(),
-      comentarioPai: comment,
-    );
+      final subCommentToSave = SubCommentModel(
+        postId: getIdFromPost(post),
+        texto: text,
+        usuarioId: user.userId,
+        usuarioNome: user.name,
+        diaHora: DateTime.now().toString(),
+        comentarioPai: comment,
+      );
 
-    final savedSubComment = await repository.saveSubComment(
-      commentId: comment.id,
-      subComment: subCommentToSave,
-    );
+      final savedSubComment = await repository.saveSubComment(
+        commentId: comment.id,
+        subComment: subCommentToSave,
+      );
 
-    final oldSubComments = [
-      ...subComments,
-    ];
-    subComments = [
-      ...oldSubComments,
-      savedSubComment,
-    ];
+      final oldSubComments = [
+        ...subComments,
+      ];
+      subComments = [
+        ...oldSubComments,
+        savedSubComment,
+      ];
 
-    commentBloc.add(
-      UpdateCommentReplies(
-        comment: comment,
-        replies: subComments,
-      ),
-    );
+      commentBloc.add(
+        UpdateCommentReplies(
+          comment: comment,
+          replies: subComments,
+        ),
+      );
 
-    yield AddedSubCommentSuccess(
-      subCommentAdded: savedSubComment,
-      numberOfReplies: subComments.length,
-    );
+      yield AddedSubCommentSuccess(
+        subCommentAdded: savedSubComment,
+        numberOfReplies: subComments.length,
+      );
+    } on Exception {
+      yield AddedSubCommentFailed();
+    }
+  }
+
+  Stream<SubCommentsState> _mapDeleteSubCommentToState(
+      DeleteSubComment event) async* {
+    try {
+      final subCommentToDelete = event.subComment;
+
+      final oldSubComments = [
+        ...subComments,
+      ];
+
+      oldSubComments.removeWhere((comment) => comment == subCommentToDelete);
+
+      subComments = [
+        ...oldSubComments,
+      ];
+
+      yield DeletedSubCommentSuccess(
+        subCommentDeleted: subCommentToDelete,
+        numberOfReplies: subComments.length,
+      );
+    } on Exception {
+      yield DeletedSubCommentFailed();
+    }
   }
 }

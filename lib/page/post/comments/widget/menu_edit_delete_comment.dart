@@ -50,6 +50,7 @@ class MenuEditDeleteComment extends StatelessWidget {
           onDelete();
         }
       },
+      captureInheritedThemes: false,
       icon: Icon(Icons.menu),
     );
   }

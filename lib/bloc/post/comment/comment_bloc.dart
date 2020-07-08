@@ -84,11 +84,8 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
 
   Stream<CommentState> _mapUpdateCommentRepliesToState(
       UpdateCommentReplies event) async* {
-    print('ggg');
     final comment = event.comment;
     final replies = event.replies;
-    print('hhhh');
-    print(replies);
 
     yield NewReplyCommentAdded(
       comment: comment,

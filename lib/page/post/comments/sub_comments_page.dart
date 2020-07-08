@@ -40,7 +40,8 @@ class _SubCommentsPageState extends State<SubCommentsPage> {
       body: BlocBuilder<SubCommentsBloc, SubCommentsState>(
         builder: (_, state) {
           if (state is GetCommentSubCommentsSuccess ||
-              state is AddedSubCommentSuccess) {
+              state is AddedSubCommentSuccess ||
+              state is DeletedSubCommentSuccess) {
             final subComments = context.bloc<SubCommentsBloc>().subComments;
             return Column(
               children: [
