@@ -8,14 +8,14 @@ import '../mock.dart';
 
 void main() {
   group('EditProfileBloc tests', () {
-    CommentRepliesBloc commentRepliesBloc;
+    SubCommentsBloc commentRepliesBloc;
     MockCommentBloc mockCommentBloc;
     MockCommentRepository mockCommentRepository;
 
     setUp(() {
       mockCommentBloc = MockCommentBloc();
       mockCommentRepository = MockCommentRepository();
-      commentRepliesBloc = CommentRepliesBloc(
+      commentRepliesBloc = SubCommentsBloc(
         post: PropostaModel(
           id: '1',
           idPropostaPolitico: '1',
@@ -34,7 +34,7 @@ void main() {
 
     test('asserts', () {
       expect(
-          () => CommentRepliesBloc(
+          () => SubCommentsBloc(
                 post: null,
                 comment: CommentModel(),
                 commentBloc: mockCommentBloc,
@@ -42,7 +42,7 @@ void main() {
               ),
           throwsAssertionError);
       expect(
-          () => CommentRepliesBloc(
+          () => SubCommentsBloc(
                 post: PropostaModel(),
                 comment: null,
                 commentBloc: mockCommentBloc,
@@ -50,7 +50,7 @@ void main() {
               ),
           throwsAssertionError);
       expect(
-          () => CommentRepliesBloc(
+          () => SubCommentsBloc(
                 post: PropostaModel(),
                 comment: CommentModel(),
                 commentBloc: null,
@@ -58,7 +58,7 @@ void main() {
               ),
           throwsAssertionError);
       expect(
-          () => CommentRepliesBloc(
+          () => SubCommentsBloc(
                 post: PropostaModel(),
                 comment: CommentModel(),
                 commentBloc: mockCommentBloc,
@@ -68,23 +68,20 @@ void main() {
     });
 
     test('''Expects InitialCommentRepliesState to be the initial state''', () {
-      expect(commentRepliesBloc.state, equals(InitialCommentRepliesState()));
+      expect(commentRepliesBloc.state, equals(InitialSubCommentsState()));
     });
 
     blocTest(
       '''Expects [LoadingPostComments, GetPostCommentsSuccess] when GetPostComments called''',
       build: () async => commentRepliesBloc,
       act: (commentBloc) async => commentBloc.add(
-        AddReplyComment(
+        AddSubComment(
           text: 'a reply',
-          commentReplied: CommentModel(
-            id: 1,
-          ),
         ),
       ),
       expect: [
-        AddedReplyCommentSuccess(
-          replyCommentAdded: CommentModel(
+        AddedSubCommentSuccess(
+          subCommentAdded: SubCommentModel(
             texto: 'a reply',
           ),
           numberOfReplies: 1,

@@ -5,10 +5,10 @@ import '../../../bloc/blocs.dart';
 import '../../../core/domain/model/comment_model.dart';
 import '../../../core/repository/concrete/repositories.dart';
 import '../../page_connected.dart';
-import 'comment_replies_page.dart';
+import 'sub_comments_page.dart';
 
-class CommentRepliesPageConnected extends StatelessWidget {
-  CommentRepliesPageConnected({
+class SubCommentsPageConnected extends StatelessWidget {
+  SubCommentsPageConnected({
     @required this.post,
     @required this.comment,
     @required this.commentBloc,
@@ -20,14 +20,14 @@ class CommentRepliesPageConnected extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageConnected<CommentRepliesBloc>(
-      bloc: CommentRepliesBloc(
+    return PageConnected<SubCommentsBloc>(
+      bloc: SubCommentsBloc(
         post: post,
         comment: comment,
         commentBloc: commentBloc,
         repository: context.repository<HttpCommentRepository>(),
-      ),
-      page: CommentRepliesPage(),
+      )..add(GetCommentSubComments(commentId: comment.id)),
+      page: SubCommentsPage(),
     );
   }
 }

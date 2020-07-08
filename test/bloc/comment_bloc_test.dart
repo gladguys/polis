@@ -9,18 +9,16 @@ import '../mock.dart';
 void main() {
   group('EditProfileBloc tests', () {
     CommentBloc commentBloc;
-    MockUserBloc mockUserBloc;
     MockCommentRepository mockCommentRepository;
 
     setUp(() {
-      mockUserBloc = MockUserBloc();
       mockCommentRepository = MockCommentRepository();
       commentBloc = CommentBloc(
         post: PropostaModel(
           id: '1',
           idPropostaPolitico: '1',
         ),
-        userBloc: mockUserBloc,
+        user: UserModel(),
         repository: mockCommentRepository,
       );
     });
@@ -33,21 +31,21 @@ void main() {
       expect(
           () => CommentBloc(
                 post: null,
-                userBloc: mockUserBloc,
+                user: UserModel(),
                 repository: mockCommentRepository,
               ),
           throwsAssertionError);
       expect(
           () => CommentBloc(
                 post: PropostaModel(),
-                userBloc: null,
+                user: null,
                 repository: mockCommentRepository,
               ),
           throwsAssertionError);
       expect(
           () => CommentBloc(
                 post: PropostaModel(),
-                userBloc: mockUserBloc,
+                user: UserModel(),
                 repository: null,
               ),
           throwsAssertionError);

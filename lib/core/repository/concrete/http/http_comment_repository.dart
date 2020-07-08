@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import '../../../domain/model/comment_model.dart';
+import '../../../domain/model/models.dart';
 import '../../abstract/comment_repository.dart';
 import 'dio.dart';
 import 'dio_utils.dart';
@@ -35,14 +36,14 @@ class HttpCommentRepository implements CommentRepository {
   }
 
   @override
-  Future<List<CommentModel>> getCommentSubComments({String commentId}) async {
+  Future<List<SubCommentModel>> getCommentSubComments({int commentId}) async {
     try {
       final response = await client.get('$COMENTARIOS/$commentId/$SUBS');
       if (response.statusCode == HTTP_STATUS_OK) {
-        final decodedResponse = response.data as List<Map<String, dynamic>>;
+        final decodedResponse = response.data as List;
         return List.generate(
           decodedResponse.length,
-          (i) => CommentModel.fromJson(decodedResponse[i]),
+          (i) => SubCommentModel.fromJson(decodedResponse[i]),
         );
       } else {
         throw Exception();
@@ -61,12 +62,7 @@ class HttpCommentRepository implements CommentRepository {
       );
       if (response.statusCode == HTTP_STATUS_OK) {
         final decodedResponse = response.data;
-        try {
-          return CommentModel.fromJson(decodedResponse);
-        } catch (e) {
-          print(e);
-          throw Exception();
-        }
+        return CommentModel.fromJson(decodedResponse);
       } else {
         throw Exception();
       }
@@ -76,9 +72,22 @@ class HttpCommentRepository implements CommentRepository {
   }
 
   @override
-  Future<CommentModel> saveCommentReply(
-      {String postId, CommentModel comment, CommentModel replyComment}) {
-    throw UnimplementedError();
+  Future<SubCommentModel> saveSubComment(
+      {int commentId, SubCommentModel subComment}) async {
+    try {
+      final response = await client.post(
+        '$COMENTARIOS/$commentId/$SUBS',
+        data: subComment.toJson(),
+      );
+      if (response.statusCode == HTTP_STATUS_OK) {
+        final decodedResponse = response.data;
+        return SubCommentModel.fromJson(decodedResponse);
+      } else {
+        throw Exception();
+      }
+    } on Exception {
+      rethrow;
+    }
   }
 
   @override

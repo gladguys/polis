@@ -9,7 +9,7 @@ export 'politic_profile/politic_profile_bloc.dart';
 export 'politic_proposals/politic_proposals_bloc.dart';
 export 'politic_suggestion/politic_suggestion_bloc.dart';
 export 'post/comment/comment_bloc.dart';
-export 'post/comment/comment_replies/comment_replies_bloc.dart';
+export 'post/comment/sub_comments/sub_comments_bloc.dart';
 export 'post/post_bloc.dart';
 export 'search_politic/search_politic_bloc.dart';
 export 'signin/signin_bloc.dart';

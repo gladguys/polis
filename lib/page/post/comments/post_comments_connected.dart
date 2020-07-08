@@ -19,7 +19,7 @@ class PostCommentsConnected extends StatelessWidget {
       bloc: CommentBloc(
         post: post,
         repository: context.repository<HttpCommentRepository>(),
-        userBloc: context.bloc<UserBloc>(),
+        user: context.bloc<UserBloc>().user,
       )..add(GetPostComments(postId: getIdFromPost(post))),
       page: PostComments(),
     );

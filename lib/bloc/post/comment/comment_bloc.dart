@@ -5,23 +5,22 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/domain/model/comment_model.dart';
+import '../../../core/domain/model/models.dart';
 import '../../../core/repository/abstract/comment_repository.dart';
 import '../../../core/repository/utils.dart';
-import '../../blocs.dart';
 
 part 'comment_event.dart';
 part 'comment_state.dart';
 
 class CommentBloc extends Bloc<CommentEvent, CommentState> {
   CommentBloc(
-      {@required this.post, @required this.repository, @required this.userBloc})
+      {@required this.post, @required this.repository, @required this.user})
       : assert(post != null),
-        assert(repository != null),
-        assert(userBloc != null);
+        assert(repository != null);
 
   final dynamic post;
   final CommentRepository repository;
-  final UserBloc userBloc;
+  final UserModel user;
 
   List<CommentModel> postComments = [];
 
@@ -66,14 +65,12 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     final commentToSave = CommentModel(
       postId: getIdFromPost(post),
       texto: event.text,
-      usuarioId: userBloc.user.userId,
-      usuarioNome: userBloc.user.name,
+      usuarioId: user.userId,
+      usuarioNome: user.name,
       diaHora: DateTime.now().toString(),
     );
 
     final newComment = await repository.saveComment(commentToSave);
-
-    userBloc.add(AddCommentToUser(newComment));
 
     postComments = [
       newComment,
@@ -87,10 +84,11 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
 
   Stream<CommentState> _mapUpdateCommentRepliesToState(
       UpdateCommentReplies event) async* {
+    print('ggg');
     final comment = event.comment;
     final replies = event.replies;
-    final indexOfComment =
-        postComments.indexWhere((postComment) => postComment.id == comment.id);
+    print('hhhh');
+    print(replies);
 
     yield NewReplyCommentAdded(
       comment: comment,
@@ -104,8 +102,6 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       ...postComments,
     ];
     currentComments.removeWhere((comment) => comment.id == commentToDelete.id);
-
-    userBloc.add(DeleteCommentToUser(commentToDelete));
 
     postComments = [
       ...currentComments,

@@ -1,23 +1,23 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:polis/bloc/blocs.dart';
-import 'package:polis/core/domain/model/comment_model.dart';
+import 'package:polis/core/domain/model/models.dart';
 
 void main() {
   group('CommentState tests', () {
     test('states', () {
-      expect(InitialCommentRepliesState(), InitialCommentRepliesState());
+      expect(InitialSubCommentsState(), InitialSubCommentsState());
       expect(
-        AddedReplyCommentSuccess(
-          replyCommentAdded: CommentModel(),
+        AddedSubCommentSuccess(
+          subCommentAdded: SubCommentModel(),
           numberOfReplies: 1,
         ),
-        AddedReplyCommentSuccess(
-          replyCommentAdded: CommentModel(),
+        AddedSubCommentSuccess(
+          subCommentAdded: SubCommentModel(),
           numberOfReplies: 1,
         ),
       );
-      expect(LoadingAddReplyComment(), LoadingAddReplyComment());
-      expect(AddedReplyCommentFailed(), AddedReplyCommentFailed());
+      expect(LoadingAddSubComment(), LoadingAddSubComment());
+      expect(AddedSubCommentFailed(), AddedSubCommentFailed());
     });
   });
 }

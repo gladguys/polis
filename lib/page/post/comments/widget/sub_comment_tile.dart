@@ -1,18 +1,22 @@
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/domain/model/comment_model.dart';
+import '../../../../bloc/blocs.dart';
+import '../../../../core/domain/model/models.dart';
 import '../../../../core/extension/extensions.dart';
 import '../../../../widget/card_base.dart';
 import '../../../theme/main_theme.dart';
+import 'menu_edit_delete_comment.dart';
 
-class CommentReplyTile extends StatelessWidget {
-  CommentReplyTile(this.comment);
+class SubCommentTile extends StatelessWidget {
+  SubCommentTile(this.comment);
 
-  final CommentModel comment;
+  final SubCommentModel comment;
 
   @override
   Widget build(BuildContext context) {
+    final user = context.bloc<UserBloc>().user;
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
       child: Bubble(
@@ -24,7 +28,20 @@ class CommentReplyTile extends StatelessWidget {
         child: CardBase(
           slotBottomWithIndent: false,
           paddingSlotCenter: const EdgeInsets.only(bottom: 4),
-          slotCenter: Text(comment.texto),
+          slotCenter: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(comment.texto),
+              (comment.usuarioId == user.userId)
+                  ? MenuEditDeleteComment(
+                      onEdit: () => {},
+                      onDelete: () => context.bloc<SubCommentsBloc>().add(
+                            DeleteSubComment(subComment: comment),
+                          ),
+                    )
+                  : const SizedBox.shrink(),
+            ],
+          ),
           slotBottom: Text(
             '${DateTime.now().toString().formatDateTime()}',
             textAlign: TextAlign.end,

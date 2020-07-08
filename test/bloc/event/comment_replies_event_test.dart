@@ -1,22 +1,18 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:polis/bloc/blocs.dart';
-import 'package:polis/core/domain/model/comment_model.dart';
 
 void main() {
   group('CommentRepliesEvent tests', () {
     group('AddReplyComment', () {
       test('props', () {
-        final ev1 = AddReplyComment(
+        final ev1 = AddSubComment(
           text: 'a',
-          commentReplied: CommentModel(),
         );
-        final ev2 = AddReplyComment(
+        final ev2 = AddSubComment(
           text: 'a',
-          commentReplied: CommentModel(),
         );
-        final ev3 = AddReplyComment(
+        final ev3 = AddSubComment(
           text: 'b',
-          commentReplied: CommentModel(),
         );
 
         expect(ev1, ev2);

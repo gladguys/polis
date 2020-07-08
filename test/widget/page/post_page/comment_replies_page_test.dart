@@ -23,7 +23,7 @@ void main() {
       final mockCommentBloc = MockCommentBloc();
       await tester.pumpWidget(
         connectedWidget(
-          CommentRepliesPageConnected(
+          SubCommentsPageConnected(
             post: PropostaModel(
               id: '1',
             ),
@@ -35,46 +35,44 @@ void main() {
     });
 
     testWidgets('should show replies', (tester) async {
-      final mockCommentRepliesBloc = MockCommentRepliesBloc();
+      final mockSubCommentsBloc = MockSubCommentsBloc();
       final mockCommentBloc = MockCommentBloc();
-      when(mockCommentRepliesBloc.commentBloc)
-          .thenAnswer((_) => mockCommentBloc);
-      when(mockCommentRepliesBloc.commentReplies).thenReturn([
-        CommentModel(
+      when(mockSubCommentsBloc.commentBloc).thenAnswer((_) => mockCommentBloc);
+      when(mockSubCommentsBloc.subComments).thenReturn([
+        SubCommentModel(
           id: 1,
           texto: 'a reply',
         ),
       ]);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<CommentRepliesBloc>(
-            bloc: mockCommentRepliesBloc,
-            page: CommentRepliesPage(),
+          PageConnected<SubCommentsBloc>(
+            bloc: mockSubCommentsBloc,
+            page: SubCommentsPage(),
           ),
         ),
       );
     });
 
     testWidgets('should write a comment on the textfield', (tester) async {
-      final mockCommentRepliesBloc = MockCommentRepliesBloc();
+      final mockSubCommentsBloc = MockSubCommentsBloc();
       final mockCommentBloc = MockCommentBloc();
-      when(mockCommentRepliesBloc.commentBloc)
-          .thenAnswer((_) => mockCommentBloc);
-      when(mockCommentRepliesBloc.comment).thenReturn(CommentModel(
+      when(mockSubCommentsBloc.commentBloc).thenAnswer((_) => mockCommentBloc);
+      when(mockSubCommentsBloc.comment).thenReturn(CommentModel(
         id: 1,
         texto: 'a comment',
       ));
-      when(mockCommentRepliesBloc.commentReplies).thenReturn([
-        CommentModel(
+      when(mockSubCommentsBloc.subComments).thenReturn([
+        SubCommentModel(
           id: 2,
           texto: 'a reply',
         ),
       ]);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<CommentRepliesBloc>(
-            bloc: mockCommentRepliesBloc,
-            page: CommentRepliesPage(),
+          PageConnected<SubCommentsBloc>(
+            bloc: mockSubCommentsBloc,
+            page: SubCommentsPage(),
           ),
         ),
       );
@@ -85,12 +83,8 @@ void main() {
       expect(commentBtn, findsOneWidget);
       await tester.tap(commentBtn);
       verify(
-        mockCommentRepliesBloc.add(
-          AddReplyComment(
-            commentReplied: CommentModel(
-              id: 1,
-              texto: 'a comment',
-            ),
+        mockSubCommentsBloc.add(
+          AddSubComment(
             text: '',
           ),
         ),

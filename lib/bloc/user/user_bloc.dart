@@ -43,12 +43,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     if (event is UpdateCurrentUser) {
       yield* _mapUpdateCurrentUserToState(event);
     }
-    if (event is AddCommentToUser) {
-      yield* _mapAddCommentToUserToState(event);
-    }
-    if (event is DeleteCommentToUser) {
-      yield* _mapDeleteCommentToUserToState(event);
-    }
   }
 
   void _mapStoreUser(StoreUser event) {
@@ -73,46 +67,5 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     user = event.user;
     await sharedPreferencesService.setUser(user);
     yield CurrentUserUpdated(event.user);
-  }
-
-  Stream<UserState> _mapAddCommentToUserToState(AddCommentToUser event) async* {
-    try {
-      final comment = event.comment;
-      final userComments = user.userComments ?? {};
-      final userWithComments = user.copyWith(
-        userComments: {
-          ...userComments,
-          '${comment.id}': true,
-        },
-      );
-      user = userWithComments;
-
-      await repository.saveUserComments(user: user, comments: userComments);
-      await sharedPreferencesService.setUser(user);
-
-      yield CurrentUserUpdated(user);
-    } on Exception {
-      yield UpdateCurrentUserFailed();
-    }
-  }
-
-  Stream<UserState> _mapDeleteCommentToUserToState(
-      DeleteCommentToUser event) async* {
-    try {
-      final comment = event.comment;
-      final userComments = user.userComments ?? {};
-      userComments.remove(comment.id);
-
-      user = user.copyWith(
-        userComments: userComments,
-      );
-
-      await repository.saveUserComments(user: user, comments: userComments);
-      await sharedPreferencesService.setUser(user);
-
-      yield CurrentUserUpdated(user);
-    } on Exception {
-      yield UpdateCurrentUserFailed();
-    }
   }
 }

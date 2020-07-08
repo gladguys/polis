@@ -5,7 +5,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../../../bloc/blocs.dart';
-import '../../../../core/domain/enum/comment_option.dart';
 import '../../../../core/domain/model/comment_model.dart';
 import '../../../../core/extension/extensions.dart';
 import '../../../../core/keys.dart';
@@ -13,6 +12,7 @@ import '../../../../core/routing/route_names.dart';
 import '../../../../widget/card_base.dart';
 import '../../../pages.dart';
 import '../../../theme/main_theme.dart';
+import 'menu_edit_delete_comment.dart';
 
 class CommentTile extends StatelessWidget {
   CommentTile(this.comment);
@@ -22,7 +22,6 @@ class CommentTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = context.bloc<UserBloc>().user;
-    final userComments = user.userComments ?? {};
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
       child: Bubble(
@@ -38,40 +37,12 @@ class CommentTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(comment.texto),
-              (userComments[comment.id] ?? false)
-                  ? PopupMenuButton<CommentOption>(
-                      itemBuilder: (_) => [
-                        CommentOption.edit,
-                        CommentOption.delete,
-                      ]
-                          .map(
-                            (option) => PopupMenuItem(
-                              child: Row(
-                                children: <Widget>[
-                                  Icon(
-                                    option == CommentOption.edit
-                                        ? Icons.edit
-                                        : Icons.delete,
-                                  ),
-                                  const SizedBox(width: 6),
-                                  Text(
-                                    commentOptionToString(option),
-                                  )
-                                ],
-                              ),
-                              value: option,
-                            ),
-                          )
-                          .toList(),
-                      onSelected: (option) {
-                        if (option == CommentOption.edit) {
-                        } else if (option == CommentOption.delete) {
-                          context
-                              .bloc<CommentBloc>()
-                              .add(DeleteComment(comment));
-                        }
-                      },
-                      icon: Icon(Icons.menu),
+              (comment.usuarioId == user.userId)
+                  ? MenuEditDeleteComment(
+                      onEdit: () => {},
+                      onDelete: () => context.bloc<CommentBloc>().add(
+                            DeleteComment(comment),
+                          ),
                     )
                   : const SizedBox.shrink(),
             ],
@@ -84,7 +55,7 @@ class CommentTile extends StatelessWidget {
                 width: 80,
                 child: GestureDetector(
                   onTap: () => SimpleRouter.forward(
-                    CommentRepliesPageConnected(
+                    SubCommentsPageConnected(
                       post: context.bloc<CommentBloc>().post,
                       comment: comment,
                       commentBloc: context.bloc<CommentBloc>(),
