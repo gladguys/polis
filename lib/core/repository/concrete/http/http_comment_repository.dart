@@ -21,15 +21,14 @@ class HttpCommentRepository implements CommentRepository {
           POST_ID_PARAM: postId,
         },
       );
-      if (response.statusCode == HTTP_STATUS_OK) {
+      if (response.isOk) {
         final decodedResponse = response.data as List;
         return List.generate(
           decodedResponse.length,
           (i) => CommentModel.fromJson(decodedResponse[i]),
         );
-      } else {
-        throw Exception();
       }
+      throw Exception();
     } on Exception {
       rethrow;
     }
@@ -39,15 +38,14 @@ class HttpCommentRepository implements CommentRepository {
   Future<List<SubCommentModel>> getCommentSubComments({int commentId}) async {
     try {
       final response = await client.get('$COMENTARIOS/$commentId/$SUBS');
-      if (response.statusCode == HTTP_STATUS_OK) {
+      if (response.isOk) {
         final decodedResponse = response.data as List;
         return List.generate(
           decodedResponse.length,
           (i) => SubCommentModel.fromJson(decodedResponse[i]),
         );
-      } else {
-        throw Exception();
       }
+      throw Exception();
     } on Exception {
       rethrow;
     }
@@ -60,12 +58,11 @@ class HttpCommentRepository implements CommentRepository {
         COMENTARIOS,
         data: comment.toJson(),
       );
-      if (response.statusCode == HTTP_STATUS_OK) {
+      if (response.isOk) {
         final decodedResponse = response.data;
         return CommentModel.fromJson(decodedResponse);
-      } else {
-        throw Exception();
       }
+      throw Exception();
     } on Exception {
       rethrow;
     }
@@ -79,12 +76,11 @@ class HttpCommentRepository implements CommentRepository {
         '$COMENTARIOS/$commentId/$SUBS',
         data: subComment.toJson(),
       );
-      if (response.statusCode == HTTP_STATUS_OK) {
+      if (response.isOk) {
         final decodedResponse = response.data;
         return SubCommentModel.fromJson(decodedResponse);
-      } else {
-        throw Exception();
       }
+      throw Exception();
     } on Exception {
       rethrow;
     }

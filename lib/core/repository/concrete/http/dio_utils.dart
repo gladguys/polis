@@ -13,3 +13,7 @@ BaseOptions _getDefaultOptions() {
 Dio getDefaultClient() {
   return Dio(_getDefaultOptions());
 }
+
+extension IsResponseOk on Response {
+  bool get isOk => statusCode == HTTP_STATUS_OK;
+}
