@@ -14,35 +14,53 @@ class UnlikePostButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final postLiked = isPostLikedForUser(
-      post: post,
-      user: context.bloc<UserBloc>().user,
-    );
-    final postUnliked = isPostUnlikedForUser(
-      post: post,
-      user: context.bloc<UserBloc>().user,
-    );
-    return ButtonActionCard(
-      icon: postUnliked
-          ? FontAwesomeIcons.solidThumbsDown
-          : FontAwesomeIcons.thumbsDown,
-      iconColor: postUnliked ? Colors.red : Colors.grey[700],
-      text: '''${context.bloc<PostBloc>().post[QTD_NAO_CURTIDAS_FIELD] ?? 0}''',
-      textColor: postUnliked ? Colors.red : Colors.grey[700],
-      onTap: () => context.bloc<PostBloc>().add(
-            postUnliked
-                ? StopUnlikingPost(
-                    user: context.bloc<UserBloc>().user,
-                    postId: getPostId(post),
-                    politicoId: getPoliticoIdFromPost(post),
-                  )
-                : UnlikePost(
-                    user: context.bloc<UserBloc>().user,
-                    postId: getPostId(post),
-                    politicoId: getPoliticoIdFromPost(post),
-                    isLiked: postLiked,
-                  ),
-          ),
+    return BlocBuilder<PostBloc, PostState>(
+      builder: (_, state) {
+        final user = context.bloc<UserBloc>().user;
+        final postLikeStatus = getPostLikeStatusForUser(post: post, user: user);
+        var postLiked = postLikeStatus.item1;
+        var postUnliked = postLikeStatus.item2;
+        int qtdNaoCurtidas =
+            context.bloc<PostBloc>().post[QTD_NAO_CURTIDAS_FIELD] ?? 0;
+
+        if (state is PostLikedSuccess) {
+          if (postUnliked) {
+            qtdNaoCurtidas--;
+          }
+
+          postLiked = true;
+          postUnliked = false;
+        } else if (state is PostUnlikedSuccess) {
+          qtdNaoCurtidas++;
+          postLiked = false;
+          postUnliked = true;
+        } else if (state is StoppedUnlikingPostSuccess) {
+          qtdNaoCurtidas--;
+          postUnliked = false;
+        }
+        return ButtonActionCard(
+          icon: postUnliked
+              ? FontAwesomeIcons.solidThumbsDown
+              : FontAwesomeIcons.thumbsDown,
+          iconColor: postUnliked ? Colors.red : Colors.grey[700],
+          text: qtdNaoCurtidas.toString(),
+          textColor: postUnliked ? Colors.red : Colors.grey[700],
+          onTap: () => context.bloc<PostBloc>().add(
+                postUnliked
+                    ? StopUnlikingPost(
+                        user: context.bloc<UserBloc>().user,
+                        postId: getPostId(post),
+                        politicoId: getPoliticoIdFromPost(post),
+                      )
+                    : UnlikePost(
+                        user: context.bloc<UserBloc>().user,
+                        postId: getPostId(post),
+                        politicoId: getPoliticoIdFromPost(post),
+                        isLiked: postLiked,
+                      ),
+              ),
+        );
+      },
     );
   }
 }

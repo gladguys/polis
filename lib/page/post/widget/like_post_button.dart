@@ -14,35 +14,53 @@ class LikePostButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final postLiked = isPostLikedForUser(
-      post: post,
-      user: context.bloc<UserBloc>().user,
-    );
-    final postUnliked = isPostUnlikedForUser(
-      post: post,
-      user: context.bloc<UserBloc>().user,
-    );
-    return ButtonActionCard(
-      icon: postLiked
-          ? FontAwesomeIcons.solidThumbsUp
-          : FontAwesomeIcons.thumbsUp,
-      iconColor: postLiked ? Colors.green : Colors.grey[700],
-      text: '''${context.bloc<PostBloc>().post[QTD_CURTIDAS_FIELD] ?? 0}''',
-      textColor: postLiked ? Colors.green : Colors.grey[700],
-      onTap: () => context.bloc<PostBloc>().add(
-            postLiked
-                ? StopLikingPost(
-                    user: context.bloc<UserBloc>().user,
-                    postId: getPostId(post),
-                    politicoId: getPoliticoIdFromPost(post),
-                  )
-                : LikePost(
-                    user: context.bloc<UserBloc>().user,
-                    postId: getPostId(post),
-                    politicoId: getPoliticoIdFromPost(post),
-                    isUnliked: postUnliked,
-                  ),
-          ),
+    return BlocBuilder<PostBloc, PostState>(
+      builder: (_, state) {
+        final user = context.bloc<UserBloc>().user;
+        final postLikeStatus = getPostLikeStatusForUser(post: post, user: user);
+        var postLiked = postLikeStatus.item1;
+        var postUnliked = postLikeStatus.item2;
+        int qtdCurtidas =
+            context.bloc<PostBloc>().post[QTD_CURTIDAS_FIELD] ?? 0;
+
+        if (state is PostLikedSuccess) {
+          qtdCurtidas++;
+          postLiked = true;
+          postUnliked = false;
+        } else if (state is PostUnlikedSuccess) {
+          if (postLiked) {
+            qtdCurtidas--;
+          }
+
+          postLiked = false;
+          postUnliked = true;
+        } else if (state is StoppedLikingPostSuccess) {
+          qtdCurtidas--;
+          postLiked = false;
+        }
+        return ButtonActionCard(
+          icon: postLiked
+              ? FontAwesomeIcons.solidThumbsUp
+              : FontAwesomeIcons.thumbsUp,
+          iconColor: postLiked ? Colors.green : Colors.grey[700],
+          text: qtdCurtidas.toString(),
+          textColor: postLiked ? Colors.green : Colors.grey[700],
+          onTap: () => context.bloc<PostBloc>().add(
+                postLiked
+                    ? StopLikingPost(
+                        user: context.bloc<UserBloc>().user,
+                        postId: getPostId(post),
+                        politicoId: getPoliticoIdFromPost(post),
+                      )
+                    : LikePost(
+                        user: context.bloc<UserBloc>().user,
+                        postId: getPostId(post),
+                        politicoId: getPoliticoIdFromPost(post),
+                        isUnliked: postUnliked,
+                      ),
+              ),
+        );
+      },
     );
   }
 }

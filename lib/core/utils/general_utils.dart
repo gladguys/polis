@@ -1,3 +1,5 @@
+import 'package:tuple/tuple.dart';
+
 import '../domain/enum/post_type.dart';
 import '../domain/model/models.dart';
 
@@ -11,6 +13,12 @@ PostType getPostType(dynamic post) {
 
 bool isPostProposal(dynamic post) {
   return post is PropostaModel;
+}
+
+Tuple2<bool, bool> getPostLikeStatusForUser({dynamic post, UserModel user}) {
+  final isLiked = isPostLikedForUser(post: post, user: user);
+  final isUnliked = isPostUnlikedForUser(post: post, user: user);
+  return Tuple2<bool, bool>(isLiked, isUnliked);
 }
 
 bool isPostLikedForUser({dynamic post, UserModel user}) {

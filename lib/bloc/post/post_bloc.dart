@@ -168,6 +168,11 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     try {
       final isUnliked = event.isUnliked ?? false;
       final user = event.user;
+
+      yield PostLikedSuccess(
+        postId: event.postId,
+      );
+
       final likes = await postRepository.likePost(
         userId: user.userId,
         postId: event.postId,
@@ -191,9 +196,6 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         post: post,
         actionType: AcaoType.like,
       );
-      yield PostLikedSuccess(
-        postId: event.postId,
-      );
     } on Exception {
       yield PostLikedFailed();
     }
@@ -201,6 +203,10 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
   Stream<PostState> _mapStopLikingPostToState(StopLikingPost event) async* {
     try {
+      yield StoppedLikingPostSuccess(
+        postId: event.postId,
+      );
+
       final userLikes = await postRepository.stopLikingPost(
         userId: event.user.userId,
         postId: event.postId,
@@ -217,9 +223,6 @@ class PostBloc extends Bloc<PostEvent, PostState> {
           ),
         ),
       );
-      yield StoppedLikingPostSuccess(
-        postId: event.postId,
-      );
     } on Exception {
       yield StoppedLikingPostFailed();
     }
@@ -229,6 +232,11 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     try {
       final user = event.user;
       final isLiked = event.isLiked ?? false;
+
+      yield PostUnlikedSuccess(
+        postId: event.postId,
+      );
+
       final likes = await postRepository.unlikePost(
         userId: user.userId,
         postId: event.postId,
@@ -255,10 +263,6 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         post: post,
         actionType: AcaoType.unlike,
       );
-
-      yield PostUnlikedSuccess(
-        postId: event.postId,
-      );
     } on Exception {
       yield PostUnlikedFailed();
     }
@@ -266,6 +270,10 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
   Stream<PostState> _mapStopUnlikingPostToState(StopUnlikingPost event) async* {
     try {
+      yield StoppedUnlikingPostSuccess(
+        postId: event.postId,
+      );
+
       final userUnlikes = await postRepository.stopUnlikingPost(
         userId: event.user.userId,
         postId: event.postId,
@@ -281,9 +289,6 @@ class PostBloc extends Bloc<PostEvent, PostState> {
             userUnlikes: userUnlikes,
           ),
         ),
-      );
-      yield StoppedUnlikingPostSuccess(
-        postId: event.postId,
       );
     } on Exception {
       yield StoppedUnlikingPostFailed();
