@@ -3,6 +3,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 const HTTP_STATUS_OK = 200;
 
+const jsonPlaceholder = 'https://my-json-server.typicode.com/gladguys/polis/';
+
 BaseOptions _getDefaultOptions() {
   return BaseOptions(
     contentType: 'application/json',
