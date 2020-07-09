@@ -573,6 +573,9 @@ void main() {
         ),
       ),
       expect: [
+        PostLikedSuccess(
+          postId: '1',
+        ),
         PostLikedFailed(),
       ],
     );
@@ -689,6 +692,9 @@ void main() {
         ),
       ),
       expect: [
+        PostUnlikedSuccess(
+          postId: '1',
+        ),
         PostUnlikedFailed(),
       ],
     );
@@ -740,6 +746,9 @@ void main() {
         ),
       ),
       expect: [
+        PostUnlikedSuccess(
+          postId: '1',
+        ),
         PostUnlikedFailed(),
       ],
     );
@@ -834,6 +843,9 @@ void main() {
         ),
       ),
       expect: [
+        StoppedLikingPostSuccess(
+          postId: '1',
+        ),
         StoppedLikingPostFailed(),
       ],
     );
@@ -928,6 +940,9 @@ void main() {
         ),
       ),
       expect: [
+        StoppedUnlikingPostSuccess(
+          postId: '1',
+        ),
         StoppedUnlikingPostFailed(),
       ],
     );
