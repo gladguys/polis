@@ -98,9 +98,7 @@ flutter_icons:
 flutter:
   uses-material-design: true
   assets:
-    - .env_dev
-    - .env_local
-    - .env_prod
+    - .env/
     - assets/images/
     - assets/animations/
 
