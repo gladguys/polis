@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../core/domain/model/comment_model.dart';
-import '../../../core/repository/concrete/repositories.dart';
+import '../../../core/repository/abstract/repositories.dart';
 import '../../page_connected.dart';
 import 'sub_comments_page.dart';
 
@@ -25,7 +25,7 @@ class SubCommentsPageConnected extends StatelessWidget {
         post: post,
         comment: comment,
         commentBloc: commentBloc,
-        repository: context.repository<HttpCommentRepository>(),
+        repository: context.repository<CommentRepository>(),
       )..add(GetCommentSubComments(commentId: comment.id)),
       page: SubCommentsPage(),
     );

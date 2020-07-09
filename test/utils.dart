@@ -9,7 +9,8 @@ import 'mock.dart';
 
 final MockNavigatorObserver mockObserver = MockNavigatorObserver();
 
-Widget connectedWidget(Widget widget, {bool withScaffold = false}) {
+Widget connectedWidget(Widget widget,
+    {bool withScaffold = false, List<RepositoryProvider> extraProviders}) {
   SimpleRouter.setKey(GlobalKey<NavigatorState>());
   return MyAppInjections(
     child: BlocProvider<UserBloc>(
@@ -21,17 +22,36 @@ Widget connectedWidget(Widget widget, {bool withScaffold = false}) {
         analyticsService: MockAnalyticsService(),
         sharedPreferencesService: MockSharedPreferencesService(),
       ),
-      child: MaterialApp(
-        navigatorObservers: [
-          mockObserver,
-        ],
-        navigatorKey: SimpleRouter.getKey(),
-        home: withScaffold
-            ? Scaffold(
-                body: widget,
-              )
-            : widget,
-      ),
+      child: extraProviders != null
+          ? MultiRepositoryProvider(
+              providers: [
+                ...extraProviders,
+              ],
+              child: TestApp(widget: widget, withScaffold: withScaffold),
+            )
+          : TestApp(widget: widget, withScaffold: withScaffold),
     ),
   );
+}
+
+class TestApp extends StatelessWidget {
+  TestApp({this.widget, this.withScaffold});
+
+  final Widget widget;
+  final bool withScaffold;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      navigatorObservers: [
+        mockObserver,
+      ],
+      navigatorKey: SimpleRouter.getKey(),
+      home: withScaffold
+          ? Scaffold(
+              body: widget,
+            )
+          : widget,
+    );
+  }
 }

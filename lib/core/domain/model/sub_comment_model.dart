@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'comment_model.dart';
@@ -5,7 +6,7 @@ import 'comment_model.dart';
 part 'sub_comment_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class SubCommentModel extends CommentModel {
+class SubCommentModel extends Equatable {
   SubCommentModel({
     this.id,
     this.usuarioId,

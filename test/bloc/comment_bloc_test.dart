@@ -92,7 +92,17 @@ void main() {
 
     blocTest(
       'Expects [NewCommentAdded] when added a comment',
-      build: () async => commentBloc,
+      build: () async {
+        when(mockCommentRepository.saveComment(any)).thenAnswer(
+          (_) => Future.value(
+            CommentModel(
+              id: 1,
+              texto: 'a new comment arrive',
+            ),
+          ),
+        );
+        return commentBloc;
+      },
       act: (commentBloc) async => commentBloc.add(
         AddComment(
           text: 'a new comment arrive',
@@ -101,6 +111,7 @@ void main() {
       expect: [
         NewCommentAdded(
           comment: CommentModel(
+            id: 1,
             texto: 'a new comment arrive',
           ),
           numberOfComments: 1,
@@ -120,8 +131,8 @@ void main() {
       act: (commentBloc) async => commentBloc.add(
         UpdateCommentReplies(
           comment: CommentModel(),
-          replies: [
-            CommentModel(),
+          subComments: [
+            SubCommentModel(),
           ],
         ),
       ),

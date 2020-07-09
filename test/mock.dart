@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -162,6 +163,8 @@ class MockFirebasePoliticoRepository extends Mock
 class MockHivePoliticoRepository extends Mock
     implements HivePoliticoRepository {}
 
+class MockHttpCommentRepository extends Mock implements HttpCommentRepository {}
+
 class MockSyncLogRepository extends Mock implements SyncLogRepository {}
 
 // Firebase
@@ -261,3 +264,8 @@ class MockPanelController extends Mock implements PanelController {}
 
 class MockPoliticProfileStreamSubscription extends Mock
     implements StreamSubscription<PoliticProfileState> {}
+
+// Http
+class MockDio extends Mock implements Dio {}
+
+class MockResponse extends Mock implements Response {}

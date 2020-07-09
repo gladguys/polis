@@ -12,7 +12,7 @@ class InitialSubCommentsState extends SubCommentsState {
 class GetCommentSubCommentsSuccess extends SubCommentsState {
   GetCommentSubCommentsSuccess(this.subComments);
 
-  final List<CommentModel> subComments;
+  final List<SubCommentModel> subComments;
 
   @override
   List<Object> get props => [subComments];

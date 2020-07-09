@@ -32,11 +32,11 @@ class DeleteComment extends CommentEvent {
 }
 
 class UpdateCommentReplies extends CommentEvent {
-  UpdateCommentReplies({this.comment, this.replies});
+  UpdateCommentReplies({this.comment, this.subComments});
 
   final CommentModel comment;
-  final List<CommentModel> replies;
+  final List<SubCommentModel> subComments;
 
   @override
-  List<Object> get props => [comment, replies];
+  List<Object> get props => [comment, subComments];
 }

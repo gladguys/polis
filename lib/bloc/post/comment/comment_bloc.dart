@@ -16,7 +16,8 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
   CommentBloc(
       {@required this.post, @required this.repository, @required this.user})
       : assert(post != null),
-        assert(repository != null);
+        assert(repository != null),
+        assert(user != null);
 
   final dynamic post;
   final CommentRepository repository;
@@ -76,6 +77,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       newComment,
       ...oldComments,
     ];
+
     yield NewCommentAdded(
       comment: newComment,
       numberOfComments: postComments.length,
@@ -85,11 +87,11 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
   Stream<CommentState> _mapUpdateCommentRepliesToState(
       UpdateCommentReplies event) async* {
     final comment = event.comment;
-    final replies = event.replies;
+    final subComments = event.subComments;
 
     yield NewReplyCommentAdded(
       comment: comment,
-      numberOfReplies: replies.length,
+      numberOfReplies: subComments.length,
     );
   }
 

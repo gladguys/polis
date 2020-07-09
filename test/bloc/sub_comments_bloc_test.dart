@@ -8,14 +8,19 @@ import '../mock.dart';
 
 void main() {
   group('EditProfileBloc tests', () {
-    SubCommentsBloc commentRepliesBloc;
+    SubCommentsBloc subCommentsBloc;
     MockCommentBloc mockCommentBloc;
     MockCommentRepository mockCommentRepository;
 
     setUp(() {
       mockCommentBloc = MockCommentBloc();
+      when(mockCommentBloc.user).thenReturn(
+        UserModel(
+          userId: '1',
+        ),
+      );
       mockCommentRepository = MockCommentRepository();
-      commentRepliesBloc = SubCommentsBloc(
+      subCommentsBloc = SubCommentsBloc(
         post: PropostaModel(
           id: '1',
           idPropostaPolitico: '1',
@@ -29,7 +34,7 @@ void main() {
     });
 
     tearDown(() {
-      commentRepliesBloc?.close();
+      subCommentsBloc?.close();
     });
 
     test('asserts', () {
@@ -68,12 +73,24 @@ void main() {
     });
 
     test('''Expects InitialCommentRepliesState to be the initial state''', () {
-      expect(commentRepliesBloc.state, equals(InitialSubCommentsState()));
+      expect(subCommentsBloc.state, equals(InitialSubCommentsState()));
     });
 
     blocTest(
       '''Expects [LoadingPostComments, GetPostCommentsSuccess] when GetPostComments called''',
-      build: () async => commentRepliesBloc,
+      build: () async {
+        when(mockCommentRepository.saveSubComment(
+                commentId: anyNamed('commentId'),
+                subComment: anyNamed('subComment')))
+            .thenAnswer(
+          (_) => Future.value(
+            SubCommentModel(
+              texto: 'a reply',
+            ),
+          ),
+        );
+        return subCommentsBloc;
+      },
       act: (commentBloc) async => commentBloc.add(
         AddSubComment(
           text: 'a reply',
@@ -94,7 +111,9 @@ void main() {
               comment: CommentModel(
                 id: 1,
               ),
-              replies: [CommentModel(texto: 'a reply')],
+              subComments: [
+                SubCommentModel(texto: 'a reply'),
+              ],
             ),
           ),
         );

@@ -42,15 +42,15 @@ void main() {
       test('props', () {
         final ev1 = UpdateCommentReplies(
           comment: CommentModel(),
-          replies: [],
+          subComments: [],
         );
         final ev2 = UpdateCommentReplies(
           comment: CommentModel(),
-          replies: [],
+          subComments: [],
         );
         final ev3 = UpdateCommentReplies(
           comment: null,
-          replies: [],
+          subComments: [],
         );
 
         expect(ev1, ev2);

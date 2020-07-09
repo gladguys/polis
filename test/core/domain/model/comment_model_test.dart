@@ -6,7 +6,7 @@ void main() {
     test('toString()', () {
       final modelToString = CommentModel(id: 1).toString();
       final result =
-          '''CommentModel{id: 1, userId: null, username: null, userPhoto: null, texto: null, data: null, respostas: null}''';
+          '''CommentModel{id: 1, usuarioId: null, usuarioNome: null, postId: null, texto: null, diaHora: null}''';
       expect(modelToString == result, true);
     });
   });

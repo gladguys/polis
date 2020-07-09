@@ -31,7 +31,7 @@ class SubCommentsBloc extends Bloc<SubCommentsEvent, SubCommentsState> {
   final CommentBloc commentBloc;
   final CommentRepository repository;
 
-  List<SubCommentModel> subComments;
+  List<SubCommentModel> subComments = [];
 
   @override
   SubCommentsState get initialState => InitialSubCommentsState();
@@ -94,7 +94,7 @@ class SubCommentsBloc extends Bloc<SubCommentsEvent, SubCommentsState> {
       commentBloc.add(
         UpdateCommentReplies(
           comment: comment,
-          replies: subComments,
+          subComments: subComments,
         ),
       );
 
