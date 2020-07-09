@@ -8,6 +8,7 @@ linter:
     directives_ordering: false
     prefer_const_constructors: true
     type_annotate_public_apis: false
+    asset_does_not_exist: false
 
 analyzer:
   exclude:
