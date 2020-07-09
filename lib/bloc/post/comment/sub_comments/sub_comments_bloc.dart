@@ -74,7 +74,7 @@ class SubCommentsBloc extends Bloc<SubCommentsEvent, SubCommentsState> {
         texto: text,
         usuarioId: user.userId,
         usuarioNome: user.name,
-        diaHora: DateTime.now().toString(),
+        diaHora: DateTime.now(),
         comentarioPai: comment,
       );
 

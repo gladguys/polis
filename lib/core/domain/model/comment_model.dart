@@ -12,6 +12,8 @@ class CommentModel extends Equatable {
     this.postId,
     this.texto,
     this.diaHora,
+    this.foiEditado,
+    this.qntSubComentarios,
   });
 
   final int id;
@@ -19,7 +21,10 @@ class CommentModel extends Equatable {
   final String usuarioNome;
   final String postId;
   final String texto;
-  final String diaHora;
+  final DateTime diaHora;
+  final bool foiEditado;
+  @JsonKey(defaultValue: 0)
+  final int qntSubComentarios;
 
   CommentModel copyWith({
     int id,
@@ -28,6 +33,8 @@ class CommentModel extends Equatable {
     String postId,
     String texto,
     String diaHora,
+    bool foiEditado,
+    int qntSubComentarios,
   }) {
     return CommentModel(
       id: id ?? this.id,
@@ -36,6 +43,8 @@ class CommentModel extends Equatable {
       postId: postId ?? this.postId,
       texto: texto ?? this.texto,
       diaHora: diaHora ?? this.diaHora,
+      foiEditado: foiEditado ?? this.foiEditado,
+      qntSubComentarios: qntSubComentarios ?? this.qntSubComentarios,
     );
   }
 
@@ -46,7 +55,7 @@ class CommentModel extends Equatable {
 
   @override
   String toString() {
-    return '''CommentModel{id: $id, usuarioId: $usuarioId, usuarioNome: $usuarioNome, postId: $postId, texto: $texto, diaHora: $diaHora}''';
+    return '''CommentModel{id: $id, usuarioId: $usuarioId, usuarioNome: $usuarioNome, postId: $postId, texto: $texto, diaHora: $diaHora, foiEditado: $foiEditado, qntSubComentarios: $qntSubComentarios}''';
   }
 
   @override

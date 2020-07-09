@@ -54,16 +54,22 @@ class HttpCommentRepository implements CommentRepository {
   @override
   Future<CommentModel> saveComment(CommentModel comment) async {
     try {
+      print('c');
       final response = await client.post(
         COMENTARIOS,
         data: comment.toJson(),
       );
+      print('d');
+      print(response);
+      print(response.data);
+
       if (response.isOk) {
         final decodedResponse = response.data;
         return CommentModel.fromJson(decodedResponse);
       }
       throw Exception();
-    } on Exception {
+    } on Exception catch (e) {
+      print(e);
       rethrow;
     }
   }

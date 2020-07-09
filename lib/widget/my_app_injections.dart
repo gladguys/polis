@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
+import 'package:polis/core/repository/abstract/comment_repository.dart';
 
 import '../core/abstract/polis_google_auth_provider.dart';
 import '../core/repository/concrete/http/dio_utils.dart';
@@ -161,7 +162,7 @@ class MyAppInjections extends StatelessWidget {
             firestore: Firestore.instance,
           ),
         ),
-        RepositoryProvider(
+        RepositoryProvider<CommentRepository>(
           create: (_) => HttpCommentRepository(
             client: getDefaultClient(),
           ),

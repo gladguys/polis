@@ -22,7 +22,7 @@ class SubCommentModel extends Equatable {
   final String usuarioNome;
   final String postId;
   final String texto;
-  final String diaHora;
+  final DateTime diaHora;
   final CommentModel comentarioPai;
 
   SubCommentModel copyWith({

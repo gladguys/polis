@@ -72,7 +72,7 @@ class CommentTile extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        '0',
+                        comment.qntSubComentarios.toString(),
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,

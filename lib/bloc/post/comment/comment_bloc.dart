@@ -68,7 +68,9 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       texto: event.text,
       usuarioId: user.userId,
       usuarioNome: user.name,
-      diaHora: DateTime.now().toString(),
+      diaHora: DateTime.now(),
+      qntSubComentarios: 0,
+      foiEditado: false,
     );
 
     final newComment = await repository.saveComment(commentToSave);
@@ -86,11 +88,24 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
 
   Stream<CommentState> _mapUpdateCommentRepliesToState(
       UpdateCommentReplies event) async* {
-    final comment = event.comment;
+    final updatedComment = event.comment;
     final subComments = event.subComments;
 
+    final updatedComments = [
+      ...postComments,
+    ];
+
+    postComments = updatedComments.map((comment) {
+      if (comment == updatedComment) {
+        return comment.copyWith(
+          qntSubComentarios: subComments.length,
+        );
+      }
+      return comment;
+    }).toList();
+
     yield NewReplyCommentAdded(
-      comment: comment,
+      comment: updatedComment,
       numberOfReplies: subComments.length,
     );
   }
