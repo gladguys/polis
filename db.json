@@ -1,11 +1,14 @@
 {
-  "posts": [
+  "comentarios": [
     {
       "id": 1,
-      "title": "hello"
+      "usuarioId": "1",
+      "usuarioNome": "Nome",
+      "postId": "1",
+      "texto": "Comentario",
+      "diaHora": "2020-07-08T00:29:32.694583",
+      "foiEditado": true,
+      "qntSubComentarios": 0
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }
