@@ -9,25 +9,28 @@ import '../../widget/default_bottombar.dart';
 import '../../widget/empty_info.dart';
 import '../../widget/error_container.dart';
 import '../../widget/text_title.dart';
+import '../safe_page.dart';
 import 'widget/favorites_post_list.dart';
 import 'widget/favorites_posts_skeleton.dart';
 
 class FavoritePostsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: DefaultBottombar(FAVORITE_POSTS_PAGE),
-      body: SafeArea(
-        child: BlocBuilder<FavoritePostsBloc, FavoritePostsState>(
-          builder: (_, state) {
-            if (state is FetchUserFavoritePostsSuccess) {
-              return _buildList(state.posts);
-            } else if (state is LoadingFavoritesPosts) {
-              return const FavoritesPostsSkeleton();
-            } else {
-              return const ErrorContainer();
-            }
-          },
+    return SafePage(
+      child: Scaffold(
+        bottomNavigationBar: DefaultBottombar(FAVORITE_POSTS_PAGE),
+        body: SafeArea(
+          child: BlocBuilder<FavoritePostsBloc, FavoritePostsState>(
+            builder: (_, state) {
+              if (state is FetchUserFavoritePostsSuccess) {
+                return _buildList(state.posts);
+              } else if (state is LoadingFavoritesPosts) {
+                return const FavoritesPostsSkeleton();
+              } else {
+                return const ErrorContainer();
+              }
+            },
+          ),
         ),
       ),
     );
