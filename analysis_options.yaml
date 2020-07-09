@@ -10,5 +10,7 @@ linter:
     type_annotate_public_apis: false
 
 analyzer:
+  exclude:
+    - pubspec.yaml
   errors:
     prefer_const_constructors: error
