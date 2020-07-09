@@ -31,7 +31,6 @@ class FirebaseFavoritePostsRepository implements FavoritePostsRepository {
           final despesa = DespesaModel.fromJson(document.data);
           posts.add(
             despesa.copyWith(
-              id: document.documentID,
               favorito: true,
             ),
           );
@@ -39,7 +38,6 @@ class FirebaseFavoritePostsRepository implements FavoritePostsRepository {
           final proposta = PropostaModel.fromJson(document.data);
           posts.add(
             proposta.copyWith(
-              id: document.documentID,
               favorito: true,
             ),
           );
