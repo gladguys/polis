@@ -52,6 +52,7 @@ class ResultadosRanking extends StatelessWidget {
                 totalDespesas: resultadosRanking.despesaPoliticoUltimo,
                 posicao: 513,
               ),
+              theme: theme,
             ),
             _buildSeparator(theme),
             _buildBorder(
@@ -63,6 +64,7 @@ class ResultadosRanking extends StatelessWidget {
                 totalDespesas: politico.totalDespesas,
                 posicao: politico.rankingPosDespesa,
               ),
+              theme: theme,
             ),
             _buildSeparator(theme),
             _buildBorder(
@@ -85,6 +87,7 @@ class ResultadosRanking extends StatelessWidget {
                   ],
                 ],
               ),
+              theme: theme,
             ),
             const SizedBox(height: 8),
             Row(
