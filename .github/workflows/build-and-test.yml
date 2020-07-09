@@ -18,7 +18,7 @@ jobs:
           channel: 'stable'
       - run: flutter pub get
       - run: flutter pub run build_runner build --delete-conflicting-outputs
-      - run: flutter build aot
+      - run: flutter build aot -t lib/main_commom.dart
       - run: flutter analyze
       - run: flutter test --coverage
       - uses: codecov/codecov-action@v1.0.2
