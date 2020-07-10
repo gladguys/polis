@@ -14,7 +14,19 @@ class HttpCommentRepository implements CommentRepository {
 
   @override
   Future<List<CommentModel>> getPostComments({String postId}) async {
-    try {
+    return [
+      CommentModel(
+        id: 1,
+        foiEditado: false,
+        qntSubComentarios: 5,
+        postId: '1',
+        diaHora: DateTime.now(),
+        usuarioNome: 'Teste',
+        usuarioId: 'w7xvEM1t6WRrXhUUCkQROSRIl9l2',
+        texto: 'textim',
+      ),
+    ];
+    /*try {
       final response = await client.get(
         COMENTARIOS,
         queryParameters: {
@@ -31,7 +43,7 @@ class HttpCommentRepository implements CommentRepository {
       throw Exception();
     } on Exception {
       rethrow;
-    }
+    }*/
   }
 
   @override
@@ -54,14 +66,10 @@ class HttpCommentRepository implements CommentRepository {
   @override
   Future<CommentModel> saveComment(CommentModel comment) async {
     try {
-      print('c');
       final response = await client.post(
         COMENTARIOS,
         data: comment.toJson(),
       );
-      print('d');
-      print(response);
-      print(response.data);
 
       if (response.isOk) {
         final decodedResponse = response.data;

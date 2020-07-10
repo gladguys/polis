@@ -62,11 +62,15 @@ void main() {
           BlocProvider(
             create: (_) => UserBloc(
               repository: MockUserRepository(),
-              user: UserModel(),
+              user: UserModel(
+                userId: '1',
+              ),
               analyticsService: MockAnalyticsService(),
               sharedPreferencesService: MockSharedPreferencesService(),
             ),
-            child: UserProfilePageConnected(),
+            child: UserProfilePageConnected(
+              userId: '1',
+            ),
           ),
         ),
       );

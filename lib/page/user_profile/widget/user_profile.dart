@@ -1,10 +1,7 @@
 import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../bloc/blocs.dart';
-import '../../../bloc/user/user_bloc.dart';
 import '../../../core/domain/model/models.dart';
 import '../../../core/extension/media_query_extensions.dart';
 import '../../../core/i18n/label.dart';
@@ -16,8 +13,9 @@ import 'politics_following_quantity.dart';
 import 'user_activities.dart';
 
 class UserProfile extends StatefulWidget {
-  const UserProfile({this.politicsFollowing, this.userActions});
+  const UserProfile({this.user, this.politicsFollowing, this.userActions});
 
+  final UserModel user;
   final List<PoliticoModel> politicsFollowing;
   final List<AcaoUsuarioModel> userActions;
 
@@ -86,9 +84,12 @@ class _UserProfileState extends State<UserProfile> {
       children: <Widget>[
         const SizedBox(height: 8),
         LogoutButton(),
-        PersonalUserInfo(user: context.bloc<UserBloc>().user),
+        PersonalUserInfo(user: widget.user),
         const SizedBox(height: 16),
-        PoliticsFollowingQuantity(politics: widget.politicsFollowing),
+        PoliticsFollowingQuantity(
+          user: widget.user,
+          politics: widget.politicsFollowing,
+        ),
       ],
     );
   }

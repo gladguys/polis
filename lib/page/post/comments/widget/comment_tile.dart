@@ -33,18 +33,36 @@ class CommentTile extends StatelessWidget {
         child: CardBase(
           slotBottomWithIndent: false,
           paddingSlotCenter: const EdgeInsets.only(bottom: 4),
-          slotCenter: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          slotCenter: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(comment.texto),
-              (comment.usuarioId == user.userId)
-                  ? MenuEditDeleteComment(
-                      onEdit: () => {},
-                      onDelete: () => context.bloc<CommentBloc>().add(
-                            DeleteComment(comment),
-                          ),
-                    )
-                  : const SizedBox.shrink(),
+              GestureDetector(
+                onTap: () => SimpleRouter.forward(
+                  UserProfilePageConnected(
+                    userId: comment.usuarioId,
+                  ),
+                ),
+                child: Text(
+                  comment.usuarioNome,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(comment.texto),
+                  (comment.usuarioId == user.userId)
+                      ? MenuEditDeleteComment(
+                          onEdit: () => {},
+                          onDelete: () => context.bloc<CommentBloc>().add(
+                                DeleteComment(comment),
+                              ),
+                        )
+                      : const SizedBox.shrink(),
+                ],
+              ),
             ],
           ),
           slotBottom: Row(
