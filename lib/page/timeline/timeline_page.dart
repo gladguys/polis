@@ -90,14 +90,14 @@ class TimelinePage extends StatelessWidget {
             },
           ),
         ),
+        floatingActionButton: !kReleaseMode
+            ? FloatingActionButton(
+                backgroundColor: context.primaryColorLight,
+                onPressed: SharedPreferencesMonitor.showPage,
+                child: Icon(Entypo.info),
+              )
+            : null,
       ),
-      floatingActionButton: !kReleaseMode
-          ? FloatingActionButton(
-              backgroundColor: context.primaryColorLight,
-              onPressed: SharedPreferencesMonitor.showPage,
-              child: Icon(Entypo.info),
-            )
-          : null,
     );
   }
 }
