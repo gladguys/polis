@@ -1,3 +1,4 @@
+import 'package:abouttoclose/abouttoclose.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -66,11 +67,16 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         theme: theme,
         navigatorKey: SimpleRouter.getKey(),
-        home: isUserLogged
-            ? TimelinePageConnected(
-                appUpdateService: G<AppUpdateService>(),
-              )
-            : InitialPageConnected(),
+        home: AboutToClose(
+          dialogType: DialogType.cupertino,
+          dialogTitle:
+              'You are about to close the app. Are you sure you want to leave?',
+          child: isUserLogged
+              ? TimelinePageConnected(
+                  appUpdateService: G<AppUpdateService>(),
+                )
+              : InitialPageConnected(),
+        ),
         navigatorObservers: [
           FirebaseAnalyticsObserver(analytics: G<AnalyticsService>().analytics),
           PolisRoutingObserver(),
