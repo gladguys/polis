@@ -12,6 +12,7 @@ const USUARIOS_SEGUINDO_COLLECTION = 'usuarios_seguindo';
 const POSTS_FAVORITOS_COLLECTION = 'posts_favoritos';
 const SYNC_LOG_COLLECTION = 'sync_log';
 const RESULTADOS_RANKING_COLLECTION = 'resultados_ranking';
+const TOTALIZADOR_DESPESAS_COLLECTION = 'totalizador_despesas';
 
 // Subcollection
 const POLITICOS_SEGUIDOS_SUBCOLLECTION = 'politicosSeguidos';
@@ -21,6 +22,8 @@ const ATIVIDADES_TIMELINE_SUBCOLLECTION = 'atividadesTimeline';
 const ATIVIDADES_POLITICO_SUBCOLLECTION = 'atividadesPolitico';
 const POSTS_FAVORITOS_USUARIO_SUBCOLLECTION = 'postsFavoritosUsuario';
 const ACOES_USUARIO_SUBCOLLECTION = 'acoesUsuario';
+const TOTAIS_ANO_SUBCOLLECTION = 'totaisAno';
+const TOTAL_MES_SUBCOLLECTION = 'totalMes';
 
 // Field
 const SIGLA_UF_FIELD = 'siglaUf';
