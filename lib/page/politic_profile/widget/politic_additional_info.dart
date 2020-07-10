@@ -128,8 +128,8 @@ class PoliticAdditionalInfo extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(5),
             onTap: () => SimpleRouter.forward(
-              PoliticExpensesPageConnected(politic),
-              name: RANKING_EXPENSES_COMPARE_PAGE,
+              PoliticExpensesAnalysisPageConnected(politic),
+              name: POLITIC_EXPENSES_ANALYSIS_PAGE,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

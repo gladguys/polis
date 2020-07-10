@@ -12,6 +12,7 @@ const INITIAL_PAGE = 'InitialPage';
 const POLITIC_SUGGESTION_PAGE = 'PoliticSuggestionPage';
 const POLITIC_PROFILE_PAGE = 'PoliticProfilePage';
 const POLITIC_FOLLOWERS_PAGE = 'PoliticFollowersPage';
+const POLITIC_EXPENSES_ANALYSIS_PAGE = 'PoliticExpensesAnalysisPage';
 const RANKING_EXPENSES_COMPARE_PAGE = 'ComparativoRankingDespesasPage';
 const POLITIC_PROPOSALS_PAGE = 'PoliticProposalsPage';
 const RESULTADOS_RANKING_PAGE = 'ResultadosRankingPage';
