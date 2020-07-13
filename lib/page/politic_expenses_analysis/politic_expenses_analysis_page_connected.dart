@@ -16,9 +16,10 @@ class PoliticExpensesAnalysisPageConnected extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageConnected<PoliticExpensesAnalysisBloc>(
       bloc: PoliticExpensesAnalysisBloc(
+        politicoId: politico.id,
         repository:
             context.repository<FirebasePoliticExpensesAnalysisRepository>(),
-      )..add(GetPoliticExpensesData(politico)),
+      )..add(GetPoliticExpensesData()),
       page: PoliticExpensesAnalysisPage(politico),
     );
   }

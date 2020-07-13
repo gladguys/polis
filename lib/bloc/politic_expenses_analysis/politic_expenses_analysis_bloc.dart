@@ -5,7 +5,6 @@ import 'package:equatable/equatable.dart';
 
 import '../../core/domain/dto/despesa_anual_por_tipo.dart';
 import '../../core/domain/dto/total_despesas_anuais.dart';
-import '../../core/domain/model/models.dart';
 import '../../core/repository/abstract/repositories.dart';
 
 part 'politic_expenses_analysis_event.dart';
@@ -13,9 +12,14 @@ part 'politic_expenses_analysis_state.dart';
 
 class PoliticExpensesAnalysisBloc
     extends Bloc<PoliticExpensesAnalysisEvent, PoliticExpensesAnalysisState> {
-  PoliticExpensesAnalysisBloc({this.repository}) : assert(repository != null);
+  PoliticExpensesAnalysisBloc({this.repository, this.politicoId})
+      : year = DateTime.now().year,
+        assert(repository != null);
 
   final PoliticExpensesAnalysisRepository repository;
+  final String politicoId;
+
+  int year;
 
   @override
   PoliticExpensesAnalysisState get initialState =>
@@ -27,6 +31,12 @@ class PoliticExpensesAnalysisBloc
     if (event is GetPoliticExpensesData) {
       yield* _mapGetPoliticExpensesDataToState(event);
     }
+    if (event is GetPoliticExpensesDataFromNextYear) {
+      yield* _mapGetPoliticExpensesDataFromNextYearToState(event);
+    }
+    if (event is GetPoliticExpensesDataFromPreviousYear) {
+      yield* _mapGetPoliticExpensesDataFromPreviousYearToState(event);
+    }
   }
 
   Stream<PoliticExpensesAnalysisState> _mapGetPoliticExpensesDataToState(
@@ -34,11 +44,10 @@ class PoliticExpensesAnalysisBloc
     try {
       yield LoadingPoliticExpensesData();
 
-      final politico = event.politico;
       final despesasPorTipo = await repository.getYearExpensesByType(
-          politicoId: politico.id, ano: '2020');
+          politicoId: politicoId, ano: year.toString());
       final totalDespesasAnuais = await repository.getYearExpensesData(
-          politicoId: politico.id, ano: '2020');
+          politicoId: politicoId, ano: year.toString());
 
       yield GetPoliticExpensesDataSuccess(
         despesasAnuaisPorTipo: despesasPorTipo,
@@ -47,5 +56,19 @@ class PoliticExpensesAnalysisBloc
     } on Exception {
       yield GetPoliticExpensesDataFailed();
     }
+  }
+
+  Stream<PoliticExpensesAnalysisState>
+      _mapGetPoliticExpensesDataFromNextYearToState(
+          GetPoliticExpensesDataFromNextYear event) async* {
+    year++;
+    add(GetPoliticExpensesData());
+  }
+
+  Stream<PoliticExpensesAnalysisState>
+      _mapGetPoliticExpensesDataFromPreviousYearToState(
+          GetPoliticExpensesDataFromPreviousYear event) async* {
+    year--;
+    add(GetPoliticExpensesData());
   }
 }

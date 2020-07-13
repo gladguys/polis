@@ -5,10 +5,17 @@ abstract class PoliticExpensesAnalysisEvent extends Equatable {
 }
 
 class GetPoliticExpensesData extends PoliticExpensesAnalysisEvent {
-  GetPoliticExpensesData(this.politico);
-
-  final PoliticoModel politico;
-
   @override
-  List<Object> get props => [politico];
+  List<Object> get props => [];
+}
+
+class GetPoliticExpensesDataFromNextYear extends PoliticExpensesAnalysisEvent {
+  @override
+  List<Object> get props => [];
+}
+
+class GetPoliticExpensesDataFromPreviousYear
+    extends PoliticExpensesAnalysisEvent {
+  @override
+  List<Object> get props => [];
 }

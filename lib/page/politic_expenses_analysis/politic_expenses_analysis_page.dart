@@ -20,42 +20,57 @@ class PoliticExpensesAnalysisPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<PoliticExpensesAnalysisBloc,
-            PoliticExpensesAnalysisState>(builder: (_, state) {
-          if (state is GetPoliticExpensesDataSuccess) {
-            final despesasAnuaisPorTipo = state.despesasAnuaisPorTipo;
-            final totalDespesasAno = state.totalDespesasAnuais;
-            return Column(
-              children: <Widget>[
-                const SizedBox(height: 8),
-                TextTitle(EXPENSES_ANALYSIS),
-                const SizedBox(height: 8),
-                Expanded(
-                  child: ExpensesByTypeChart(
-                    despesasAnuaisPorTipo: despesasAnuaisPorTipo,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextTitle(
-                  '$EXPENSES_BY_MONTH_ON_YEAR ${totalDespesasAno.ano}',
-                  fontSize: 12,
-                ),
-                const SizedBox(height: 8),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: ExpensesByMonth(
-                      despesasPorMes: totalDespesasAno.despesasPorMes,
+        child: GestureDetector(
+          onHorizontalDragEnd: (dragEndDetails) {
+            if (dragEndDetails.primaryVelocity < 0) {
+              context.bloc<PoliticExpensesAnalysisBloc>().add(
+                    GetPoliticExpensesDataFromNextYear(),
+                  );
+              print('Voltar mês');
+            } else {
+              print('Passar mês');
+              context.bloc<PoliticExpensesAnalysisBloc>().add(
+                    GetPoliticExpensesDataFromPreviousYear(),
+                  );
+            }
+          },
+          child: BlocBuilder<PoliticExpensesAnalysisBloc,
+              PoliticExpensesAnalysisState>(builder: (_, state) {
+            if (state is GetPoliticExpensesDataSuccess) {
+              final despesasAnuaisPorTipo = state.despesasAnuaisPorTipo;
+              final totalDespesasAno = state.totalDespesasAnuais;
+              return Column(
+                children: <Widget>[
+                  const SizedBox(height: 8),
+                  TextTitle(EXPENSES_ANALYSIS),
+                  const SizedBox(height: 8),
+                  Expanded(
+                    child: ExpensesByTypeChart(
+                      despesasAnuaisPorTipo: despesasAnuaisPorTipo,
                     ),
                   ),
-                ),
-                SeeExpensesButton(politico),
-              ],
-            );
-          } else if (state is LoadingPoliticExpensesData) {
-            return const Loading();
-          }
-          return const ErrorContainer();
-        }),
+                  const SizedBox(height: 8),
+                  TextTitle(
+                    '$EXPENSES_BY_MONTH_ON_YEAR ${totalDespesasAno.ano}',
+                    fontSize: 12,
+                  ),
+                  const SizedBox(height: 8),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: ExpensesByMonth(
+                        despesasPorMes: totalDespesasAno.despesasPorMes,
+                      ),
+                    ),
+                  ),
+                  SeeExpensesButton(politico),
+                ],
+              );
+            } else if (state is LoadingPoliticExpensesData) {
+              return const Loading();
+            }
+            return const ErrorContainer();
+          }),
+        ),
       ),
     );
   }
