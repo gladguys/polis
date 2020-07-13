@@ -26,10 +26,12 @@ void main() {
         CommentModel(
           id: 1,
           texto: 'first text',
+          usuarioNome: 'user',
         ),
         CommentModel(
           id: 2,
           texto: 'second text',
+          usuarioNome: 'user2',
         ),
       ];
       final mockCommentBloc = MockCommentBloc();
@@ -56,6 +58,7 @@ void main() {
         CommentModel(
           id: 1,
           texto: 'first text',
+          usuarioNome: 'user',
         ),
       ];
       final mockCommentBloc = MockCommentBloc();
