@@ -75,7 +75,7 @@ class SubCommentsBloc extends Bloc<SubCommentsEvent, SubCommentsState> {
         usuarioId: user.userId,
         usuarioNome: user.name,
         diaHora: DateTime.now(),
-        comentarioPai: comment,
+        comentarioPaiId: comment.id,
       );
 
       final savedSubComment = await repository.saveSubComment(

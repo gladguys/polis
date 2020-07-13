@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'comment_model.dart';
-
 part 'sub_comment_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
@@ -14,7 +12,7 @@ class SubCommentModel extends Equatable {
     this.postId,
     this.texto,
     this.diaHora,
-    this.comentarioPai,
+    this.comentarioPaiId,
   });
 
   final int id;
@@ -23,7 +21,7 @@ class SubCommentModel extends Equatable {
   final String postId;
   final String texto;
   final DateTime diaHora;
-  final CommentModel comentarioPai;
+  final int comentarioPaiId;
 
   SubCommentModel copyWith({
     int id,
@@ -32,7 +30,7 @@ class SubCommentModel extends Equatable {
     String postId,
     String texto,
     String diaHora,
-    CommentModel comentarioPai,
+    int comentarioPaiId,
   }) {
     return SubCommentModel(
       id: id ?? this.id,
@@ -41,7 +39,7 @@ class SubCommentModel extends Equatable {
       postId: postId ?? this.postId,
       texto: texto ?? this.texto,
       diaHora: diaHora ?? this.diaHora,
-      comentarioPai: comentarioPai ?? this.comentarioPai,
+      comentarioPaiId: comentarioPaiId ?? this.comentarioPaiId,
     );
   }
 
@@ -52,9 +50,9 @@ class SubCommentModel extends Equatable {
 
   @override
   String toString() {
-    return '''SubCommentModel{id: $id, usuarioId: $usuarioId, usuarioNome: $usuarioNome, postId: $postId, texto: $texto, diaHora: $diaHora, comentarioPai: $comentarioPai}''';
+    return '''SubCommentModel{id: $id, usuarioId: $usuarioId, usuarioNome: $usuarioNome, postId: $postId, texto: $texto, diaHora: $diaHora, comentarioPaiId: $comentarioPaiId}''';
   }
 
   @override
-  List<Object> get props => [id, texto, comentarioPai];
+  List<Object> get props => [id, texto, comentarioPaiId];
 }
