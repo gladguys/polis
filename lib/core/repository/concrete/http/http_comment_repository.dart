@@ -14,19 +14,7 @@ class HttpCommentRepository implements CommentRepository {
 
   @override
   Future<List<CommentModel>> getPostComments({String postId}) async {
-    return [
-      CommentModel(
-        id: 1,
-        foiEditado: false,
-        qntSubComentarios: 5,
-        postId: '1',
-        diaHora: DateTime.now(),
-        usuarioNome: 'Teste',
-        usuarioId: 'w7xvEM1t6WRrXhUUCkQROSRIl9l2',
-        texto: 'textim',
-      ),
-    ];
-    /*try {
+    try {
       final response = await client.get(
         COMENTARIOS,
         queryParameters: {
@@ -43,7 +31,7 @@ class HttpCommentRepository implements CommentRepository {
       throw Exception();
     } on Exception {
       rethrow;
-    }*/
+    }
   }
 
   @override
@@ -76,8 +64,7 @@ class HttpCommentRepository implements CommentRepository {
         return CommentModel.fromJson(decodedResponse);
       }
       throw Exception();
-    } on Exception catch (e) {
-      print(e);
+    } on Exception {
       rethrow;
     }
   }
@@ -101,14 +88,66 @@ class HttpCommentRepository implements CommentRepository {
   }
 
   @override
-  Future<CommentModel> deleteComment({String postId, CommentModel comment}) {
-    // TODO: implement deleteComment
-    throw UnimplementedError();
+  Future<void> deleteComment({CommentModel comment}) async {
+    try {
+      final response = await client.delete(
+        '$COMENTARIOS/${comment.id}',
+      );
+      if (!response.isOk) {
+        throw Exception();
+      }
+    } on Exception catch (e) {
+      print(e);
+      rethrow;
+    }
   }
 
   @override
-  Future<CommentModel> editComment({String postId, CommentModel comment}) {
-    // TODO: implement editComment
-    throw UnimplementedError();
+  Future<CommentModel> editComment({CommentModel comment}) async {
+    try {
+      final response = await client.put(
+        COMENTARIOS,
+        data: comment.toJson(),
+      );
+      if (response.isOk) {
+        final decodedResponse = response.data;
+        return CommentModel.fromJson(decodedResponse);
+      }
+      throw Exception();
+    } on Exception {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> deleteSubComment({SubCommentModel subComment}) async {
+    try {
+      final response = await client.delete(
+        '$COMENTARIOS/$SUBS/${subComment.id}',
+      );
+      if (!response.isOk) {
+        throw Exception();
+      }
+    } on Exception {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<SubCommentModel> editSubComment(
+      {int commentId, SubCommentModel subComment}) async {
+    try {
+      final response = await client.put(
+        '$COMENTARIOS/$commentId/$SUBS',
+        data: subComment.toJson(),
+      );
+      if (response.isOk) {
+        final decodedResponse = response.data;
+        return SubCommentModel.fromJson(decodedResponse);
+      }
+      throw Exception();
+    } on Exception {
+      rethrow;
+    }
   }
 }

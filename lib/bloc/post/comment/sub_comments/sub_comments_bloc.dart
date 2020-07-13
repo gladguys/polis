@@ -118,6 +118,8 @@ class SubCommentsBloc extends Bloc<SubCommentsEvent, SubCommentsState> {
 
       oldSubComments.removeWhere((comment) => comment == subCommentToDelete);
 
+      await repository.deleteSubComment(subComment: subCommentToDelete);
+
       subComments = [
         ...oldSubComments,
       ];

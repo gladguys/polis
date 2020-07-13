@@ -117,6 +117,8 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     ];
     currentComments.removeWhere((comment) => comment.id == commentToDelete.id);
 
+    await repository.deleteComment(comment: commentToDelete);
+
     postComments = [
       ...currentComments,
     ];
