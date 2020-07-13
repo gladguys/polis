@@ -26,6 +26,7 @@ const STATE_MESSAGE = 'Qual o seu Estado?';
 const FOLLOW = 'Seguir';
 const STOP_FOLLOW = 'Deixar de seguir';
 const YOU_DONT_FOLLOW_ANYONE_YET = 'Você ainda não segue nenhum político!';
+const LEAVE_APP_WARN = 'Você irá sair do aplicativo. Deseja prosseguir?';
 
 const POLIS_INFO_MESSAGE =
     '''Siga Deputados Federais e receba notificações quando eles tiverem novas Propostas de Lei ou Despesas...''';
