@@ -8,6 +8,7 @@ import '../../widget/error_container.dart';
 import '../../widget/loading.dart';
 import '../../widget/text_title.dart';
 import 'widget/expenses_by_month.dart';
+import 'widget/expenses_by_type_chart.dart';
 import 'widget/see_expenses_button.dart';
 
 class PoliticExpensesAnalysisPage extends StatelessWidget {
@@ -22,11 +23,18 @@ class PoliticExpensesAnalysisPage extends StatelessWidget {
         child: BlocBuilder<PoliticExpensesAnalysisBloc,
             PoliticExpensesAnalysisState>(builder: (_, state) {
           if (state is GetPoliticExpensesDataSuccess) {
+            final despesasAnuaisPorTipo = state.despesasAnuaisPorTipo;
             final totalDespesasAno = state.totalDespesasAnuais;
             return Column(
               children: <Widget>[
                 const SizedBox(height: 8),
                 TextTitle(EXPENSES_ANALYSIS),
+                const SizedBox(height: 8),
+                Expanded(
+                  child: ExpensesByTypeChart(
+                    despesasAnuaisPorTipo: despesasAnuaisPorTipo,
+                  ),
+                ),
                 const SizedBox(height: 8),
                 TextTitle(
                   '$EXPENSES_BY_MONTH_ON_YEAR ${totalDespesasAno.ano}',

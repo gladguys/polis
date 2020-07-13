@@ -16,6 +16,10 @@ extension NumberExtension on String {
             locale: 'pt_BR', symbol: 'R\$', decimalDigits: 2)
         .format(double.parse(this));
   }
+
+  double sanitizePercentageToDouble() {
+    return double.parse(replaceAll('%', '').replaceAll(',', '.'));
+  }
 }
 
 extension DoubleExtension on double {
@@ -29,7 +33,7 @@ extension DoubleExtension on double {
 extension DateExtension on String {
   String formatDate() => DateFormat('d MMM y', 'pt_br')
       .format(DateFormat('yyyy-MM-dd').parse(this));
-  
+
   String formatDateBig() => DateFormat("dd 'de' MMMM 'de' y", 'pt_br')
       .format(DateFormat('yyyy-MM-dd').parse(this));
 }

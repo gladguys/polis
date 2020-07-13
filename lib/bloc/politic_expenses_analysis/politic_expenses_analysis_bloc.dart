@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../core/domain/dto/despesa_anual_por_tipo.dart';
 import '../../core/domain/dto/total_despesas_anuais.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/repository/abstract/repositories.dart';
@@ -34,11 +35,15 @@ class PoliticExpensesAnalysisBloc
       yield LoadingPoliticExpensesData();
 
       final politico = event.politico;
+      final despesasPorTipo = await repository.getYearExpensesByType(
+          politicoId: politico.id, ano: '2020');
       final totalDespesasAnuais = await repository.getYearExpensesData(
-          politicoId: politico.id, ano: '2019');
+          politicoId: politico.id, ano: '2020');
 
       yield GetPoliticExpensesDataSuccess(
-          totalDespesasAnuais: totalDespesasAnuais);
+        despesasAnuaisPorTipo: despesasPorTipo,
+        totalDespesasAnuais: totalDespesasAnuais,
+      );
     } on Exception {
       yield GetPoliticExpensesDataFailed();
     }

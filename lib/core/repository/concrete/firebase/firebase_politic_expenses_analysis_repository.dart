@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../../domain/dto/despesa_anual_por_tipo.dart';
 import '../../../domain/dto/despesa_mensal.dart';
+import '../../../domain/dto/despesa_por_tipo.dart';
 import '../../../domain/dto/total_despesas_anuais.dart';
 import '../../../exception/exceptions.dart';
 import '../../abstract/repositories.dart';
@@ -42,5 +44,32 @@ class FirebasePoliticExpensesAnalysisRepository
     } on Exception {
       throw ComunicationException();
     }
+  }
+
+  @override
+  Future<DespesaAnualPorTipo> getYearExpensesByType(
+      {String politicoId, String ano}) async {
+    return DespesaAnualPorTipo(ano: '2020', despesas: [
+      DespesaPorTipo(
+        tipo: 'Divulgação da Atividade Parlamentar.',
+        percentual: '44,60%',
+        valor: '66.094,00',
+      ),
+      DespesaPorTipo(
+        tipo: 'Manutenção de Escritório de Apoio à Atividade Parlamentar',
+        percentual: '30,37%',
+        valor: '45.003,38',
+      ),
+      DespesaPorTipo(
+        tipo: 'Combustíveis e Lubrificantes.',
+        percentual: '14,75%',
+        valor: '21.856,11',
+      ),
+      DespesaPorTipo(
+        tipo: 'Outros',
+        percentual: '10,29%',
+        valor: '15.249,50',
+      ),
+    ]);
   }
 }
