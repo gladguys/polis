@@ -11,13 +11,14 @@ class PoliticExpensesAnalysisInitial extends PoliticExpensesAnalysisState {
 
 class GetPoliticExpensesDataSuccess extends PoliticExpensesAnalysisState {
   GetPoliticExpensesDataSuccess(
-      {this.totalDespesasAnuais, this.despesasAnuaisPorTipo});
+      {this.year, this.totalDespesasAnuais, this.despesasAnuaisPorTipo});
 
+  final int year;
   final TotalDespesasAnuais totalDespesasAnuais;
   final DespesaAnualPorTipo despesasAnuaisPorTipo;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [year];
 }
 
 class LoadingPoliticExpensesData extends PoliticExpensesAnalysisState {

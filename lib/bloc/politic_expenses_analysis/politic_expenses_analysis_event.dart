@@ -4,18 +4,20 @@ abstract class PoliticExpensesAnalysisEvent extends Equatable {
   const PoliticExpensesAnalysisEvent();
 }
 
-class GetPoliticExpensesData extends PoliticExpensesAnalysisEvent {
+class GetInitialInfo extends PoliticExpensesAnalysisEvent {
+  GetInitialInfo(this.year);
+
+  final int year;
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [year];
 }
 
-class GetPoliticExpensesDataFromNextYear extends PoliticExpensesAnalysisEvent {
-  @override
-  List<Object> get props => [];
-}
+class GetPoliticExpensesDataForYear extends PoliticExpensesAnalysisEvent {
+  GetPoliticExpensesDataForYear(this.year);
 
-class GetPoliticExpensesDataFromPreviousYear
-    extends PoliticExpensesAnalysisEvent {
+  final int year;
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [year];
 }

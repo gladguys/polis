@@ -165,6 +165,11 @@ class MyAppInjections extends StatelessWidget {
             firestore: Firestore.instance,
           ),
         ),
+        RepositoryProvider(
+          create: (_) => FirebasePoliticExpensesAnalysisConfigRepository(
+            firestore: Firestore.instance,
+          ),
+        ),
       ],
       child: child,
     );

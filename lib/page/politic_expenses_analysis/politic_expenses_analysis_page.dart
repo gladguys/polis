@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_select/smart_select.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/domain/model/models.dart';
@@ -20,58 +21,60 @@ class PoliticExpensesAnalysisPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: GestureDetector(
-          onHorizontalDragEnd: (dragEndDetails) {
-            if (dragEndDetails.primaryVelocity < 0) {
-              context.bloc<PoliticExpensesAnalysisBloc>().add(
-                    GetPoliticExpensesDataFromNextYear(),
-                  );
-              print('Voltar mês');
-            } else {
-              print('Passar mês');
-              context.bloc<PoliticExpensesAnalysisBloc>().add(
-                    GetPoliticExpensesDataFromPreviousYear(),
-                  );
-            }
-          },
-          child: BlocBuilder<PoliticExpensesAnalysisBloc,
-              PoliticExpensesAnalysisState>(builder: (_, state) {
-            if (state is GetPoliticExpensesDataSuccess) {
-              final despesasAnuaisPorTipo = state.despesasAnuaisPorTipo;
-              final totalDespesasAno = state.totalDespesasAnuais;
-              return Column(
-                children: <Widget>[
-                  const SizedBox(height: 8),
-                  TextTitle(EXPENSES_ANALYSIS),
-                  const SizedBox(height: 8),
-                  Expanded(
-                    child: ExpensesByTypeChart(
-                      despesasAnuaisPorTipo: despesasAnuaisPorTipo,
+        child: BlocBuilder<PoliticExpensesAnalysisBloc,
+            PoliticExpensesAnalysisState>(builder: (_, state) {
+          if (state is GetPoliticExpensesDataSuccess) {
+            final year = state.year;
+            final despesasAnuaisPorTipo = state.despesasAnuaisPorTipo;
+            final totalDespesasAno = state.totalDespesasAnuais;
+            return Column(
+              children: <Widget>[
+                const SizedBox(height: 8),
+                TextTitle(EXPENSES_ANALYSIS),
+                const SizedBox(height: 18),
+                Expanded(
+                  child: ExpensesByTypeChart(
+                    despesasAnuaisPorTipo: despesasAnuaisPorTipo,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                SmartSelect<int>.single(
+                  title: EXPENSES_ON_YEAR,
+                  value: year,
+                  options: _getAllPossibleYears(context),
+                  onChange: (pickedYear) => context
+                      .bloc<PoliticExpensesAnalysisBloc>()
+                      .add(GetPoliticExpensesDataForYear(pickedYear)),
+                ),
+                const SizedBox(height: 8),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: ExpensesByMonth(
+                      despesasPorMes: totalDespesasAno.despesasPorMes,
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  TextTitle(
-                    '$EXPENSES_BY_MONTH_ON_YEAR ${totalDespesasAno.ano}',
-                    fontSize: 12,
-                  ),
-                  const SizedBox(height: 8),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: ExpensesByMonth(
-                        despesasPorMes: totalDespesasAno.despesasPorMes,
-                      ),
-                    ),
-                  ),
-                  SeeExpensesButton(politico),
-                ],
-              );
-            } else if (state is LoadingPoliticExpensesData) {
-              return const Loading();
-            }
-            return const ErrorContainer();
-          }),
-        ),
+                ),
+                SeeExpensesButton(politico),
+              ],
+            );
+          } else if (state is LoadingPoliticExpensesData) {
+            return const Loading();
+          }
+          return const ErrorContainer();
+        }),
       ),
     );
+  }
+
+  List<SmartSelectOption<int>> _getAllPossibleYears(BuildContext context) {
+    var yearOptions = <SmartSelectOption<int>>[];
+    final beginYear = context.bloc<PoliticExpensesAnalysisBloc>().beginYear;
+    final currentYear = DateTime.now().year;
+    for (var year = beginYear; year <= currentYear; year++) {
+      yearOptions.add(
+        SmartSelectOption(title: year.toString(), value: year),
+      );
+    }
+    return yearOptions;
   }
 }

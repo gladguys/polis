@@ -40,9 +40,11 @@ const SEQUENCIA_FIELD = 'sequencia';
 const VISUALIZADO_FIELD = 'visualizado';
 const FCM_TOKEN = 'fcmToken';
 const HASH = 'hash';
+const VALUE = 'value';
 
 // References
 const PARTIDO_SYNC = 'PARTIDOSYNC';
 const POLITICO_SYNC = 'POLITICOSYNC';
 const ORGAO_SYNC = 'ORGAOSYNC';
+const INICIO_ANO_DESPESAS = 'INICIO_ANO_DESPESAS';
 const RANKING = 'ranking';

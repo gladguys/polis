@@ -14,12 +14,15 @@ class PoliticExpensesAnalysisPageConnected extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final year = DateTime.now().year;
     return PageConnected<PoliticExpensesAnalysisBloc>(
       bloc: PoliticExpensesAnalysisBloc(
         politicoId: politico.id,
-        repository:
+        politicExpensesAnalysisRepository:
             context.repository<FirebasePoliticExpensesAnalysisRepository>(),
-      )..add(GetPoliticExpensesData()),
+        politicExpensesAnalysisConfigRepository: context
+            .repository<FirebasePoliticExpensesAnalysisConfigRepository>(),
+      )..add(GetInitialInfo(year)),
       page: PoliticExpensesAnalysisPage(politico),
     );
   }
