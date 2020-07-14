@@ -36,23 +36,23 @@ class CommentTile extends StatelessWidget {
           slotCenter: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              GestureDetector(
-                onTap: () => SimpleRouter.forward(
-                  UserProfilePageConnected(
-                    userId: comment.usuarioId,
-                  ),
-                ),
-                child: Text(
-                  comment.usuarioNome,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(comment.texto),
+                  InkWell(
+                    onTap: () => SimpleRouter.forward(
+                      UserProfilePageConnected(
+                        userId: comment.usuarioId,
+                      ),
+                    ),
+                    child: Text(
+                      comment.usuarioNome,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
                   (comment.usuarioId == user.userId)
                       ? MenuEditDeleteComment(
                           onEdit: () => {},
@@ -60,49 +60,48 @@ class CommentTile extends StatelessWidget {
                                 DeleteComment(comment),
                               ),
                         )
-                      : const SizedBox.shrink(),
+                      : Container(),
                 ],
               ),
+              const SizedBox(height: 4),
+              Text(comment.texto),
             ],
           ),
           slotBottom: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
-              Container(
-                width: 80,
-                child: GestureDetector(
-                  onTap: () => SimpleRouter.forward(
-                    SubCommentsPageConnected(
-                      post: context.bloc<CommentBloc>().post,
-                      comment: comment,
-                      commentBloc: context.bloc<CommentBloc>(),
-                    ),
-                    name: COMMENT_REPLIES_PAGE,
+              InkWell(
+                onTap: () => SimpleRouter.forward(
+                  SubCommentsPageConnected(
+                    post: context.bloc<CommentBloc>().post,
+                    comment: comment,
+                    commentBloc: context.bloc<CommentBloc>(),
                   ),
-                  child: Row(
-                    key: commentsKey,
-                    children: <Widget>[
-                      FaIcon(
-                        FontAwesomeIcons.comment,
-                        size: 16,
+                  name: COMMENT_REPLIES_PAGE,
+                ),
+                child: Row(
+                  key: commentsKey,
+                  children: <Widget>[
+                    FaIcon(
+                      FontAwesomeIcons.comment,
+                      size: 16,
+                      color: Colors.grey[600],
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      comment.qntSubComentarios.toString(),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
                         color: Colors.grey[600],
                       ),
-                      const SizedBox(width: 4),
-                      Text(
-                        comment.qntSubComentarios.toString(),
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey[600],
-                        ),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ),
               Text(
-                '${DateTime.now().toString().formatDateTime()}',
+                comment.diaHora.toString().formatDateTime(),
                 style: TextStyle(
                   fontSize: 11,
                   color: Colors.grey[600],

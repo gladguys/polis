@@ -9,27 +9,25 @@ class ErrorContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          FaIcon(
-            FontAwesomeIcons.exclamationCircle,
-            size: 80,
-            color: theme.primaryColorLight,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        FaIcon(
+          FontAwesomeIcons.exclamationCircle,
+          size: 80,
+          color: theme.primaryColorLight,
+        ),
+        const SizedBox(height: 12),
+        Text(
+          UNEXPECTED_ERROR_HAPPENED,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.grey[800],
           ),
-          const SizedBox(height: 12),
-          Text(
-            UNEXPECTED_ERROR_HAPPENED,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.grey[800],
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

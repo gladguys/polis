@@ -40,10 +40,11 @@ class _PostCommentsState extends State<PostComments> {
             state is NewReplyCommentAdded) {
           final comments = context.bloc<CommentBloc>().postComments;
           return Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               const Divider(color: Colors.grey, height: 1),
               const SizedBox(height: 12),
-              Expanded(
+              Flexible(
                 child: comments.isNotEmpty
                     ? CommentsList(
                         comments: comments,

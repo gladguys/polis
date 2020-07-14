@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../core/i18n/i18n.dart';
 
@@ -30,8 +31,11 @@ class MenuEditDeleteComment extends StatelessWidget {
             (option) => PopupMenuItem(
               child: Row(
                 children: <Widget>[
-                  Icon(
-                    option == CommentOption.edit ? Icons.edit : Icons.delete,
+                  FaIcon(
+                    option == CommentOption.edit
+                        ? FontAwesomeIcons.solidEdit
+                        : FontAwesomeIcons.trash,
+                    size: 18,
                   ),
                   const SizedBox(width: 6),
                   Text(
@@ -50,8 +54,10 @@ class MenuEditDeleteComment extends StatelessWidget {
           onDelete();
         }
       },
-      captureInheritedThemes: false,
-      icon: Icon(Icons.menu),
+      child: FaIcon(
+        FontAwesomeIcons.ellipsisV,
+        size: 16,
+      ),
     );
   }
 }

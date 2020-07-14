@@ -10,10 +10,18 @@ class CommentsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return CustomScrollView(
       shrinkWrap: true,
-      itemBuilder: (_, i) => CommentTile(comments[i]),
-      itemCount: comments.length,
+      slivers: <Widget>[
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, i) {
+              if (i > comments.length - 1) return null;
+              return CommentTile(comments[i]);
+            },
+          ),
+        ),
+      ],
     );
   }
 }
