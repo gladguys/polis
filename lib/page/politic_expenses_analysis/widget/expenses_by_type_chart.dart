@@ -1,28 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:multi_charts/multi_charts.dart';
 
-import '../../../core/domain/dto/despesa_anual_por_tipo.dart';
+import '../../../core/domain/dto/despesa_por_tipo.dart';
+import '../../../core/extension/extensions.dart';
 
 class ExpensesByTypeChart extends StatelessWidget {
-  ExpensesByTypeChart({this.despesasAnuaisPorTipo});
+  ExpensesByTypeChart({this.despesasPorTipo});
 
-  final DespesaAnualPorTipo despesasAnuaisPorTipo;
+  final List<DespesaPorTipo> despesasPorTipo;
 
   @override
   Widget build(BuildContext context) {
+    final labels = [
+      ...despesasPorTipo.map((despesa) => despesa.tipoCota).toList(),
+    ];
+    final values = [
+      ...despesasPorTipo
+          .map((despesa) => despesa.percentual.sanitizePercentageToDouble())
+          .toList(),
+    ];
     return PieChart(
-      labels: [
-        ...despesasAnuaisPorTipo.tipos,
-      ],
-      values: [
-        ...despesasAnuaisPorTipo.valores,
-      ],
+      labels: labels,
+      values: values,
       animationDuration: const Duration(milliseconds: 500),
       sliceFillColors: [
-        const Color(0xFF4FC2D7),
-        const Color(0xFF48C7B2),
-        const Color(0xFF72C588),
-        const Color(0xFFA0BE68),
+        const Color(0xFF63B95C),
+        const Color(0xFF5D66B7),
+        const Color(0xFFCA56A6),
+        const Color(0xFFFFD850),
+        const Color(0xFFFF8F50),
+        const Color(0xFFFF5050),
       ],
       legendTextSize: 12,
     );

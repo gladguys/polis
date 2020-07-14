@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
-import '../../core/domain/dto/despesa_anual_por_tipo.dart';
+import '../../core/domain/dto/despesa_por_tipo.dart';
 import '../../core/domain/dto/total_despesas_anuais.dart';
 import '../../core/repository/abstract/repositories.dart';
 
@@ -12,19 +13,28 @@ part 'politic_expenses_analysis_state.dart';
 
 class PoliticExpensesAnalysisBloc
     extends Bloc<PoliticExpensesAnalysisEvent, PoliticExpensesAnalysisState> {
-  PoliticExpensesAnalysisBloc(
-      {this.politicExpensesAnalysisRepository,
-      this.politicExpensesAnalysisConfigRepository,
-      this.politicoId})
-      : assert(politicExpensesAnalysisRepository != null),
+  PoliticExpensesAnalysisBloc({
+    @required this.politicExpensesAnalysisRepository,
+    @required this.politicExpensesAnalysisConfigRepository,
+    @required this.politicExpensesAnalysisQuotaRepository,
+    @required this.politicExpensesByTypeAnalysisRepository,
+    @required this.politicoId,
+    @required this.politicoUf,
+  })  : assert(politicExpensesAnalysisRepository != null),
         assert(politicExpensesAnalysisConfigRepository != null);
 
   final PoliticExpensesAnalysisRepository politicExpensesAnalysisRepository;
   final PoliticExpensesAnalysisConfigRepository
       politicExpensesAnalysisConfigRepository;
+  final PoliticExpensesAnalysisQuotaRepository
+      politicExpensesAnalysisQuotaRepository;
+  final PoliticExpensesByTypeAnalysisRepository
+      politicExpensesByTypeAnalysisRepository;
   final String politicoId;
+  final String politicoUf;
 
   int beginYear;
+  double maxQuotaForState;
 
   @override
   PoliticExpensesAnalysisState get initialState =>
@@ -47,8 +57,12 @@ class PoliticExpensesAnalysisBloc
       yield LoadingPoliticExpensesData();
 
       final currentYear = event.year;
+
+      maxQuotaForState = await politicExpensesAnalysisQuotaRepository
+          .getMaxQuotaForStateUf(politicoUf);
       beginYear =
           await politicExpensesAnalysisConfigRepository.getExpensesBeginYear();
+
       add(GetPoliticExpensesDataForYear(currentYear));
     } on Exception {
       yield GetPoliticExpensesDataFailed();
@@ -61,14 +75,16 @@ class PoliticExpensesAnalysisBloc
       yield LoadingPoliticExpensesData();
 
       final year = event.year;
-      final despesasPorTipo = await politicExpensesAnalysisRepository
+
+      final despesasPorTipo = await politicExpensesByTypeAnalysisRepository
           .getYearExpensesByType(politicoId: politicoId, ano: year.toString());
+
       final totalDespesasAnuais = await politicExpensesAnalysisRepository
           .getYearExpensesData(politicoId: politicoId, ano: year.toString());
 
       yield GetPoliticExpensesDataSuccess(
         year: year,
-        despesasAnuaisPorTipo: despesasPorTipo,
+        despesasPorTipo: despesasPorTipo,
         totalDespesasAnuais: totalDespesasAnuais,
       );
     } on Exception {

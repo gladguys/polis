@@ -25,7 +25,7 @@ class PoliticExpensesAnalysisPage extends StatelessWidget {
             PoliticExpensesAnalysisState>(builder: (_, state) {
           if (state is GetPoliticExpensesDataSuccess) {
             final year = state.year;
-            final despesasAnuaisPorTipo = state.despesasAnuaisPorTipo;
+            final despesasPorTipo = state.despesasPorTipo;
             final totalDespesasAno = state.totalDespesasAnuais;
             return Column(
               children: <Widget>[
@@ -34,7 +34,7 @@ class PoliticExpensesAnalysisPage extends StatelessWidget {
                 const SizedBox(height: 18),
                 Expanded(
                   child: ExpensesByTypeChart(
-                    despesasAnuaisPorTipo: despesasAnuaisPorTipo,
+                    despesasPorTipo: despesasPorTipo,
                   ),
                 ),
                 const SizedBox(height: 8),

@@ -26,3 +26,5 @@ export 'hive/hive_orgao_repository.dart';
 export 'hive/hive_partido_repository.dart';
 export 'hive/hive_politico_repository.dart';
 export 'http/http_comment_repository.dart';
+export 'http/http_politic_expenses_analysis_quota_repository.dart';
+export 'http/http_politic_expenses_by_type_analysis_repository.dart';

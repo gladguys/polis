@@ -20,6 +20,10 @@ extension NumberExtension on String {
   double sanitizePercentageToDouble() {
     return double.parse(replaceAll('%', '').replaceAll(',', '.'));
   }
+
+  double sanitizeToCleanDouble() {
+    return double.parse(replaceAll('.', '').replaceAll(',', ''));
+  }
 }
 
 extension DoubleExtension on double {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../bloc/blocs.dart';
 import '../../../core/domain/dto/despesa_mensal.dart';
 import '../../../core/extension/extensions.dart';
 
@@ -14,14 +16,14 @@ class ExpensesByMonth extends StatefulWidget {
 
 class _ExpensesByMonthState extends State<ExpensesByMonth>
     with SingleTickerProviderStateMixin {
-  //TODO: this should come from remote
-  final double max = 80000;
+  double maxQuota;
 
   AnimationController _animationController;
   Animation<double> _animation;
 
   @override
   void initState() {
+    maxQuota = context.bloc<PoliticExpensesAnalysisBloc>().maxQuotaForState;
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
@@ -57,7 +59,7 @@ class _ExpensesByMonthState extends State<ExpensesByMonth>
     final containerSize = width - 20;
     return widget.despesasPorMes.map(
       (despesa) {
-        final ratio = despesa.valor / max;
+        final ratio = despesa.valor / maxQuota;
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
           child: Stack(
