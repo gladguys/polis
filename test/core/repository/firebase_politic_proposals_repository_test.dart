@@ -61,7 +61,9 @@ void main() {
         when(mockQuerySnapshot.documents).thenReturn([
           mockDocumentSnapshot,
         ]);
-        when(mockDocumentSnapshot.data).thenReturn({'id': '1'});
+        when(mockDocumentSnapshot.data).thenReturn({
+          ID_FIELD: '1',
+        });
         final proposals =
             await firebasePoliticProposalsRepository.getPoliticProposals('1');
         expect(proposals.length, 1);

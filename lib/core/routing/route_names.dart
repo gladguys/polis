@@ -5,6 +5,7 @@ const TIMELINE_INFO_PAGE = 'TimelineInfoPage';
 const POLITIC_GENERAL_INFO_PAGE = 'PoliticGeneralInfoPage';
 const PICK_STATE_PAGE = 'PickStatePage';
 const TIMELINE_PAGE = 'TimelinePage';
+const COMMENT_REPLIES_PAGE = 'CommentRepliesPage';
 const SEARCH_POLITIC_PAGE = 'SearchPoliticPage';
 const FAVORITE_POSTS_PAGE = 'FavoritePostsPage';
 const USER_PROFILE_PAGE = 'UserProfilePage';

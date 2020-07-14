@@ -4,14 +4,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../core/i18n/message.dart';
 import '../page/theme/main_theme.dart';
 
-class ErrorContainer extends StatefulWidget {
+class ErrorContainer extends StatelessWidget {
   const ErrorContainer();
 
-  @override
-  _ErrorContainerState createState() => _ErrorContainerState();
-}
-
-class _ErrorContainerState extends State<ErrorContainer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -14,7 +14,17 @@ class UserFollowingPoliticsPage extends StatelessWidget {
     return Scaffold(
       body: WillPopScope(
         onWillPop: () {
-          SimpleRouter.forwardAndReplace(UserProfilePageConnected());
+          final localUser = context.bloc<UserBloc>().user;
+          final pickedUser = context.bloc<UserProfileBloc>().user;
+          final isLocalUserThePickedOne = localUser == pickedUser;
+
+          SimpleRouter.forwardAndReplace(
+            UserProfilePageConnected(
+              userId: isLocalUserThePickedOne
+                  ? localUser.userId
+                  : pickedUser.userId,
+            ),
+          );
           return Future.value(true);
         },
         child: SafeArea(

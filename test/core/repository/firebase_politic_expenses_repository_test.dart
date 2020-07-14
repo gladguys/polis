@@ -60,7 +60,9 @@ void main() {
         when(mockQuerySnapshot.documents).thenReturn([
           mockDocumentSnapshot,
         ]);
-        when(mockDocumentSnapshot.data).thenReturn({'id': '1'});
+        when(mockDocumentSnapshot.data).thenReturn({
+          ID_FIELD: '1',
+        });
         final expenses =
             await firebasePoliticExpensesRepository.getPoliticExpenses('1');
         expect(expenses.length, 1);

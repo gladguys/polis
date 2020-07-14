@@ -32,3 +32,8 @@ class CurrentUserUpdated extends UserState {
   @override
   List<Object> get props => [user];
 }
+
+class UpdateCurrentUserFailed extends UserState {
+  @override
+  List<Object> get props => [];
+}

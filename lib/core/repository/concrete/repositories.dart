@@ -25,3 +25,4 @@ export 'firebase/firebase_user_repository.dart';
 export 'hive/hive_orgao_repository.dart';
 export 'hive/hive_partido_repository.dart';
 export 'hive/hive_politico_repository.dart';
+export 'http/http_comment_repository.dart';

@@ -103,6 +103,9 @@ void main() {
       expect: [
         CurrentUserUpdated(UserModel()),
       ],
+      verify: (userBloc) async {
+        verify(mockSharedPreferencesService.setUser(UserModel())).called(1);
+      },
     );
 
     blocTest(

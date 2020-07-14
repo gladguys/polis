@@ -57,7 +57,7 @@ void main() {
             .thenAnswer((_) => Future.value(mockDocumentSnapshot));
 
         when(mockDocumentSnapshot.data).thenReturn({
-          'id': '1',
+          ID_FIELD: '1',
         });
         final politico =
             await firebasePoliticProfileRepository.getInfoPolitic('1');
@@ -101,12 +101,12 @@ void main() {
             .thenReturn([mockDocumentSnapshot, mockDocumentPropostaSnapshot]);
 
         when(mockDocumentSnapshot.data).thenReturn({
-          'codDocumento': '1',
-          'tipoAtividade': 'DESPESA',
+          COD_DOCUMENTO_FIELD: '1',
+          TIPO_ATIVIDADE_FIELD: 'DESPESA',
         });
         when(mockDocumentPropostaSnapshot.data).thenReturn({
-          'id': '1',
-          'tipoAtividade': 'PROPOSICAO',
+          ID_FIELD: '1',
+          TIPO_ATIVIDADE_FIELD: 'PROPOSICAO',
         });
         final lastActivitiesData = await firebasePoliticProfileRepository
             .getLastActivities(politicId: '1', count: 5);
@@ -158,12 +158,12 @@ void main() {
             .thenReturn([mockDocumentSnapshot, mockDocumentPropostaSnapshot]);
 
         when(mockDocumentSnapshot.data).thenReturn({
-          'codDocumento': '1',
-          'tipoAtividade': 'DESPESA',
+          COD_DOCUMENTO_FIELD: '1',
+          TIPO_ATIVIDADE_FIELD: 'DESPESA',
         });
         when(mockDocumentPropostaSnapshot.data).thenReturn({
-          'id': '1',
-          'tipoAtividade': 'PROPOSICAO',
+          ID_FIELD: '1',
+          TIPO_ATIVIDADE_FIELD: 'PROPOSICAO',
         });
         final lastActivitiesData =
             await firebasePoliticProfileRepository.getMoreActivities(

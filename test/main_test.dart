@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:polis/bloc/flutter_bloc_delegate.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/core/service/services.dart';
-import 'package:polis/main.dart' as m;
+import 'package:polis/main_commom.dart' as m;
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {

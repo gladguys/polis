@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/core/domain/enum/post_type.dart';
 import 'package:polis/core/domain/model/despesa_model.dart';
+import 'package:polis/core/repository/abstract/comment_repository.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/timeline/widget/goto_post_gesture_detector.dart';
 
@@ -14,7 +16,7 @@ import '../utils.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  setUpAll(() {
+  setUpAll(() async {
     const channel = MethodChannel('plugins.flutter.io/firebase_performance');
     channel.setMockMethodCallHandler((methodCall) async => true);
     initLocator(MockSharedPreferences());
@@ -49,26 +51,30 @@ void main() {
     testWidgets('should go to PostPage when click', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          Scaffold(
-            body: GoToPostGestureDetector(
-              tile: const Text('Tap me'),
-              postType: PostType.DESPESA,
-              post: DespesaModel(
-                tipoAtividade: 'T',
-                tipoDespesa: 'D',
-                nomePolitico: 'pol',
-                nomeFornecedor: 'forn',
-                dataDocumento: '20-10-2020',
-                valorLiquido: '2.33',
-                valorDocumento: '2.33',
-                valorGlosa: '2.33',
-                numDocumento: '1',
-                fotoPolitico: 'foto',
-                urlPartidoLogo: 'logo',
+            Scaffold(
+              body: GoToPostGestureDetector(
+                tile: const Text('Tap me'),
+                postType: PostType.DESPESA,
+                post: DespesaModel(
+                  tipoAtividade: 'T',
+                  tipoDespesa: 'D',
+                  nomePolitico: 'pol',
+                  nomeFornecedor: 'forn',
+                  dataDocumento: '20-10-2020',
+                  valorLiquido: '2.33',
+                  valorDocumento: '2.33',
+                  valorGlosa: '2.33',
+                  numDocumento: '1',
+                  fotoPolitico: 'foto',
+                  urlPartidoLogo: 'logo',
+                ),
               ),
             ),
-          ),
-        ),
+            extraProviders: [
+              RepositoryProvider<CommentRepository>(
+                create: (_) => MockCommentRepository(),
+              )
+            ]),
       );
       final child = find.text('Tap me');
       expect(child, findsOneWidget);

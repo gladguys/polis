@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
 import '../../widget/error_container.dart';
-import 'widget/user_profile.dart';
-import 'widget/user_profile_skeleton.dart';
+import '../user_profile/widget/user_profile.dart';
+import '../user_profile/widget/user_profile_skeleton.dart';
 
 class UserProfilePage extends StatelessWidget {
   @override
@@ -17,6 +17,7 @@ class UserProfilePage extends StatelessWidget {
               final politicsFollowing = state.politicsFollowing;
               final userActions = state.userActions;
               return UserProfile(
+                user: context.bloc<UserProfileBloc>().user,
                 politicsFollowing: politicsFollowing,
                 userActions: userActions,
               );

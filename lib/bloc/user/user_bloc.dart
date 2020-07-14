@@ -65,6 +65,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   Stream<UserState> _mapUpdateCurrentUserToState(
       UpdateCurrentUser event) async* {
     user = event.user;
+    await sharedPreferencesService.setUser(user);
     yield CurrentUserUpdated(event.user);
   }
 }

@@ -26,6 +26,9 @@ const TOTAIS_ANO_SUBCOLLECTION = 'totaisAno';
 const TOTAL_MES_SUBCOLLECTION = 'totalMes';
 
 // Field
+const ID_FIELD = 'id';
+const ID_PROPOSTA_POLITICO_FIELD = 'idPropostaPolitico';
+const COD_DOCUMENTO_FIELD = 'codDocumento';
 const SIGLA_UF_FIELD = 'siglaUf';
 const FAVORITO_FIELD = 'favorito';
 const NOME_ELEITORAL_FIELD = 'nomeEleitoral';
@@ -38,6 +41,7 @@ const DATA_ACAO = 'data';
 const DATA_FAVORITADO_FIELD = 'dataFavoritado';
 const SEQUENCIA_FIELD = 'sequencia';
 const VISUALIZADO_FIELD = 'visualizado';
+const USER_COMMENTS_FIELD = 'userComments';
 const FCM_TOKEN = 'fcmToken';
 const HASH = 'hash';
 const VALUE = 'value';

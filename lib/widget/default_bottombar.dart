@@ -136,7 +136,9 @@ class DefaultBottombar extends StatelessWidget {
         ),
         onTap: () => routeName != USER_PROFILE_PAGE
             ? SimpleRouter.forward(
-                UserProfilePageConnected(),
+                UserProfilePageConnected(
+                  userId: context.bloc<UserBloc>().user.userId,
+                ),
                 name: USER_PROFILE_PAGE,
               )
             : VoidCallback,
