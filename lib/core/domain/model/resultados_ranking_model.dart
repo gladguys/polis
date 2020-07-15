@@ -16,6 +16,8 @@ class ResultadosRankingModel extends Equatable {
     this.estadoPoliticoUltimo,
     this.logosPartidoPoliticoPrimeiro,
     this.logoPartidoPoliticoUltimo,
+    this.idPoliticoUltimo,
+    this.idPoliticosPrimeiro,
     this.despesasPoliticoPrimeiro,
     this.despesaPoliticoUltimo,
     this.despesaMedia,
@@ -26,6 +28,8 @@ class ResultadosRankingModel extends Equatable {
   final String partidoPoliticoUltimo;
   final String estadoPoliticoUltimo;
   final String logoPartidoPoliticoUltimo;
+  final String idPoliticoUltimo;
+  final List<String> idPoliticosPrimeiro;
   final double despesaPoliticoUltimo;
   final double despesaMedia;
   final List<String> nomesPoliticoPrimeiro;
@@ -45,6 +49,6 @@ class ResultadosRankingModel extends Equatable {
 
   @override
   String toString() {
-    return '''ResultadosRankingModel{nomePoliticoUltimo: $nomePoliticoUltimo, fotoPoliticoUltimo: $fotoPoliticoUltimo, partidoPoliticoUltimo: $partidoPoliticoUltimo, estadoPoliticoUltimo: $estadoPoliticoUltimo, logoPartidoPoliticoUltimo: $logoPartidoPoliticoUltimo, despesaPoliticoUltimo: $despesaPoliticoUltimo, despesaMedia: $despesaMedia, nomesPoliticoPrimeiro: $nomesPoliticoPrimeiro, fotosPoliticoPrimeiro: $fotosPoliticoPrimeiro, partidosPoliticoPrimeiro: $partidosPoliticoPrimeiro, estadosPoliticoPrimeiro: $estadosPoliticoPrimeiro, logosPartidoPoliticoPrimeiro: $logosPartidoPoliticoPrimeiro, despesasPoliticoPrimeiro: $despesasPoliticoPrimeiro}''';
+    return '''ResultadosRankingModel{nomePoliticoUltimo: $nomePoliticoUltimo, fotoPoliticoUltimo: $fotoPoliticoUltimo, partidoPoliticoUltimo: $partidoPoliticoUltimo, estadoPoliticoUltimo: $estadoPoliticoUltimo, logoPartidoPoliticoUltimo: $logoPartidoPoliticoUltimo, despesaPoliticoUltimo: $despesaPoliticoUltimo, despesaMedia: $despesaMedia, nomesPoliticoPrimeiro: $nomesPoliticoPrimeiro, fotosPoliticoPrimeiro: $fotosPoliticoPrimeiro, partidosPoliticoPrimeiro: $partidosPoliticoPrimeiro, estadosPoliticoPrimeiro: $estadosPoliticoPrimeiro, logosPartidoPoliticoPrimeiro: $logosPartidoPoliticoPrimeiro, despesasPoliticoPrimeiro: $despesasPoliticoPrimeiro, idPoliticoUltimo: $idPoliticoUltimo, idPoliticosPrimeiro: $idPoliticosPrimeiro}''';
   }
 }
