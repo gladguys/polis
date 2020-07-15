@@ -91,7 +91,7 @@ void main() {
         );
         return subCommentsBloc;
       },
-      act: (commentBloc) async => commentBloc.add(
+      act: (subCommentsBloc) async => subCommentsBloc.add(
         AddSubComment(
           text: 'a reply',
         ),
@@ -104,7 +104,7 @@ void main() {
           numberOfReplies: 1,
         ),
       ],
-      verify: (commentBloc) async {
+      verify: (subCommentsBloc) async {
         verify(
           mockCommentBloc.add(
             UpdateCommentReplies(
@@ -118,6 +118,147 @@ void main() {
           ),
         );
       },
+    );
+
+    blocTest(
+      '''Expects [LoadingPostComments, GetPostCommentsSuccess] when GetPostComments failed''',
+      build: () async {
+        when(mockCommentRepository.getCommentSubComments(
+          commentId: 1,
+        )).thenThrow(Exception());
+        return subCommentsBloc;
+      },
+      act: (subCommentsBloc) async => subCommentsBloc.add(
+        GetCommentSubComments(commentId: 1),
+      ),
+      expect: [
+        CommentSubCommentsLoading(),
+        GetCommentSubCommentsFailed(),
+      ],
+    );
+
+    blocTest(
+      '''Expects [AddedSubCommentSuccess] when AddSubComment called''',
+      build: () async {
+        when(mockCommentRepository.saveSubComment(
+          subComment: anyNamed('subComment'),
+          commentId: 1,
+        )).thenAnswer(
+          (_) => Future.value(
+            SubCommentModel(
+              id: 1,
+              texto: 'texto',
+            ),
+          ),
+        );
+        return subCommentsBloc;
+      },
+      act: (subCommentsBloc) async => subCommentsBloc.add(
+        AddSubComment(
+          text: 'texto',
+        ),
+      ),
+      expect: [
+        AddedSubCommentSuccess(
+          subCommentAdded: SubCommentModel(id: 1, texto: 'texto'),
+          numberOfReplies: 1,
+        ),
+      ],
+      verify: (subCommentsBloc) async {
+        verify(
+          mockCommentBloc.add(
+            UpdateCommentReplies(
+              comment: CommentModel(
+                id: 1,
+              ),
+              subComments: [
+                SubCommentModel(
+                  id: 1,
+                  texto: 'texto',
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+
+    blocTest(
+      '''Expects [AddedSubCommentFailed] when AddSubComment failed''',
+      build: () async {
+        when(mockCommentRepository.saveSubComment(
+          subComment: anyNamed('subComment'),
+          commentId: 1,
+        )).thenThrow(Exception());
+        return subCommentsBloc;
+      },
+      act: (subCommentsBloc) async => subCommentsBloc.add(
+        AddSubComment(
+          text: 'texto',
+        ),
+      ),
+      expect: [
+        AddedSubCommentFailed(),
+      ],
+    );
+
+    blocTest(
+      '''Expects [DeletedSubCommentSuccess] when DeleteSubComment called''',
+      build: () async {
+        when(mockCommentRepository.deleteSubComment(
+          subComment: anyNamed('subComment'),
+        )).thenAnswer(
+          (_) => Future.value(),
+        );
+        return subCommentsBloc;
+      },
+      act: (subCommentsBloc) async => subCommentsBloc.add(
+        DeleteSubComment(
+          subComment: SubCommentModel(
+            id: 1,
+          ),
+        ),
+      ),
+      expect: [
+        DeletedSubCommentSuccess(
+          subCommentDeleted: SubCommentModel(
+            id: 1,
+          ),
+          numberOfReplies: 0,
+        ),
+      ],
+      verify: (subCommentsBloc) async {
+        verify(
+          mockCommentBloc.add(
+            UpdateCommentReplies(
+              comment: CommentModel(
+                id: 1,
+              ),
+              subComments: [],
+            ),
+          ),
+        );
+      },
+    );
+
+    blocTest(
+      '''Expects [DeletedSubCommentFailed] when DeleteSubComment failed''',
+      build: () async {
+        when(mockCommentRepository.deleteSubComment(
+          subComment: anyNamed('subComment'),
+        )).thenThrow(Exception());
+        return subCommentsBloc;
+      },
+      act: (subCommentsBloc) async => subCommentsBloc.add(
+        DeleteSubComment(
+          subComment: SubCommentModel(
+            id: 1,
+          ),
+        ),
+      ),
+      expect: [
+        DeletedSubCommentFailed(),
+      ],
     );
   });
 }

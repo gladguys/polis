@@ -143,5 +143,30 @@ void main() {
         ),
       ],
     );
+
+    blocTest(
+      'Expects [CommentDeletedSuccess] when deleted a comment',
+      build: () async {
+        commentBloc.postComments = [
+          CommentModel(
+            id: 1,
+          ),
+        ];
+        return commentBloc;
+      },
+      act: (commentBloc) async => commentBloc.add(
+        DeleteComment(CommentModel(
+          id: 1,
+        )),
+      ),
+      expect: [
+        CommentDeletedSuccess(
+          comment: CommentModel(
+            id: 1,
+          ),
+          numberOfComments: 0,
+        ),
+      ],
+    );
   });
 }

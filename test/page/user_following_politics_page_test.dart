@@ -20,6 +20,13 @@ void main() {
       mockUserFollowingPoliticsBloc = MockUserFollowingPoliticsBloc();
     });
 
+    test('asserts', () {
+      expect(
+        () => UserFollowingPoliticsPageConnected(user: null),
+        throwsAssertionError,
+      );
+    });
+
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(

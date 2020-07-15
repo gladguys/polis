@@ -120,6 +120,13 @@ class SubCommentsBloc extends Bloc<SubCommentsEvent, SubCommentsState> {
         ...oldSubComments,
       ];
 
+      commentBloc.add(
+        UpdateCommentReplies(
+          comment: comment,
+          subComments: subComments,
+        ),
+      );
+
       yield DeletedSubCommentSuccess(
         subCommentDeleted: subCommentToDelete,
         numberOfReplies: subComments.length,
