@@ -49,6 +49,11 @@ void main() {
         logoPartidoPoliticoUltimo: 'logo',
         nomePoliticoUltimo: 'nome',
         partidoPoliticoUltimo: 'PT',
+        idPoliticoUltimo: '1',
+        idPoliticosPrimeiro: [
+          '2',
+          '3',
+        ],
         despesasPoliticoPrimeiro: [
           0,
           0,
