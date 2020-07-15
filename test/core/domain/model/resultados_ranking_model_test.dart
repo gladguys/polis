@@ -81,7 +81,7 @@ void main() {
     test('toString()', () {
       final modelToString = ResultadosRankingModel().toString();
       final result =
-          '''ResultadosRankingModel{nomePoliticoUltimo: null, fotoPoliticoUltimo: null, partidoPoliticoUltimo: null, estadoPoliticoUltimo: null, logoPartidoPoliticoUltimo: null, despesaPoliticoUltimo: null, despesaMedia: null, nomesPoliticoPrimeiro: null, fotosPoliticoPrimeiro: null, partidosPoliticoPrimeiro: null, estadosPoliticoPrimeiro: null, logosPartidoPoliticoPrimeiro: null, despesasPoliticoPrimeiro: null}''';
+          '''ResultadosRankingModel{nomePoliticoUltimo: null, fotoPoliticoUltimo: null, partidoPoliticoUltimo: null, estadoPoliticoUltimo: null, logoPartidoPoliticoUltimo: null, despesaPoliticoUltimo: null, despesaMedia: null, nomesPoliticoPrimeiro: null, fotosPoliticoPrimeiro: null, partidosPoliticoPrimeiro: null, estadosPoliticoPrimeiro: null, logosPartidoPoliticoPrimeiro: null, despesasPoliticoPrimeiro: null, idPoliticoUltimo: null, idPoliticosPrimeiro: null}''';
       expect(modelToString == result, true);
     });
 
