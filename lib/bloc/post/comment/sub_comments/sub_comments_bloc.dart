@@ -19,12 +19,11 @@ class SubCommentsBloc extends Bloc<SubCommentsEvent, SubCommentsState> {
     @required this.comment,
     @required this.commentBloc,
     @required this.repository,
-  }) {
-    assert(post != null);
-    assert(comment != null);
-    assert(commentBloc != null);
-    assert(repository != null);
-  }
+  })  : assert(post != null),
+        assert(comment != null),
+        assert(commentBloc != null),
+        assert(repository != null),
+        super(InitialSubCommentsState());
 
   final dynamic post;
   final CommentModel comment;
@@ -32,9 +31,6 @@ class SubCommentsBloc extends Bloc<SubCommentsEvent, SubCommentsState> {
   final CommentRepository repository;
 
   List<SubCommentModel> subComments = [];
-
-  @override
-  SubCommentsState get initialState => InitialSubCommentsState();
 
   @override
   Stream<SubCommentsState> mapEventToState(SubCommentsEvent event) async* {

@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/post/comment/comment_bloc.dart';
+import '../../../core/extension/extensions.dart';
 import '../../../core/i18n/i18n.dart';
 import '../../../core/keys.dart';
-import '../../../core/extension/extensions.dart';
 import '../../../widget/error_container.dart';
 import '../../../widget/field_rounded.dart';
 import '../../../widget/loading.dart';
@@ -82,7 +82,7 @@ class _PostCommentsState extends State<PostComments> {
                             //   size: 16,
                             // ),
                             // const SizedBox(width: 8),
-                            Text(
+                            const Text(
                               'Editar comentário:',
                               style: TextStyle(
                                 // color: theme.primaryColor,
@@ -96,28 +96,27 @@ class _PostCommentsState extends State<PostComments> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: FieldRounded(
-                          hintText: COMMENT_HERE,
-                          width: 360,
-                          // iconSuffix: FontAwesomeIcons.solidPaperPlane,
-                          // backgroundColorSuffix: theme.primaryColor,
-                          iconSuffix: FontAwesomeIcons.times,
-                          backgroundColorSuffix: Colors.red,
-                          fontColorSuffix: Colors.white,
-                          iconSuffix2: FontAwesomeIcons.check,
-                          backgroundColorSuffix2: Colors.green,
-                          fontColorSuffix2: Colors.white,
-                          keySuffix: commentButtonKey,
-                          controller: commentInputController,
-                          onPressedSuffix: () {
-                            context.bloc<CommentBloc>().add(
-                                  AddComment(
-                                    text: commentInputController.text,
-                                  ),
-                                );
-                            commentInputController.clear();
-                          },
-                          onPressedSuffix2: () {}
-                        ),
+                            hintText: COMMENT_HERE,
+                            width: 360,
+                            // iconSuffix: FontAwesomeIcons.solidPaperPlane,
+                            // backgroundColorSuffix: theme.primaryColor,
+                            iconSuffix: FontAwesomeIcons.times,
+                            backgroundColorSuffix: Colors.red,
+                            fontColorSuffix: Colors.white,
+                            iconSuffix2: FontAwesomeIcons.check,
+                            backgroundColorSuffix2: Colors.green,
+                            fontColorSuffix2: Colors.white,
+                            keySuffix: commentButtonKey,
+                            controller: commentInputController,
+                            onPressedSuffix: () {
+                              context.bloc<CommentBloc>().add(
+                                    AddComment(
+                                      text: commentInputController.text,
+                                    ),
+                                  );
+                              commentInputController.clear();
+                            },
+                            onPressedSuffix2: () {}),
                       ),
                       const SizedBox(height: 12),
                     ],
