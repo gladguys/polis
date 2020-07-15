@@ -54,7 +54,7 @@ void main() {
     test('toString()', () {
       final modelToString = UserModel(userId: 'myId').toString();
       final result =
-          '''UserModel{userId: myId, name: null, email: null, photoUrl: null, isFirstLoginDone: null, authProvider: null, password: null, fcmToken: null, userConfigs: null}''';
+          '''UserModel{userId: myId, name: null, email: null, photoUrl: null, isFirstLoginDone: null, authProvider: null, password: null, fcmToken: null, userConfigs: null, userLikes: null, userUnlikes: null}''';
       expect(modelToString == result, true);
     });
 
