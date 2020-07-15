@@ -72,6 +72,8 @@ void main() {
             SubCommentModel(
               id: 2,
               texto: 'a reply',
+              usuarioNome: 'nome',
+              diaHora: DateTime.now(),
             ),
           ],
         ),
@@ -81,6 +83,8 @@ void main() {
         CommentModel(
           id: 1,
           texto: 'a comment',
+          usuarioNome: 'nome',
+          diaHora: DateTime.now(),
         ),
       );
       when(mockSubCommentsBloc.subComments).thenReturn(
@@ -88,6 +92,8 @@ void main() {
           SubCommentModel(
             id: 2,
             texto: 'a reply',
+            usuarioNome: 'nome',
+            diaHora: DateTime.now(),
           ),
         ],
       );
