@@ -17,16 +17,14 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       {@required this.post, @required this.repository, @required this.user})
       : assert(post != null),
         assert(repository != null),
-        assert(user != null);
+        assert(user != null),
+        super(InitialCommentState());
 
   final dynamic post;
   final CommentRepository repository;
   final UserModel user;
 
   List<CommentModel> postComments = [];
-
-  @override
-  CommentState get initialState => InitialCommentState();
 
   @override
   Stream<CommentState> mapEventToState(CommentEvent event) async* {
