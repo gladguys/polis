@@ -25,10 +25,14 @@ class CommentTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
       child: Bubble(
-        color: theme.primaryColorLight,
+        color: user.userId == comment.usuarioId
+            ? Colors.grey[200]
+            : theme.primaryColorLight,
         padding: const BubbleEdges.all(8),
         radius: const Radius.circular(15),
-        nip: BubbleNip.leftTop,
+        nip: user.userId == comment.usuarioId
+            ? BubbleNip.rightBottom
+            : BubbleNip.leftTop,
         nipHeight: 12,
         child: CardBase(
           slotBottomWithIndent: false,

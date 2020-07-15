@@ -10,6 +10,7 @@ import '../../../widget/card_base.dart';
 import '../../../widget/error_container.dart';
 import '../../../widget/field_rounded.dart';
 import '../../../widget/loading.dart';
+import '../../theme/main_theme.dart';
 import '../../user_profile/user_profile_page_connected.dart';
 import 'widget/menu_edit_delete_comment.dart';
 import 'widget/no_sub_comment_for_comment.dart';
@@ -50,9 +51,10 @@ class _SubCommentsPageState extends State<SubCommentsPage> {
             final user = context.bloc<UserBloc>().user;
             final subComments = context.bloc<SubCommentsBloc>().subComments;
             final commentPai = context.bloc<SubCommentsBloc>().comment;
-            return Column(
+            return Stack(
               children: <Widget>[
-                Expanded(
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 70),
                   child: CustomScrollView(
                     slivers: <Widget>[
                       SliverList(
@@ -135,28 +137,39 @@ class _SubCommentsPageState extends State<SubCommentsPage> {
                     ],
                   ),
                 ),
-                const Divider(color: Colors.grey, height: 1),
-                const SizedBox(height: 12),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: FieldRounded(
-                    hintText: COMMENT_HERE,
-                    width: 360,
-                    textSuffix: SEND,
-                    widthSuffix: 70,
-                    keySuffix: commentButtonKey,
-                    controller: commentInputController,
-                    onPressedSuffix: () {
-                      context.bloc<SubCommentsBloc>().add(
-                            AddSubComment(
-                              text: commentInputController.text,
-                            ),
-                          );
-                      commentInputController.clear();
-                    },
+                Positioned(
+                  bottom: 0,
+                  child: Container(
+                    width: context.screenWidth,
+                    alignment: Alignment.center,
+                    color: theme.scaffoldBackgroundColor,
+                    child: Column(
+                      children: <Widget>[
+                        const Divider(color: Colors.grey, height: 16),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: FieldRounded(
+                            hintText: COMMENT_HERE,
+                            width: 360,
+                            textSuffix: SEND,
+                            widthSuffix: 70,
+                            keySuffix: commentButtonKey,
+                            controller: commentInputController,
+                            onPressedSuffix: () {
+                              context.bloc<SubCommentsBloc>().add(
+                                    AddSubComment(
+                                      text: commentInputController.text,
+                                    ),
+                                  );
+                              commentInputController.clear();
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(height: 12),
               ],
             );
           } else if (state is CommentSubCommentsLoading) {
