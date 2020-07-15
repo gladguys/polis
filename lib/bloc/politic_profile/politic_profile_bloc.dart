@@ -25,7 +25,8 @@ class PoliticProfileBloc
   })  : assert(user != null),
         assert(politicProfileRepository != null),
         assert(followRepository != null),
-        assert(urlLauncherService != null);
+        assert(urlLauncherService != null),
+        super(InitialPoliticProfileState());
 
   final UserModel user;
   final PoliticProfileRepository politicProfileRepository;
@@ -37,9 +38,6 @@ class PoliticProfileBloc
   bool isPoliticBeingFollowedByUser;
   int followersCount;
   DocumentSnapshot lastDocument;
-
-  @override
-  PoliticProfileState get initialState => InitialPoliticProfileState();
 
   @override
   Stream<PoliticProfileState> mapEventToState(

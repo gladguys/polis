@@ -20,7 +20,7 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
     @required this.followRepository,
     @required this.partidoService,
     @required this.politicProfileBloc,
-  }) {
+  }) : super(InitialSearchPoliticState()) {
     assert(politicoService != null);
     assert(userFollowingPoliticsRepository != null);
     assert(followRepository != null);
@@ -55,9 +55,6 @@ class SearchPoliticBloc extends Bloc<SearchPoliticEvent, SearchPoliticState> {
   String partidoPicked = 'T';
   String searchTerm = '';
   Map<String, bool> isPoliticFollowed = {};
-
-  @override
-  SearchPoliticState get initialState => InitialSearchPoliticState();
 
   @override
   Stream<SearchPoliticState> mapEventToState(SearchPoliticEvent event) async* {

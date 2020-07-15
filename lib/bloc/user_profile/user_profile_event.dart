@@ -12,3 +12,14 @@ class FetchUserRelatedInfo extends UserProfileEvent {
   @override
   List<Object> get props => [userId];
 }
+
+class GetPostInfo extends UserProfileEvent {
+  GetPostInfo({this.postId, this.politicId, this.postType});
+
+  final String postId;
+  final String politicId;
+  final PostType postType;
+
+  @override
+  List<Object> get props => [postId, politicId, postType];
+}

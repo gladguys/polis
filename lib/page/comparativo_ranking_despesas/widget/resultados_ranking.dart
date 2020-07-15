@@ -45,6 +45,7 @@ class ResultadosRanking extends StatelessWidget {
             const SizedBox(height: 8),
             _buildBorder(
               child: PoliticWithExpensesInfo(
+                idPolitico: resultadosRanking.idPoliticoUltimo,
                 nome: resultadosRanking.nomePoliticoUltimo,
                 foto: resultadosRanking.fotoPoliticoUltimo,
                 estado: resultadosRanking.estadoPoliticoUltimo,
@@ -56,6 +57,7 @@ class ResultadosRanking extends StatelessWidget {
             _buildSeparator(),
             _buildBorder(
               child: PoliticWithExpensesInfo(
+                idPolitico: politico.id,
                 nome: politico.nomeEleitoral,
                 foto: politico.urlFoto,
                 estado: politico.siglaUf,
@@ -72,6 +74,7 @@ class ResultadosRanking extends StatelessWidget {
                       i < resultadosRanking.nomesPoliticoPrimeiro.length;
                       i++) ...[
                     PoliticWithExpensesInfo(
+                      idPolitico: resultadosRanking.idPoliticosPrimeiro[i],
                       nome: resultadosRanking.nomesPoliticoPrimeiro[i],
                       foto: resultadosRanking.fotosPoliticoPrimeiro[i],
                       estado: resultadosRanking.estadosPoliticoPrimeiro[i],

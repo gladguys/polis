@@ -10,6 +10,8 @@ import '../core/abstract/polis_google_auth_provider.dart';
 import '../core/repository/abstract/comment_repository.dart';
 import '../core/repository/concrete/http/dio_utils.dart';
 import '../core/repository/concrete/repositories.dart';
+import '../core/service/locator.dart';
+import '../core/service/services.dart';
 
 const SCOPE_TYPE = 'email';
 const SCOPE_URL = 'https://www.googleapis.com/auth/userinfo.profile';
@@ -168,7 +170,29 @@ class MyAppInjections extends StatelessWidget {
           ),
         ),
       ],
-      child: child,
+      child: MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider(
+            create: (_) => PoliticoService(
+              firebaseRepository: _.repository<FirebasePoliticoRepository>(),
+              hiveRepository: _.repository<HivePoliticoRepository>(),
+              syncLogRepository: _.repository<FirebaseSyncLogRepository>(),
+              sharedPreferencesService: G<SharedPreferencesService>(),
+            ),
+          ),
+        ],
+        child: MultiRepositoryProvider(
+          providers: [
+            RepositoryProvider(
+              create: (__) => FirebaseActionRepository(
+                firestore: Firestore.instance,
+                politicoService: __.repository<PoliticoService>(),
+              ),
+            ),
+          ],
+          child: child,
+        ),
+      ),
     );
   }
 }

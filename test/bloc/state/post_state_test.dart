@@ -10,6 +10,17 @@ void main() {
       expect(PostFavoritedSuccess(), PostFavoritedSuccess());
       expect(PostFavoritedFailed(), PostFavoritedFailed());
       expect(PostViewedFailed(), PostViewedFailed());
+      expect(PostLikedSuccess(postId: '1'), PostLikedSuccess(postId: '1'));
+      expect(PostLikedFailed(), PostLikedFailed());
+      expect(PostUnlikedSuccess(postId: '1'), PostUnlikedSuccess(postId: '1'));
+      expect(PostUnlikedFailed(), PostUnlikedFailed());
+      expect(StoppedLikingPostSuccess(postId: '1'),
+          StoppedLikingPostSuccess(postId: '1'));
+      expect(StoppedLikingPostFailed(), StoppedLikingPostFailed());
+      expect(StoppedUnlikingPostSuccess(postId: '1'),
+          StoppedUnlikingPostSuccess(postId: '1'));
+      expect(StoppedUnlikingPostFailed(postId: '1'),
+          StoppedUnlikingPostFailed(postId: '1'));
     });
   });
 }

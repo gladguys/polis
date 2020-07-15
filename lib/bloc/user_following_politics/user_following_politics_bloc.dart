@@ -16,7 +16,8 @@ class UserFollowingPoliticsBloc
       {@required this.userFollowingPoliticsRepository,
       @required this.followRepository})
       : assert(userFollowingPoliticsRepository != null),
-        assert(followRepository != null);
+        assert(followRepository != null),
+        super(InitialUserFollowingPoliticsState());
 
   final UserFollowingPoliticsRepository userFollowingPoliticsRepository;
   final FollowRepository followRepository;
@@ -24,10 +25,6 @@ class UserFollowingPoliticsBloc
   List<PoliticoModel> politicsFollowing = [];
   Map<String, bool> isPoliticFollowed = {};
   String searchTerm = '';
-
-  @override
-  UserFollowingPoliticsState get initialState =>
-      InitialUserFollowingPoliticsState();
 
   @override
   Stream<UserFollowingPoliticsState> mapEventToState(

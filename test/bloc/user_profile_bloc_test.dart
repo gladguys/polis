@@ -2,6 +2,8 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/domain/enum/post_type.dart';
+import 'package:polis/core/domain/model/models.dart';
 
 import '../mock.dart';
 
@@ -75,6 +77,91 @@ void main() {
           LoadingFetchUserInfo(),
           FetchUserRelatedInfoFailed(),
         ],
+      );
+
+      blocTest(
+        '''Expects [GetPostInfoSuccess] when success''',
+        build: () async {
+          when(
+            mockUserProfileRepository.getPostInfo(
+              postId: '1',
+              politicoId: '1',
+              postType: PostType.PROPOSICAO,
+            ),
+          ).thenAnswer(
+            (_) => Future.value(
+              PropostaModel(
+                id: '1',
+              ),
+            ),
+          );
+          return userProfileBloc;
+        },
+        act: (userProfileBloc) {
+          userProfileBloc.add(
+            GetPostInfo(
+              postId: '1',
+              politicId: '1',
+              postType: PostType.PROPOSICAO,
+            ),
+          );
+          return;
+        },
+        expect: [
+          GetPostInfoSuccess(
+            post: PropostaModel(
+              id: '1',
+            ),
+            postType: PostType.PROPOSICAO,
+          ),
+        ],
+        verify: (userProfileBloc) async {
+          verify(
+            mockUserProfileRepository.getPostInfo(
+              postId: '1',
+              politicoId: '1',
+              postType: PostType.PROPOSICAO,
+            ),
+          ).called(1);
+        },
+      );
+
+      blocTest(
+        '''Expects [GetPostInfoSuccess] when failed''',
+        build: () async {
+          when(
+            mockUserProfileRepository.getPostInfo(
+              postId: '1',
+              politicoId: '1',
+              postType: PostType.PROPOSICAO,
+            ),
+          ).thenThrow(
+            Exception(),
+          );
+          return userProfileBloc;
+        },
+        act: (userProfileBloc) {
+          userProfileBloc.add(
+            GetPostInfo(
+              postId: '1',
+              politicId: '1',
+              postType: PostType.PROPOSICAO,
+            ),
+          );
+          return;
+        },
+        expect: [
+          GetPostInfoFailed(),
+        ],
+        verify: (userProfileBloc) async {
+          verify(
+            mockUserProfileRepository.getPostInfo(
+              postId: '1',
+              politicoId: '1',
+              postType: PostType.PROPOSICAO,
+            ),
+          ).called(1);
+        },
       );
     });
   });

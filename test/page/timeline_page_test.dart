@@ -579,7 +579,7 @@ void main() {
       expect(listview, findsOneWidget);
       await tester.drag(listview, const Offset(0, -3000));
       await tester.pump();
-      verify(mockTimelineBloc.add(FetchMorePosts('1', 105.0))).called(1);
+      verify(mockTimelineBloc.add(FetchMorePosts('1', 199.0))).called(1);
     });
   });
 }

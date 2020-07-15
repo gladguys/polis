@@ -16,6 +16,8 @@ class UserModel extends Equatable {
     this.isFirstLoginDone,
     this.authProvider,
     this.fcmToken,
+    this.userLikes,
+    this.userUnlikes,
   });
 
   final String userId;
@@ -29,6 +31,8 @@ class UserModel extends Equatable {
   @JsonKey(ignore: true)
   final String password;
   final String fcmToken;
+  final Map<String, bool> userLikes;
+  final Map<String, bool> userUnlikes;
 
   static AuthProvider _fromJsonAuth(String authProvider) =>
       authProvider == 'GOOGLE'
@@ -52,6 +56,8 @@ class UserModel extends Equatable {
     bool isFirstLoginDone,
     AuthProvider authProvider,
     String fcmToken,
+    Map<String, bool> userLikes,
+    Map<String, bool> userUnlikes,
   }) {
     return UserModel(
       userId: userId ?? this.userId,
@@ -62,6 +68,8 @@ class UserModel extends Equatable {
       isFirstLoginDone: isFirstLoginDone ?? this.isFirstLoginDone,
       authProvider: authProvider ?? this.authProvider,
       fcmToken: fcmToken ?? this.fcmToken,
+      userLikes: userLikes ?? this.userLikes,
+      userUnlikes: userUnlikes ?? this.userUnlikes,
     );
   }
 
