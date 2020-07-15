@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(
-      condition: (previous, current) =>
+      buildWhen: (previous, current) =>
           current is InitialUser ||
           current is CurrentUserConfigUpdated ||
           current is UserStoredLocally ||
