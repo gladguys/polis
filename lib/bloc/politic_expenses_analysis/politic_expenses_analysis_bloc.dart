@@ -21,7 +21,8 @@ class PoliticExpensesAnalysisBloc
     @required this.politicoId,
     @required this.politicoUf,
   })  : assert(politicExpensesAnalysisRepository != null),
-        assert(politicExpensesAnalysisConfigRepository != null);
+        assert(politicExpensesAnalysisConfigRepository != null),
+        super(PoliticExpensesAnalysisInitial());
 
   final PoliticExpensesAnalysisRepository politicExpensesAnalysisRepository;
   final PoliticExpensesAnalysisConfigRepository
@@ -35,10 +36,6 @@ class PoliticExpensesAnalysisBloc
 
   int beginYear;
   double maxQuotaForState;
-
-  @override
-  PoliticExpensesAnalysisState get initialState =>
-      PoliticExpensesAnalysisInitial();
 
   @override
   Stream<PoliticExpensesAnalysisState> mapEventToState(
