@@ -94,6 +94,8 @@ class MockSearchPoliticBloc
 // Repository
 class MockSigninRepository extends Mock implements SigninRepository {}
 
+class MockActionRepository extends Mock implements ActionRepository {}
+
 class MockEditProfileRepository extends Mock implements EditProfileRepository {}
 
 class MockTramitacaoPropostaRepository extends Mock

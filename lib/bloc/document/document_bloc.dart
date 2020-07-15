@@ -11,12 +11,10 @@ part 'document_state.dart';
 
 class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
   DocumentBloc({@required this.urlLaunchService})
-      : assert(urlLaunchService != null);
+      : assert(urlLaunchService != null),
+        super(InitialDocumentState());
 
   final UrlLauncherService urlLaunchService;
-
-  @override
-  DocumentState get initialState => InitialDocumentState();
 
   @override
   Stream<DocumentState> mapEventToState(DocumentEvent event) async* {

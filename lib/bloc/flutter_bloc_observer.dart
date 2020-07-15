@@ -7,8 +7,8 @@ import '../core/service/analytics_service.dart';
 import '../core/service/services.dart';
 import 'blocs.dart';
 
-class FlutterBlocDelegate extends FlutterBlocMonitorDelegate {
-  FlutterBlocDelegate(
+class FlutterBlocObserver extends FlutterBlocMonitorDelegate {
+  FlutterBlocObserver(
       {@required this.analyticsService, @required this.performanceService})
       : assert(analyticsService != null),
         assert(performanceService != null);

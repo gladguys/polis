@@ -25,7 +25,11 @@ const ACOES_USUARIO_SUBCOLLECTION = 'acoesUsuario';
 // Field
 const SIGLA_UF_FIELD = 'siglaUf';
 const FAVORITO_FIELD = 'favorito';
+const USER_LIKES_FIELD = 'userLikes';
+const USER_UNLIKES_FIELD = 'userUnlikes';
 const NOME_ELEITORAL_FIELD = 'nomeEleitoral';
+const NOME_POLITICO_FIELD = 'nomePolitico';
+const FOTO_POLITICO_FIELD = 'fotoPolitico';
 const TIPO_ATIVIDADE_FIELD = 'tipoAtividade';
 const DESCRICAO_TIPO_FIELD = 'descricaoTipo';
 const DATA_ATUALIZACAO_FIELD = 'dataAtualizacao';
@@ -35,6 +39,8 @@ const DATA_ACAO = 'data';
 const DATA_FAVORITADO_FIELD = 'dataFavoritado';
 const SEQUENCIA_FIELD = 'sequencia';
 const VISUALIZADO_FIELD = 'visualizado';
+const QTD_CURTIDAS_FIELD = 'qtdCurtidas';
+const QTD_NAO_CURTIDAS_FIELD = 'qtdNaoCurtidas';
 const FCM_TOKEN = 'fcmToken';
 const HASH = 'hash';
 

@@ -17,13 +17,11 @@ part 'signup_state.dart';
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
   SignupBloc({@required this.repository, @required this.analyticsService})
       : assert(repository != null),
-        assert(analyticsService != null);
+        assert(analyticsService != null),
+        super(InitialSignup());
 
   final SignupRepository repository;
   final AnalyticsService analyticsService;
-
-  @override
-  SignupState get initialState => InitialSignup();
 
   @override
   Stream<SignupState> mapEventToState(SignupEvent event) async* {

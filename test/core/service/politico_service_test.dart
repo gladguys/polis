@@ -92,5 +92,22 @@ void main() {
         verifyNever(mockFirebasePoliticoRepository.getAllPoliticos());
       });
     });
+
+    group('getPoliticoById', () {
+      test('should return politic by its id', () async {
+        when(mockSharedPreferencesService.getPoliticoHash())
+            .thenReturn('hash1');
+        when(mockSyncLogRepository.getPoliticoHash())
+            .thenAnswer((_) => Future.value('hash2'));
+        when(mockFirebasePoliticoRepository.getAllPoliticos()).thenAnswer(
+          (_) => Future.value([PoliticoModel(id: '1')]),
+        );
+        final politico = await politicoService.getPoliticoById('1');
+        expect(
+          politico,
+          PoliticoModel(id: '1'),
+        );
+      });
+    });
   });
 }

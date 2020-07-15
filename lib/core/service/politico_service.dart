@@ -21,6 +21,8 @@ class PoliticoService {
   final SyncLogRepository syncLogRepository;
   final SharedPreferencesService sharedPreferencesService;
 
+  Map<String, PoliticoModel> politicosMap;
+
   Future<List<PoliticoModel>> getAllPoliticos() async {
     final localHash = await sharedPreferencesService.getPoliticoHash();
     final remoteHash = await syncLogRepository.getPoliticoHash();
@@ -32,5 +34,16 @@ class PoliticoService {
     } else {
       return await hiveRepository.getAllPoliticos();
     }
+  }
+
+  Future<PoliticoModel> getPoliticoById(String politicoId) async {
+    if (politicosMap == null) {
+      politicosMap = {};
+      final politicos = await getAllPoliticos();
+      for (var politico in politicos) {
+        politicosMap.putIfAbsent(politico.id, () => politico);
+      }
+    }
+    return politicosMap[politicoId];
   }
 }
