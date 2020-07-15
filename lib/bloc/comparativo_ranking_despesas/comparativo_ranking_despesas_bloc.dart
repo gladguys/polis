@@ -13,13 +13,10 @@ part 'comparativo_ranking_despesas_state.dart';
 class ComparativoRankingDespesasBloc extends Bloc<
     ComparativoRankingDespesasEvent, ComparativoRankingDespesasState> {
   ComparativoRankingDespesasBloc({@required this.repository})
-      : assert(repository != null);
+      : assert(repository != null),
+        super(InitialComparativoRankingDespesasState());
 
   final ComparativoRankingDespesasRepository repository;
-
-  @override
-  ComparativoRankingDespesasState get initialState =>
-      InitialComparativoRankingDespesasState();
 
   @override
   Stream<ComparativoRankingDespesasState> mapEventToState(

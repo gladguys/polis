@@ -2,14 +2,14 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
-import 'package:polis/bloc/flutter_bloc_delegate.dart';
+import 'package:polis/bloc/flutter_bloc_observer.dart';
 import 'package:polis/core/domain/model/models.dart';
 
 import '../mock.dart';
 
 void main() {
   group('FlutterBlocDelegate tests', () {
-    FlutterBlocDelegate delegate;
+    FlutterBlocObserver observer;
     SigninBloc signinBloc;
     TimelineBloc timelineBloc;
     MockSigninRepository mockSigninRepository;
@@ -21,7 +21,7 @@ void main() {
     setUp(() {
       mockAnalyticsService = MockAnalyticsService();
       mockPerformanceService = MockPerformanceService();
-      delegate = FlutterBlocDelegate(
+      observer = FlutterBlocObserver(
         analyticsService: mockAnalyticsService,
         performanceService: mockPerformanceService,
       );
@@ -41,13 +41,13 @@ void main() {
 
     test('assert', () {
       expect(
-          () => FlutterBlocDelegate(
+          () => FlutterBlocObserver(
                 analyticsService: null,
                 performanceService: mockPerformanceService,
               ),
           throwsAssertionError);
       expect(
-          () => FlutterBlocDelegate(
+          () => FlutterBlocObserver(
                 analyticsService: mockAnalyticsService,
                 performanceService: null,
               ),
@@ -56,12 +56,12 @@ void main() {
 
     group('onEvent test', () {
       test('simple call to onEvent', () {
-        delegate.onEvent(
+        observer.onEvent(
             signinBloc, SigninWithEmailAndPassword('email', 'pass'));
       });
 
       test('should not send performance on untracked event', () {
-        delegate.onEvent(
+        observer.onEvent(
             signinBloc, SigninWithEmailAndPassword('email', 'pass'));
         verifyNever(mockPerformanceService.getTrace(trace: anyNamed('trace')));
       });
@@ -69,7 +69,7 @@ void main() {
       test('should send FetchUserTimeline performance', () {
         when(mockPerformanceService.getTrace(trace: anyNamed('trace')))
             .thenAnswer((_) => Future.value(MockTrace()));
-        delegate.onEvent(timelineBloc, FetchUserTimeline('1'));
+        observer.onEvent(timelineBloc, FetchUserTimeline('1'));
         verify(mockPerformanceService.getTrace(trace: anyNamed('trace')))
             .called(1);
       });
@@ -77,7 +77,7 @@ void main() {
       test('should send FetchMorePosts performance', () {
         when(mockPerformanceService.getTrace(trace: anyNamed('trace')))
             .thenAnswer((_) => Future.value(MockTrace()));
-        delegate.onEvent(timelineBloc, FetchMorePosts('1', 0));
+        observer.onEvent(timelineBloc, FetchMorePosts('1', 0));
         verify(mockPerformanceService.getTrace(trace: anyNamed('trace')))
             .called(1);
       });
@@ -85,7 +85,7 @@ void main() {
       test('should send ReloadTimeline performance', () {
         when(mockPerformanceService.getTrace(trace: anyNamed('trace')))
             .thenAnswer((_) => Future.value(MockTrace()));
-        delegate.onEvent(timelineBloc, ReloadTimeline('1'));
+        observer.onEvent(timelineBloc, ReloadTimeline('1'));
         verify(mockPerformanceService.getTrace(trace: anyNamed('trace')))
             .called(1);
       });
@@ -94,13 +94,13 @@ void main() {
           () {
         when(mockPerformanceService.getTrace(trace: anyNamed('trace')))
             .thenAnswer((_) => Future.value(MockTrace()));
-        delegate.onEvent(timelineBloc, NotifyTimelineFetchedOnce());
+        observer.onEvent(timelineBloc, NotifyTimelineFetchedOnce());
         verifyNever(mockPerformanceService.getTrace(trace: anyNamed('trace')));
       });
     });
 
     test('onTransition test', () {
-      delegate.onTransition(
+      observer.onTransition(
         signinBloc,
         Transition(
           currentState: InitialSignin(),
@@ -118,7 +118,7 @@ void main() {
     });
 
     test('onError test', () {
-      delegate.onError(signinBloc, 'error', null);
+      observer.onError(signinBloc, 'error', null);
     });
   });
 }

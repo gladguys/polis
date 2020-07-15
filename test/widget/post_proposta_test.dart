@@ -33,6 +33,8 @@ void main() {
         nomesAutores: ['a', 'b', 'c'],
         foiAtualizada: true,
         urlPartidoLogo: 'logo',
+        qtdCurtidas: 0,
+        qtdNaoCurtidas: 0,
       );
     });
 
@@ -54,6 +56,7 @@ void main() {
     testWidgets('should build without exploding', (tester) async {
       final mockPostBloc = MockPostBloc();
       when(mockPostBloc.isPostFavorite).thenReturn(true);
+      when(mockPostBloc.post).thenReturn(proposta.toJson());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<PostBloc>(
@@ -85,6 +88,7 @@ void main() {
       );
       final mockPostBloc = MockPostBloc();
       when(mockPostBloc.isPostFavorite).thenReturn(true);
+      when(mockPostBloc.post).thenReturn(proposta.toJson());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<PostBloc>(
@@ -106,6 +110,7 @@ void main() {
           .thenAnswer((_) => Future.value(mockFile));
       final mockPostBloc = MockPostBloc();
       when(mockPostBloc.isPostFavorite).thenReturn(true);
+      when(mockPostBloc.post).thenReturn(proposta.toJson());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<PostBloc>(
@@ -133,6 +138,7 @@ void main() {
         (tester) async {
       final mockPostBloc = MockPostBloc();
       when(mockPostBloc.isPostFavorite).thenReturn(false);
+      when(mockPostBloc.post).thenReturn(proposta.toJson());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<PostBloc>(
@@ -159,6 +165,7 @@ void main() {
         (tester) async {
       final mockPostBloc = MockPostBloc();
       when(mockPostBloc.isPostFavorite).thenReturn(true);
+      when(mockPostBloc.post).thenReturn(proposta.toJson());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<PostBloc>(
@@ -183,6 +190,7 @@ void main() {
       final mockDocumentBloc = MockDocumentBloc();
       final mockPostBloc = MockPostBloc();
       when(mockPostBloc.isPostFavorite).thenReturn(true);
+      when(mockPostBloc.post).thenReturn(proposta.toJson());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<PostBloc>(
@@ -206,6 +214,7 @@ void main() {
         (tester) async {
       final mockPostBloc = MockPostBloc();
       when(mockPostBloc.isPostFavorite).thenReturn(true);
+      when(mockPostBloc.post).thenReturn(proposta.toJson());
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<PostBloc>(

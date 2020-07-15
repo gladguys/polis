@@ -12,6 +12,8 @@ import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../page/pages.dart';
+import '../../page/post/widget/like_post_button.dart';
+import '../../page/post/widget/unlike_post_button.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';
 import '../image/photo_image.dart';
@@ -40,6 +42,14 @@ class DespesaTile extends StatelessWidget {
               children: <Widget>[
                 _buildTopContent(),
                 _buildCenterContent(),
+                const SizedBox(height: 8),
+                Text(
+                  '${despesa.dataDocumento.formatDate()}',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                  ),
+                ),
               ],
             ),
           ),
@@ -157,37 +167,49 @@ class DespesaTile extends StatelessWidget {
 
   Widget _buildActions(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
-      builder: (_, state) => Padding(
-        padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              '${despesa.dataDocumento.formatDate()}',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey[600],
-              ),
+      builder: (_, state) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                LikePostButton(post: despesa),
+                const SizedBox(width: 24),
+                UnlikePostButton(post: despesa),
+                const SizedBox(width: 24),
+                ButtonActionCard(
+                  icon: FontAwesomeIcons.comment,
+                  iconColor: Colors.grey[700],
+                  textColor: Colors.grey[700],
+                  text: '120',
+                  onTap: () {},
+                ),
+                const Spacer(),
+                ButtonActionCard(
+                  isIconOnly: true,
+                  icon: (despesa.favorito ?? false)
+                      ? FontAwesomeIcons.solidBookmark
+                      : FontAwesomeIcons.bookmark,
+                  iconColor: (despesa.favorito ?? false)
+                      ? Colors.yellow
+                      : Colors.grey[700],
+                  onTap: () => context.bloc<PostBloc>().add(
+                        FavoritePostForUser(
+                          post: {
+                            'id': despesa.id,
+                            ...despesa.toJson(),
+                          },
+                          user: context.bloc<UserBloc>().user,
+                        ),
+                      ),
+                ),
+              ],
             ),
-            ButtonActionCard(
-              isIconOnly: true,
-              icon: (despesa.favorito ?? false)
-                  ? FontAwesomeIcons.solidBookmark
-                  : FontAwesomeIcons.bookmark,
-              iconColor: (despesa.favorito ?? false) ? Colors.yellow : null,
-              onTap: () => context.bloc<PostBloc>().add(
-                    FavoritePostForUser(
-                      post: {
-                        'id': despesa.id,
-                        ...despesa.toJson(),
-                      },
-                      user: context.bloc<UserBloc>().user,
-                    ),
-                  ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

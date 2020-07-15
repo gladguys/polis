@@ -33,3 +33,63 @@ class PostViewedFailed extends PostState {
   @override
   List<Object> get props => [];
 }
+
+class PostLikedSuccess extends PostState {
+  PostLikedSuccess({this.postId});
+
+  final String postId;
+
+  @override
+  List<Object> get props => [postId];
+}
+
+class PostLikedFailed extends PostState {
+  @override
+  List<Object> get props => [];
+}
+
+class PostUnlikedSuccess extends PostState {
+  PostUnlikedSuccess({this.postId});
+
+  final String postId;
+
+  @override
+  List<Object> get props => [postId];
+}
+
+class PostUnlikedFailed extends PostState {
+  @override
+  List<Object> get props => [];
+}
+
+class StoppedLikingPostSuccess extends PostState {
+  StoppedLikingPostSuccess({this.postId});
+
+  final String postId;
+
+  @override
+  List<Object> get props => [postId];
+}
+
+class StoppedLikingPostFailed extends PostState {
+  @override
+  List<Object> get props => [];
+}
+
+class StoppedUnlikingPostSuccess extends PostState {
+  StoppedUnlikingPostSuccess({this.postId});
+
+  final String postId;
+
+  @override
+  List<Object> get props => [postId];
+}
+
+class StoppedUnlikingPostFailed extends PostState {
+  StoppedUnlikingPostFailed({this.postId});
+
+  final String postId;
+
+  @override
+  List<Object> get props => [postId];
+}

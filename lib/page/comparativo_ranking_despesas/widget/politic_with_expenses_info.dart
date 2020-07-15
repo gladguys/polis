@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:simple_router/simple_router.dart';
 
 import '../../../core/extension/extensions.dart';
 import '../../../core/i18n/i18n.dart';
+import '../../../core/routing/route_names.dart';
 import '../../../widget/photo.dart';
+import '../../pages.dart';
 
 class PoliticWithExpensesInfo extends StatelessWidget {
   const PoliticWithExpensesInfo({
+    this.idPolitico,
     @required this.nome,
     @required this.foto,
     @required this.partido,
@@ -19,6 +23,7 @@ class PoliticWithExpensesInfo extends StatelessWidget {
         assert(estado != null),
         assert(totalDespesas != null);
 
+  final String idPolitico;
   final String nome;
   final String foto;
   final String partido;
@@ -67,10 +72,16 @@ class PoliticWithExpensesInfo extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Photo(
-          url: foto,
-          size: 60,
-          borderRadius: BorderRadius.circular(35),
+        GestureDetector(
+          onTap: () => SimpleRouter.forward(
+            PoliticProfilePageConnected(idPolitico),
+            name: POLITIC_PROFILE_PAGE,
+          ),
+          child: Photo(
+            url: foto,
+            size: 60,
+            borderRadius: BorderRadius.circular(35),
+          ),
         ),
         const SizedBox(width: 4),
         Column(

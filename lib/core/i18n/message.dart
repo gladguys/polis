@@ -26,6 +26,7 @@ const STATE_MESSAGE = 'Qual o seu Estado?';
 const FOLLOW = 'Seguir';
 const STOP_FOLLOW = 'Deixar de seguir';
 const YOU_DONT_FOLLOW_ANYONE_YET = 'Você ainda não segue nenhum político!';
+const LEAVE_APP_WARN = 'Você irá sair do aplicativo. Deseja prosseguir?';
 
 const POLIS_INFO_MESSAGE =
     '''Siga Deputados Federais e receba notificações quando eles tiverem novas Propostas de Lei ou Despesas...''';
@@ -66,3 +67,8 @@ const ASSERT_ATLEAST_IMAGE_OR_ICON =
     'You have to pass at least an image or an icon';
 const ASSERT_IMAGE_AND_ICON_NOT_PRESENT =
     'You must not pass both an image and an icon';
+
+const LIKED_PROPOSAL = 'Você curtiu esse projeto de lei';
+const NOT_LIKED_PROPOSAL = 'Você não curtiu esse projeto de lei';
+const LIKED_EXPENSE = 'Você curtiu essa despesa';
+const NOT_LIKED_EXPENSE = 'Você não curtiu essa despesa';

@@ -34,15 +34,13 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
       : assert(repository != null),
         assert(analyticsService != null),
         assert(sharedPreferencesService != null),
-        assert(messageService != null);
+        assert(messageService != null),
+        super(InitialSignin());
 
   final SigninRepository repository;
   final AnalyticsService analyticsService;
   final SharedPreferencesService sharedPreferencesService;
   final MessageService messageService;
-
-  @override
-  SigninState get initialState => InitialSignin();
 
   @override
   Stream<SigninState> mapEventToState(SigninEvent event) async* {

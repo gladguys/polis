@@ -15,13 +15,11 @@ part 'edit_profile_state.dart';
 class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
   EditProfileBloc({@required this.repository, @required this.userBloc})
       : assert(repository != null),
-        assert(userBloc != null);
+        assert(userBloc != null),
+        super(InitialEditProfileState());
 
   final EditProfileRepository repository;
   final UserBloc userBloc;
-
-  @override
-  EditProfileState get initialState => InitialEditProfileState();
 
   @override
   Stream<EditProfileState> mapEventToState(EditProfileEvent event) async* {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -6,11 +7,14 @@ import 'package:simple_router/simple_router.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/domain/enum/post_type.dart';
+import '../../core/domain/model/models.dart';
 import '../../core/domain/model/proposta_model.dart';
 import '../../core/extension/extensions.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/routing/route_names.dart';
 import '../../page/pages.dart';
+import '../../page/post/widget/like_post_button.dart';
+import '../../page/post/widget/unlike_post_button.dart';
 import '../button_action_card.dart';
 import '../card_base.dart';
 import '../image/photo_image.dart';
@@ -38,6 +42,14 @@ class PropostaTile extends StatelessWidget {
             children: <Widget>[
               _buildTopContent(),
               _buildCenterContent(),
+              const SizedBox(height: 8),
+              Text(
+                proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey[600],
+                ),
+              ),
             ],
           ),
           slotBottom: _buildActions(context),
@@ -167,35 +179,48 @@ class PropostaTile extends StatelessWidget {
 
   Widget _buildActions(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
-      builder: (_, state) => Padding(
-        padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey[600],
-              ),
-            ),
-            ButtonActionCard(
-              isIconOnly: true,
-              icon: proposta.favorito ?? false
-                  ? FontAwesomeIcons.solidBookmark
-                  : FontAwesomeIcons.bookmark,
-              iconColor: (proposta.favorito ?? false) ? Colors.yellow : null,
-              onTap: () => context.bloc<PostBloc>().add(
-                    FavoritePostForUser(
-                      post: proposta.toJson(),
-                      user: context.bloc<UserBloc>().user,
-                    ),
+      builder: (_, state) {
+        return Padding(
+          padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  LikePostButton(post: proposta),
+                  const SizedBox(width: 24),
+                  UnlikePostButton(post: proposta),
+                  const SizedBox(width: 24),
+                  ButtonActionCard(
+                    icon: FontAwesomeIcons.comment,
+                    iconColor: Colors.grey[700],
+                    text: '120',
+                    textColor: Colors.grey[700],
+                    onTap: () {},
                   ),
-            ),
-          ],
-        ),
-      ),
+                  const Spacer(),
+                  ButtonActionCard(
+                    isIconOnly: true,
+                    icon: proposta.favorito ?? false
+                        ? FontAwesomeIcons.solidBookmark
+                        : FontAwesomeIcons.bookmark,
+                    iconColor: (proposta.favorito ?? false)
+                        ? Colors.yellow
+                        : Colors.grey[700],
+                    onTap: () => context.bloc<PostBloc>().add(
+                          FavoritePostForUser(
+                            post: proposta.toJson(),
+                            user: context.bloc<UserBloc>().user,
+                          ),
+                        ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

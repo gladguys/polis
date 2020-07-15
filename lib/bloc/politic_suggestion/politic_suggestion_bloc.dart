@@ -16,16 +16,14 @@ class PoliticSuggestionBloc
       {@required this.politicSuggestionRepository,
       @required this.userRepository})
       : assert(politicSuggestionRepository != null),
-        assert(userRepository != null);
+        assert(userRepository != null),
+        super(InitialPoliticSuggestionState());
 
   final PoliticSuggestionRepository politicSuggestionRepository;
   final UserRepository userRepository;
 
   List<PoliticoModel> politics;
   List<PoliticoModel> followedPolitics = [];
-
-  @override
-  PoliticSuggestionState get initialState => InitialPoliticSuggestionState();
 
   @override
   Stream<PoliticSuggestionState> mapEventToState(
