@@ -31,3 +31,18 @@ class LoadingFetchUserInfo extends UserProfileState {
   @override
   List<Object> get props => [];
 }
+
+class GetPostInfoSuccess extends UserProfileState {
+  GetPostInfoSuccess({this.post, this.postType});
+
+  final dynamic post;
+  final PostType postType;
+
+  @override
+  List<Object> get props => [post, postType];
+}
+
+class GetPostInfoFailed extends UserProfileState {
+  @override
+  List<Object> get props => [];
+}

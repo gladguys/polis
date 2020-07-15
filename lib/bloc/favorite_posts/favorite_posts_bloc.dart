@@ -10,12 +10,11 @@ part 'favorite_posts_event.dart';
 part 'favorite_posts_state.dart';
 
 class FavoritePostsBloc extends Bloc<FavoritePostsEvent, FavoritePostsState> {
-  FavoritePostsBloc({@required this.repository}) : assert(repository != null);
+  FavoritePostsBloc({@required this.repository})
+      : assert(repository != null),
+        super(InitialFavoritePostsState());
 
   final FavoritePostsRepository repository;
-
-  @override
-  FavoritePostsState get initialState => InitialFavoritePostsState();
 
   @override
   Stream<FavoritePostsState> mapEventToState(FavoritePostsEvent event) async* {

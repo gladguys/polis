@@ -3,7 +3,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:polis/bloc/flutter_bloc_delegate.dart';
+import 'package:polis/bloc/flutter_bloc_observer.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/core/service/services.dart';
 import 'package:polis/main_commom.dart' as m;
@@ -25,6 +25,6 @@ void main() async {
     expect(Crashlytics.instance.enableInDevMode, true);
     expect(FlutterError.onError,
         equals(G<CrashlyticsService>().crashlytics.recordFlutterError));
-    expect(BlocSupervisor.delegate, isA<FlutterBlocDelegate>());
+    expect(Bloc.observer, isA<FlutterBlocObserver>());
   });
 }

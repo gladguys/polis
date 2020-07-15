@@ -5,35 +5,38 @@ part 'despesa_model.g.dart';
 
 @JsonSerializable()
 class DespesaModel extends Equatable {
-  DespesaModel(
-      {this.id,
-      this.ano,
-      this.mes,
-      this.cnpjCpfFornecedor,
-      this.codDocumento,
-      this.codLote,
-      this.codTipoDocumento,
-      this.dataDocumento,
-      this.dataPublicacao,
-      this.estadoPolitico,
-      this.idPolitico,
-      this.nomeFornecedor,
-      this.nomePolitico,
-      this.numDocumento,
-      this.fotoPolitico,
-      this.numRessarcimento,
-      this.parcela,
-      this.favorito,
-      this.siglaPartido,
-      this.tipoAtividade,
-      this.tipoDespesa,
-      this.tipoDocumento,
-      this.urlDocumento,
-      this.valorDocumento,
-      this.valorGlosa,
-      this.valorLiquido,
-      this.visualizado,
-      this.urlPartidoLogo});
+  DespesaModel({
+    this.id,
+    this.ano,
+    this.mes,
+    this.cnpjCpfFornecedor,
+    this.codDocumento,
+    this.codLote,
+    this.codTipoDocumento,
+    this.dataDocumento,
+    this.dataPublicacao,
+    this.estadoPolitico,
+    this.idPolitico,
+    this.nomeFornecedor,
+    this.nomePolitico,
+    this.numDocumento,
+    this.fotoPolitico,
+    this.numRessarcimento,
+    this.parcela,
+    this.favorito,
+    this.siglaPartido,
+    this.tipoAtividade,
+    this.tipoDespesa,
+    this.tipoDocumento,
+    this.urlDocumento,
+    this.valorDocumento,
+    this.valorGlosa,
+    this.valorLiquido,
+    this.visualizado,
+    this.urlPartidoLogo,
+    this.qtdCurtidas,
+    this.qtdNaoCurtidas,
+  });
 
   final String id;
   final String ano;
@@ -63,6 +66,8 @@ class DespesaModel extends Equatable {
   final bool favorito;
   final bool visualizado;
   final String urlPartidoLogo;
+  final int qtdCurtidas;
+  final int qtdNaoCurtidas;
 
   factory DespesaModel.fromJson(Map<String, dynamic> json) =>
       _$DespesaModelFromJson(json);
@@ -98,6 +103,8 @@ class DespesaModel extends Equatable {
     bool favorito,
     bool visualizado,
     String urlPartidoLogo,
+    int qtdCurtidas,
+    int qtdNaoCurtidas,
   }) {
     return DespesaModel(
       id: id ?? this.id,
@@ -128,6 +135,8 @@ class DespesaModel extends Equatable {
       valorLiquido: valorLiquido ?? this.valorLiquido,
       visualizado: visualizado ?? this.visualizado,
       urlPartidoLogo: urlPartidoLogo ?? this.urlPartidoLogo,
+      qtdCurtidas: qtdCurtidas ?? this.qtdCurtidas,
+      qtdNaoCurtidas: qtdNaoCurtidas ?? this.qtdNaoCurtidas,
     );
   }
 
@@ -136,6 +145,6 @@ class DespesaModel extends Equatable {
 
   @override
   String toString() {
-    return '''DespesaModel{id: $id, ano: $ano, mes: $mes, cnpjCpfFornecedor: $cnpjCpfFornecedor, codDocumento: $codDocumento, codLote: $codLote, codTipoDocumento: $codTipoDocumento, fotoPolitico: $fotoPolitico, dataDocumento: $dataDocumento, dataPublicacao: $dataPublicacao, estadoPolitico: $estadoPolitico, idPolitico: $idPolitico, nomeFornecedor: $nomeFornecedor, nomePolitico: $nomePolitico, numDocumento: $numDocumento, numRessarcimento: $numRessarcimento, parcela: $parcela, siglaPartido: $siglaPartido, tipoAtividade: $tipoAtividade, tipoDespesa: $tipoDespesa, tipoDocumento: $tipoDocumento, urlDocumento: $urlDocumento, valorDocumento: $valorDocumento, valorGlosa: $valorGlosa, valorLiquido: $valorLiquido, favorito: $favorito, visualizado: $visualizado, urlPartidoLogo: $urlPartidoLogo}''';
+    return '''DespesaModel{id: $id, ano: $ano, mes: $mes, cnpjCpfFornecedor: $cnpjCpfFornecedor, codDocumento: $codDocumento, codLote: $codLote, codTipoDocumento: $codTipoDocumento, fotoPolitico: $fotoPolitico, dataDocumento: $dataDocumento, dataPublicacao: $dataPublicacao, estadoPolitico: $estadoPolitico, idPolitico: $idPolitico, nomeFornecedor: $nomeFornecedor, nomePolitico: $nomePolitico, numDocumento: $numDocumento, numRessarcimento: $numRessarcimento, parcela: $parcela, siglaPartido: $siglaPartido, tipoAtividade: $tipoAtividade, tipoDespesa: $tipoDespesa, tipoDocumento: $tipoDocumento, urlDocumento: $urlDocumento, valorDocumento: $valorDocumento, valorGlosa: $valorGlosa, valorLiquido: $valorLiquido, favorito: $favorito, visualizado: $visualizado, urlPartidoLogo: $urlPartidoLogo, qtdCurtidas: $qtdCurtidas, qtdNaoCurtidas: $qtdNaoCurtidas}''';
   }
 }

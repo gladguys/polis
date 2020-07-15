@@ -1,3 +1,4 @@
+export 'action_repository.dart';
 export 'change_password_repository.dart';
 export 'comment_repository.dart';
 export 'comparativo_ranking_despesas_repository.dart';

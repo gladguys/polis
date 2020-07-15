@@ -12,12 +12,11 @@ part 'change_password_state.dart';
 
 class ChangePasswordBloc
     extends Bloc<ChangePasswordEvent, ChangePasswordState> {
-  ChangePasswordBloc({@required this.repository}) : assert(repository != null);
+  ChangePasswordBloc({@required this.repository})
+      : assert(repository != null),
+        super(InitialChangePasswordState());
 
   final ChangePasswordRepository repository;
-
-  @override
-  ChangePasswordState get initialState => InitialChangePasswordState();
 
   @override
   Stream<ChangePasswordState> mapEventToState(

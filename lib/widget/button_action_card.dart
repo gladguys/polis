@@ -6,8 +6,9 @@ class ButtonActionCard extends StatelessWidget {
     @required this.icon,
     @required this.onTap,
     this.text,
-    this.fontSize = 12,
+    this.fontSize = 14,
     this.iconColor,
+    this.textColor = Colors.black,
     this.isIconOnly = false,
   })  : assert(icon != null),
         assert(onTap != null);
@@ -16,6 +17,7 @@ class ButtonActionCard extends StatelessWidget {
   final String text;
   final double fontSize;
   final Color iconColor;
+  final Color textColor;
   final bool isIconOnly;
   final Function onTap;
 
@@ -43,7 +45,7 @@ class ButtonActionCard extends StatelessWidget {
 
   Widget _buildIconAndText() {
     return ConstrainedBox(
-      constraints: const BoxConstraints(minWidth: 50),
+      constraints: const BoxConstraints(minWidth: 10),
       child: InkWell(
         borderRadius: BorderRadius.circular(4),
         child: Padding(
@@ -59,7 +61,11 @@ class ButtonActionCard extends StatelessWidget {
               ),
               Text(
                 text ?? '',
-                style: TextStyle(fontSize: fontSize),
+                style: TextStyle(
+                  fontSize: fontSize,
+                  color: textColor,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ],
           ),

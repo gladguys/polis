@@ -12,12 +12,11 @@ part 'politic_expenses_state.dart';
 
 class PoliticExpensesBloc
     extends Bloc<PoliticExpensesEvent, PoliticExpensesState> {
-  PoliticExpensesBloc({@required this.repository}) : assert(repository != null);
+  PoliticExpensesBloc({@required this.repository})
+      : assert(repository != null),
+        super(InitialPoliticExpensesState());
 
   final PoliticExpensesRepository repository;
-
-  @override
-  PoliticExpensesState get initialState => InitialPoliticExpensesState();
 
   @override
   Stream<PoliticExpensesState> mapEventToState(
