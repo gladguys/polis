@@ -9,7 +9,6 @@ import '../../../core/keys.dart';
 import '../../../widget/error_container.dart';
 import '../../../widget/field_rounded.dart';
 import '../../../widget/loading.dart';
-import '../../theme/main_theme.dart';
 import 'widget/comments_list.dart';
 import 'widget/no_comment_for_post.dart';
 
@@ -66,7 +65,7 @@ class _PostCommentsState extends State<PostComments> {
                 child: Container(
                   width: context.screenWidth,
                   alignment: Alignment.center,
-                  color: theme.scaffoldBackgroundColor,
+                  color: context.baseBackgroundColor,
                   child: Column(
                     children: <Widget>[
                       const Divider(color: Colors.grey, height: 16),

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/blocs.dart';
+import '../../../core/extension/extensions.dart';
 import '../../../core/extension/media_query_extensions.dart';
 import '../../../core/i18n/label.dart';
 import '../../../widget/text_title.dart';
@@ -42,7 +43,7 @@ class _PoliticProfileState extends State<PoliticProfile> {
     return Container(
       width: double.maxFinite,
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: context.baseBackgroundColor,
         boxShadow: [
           const BoxShadow(
             color: Colors.black12,
@@ -74,7 +75,7 @@ class _PoliticProfileState extends State<PoliticProfile> {
   Widget _buildPanel(BuildContext context) {
     final bloc = context.bloc<PoliticProfileBloc>();
     return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
+      color: context.baseBackgroundColor,
       child: PoliticActivities(bloc.lastActivities),
     );
   }

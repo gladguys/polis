@@ -10,7 +10,6 @@ import '../../../widget/card_base.dart';
 import '../../../widget/error_container.dart';
 import '../../../widget/field_rounded.dart';
 import '../../../widget/loading.dart';
-import '../../theme/main_theme.dart';
 import '../../user_profile/user_profile_page_connected.dart';
 import 'widget/menu_edit_delete_comment.dart';
 import 'widget/no_sub_comment_for_comment.dart';
@@ -142,7 +141,7 @@ class _SubCommentsPageState extends State<SubCommentsPage> {
                   child: Container(
                     width: context.screenWidth,
                     alignment: Alignment.center,
-                    color: theme.scaffoldBackgroundColor,
+                    color: context.baseBackgroundColor,
                     child: Column(
                       children: <Widget>[
                         const Divider(color: Colors.grey, height: 16),

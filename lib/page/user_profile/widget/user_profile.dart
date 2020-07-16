@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../core/domain/model/models.dart';
-import '../../../core/extension/media_query_extensions.dart';
+import '../../../core/extension/extensions.dart';
 import '../../../core/i18n/label.dart';
 import '../../../widget/text_title.dart';
 import 'configs_button.dart';
@@ -45,7 +45,7 @@ class _UserProfileState extends State<UserProfile> {
     return Container(
       width: double.maxFinite,
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: context.baseBackgroundColor,
         boxShadow: [
           const BoxShadow(
             color: Colors.black12,
@@ -76,7 +76,7 @@ class _UserProfileState extends State<UserProfile> {
 
   Widget _buildPanel(BuildContext context) {
     return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
+      color: context.baseBackgroundColor,
       child: UserActions(actions: widget.userActions),
     );
   }
