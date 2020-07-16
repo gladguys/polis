@@ -40,6 +40,15 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     if (event is DeleteComment) {
       yield* _mapDeleteCommentToState(event);
     }
+    if (event is StartEditingComment) {
+      yield* _mapStartEditingCommentToState(event);
+    }
+    if (event is StopEditingComment) {
+      yield* _mapStopEditingCommentToState(event);
+    }
+    if (event is EditComment) {
+      yield* _mapEditCommentToState(event);
+    }
   }
 
   Stream<CommentState> _mapGetPostCommentsToState(
@@ -124,5 +133,41 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       comment: commentToDelete,
       numberOfComments: postComments.length,
     );
+  }
+
+  Stream<CommentState> _mapStartEditingCommentToState(
+      StartEditingComment event) async* {
+    yield EditingCommentStarted(
+      event.comment,
+    );
+  }
+
+  Stream<CommentState> _mapEditCommentToState(EditComment event) async* {
+    final commentToBeEdited = event.comment;
+    final currentComments = [
+      ...postComments,
+    ];
+
+    final commentIndex = currentComments
+        .indexWhere((comment) => comment.id == commentToBeEdited.id);
+
+    currentComments[commentIndex] = currentComments[commentIndex].copyWith(
+      texto: event.newText,
+    );
+
+    //await repository.editComment(comment: currentComments[commentIndex]);
+
+    postComments = [
+      ...currentComments,
+    ];
+
+    yield CommentEditedSuccess(
+      comment: commentToBeEdited,
+    );
+  }
+
+  Stream<CommentState> _mapStopEditingCommentToState(
+      StopEditingComment event) async* {
+    yield InitialCommentState();
   }
 }

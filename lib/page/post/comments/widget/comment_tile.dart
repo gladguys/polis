@@ -58,10 +58,12 @@ class CommentTile extends StatelessWidget {
                   ),
                   (comment.usuarioId == user.userId)
                       ? MenuEditDeleteComment(
-                          onEdit: () => {},
-                          onDelete: () => context.bloc<CommentBloc>().add(
-                                DeleteComment(comment),
-                              ),
+                          onEdit: () => context
+                              .bloc<CommentBloc>()
+                              .add(StartEditingComment(comment)),
+                          onDelete: () => context
+                              .bloc<CommentBloc>()
+                              .add(DeleteComment(comment)),
                         )
                       : Container(),
                 ],

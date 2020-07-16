@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/post/comment/comment_bloc.dart';
+import '../../../core/domain/model/comment_model.dart';
 import '../../../core/extension/extensions.dart';
 import '../../../core/i18n/i18n.dart';
 import '../../../core/keys.dart';
@@ -36,10 +37,13 @@ class _PostCommentsState extends State<PostComments> {
   Widget build(BuildContext context) {
     return BlocBuilder<CommentBloc, CommentState>(
       builder: (_, state) {
-        if (state is GetPostCommentsSuccess ||
+        if (state is InitialCommentState ||
+            state is GetPostCommentsSuccess ||
             state is NewCommentAdded ||
             state is CommentDeletedSuccess ||
-            state is NewReplyCommentAdded) {
+            state is NewReplyCommentAdded ||
+            state is EditingCommentStarted ||
+            state is CommentEditedSuccess) {
           final comments = context.bloc<CommentBloc>().postComments;
           return Stack(
             children: <Widget>[
@@ -60,68 +64,10 @@ class _PostCommentsState extends State<PostComments> {
                   ],
                 ),
               ),
-              Positioned(
-                bottom: 0,
-                child: Container(
-                  width: context.screenWidth,
-                  alignment: Alignment.center,
-                  color: context.baseBackgroundColor,
-                  child: Column(
-                    children: <Widget>[
-                      const Divider(color: Colors.grey, height: 16),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        width: 360,
-                        child: Row(
-                          // mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            // FaIcon(
-                            //   FontAwesomeIcons.pen,
-                            //   color: theme.primaryColor,
-                            //   size: 16,
-                            // ),
-                            // const SizedBox(width: 8),
-                            const Text(
-                              'Editar comentário:',
-                              style: TextStyle(
-                                // color: theme.primaryColor,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: FieldRounded(
-                            hintText: COMMENT_HERE,
-                            width: 360,
-                            // iconSuffix: FontAwesomeIcons.solidPaperPlane,
-                            // backgroundColorSuffix: theme.primaryColor,
-                            iconSuffix: FontAwesomeIcons.times,
-                            backgroundColorSuffix: Colors.red,
-                            fontColorSuffix: Colors.white,
-                            iconSuffix2: FontAwesomeIcons.check,
-                            backgroundColorSuffix2: Colors.green,
-                            fontColorSuffix2: Colors.white,
-                            keySuffix: commentButtonKey,
-                            controller: commentInputController,
-                            onPressedSuffix: () {
-                              context.bloc<CommentBloc>().add(
-                                    AddComment(
-                                      text: commentInputController.text,
-                                    ),
-                                  );
-                              commentInputController.clear();
-                            },
-                            onPressedSuffix2: () {}),
-                      ),
-                      const SizedBox(height: 12),
-                    ],
-                  ),
-                ),
-              ),
+              if (state is EditingCommentStarted)
+                ..._buildWidgetsWhenEditingComment(state.comment),
+              if (!(state is EditingCommentStarted))
+                ..._buildWidgetsWhenNotEditingComment(),
             ],
           );
         } else if (state is LoadingPostComments) {
@@ -131,5 +77,133 @@ class _PostCommentsState extends State<PostComments> {
         }
       },
     );
+  }
+
+  List<Widget> _buildWidgetsWhenEditingComment(CommentModel comment) {
+    commentInputController.text = comment.texto;
+    return [
+      Positioned(
+        bottom: 0,
+        child: Container(
+          width: context.screenWidth,
+          alignment: Alignment.center,
+          color: context.baseBackgroundColor,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Divider(color: Colors.grey, height: 16),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                width: 360,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    FaIcon(
+                      FontAwesomeIcons.pen,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      '$EDIT_COMMENT:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 4),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 16),
+                        child: Text(
+                          comment.texto,
+                          textAlign: TextAlign.start,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                        icon: Icon(Icons.cancel),
+                        onPressed: () {
+                          context.bloc<CommentBloc>().add(StopEditingComment());
+                          commentInputController.clear();
+                        }),
+                  ],
+                ),
+              ),
+              const Divider(),
+              const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: FieldRounded(
+                  hintText: COMMENT_HERE,
+                  width: 360,
+                  iconSuffix: FontAwesomeIcons.check,
+                  backgroundColorSuffix: Colors.green,
+                  fontColorSuffix: Colors.white,
+                  keySuffix: commentButtonKey,
+                  controller: commentInputController,
+                  onPressedSuffix: () {
+                    context.bloc<CommentBloc>().add(
+                          EditComment(
+                            comment: comment,
+                            newText: commentInputController.text,
+                          ),
+                        );
+                    commentInputController.clear();
+                  },
+                ),
+              ),
+              const SizedBox(height: 12),
+            ],
+          ),
+        ),
+      ),
+    ];
+  }
+
+  List<Widget> _buildWidgetsWhenNotEditingComment() {
+    return [
+      Positioned(
+        bottom: 0,
+        child: Container(
+          width: context.screenWidth,
+          alignment: Alignment.center,
+          color: context.baseBackgroundColor,
+          child: Column(
+            children: <Widget>[
+              const Divider(color: Colors.grey, height: 16),
+              const SizedBox(height: 4),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: FieldRounded(
+                  hintText: COMMENT_HERE,
+                  width: 360,
+                  textSuffix: SEND,
+                  widthSuffix: 70,
+                  keySuffix: commentButtonKey,
+                  controller: commentInputController,
+                  onPressedSuffix: () {
+                    context.bloc<CommentBloc>().add(
+                          AddComment(
+                            text: commentInputController.text,
+                          ),
+                        );
+                    commentInputController.clear();
+                  },
+                ),
+              ),
+              const SizedBox(height: 12),
+            ],
+          ),
+        ),
+      ),
+    ];
   }
 }

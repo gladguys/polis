@@ -76,6 +76,7 @@ const DATE = 'Data';
 const SEARCH_HERE = 'Pesquise...';
 const SEND_EMAIL = 'Enviar email';
 const COMMENT_HERE = 'Deixe seu comentário...';
+const EDIT_COMMENT = 'Editar comentário';
 const SEND = 'Enviar';
 const NOT_INFORMED = 'Não informado';
 const NOT_INFORMED_FEMALE = 'Não informada';

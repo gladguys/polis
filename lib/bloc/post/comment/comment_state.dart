@@ -57,3 +57,21 @@ class NewReplyCommentAdded extends CommentState {
   @override
   List<Object> get props => [comment, numberOfReplies];
 }
+
+class EditingCommentStarted extends CommentState {
+  EditingCommentStarted(this.comment);
+
+  final CommentModel comment;
+
+  @override
+  List<Object> get props => [comment];
+}
+
+class CommentEditedSuccess extends CommentState {
+  CommentEditedSuccess({this.comment});
+
+  final CommentModel comment;
+
+  @override
+  List<Object> get props => [comment];
+}
