@@ -55,6 +55,7 @@ const CHANGE_YOUR_PROFILE = 'Altere sua senha';
 const EDIT_YOUR_PROFILE = 'Edite seu perfil';
 const EXPENSES_COMPARATION = 'Comparativo de despesas';
 const FAVORITE_POSTS = 'Posts salvos';
+const CONFIGS = 'Configurações';
 const MY_ACTIVITIES = 'Minhas atividades';
 const ACTIVITIES = 'Atividades';
 const FEDERAL_DEPUTY = 'Dep. Federal';

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import '../page/theme/main_theme.dart';
-
 class Loading extends StatefulWidget {
   const Loading();
 
@@ -15,7 +13,7 @@ class _LoadingState extends State<Loading> {
   Widget build(BuildContext context) {
     return Center(
       child: SpinKitDoubleBounce(
-        color: theme.primaryColor,
+        color: Theme.of(context).primaryColor,
         size: 60,
       ),
     );

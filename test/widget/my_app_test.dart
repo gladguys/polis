@@ -6,7 +6,8 @@ import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/pages.dart';
-import 'package:polis/widget/my_app.dart';
+import 'package:polis/widget/core/my_app.dart';
+import 'package:polis/widget/core/my_app_connected.dart';
 import 'package:polis/widget/my_app_injections.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,7 +25,7 @@ void main() async {
   group('MyApp tests', () {
     test('assert', () {
       expect(
-          () => MyApp(
+          () => MyAppConnected(
                 sharedPreferencesService: null,
               ),
           throwsAssertionError);
@@ -40,7 +41,7 @@ void main() async {
       when(mockSharedPreferencesService.isUserLogged()).thenReturn(false);
       await tester.pumpWidget(
         MyAppInjections(
-          child: MyApp(
+          child: MyAppConnected(
             sharedPreferencesService: mockSharedPreferencesService,
           ),
         ),
@@ -60,7 +61,7 @@ void main() async {
       when(mockSharedPreferencesService.isUserLogged()).thenReturn(true);
       await tester.pumpWidget(
         MyAppInjections(
-          child: MyApp(
+          child: MyAppConnected(
             sharedPreferencesService: mockSharedPreferencesService,
           ),
         ),

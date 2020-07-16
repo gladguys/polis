@@ -9,7 +9,7 @@ import '../../../core/domain/model/models.dart';
 import '../../../core/extension/media_query_extensions.dart';
 import '../../../core/i18n/label.dart';
 import '../../../widget/text_title.dart';
-import '../../theme/main_theme.dart';
+import 'configs_button.dart';
 import 'logout_button.dart';
 import 'personal_user_info.dart';
 import 'politics_following_quantity.dart';
@@ -45,7 +45,7 @@ class _UserProfileState extends State<UserProfile> {
     return Container(
       width: double.maxFinite,
       decoration: BoxDecoration(
-        color: theme.scaffoldBackgroundColor,
+        color: Theme.of(context).scaffoldBackgroundColor,
         boxShadow: [
           const BoxShadow(
             color: Colors.black12,
@@ -64,7 +64,7 @@ class _UserProfileState extends State<UserProfile> {
           FaIcon(
             FontAwesomeIcons.chevronUp,
             size: 16,
-            color: theme.accentColor.withOpacity(.25),
+            color: Theme.of(context).accentColor.withOpacity(.25),
           ),
           const SizedBox(height: 4),
           TextTitle(MY_ACTIVITIES, fontSize: 15),
@@ -76,7 +76,7 @@ class _UserProfileState extends State<UserProfile> {
 
   Widget _buildPanel(BuildContext context) {
     return Container(
-      color: theme.scaffoldBackgroundColor,
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: UserActions(actions: widget.userActions),
     );
   }
@@ -86,6 +86,7 @@ class _UserProfileState extends State<UserProfile> {
       children: <Widget>[
         const SizedBox(height: 8),
         LogoutButton(),
+        ConfigsButton(),
         PersonalUserInfo(user: context.bloc<UserBloc>().user),
         const SizedBox(height: 16),
         PoliticsFollowingQuantity(politics: widget.politicsFollowing),

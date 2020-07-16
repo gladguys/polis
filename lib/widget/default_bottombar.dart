@@ -12,7 +12,6 @@ import '../core/routing/route_names.dart';
 import '../core/service/locator.dart';
 import '../core/service/services.dart';
 import '../page/pages.dart';
-import '../page/theme/main_theme.dart';
 import 'photo.dart';
 
 class DefaultBottombar extends StatelessWidget {
@@ -55,6 +54,7 @@ class DefaultBottombar extends StatelessWidget {
                     ),
                   )
                 : _buildButtonBottomAppBar(
+                    context,
                     key: arrowBackButtonKey,
                     icon: FontAwesomeIcons.chevronLeft,
                     onPressed: onPopCallback,
@@ -62,6 +62,7 @@ class DefaultBottombar extends StatelessWidget {
           ),
           const Spacer(),
           _buildButtonBottomAppBar(
+            context,
             icon: FontAwesomeIcons.home,
             isSelected: routeName == TIMELINE_PAGE,
             onPressed: () => routeName != TIMELINE_PAGE
@@ -75,6 +76,7 @@ class DefaultBottombar extends StatelessWidget {
           ),
           const SizedBox(width: 4),
           _buildButtonBottomAppBar(
+            context,
             icon: FontAwesomeIcons.search,
             isSelected: routeName == SEARCH_POLITIC_PAGE,
             onPressed: () => routeName != SEARCH_POLITIC_PAGE
@@ -86,6 +88,7 @@ class DefaultBottombar extends StatelessWidget {
           ),
           const SizedBox(width: 4),
           _buildButtonBottomAppBar(
+            context,
             icon: FontAwesomeIcons.solidBookmark,
             isSelected: routeName == FAVORITE_POSTS_PAGE,
             onPressed: () => routeName != FAVORITE_POSTS_PAGE
@@ -128,7 +131,7 @@ class DefaultBottombar extends StatelessWidget {
                     : user.photoUrl,
                 size: 32,
                 boxFit: BoxFit.cover,
-                iconColor: theme.accentColor,
+                iconColor: Theme.of(context).accentColor,
                 iconKey: userPhotolessIconKey,
               ),
             ),
@@ -144,7 +147,8 @@ class DefaultBottombar extends StatelessWidget {
     );
   }
 
-  Widget _buildButtonBottomAppBar({
+  Widget _buildButtonBottomAppBar(
+    BuildContext context, {
     Widget child,
     IconData icon,
     double iconSize = 24,
@@ -157,7 +161,9 @@ class DefaultBottombar extends StatelessWidget {
       height: 40,
       child: FlatButton(
         key: key,
-        color: isSelected ? theme.primaryColorLight.withOpacity(.7) : null,
+        color: isSelected
+            ? Theme.of(context).primaryColorLight.withOpacity(.7)
+            : null,
         child: icon != null ? FaIcon(icon, size: iconSize) : child,
         padding: EdgeInsets.zero,
         onPressed: onPressed,
