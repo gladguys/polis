@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../../core/extension/extensions.dart';
 import '../../../../core/i18n/i18n.dart';
-import '../../../theme/main_theme.dart';
 
 class NoCommentForPost extends StatelessWidget {
   const NoCommentForPost();
@@ -20,7 +20,7 @@ class NoCommentForPost extends StatelessWidget {
             child: FaIcon(
               FontAwesome5.comments,
               size: 80,
-              color: theme.primaryColorLight,
+              color: context.primaryColorLight,
             ),
           ),
           const SizedBox(height: 12),

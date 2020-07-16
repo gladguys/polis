@@ -11,7 +11,6 @@ import '../../../../core/keys.dart';
 import '../../../../core/routing/route_names.dart';
 import '../../../../widget/card_base.dart';
 import '../../../pages.dart';
-import '../../../theme/main_theme.dart';
 import 'menu_edit_delete_comment.dart';
 
 class CommentTile extends StatelessWidget {
@@ -25,7 +24,7 @@ class CommentTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
       child: Bubble(
-        color: theme.primaryColorLight,
+        color: context.primaryColorLight,
         padding: const BubbleEdges.all(8),
         radius: const Radius.circular(15),
         nip: BubbleNip.leftTop,
