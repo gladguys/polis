@@ -3,8 +3,6 @@ import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import '../../page/theme/main_theme.dart';
-
 class TimelineAdBanner extends StatelessWidget {
   TimelineAdBanner(this.nativeAdmobController);
 
@@ -21,7 +19,7 @@ class TimelineAdBanner extends StatelessWidget {
             height: 64,
             child: NativeAdmob(
               loading: SpinKitThreeBounce(
-                color: theme.primaryColor,
+                color: Theme.of(context).primaryColor,
                 size: 32,
               ),
               adUnitID: 'ca-app-pub-5806526425473649/3495270844',

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../domain/model/comment_model.dart';
 import '../../../domain/model/models.dart';
 import '../../abstract/comment_repository.dart';
-import 'dio.dart';
+import 'dio_main_api.dart';
 import 'dio_utils.dart';
 
 class HttpCommentRepository implements CommentRepository {
@@ -96,8 +96,7 @@ class HttpCommentRepository implements CommentRepository {
       if (!response.isOk) {
         throw Exception();
       }
-    } on Exception catch (e) {
-      print(e);
+    } on Exception {
       rethrow;
     }
   }

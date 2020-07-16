@@ -50,7 +50,7 @@ class _SigninPageState extends State<SigninPage> {
         if (state is UserAuthenticated) {
           final user = state.user;
           context.bloc<UserBloc>().add(StoreUser(user));
-
+          context.bloc<UserBloc>().add(SetUserPickedTheme(user));
           if (user.isFirstLoginDone) {
             SimpleRouter.forwardAndReplace(
               TimelinePageConnected(

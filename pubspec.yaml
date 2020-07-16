@@ -60,6 +60,7 @@ dependencies:
   expandable_bottom_sheet: ^0.2.1+1
   bubble: ^1.1.9+1
   abouttoclose: ^1.0.0+1
+  multi_charts: ^0.2.0
 
 dependency_overrides:
   dartx: ^0.4.2

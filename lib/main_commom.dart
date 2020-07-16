@@ -14,7 +14,7 @@ import 'bloc/flutter_bloc_observer.dart';
 import 'core/domain/model/models.dart';
 import 'core/service/locator.dart';
 import 'core/service/services.dart';
-import 'widget/my_app.dart';
+import 'widget/core/my_app_connected.dart';
 import 'widget/my_app_injections.dart';
 
 void main() async {
@@ -32,15 +32,18 @@ void main() async {
   );
   initializeDateFormatting('pt_BR', null);
 
-  runZoned(() {
-    runApp(
-      MyAppInjections(
-        child: MyApp(
-          sharedPreferencesService: G<SharedPreferencesService>(),
+  runZoned(
+    () {
+      runApp(
+        MyAppInjections(
+          child: MyAppConnected(
+            sharedPreferencesService: G<SharedPreferencesService>(),
+          ),
         ),
-      ),
-    );
-  }, onError: G<CrashlyticsService>().crashlytics.recordError);
+      );
+    },
+    onError: G<CrashlyticsService>().crashlytics.recordError,
+  );
 }
 
 Future<void> initHive() async {

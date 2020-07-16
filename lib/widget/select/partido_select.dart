@@ -4,7 +4,6 @@ import 'package:smart_select/smart_select.dart';
 
 import '../../core/domain/model/models.dart';
 import '../../core/i18n/i18n.dart';
-import '../../page/theme/main_theme.dart';
 
 class PartidoSelect extends StatefulWidget {
   PartidoSelect(
@@ -41,7 +40,7 @@ class _PartidoSelectState extends State<PartidoSelect> {
         modalType: SmartSelectModalType.popupDialog,
         choiceConfig: SmartSelectChoiceConfig(
           style: SmartSelectChoiceStyle(
-            activeColor: theme.primaryColor,
+            activeColor: Theme.of(context).primaryColor,
             titleStyle: const TextStyle(
               fontSize: 14,
               fontFamily: 'Ubuntu',

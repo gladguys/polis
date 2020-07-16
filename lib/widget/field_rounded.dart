@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../page/theme/main_theme.dart';
-
 class FieldRounded extends StatelessWidget {
   const FieldRounded({
     this.width,
@@ -99,7 +97,7 @@ class FieldRounded extends StatelessWidget {
               width: widthSuffix,
               alignment: Alignment.center,
               child: FlatButton(
-                color: theme.primaryColor,
+                color: Theme.of(context).primaryColor,
                 padding: EdgeInsets.zero,
                 child: Text(
                   textSuffix,

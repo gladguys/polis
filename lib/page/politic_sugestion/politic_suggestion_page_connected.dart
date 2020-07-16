@@ -6,7 +6,6 @@ import '../../bloc/blocs.dart';
 import '../../core/repository/concrete/repositories.dart';
 import '../page_connected.dart';
 import '../pages.dart';
-import '../theme/main_theme.dart';
 
 class PoliticSuggestionPageConnected extends StatelessWidget {
   PoliticSuggestionPageConnected(this.stateOption);
@@ -17,7 +16,7 @@ class PoliticSuggestionPageConnected extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        systemNavigationBarColor: theme.scaffoldBackgroundColor,
+        systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );

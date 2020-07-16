@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import '../../../core/constants.dart';
-import '../../theme/main_theme.dart';
 
 import '../../../bloc/blocs.dart';
+import '../../../core/constants.dart';
 import '../../../core/domain/model/despesa_model.dart';
 import '../../../core/domain/model/models.dart';
 import '../../../core/extension/extensions.dart';
@@ -32,7 +31,7 @@ class _PoliticActivitiesState extends State<PoliticActivities> {
       currentPosition >= maxScrollPosition - kBottomOffsetToLoadMore;
   PoliticProfileBloc get politicProfileBloc =>
       context.bloc<PoliticProfileBloc>();
-  
+
   bool hasLoadedAlready;
   int currentActivitiesLength;
   int oldActivitiesLength;
@@ -87,7 +86,7 @@ class _PoliticActivitiesState extends State<PoliticActivities> {
               return Padding(
                 padding: const EdgeInsets.only(top: 16),
                 child: SpinKitThreeBounce(
-                  color: theme.primaryColor,
+                  color: Theme.of(context).primaryColor,
                   size: 32,
                 ),
               );

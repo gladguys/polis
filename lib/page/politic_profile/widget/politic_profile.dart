@@ -7,7 +7,6 @@ import '../../../bloc/blocs.dart';
 import '../../../core/extension/media_query_extensions.dart';
 import '../../../core/i18n/label.dart';
 import '../../../widget/text_title.dart';
-import '../../theme/main_theme.dart';
 import 'politic_action_buttons.dart';
 import 'politic_activities.dart';
 import 'politic_additional_info.dart';
@@ -43,7 +42,7 @@ class _PoliticProfileState extends State<PoliticProfile> {
     return Container(
       width: double.maxFinite,
       decoration: BoxDecoration(
-        color: theme.scaffoldBackgroundColor,
+        color: Theme.of(context).scaffoldBackgroundColor,
         boxShadow: [
           const BoxShadow(
             color: Colors.black12,
@@ -62,7 +61,7 @@ class _PoliticProfileState extends State<PoliticProfile> {
           FaIcon(
             FontAwesomeIcons.chevronUp,
             size: 16,
-            color: theme.accentColor.withOpacity(.25),
+            color: Theme.of(context).accentColor.withOpacity(.25),
           ),
           const SizedBox(height: 4),
           TextTitle(ACTIVITIES, fontSize: 15),
@@ -75,7 +74,7 @@ class _PoliticProfileState extends State<PoliticProfile> {
   Widget _buildPanel(BuildContext context) {
     final bloc = context.bloc<PoliticProfileBloc>();
     return Container(
-      color: theme.scaffoldBackgroundColor,
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: PoliticActivities(bloc.lastActivities),
     );
   }

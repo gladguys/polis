@@ -16,6 +16,14 @@ extension NumberExtension on String {
             locale: 'pt_BR', symbol: 'R\$', decimalDigits: 2)
         .format(double.parse(this));
   }
+
+  double sanitizePercentageToDouble() {
+    return double.parse(replaceAll('%', '').replaceAll(',', '.'));
+  }
+
+  double sanitizeToCleanDouble() {
+    return double.parse(replaceAll('.', '').replaceAll(',', ''));
+  }
 }
 
 extension DoubleExtension on double {

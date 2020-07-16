@@ -7,7 +7,6 @@ import '../../../../bloc/blocs.dart';
 import '../../../../core/domain/model/models.dart';
 import '../../../../core/extension/extensions.dart';
 import '../../../../widget/card_base.dart';
-import '../../../theme/main_theme.dart';
 import '../../../user_profile/user_profile_page_connected.dart';
 import 'menu_edit_delete_comment.dart';
 
@@ -22,7 +21,7 @@ class SubCommentTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
       child: Bubble(
-        color: theme.primaryColorLight,
+        color: context.primaryColorLight,
         padding: const BubbleEdges.all(8),
         radius: const Radius.circular(15),
         nip: BubbleNip.leftTop,

@@ -8,6 +8,7 @@ import 'package:hive/hive.dart';
 
 import '../core/abstract/polis_google_auth_provider.dart';
 import '../core/repository/abstract/comment_repository.dart';
+import '../core/repository/abstract/repositories.dart';
 import '../core/repository/concrete/http/dio_utils.dart';
 import '../core/repository/concrete/repositories.dart';
 import '../core/service/locator.dart';
@@ -164,9 +165,29 @@ class MyAppInjections extends StatelessWidget {
             firestore: Firestore.instance,
           ),
         ),
+        RepositoryProvider(
+          create: (_) => FirebasePoliticExpensesAnalysisRepository(
+            firestore: Firestore.instance,
+          ),
+        ),
+        RepositoryProvider(
+          create: (_) => FirebasePoliticExpensesAnalysisConfigRepository(
+            firestore: Firestore.instance,
+          ),
+        ),
         RepositoryProvider<CommentRepository>(
           create: (_) => HttpCommentRepository(
-            client: getDefaultClient(),
+            client: getMainApiDefaultClient(),
+          ),
+        ),
+        RepositoryProvider<PoliticExpensesAnalysisQuotaRepository>(
+          create: (_) => HttpPoliticExpensesAnalysisQuotaRepository(
+            client: getMainApiDefaultClient(),
+          ),
+        ),
+        RepositoryProvider<PoliticExpensesByTypeAnalysisRepository>(
+          create: (_) => HttpPoliticExpensesByTypeAnalysisRepository(
+            client: getScrapperApiDefaultClient(),
           ),
         ),
       ],

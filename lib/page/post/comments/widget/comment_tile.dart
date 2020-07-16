@@ -11,7 +11,6 @@ import '../../../../core/keys.dart';
 import '../../../../core/routing/route_names.dart';
 import '../../../../widget/card_base.dart';
 import '../../../pages.dart';
-import '../../../theme/main_theme.dart';
 import 'menu_edit_delete_comment.dart';
 
 class CommentTile extends StatelessWidget {
@@ -27,7 +26,7 @@ class CommentTile extends StatelessWidget {
       child: Bubble(
         color: user.userId == comment.usuarioId
             ? Colors.grey[200]
-            : theme.primaryColorLight,
+            : context.primaryColorLight,
         padding: const BubbleEdges.all(8),
         radius: const Radius.circular(15),
         nip: user.userId == comment.usuarioId

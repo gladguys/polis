@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smart_select/smart_select.dart';
 
 import '../../core/i18n/i18n.dart';
-import '../../page/theme/main_theme.dart';
 
 class EstadoSelect extends StatefulWidget {
   EstadoSelect({this.initialValue, @required this.onChange})
@@ -36,7 +35,7 @@ class _EstadoSelectState extends State<EstadoSelect> {
         onChange: widget.onChange,
         choiceConfig: SmartSelectChoiceConfig(
           style: SmartSelectChoiceStyle(
-            activeColor: theme.primaryColor,
+            activeColor: Theme.of(context).primaryColor,
             titleStyle: const TextStyle(
               fontSize: 14,
               fontFamily: 'Ubuntu',
