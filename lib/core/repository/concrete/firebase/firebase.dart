@@ -51,6 +51,7 @@ const QTD_NAO_CURTIDAS_FIELD = 'qtdNaoCurtidas';
 const FCM_TOKEN = 'fcmToken';
 const HASH = 'hash';
 const VALUE = 'value';
+const USER_CONFIGS_FIELD = 'userConfigs';
 
 // References
 const PARTIDO_SYNC = 'PARTIDOSYNC';

@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/domain/enum/configuracao.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/exception/exceptions.dart';
 import '../../core/repository/abstract/repositories.dart';
@@ -41,6 +42,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     if (event is UpdateCurrentUser) {
       yield* _mapUpdateCurrentUserToState(event);
     }
+    if (event is ChangeUserConfig) {
+      yield* _mapChangeUserConfigToState(event);
+    }
+    if (event is SetUserPickedTheme) {
+      yield* _mapSetUserPickedThemeToState(event);
+    }
   }
 
   void _mapStoreUser(StoreUser event) {
@@ -65,5 +72,46 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     user = event.user;
     await sharedPreferencesService.setUser(user);
     yield CurrentUserUpdated(user);
+  }
+
+  Stream<UserState> _mapChangeUserConfigToState(ChangeUserConfig event) async* {
+    try {
+      final config = event.config;
+      final configValue = event.value;
+      final currentUser = event.user;
+
+      final configName = configToStringKey(config);
+      final userConfigs = currentUser.userConfigs ?? {};
+
+      userConfigs[configName] = configValue;
+
+      user = user.copyWith(
+        userConfigs: {
+          ...userConfigs,
+        },
+      );
+
+      await sharedPreferencesService.setUser(user);
+      await repository.updateUserConfigs(user);
+
+      yield CurrentUserConfigUpdated(
+        user: user,
+        config: configName,
+        value: configValue,
+      );
+    } on Exception {
+      yield UpdateUserConfigFailed();
+    }
+  }
+
+  Stream<UserState> _mapSetUserPickedThemeToState(
+      SetUserPickedTheme event) async* {
+    try {
+      yield CurrentUserConfigUpdated(
+        user: event.user,
+      );
+    } on Exception {
+      yield UpdateUserConfigFailed();
+    }
   }
 }

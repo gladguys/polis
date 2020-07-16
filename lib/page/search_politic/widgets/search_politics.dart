@@ -9,7 +9,6 @@ import '../../../core/i18n/label.dart';
 import '../../../core/keys.dart';
 import '../../../widget/field_rounded.dart';
 import '../../../widget/select/selects.dart';
-import '../../theme/main_theme.dart';
 import 'search_politics_list.dart';
 
 class SearchPolitics extends StatelessWidget {
@@ -83,9 +82,9 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
               height: 40,
               child: OutlineButton(
                 key: searchPoliticsSlidersIconKey,
-                color: theme.primaryColor,
-                highlightedBorderColor: theme.primaryColorDark,
-                borderSide: BorderSide(color: theme.primaryColor),
+                color: Theme.of(context).primaryColor,
+                highlightedBorderColor: Theme.of(context).primaryColorDark,
+                borderSide: BorderSide(color: Theme.of(context).primaryColor),
                 padding: EdgeInsets.zero,
                 child: FaIcon(
                   FontAwesomeIcons.slidersH,

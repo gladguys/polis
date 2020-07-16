@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../core/i18n/message.dart';
-import '../page/theme/main_theme.dart';
 
 class ErrorContainer extends StatelessWidget {
   const ErrorContainer();
@@ -17,7 +16,7 @@ class ErrorContainer extends StatelessWidget {
           FaIcon(
             FontAwesomeIcons.exclamationCircle,
             size: 80,
-            color: theme.primaryColorLight,
+            color: Theme.of(context).primaryColorLight,
           ),
           const SizedBox(height: 12),
           Text(

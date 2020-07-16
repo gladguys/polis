@@ -16,6 +16,7 @@ class UserModel extends Equatable {
     this.isFirstLoginDone,
     this.authProvider,
     this.fcmToken,
+    this.userConfigs,
     this.userLikes,
     this.userUnlikes,
   });
@@ -27,6 +28,7 @@ class UserModel extends Equatable {
   final bool isFirstLoginDone;
   @JsonKey(fromJson: _fromJsonAuth, toJson: _toJsonAuth)
   final AuthProvider authProvider;
+  final Map<String, dynamic> userConfigs;
 
   @JsonKey(ignore: true)
   final String password;
@@ -56,6 +58,7 @@ class UserModel extends Equatable {
     bool isFirstLoginDone,
     AuthProvider authProvider,
     String fcmToken,
+    Map<String, dynamic> userConfigs,
     Map<String, bool> userLikes,
     Map<String, bool> userUnlikes,
   }) {
@@ -68,6 +71,7 @@ class UserModel extends Equatable {
       isFirstLoginDone: isFirstLoginDone ?? this.isFirstLoginDone,
       authProvider: authProvider ?? this.authProvider,
       fcmToken: fcmToken ?? this.fcmToken,
+      userConfigs: userConfigs ?? this.userConfigs,
       userLikes: userLikes ?? this.userLikes,
       userUnlikes: userUnlikes ?? this.userUnlikes,
     );
@@ -78,6 +82,6 @@ class UserModel extends Equatable {
 
   @override
   String toString() {
-    return '''UserModel{userId: $userId, name: $name, email: $email, photoUrl: $photoUrl, isFirstLoginDone: $isFirstLoginDone, authProvider: $authProvider, password: $password, fcmToken: $fcmToken}''';
+    return '''UserModel{userId: $userId, name: $name, email: $email, photoUrl: $photoUrl, isFirstLoginDone: $isFirstLoginDone, authProvider: $authProvider, password: $password, fcmToken: $fcmToken, userConfigs: $userConfigs, userLikes: $userLikes, userUnlikes: $userUnlikes}''';
   }
 }

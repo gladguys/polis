@@ -6,7 +6,6 @@ import '../../../core/i18n/i18n.dart';
 import '../../../core/routing/route_names.dart';
 import '../../../widget/photo.dart';
 import '../../pages.dart';
-import '../../theme/main_theme.dart';
 
 class PoliticWithExpensesInfo extends StatelessWidget {
   const PoliticWithExpensesInfo({
@@ -39,7 +38,9 @@ class PoliticWithExpensesInfo extends StatelessWidget {
       children: <Widget>[
         Container(
           width: 46,
-          child: exibePosicao ? _buildPosicao() : const SizedBox(height: 10),
+          child: exibePosicao
+              ? _buildPosicao(context)
+              : const SizedBox(height: 10),
         ),
         const SizedBox(width: 4),
         _buildPolitico(),
@@ -47,13 +48,13 @@ class PoliticWithExpensesInfo extends StatelessWidget {
     );
   }
 
-  Widget _buildPosicao() {
+  Widget _buildPosicao(BuildContext context) {
     return Container(
       width: 46,
       height: 46,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: theme.primaryColorLight,
+        color: Theme.of(context).primaryColorLight,
         borderRadius: BorderRadius.circular(23),
       ),
       child: Text(
@@ -102,7 +103,7 @@ class PoliticWithExpensesInfo extends StatelessWidget {
             const SizedBox(height: 2),
             Text(
               totalDespesas.formatCurrency(),
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Colors.green,
                 fontSize: 16,

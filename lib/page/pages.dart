@@ -43,6 +43,7 @@ export 'timeline/timeline_page.dart';
 export 'timeline/timeline_page_connected.dart';
 export 'tramitacao_proposta/tramitacao_proposta_page.dart';
 export 'tramitacao_proposta/tramitacao_proposta_page_connected.dart';
+export 'user_configs/user_configs_page.dart';
 export 'user_following_politics/user_following_politics_page.dart';
 export 'user_following_politics/user_following_politics_page_connected.dart';
 export 'user_profile/user_profile_page.dart';

@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
-import '../../page/theme/main_theme.dart';
 import '../label_value.dart';
 
 class ProposalAuthors extends StatefulWidget {
@@ -66,7 +65,7 @@ class _ProposalAuthorsState extends State<ProposalAuthors> {
         horizontal: 10,
       ),
       decoration: BoxDecoration(
-        border: Border.all(color: theme.primaryColorLight),
+        border: Border.all(color: Theme.of(context).primaryColorLight),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(

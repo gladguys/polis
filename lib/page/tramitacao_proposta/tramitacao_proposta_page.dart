@@ -10,7 +10,6 @@ import '../../widget/label_value.dart';
 import '../../widget/loading.dart';
 import '../../widget/text_title.dart';
 import '../../widget/timeline_tile.dart';
-import '../theme/main_theme.dart';
 
 class TramitacaoPropostaPage extends StatelessWidget {
   @override
@@ -89,7 +88,7 @@ class TramitacaoPropostaPage extends StatelessWidget {
                     horizontal: 8,
                   ),
                   decoration: BoxDecoration(
-                    color: theme.primaryColor,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
@@ -107,7 +106,7 @@ class TramitacaoPropostaPage extends StatelessWidget {
                     horizontal: 8,
                   ),
                   decoration: BoxDecoration(
-                    color: theme.primaryColor,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(

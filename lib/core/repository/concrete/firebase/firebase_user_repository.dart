@@ -56,4 +56,15 @@ class FirebaseUserRepository implements UserRepository {
       throw ComunicationException();
     }
   }
+
+  Future<void> updateUserConfigs(UserModel user) async {
+    final userConfigs = user.userConfigs;
+    try {
+      await userRef.document(user.userId).updateData({
+        USER_CONFIGS_FIELD: userConfigs,
+      });
+    } on Exception {
+      throw ComunicationException();
+    }
+  }
 }
