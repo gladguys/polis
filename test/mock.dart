@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -27,6 +28,12 @@ import 'package:sliding_panel/sliding_panel.dart';
 // Bloc
 class MockSigninBloc extends MockBloc<SigninEvent, SigninState>
     implements SigninBloc {}
+
+class MockSubCommentsBloc extends MockBloc<SubCommentsEvent, SubCommentsState>
+    implements SubCommentsBloc {}
+
+class MockCommentBloc extends MockBloc<CommentEvent, CommentState>
+    implements CommentBloc {}
 
 class MockEditProfileBloc extends MockBloc<EditProfileEvent, EditProfileState>
     implements EditProfileBloc {}
@@ -101,6 +108,8 @@ class MockEditProfileRepository extends Mock implements EditProfileRepository {}
 class MockTramitacaoPropostaRepository extends Mock
     implements TramitacaoPropostaRepository {}
 
+class MockCommentRepository extends Mock implements CommentRepository {}
+
 class MockChangePasswordRepository extends Mock
     implements ChangePasswordRepository {}
 
@@ -155,6 +164,8 @@ class MockFirebasePoliticoRepository extends Mock
 
 class MockHivePoliticoRepository extends Mock
     implements HivePoliticoRepository {}
+
+class MockHttpCommentRepository extends Mock implements HttpCommentRepository {}
 
 class MockSyncLogRepository extends Mock implements SyncLogRepository {}
 
@@ -255,3 +266,8 @@ class MockPanelController extends Mock implements PanelController {}
 
 class MockPoliticProfileStreamSubscription extends Mock
     implements StreamSubscription<PoliticProfileState> {}
+
+// Http
+class MockDio extends Mock implements Dio {}
+
+class MockResponse extends Mock implements Response {}

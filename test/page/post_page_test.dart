@@ -1,8 +1,10 @@
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:polis/core/domain/enum/post_type.dart';
 import 'package:polis/core/domain/model/models.dart';
+import 'package:polis/core/repository/abstract/repositories.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/pages.dart';
 
@@ -51,20 +53,23 @@ void main() {
     testWidgets('should build connected without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PostPageConnected(
-            post: DespesaModel(
-              nomePolitico: 'politico',
-              nomeFornecedor: 'fornecedor',
-              valorDocumento: '22.85',
-              fotoPolitico: 'foto',
-              tipoAtividade: 'tipo',
-              tipoDespesa: 'tipod',
-              valorLiquido: '22.85',
-              valorGlosa: '22.85',
-              dataDocumento: '10-01-2020',
-              urlPartidoLogo: 'logo',
+          RepositoryProvider<CommentRepository>(
+            create: (_) => MockCommentRepository(),
+            child: PostPageConnected(
+              post: DespesaModel(
+                nomePolitico: 'politico',
+                nomeFornecedor: 'fornecedor',
+                valorDocumento: '22.85',
+                fotoPolitico: 'foto',
+                tipoAtividade: 'tipo',
+                tipoDespesa: 'tipod',
+                valorLiquido: '22.85',
+                valorGlosa: '22.85',
+                dataDocumento: '10-01-2020',
+                urlPartidoLogo: 'logo',
+              ),
+              postType: PostType.DESPESA,
             ),
-            postType: PostType.DESPESA,
           ),
         ),
       );
@@ -73,20 +78,23 @@ void main() {
     testWidgets('should build without exploding with despesa', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PostPageConnected(
-            post: DespesaModel(
-              nomePolitico: 'politico',
-              nomeFornecedor: 'fornecedor',
-              valorDocumento: '22.85',
-              fotoPolitico: 'foto',
-              tipoAtividade: 'tipo',
-              tipoDespesa: 'tipod',
-              valorLiquido: '22.85',
-              valorGlosa: '22.85',
-              dataDocumento: '10-01-2020',
-              urlPartidoLogo: 'url',
+          RepositoryProvider<CommentRepository>(
+            create: (_) => MockCommentRepository(),
+            child: PostPageConnected(
+              post: DespesaModel(
+                nomePolitico: 'politico',
+                nomeFornecedor: 'fornecedor',
+                valorDocumento: '22.85',
+                fotoPolitico: 'foto',
+                tipoAtividade: 'tipo',
+                tipoDespesa: 'tipod',
+                valorLiquido: '22.85',
+                valorGlosa: '22.85',
+                dataDocumento: '10-01-2020',
+                urlPartidoLogo: 'url',
+              ),
+              postType: PostType.DESPESA,
             ),
-            postType: PostType.DESPESA,
           ),
         ),
       );
@@ -97,21 +105,24 @@ void main() {
       final mockTimelineBloc = MockTimelineBloc();
       await tester.pumpWidget(
         connectedWidget(
-          PostPageConnected(
-            post: DespesaModel(
-              nomePolitico: 'politico',
-              nomeFornecedor: 'fornecedor',
-              valorDocumento: '22.85',
-              fotoPolitico: 'foto',
-              tipoAtividade: 'tipo',
-              tipoDespesa: 'tipod',
-              valorLiquido: '22.85',
-              valorGlosa: '22.85',
-              dataDocumento: '10-01-2020',
-              urlPartidoLogo: 'url',
+          RepositoryProvider<CommentRepository>(
+            create: (_) => MockCommentRepository(),
+            child: PostPageConnected(
+              post: DespesaModel(
+                nomePolitico: 'politico',
+                nomeFornecedor: 'fornecedor',
+                valorDocumento: '22.85',
+                fotoPolitico: 'foto',
+                tipoAtividade: 'tipo',
+                tipoDespesa: 'tipod',
+                valorLiquido: '22.85',
+                valorGlosa: '22.85',
+                dataDocumento: '10-01-2020',
+                urlPartidoLogo: 'url',
+              ),
+              postType: PostType.DESPESA,
+              timelineBloc: mockTimelineBloc,
             ),
-            postType: PostType.DESPESA,
-            timelineBloc: mockTimelineBloc,
           ),
         ),
       );
@@ -122,19 +133,22 @@ void main() {
       final mockTimelineBloc = MockTimelineBloc();
       await tester.pumpWidget(
         connectedWidget(
-          PostPageConnected(
-            post: PropostaModel(
-              nomePolitico: 'politico',
-              tipoDocumento: 'PROPOSICAO',
-              fotoPolitico: 'foto',
-              siglaPartido: 'PT',
-              dataAtualizacao: '10-01-2020',
-              nomesAutores: ['a', 'b', 'c'],
-              foiAtualizada: true,
-              urlPartidoLogo: 'logo',
+          RepositoryProvider<CommentRepository>(
+            create: (_) => MockCommentRepository(),
+            child: PostPageConnected(
+              post: PropostaModel(
+                nomePolitico: 'politico',
+                tipoDocumento: 'PROPOSICAO',
+                fotoPolitico: 'foto',
+                siglaPartido: 'PT',
+                dataAtualizacao: '10-01-2020',
+                nomesAutores: ['a', 'b', 'c'],
+                foiAtualizada: true,
+                urlPartidoLogo: 'logo',
+              ),
+              postType: PostType.PROPOSICAO,
+              timelineBloc: mockTimelineBloc,
             ),
-            postType: PostType.PROPOSICAO,
-            timelineBloc: mockTimelineBloc,
           ),
         ),
       );
@@ -143,18 +157,21 @@ void main() {
     testWidgets('should build without exploding with proposta', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PostPageConnected(
-            post: PropostaModel(
-              nomePolitico: 'politico',
-              tipoDocumento: 'PROPOSICAO',
-              fotoPolitico: 'foto',
-              siglaPartido: 'PT',
-              dataAtualizacao: '10-01-2020',
-              nomesAutores: ['a', 'b', 'c'],
-              foiAtualizada: false,
-              urlPartidoLogo: 'logo',
+          RepositoryProvider<CommentRepository>(
+            create: (_) => MockCommentRepository(),
+            child: PostPageConnected(
+              post: PropostaModel(
+                nomePolitico: 'politico',
+                tipoDocumento: 'PROPOSICAO',
+                fotoPolitico: 'foto',
+                siglaPartido: 'PT',
+                dataAtualizacao: '10-01-2020',
+                nomesAutores: ['a', 'b', 'c'],
+                foiAtualizada: false,
+                urlPartidoLogo: 'logo',
+              ),
+              postType: PostType.PROPOSICAO,
             ),
-            postType: PostType.PROPOSICAO,
           ),
         ),
       );

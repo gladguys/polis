@@ -33,6 +33,11 @@ class CurrentUserUpdated extends UserState {
   List<Object> get props => [user];
 }
 
+class UpdateCurrentUserFailed extends UserState {
+  @override
+  List<Object> get props => [];
+}
+
 class CurrentUserConfigUpdated extends UserState {
   CurrentUserConfigUpdated({this.user, this.config, this.value});
 

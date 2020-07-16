@@ -25,6 +25,7 @@ void main() {
               ),
               child: PoliticsFollowingQuantity(
                 politics: [],
+                user: UserModel(userId: '1'),
               ),
             ),
           ),

@@ -32,18 +32,21 @@ void main() {
     });
 
     testWidgets('should build connected without exploding', (tester) async {
+      final user = UserModel(
+        userId: '1',
+      );
       await tester.pumpWidget(
         connectedWidget(
           BlocProvider(
             create: (_) => UserBloc(
               repository: MockUserRepository(),
-              user: UserModel(
-                userId: '1',
-              ),
+              user: user,
               analyticsService: MockAnalyticsService(),
               sharedPreferencesService: MockSharedPreferencesService(),
             ),
-            child: UserFollowingPoliticsPageConnected(),
+            child: UserFollowingPoliticsPageConnected(
+              user: user,
+            ),
           ),
         ),
       );

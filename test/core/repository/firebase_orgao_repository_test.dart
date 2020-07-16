@@ -39,7 +39,10 @@ void main() {
         when(mockPoliticosCollectionReference.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
         when(mockQuerySnapshot.documents).thenReturn([mockDocumentSnapshot]);
-        when(mockDocumentSnapshot.data).thenReturn({'id': '1', 'sigla': 'T'});
+        when(mockDocumentSnapshot.data).thenReturn({
+          ID_FIELD: '1',
+          'sigla': 'T',
+        });
 
         final politicosMap = await firebaseOrgaoRepository.getAllOrgaosMap();
         expect(politicosMap['T'].id, '1');
@@ -61,7 +64,10 @@ void main() {
         when(mockPoliticosCollectionReference.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
         when(mockQuerySnapshot.documents).thenReturn([mockDocumentSnapshot]);
-        when(mockDocumentSnapshot.data).thenReturn({'id': '1', 'sigla': 'T'});
+        when(mockDocumentSnapshot.data).thenReturn({
+          ID_FIELD: '1',
+          'sigla': 'T',
+        });
 
         final politicosMap = await firebaseOrgaoRepository.getAllOrgaos();
         expect(politicosMap[0].id, '1');

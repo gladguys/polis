@@ -46,6 +46,17 @@ class FirebaseUserRepository implements UserRepository {
   }
 
   @override
+  Future<void> saveUserComments(
+      {UserModel user, Map<String, bool> comments}) async {
+    try {
+      await userRef.document(user.userId).updateData({
+        USER_COMMENTS_FIELD: comments,
+      });
+    } on Exception {
+      throw ComunicationException();
+    }
+  }
+
   Future<void> updateUserConfigs(UserModel user) async {
     final userConfigs = user.userConfigs;
     try {

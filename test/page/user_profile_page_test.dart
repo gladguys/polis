@@ -72,11 +72,15 @@ void main() {
           BlocProvider(
             create: (_) => UserBloc(
               repository: MockUserRepository(),
-              user: UserModel(),
+              user: UserModel(
+                userId: '1',
+              ),
               analyticsService: MockAnalyticsService(),
               sharedPreferencesService: MockSharedPreferencesService(),
             ),
-            child: UserProfilePageConnected(),
+            child: UserProfilePageConnected(
+              userId: '1',
+            ),
           ),
         ),
       );
@@ -85,6 +89,12 @@ void main() {
     testWidgets('should build info when success with no activity',
         (tester) async {
       provideMockedNetworkImages(() async {
+        final user = UserModel(
+          name: 'name',
+          email: 'email',
+          photoUrl: 'photo',
+        );
+        when(mockUserProfileBloc.user).thenReturn(user);
         when(mockUserProfileBloc.state).thenReturn(
           FetchUserRelatedInfoSuccess(
             userActions: [],
@@ -99,11 +109,7 @@ void main() {
             BlocProvider(
               create: (_) => UserBloc(
                 repository: MockUserRepository(),
-                user: UserModel(
-                  name: 'name',
-                  email: 'email',
-                  photoUrl: 'photo',
-                ),
+                user: user,
                 analyticsService: MockAnalyticsService(),
                 sharedPreferencesService: MockSharedPreferencesService(),
               ),
@@ -122,6 +128,12 @@ void main() {
 
     testWidgets('should build info when success with activity', (tester) async {
       provideMockedNetworkImages(() async {
+        final user = UserModel(
+          name: 'name',
+          email: 'email',
+          photoUrl: 'photo',
+        );
+        when(mockUserProfileBloc.user).thenReturn(user);
         when(mockUserProfileBloc.state).thenReturn(
           FetchUserRelatedInfoSuccess(
             userActions: [
@@ -188,11 +200,7 @@ void main() {
             BlocProvider(
               create: (_) => UserBloc(
                 repository: MockUserRepository(),
-                user: UserModel(
-                  name: 'name',
-                  email: 'email',
-                  photoUrl: 'photo',
-                ),
+                user: user,
                 analyticsService: MockAnalyticsService(),
                 sharedPreferencesService: MockSharedPreferencesService(),
               ),
@@ -319,15 +327,15 @@ void main() {
     });
 
     testWidgets('should build with logout button', (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(
-        UserModel(
-          name: 'name',
-          email: 'email',
-          photoUrl: 'photo',
-        ),
+      final user = UserModel(
+        name: 'name',
+        email: 'email',
+        photoUrl: 'photo',
       );
+      final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.user).thenReturn(user);
       final mockUserProfileBloc = MockUserProfileBloc();
+      when(mockUserProfileBloc.user).thenReturn(user);
       when(mockUserProfileBloc.state).thenReturn(
         FetchUserRelatedInfoSuccess(
           userActions: [

@@ -13,11 +13,23 @@ class FirebaseUserProfileRepository implements UserProfileRepository {
 
   final Firestore firestore;
 
+  CollectionReference get usersRef => firestore.collection(USERS_COLLECTION);
   CollectionReference get politicosSeguidosRef =>
       firestore.collection(POLITICOS_SEGUIDOS_COLLECTION);
   CollectionReference get acoesRef => firestore.collection(ACOES_COLLECTION);
   CollectionReference get atividadesRef =>
       firestore.collection(ATIVIDADES_COLLECTION);
+
+  @override
+  Future<UserModel> getUserInfo(String userId) async {
+    try {
+      final userDocumentReference = await usersRef.document(userId);
+      final documentSnapshot = await userDocumentReference.get();
+      return UserModel.fromJson(documentSnapshot.data);
+    } on Exception {
+      throw ComunicationException();
+    }
+  }
 
   @override
   Future<List<PoliticoModel>> getPoliticsFollowing(String userId) async {

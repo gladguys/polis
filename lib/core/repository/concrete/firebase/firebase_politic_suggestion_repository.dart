@@ -48,7 +48,7 @@ class FirebasePoliticSuggestionRepository
         await politicosSeguidosRef
             .document(userId)
             .collection(POLITICOS_SEGUIDOS_SUBCOLLECTION)
-            .document(politic['id'])
+            .document(politic[ID_FIELD])
             .setData(politic);
       }
     } on Exception {

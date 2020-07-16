@@ -7,8 +7,9 @@ import '../../../core/routing/route_names.dart';
 import '../../pages.dart';
 
 class PoliticsFollowingQuantity extends StatelessWidget {
-  PoliticsFollowingQuantity({this.politics});
+  PoliticsFollowingQuantity({this.user, this.politics});
 
+  final UserModel user;
   final List<PoliticoModel> politics;
 
   @override
@@ -16,7 +17,9 @@ class PoliticsFollowingQuantity extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(5),
       onTap: () => SimpleRouter.forwardAndReplace(
-        UserFollowingPoliticsPageConnected(),
+        UserFollowingPoliticsPageConnected(
+          user: user,
+        ),
         name: USER_FOLLOWING_POLITICS_PAGE,
       ),
       child: Column(

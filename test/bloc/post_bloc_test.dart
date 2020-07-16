@@ -173,7 +173,7 @@ void main() {
         ]);
         return PostBloc(
           post: {
-            'id': 1,
+            ID_FIELD: 1,
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
@@ -188,7 +188,7 @@ void main() {
       expect: [
         PostFavoriteStatusChanged(
           post: {
-            'id': 1,
+            ID_FIELD: 1,
             FAVORITO_FIELD: true,
           },
           isFavorite: false,
@@ -215,8 +215,8 @@ void main() {
         ]);
         return PostBloc(
           post: {
-            'id': 1,
-            'idPropostaPolitico': '1',
+            ID_FIELD: 1,
+            ID_PROPOSTA_POLITICO_FIELD: '1',
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
@@ -231,8 +231,8 @@ void main() {
       expect: [
         PostFavoriteStatusChanged(
           post: {
-            'id': 1,
-            'idPropostaPolitico': '1',
+            ID_FIELD: 1,
+            ID_PROPOSTA_POLITICO_FIELD: '1',
             FAVORITO_FIELD: true,
           },
           isFavorite: false,

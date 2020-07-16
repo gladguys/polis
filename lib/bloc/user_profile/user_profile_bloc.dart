@@ -17,6 +17,8 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
         super(InitialUserProfileState());
 
   final UserProfileRepository repository;
+
+  UserModel user;
   List<PoliticoModel> politicsFollowing;
   List<AcaoUsuarioModel> userActions;
 
@@ -35,8 +37,10 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     yield LoadingFetchUserInfo();
 
     try {
-      politicsFollowing = await repository.getPoliticsFollowing(event.userId);
-      userActions = await repository.getUserActions(event.userId);
+      final userId = event.userId;
+      user = await repository.getUserInfo(userId);
+      politicsFollowing = await repository.getPoliticsFollowing(userId);
+      userActions = await repository.getUserActions(userId);
 
       yield FetchUserRelatedInfoSuccess(
         politicsFollowing: politicsFollowing,

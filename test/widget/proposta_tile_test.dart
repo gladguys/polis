@@ -104,11 +104,9 @@ void main() {
         (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          connectedWidget(
-            PageConnected<TimelineBloc>(
-              bloc: null,
-              page: PropostaTileConnected(proposta),
-            ),
+          PageConnected<TimelineBloc>(
+            bloc: null,
+            page: PropostaTileConnected(proposta),
           ),
         ),
       );

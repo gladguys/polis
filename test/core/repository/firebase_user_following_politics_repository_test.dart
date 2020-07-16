@@ -53,7 +53,9 @@ void main() {
         when(mockQuerySnapshot.documents).thenReturn([
           mockDocumentSnapshot,
         ]);
-        when(mockDocumentSnapshot.data).thenReturn({'id': '2'});
+        when(mockDocumentSnapshot.data).thenReturn({
+          ID_FIELD: '2',
+        });
         final politics = await firebaseUserFollowingPoliticsRepository
             .getFollowingPolitics('1');
         expect(politics.length, 1);

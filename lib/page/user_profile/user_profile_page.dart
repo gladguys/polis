@@ -6,6 +6,8 @@ import '../../bloc/blocs.dart';
 import '../../core/routing/route_names.dart';
 import '../../widget/error_container.dart';
 import '../pages.dart';
+import '../user_profile/widget/user_profile.dart';
+import '../user_profile/widget/user_profile_skeleton.dart';
 import 'widget/user_profile.dart';
 import 'widget/user_profile_skeleton.dart';
 
@@ -33,6 +35,7 @@ class UserProfilePage extends StatelessWidget {
                   context.bloc<UserProfileBloc>().politicsFollowing;
               final userActions = context.bloc<UserProfileBloc>().userActions;
               return UserProfile(
+                user: context.bloc<UserProfileBloc>().user,
                 politicsFollowing: politicsFollowing,
                 userActions: userActions,
               );

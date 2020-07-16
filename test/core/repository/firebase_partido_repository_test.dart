@@ -39,7 +39,9 @@ void main() {
         when(mockPartidosCollectionReference.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
         when(mockQuerySnapshot.documents).thenReturn([mockDocumentSnapshot]);
-        when(mockDocumentSnapshot.data).thenReturn({'id': '1'});
+        when(mockDocumentSnapshot.data).thenReturn({
+          ID_FIELD: '1',
+        });
 
         final partidos = await firebasePartidoRepository.getAllPartidos();
         expect(partidos[0].id, '1');

@@ -1,11 +1,16 @@
 export 'action_repository.dart';
 export 'change_password_repository.dart';
+export 'comment_repository.dart';
 export 'comparativo_ranking_despesas_repository.dart';
 export 'edit_profile_repository.dart';
 export 'favorite_posts_repository.dart';
 export 'follow_repository.dart';
 export 'orgao_repository.dart';
 export 'partido_repository.dart';
+export 'politic_expenses_analysis_config_repository.dart';
+export 'politic_expenses_analysis_quota_repository.dart';
+export 'politic_expenses_analysis_repository.dart';
+export 'politic_expenses_by_type_analysis_repository.dart';
 export 'politic_expenses_repository.dart';
 export 'politic_followers_repository.dart';
 export 'politic_profile_repository.dart';

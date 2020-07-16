@@ -9,6 +9,7 @@ import '../../core/domain/enum/post_type.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/extension/extensions.dart';
 import '../../core/i18n/i18n.dart';
+import '../../core/repository/concrete/firebase/firebase.dart';
 import '../../core/routing/route_names.dart';
 import '../../page/pages.dart';
 import '../button_action_card.dart';
@@ -164,7 +165,7 @@ class FavoriteDespesaTile extends StatelessWidget {
               onTap: () => context.bloc<PostBloc>().add(
                     FavoritePostForUser(
                       post: {
-                        'id': despesa.id,
+                        ID_FIELD: despesa.id,
                         ...despesa.toJson(),
                       },
                       user: context.bloc<UserBloc>().user,

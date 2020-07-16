@@ -12,6 +12,7 @@ const USUARIOS_SEGUINDO_COLLECTION = 'usuarios_seguindo';
 const POSTS_FAVORITOS_COLLECTION = 'posts_favoritos';
 const SYNC_LOG_COLLECTION = 'sync_log';
 const RESULTADOS_RANKING_COLLECTION = 'resultados_ranking';
+const TOTALIZADOR_DESPESAS_COLLECTION = 'totalizador_despesas';
 
 // Subcollection
 const POLITICOS_SEGUIDOS_SUBCOLLECTION = 'politicosSeguidos';
@@ -21,8 +22,13 @@ const ATIVIDADES_TIMELINE_SUBCOLLECTION = 'atividadesTimeline';
 const ATIVIDADES_POLITICO_SUBCOLLECTION = 'atividadesPolitico';
 const POSTS_FAVORITOS_USUARIO_SUBCOLLECTION = 'postsFavoritosUsuario';
 const ACOES_USUARIO_SUBCOLLECTION = 'acoesUsuario';
+const TOTAIS_ANO_SUBCOLLECTION = 'totaisAno';
+const TOTAL_MES_SUBCOLLECTION = 'totalMes';
 
 // Field
+const ID_FIELD = 'id';
+const ID_PROPOSTA_POLITICO_FIELD = 'idPropostaPolitico';
+const COD_DOCUMENTO_FIELD = 'codDocumento';
 const SIGLA_UF_FIELD = 'siglaUf';
 const FAVORITO_FIELD = 'favorito';
 const USER_LIKES_FIELD = 'userLikes';
@@ -39,14 +45,17 @@ const DATA_ACAO = 'data';
 const DATA_FAVORITADO_FIELD = 'dataFavoritado';
 const SEQUENCIA_FIELD = 'sequencia';
 const VISUALIZADO_FIELD = 'visualizado';
+const USER_COMMENTS_FIELD = 'userComments';
 const QTD_CURTIDAS_FIELD = 'qtdCurtidas';
 const QTD_NAO_CURTIDAS_FIELD = 'qtdNaoCurtidas';
 const FCM_TOKEN = 'fcmToken';
 const HASH = 'hash';
+const VALUE = 'value';
 const USER_CONFIGS_FIELD = 'userConfigs';
 
 // References
 const PARTIDO_SYNC = 'PARTIDOSYNC';
 const POLITICO_SYNC = 'POLITICOSYNC';
 const ORGAO_SYNC = 'ORGAOSYNC';
+const INICIO_ANO_DESPESAS = 'INICIO_ANO_DESPESAS';
 const RANKING = 'ranking';
