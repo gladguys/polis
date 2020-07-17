@@ -20,7 +20,7 @@ class EditingTopPart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Divider(color: Theme.of(context).primaryColor, height: 1,),
+        const Divider(height: 1),
         const SizedBox(height: 8),
         Container(
           width: 360,
@@ -30,7 +30,6 @@ class EditingTopPart extends StatelessWidget {
               FaIcon(
                 FontAwesomeIcons.pen,
                 size: 16,
-                color: Theme.of(context).primaryColor,
               ),
               const SizedBox(width: 8),
               Text(
@@ -38,7 +37,6 @@ class EditingTopPart extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: Theme.of(context).primaryColor,
                 ),
               ),
               const Spacer(),
