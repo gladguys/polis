@@ -26,6 +26,8 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
+  bool get isUserPickedTheLocal => context.bloc<UserBloc>().user == widget.user;
+
   @override
   Widget build(BuildContext context) {
     var persistentContentHeight = context.screenHeight * 0.40;
@@ -85,9 +87,12 @@ class _UserProfileState extends State<UserProfile> {
     return Column(
       children: <Widget>[
         const SizedBox(height: 8),
-        LogoutButton(),
-        ConfigsButton(),
-        PersonalUserInfo(user: context.bloc<UserBloc>().user),
+        isUserPickedTheLocal ? LogoutButton() : const SizedBox.shrink(),
+        isUserPickedTheLocal ? ConfigsButton() : const SizedBox.shrink(),
+        PersonalUserInfo(
+          user: widget.user,
+          isUserPickedTheLocal: isUserPickedTheLocal,
+        ),
         const SizedBox(height: 16),
         PoliticsFollowingQuantity(
           user: widget.user,

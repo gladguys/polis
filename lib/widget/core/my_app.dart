@@ -43,10 +43,14 @@ class MyApp extends StatelessWidget {
               : lightTheme;
         }
         if (state is CurrentUserConfigUpdated) {
-          choosedTheme = state.user.userConfigs[
-                  configToStringKey(Configuracao.isDarkModeEnabled)]
-              ? darkTheme
-              : lightTheme;
+          if (state.user.userConfigs == null) {
+            choosedTheme = lightTheme;
+          } else {
+            choosedTheme = state.user.userConfigs[
+                    configToStringKey(Configuracao.isDarkModeEnabled)]
+                ? darkTheme
+                : lightTheme;
+          }
         }
         return MaterialApp(
           title: POLIS,
