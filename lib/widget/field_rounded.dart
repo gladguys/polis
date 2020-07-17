@@ -21,6 +21,7 @@ class FieldRounded extends StatelessWidget {
     this.onPressedSuffix,
     this.onPressedSuffix2,
     this.controller,
+    this.initialValue,
   });
 
   final double width;
@@ -41,6 +42,7 @@ class FieldRounded extends StatelessWidget {
   final Function onPressedSuffix;
   final Function onPressedSuffix2;
   final TextEditingController controller;
+  final String initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +54,10 @@ class FieldRounded extends StatelessWidget {
         Container(
           height: 40,
           width: width,
-          child: TextField(
+          child: TextFormField(
             controller: controller,
             key: key,
+            initialValue: initialValue,
             style: const TextStyle(fontSize: 14),
             decoration: InputDecoration(
               hintText: hintText,
