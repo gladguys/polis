@@ -6,20 +6,15 @@ class FieldRounded extends StatelessWidget {
     this.width,
     this.key,
     this.keySuffix,
-    this.keySuffix2,
     this.iconPrefix,
     this.iconSuffix,
-    this.iconSuffix2,
     this.textSuffix,
     this.widthSuffix,
     this.backgroundColorSuffix,
-    this.backgroundColorSuffix2,
     this.fontColorSuffix,
-    this.fontColorSuffix2,
     this.hintText,
     this.onChanged,
     this.onPressedSuffix,
-    this.onPressedSuffix2,
     this.controller,
     this.initialValue,
   });
@@ -27,27 +22,22 @@ class FieldRounded extends StatelessWidget {
   final double width;
   final Key key;
   final Key keySuffix;
-  final Key keySuffix2;
   final IconData iconPrefix;
   final IconData iconSuffix;
-  final IconData iconSuffix2;
   final String textSuffix;
   final double widthSuffix;
   final Color backgroundColorSuffix;
-  final Color backgroundColorSuffix2;
   final Color fontColorSuffix;
-  final Color fontColorSuffix2;
   final String hintText;
   final Function onChanged;
   final Function onPressedSuffix;
-  final Function onPressedSuffix2;
   final TextEditingController controller;
   final String initialValue;
 
   @override
   Widget build(BuildContext context) {
     final paddingLeft = iconPrefix != null ? 36.0 : 16.0;
-    final paddingRight = iconSuffix != null ? 48.0 : 16.0;
+    final paddingRight = iconSuffix != null ? 54.0 : 16.0;
 
     return Stack(
       children: <Widget>[
@@ -131,27 +121,6 @@ class FieldRounded extends StatelessWidget {
                   color: fontColorSuffix,
                 ),
                 onPressed: onPressedSuffix,
-              ),
-            ),
-          ),
-        if (iconSuffix2 != null)
-          Positioned(
-            right: 54,
-            top: 5,
-            child: Container(
-              width: 46,
-              height: 30,
-              alignment: Alignment.center,
-              child: FlatButton(
-                color: backgroundColorSuffix2,
-                padding: EdgeInsets.zero,
-                child: FaIcon(
-                  iconSuffix2,
-                  key: keySuffix2,
-                  size: 16,
-                  color: fontColorSuffix2,
-                ),
-                onPressed: onPressedSuffix2,
               ),
             ),
           ),

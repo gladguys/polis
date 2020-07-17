@@ -28,7 +28,7 @@ class EditCommentContainer extends StatelessWidget {
         alignment: Alignment.center,
         color: context.baseBackgroundColor,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             EditingTopPart(
               text: comment.texto,
@@ -38,29 +38,26 @@ class EditCommentContainer extends StatelessWidget {
                 commentInputController.clear();
               },
             ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: FieldRounded(
-                hintText: COMMENT_HERE,
-                width: 360,
-                iconSuffix: FontAwesomeIcons.check,
-                backgroundColorSuffix: Colors.green,
-                fontColorSuffix: Colors.white,
-                keySuffix: commentButtonKey,
-                controller: commentInputController,
-                onPressedSuffix: () {
-                  context.bloc<CommentBloc>().add(
-                        EditComment(
-                          comment: comment,
-                          newText: commentInputController.text,
-                        ),
-                      );
-                  commentInputController.clear();
-                },
-              ),
-            ),
             const SizedBox(height: 12),
+            FieldRounded(
+              hintText: COMMENT_HERE,
+              width: 360,
+              iconSuffix: FontAwesomeIcons.check,
+              backgroundColorSuffix: Colors.green,
+              fontColorSuffix: Colors.white,
+              keySuffix: commentButtonKey,
+              controller: commentInputController,
+              onPressedSuffix: () {
+                context.bloc<CommentBloc>().add(
+                      EditComment(
+                        comment: comment,
+                        newText: commentInputController.text,
+                      ),
+                    );
+                commentInputController.clear();
+              },
+            ),
+            const SizedBox(height: 8),
           ],
         ),
       ),

@@ -20,51 +20,56 @@ class EditingTopPart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        const Divider(color: Colors.grey, height: 16),
+        Divider(color: Theme.of(context).primaryColor, height: 1,),
+        const SizedBox(height: 8),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
           width: 360,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               FaIcon(
                 FontAwesomeIcons.pen,
                 size: 16,
+                color: Theme.of(context).primaryColor,
               ),
               const SizedBox(width: 8),
               Text(
                 '$EDIT_COMMENT:',
-                style: const TextStyle(
+                style: TextStyle(
+                  fontSize: 16,
                   fontWeight: FontWeight.w500,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              const Spacer(),
+              Material(
+                borderRadius: BorderRadius.circular(11),
+                clipBehavior: Clip.antiAlias,
+                child: InkWell(
+                  child: Container(
+                    width: 22,
+                    height: 22,
+                    alignment: Alignment.center,
+                    child: FaIcon(
+                      FontAwesomeIcons.times,
+                      size: 20,
+                    ),
+                  ),
+                  onTap: onCancelEditing,
                 ),
               ),
             ],
           ),
         ),
         const SizedBox(height: 4),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16),
-                  child: Text(
-                    text,
-                    textAlign: TextAlign.start,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ),
-              IconButton(
-                icon: Icon(Icons.cancel),
-                onPressed: onCancelEditing,
-              ),
-            ],
+        Container(
+          width: 360,
+          child: Text(
+            text,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
-        const Divider(),
       ],
     );
   }
