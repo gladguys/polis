@@ -12,17 +12,17 @@ dependencies:
 
   # Core
   intl: ^0.16.1
-  flutter_bloc: ^5.0.0
-  bloc: ^5.0.0
+  flutter_bloc: ^5.0.1
+  bloc: ^5.0.1
   simple_router: ^0.1.0+1
-  equatable: ^1.2.0
+  equatable: ^1.2.2
   json_serializable: ^3.3.0
   hive: ^1.4.1+1
   hive_flutter: ^0.3.0+2
   get_it: ^4.0.2
-  shared_preferences: ^0.5.7+3
-  image_picker: ^0.6.7+3
-  url_launcher: ^5.4.11
+  shared_preferences: ^0.5.8
+  image_picker: ^0.6.7+4
+  url_launcher: ^5.5.0
   flutter_native_admob: ^2.1.0
   dio: ^3.0.9
 
@@ -55,7 +55,7 @@ dependencies:
   flutter_grid_delegate_ext: ^0.0.2
   sliding_panel: ^1.0.3
   skeleton_text: ^1.0.0
-  flare_flutter: ^2.0.4
+  flare_flutter: ^2.0.5
   flutter_spinkit: ^4.1.2+1
   expandable_bottom_sheet: ^0.2.1+1
   bubble: ^1.1.9+1
@@ -77,7 +77,7 @@ dev_dependencies:
 
   # Tests
   test: ^1.14.4
-  bloc_test: ^6.0.0
+  bloc_test: ^6.0.1
   mockito: ^4.1.1
   image_test_utils:
     git: 'https://github.com/MarcinusX/image_test_utils'
