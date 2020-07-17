@@ -11,9 +11,9 @@ import '../../../user_profile/user_profile_page_connected.dart';
 import 'menu_edit_delete_comment.dart';
 
 class SubCommentTile extends StatelessWidget {
-  SubCommentTile(this.comment);
+  SubCommentTile(this.subComment);
 
-  final SubCommentModel comment;
+  final SubCommentModel subComment;
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +21,14 @@ class SubCommentTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
       child: Bubble(
-        color: context.primaryColorLight,
+        color: user.userId == subComment.usuarioId
+            ? Colors.grey[200]
+            : context.primaryColorLight,
         padding: const BubbleEdges.all(8),
         radius: const Radius.circular(15),
-        nip: BubbleNip.leftTop,
+        nip: user.userId == subComment.usuarioId
+            ? BubbleNip.rightBottom
+            : BubbleNip.leftTop,
         nipHeight: 12,
         child: CardBase(
           slotBottomWithIndent: false,
@@ -38,33 +42,35 @@ class SubCommentTile extends StatelessWidget {
                   InkWell(
                     onTap: () => SimpleRouter.forward(
                       UserProfilePageConnected(
-                        userId: comment.usuarioId,
+                        userId: subComment.usuarioId,
                       ),
                     ),
                     child: Text(
-                      comment.usuarioNome,
+                      subComment.usuarioNome,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
-                  (comment.usuarioId == user.userId)
+                  (subComment.usuarioId == user.userId)
                       ? MenuEditDeleteComment(
-                          onEdit: () => {},
+                          onEdit: () => context.bloc<SubCommentsBloc>().add(
+                                StartEditingSubComment(subComment),
+                              ),
                           onDelete: () => context.bloc<SubCommentsBloc>().add(
-                                DeleteSubComment(subComment: comment),
+                                DeleteSubComment(subComment: subComment),
                               ),
                         )
                       : Container(),
                 ],
               ),
               const SizedBox(height: 4),
-              Text(comment.texto),
+              Text(subComment.texto),
             ],
           ),
           slotBottom: Text(
-            comment.diaHora.toString().formatDateTime(),
+            subComment.diaHora.toString().formatDateTime(),
             textAlign: TextAlign.end,
             style: TextStyle(
               fontSize: 11,

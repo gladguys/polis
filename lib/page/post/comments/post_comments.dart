@@ -41,7 +41,7 @@ class _PostCommentsState extends State<PostComments> {
             state is GetPostCommentsSuccess ||
             state is NewCommentAdded ||
             state is CommentDeletedSuccess ||
-            state is NewReplyCommentAdded ||
+            state is NewSubCommentAdded ||
             state is EditingCommentStarted ||
             state is CommentEditedSuccess) {
           final comments = context.bloc<CommentBloc>().postComments;
@@ -105,7 +105,7 @@ class _PostCommentsState extends State<PostComments> {
                     const SizedBox(width: 8),
                     Text(
                       '$EDIT_COMMENT:',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w500,
                       ),
                     ),

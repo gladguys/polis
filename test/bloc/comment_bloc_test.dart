@@ -137,7 +137,7 @@ void main() {
         ),
       ),
       expect: [
-        NewReplyCommentAdded(
+        NewSubCommentAdded(
           comment: CommentModel(),
           numberOfReplies: 1,
         ),

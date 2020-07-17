@@ -111,7 +111,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       return comment;
     }).toList();
 
-    yield NewReplyCommentAdded(
+    yield NewSubCommentAdded(
       comment: updatedComment,
       numberOfReplies: subComments.length,
     );
@@ -155,7 +155,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       texto: event.newText,
     );
 
-    //await repository.editComment(comment: currentComments[commentIndex]);
+    await repository.editComment(comment: currentComments[commentIndex]);
 
     postComments = [
       ...currentComments,
