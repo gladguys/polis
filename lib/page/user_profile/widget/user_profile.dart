@@ -12,7 +12,7 @@ import 'configs_button.dart';
 import 'logout_button.dart';
 import 'personal_user_info.dart';
 import 'politics_following_quantity.dart';
-import 'user_activities.dart';
+import 'user_actions.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({this.user, this.politicsFollowing, this.userActions});
@@ -79,7 +79,11 @@ class _UserProfileState extends State<UserProfile> {
   Widget _buildPanel(BuildContext context) {
     return Container(
       color: context.baseBackgroundColor,
-      child: UserActions(actions: widget.userActions),
+      child: UserActions(
+        user: widget.user,
+        actions: widget.userActions,
+        isUserPickedTheLocal: isUserPickedTheLocal,
+      ),
     );
   }
 

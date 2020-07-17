@@ -26,9 +26,13 @@ class FollowingPoliticsList extends StatelessWidget {
   }
 
   Widget _buildList(BuildContext context) {
+    final localUser = context.bloc<UserBloc>().user;
+    final pickedUser = context.bloc<UserProfileBloc>().user;
+    final isLocalUserThePickedOne = localUser == pickedUser;
     return ListView.separated(
       itemCount: politicos.length,
-      itemBuilder: (_, i) => _buildListTile(context, politicos[i]),
+      itemBuilder: (_, i) =>
+          _buildListTile(context, politicos[i], isLocalUserThePickedOne),
       separatorBuilder: (_, i) => const Divider(
         height: 1,
         indent: 8,
@@ -37,7 +41,8 @@ class FollowingPoliticsList extends StatelessWidget {
     );
   }
 
-  Widget _buildListTile(BuildContext context, PoliticoModel politico) {
+  Widget _buildListTile(BuildContext context, PoliticoModel politico,
+      bool isLocalUserThePickedOne) {
     final bloc = context.bloc<UserFollowingPoliticsBloc>();
     return CardBase(
       key: ValueKey(politico.id),
@@ -58,16 +63,18 @@ class FollowingPoliticsList extends StatelessWidget {
         ),
       ),
       slotCenter: _buildSlotCenter(politico),
-      slotRight: ButtonFollowUnfollow(
-        isFollow: bloc.isPoliticBeingFollowed(politico),
-        key: followUnfollowButtonKey,
-        onPressed: () => bloc.add(
-          FollowUnfollowPolitic(
-            user: context.bloc<UserBloc>().user,
-            politico: politico,
-          ),
-        ),
-      ),
+      slotRight: isLocalUserThePickedOne
+          ? ButtonFollowUnfollow(
+              isFollow: bloc.isPoliticBeingFollowed(politico),
+              key: followUnfollowButtonKey,
+              onPressed: () => bloc.add(
+                FollowUnfollowPolitic(
+                  user: context.bloc<UserBloc>().user,
+                  politico: politico,
+                ),
+              ),
+            )
+          : const SizedBox.shrink(),
     );
   }
 
