@@ -57,7 +57,7 @@ class _PostCommentsState extends State<PostComments> {
               ),
               if (state is EditingCommentStarted)
                 _buildWidgetsWhenEditingComment(state.comment),
-              if (!(state is EditingCommentStarted))
+              if (state is! EditingCommentStarted)
                 AddCommentContainer(
                   commentInputController: commentInputController,
                   onAddComment: () {

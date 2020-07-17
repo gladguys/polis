@@ -125,7 +125,7 @@ class _SubCommentsPageState extends State<SubCommentsPage> {
                 ),
                 if (state is EditingSubCommentStarted)
                   _buildWidgetWhenEditingSubComment(state.subComment),
-                if (!(state is EditingSubCommentStarted))
+                if (state is! EditingSubCommentStarted)
                   AddCommentContainer(
                     commentInputController: commentInputController,
                     onAddComment: () {
