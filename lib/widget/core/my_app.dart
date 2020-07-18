@@ -46,8 +46,9 @@ class MyApp extends StatelessWidget {
           if (state.user.userConfigs == null) {
             choosedTheme = lightTheme;
           } else {
-            choosedTheme = state.user.userConfigs[
-                    configToStringKey(Configuracao.isDarkModeEnabled)]
+            choosedTheme = isConfigEnabledForUser(
+                    user: state.user,
+                    configuracao: Configuracao.isDarkModeEnabled)
                 ? darkTheme
                 : lightTheme;
           }

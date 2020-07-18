@@ -16,7 +16,7 @@ import 'package:polis/page/user_profile/widget/activities_list.dart';
 import 'package:polis/page/user_profile/widget/logout_button.dart';
 import 'package:polis/page/user_profile/widget/personal_user_info.dart';
 import 'package:polis/page/user_profile/widget/politics_following_quantity.dart';
-import 'package:polis/page/user_profile/widget/user_activities.dart';
+import 'package:polis/page/user_profile/widget/user_actions.dart';
 import 'package:polis/page/user_profile/widget/user_profile_skeleton.dart';
 import 'package:polis/widget/error_container.dart';
 
