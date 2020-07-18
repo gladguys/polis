@@ -186,39 +186,60 @@ class PostDespesa extends StatelessWidget {
         ),
         margin: const EdgeInsets.symmetric(vertical: 16),
         padding: const EdgeInsets.only(top: 4),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            LikePostButton(post: despesa),
-            const SizedBox(width: 24),
-            UnlikePostButton(post: despesa),
-            const Spacer(),
-            ButtonActionCard(
-              isIconOnly: true,
-              icon: FontAwesomeIcons.shareAlt,
-              iconColor: Colors.grey[700],
-              onTap: () async {
-                final postImage = await screenshotController.capture();
-                context.bloc<PostBloc>().add(SharePost(postImage: postImage));
-              },
+            Row(
+              children: <Widget>[
+                LikePostButton(post: despesa),
+                const SizedBox(width: 24),
+                UnlikePostButton(post: despesa),
+                const SizedBox(width: 24),
+                ButtonActionCard(
+                  icon: FontAwesomeIcons.comment,
+                  iconColor: Colors.grey[700],
+                  text: '0',
+                  textColor: Colors.grey[700],
+                  onTap: () async {},
+                ),
+                const Spacer(),
+                ButtonActionCard(
+                  isIconOnly: true,
+                  icon: FontAwesomeIcons.shareAlt,
+                  iconColor: Colors.grey[700],
+                  onTap: () async {
+                    final postImage = await screenshotController.capture();
+                    context
+                        .bloc<PostBloc>()
+                        .add(SharePost(postImage: postImage));
+                  },
+                ),
+                const SizedBox(width: 8),
+                ButtonActionCard(
+                  isIconOnly: true,
+                  icon: context.bloc<PostBloc>().isPostFavorite
+                      ? FontAwesomeIcons.solidBookmark
+                      : FontAwesomeIcons.bookmark,
+                  iconColor: context.bloc<PostBloc>().isPostFavorite
+                      ? Colors.yellow
+                      : Colors.grey[700],
+                  onTap: () => context.bloc<PostBloc>().add(
+                        FavoritePostForUser(
+                          post: {
+                            ID_FIELD: despesa.id,
+                            ...despesa.toJson(),
+                          },
+                          user: context.bloc<UserBloc>().user,
+                        ),
+                      ),
+                ),
+              ],
             ),
-            const SizedBox(width: 8),
-            ButtonActionCard(
-              isIconOnly: true,
-              icon: context.bloc<PostBloc>().isPostFavorite
-                  ? FontAwesomeIcons.solidBookmark
-                  : FontAwesomeIcons.bookmark,
-              iconColor: context.bloc<PostBloc>().isPostFavorite
-                  ? Colors.yellow
-                  : Colors.grey[700],
-              onTap: () => context.bloc<PostBloc>().add(
-                    FavoritePostForUser(
-                      post: {
-                        ID_FIELD: despesa.id,
-                        ...despesa.toJson(),
-                      },
-                      user: context.bloc<UserBloc>().user,
-                    ),
-                  ),
+            const SizedBox(height: 12),
+            FlatButton(
+              color: Theme.of(context).primaryColor,
+              child: const Text('Acompanhe os comentários'),
+              onPressed: () {},
             ),
           ],
         ),
