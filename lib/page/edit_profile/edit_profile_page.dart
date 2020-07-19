@@ -93,7 +93,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     child: FlatButton(
                       padding: EdgeInsets.zero,
                       child: const Text(CONFIRM),
-                      color: Colors.amber,
+                      color: Theme.of(context).primaryColor,
+                      textColor: Colors.black,
                       onPressed: () {
                         final formState = _formKey.currentState;
                         if (formState.validate()) {

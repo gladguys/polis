@@ -35,7 +35,9 @@ class PersonalUserInfo extends StatelessWidget {
           user.email,
           style: TextStyle(
             fontSize: 12,
-            color: Colors.grey[600],
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey[600]
+                : Colors.grey[300],
           ),
         ),
         const SizedBox(height: 16),
@@ -50,6 +52,7 @@ class PersonalUserInfo extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       child: const Text(EDIT_PROFILE),
                       color: Colors.amber,
+                      textColor: Colors.black,
                       onPressed: () => SimpleRouter.forward(
                         EditProfilePageConnected(),
                         name: EDIT_PROFILE_PAGE,

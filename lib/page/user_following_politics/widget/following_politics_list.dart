@@ -62,7 +62,7 @@ class FollowingPoliticsList extends StatelessWidget {
           name: POLITIC_PROFILE_PAGE,
         ),
       ),
-      slotCenter: _buildSlotCenter(politico),
+      slotCenter: _buildSlotCenter(politico, context),
       slotRight: isLocalUserThePickedOne
           ? ButtonFollowUnfollow(
               isFollow: bloc.isPoliticBeingFollowed(politico),
@@ -78,7 +78,7 @@ class FollowingPoliticsList extends StatelessWidget {
     );
   }
 
-  Widget _buildSlotCenter(PoliticoModel politico) {
+  Widget _buildSlotCenter(PoliticoModel politico, BuildContext context) {
     return Wrap(
       direction: Axis.vertical,
       spacing: 2,
@@ -94,7 +94,9 @@ class FollowingPoliticsList extends StatelessWidget {
           ' · ${politico.siglaUf}',
           style: TextStyle(
             fontSize: 12,
-            color: Colors.grey[600],
+            color: Theme.of(context).brightness == Brightness.light
+                        ? Colors.grey[600]
+                        : Colors.grey[300],
           ),
         ),
       ],

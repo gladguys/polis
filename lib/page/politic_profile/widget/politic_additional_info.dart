@@ -51,7 +51,9 @@ class PoliticAdditionalInfo extends StatelessWidget {
                       quantidadeSeguidores == 1 ? FOLLOWER : FOLLOWERS,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.grey[600],
+                        color: Theme.of(context).brightness == Brightness.light
+                            ? Colors.grey[600]
+                            : Colors.grey[300],
                         fontSize: 12,
                       ),
                     ),
@@ -79,7 +81,10 @@ class PoliticAdditionalInfo extends StatelessWidget {
                         PROJECTS_PARTICIPATIONS,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.grey[600],
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Colors.grey[600]
+                                  : Colors.grey[300],
                           fontSize: 12,
                           height: 1,
                         ),
@@ -110,7 +115,10 @@ class PoliticAdditionalInfo extends StatelessWidget {
                         WITH_LESS_EXPENSES,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.grey[600],
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Colors.grey[600]
+                                  : Colors.grey[300],
                           fontSize: 12,
                           height: 1,
                         ),
@@ -151,7 +159,10 @@ class PoliticAdditionalInfo extends StatelessWidget {
                         Text(
                           EXPENSES,
                           style: TextStyle(
-                            color: Colors.grey[600],
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.grey[600]
+                                    : Colors.grey[300],
                             fontSize: 12,
                           ),
                         ),
