@@ -91,8 +91,17 @@ class _UserProfileState extends State<UserProfile> {
     return Column(
       children: <Widget>[
         const SizedBox(height: 8),
-        isUserPickedTheLocal ? LogoutButton() : const SizedBox.shrink(),
-        isUserPickedTheLocal ? ConfigsButton() : const SizedBox.shrink(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            const SizedBox(width: 8),
+            isUserPickedTheLocal ? ConfigsButton() : const SizedBox.shrink(),
+            const Spacer(),
+            isUserPickedTheLocal ? LogoutButton() : const SizedBox.shrink(),
+            const SizedBox(width: 8),
+          ],
+        ),
+        const SizedBox(height: 8),
         PersonalUserInfo(
           user: widget.user,
           isUserPickedTheLocal: isUserPickedTheLocal,

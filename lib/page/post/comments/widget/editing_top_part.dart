@@ -34,7 +34,7 @@ class EditingTopPart extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 '$EDIT_COMMENT:',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),

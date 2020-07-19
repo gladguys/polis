@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class FancySwitcher extends StatefulWidget {
   @required
@@ -98,9 +99,11 @@ class _FancySwitcherState extends State<FancySwitcher>
       },
       child: Container(
         padding: const EdgeInsets.all(5),
-        width: 130,
+        width: 90,
         decoration: BoxDecoration(
-            color: transitionColor, borderRadius: BorderRadius.circular(50)),
+          color: transitionColor,
+          borderRadius: BorderRadius.circular(50),
+        ),
         child: Stack(
           children: <Widget>[
             Transform.translate(
@@ -110,13 +113,14 @@ class _FancySwitcherState extends State<FancySwitcher>
                 child: Container(
                   padding: const EdgeInsets.only(right: 10),
                   alignment: Alignment.centerRight,
-                  height: 40,
+                  height: 30,
                   child: Text(
                     widget.textOff,
                     style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: widget.textSize),
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      fontSize: widget.textSize,
+                    ),
                   ),
                 ),
               ),
@@ -128,24 +132,25 @@ class _FancySwitcherState extends State<FancySwitcher>
                 child: Container(
                   padding: const EdgeInsets.only(/*top: 10,*/ left: 5),
                   alignment: Alignment.centerLeft,
-                  height: 40,
+                  height: 30,
                   child: Text(
                     widget.textOn,
                     style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: widget.textSize),
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      fontSize: widget.textSize,
+                    ),
                   ),
                 ),
               ),
             ),
             Transform.translate(
-              offset: Offset(80 * value, 0),
+              offset: Offset(50 * value, 0),
               child: Transform.rotate(
                 angle: lerpDouble(0, 2 * pi, value),
                 child: Container(
-                  height: 40,
-                  width: 40,
+                  height: 30,
+                  width: 30,
                   alignment: Alignment.center,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
@@ -156,9 +161,9 @@ class _FancySwitcherState extends State<FancySwitcher>
                       Center(
                         child: Opacity(
                           opacity: (1 - value).clamp(0.0, 1.0),
-                          child: Icon(
+                          child: FaIcon(
                             widget.iconOff,
-                            size: 25,
+                            size: 18,
                             color: transitionColor,
                           ),
                         ),
@@ -166,9 +171,9 @@ class _FancySwitcherState extends State<FancySwitcher>
                       Center(
                         child: Opacity(
                           opacity: value.clamp(0.0, 1.0),
-                          child: Icon(
+                          child: FaIcon(
                             widget.iconOn,
-                            size: 21,
+                            size: 18,
                             color: transitionColor,
                           ),
                         ),
