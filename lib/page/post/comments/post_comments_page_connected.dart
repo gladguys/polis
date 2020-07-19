@@ -6,10 +6,10 @@ import '../../../bloc/post/comment/comment_bloc.dart';
 import '../../../core/repository/abstract/repositories.dart';
 import '../../../core/repository/utils.dart';
 import '../../page_connected.dart';
-import 'post_comments.dart';
+import 'post_comments_page.dart';
 
-class PostCommentsConnected extends StatelessWidget {
-  PostCommentsConnected({@required this.post}) : assert(post != null);
+class PostCommentsPageConnected extends StatelessWidget {
+  PostCommentsPageConnected({@required this.post}) : assert(post != null);
 
   final dynamic post;
 
@@ -21,7 +21,7 @@ class PostCommentsConnected extends StatelessWidget {
         repository: context.repository<CommentRepository>(),
         user: context.bloc<UserBloc>().user,
       )..add(GetPostComments(postId: getIdFromPost(post))),
-      page: PostComments(),
+      page: PostCommentsPage(),
     );
   }
 }

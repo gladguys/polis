@@ -48,7 +48,7 @@ void main() {
           Scaffold(
               body: PageConnected<CommentBloc>(
             bloc: mockCommentBloc,
-            page: PostComments(),
+            page: PostCommentsPage(),
           )),
         ),
       );
@@ -76,7 +76,7 @@ void main() {
           Scaffold(
             body: PageConnected<CommentBloc>(
               bloc: mockCommentBloc,
-              page: PostComments(),
+              page: PostCommentsPage(),
             ),
           ),
         ),

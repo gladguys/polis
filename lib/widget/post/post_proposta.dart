@@ -20,6 +20,7 @@ import '../image/photo_image.dart';
 import '../label_value.dart';
 import '../photo.dart';
 import '../text_rich.dart';
+import 'go_to_post_comments_button.dart';
 
 class PostProposta extends StatelessWidget {
   PostProposta(this.proposta, {@required this.screenshotController})
@@ -262,12 +263,7 @@ class PostProposta extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            FlatButton(
-              color: Theme.of(context).primaryColor,
-              textColor: Colors.black,
-              child: const Text('Acompanhe os comentários'),
-              onPressed: () {},
-            ),
+            GoToPostCommentsButton(proposta),
           ],
         ),
       ),

@@ -83,7 +83,7 @@ class CommentTile extends StatelessWidget {
                     comment: comment,
                     commentBloc: context.bloc<CommentBloc>(),
                   ),
-                  name: COMMENT_REPLIES_PAGE,
+                  name: SUB_COMMENTS_PAGE,
                 ),
                 child: Row(
                   key: commentsKey,

@@ -73,6 +73,7 @@ const FOLLOW_POLITICS = 'Seguir políticos';
 const TRAMITATION = 'Tramitação';
 const AUTHORS = 'Autores';
 const DATE = 'Data';
+const FOLLOW_COMMENTS = 'Acompanhe os comentários';
 const SEARCH_HERE = 'Pesquise...';
 const SEND_EMAIL = 'Enviar email';
 const COMMENT_HERE = 'Deixe seu comentário...';
