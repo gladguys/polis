@@ -39,6 +39,8 @@ class UserModel extends Equatable {
   @JsonKey(defaultValue: {})
   final Map<String, bool> userUnlikes;
 
+  bool get hasNoConfigsSet => userConfigs == {} || userConfigs == null;
+
   static AuthProvider _fromJsonAuth(String authProvider) =>
       authProvider == 'GOOGLE'
           ? AuthProvider.google

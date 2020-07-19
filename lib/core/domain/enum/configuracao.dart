@@ -11,6 +11,10 @@ bool isConfigEnabledForUser({UserModel user, Configuracao configuracao}) {
       getConfigDefaultValue(configuracao);
 }
 
+bool isThemeConfig(String config) {
+  return stringToConfig(config) == Configuracao.isDarkModeEnabled;
+}
+
 Configuracao stringToConfig(String configString) {
   switch (configString) {
     case 'isNotificationEnabled':

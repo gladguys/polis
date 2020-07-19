@@ -24,34 +24,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(
       buildWhen: (previous, current) =>
-          current is InitialUser ||
-          current is CurrentUserConfigUpdated ||
-          current is UserStoredLocally ||
-          current is CurrentUserConfigUpdated,
+          current is InitialUser || current is CurrentUserConfigUpdated,
       builder: (_, state) {
         var choosedTheme = lightTheme;
-        if (state is CurrentUserConfigUpdated &&
-            stringToConfig(state.config) == Configuracao.isDarkModeEnabled) {
-          if (state.value) {
-            choosedTheme = darkTheme;
-          }
-        }
-        if (state is UserStoredLocally) {
-          choosedTheme = state.user.userConfigs[
-                  configToStringKey(Configuracao.isDarkModeEnabled)]
-              ? darkTheme
-              : lightTheme;
-        }
-        if (state is CurrentUserConfigUpdated) {
-          if (state.user.userConfigs == null) {
-            choosedTheme = lightTheme;
-          } else {
-            choosedTheme = isConfigEnabledForUser(
-                    user: state.user,
-                    configuracao: Configuracao.isDarkModeEnabled)
-                ? darkTheme
-                : lightTheme;
-          }
+        if (state is CurrentUserConfigUpdated && isThemeConfig(state.config)) {
+          choosedTheme = _getThemeForUser(state.user);
+        } else {
+          choosedTheme = _getThemeForUser(user);
         }
         return MaterialApp(
           title: POLIS,
@@ -72,5 +51,17 @@ class MyApp extends StatelessWidget {
         );
       },
     );
+  }
+
+  ThemeData _getThemeForUser(UserModel user) {
+    if (user.hasNoConfigsSet) {
+      return lightTheme;
+    }
+    return isConfigEnabledForUser(
+      user: user,
+      configuracao: Configuracao.isDarkModeEnabled,
+    )
+        ? darkTheme
+        : lightTheme;
   }
 }
