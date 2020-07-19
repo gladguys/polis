@@ -131,6 +131,18 @@ class MockPoliticFollowersRepository extends Mock
 class MockPoliticExpensesRepository extends Mock
     implements PoliticExpensesRepository {}
 
+class MockPoliticExpensesAnalysisRepository extends Mock
+    implements PoliticExpensesAnalysisRepository {}
+
+class MockPoliticExpensesByTypeAnalysisRepository extends Mock
+    implements PoliticExpensesByTypeAnalysisRepository {}
+
+class MockPoliticExpensesAnalysisQuotaRepository extends Mock
+    implements PoliticExpensesAnalysisQuotaRepository {}
+
+class MockPoliticExpensesAnalysisConfigRepository extends Mock
+    implements PoliticExpensesAnalysisConfigRepository {}
+
 class MockUserProfileRepository extends Mock implements UserProfileRepository {}
 
 class MockSignupRepository extends Mock implements SignupRepository {}
