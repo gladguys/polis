@@ -7,7 +7,6 @@ import '../../core/domain/model/models.dart';
 import '../../core/repository/concrete/repositories.dart';
 import '../../core/service/locator.dart';
 import '../../core/service/services.dart';
-import '../../page/theme/light_theme.dart';
 import 'my_app.dart';
 
 class MyAppConnected extends StatefulWidget {
@@ -36,15 +35,7 @@ class _MyAppConnectedState extends State<MyAppConnected> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        systemNavigationBarColor:
-            isUserLogged ? lightTheme.scaffoldBackgroundColor : Colors.black,
-        systemNavigationBarIconBrightness:
-            isUserLogged ? Brightness.dark : Brightness.light,
-      ),
-    );
+    
     super.initState();
   }
 

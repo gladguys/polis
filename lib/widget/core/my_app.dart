@@ -1,5 +1,6 @@
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
@@ -26,16 +27,20 @@ class MyApp extends StatelessWidget {
       buildWhen: (previous, current) =>
           current is InitialUser || current is CurrentUserConfigUpdated,
       builder: (_, state) {
-        var choosedTheme = lightTheme;
+        var themeMode = ThemeMode.system;
         if (state is CurrentUserConfigUpdated && isThemeConfig(state.config)) {
-          choosedTheme = _getThemeForUser(state.user);
+          themeMode = _getThemeForUser(state.user);
+          _setSystemBarColor(themeMode);
         } else {
-          choosedTheme = _getThemeForUser(user);
+          themeMode = _getThemeForUser(user);
+          _setSystemBarColor(themeMode);
         }
         return MaterialApp(
           title: POLIS,
           debugShowCheckedModeBanner: false,
-          theme: choosedTheme,
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: themeMode,
           navigatorKey: SimpleRouter.getKey(),
           home: isUserLogged
               ? TimelinePageConnected(
@@ -53,15 +58,30 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  ThemeData _getThemeForUser(UserModel user) {
-    if (user.hasNoConfigsSet) {
-      return lightTheme;
+  ThemeMode _getThemeForUser(UserModel user) {
+    if (user == null || user.hasNoConfigsSet) {
+      return ThemeMode.system;
     }
     return isConfigEnabledForUser(
       user: user,
       configuracao: Configuracao.isDarkModeEnabled,
     )
-        ? darkTheme
-        : lightTheme;
+        ? ThemeMode.dark
+        : ThemeMode.system;
+  }
+
+  _setSystemBarColor(ThemeMode themeMode) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        systemNavigationBarColor: isUserLogged
+            ? themeMode == ThemeMode.dark
+                ? darkTheme.scaffoldBackgroundColor
+                : lightTheme.scaffoldBackgroundColor
+            : Colors.black,
+        systemNavigationBarIconBrightness: isUserLogged
+            ? themeMode == ThemeMode.dark ? Brightness.light : Brightness.dark
+            : Brightness.light,
+      ),
+    );
   }
 }
