@@ -8,7 +8,7 @@ import '../../../widget/photo.dart';
 import '../../pages.dart';
 
 class PersonalUserInfo extends StatelessWidget {
-  PersonalUserInfo({this.user, this.isUserPickedTheLocal});
+  PersonalUserInfo({this.user, this.isUserPickedTheLocal = true});
 
   final UserModel user;
   final bool isUserPickedTheLocal;

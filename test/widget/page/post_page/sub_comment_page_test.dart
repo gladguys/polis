@@ -35,7 +35,11 @@ void main() {
               post: PropostaModel(
                 id: '1',
               ),
-              comment: CommentModel(),
+              comment: CommentModel(
+                usuarioNome: 'nome',
+                texto: 'texto',
+                diaHora: DateTime.now(),
+              ),
               commentBloc: mockCommentBloc,
             ),
           ),
@@ -47,6 +51,13 @@ void main() {
       final mockSubCommentsBloc = MockSubCommentsBloc();
       final mockCommentBloc = MockCommentBloc();
       when(mockSubCommentsBloc.commentBloc).thenAnswer((_) => mockCommentBloc);
+      when(mockSubCommentsBloc.comment).thenReturn(
+        CommentModel(
+          postId: '1',
+          texto: '1111',
+          usuarioNome: 'nome',
+        ),
+      );
       when(mockSubCommentsBloc.subComments).thenReturn([
         SubCommentModel(
           id: 1,

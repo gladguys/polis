@@ -17,15 +17,20 @@ void main() {
         connectedWidget(
           Scaffold(
             body: BlocProvider.value(
-              value: UserBloc(
-                user: UserModel(userId: '1'),
-                repository: MockUserRepository(),
-                analyticsService: MockAnalyticsService(),
-                sharedPreferencesService: MockSharedPreferencesService(),
+              value: UserProfileBloc(
+                repository: MockUserProfileRepository(),
               ),
-              child: PoliticsFollowingQuantity(
-                politics: [],
-                user: UserModel(userId: '1'),
+              child: BlocProvider.value(
+                value: UserBloc(
+                  user: UserModel(userId: '1'),
+                  repository: MockUserRepository(),
+                  analyticsService: MockAnalyticsService(),
+                  sharedPreferencesService: MockSharedPreferencesService(),
+                ),
+                child: PoliticsFollowingQuantity(
+                  politics: [],
+                  user: UserModel(userId: '1'),
+                ),
               ),
             ),
           ),

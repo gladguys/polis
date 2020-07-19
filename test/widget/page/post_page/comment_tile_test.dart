@@ -34,7 +34,7 @@ void main() {
       );
     });
 
-    testWidgets('should go to replies page when click on comments',
+    testWidgets('should go to sub comments page when click on comments',
         (tester) async {
       final mockCommentBloc = MockCommentBloc();
       when(mockCommentBloc.post).thenReturn(
@@ -60,7 +60,6 @@ void main() {
       );
       final comments = find.byKey(commentsKey);
       await tester.tap(comments);
-      await tester.pumpAndSettle();
       verify(mockObserver.didPush(any, any));
     });
   });

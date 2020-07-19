@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:polis/bloc/blocs.dart';
 import 'package:polis/bloc/user_following_politics/user_following_politics_bloc.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/page/page_connected.dart';
@@ -19,20 +20,24 @@ void main() {
 
     testWidgets('should go to politic profile when click on photo',
         (tester) async {
+      final mockUserProfileBloc = MockUserProfileBloc();
       final mockUserFollowingPoliticsBloc = MockUserFollowingPoliticsBloc();
       when(mockUserFollowingPoliticsBloc.isPoliticBeingFollowed(any))
           .thenReturn(false);
       await tester.pumpWidget(connectedWidget(
-        PageConnected<UserFollowingPoliticsBloc>(
-          bloc: mockUserFollowingPoliticsBloc,
-          page: FollowingPoliticsList([
-            PoliticoModel(
-              id: '1',
-              nomeEleitoral: 'aaa',
-              urlFoto: 'photo',
-              urlPartidoLogo: 'logo',
-            ),
-          ]),
+        PageConnected<UserProfileBloc>(
+          bloc: mockUserProfileBloc,
+          page: PageConnected<UserFollowingPoliticsBloc>(
+            bloc: mockUserFollowingPoliticsBloc,
+            page: FollowingPoliticsList([
+              PoliticoModel(
+                id: '1',
+                nomeEleitoral: 'aaa',
+                urlFoto: 'photo',
+                urlPartidoLogo: 'logo',
+              ),
+            ]),
+          ),
         ),
       ));
       final photo = find.byType(Photo);

@@ -85,9 +85,12 @@ void main() {
               analyticsService: MockAnalyticsService(),
               sharedPreferencesService: MockSharedPreferencesService(),
             ),
-            child: PageConnected<UserFollowingPoliticsBloc>(
-              bloc: mockUserFollowingPoliticsBloc,
-              page: UserFollowingPoliticsPage(),
+            child: PageConnected<UserProfileBloc>(
+              bloc: MockUserProfileBloc(),
+              page: PageConnected<UserFollowingPoliticsBloc>(
+                bloc: mockUserFollowingPoliticsBloc,
+                page: UserFollowingPoliticsPage(),
+              ),
             ),
           ),
         ),
@@ -147,9 +150,12 @@ void main() {
               analyticsService: MockAnalyticsService(),
               sharedPreferencesService: MockSharedPreferencesService(),
             ),
-            child: PageConnected<UserFollowingPoliticsBloc>(
-              bloc: mockUserFollowingPoliticsBloc,
-              page: UserFollowingPoliticsPage(),
+            child: PageConnected<UserProfileBloc>(
+              bloc: MockUserProfileBloc(),
+              page: PageConnected<UserFollowingPoliticsBloc>(
+                bloc: mockUserFollowingPoliticsBloc,
+                page: UserFollowingPoliticsPage(),
+              ),
             ),
           ),
         ),
@@ -180,9 +186,12 @@ void main() {
               analyticsService: MockAnalyticsService(),
               sharedPreferencesService: MockSharedPreferencesService(),
             ),
-            child: PageConnected<UserFollowingPoliticsBloc>(
-              bloc: mockUserFollowingPoliticsBloc,
-              page: UserFollowingPoliticsPage(),
+            child: PageConnected<UserProfileBloc>(
+              bloc: MockUserProfileBloc(),
+              page: PageConnected<UserFollowingPoliticsBloc>(
+                bloc: mockUserFollowingPoliticsBloc,
+                page: UserFollowingPoliticsPage(),
+              ),
             ),
           ),
         ),
@@ -192,11 +201,19 @@ void main() {
 
     testWidgets('''should call bloc when clicked follow button''',
         (tester) async {
+      final mockUserProfileBloc = MockUserProfileBloc();
+      when(mockUserProfileBloc.user).thenReturn(
+        UserModel(
+          userId: '1',
+        ),
+      );
       when(mockUserFollowingPoliticsBloc.isPoliticBeingFollowed(any))
           .thenReturn(true);
       when(mockUserFollowingPoliticsBloc.state).thenReturn(
         FetchPoliticsSuccess(
-          [PoliticoModel(id: '1', nomeEleitoral: 'nome', urlFoto: 'photo')],
+          [
+            PoliticoModel(id: '1', nomeEleitoral: 'nome', urlFoto: 'photo'),
+          ],
         ),
       );
       await tester.pumpWidget(
@@ -210,9 +227,12 @@ void main() {
               analyticsService: MockAnalyticsService(),
               sharedPreferencesService: MockSharedPreferencesService(),
             ),
-            child: PageConnected<UserFollowingPoliticsBloc>(
-              bloc: mockUserFollowingPoliticsBloc,
-              page: UserFollowingPoliticsPage(),
+            child: PageConnected<UserProfileBloc>(
+              bloc: mockUserProfileBloc,
+              page: PageConnected<UserFollowingPoliticsBloc>(
+                bloc: mockUserFollowingPoliticsBloc,
+                page: UserFollowingPoliticsPage(),
+              ),
             ),
           ),
         ),
