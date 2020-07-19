@@ -23,7 +23,9 @@ class TextRich extends StatelessWidget {
         style: TextStyle(
           fontFamily: 'Ubuntu',
           fontSize: fontSize,
-          color: color,
+          color: color ?? Theme.of(context).brightness == Brightness.light
+              ? Colors.black
+              : Colors.white,
         ),
         children: children,
       ),
