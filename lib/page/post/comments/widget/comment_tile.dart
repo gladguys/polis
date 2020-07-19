@@ -53,6 +53,7 @@ class CommentTile extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
+                        color: Colors.black,
                       ),
                     ),
                   ),
@@ -69,7 +70,10 @@ class CommentTile extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 4),
-              Text(comment.texto),
+              Text(
+                comment.texto,
+                style: const TextStyle(color: Colors.black),
+              ),
             ],
           ),
           slotBottom: Row(

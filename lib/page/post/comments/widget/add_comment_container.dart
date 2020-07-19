@@ -24,8 +24,8 @@ class AddCommentContainer extends StatelessWidget {
         color: context.baseBackgroundColor,
         child: Column(
           children: <Widget>[
-            const Divider(color: Colors.grey, height: 16),
-            const SizedBox(height: 4),
+            const Divider(color: Colors.grey, height: 1),
+            const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: FieldRounded(

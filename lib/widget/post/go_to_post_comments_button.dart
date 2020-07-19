@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../core/i18n/i18n.dart';
@@ -12,10 +13,16 @@ class GoToPostCommentsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return OutlineButton.icon(
+      icon: FaIcon(FontAwesomeIcons.comments, size: 18),
+      label: Text(
+        FOLLOW_COMMENTS.toUpperCase(),
+        style: const TextStyle(fontSize: 13),
+      ),
       color: Theme.of(context).primaryColor,
-      textColor: Colors.black,
-      child: const Text(FOLLOW_COMMENTS),
+      highlightedBorderColor: Theme.of(context).primaryColorDark,
+      borderSide: BorderSide(color: Theme.of(context).primaryColor),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       onPressed: () => SimpleRouter.forward(
         PostCommentsPageConnected(post: post),
         name: POST_COMMENTS_PAGE,

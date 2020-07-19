@@ -50,6 +50,7 @@ class SubCommentTile extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
+                        color: Colors.black,
                       ),
                     ),
                   ),
@@ -66,7 +67,10 @@ class SubCommentTile extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 4),
-              Text(subComment.texto),
+              Text(
+                subComment.texto,
+                style: const TextStyle(color: Colors.black),
+              ),
             ],
           ),
           slotBottom: Text(

@@ -42,7 +42,6 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                 children: <Widget>[
                   Container(
                     padding: const EdgeInsets.only(bottom: 70),
-                    constraints: const BoxConstraints(maxHeight: 200),
                     child: Column(
                       children: <Widget>[
                         const Divider(color: Colors.grey, height: 1),

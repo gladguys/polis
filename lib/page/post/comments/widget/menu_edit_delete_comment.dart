@@ -57,6 +57,7 @@ class MenuEditDeleteComment extends StatelessWidget {
       child: FaIcon(
         FontAwesomeIcons.ellipsisV,
         size: 16,
+        color: Colors.black,
       ),
     );
   }
