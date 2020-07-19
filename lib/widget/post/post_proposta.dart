@@ -40,7 +40,7 @@ class PostProposta extends StatelessWidget {
           slotCenter: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              _buildTopContent(),
+              _buildTopContent(context),
               _buildCenterContent(context),
             ],
           ),
@@ -74,7 +74,7 @@ class PostProposta extends StatelessWidget {
     );
   }
 
-  Widget _buildTopContent() {
+  Widget _buildTopContent(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -89,7 +89,9 @@ class PostProposta extends StatelessWidget {
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.normal,
-            color: Colors.grey[600],
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey[600]
+                : Colors.grey[300],
           ),
         ),
       ],
@@ -180,6 +182,7 @@ class PostProposta extends StatelessWidget {
                         style: const TextStyle(fontSize: 13),
                       ),
                       color: Theme.of(context).primaryColor,
+                      textColor: Colors.black,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       onPressed: () => context.bloc<DocumentBloc>().add(
                             OpenDocumentImage(proposta.urlInteiroTeor),
@@ -215,16 +218,22 @@ class PostProposta extends StatelessWidget {
                 const SizedBox(width: 24),
                 ButtonActionCard(
                   icon: FontAwesomeIcons.comment,
-                  iconColor: Colors.grey[700],
+                  iconColor: Theme.of(context).brightness == Brightness.light
+                      ? Colors.grey[700]
+                      : Colors.grey[500],
                   text: '0',
-                  textColor: Colors.grey[700],
+                  textColor: Theme.of(context).brightness == Brightness.light
+                      ? Colors.grey[700]
+                      : Colors.grey[500],
                   onTap: () async {},
                 ),
                 const Spacer(),
                 ButtonActionCard(
                   isIconOnly: true,
                   icon: FontAwesomeIcons.shareAlt,
-                  iconColor: Colors.grey[700],
+                  iconColor: Theme.of(context).brightness == Brightness.light
+                      ? Colors.grey[700]
+                      : Colors.grey[500],
                   onTap: () async {
                     final postImage = await screenshotController.capture();
                     context
@@ -240,7 +249,9 @@ class PostProposta extends StatelessWidget {
                       : FontAwesomeIcons.bookmark,
                   iconColor: context.bloc<PostBloc>().isPostFavorite
                       ? Colors.yellow
-                      : Colors.grey[700],
+                      : Theme.of(context).brightness == Brightness.light
+                          ? Colors.grey[700]
+                          : Colors.grey[500],
                   onTap: () => context.bloc<PostBloc>().add(
                         FavoritePostForUser(
                           post: proposta.toJson(),
@@ -253,6 +264,7 @@ class PostProposta extends StatelessWidget {
             const SizedBox(height: 12),
             FlatButton(
               color: Theme.of(context).primaryColor,
+              textColor: Colors.black,
               child: const Text('Acompanhe os comentários'),
               onPressed: () {},
             ),

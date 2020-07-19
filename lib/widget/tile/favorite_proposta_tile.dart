@@ -106,7 +106,9 @@ class FavoritePropostaTile extends StatelessWidget {
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.normal,
-                color: Colors.grey[600],
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.grey[600]
+                    : Colors.grey[300],
               ),
             ),
           ],
@@ -150,7 +152,9 @@ class FavoritePropostaTile extends StatelessWidget {
               proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
               style: TextStyle(
                 fontSize: 12,
-                color: Colors.grey[600],
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.grey[600]
+                    : Colors.grey[300],
               ),
             ),
             ButtonActionCard(
@@ -158,7 +162,11 @@ class FavoritePropostaTile extends StatelessWidget {
               icon: (proposta.favorito ?? false)
                   ? FontAwesomeIcons.solidBookmark
                   : FontAwesomeIcons.bookmark,
-              iconColor: (proposta.favorito ?? false) ? Colors.yellow : null,
+              iconColor: (proposta.favorito ?? false)
+                  ? Colors.yellow
+                  : Theme.of(context).brightness == Brightness.light
+                      ? Colors.grey[700]
+                      : Colors.grey[500],
               onTap: () => context.bloc<PostBloc>().add(
                     FavoritePostForUser(
                       post: proposta.toJson(),

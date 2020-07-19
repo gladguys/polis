@@ -5,7 +5,7 @@ class TextRich extends StatelessWidget {
     @required this.children,
     this.maxLines,
     this.fontSize = 14,
-    this.color = Colors.black,
+    this.color,
   })  : assert(children != null),
         assert(children.isNotEmpty);
 

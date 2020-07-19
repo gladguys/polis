@@ -36,9 +36,15 @@ class _EstadoSelectState extends State<EstadoSelect> {
         choiceConfig: SmartSelectChoiceConfig(
           style: SmartSelectChoiceStyle(
             activeColor: Theme.of(context).primaryColor,
-            titleStyle: const TextStyle(
+            inactiveColor: Theme.of(context).brightness == Brightness.light
+                ? null
+                : Colors.grey[300],
+            titleStyle: TextStyle(
               fontSize: 14,
               fontFamily: 'Ubuntu',
+              color: Theme.of(context).brightness == Brightness.light
+                  ? Colors.grey[600]
+                  : Colors.grey[300],
             ),
           ),
         ),
@@ -49,8 +55,16 @@ class _EstadoSelectState extends State<EstadoSelect> {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          headerStyle: const SmartSelectModalHeaderStyle(
-            shape: RoundedRectangleBorder(
+          headerStyle: SmartSelectModalHeaderStyle(
+            backgroundColor: Theme.of(context).brightness == Brightness.light
+                ? null
+                : Colors.grey[800],
+            textStyle: TextStyle(
+              color: Theme.of(context).brightness == Brightness.light
+                  ? Colors.black
+                  : Colors.grey[300],
+            ),
+            shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),

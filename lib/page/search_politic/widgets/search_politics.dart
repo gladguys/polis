@@ -110,7 +110,6 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
       child: Material(
         borderRadius: BorderRadius.circular(10),
         elevation: 3,
-        color: Colors.white,
         clipBehavior: Clip.antiAlias,
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,

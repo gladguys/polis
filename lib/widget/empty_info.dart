@@ -42,7 +42,9 @@ class EmptyInfo extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 18,
-              color: Colors.grey[600],
+              color: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey[600]
+                : Colors.grey[400],
             ),
           ),
         ],

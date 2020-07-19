@@ -42,9 +42,17 @@ class UnlikePostButton extends StatelessWidget {
           icon: postUnliked
               ? FontAwesomeIcons.solidThumbsDown
               : FontAwesomeIcons.thumbsDown,
-          iconColor: postUnliked ? Colors.red : Colors.grey[700],
+          iconColor: postUnliked
+              ? Colors.red
+              : Theme.of(context).brightness == Brightness.light
+                  ? Colors.grey[700]
+                  : Colors.grey[500],
           text: qtdNaoCurtidas.toString(),
-          textColor: postUnliked ? Colors.red : Colors.grey[700],
+          textColor: postUnliked
+              ? Colors.red
+              : Theme.of(context).brightness == Brightness.light
+                  ? Colors.grey[700]
+                  : Colors.grey[500],
           onTap: () => context.bloc<PostBloc>().add(
                 postUnliked
                     ? StopUnlikingPost(

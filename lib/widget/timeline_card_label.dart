@@ -12,7 +12,10 @@ class TimelineCardLabel extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 2),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey[200]),
+        border: Border.all(
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey[200]
+                : Colors.grey[600]),
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(6),
         ),

@@ -24,7 +24,9 @@ class ErrorContainer extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 18,
-            color: Colors.grey[800],
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey[800]
+                : Colors.grey[500],
           ),
         ),
       ],

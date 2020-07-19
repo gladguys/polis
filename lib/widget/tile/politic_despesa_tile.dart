@@ -32,7 +32,7 @@ class PoliticDespesaTile extends StatelessWidget {
             builder: (_, state) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                _buildTopContent(),
+                _buildTopContent(context),
                 _buildCenterContent(),
               ],
             ),
@@ -84,7 +84,7 @@ class PoliticDespesaTile extends StatelessWidget {
     );
   }
 
-  Widget _buildTopContent() {
+  Widget _buildTopContent(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +104,9 @@ class PoliticDespesaTile extends StatelessWidget {
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.normal,
-                color: Colors.grey[600],
+                color: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey[600]
+                : Colors.grey[300],
               ),
             ),
           ],
@@ -148,7 +150,9 @@ class PoliticDespesaTile extends StatelessWidget {
               '${despesa.dataDocumento.formatDate()}',
               style: TextStyle(
                 fontSize: 12,
-                color: Colors.grey[600],
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.grey[600]
+                    : Colors.grey[300],
               ),
             ),
           ],
