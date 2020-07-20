@@ -3,8 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/post/comment/comment_bloc.dart';
 import '../../../core/domain/model/comment_model.dart';
+import '../../../core/utils/general_utils.dart';
 import '../../../widget/error_container.dart';
 import '../../../widget/loading.dart';
+import '../../../widget/post/post_despesa_connected.dart';
+import '../../../widget/post/post_proposta_connected.dart';
 import 'widget/add_comment_container.dart';
 import 'widget/comments_list.dart';
 import 'widget/edit_comment_container.dart';
@@ -17,6 +20,10 @@ class PostCommentsPage extends StatefulWidget {
 
 class _PostCommentsPageState extends State<PostCommentsPage> {
   TextEditingController commentInputController;
+
+  dynamic get post => context.bloc<CommentBloc>().post;
+  bool get isPostProposta => isPostProposal(post);
+  bool get isPostDespesa => isPostExpense(post);
 
   @override
   void initState() {
@@ -44,6 +51,16 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                     padding: const EdgeInsets.only(bottom: 70),
                     child: Column(
                       children: <Widget>[
+                        if (isPostProposta)
+                          PostPropostaConnected(
+                            post,
+                            isPostPreview: true,
+                          ),
+                        if (isPostDespesa)
+                          PostDespesaConnected(
+                            post,
+                            isPostPreview: true,
+                          ),
                         const Divider(color: Colors.grey, height: 1),
                         const SizedBox(height: 12),
                         Expanded(

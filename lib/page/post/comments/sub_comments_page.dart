@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:polis/widget/text_title.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../../bloc/blocs.dart';
@@ -10,6 +9,7 @@ import '../../../core/i18n/i18n.dart';
 import '../../../widget/card_base.dart';
 import '../../../widget/error_container.dart';
 import '../../../widget/loading.dart';
+import '../../../widget/text_title.dart';
 import '../../user_profile/user_profile_page_connected.dart';
 import 'widget/add_comment_container.dart';
 import 'widget/edit_sub_comment_container.dart';

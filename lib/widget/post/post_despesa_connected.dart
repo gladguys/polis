@@ -9,9 +9,10 @@ import '../../page/page_connected.dart';
 import 'post_despesa.dart';
 
 class PostDespesaConnected extends StatelessWidget {
-  PostDespesaConnected(this.despesa);
+  PostDespesaConnected(this.despesa, {this.isPostPreview = false});
 
   final DespesaModel despesa;
+  final bool isPostPreview;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,7 @@ class PostDespesaConnected extends StatelessWidget {
       page: PostDespesa(
         despesa,
         screenshotController: ScreenshotController(),
+        isPostPreview: isPostPreview,
       ),
     );
   }

@@ -23,12 +23,14 @@ import '../text_rich.dart';
 import 'go_to_post_comments_button.dart';
 
 class PostDespesa extends StatelessWidget {
-  PostDespesa(this.despesa, {@required this.screenshotController})
+  PostDespesa(this.despesa,
+      {@required this.screenshotController, this.isPostPreview})
       : assert(despesa != null),
         assert(screenshotController != null);
 
   final DespesaModel despesa;
   final ScreenshotController screenshotController;
+  final bool isPostPreview;
 
   @override
   Widget build(BuildContext context) {
@@ -38,16 +40,15 @@ class PostDespesa extends StatelessWidget {
         color: context.baseBackgroundColor,
         child: CardBase(
           slotLeft: _buildLeftContent(),
-          slotCenter: BlocBuilder<PostBloc, PostState>(
-            builder: (_, state) => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                _buildTopContent(context),
-                _buildCenterContent(_),
-              ],
-            ),
+          slotCenter: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _buildTopContent(context),
+              _buildCenterContent(context),
+            ],
           ),
-          slotBottom: _buildActions(context),
+          slotBottom:
+              isPostPreview ? const SizedBox.shrink() : _buildActions(context),
         ),
       ),
     );
@@ -122,59 +123,61 @@ class PostDespesa extends StatelessWidget {
               ),
             ],
           ),
-          LabelValue(
-            label: DOCUMENT_DATE,
-            value: despesa.dataDocumento.formatDate(),
-            emptyValue: NOT_INFORMED_FEMALE,
-          ),
-          LabelValue(
-            label: DOCUMENT_VALUE,
-            value: despesa.valorDocumento.formatCurrency(),
-            emptyValue: NOT_INFORMED,
-          ),
-          LabelValue(
-            label: GLOSS_VALUE,
-            value: despesa.valorGlosa.formatCurrency(),
-            emptyValue: NOT_INFORMED,
-          ),
-          LabelValue(
-            label: PORTION,
-            value: despesa.parcela == '0' ? IN_CASH : despesa.parcela,
-            emptyValue: NOT_INFORMED_FEMALE,
-          ),
-          LabelValue(
-            label: PROVIDER_NAME,
-            value: despesa.nomeFornecedor,
-            emptyValue: NOT_INFORMED,
-          ),
-          LabelValue(
-            label: CNPJ_CPF_PROVIDER,
-            value: despesa.cnpjCpfFornecedor,
-            emptyValue: NOT_INFORMED,
-          ),
-          if (despesa.urlDocumento != null)
-            Row(
-              children: <Widget>[
-                Container(
-                  height: 30,
-                  margin: const EdgeInsets.only(top: 8),
-                  child: FlatButton.icon(
-                    key: despesaImageIconKey,
-                    icon: FaIcon(FontAwesomeIcons.file, size: 18),
-                    label: Text(
-                      DOCUMENT.toUpperCase(),
-                      style: const TextStyle(fontSize: 13),
-                    ),
-                    color: Theme.of(context).primaryColor,
-                    textColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    onPressed: () => context.bloc<DocumentBloc>().add(
-                          OpenDocumentImage(despesa.urlDocumento),
-                        ),
-                  ),
-                ),
-              ],
+          if (!isPostPreview) ...[
+            LabelValue(
+              label: DOCUMENT_DATE,
+              value: despesa.dataDocumento.formatDate(),
+              emptyValue: NOT_INFORMED_FEMALE,
             ),
+            LabelValue(
+              label: DOCUMENT_VALUE,
+              value: despesa.valorDocumento.formatCurrency(),
+              emptyValue: NOT_INFORMED,
+            ),
+            LabelValue(
+              label: GLOSS_VALUE,
+              value: despesa.valorGlosa.formatCurrency(),
+              emptyValue: NOT_INFORMED,
+            ),
+            LabelValue(
+              label: PORTION,
+              value: despesa.parcela == '0' ? IN_CASH : despesa.parcela,
+              emptyValue: NOT_INFORMED_FEMALE,
+            ),
+            LabelValue(
+              label: PROVIDER_NAME,
+              value: despesa.nomeFornecedor,
+              emptyValue: NOT_INFORMED,
+            ),
+            LabelValue(
+              label: CNPJ_CPF_PROVIDER,
+              value: despesa.cnpjCpfFornecedor,
+              emptyValue: NOT_INFORMED,
+            ),
+            if (despesa.urlDocumento != null)
+              Row(
+                children: <Widget>[
+                  Container(
+                    height: 30,
+                    margin: const EdgeInsets.only(top: 8),
+                    child: FlatButton.icon(
+                      key: despesaImageIconKey,
+                      icon: FaIcon(FontAwesomeIcons.file, size: 18),
+                      label: Text(
+                        DOCUMENT.toUpperCase(),
+                        style: const TextStyle(fontSize: 13),
+                      ),
+                      color: Theme.of(context).primaryColor,
+                      textColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      onPressed: () => context.bloc<DocumentBloc>().add(
+                            OpenDocumentImage(despesa.urlDocumento),
+                          ),
+                    ),
+                  ),
+                ],
+              ),
+          ],
         ],
       ),
     );

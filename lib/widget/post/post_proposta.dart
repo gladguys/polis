@@ -23,12 +23,14 @@ import '../text_rich.dart';
 import 'go_to_post_comments_button.dart';
 
 class PostProposta extends StatelessWidget {
-  PostProposta(this.proposta, {@required this.screenshotController})
+  PostProposta(this.proposta,
+      {@required this.screenshotController, this.isPostPreview})
       : assert(proposta != null),
         assert(screenshotController != null);
 
   final PropostaModel proposta;
   final ScreenshotController screenshotController;
+  final bool isPostPreview;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,8 @@ class PostProposta extends StatelessWidget {
               _buildCenterContent(context),
             ],
           ),
-          slotBottom: _buildActions(context),
+          slotBottom:
+              isPostPreview ? const SizedBox.shrink() : _buildActions(context),
         ),
       ),
     );
@@ -120,79 +123,82 @@ class PostProposta extends StatelessWidget {
                 TextSpan(text: '${proposta.ementa ?? NOT_INFORMED_FEMALE}'),
               ],
             ),
-          if (proposta.foiAtualizada)
+          if (!isPostPreview) ...[
+            if (proposta.foiAtualizada)
+              LabelValue(
+                label: UPDATE,
+                value: proposta.despacho,
+              ),
             LabelValue(
-              label: UPDATE,
-              value: proposta.despacho,
+              label: TRAMITATION,
+              value: proposta.descricaoTramitacao,
+              emptyValue: NOT_INFORMED_FEMALE,
             ),
-          LabelValue(
-            label: TRAMITATION,
-            value: proposta.descricaoTramitacao,
-            emptyValue: NOT_INFORMED_FEMALE,
-          ),
-          LabelValue(
-            label: DISPATCH,
-            value: proposta.despacho,
-            emptyValue: NOT_INFORMED,
-          ),
-          LabelValue(
-            label: SITUATION,
-            value: proposta.descricaoSituacao,
-            emptyValue: NOT_INFORMED,
-          ),
-          LabelValue(
-            label: UPDATE_DATE,
-            value: proposta.dataAtualizacao.formatDate(),
-            emptyValue: NOT_INFORMED_FEMALE,
-          ),
-          ProposalAuthors(proposta.nomesAutores),
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: <Widget>[
-                Container(
-                  height: 30,
-                  child: OutlineButton.icon(
-                    key: tramitationsIconKey,
-                    icon: FaIcon(FontAwesomeIcons.exchangeAlt, size: 18),
-                    label: Text(
-                      TRAMITATIONS.toUpperCase(),
-                      style: const TextStyle(fontSize: 13),
-                    ),
-                    color: Theme.of(context).primaryColor,
-                    highlightedBorderColor: Theme.of(context).primaryColorDark,
-                    borderSide:
-                        BorderSide(color: Theme.of(context).primaryColor),
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    onPressed: () => SimpleRouter.forward(
-                      TramitacaoPropostaPageConnected(proposta),
-                      name: TRAMITACAO_PROPOSTA_PAGE,
-                    ),
-                  ),
-                ),
-                if (proposta.urlInteiroTeor != null)
+            LabelValue(
+              label: DISPATCH,
+              value: proposta.despacho,
+              emptyValue: NOT_INFORMED,
+            ),
+            LabelValue(
+              label: SITUATION,
+              value: proposta.descricaoSituacao,
+              emptyValue: NOT_INFORMED,
+            ),
+            LabelValue(
+              label: UPDATE_DATE,
+              value: proposta.dataAtualizacao.formatDate(),
+              emptyValue: NOT_INFORMED_FEMALE,
+            ),
+            ProposalAuthors(proposta.nomesAutores),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: <Widget>[
                   Container(
                     height: 30,
-                    child: FlatButton.icon(
-                      key: seePropostaDocumentKey,
-                      icon: FaIcon(FontAwesomeIcons.file, size: 18),
+                    child: OutlineButton.icon(
+                      key: tramitationsIconKey,
+                      icon: FaIcon(FontAwesomeIcons.exchangeAlt, size: 18),
                       label: Text(
-                        DOCUMENT.toUpperCase(),
+                        TRAMITATIONS.toUpperCase(),
                         style: const TextStyle(fontSize: 13),
                       ),
                       color: Theme.of(context).primaryColor,
-                      textColor: Colors.black,
+                      highlightedBorderColor:
+                          Theme.of(context).primaryColorDark,
+                      borderSide:
+                          BorderSide(color: Theme.of(context).primaryColor),
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      onPressed: () => context.bloc<DocumentBloc>().add(
-                            OpenDocumentImage(proposta.urlInteiroTeor),
-                          ),
+                      onPressed: () => SimpleRouter.forward(
+                        TramitacaoPropostaPageConnected(proposta),
+                        name: TRAMITACAO_PROPOSTA_PAGE,
+                      ),
                     ),
                   ),
-              ],
+                  if (proposta.urlInteiroTeor != null)
+                    Container(
+                      height: 30,
+                      child: FlatButton.icon(
+                        key: seePropostaDocumentKey,
+                        icon: FaIcon(FontAwesomeIcons.file, size: 18),
+                        label: Text(
+                          DOCUMENT.toUpperCase(),
+                          style: const TextStyle(fontSize: 13),
+                        ),
+                        color: Theme.of(context).primaryColor,
+                        textColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        onPressed: () => context.bloc<DocumentBloc>().add(
+                              OpenDocumentImage(proposta.urlInteiroTeor),
+                            ),
+                      ),
+                    ),
+                ],
+              ),
             ),
-          ),
+          ],
         ],
       ),
     );
