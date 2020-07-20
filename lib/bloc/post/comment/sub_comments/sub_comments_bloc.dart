@@ -154,31 +154,35 @@ class SubCommentsBloc extends Bloc<SubCommentsEvent, SubCommentsState> {
 
   Stream<SubCommentsState> _mapEditSubCommentToState(
       EditSubComment event) async* {
-    final subCommentToBeEdited = event.subComment;
-    final currentSubComments = [
-      ...subComments,
-    ];
+    try {
+      final subCommentToBeEdited = event.subComment;
+      final currentSubComments = [
+        ...subComments,
+      ];
 
-    final subCommentIndex = currentSubComments
-        .indexWhere((subComment) => subComment.id == subCommentToBeEdited.id);
+      final subCommentIndex = currentSubComments
+          .indexWhere((subComment) => subComment.id == subCommentToBeEdited.id);
 
-    currentSubComments[subCommentIndex] =
-        currentSubComments[subCommentIndex].copyWith(
-      texto: event.newText,
-    );
+      currentSubComments[subCommentIndex] =
+          currentSubComments[subCommentIndex].copyWith(
+        texto: event.newText,
+      );
 
-    await repository.editSubComment(
-      commentId: comment.id,
-      subComment: currentSubComments[subCommentIndex],
-    );
+      await repository.editSubComment(
+        commentId: comment.id,
+        subComment: currentSubComments[subCommentIndex],
+      );
 
-    subComments = [
-      ...currentSubComments,
-    ];
+      subComments = [
+        ...currentSubComments,
+      ];
 
-    yield SubCommentEditedSuccess(
-      subComment: event.subComment,
-    );
+      yield SubCommentEditedSuccess(
+        subComment: event.subComment,
+      );
+    } on Exception {
+      yield SubCommentEditedFailed();
+    }
   }
 
   Stream<SubCommentsState> _mapStopEditingSubCommentToState(

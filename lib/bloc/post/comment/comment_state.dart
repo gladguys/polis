@@ -75,3 +75,8 @@ class CommentEditedSuccess extends CommentState {
   @override
   List<Object> get props => [comment];
 }
+
+class CommentEditedFailed extends CommentState {
+  @override
+  List<Object> get props => [];
+}

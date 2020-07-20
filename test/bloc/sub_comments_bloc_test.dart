@@ -260,5 +260,122 @@ void main() {
         DeletedSubCommentFailed(),
       ],
     );
+
+    blocTest(
+      '''Expects [EditingSubCommentStarted] when starting edition of  a sub comment''',
+      build: () async => subCommentsBloc,
+      act: (subCommentsBloc) async => subCommentsBloc.add(
+        StartEditingSubComment(
+          SubCommentModel(
+            id: 1,
+          ),
+        ),
+      ),
+      expect: [
+        EditingSubCommentStarted(
+          SubCommentModel(
+            id: 1,
+          ),
+        ),
+      ],
+    );
+
+    blocTest(
+      'Expects [InitialSubCommentsState] when stops editing',
+      build: () async => subCommentsBloc,
+      act: (subCommentsBloc) async {
+        subCommentsBloc.add(
+          StartEditingSubComment(
+            SubCommentModel(
+              id: 1,
+            ),
+          ),
+        );
+        subCommentsBloc.add(
+          StopEditingSubComment(),
+        );
+      },
+      expect: [
+        EditingSubCommentStarted(
+          SubCommentModel(
+            id: 1,
+          ),
+        ),
+        InitialSubCommentsState(),
+      ],
+    );
+
+    blocTest(
+      'Expects [SubCommentEditedSuccess] when EditSubComment added',
+      build: () async {
+        subCommentsBloc.subComments = [
+          SubCommentModel(
+            id: 1,
+          ),
+          SubCommentModel(
+            id: 2,
+          ),
+        ];
+        when(mockCommentRepository.editSubComment(
+                commentId: 1, subComment: anyNamed('subComment')))
+            .thenAnswer((_) => Future.value());
+        return subCommentsBloc;
+      },
+      act: (subCommentsBloc) async => subCommentsBloc.add(
+        EditSubComment(
+          subComment: SubCommentModel(
+            id: 1,
+          ),
+          newText: 'novo',
+        ),
+      ),
+      expect: [
+        SubCommentEditedSuccess(
+          subComment: SubCommentModel(
+            id: 1,
+          ),
+        ),
+      ],
+      verify: (subCommentsBloc) async {
+        verify(
+          mockCommentRepository.editSubComment(
+            subComment: SubCommentModel(
+              id: 1,
+              texto: 'novo',
+            ),
+            commentId: 1,
+          ),
+        ).called(1);
+      },
+    );
+
+    blocTest(
+      'Expects [CommentEditedFailed] when fails',
+      build: () async {
+        subCommentsBloc.subComments = [
+          SubCommentModel(
+            id: 1,
+          ),
+          SubCommentModel(
+            id: 2,
+          ),
+        ];
+        when(mockCommentRepository.editSubComment(
+                commentId: 1, subComment: anyNamed('subComment')))
+            .thenThrow(Exception());
+        return subCommentsBloc;
+      },
+      act: (subCommentsBloc) async => subCommentsBloc.add(
+        EditSubComment(
+          subComment: SubCommentModel(
+            id: 1,
+          ),
+          newText: 'novo',
+        ),
+      ),
+      expect: [
+        SubCommentEditedFailed(),
+      ],
+    );
   });
 }

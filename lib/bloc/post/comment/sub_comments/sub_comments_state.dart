@@ -80,3 +80,8 @@ class SubCommentEditedSuccess extends SubCommentsState {
   @override
   List<Object> get props => [subComment];
 }
+
+class SubCommentEditedFailed extends SubCommentsState {
+  @override
+  List<Object> get props => [];
+}

@@ -57,5 +57,50 @@ void main() {
         expect(ev1 == ev3, false);
       });
     });
+
+    test('props', () {
+      expect(
+        DeleteComment(
+          CommentModel(
+            id: 1,
+          ),
+        ),
+        DeleteComment(
+          CommentModel(
+            id: 1,
+          ),
+        ),
+      );
+      expect(
+        EditComment(
+          comment: CommentModel(
+            id: 1,
+          ),
+          newText: 'novo',
+        ),
+        EditComment(
+          comment: CommentModel(
+            id: 1,
+          ),
+          newText: 'novo',
+        ),
+      );
+      expect(
+        StartEditingComment(
+          CommentModel(
+            id: 1,
+          ),
+        ),
+        StartEditingComment(
+          CommentModel(
+            id: 1,
+          ),
+        ),
+      );
+      expect(
+        StopEditingComment(),
+        StopEditingComment(),
+      );
+    });
   });
 }

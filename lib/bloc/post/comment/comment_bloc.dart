@@ -143,27 +143,31 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
   }
 
   Stream<CommentState> _mapEditCommentToState(EditComment event) async* {
-    final commentToBeEdited = event.comment;
-    final currentComments = [
-      ...postComments,
-    ];
+    try {
+      final commentToBeEdited = event.comment;
+      final currentComments = [
+        ...postComments,
+      ];
 
-    final commentIndex = currentComments
-        .indexWhere((comment) => comment.id == commentToBeEdited.id);
+      final commentIndex = currentComments
+          .indexWhere((comment) => comment.id == commentToBeEdited.id);
 
-    currentComments[commentIndex] = currentComments[commentIndex].copyWith(
-      texto: event.newText,
-    );
+      currentComments[commentIndex] = currentComments[commentIndex].copyWith(
+        texto: event.newText,
+      );
 
-    await repository.editComment(comment: currentComments[commentIndex]);
+      await repository.editComment(comment: currentComments[commentIndex]);
 
-    postComments = [
-      ...currentComments,
-    ];
+      postComments = [
+        ...currentComments,
+      ];
 
-    yield CommentEditedSuccess(
-      comment: commentToBeEdited,
-    );
+      yield CommentEditedSuccess(
+        comment: commentToBeEdited,
+      );
+    } on Exception {
+      yield CommentEditedFailed();
+    }
   }
 
   Stream<CommentState> _mapStopEditingCommentToState(
