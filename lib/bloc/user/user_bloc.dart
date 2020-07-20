@@ -62,6 +62,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       await sharedPreferencesService.setUser(null);
       await repository.signOut();
       yield SignoutSucceded();
+      yield InitialUser();
     } on SignOutException {
       yield SignoutFailed();
     }

@@ -30,11 +30,10 @@ class MyApp extends StatelessWidget {
         var themeMode = ThemeMode.system;
         if (state is CurrentUserConfigUpdated && isThemeConfig(state.config)) {
           themeMode = _getThemeForUser(state.user);
-          _setSystemBarColor(themeMode);
         } else {
           themeMode = _getThemeForUser(user);
-          _setSystemBarColor(themeMode);
         }
+        _setSystemBarColor(themeMode);
         return MaterialApp(
           title: POLIS,
           debugShowCheckedModeBanner: false,
@@ -70,7 +69,7 @@ class MyApp extends StatelessWidget {
         : ThemeMode.system;
   }
 
-  _setSystemBarColor(ThemeMode themeMode) {
+  void _setSystemBarColor(ThemeMode themeMode) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         systemNavigationBarColor: isUserLogged
