@@ -15,6 +15,10 @@ bool isPostProposal(dynamic post) {
   return post is PropostaModel;
 }
 
+bool isPostExpense(dynamic post) {
+  return post is DespesaModel;
+}
+
 Tuple2<bool, bool> getPostLikeStatusForUser({dynamic post, UserModel user}) {
   final isLiked = isPostLikedForUser(post: post, user: user);
   final isUnliked = isPostUnlikedForUser(post: post, user: user);
