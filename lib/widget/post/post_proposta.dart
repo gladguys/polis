@@ -24,7 +24,7 @@ import 'go_to_post_comments_button.dart';
 
 class PostProposta extends StatelessWidget {
   PostProposta(this.proposta,
-      {@required this.screenshotController, this.isPostPreview})
+      {@required this.screenshotController, this.isPostPreview = false})
       : assert(proposta != null),
         assert(screenshotController != null);
 

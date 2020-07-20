@@ -107,12 +107,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   Stream<UserState> _mapSetUserPickedThemeToState(
       SetUserPickedTheme event) async* {
-    try {
-      yield CurrentUserConfigUpdated(
-        user: event.user,
-      );
-    } on Exception {
-      yield UpdateUserConfigFailed();
-    }
+    yield CurrentUserConfigUpdated(
+      user: event.user,
+    );
   }
 }

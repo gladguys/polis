@@ -37,7 +37,7 @@ class DespesaMensal extends Equatable {
   }
 
   @override
-  List<Object> get props => throw [mes, valor];
+  List<Object> get props => [mes, valor];
 
   @override
   String toString() {

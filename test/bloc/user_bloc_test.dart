@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/domain/enum/configuracao.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/exception/exceptions.dart';
 
@@ -124,6 +125,79 @@ void main() {
       expect: [
         SignoutLoading(),
         SignoutFailed(),
+      ],
+    );
+
+    blocTest(
+      'Expects [CurrentUserConfigUpdated] when updates config',
+      build: () async {
+        when(mockSharedPreferencesService.setUser(any))
+            .thenAnswer((_) => Future.value());
+        when(mockUserRepository.updateUserConfigs(any))
+            .thenAnswer((_) => Future.value());
+        return userBloc;
+      },
+      act: (userBloc) {
+        userBloc.add(
+          ChangeUserConfig(
+            config: Configuracao.isActivityInfoEnabled,
+            value: true,
+            user: UserModel(userId: '1'),
+          ),
+        );
+        return;
+      },
+      expect: [
+        CurrentUserConfigUpdated(
+          user: UserModel(userId: '1'),
+          config: 'isActivityInfoEnabled',
+          value: true,
+        ),
+      ],
+    );
+
+    blocTest(
+      'Expects [CurrentUserConfigUpdated] when updates config',
+      build: () async {
+        when(mockSharedPreferencesService.setUser(any))
+            .thenAnswer((_) => Future.value());
+        when(mockUserRepository.updateUserConfigs(any)).thenThrow(Exception());
+        return userBloc;
+      },
+      act: (userBloc) {
+        userBloc.add(
+          ChangeUserConfig(
+            config: Configuracao.isActivityInfoEnabled,
+            value: true,
+            user: UserModel(userId: '1'),
+          ),
+        );
+        return;
+      },
+      expect: [
+        UpdateUserConfigFailed(),
+      ],
+    );
+
+    blocTest(
+      'Expects [CurrentUserConfigUpdated] when updates theme',
+      build: () async => userBloc,
+      act: (userBloc) {
+        userBloc.add(
+          SetUserPickedTheme(
+            UserModel(
+              userId: '1',
+            ),
+          ),
+        );
+        return;
+      },
+      expect: [
+        CurrentUserConfigUpdated(
+          user: UserModel(
+            userId: '1',
+          ),
+        ),
       ],
     );
   });

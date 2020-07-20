@@ -51,7 +51,7 @@ dynamic getConfigDefaultValue(Configuracao configuracao) {
   return null;
 }
 
-String getConfigValueForUser({Configuracao configuracao, UserModel user}) {
+dynamic getConfigValueForUser({Configuracao configuracao, UserModel user}) {
   final configString = configToStringKey(configuracao);
   final userConfigs = user.userConfigs ?? {};
   return userConfigs[configString];

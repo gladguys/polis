@@ -24,7 +24,7 @@ import 'go_to_post_comments_button.dart';
 
 class PostDespesa extends StatelessWidget {
   PostDespesa(this.despesa,
-      {@required this.screenshotController, this.isPostPreview})
+      {@required this.screenshotController, this.isPostPreview = false})
       : assert(despesa != null),
         assert(screenshotController != null);
 
