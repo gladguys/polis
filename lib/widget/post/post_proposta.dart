@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:polis/widget/text_title.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:simple_router/simple_router.dart';
 
@@ -38,17 +39,26 @@ class PostProposta extends StatelessWidget {
       controller: screenshotController,
       child: Container(
         color: context.baseBackgroundColor,
-        child: CardBase(
-          slotLeft: _buildLeftContent(),
-          slotCenter: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              _buildTopContent(context),
-              _buildCenterContent(context),
+        child: Column(
+          children: <Widget>[
+            if (isPostPreview) ...[
+              const SizedBox(height: 8),
+              TextTitle(COMMENTS),
+              const SizedBox(height: 8),
             ],
-          ),
-          slotBottom:
-              isPostPreview ? const SizedBox.shrink() : _buildActions(context),
+            CardBase(
+              slotLeft: _buildLeftContent(),
+              slotCenter: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  _buildTopContent(context),
+                  _buildCenterContent(context),
+                ],
+              ),
+              slotBottom:
+                  isPostPreview ? const SizedBox.shrink() : _buildActions(context),
+            ),
+          ],
         ),
       ),
     );
@@ -115,6 +125,7 @@ class PostProposta extends StatelessWidget {
             ])
           else
             TextRich(
+              maxLines: isPostPreview ? 4 : null,
               children: [
                 TextSpan(
                   text: '${proposta.descricaoTipo}: ',

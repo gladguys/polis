@@ -10,30 +10,26 @@ class NoSubCommentForComment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Center(
-            child: FaIcon(
-              FontAwesome5.comments,
-              size: 80,
-              color: context.primaryColorLight,
-            ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        FaIcon(
+          FontAwesome5.comments,
+          size: 80,
+          color: context.primaryColorLight,
+        ),
+        const SizedBox(height: 12),
+        Text(
+          THIS_COMMENT_HAS_NO_SUB_COMMENTS,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 18,
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey[600]
+                : Colors.grey[300],
           ),
-          const SizedBox(height: 12),
-          Text(
-            THIS_COMMENT_HAS_NO_SUB_COMMENTS,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.grey[800],
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

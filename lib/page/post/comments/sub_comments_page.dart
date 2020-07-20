@@ -90,7 +90,7 @@ class _SubCommentsPageState extends State<SubCommentsPage> {
             child: Column(
               children: <Widget>[
                 TextTitle(ANSWERS),
-                const SizedBox(height: 4),
+                const SizedBox(height: 8),
                 CardBase(
                   slotBottomWithIndent: false,
                   paddingSlotCenter: const EdgeInsets.only(bottom: 4),
@@ -128,7 +128,10 @@ class _SubCommentsPageState extends State<SubCommentsPage> {
                         commentPai.diaHora.toString().formatDateTime(),
                         style: TextStyle(
                           fontSize: 11,
-                          color: Colors.grey[600],
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Colors.grey[600]
+                                  : Colors.grey[300],
                         ),
                       ),
                     ],

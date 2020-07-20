@@ -140,3 +140,4 @@ const MALE = 'M';
 const EXPENSES_AVERAGE_BETWEEN_POLITICIS =
     'Média de despesas entre todos os políticos';
 const PREFERENCES = 'Preferências';
+const COMMENTS = 'Comentários';
