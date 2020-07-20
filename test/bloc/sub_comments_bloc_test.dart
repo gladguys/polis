@@ -77,7 +77,7 @@ void main() {
     });
 
     blocTest(
-      '''Expects [LoadingPostComments, GetPostCommentsSuccess] when GetPostComments called''',
+      '''Expects [AddedSubCommentSuccess] when AddSubComment called''',
       build: () async {
         when(mockCommentRepository.saveSubComment(
                 commentId: anyNamed('commentId'),
@@ -117,6 +117,48 @@ void main() {
             ),
           ),
         );
+      },
+    );
+
+    blocTest(
+      '''Expects [GetCommentSubCommentsSuccess] when GetCommentSubComments called''',
+      build: () async {
+        when(mockCommentRepository.getCommentSubComments(commentId: 1))
+            .thenAnswer(
+          (_) => Future.value(
+            [
+              SubCommentModel(
+                id: 1,
+              ),
+              SubCommentModel(
+                id: 2,
+              ),
+            ],
+          ),
+        );
+        return subCommentsBloc;
+      },
+      act: (subCommentsBloc) async => subCommentsBloc.add(
+        GetCommentSubComments(
+          commentId: 1,
+        ),
+      ),
+      expect: [
+        CommentSubCommentsLoading(),
+        GetCommentSubCommentsSuccess(
+          [
+            SubCommentModel(
+              id: 1,
+            ),
+            SubCommentModel(
+              id: 2,
+            ),
+          ],
+        ),
+      ],
+      verify: (subCommentsBloc) async {
+        verify(mockCommentRepository.getCommentSubComments(commentId: 1))
+            .called(1);
       },
     );
 

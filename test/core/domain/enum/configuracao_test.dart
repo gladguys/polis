@@ -18,6 +18,48 @@ void main() {
       );
     });
 
+    group('isConfigEnabledForUser', () {
+      group(
+          '''should return default of each config in case user dont have configs setted''',
+          () {
+        test('isActivityInfoEnabled should default to true', () {
+          expect(
+            isConfigEnabledForUser(
+              user: UserModel(
+                userConfigs: {},
+              ),
+              configuracao: Configuracao.isActivityInfoEnabled,
+            ),
+            true,
+          );
+        });
+
+        test('isNotificationEnabled should default to true', () {
+          expect(
+            isConfigEnabledForUser(
+              user: UserModel(
+                userConfigs: {},
+              ),
+              configuracao: Configuracao.isNotificationEnabled,
+            ),
+            true,
+          );
+        });
+
+        test('isDarkModeEnabled should default to false', () {
+          expect(
+            isConfigEnabledForUser(
+              user: UserModel(
+                userConfigs: {},
+              ),
+              configuracao: Configuracao.isDarkModeEnabled,
+            ),
+            false,
+          );
+        });
+      });
+    });
+
     test('isThemeConfig', () {
       expect(isThemeConfig('isDarkModeEnabled'), true);
     });

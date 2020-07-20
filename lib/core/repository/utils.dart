@@ -1,7 +1,8 @@
 import '../domain/model/models.dart';
+import 'concrete/firebase/firebase.dart';
 
 bool isDocumentDespesa(Map<String, dynamic> document) =>
-    document['tipoAtividade'] == 'DESPESA';
+    document[TIPO_ATIVIDADE_FIELD] == 'DESPESA';
 
 String getIdFromPost(dynamic post) {
   if (post is PropostaModel) {

@@ -9,9 +9,9 @@ void main() {
         TotalDespesasAnuais(ano: '2020', despesasPorMes: []),
       );
       expect(
-        TotalDespesasAnuais(ano: '2019', despesasPorMes: []),
-        TotalDespesasAnuais(ano: '2020', despesasPorMes: []),
-      );
+          TotalDespesasAnuais(ano: '2019', despesasPorMes: []) ==
+              TotalDespesasAnuais(ano: '2020', despesasPorMes: []),
+          false);
     });
 
     test('toString()', () {

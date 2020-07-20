@@ -50,5 +50,16 @@ void main() {
       expect(
           subCommentToJson['usuarioId'] == jsonSubComment['usuarioId'], true);
     });
+
+    test('copyWith()', () {
+      final subComment = SubCommentModel(
+        id: 1,
+        texto: 'texto',
+      );
+      final subCommentCopyText = subComment.copyWith(texto: 'texto2');
+      expect(subComment.texto, 'texto');
+      expect(subCommentCopyText.texto, 'texto2');
+      expect(subComment == subCommentCopyText, false);
+    });
   });
 }

@@ -5,7 +5,7 @@ import 'package:polis/core/exception/exceptions.dart';
 import 'package:polis/core/repository/concrete/firebase/firebase.dart';
 import 'package:polis/core/repository/concrete/repositories.dart';
 
-import '../../mock.dart';
+import '../../../../mock.dart';
 
 void main() {
   FirebaseFavoritePostsRepository firebaseFavoritePostsRepository;

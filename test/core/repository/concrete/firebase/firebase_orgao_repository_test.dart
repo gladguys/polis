@@ -4,87 +4,80 @@ import 'package:polis/core/exception/exceptions.dart';
 import 'package:polis/core/repository/concrete/firebase/firebase.dart';
 import 'package:polis/core/repository/concrete/repositories.dart';
 
-import '../../mock.dart';
+import '../../../../mock.dart';
 
 void main() {
-  group('FirebasePoliticoRepository tests', () {
-    FirebasePoliticoRepository firebasePoliticoRepository;
+  group('FirebaseOrgaoRepository tests', () {
+    FirebaseOrgaoRepository firebaseOrgaoRepository;
     MockFirestore mockFirestore;
     MockCollectionReference mockPoliticosCollectionReference;
     MockQuerySnapshot mockQuerySnapshot;
     MockDocumentSnapshot mockDocumentSnapshot;
-    MockDocumentSnapshot mockDocumentSnapshot2;
-    MockDocumentSnapshot mockDocumentSnapshot3;
 
     setUp(() {
       mockFirestore = MockFirestore();
-      firebasePoliticoRepository = FirebasePoliticoRepository(
+      firebaseOrgaoRepository = FirebaseOrgaoRepository(
         firestore: mockFirestore,
       );
       mockPoliticosCollectionReference = MockCollectionReference();
       mockQuerySnapshot = MockQuerySnapshot();
       mockDocumentSnapshot = MockDocumentSnapshot();
-      mockDocumentSnapshot2 = MockDocumentSnapshot();
-      mockDocumentSnapshot3 = MockDocumentSnapshot();
     });
 
     test('test asserts', () {
       expect(
-          () => FirebasePoliticoRepository(
+          () => FirebaseOrgaoRepository(
                 firestore: null,
               ),
           throwsAssertionError);
     });
 
-    group('getAllPoliticos', () {
-      test('get all the politicos', () async {
-        when(mockFirestore.collection(POLITICOS_COLLECTION))
+    group('getAllOrgaosMap', () {
+      test('get all the orgaos and return a map', () async {
+        when(mockFirestore.collection(ORGAOS_COLLECTION))
             .thenReturn(mockPoliticosCollectionReference);
         when(mockPoliticosCollectionReference.getDocuments())
             .thenAnswer((_) => Future.value(mockQuerySnapshot));
         when(mockQuerySnapshot.documents).thenReturn([mockDocumentSnapshot]);
         when(mockDocumentSnapshot.data).thenReturn({
           ID_FIELD: '1',
+          'sigla': 'T',
         });
 
-        final politicos = await firebasePoliticoRepository.getAllPoliticos();
-        expect(politicos[0].id, '1');
-      });
-
-      test('get all the politicos with correct sorting', () async {
-        when(mockFirestore.collection(POLITICOS_COLLECTION))
-            .thenReturn(mockPoliticosCollectionReference);
-        when(mockPoliticosCollectionReference.getDocuments())
-            .thenAnswer((_) => Future.value(mockQuerySnapshot));
-        when(mockQuerySnapshot.documents).thenReturn([
-          mockDocumentSnapshot,
-          mockDocumentSnapshot2,
-          mockDocumentSnapshot3,
-        ]);
-        when(mockDocumentSnapshot.data).thenReturn({
-          ID_FIELD: '1',
-          NOME_ELEITORAL_FIELD: 'A',
-        });
-        when(mockDocumentSnapshot2.data).thenReturn({
-          ID_FIELD: '2',
-          NOME_ELEITORAL_FIELD: 'Á',
-        });
-        when(mockDocumentSnapshot3.data).thenReturn({
-          ID_FIELD: '3',
-          NOME_ELEITORAL_FIELD: 'Z',
-        });
-
-        final politicos = await firebasePoliticoRepository.getAllPoliticos();
-        expect(politicos[0].id, '1');
-        expect(politicos[1].id, '2');
-        expect(politicos[2].id, '3');
+        final politicosMap = await firebaseOrgaoRepository.getAllOrgaosMap();
+        expect(politicosMap['T'].id, '1');
       });
 
       test('throws exception', () {
-        when(mockFirestore.collection(POLITICOS_COLLECTION))
+        when(mockFirestore.collection(ORGAOS_COLLECTION))
             .thenThrow(Exception());
-        firebasePoliticoRepository
-            .getAllPoliticos()
+        firebaseOrgaoRepository
+            .getAllOrgaosMap()
+            .catchError((e) => expect(e, isA<ComunicationException>()));
+      });
+    });
+
+    group('getAllOrgaos', () {
+      test('get all orgaos', () async {
+        when(mockFirestore.collection(ORGAOS_COLLECTION))
+            .thenReturn(mockPoliticosCollectionReference);
+        when(mockPoliticosCollectionReference.getDocuments())
+            .thenAnswer((_) => Future.value(mockQuerySnapshot));
+        when(mockQuerySnapshot.documents).thenReturn([mockDocumentSnapshot]);
+        when(mockDocumentSnapshot.data).thenReturn({
+          ID_FIELD: '1',
+          'sigla': 'T',
+        });
+
+        final politicosMap = await firebaseOrgaoRepository.getAllOrgaos();
+        expect(politicosMap[0].id, '1');
+      });
+
+      test('throws exception', () {
+        when(mockFirestore.collection(ORGAOS_COLLECTION))
+            .thenThrow(Exception());
+        firebaseOrgaoRepository
+            .getAllOrgaos()
             .catchError((e) => expect(e, isA<ComunicationException>()));
       });
     });

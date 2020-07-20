@@ -83,15 +83,16 @@ void main() {
         userBloc.add(Logout());
         return;
       },
+      expect: [
+        SignoutLoading(),
+        SignoutSucceded(),
+        InitialUser(),
+      ],
       verify: (userBloc) async {
         verify(mockUserRepository.signOut()).called(1);
         verify(mockAnalyticsService.logLogout(any)).called(1);
         verify(mockSharedPreferencesService.setUser(null)).called(1);
       },
-      expect: [
-        SignoutLoading(),
-        SignoutSucceded(),
-      ],
     );
 
     blocTest(

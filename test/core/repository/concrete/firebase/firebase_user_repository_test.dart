@@ -5,7 +5,7 @@ import 'package:polis/core/exception/exceptions.dart';
 import 'package:polis/core/repository/concrete/firebase/firebase.dart';
 import 'package:polis/core/repository/concrete/repositories.dart';
 
-import '../../mock.dart';
+import '../../../../mock.dart';
 
 void main() {
   group('FirebaseUserRepository tests', () {
@@ -92,6 +92,66 @@ void main() {
         when(mockUserCollectionRef.document('1')).thenThrow(Exception());
         firebaseUserRepository
             .setFirstLoginDone(user)
+            .catchError((e) => expect(e, isA<ComunicationException>()));
+      });
+    });
+
+    group('saveUserComments', () {
+      test('works', () async {
+        when(mockFirestore.collection(USERS_COLLECTION))
+            .thenReturn(mockUserCollectionRef);
+        when(mockUserCollectionRef.document('1'))
+            .thenReturn(mockUserDocumentRef);
+        await firebaseUserRepository.saveUserComments(
+          user: UserModel(
+            userId: '1',
+          ),
+          comments: {
+            '1': true,
+          },
+        );
+      });
+
+      test('throws exception', () async {
+        when(mockFirestore.collection(USERS_COLLECTION)).thenThrow(Exception());
+        firebaseUserRepository.saveUserComments(
+          user: UserModel(
+            userId: '1',
+          ),
+          comments: {
+            '1': true,
+          },
+        ).catchError((e) => expect(e, isA<ComunicationException>()));
+      });
+    });
+
+    group('updateUserConfigs', () {
+      test('works', () async {
+        when(mockFirestore.collection(USERS_COLLECTION))
+            .thenReturn(mockUserCollectionRef);
+        when(mockUserCollectionRef.document('1'))
+            .thenReturn(mockUserDocumentRef);
+        await firebaseUserRepository.updateUserConfigs(
+          UserModel(
+            userId: '1',
+            userConfigs: {
+              '1': true,
+            },
+          ),
+        );
+      });
+
+      test('throws exception', () async {
+        when(mockFirestore.collection(USERS_COLLECTION)).thenThrow(Exception());
+        firebaseUserRepository
+            .updateUserConfigs(
+              UserModel(
+                userId: '1',
+                userConfigs: {
+                  '1': true,
+                },
+              ),
+            )
             .catchError((e) => expect(e, isA<ComunicationException>()));
       });
     });

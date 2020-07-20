@@ -9,7 +9,7 @@ import 'package:polis/core/i18n/i18n.dart';
 import 'package:polis/core/repository/concrete/firebase/firebase.dart';
 import 'package:polis/core/repository/concrete/repositories.dart';
 
-import '../../mock.dart';
+import '../../../../mock.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

@@ -4,7 +4,7 @@ import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/repository/concrete/hive/box.dart';
 import 'package:polis/core/repository/concrete/repositories.dart';
 
-import '../../mock.dart';
+import '../../../../mock.dart';
 
 void main() {
   HivePartidoRepository hivePartidoRepository;

@@ -17,18 +17,18 @@ void main() {
       final novembro = DespesaMensal(mes: '11');
       final dezembro = DespesaMensal(mes: '12');
 
-      expect(janeiro.mes, 'Janeiro');
-      expect(fevereiro.mes, 'Fevereiro');
-      expect(marco.mes, 'Marco');
-      expect(abril.mes, 'Abril');
-      expect(maio.mes, 'Maio');
-      expect(junho.mes, 'Junho');
-      expect(julho.mes, 'Julho');
-      expect(agosto.mes, 'Agosto');
-      expect(setembro.mes, 'Setembro');
-      expect(outubro.mes, 'Outubro');
-      expect(novembro.mes, 'Novembro');
-      expect(dezembro.mes, 'Dezembro');
+      expect(janeiro.nomeMes, 'Janeiro');
+      expect(fevereiro.nomeMes, 'Fevereiro');
+      expect(marco.nomeMes, 'Março');
+      expect(abril.nomeMes, 'Abril');
+      expect(maio.nomeMes, 'Maio');
+      expect(junho.nomeMes, 'Junho');
+      expect(julho.nomeMes, 'Julho');
+      expect(agosto.nomeMes, 'Agosto');
+      expect(setembro.nomeMes, 'Setembro');
+      expect(outubro.nomeMes, 'Outubro');
+      expect(novembro.nomeMes, 'Novembro');
+      expect(dezembro.nomeMes, 'Dezembro');
     });
 
     test('toString()', () {
