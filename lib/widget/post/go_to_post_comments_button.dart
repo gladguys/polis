@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:polis/core/keys.dart';
 import 'package:simple_router/simple_router.dart';
 
 import '../../core/i18n/i18n.dart';
@@ -19,6 +20,7 @@ class GoToPostCommentsButton extends StatelessWidget {
         FOLLOW_COMMENTS.toUpperCase(),
         style: const TextStyle(fontSize: 13),
       ),
+      key: goToPostCommentsButtonKey,
       color: Theme.of(context).primaryColor,
       highlightedBorderColor: Theme.of(context).primaryColorDark,
       borderSide: BorderSide(color: Theme.of(context).primaryColor),

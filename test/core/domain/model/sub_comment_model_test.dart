@@ -56,8 +56,10 @@ void main() {
         id: 1,
         texto: 'texto',
       );
+      final subCommentCopyNotText = subComment.copyWith(id: 2);
       final subCommentCopyText = subComment.copyWith(texto: 'texto2');
       expect(subComment.texto, 'texto');
+      expect(subCommentCopyNotText.texto, 'texto');
       expect(subCommentCopyText.texto, 'texto2');
       expect(subComment == subCommentCopyText, false);
     });

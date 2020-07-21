@@ -29,6 +29,7 @@ const editProfileNameFieldKey = ValueKey('name-key');
 const editProfileEmailFieldKey = ValueKey('email-field');
 const photoUrlFileKey = ValueKey('photo-url-file');
 const photoUrlUserKey = ValueKey('photo-url-user');
+const goToPostCommentsButtonKey = ValueKey('go-to-post-comments-button');
 const arrowBackButtonKey = ValueKey('arrow-back-btn');
 const commentButtonKey = ValueKey('comment-button');
 const commentsKey = ValueKey('comments');
@@ -42,6 +43,8 @@ const newPasswordFieldKey = ValueKey('new-password-field');
 const despesaImageIconKey = ValueKey('despesa-image-icon');
 const cardBaseKey = ValueKey('card-base');
 const expensesTooltipKey = ValueKey('expenses-tooltip');
+const menuEditDeleteKey = ValueKey('menu-edit-delete');
+const stopEditingCommentKey = ValueKey('stop-editing-comment');
 const proposalAuthorsVisibilityKey = ValueKey('proposal-authors-visibility');
 const newPasswordConfirmationFieldKey =
     ValueKey('new-password-confirmation-field');

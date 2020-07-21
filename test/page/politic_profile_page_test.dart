@@ -47,6 +47,18 @@ void main() {
       );
     });
 
+    testWidgets('should build dark mode without exploding', (tester) async {
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<PoliticProfileBloc>(
+            bloc: mockPoliticProfileBloc,
+            page: PoliticProfilePage(),
+          ),
+          useDarkMode: true,
+        ),
+      );
+    });
+
     testWidgets('should build connected without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(

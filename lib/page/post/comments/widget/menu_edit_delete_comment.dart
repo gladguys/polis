@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:polis/core/keys.dart';
 
 import '../../../../core/i18n/i18n.dart';
 
@@ -56,6 +57,7 @@ class MenuEditDeleteComment extends StatelessWidget {
       },
       child: FaIcon(
         FontAwesomeIcons.ellipsisV,
+        key: menuEditDeleteKey,
         size: 16,
         color: Colors.black,
       ),

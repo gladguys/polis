@@ -6,6 +6,7 @@ import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/domain/model/comment_model.dart';
 import 'package:polis/core/domain/model/models.dart';
+import 'package:polis/core/keys.dart';
 import 'package:polis/core/repository/abstract/repositories.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/page_connected.dart';
@@ -261,6 +262,40 @@ void main() {
         ),
       );
       expect(find.byType(EditCommentContainer), findsOneWidget);
+      final stopEditingBtn = find.byKey(stopEditingCommentKey);
+      expect(stopEditingBtn, findsOneWidget);
+      await tester.tap(stopEditingBtn);
+      verify(mockCommentBloc.add(StopEditingComment())).called(1);
+    });
+
+    testWidgets('should add a comment', (tester) async {
+      final comment = CommentModel(
+        usuarioNome: 'nome',
+        texto: 'texto',
+      );
+      when(mockCommentBloc.state).thenReturn(
+        EditingCommentStarted(comment),
+      );
+      when(mockCommentBloc.postComments).thenReturn(postComments);
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<CommentBloc>(
+            bloc: mockCommentBloc,
+            page: PostCommentsPage(),
+          ),
+        ),
+      );
+      final addCommentBtn = find.byKey(commentButtonKey);
+      expect(addCommentBtn, findsOneWidget);
+      await tester.tap(addCommentBtn);
+      verify(
+        mockCommentBloc.add(
+          EditComment(
+            comment: comment,
+            newText: 'texto',
+          ),
+        ),
+      ).called(1);
     });
 
     testWidgets('should show comments when state is CommentEditedSuccess',

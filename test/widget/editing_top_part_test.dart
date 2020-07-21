@@ -13,9 +13,7 @@ void main() {
         ),
         throwsAssertionError,
       );
-    });
 
-    test('asserts', () {
       expect(
         () => EditingTopPart(
           text: '',
@@ -24,9 +22,7 @@ void main() {
         ),
         throwsAssertionError,
       );
-    });
 
-    test('asserts', () {
       expect(
         () => EditingTopPart(
           text: '',

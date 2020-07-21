@@ -11,6 +11,7 @@ import '../../core/domain/model/models.dart';
 import '../../core/domain/model/proposta_model.dart';
 import '../../core/extension/extensions.dart';
 import '../../core/i18n/i18n.dart';
+import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../page/pages.dart';
 import '../../page/post/widget/like_post_button.dart';
@@ -55,7 +56,9 @@ class PropostaTile extends StatelessWidget {
             ],
           ),
           slotBottom: _buildActions(context),
+          key: cardBaseKey,
           onTap: () async {
+            context.bloc<TimelineBloc>().add(RefreshTimeline());
             await SimpleRouter.forward(
               PostPageConnected(
                 post: proposta,
@@ -64,7 +67,6 @@ class PropostaTile extends StatelessWidget {
               ),
               name: POST_PAGE,
             );
-            context.bloc<TimelineBloc>().add(RefreshTimeline());
           },
         ),
         Positioned(

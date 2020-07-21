@@ -58,6 +58,7 @@ class DespesaTile extends StatelessWidget {
           slotBottom: _buildActions(context),
           key: cardBaseKey,
           onTap: () async {
+            context.bloc<TimelineBloc>().add(RefreshTimeline());
             await SimpleRouter.forward(
               PostPageConnected(
                 post: despesa,
@@ -66,7 +67,6 @@ class DespesaTile extends StatelessWidget {
               ),
               name: POST_PAGE,
             );
-            context.bloc<TimelineBloc>().add(RefreshTimeline());
           },
         ),
         Positioned(

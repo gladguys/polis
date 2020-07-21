@@ -42,6 +42,36 @@ void main() {
       );
     });
 
+    testWidgets('should build dark mode without exploding', (tester) async {
+      final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.user).thenReturn(
+        UserModel(
+          userId: '1',
+        ),
+      );
+      final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.post).thenReturn({
+        'id': '1',
+        QTD_NAO_CURTIDAS_FIELD: 0,
+      });
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<UserBloc>(
+            bloc: mockUserBloc,
+            page: PageConnected<PostBloc>(
+              bloc: mockPostBloc,
+              page: Scaffold(
+                body: UnlikePostButton(
+                  post: PropostaModel(id: '1'),
+                ),
+              ),
+            ),
+          ),
+          useDarkMode: true,
+        ),
+      );
+    });
+
     testWidgets('should like when tap', (tester) async {
       final mockUserBloc = MockUserBloc();
       when(mockUserBloc.user).thenReturn(
@@ -89,6 +119,127 @@ void main() {
           ),
         ),
       ).called(1);
+    });
+
+    testWidgets('should decrement qtdNaoCurtidas when PostLikedSuccess',
+        (tester) async {
+      final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.user).thenReturn(
+        UserModel(
+          userId: '1',
+        ),
+      );
+      final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.post).thenReturn({
+        'id': '1',
+        'idPropostaPolitico': '1',
+        QTD_NAO_CURTIDAS_FIELD: 1,
+      });
+      when(mockPostBloc.state).thenReturn(
+        PostLikedSuccess(
+          postId: '1',
+        ),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<UserBloc>(
+            bloc: mockUserBloc,
+            page: PageConnected<PostBloc>(
+              bloc: mockPostBloc,
+              page: Scaffold(
+                body: UnlikePostButton(
+                  post: PropostaModel(
+                    id: '1',
+                    idPropostaPolitico: '1',
+                    idPoliticoAutor: '1',
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    });
+
+    testWidgets(
+        'should decrement qtdNaoCurtidas when StoppedUnlikingPostSuccess',
+        (tester) async {
+      final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.user).thenReturn(
+        UserModel(
+          userId: '1',
+        ),
+      );
+      final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.post).thenReturn({
+        'id': '1',
+        'idPropostaPolitico': '1',
+        QTD_NAO_CURTIDAS_FIELD: 1,
+      });
+      when(mockPostBloc.state).thenReturn(
+        StoppedUnlikingPostSuccess(
+          postId: '1',
+        ),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<UserBloc>(
+            bloc: mockUserBloc,
+            page: PageConnected<PostBloc>(
+              bloc: mockPostBloc,
+              page: Scaffold(
+                body: UnlikePostButton(
+                  post: PropostaModel(
+                    id: '1',
+                    idPropostaPolitico: '1',
+                    idPoliticoAutor: '1',
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    });
+
+    testWidgets('should increment qtdNaoCurtidas when PostUnlikedSuccess',
+        (tester) async {
+      final mockUserBloc = MockUserBloc();
+      when(mockUserBloc.user).thenReturn(
+        UserModel(
+          userId: '1',
+        ),
+      );
+      final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.post).thenReturn({
+        'id': '1',
+        'idPropostaPolitico': '1',
+        QTD_NAO_CURTIDAS_FIELD: 0,
+      });
+      when(mockPostBloc.state).thenReturn(
+        PostUnlikedSuccess(
+          postId: '1',
+        ),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<UserBloc>(
+            bloc: mockUserBloc,
+            page: PageConnected<PostBloc>(
+              bloc: mockPostBloc,
+              page: Scaffold(
+                body: UnlikePostButton(
+                  post: PropostaModel(
+                    id: '1',
+                    idPropostaPolitico: '1',
+                    idPoliticoAutor: '1',
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
     });
 
     testWidgets('should stop unliking already unliked post when tap',

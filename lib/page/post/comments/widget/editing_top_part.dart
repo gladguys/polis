@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:polis/core/keys.dart';
 
 import '../../../../core/i18n/i18n.dart';
 
@@ -50,6 +51,7 @@ class EditingTopPart extends StatelessWidget {
                     alignment: Alignment.center,
                     child: FaIcon(
                       FontAwesomeIcons.times,
+                      key: stopEditingCommentKey,
                       size: 20,
                     ),
                   ),

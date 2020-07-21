@@ -112,7 +112,8 @@ void main() {
       final yearSelect = find.text(EXPENSES_ON_YEAR);
       expect(yearSelect, findsOneWidget);
       await tester.tap(yearSelect);
-      final year = find.text('2019');
+      await tester.pumpAndSettle();
+      final year = find.text('2020');
       expect(year, findsOneWidget);
       await tester.tap(year);
       await tester.pumpAndSettle();

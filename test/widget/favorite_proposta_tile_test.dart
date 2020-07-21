@@ -46,6 +46,15 @@ void main() {
       );
     });
 
+    testWidgets('should build dark mode without exploding', (tester) async {
+      await tester.pumpWidget(
+        connectedWidget(
+          FavoritePropostaTileConnected(proposta),
+          useDarkMode: true,
+        ),
+      );
+    });
+
     testWidgets('should build with plenarry amendment', (tester) async {
       final propostaWithAmendment = PropostaModel(
         fotoPolitico: 'foto',

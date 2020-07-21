@@ -162,5 +162,27 @@ void main() {
             .catchError((e) => expect(e, isA<ComunicationException>()));
       });
     });
+
+    group('getUserInfo', () {
+      test('works', () async {
+        when(mockFirestore.collection(USERS_COLLECTION))
+            .thenReturn(mockCollectionReference);
+        when(mockCollectionReference.document('1'))
+            .thenReturn(mockDocumentReference);
+        when(mockDocumentReference.get())
+            .thenAnswer((_) => Future.value(mockDocumentSnapshot));
+        when(mockDocumentSnapshot.data).thenReturn({
+          'userId': '1',
+        });
+        await firebaseUserProfileRepository.getUserInfo('1');
+      });
+
+      test('fail', () {
+        when(mockFirestore.collection(USERS_COLLECTION)).thenThrow(Exception());
+        firebaseUserProfileRepository
+            .getUserInfo('1')
+            .catchError((e) => expect(e, isA<ComunicationException>()));
+      });
+    });
   });
 }

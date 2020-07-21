@@ -57,6 +57,19 @@ void main() {
       );
     });
 
+    testWidgets('should build dark mode without exploding', (tester) async {
+      final mockTimelineBloc = MockTimelineBloc();
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<TimelineBloc>(
+            bloc: mockTimelineBloc,
+            page: DespesaTileConnected(despesa),
+          ),
+          useDarkMode: true,
+        ),
+      );
+    });
+
     testWidgets('should do something when click on card', (tester) async {
       final mockTimelineBloc = MockTimelineBloc();
       await tester.pumpWidget(
@@ -91,6 +104,22 @@ void main() {
       });
       expect(likeButton, findsOneWidget);
       await tester.tap(likeButton);
+    });
+
+    testWidgets('should go to post page when click', (tester) async {
+      final mockTimelineBloc = MockTimelineBloc();
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<TimelineBloc>(
+            bloc: mockTimelineBloc,
+            page: DespesaTileConnected(despesa),
+          ),
+        ),
+      );
+      final card = find.byKey(cardBaseKey).first;
+      expect(card, findsOneWidget);
+      await tester.tap(card);
+      verify(mockTimelineBloc.add(RefreshTimeline()));
     });
 
     testWidgets('should go to profile page when click on politic photo',

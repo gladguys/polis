@@ -276,34 +276,10 @@ void main() {
       });
 
       test('should fail', () async {
-        final mockAtividadeDocumentReference = MockDocumentReference();
-        final mockAtividadeDocumentSnapshot = MockDocumentSnapshot();
-        final mockUserDocumentReference = MockDocumentReference();
-        final mockUserDocumentSnapshot = MockDocumentSnapshot();
         when(mockFirestore.collection(ATIVIDADES_COLLECTION))
             .thenReturn(mockAtividadesCollectionReference);
         when(mockAtividadesCollectionReference.document('1'))
-            .thenReturn(mockPoliticoDocumentReference);
-        when(mockPoliticoDocumentReference
-                .collection(ATIVIDADES_POLITICO_SUBCOLLECTION))
-            .thenReturn(mockAtividadesPoliticSubcollectionReference);
-        when(mockAtividadesPoliticSubcollectionReference.document('1'))
-            .thenReturn(mockAtividadeDocumentReference);
-        when(mockAtividadeDocumentReference.get())
-            .thenAnswer((_) => Future.value(mockAtividadeDocumentSnapshot));
-        when(mockAtividadeDocumentSnapshot.data).thenReturn({
-          QTD_CURTIDAS_FIELD: 0,
-          QTD_NAO_CURTIDAS_FIELD: 0,
-        });
-        when(mockFirestore.collection(USERS_COLLECTION))
-            .thenReturn(mockUsersCollectionReference);
-        when(mockUsersCollectionReference.document('1'))
-            .thenReturn(mockUserDocumentReference);
-        when(mockUserDocumentReference.get()).thenThrow(Exception());
-        when(mockUserDocumentSnapshot.data).thenReturn({
-          USER_LIKES_FIELD: {},
-          USER_UNLIKES_FIELD: {},
-        });
+            .thenThrow(Exception());
 
         firebasePostRepository
             .likePost(
@@ -464,6 +440,8 @@ void main() {
 
       test('should not work', () async {
         when(mockFirestore.collection(ATIVIDADES_COLLECTION))
+            .thenReturn(mockAtividadesCollectionReference);
+        when(mockAtividadesCollectionReference.document('1'))
             .thenThrow(Exception());
 
         firebasePostRepository

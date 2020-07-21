@@ -5,6 +5,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/domain/model/models.dart';
+import 'package:polis/core/keys.dart';
 import 'package:polis/core/repository/abstract/repositories.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/page_connected.dart';
@@ -111,6 +112,80 @@ void main() {
           ],
         ),
       );
+    });
+
+    testWidgets(
+        '''should show sub comments and edit container when state is EditingSubCommentStarted''',
+        (tester) async {
+      when(mockSubCommentsBloc.comment).thenReturn(
+        CommentModel(
+          id: 1,
+          usuarioNome: 'nome',
+          texto: 'texto',
+          diaHora: DateTime.now(),
+        ),
+      );
+      when(mockSubCommentsBloc.state).thenReturn(
+        EditingSubCommentStarted(
+          SubCommentModel(
+            usuarioNome: 'nome',
+            texto: 'texto',
+          ),
+        ),
+      );
+      when(mockSubCommentsBloc.subComments).thenReturn(subComments);
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<SubCommentsBloc>(
+            bloc: mockSubCommentsBloc,
+            page: SubCommentsPage(),
+          ),
+        ),
+      );
+      expect(find.byType(EditSubCommentContainer), findsOneWidget);
+      final stopEditingBtn = find.byKey(stopEditingCommentKey);
+      expect(stopEditingBtn, findsOneWidget);
+      await tester.tap(stopEditingBtn);
+      verify(mockSubCommentsBloc.add(StopEditingSubComment())).called(1);
+    });
+
+    testWidgets('should add a sub comment', (tester) async {
+      when(mockSubCommentsBloc.comment).thenReturn(
+        CommentModel(
+          id: 1,
+          usuarioNome: 'nome',
+          texto: 'texto',
+          diaHora: DateTime.now(),
+        ),
+      );
+      final subComment = SubCommentModel(
+        usuarioNome: 'nome',
+        texto: 'texto',
+        diaHora: DateTime.now(),
+      );
+      when(mockSubCommentsBloc.state).thenReturn(
+        EditingSubCommentStarted(subComment),
+      );
+      when(mockSubCommentsBloc.subComments).thenReturn(subComments);
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<SubCommentsBloc>(
+            bloc: mockSubCommentsBloc,
+            page: SubCommentsPage(),
+          ),
+        ),
+      );
+      final addCommentBtn = find.byKey(commentButtonKey);
+      expect(addCommentBtn, findsOneWidget);
+      await tester.tap(addCommentBtn);
+      verify(
+        mockSubCommentsBloc.add(
+          EditSubComment(
+            subComment: subComment,
+            newText: 'texto',
+          ),
+        ),
+      ).called(1);
     });
 
     testWidgets('should build editing container', (tester) async {

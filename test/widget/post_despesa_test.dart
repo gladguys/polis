@@ -78,6 +78,24 @@ void main() {
       );
     });
 
+    testWidgets('should build dark mode without exploding', (tester) async {
+      final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.isPostFavorite).thenReturn(false);
+      when(mockPostBloc.post).thenReturn(despesa.toJson());
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<PostBloc>(
+            bloc: mockPostBloc,
+            page: PostDespesa(
+              despesa,
+              screenshotController: MockScreenshotController(),
+            ),
+          ),
+          useDarkMode: true,
+        ),
+      );
+    });
+
     testWidgets('should do something when click on card', (tester) async {
       final mockPostBloc = MockPostBloc();
       when(mockPostBloc.isPostFavorite).thenReturn(false);

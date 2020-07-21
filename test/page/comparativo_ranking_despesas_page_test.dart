@@ -89,6 +89,15 @@ void main() {
       );
     });
 
+    testWidgets('shoud build dark mode without exploding', (tester) async {
+      await tester.pumpWidget(
+        connectedWidget(
+          ComparativoRankingDespesasPageConnected(politico),
+          useDarkMode: true,
+        ),
+      );
+    });
+
     testWidgets('should show ranking', (tester) async {
       when(mockComparativoRankingDespesasBloc.state).thenReturn(
         GetRankingResultadosSuccess(resultadosRanking),

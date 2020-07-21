@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/core/domain/model/despesa_model.dart';
-import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
-import 'package:polis/widget/tile/politic_despesa_tile_connected.dart';
+import 'package:polis/widget/card_base.dart';
+import 'package:polis/widget/tile/politic_expense_tile.dart';
 
 import '../mock.dart';
 import '../utils.dart';
@@ -23,7 +22,7 @@ void main() {
 
   DespesaModel despesa;
 
-  group('PoliticDespesaTile tests', () {
+  group('PoliticExpenseTile tests', () {
     setUp(() {
       despesa = DespesaModel(
         fotoPolitico: 'foto',
@@ -44,7 +43,7 @@ void main() {
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PoliticDespesaTileConnected(despesa),
+          PoliticExpenseTile(despesa),
         ),
       );
     });
@@ -52,33 +51,22 @@ void main() {
     testWidgets('should build dark mode without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PoliticDespesaTileConnected(despesa),
+          PoliticExpenseTile(despesa),
           useDarkMode: true,
         ),
       );
     });
 
-    testWidgets('should do something when click on card', (tester) async {
+    testWidgets('should go to PostPage when click', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PoliticDespesaTileConnected(despesa),
+          PoliticExpenseTile(despesa),
+          useDarkMode: true,
         ),
       );
-      final card = find.byKey(cardBaseContentKey);
-      expect(card, findsOneWidget);
+      final card = find.byType(CardBase);
       await tester.tap(card);
-    });
-
-    testWidgets('should go to profile page when click on politic photo',
-        (tester) async {
-      await tester.pumpWidget(
-        connectedWidget(
-          PoliticDespesaTileConnected(despesa),
-        ),
-      );
-      final politicPhoto = find.byType(ClipRRect);
-      expect(politicPhoto, findsOneWidget);
-      await tester.tap(politicPhoto);
+      await tester.pump();
       verify(mockObserver.didPush(any, any));
     });
   });
