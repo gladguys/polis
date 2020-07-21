@@ -19,8 +19,8 @@ void main() {
         NewCommentAdded(comment: CommentModel(), numberOfComments: 0),
       );
       expect(
-        NewSubCommentAdded(comment: CommentModel(), numberOfReplies: 0),
-        NewSubCommentAdded(comment: CommentModel(), numberOfReplies: 0),
+        NewSubCommentAdded(comment: CommentModel(), numberOfSubComments: 0),
+        NewSubCommentAdded(comment: CommentModel(), numberOfSubComments: 0),
       );
     });
   });

@@ -55,6 +55,15 @@ void main() {
               .getYearExpensesByType(politicoId: '1', ano: '2019');
         } on Exception {}
       });
+
+      test('throws exception when response is not ok', () async {
+        when(mockDio.get(any, queryParameters: anyNamed('queryParameters')))
+            .thenAnswer((_) => Future.value(mockResponse));
+        when(mockResponse.statusCode).thenReturn(500);
+        httpPoliticExpensesByTypeAnalysisRepository
+            .getYearExpensesByType(politicoId: '1', ano: '2019')
+            .catchError((e) => expect(e, isA<Exception>()));
+      });
     });
   });
 }

@@ -15,7 +15,7 @@ class UserConfigsPage extends StatelessWidget {
     final user = userBloc.user;
     final userConfigs = user.userConfigs ?? {};
     final allConfigs = Configuracao.values;
-    
+
     return Scaffold(
       body: SafeArea(
         child: Padding(

@@ -36,6 +36,7 @@ dependencies:
   flutter_bloc_monitor: ^1.0.1
   flutter_dotenv: ^2.1.0
   shared_preferences_monitor: ^1.0.1+2
+  back_button_interceptor: ^4.2.4
 
   # Firebase
   cloud_firestore: ^0.13.7

@@ -139,7 +139,7 @@ void main() {
       expect: [
         NewSubCommentAdded(
           comment: CommentModel(),
-          numberOfReplies: 1,
+          numberOfSubComments: 1,
         ),
       ],
     );

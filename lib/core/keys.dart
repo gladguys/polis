@@ -14,6 +14,7 @@ const googleSigninButtonKey = ValueKey('google-signin-btn');
 const noAccountButtonKey = ValueKey('no-account-btn');
 const followUnfollowButtonKey = ValueKey('follow-unfollow-btn');
 const searchTextfieldKey = ValueKey('search-textfield');
+const configSwitchKey = ValueKey('config-switch-key');
 const pickStateButtonKey = ValueKey('pick-state-btn');
 const updateTimelineButtonKey = ValueKey('update-timeline-btn');
 const politicsListKey = ValueKey('politics-list');

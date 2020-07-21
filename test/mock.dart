@@ -35,6 +35,10 @@ class MockSubCommentsBloc extends MockBloc<SubCommentsEvent, SubCommentsState>
 class MockCommentBloc extends MockBloc<CommentEvent, CommentState>
     implements CommentBloc {}
 
+class MockPoliticExpensesAnalysisBloc
+    extends MockBloc<PoliticExpensesAnalysisEvent, PoliticExpensesAnalysisState>
+    implements PoliticExpensesAnalysisBloc {}
+
 class MockEditProfileBloc extends MockBloc<EditProfileEvent, EditProfileState>
     implements EditProfileBloc {}
 

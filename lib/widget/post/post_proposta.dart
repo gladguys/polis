@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:polis/widget/text_title.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:simple_router/simple_router.dart';
 
@@ -21,6 +20,7 @@ import '../image/photo_image.dart';
 import '../label_value.dart';
 import '../photo.dart';
 import '../text_rich.dart';
+import '../text_title.dart';
 import 'go_to_post_comments_button.dart';
 
 class PostProposta extends StatelessWidget {
@@ -55,8 +55,9 @@ class PostProposta extends StatelessWidget {
                   _buildCenterContent(context),
                 ],
               ),
-              slotBottom:
-                  isPostPreview ? const SizedBox.shrink() : _buildActions(context),
+              slotBottom: isPostPreview
+                  ? const SizedBox.shrink()
+                  : _buildActions(context),
             ),
           ],
         ),

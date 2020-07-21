@@ -4,6 +4,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../core/keys.dart';
+
 class FancySwitcher extends StatefulWidget {
   @required
   final bool value;
@@ -84,20 +86,12 @@ class _FancySwitcherState extends State<FancySwitcher>
     final transitionColor = Color.lerp(widget.colorOff, widget.colorOn, value);
 
     return GestureDetector(
-      onDoubleTap: () {
-        _action();
-        if (widget.onDoubleTap != null) widget.onDoubleTap();
-      },
       onTap: () {
         _action();
         if (widget.onTap != null) widget.onTap();
       },
-      onPanEnd: (details) {
-        _action();
-        if (widget.onSwipe != null) widget.onSwipe();
-        //widget.onSwipe();
-      },
       child: Container(
+        key: configSwitchKey,
         padding: const EdgeInsets.all(5),
         width: 90,
         decoration: BoxDecoration(

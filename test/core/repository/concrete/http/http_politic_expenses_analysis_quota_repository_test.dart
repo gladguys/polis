@@ -48,6 +48,14 @@ void main() {
               .getMaxQuotaForStateUf('CE');
         } on Exception {}
       });
+
+      test('throws exception when response is not ok', () async {
+        when(mockDio.get(any)).thenAnswer((_) => Future.value(mockResponse));
+        when(mockResponse.statusCode).thenReturn(500);
+        httpPoliticExpensesAnalysisQuotaRepository
+            .getMaxQuotaForStateUf('CE')
+            .catchError((e) => expect(e, isA<Exception>()));
+      });
     });
   });
 }

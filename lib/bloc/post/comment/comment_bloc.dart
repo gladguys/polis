@@ -113,7 +113,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
 
     yield NewSubCommentAdded(
       comment: updatedComment,
-      numberOfReplies: subComments.length,
+      numberOfSubComments: subComments.length,
     );
   }
 

@@ -49,6 +49,15 @@ void main() {
           await httpCommentRepository.getPostComments(postId: '1');
         } on Exception {}
       });
+
+      test('throws exception when response is not ok', () async {
+        when(mockDio.get(any, queryParameters: anyNamed('queryParameters')))
+            .thenAnswer((_) => Future.value(mockResponse));
+        when(mockResponse.statusCode).thenReturn(500);
+        httpCommentRepository
+            .getPostComments(postId: '1')
+            .catchError((e) => expect(e, isA<Exception>()));
+      });
     });
 
     group('getCommentSubComments', () {
@@ -71,6 +80,15 @@ void main() {
           await httpCommentRepository.getCommentSubComments(commentId: 1);
         } on Exception {}
       });
+
+      test('throws exception when response is not ok', () async {
+        when(mockDio.get(any, queryParameters: anyNamed('queryParameters')))
+            .thenAnswer((_) => Future.value(mockResponse));
+        when(mockResponse.statusCode).thenReturn(500);
+        httpCommentRepository
+            .getCommentSubComments(commentId: 1)
+            .catchError((e) => expect(e, isA<Exception>()));
+      });
     });
 
     group('saveComment', () {
@@ -91,6 +109,15 @@ void main() {
         try {
           await httpCommentRepository.saveComment(CommentModel(id: 1));
         } on Exception {}
+      });
+
+      test('throws exception when response is not ok', () async {
+        when(mockDio.post(any, data: anyNamed('data')))
+            .thenAnswer((_) => Future.value(mockResponse));
+        when(mockResponse.statusCode).thenReturn(500);
+        httpCommentRepository
+            .saveComment(CommentModel(id: 1))
+            .catchError((e) => expect(e, isA<Exception>()));
       });
     });
 
@@ -118,6 +145,18 @@ void main() {
           );
         } on Exception {}
       });
+
+      test('throws exception when response is not ok', () async {
+        when(mockDio.post(any, data: anyNamed('data')))
+            .thenAnswer((_) => Future.value(mockResponse));
+        when(mockResponse.statusCode).thenReturn(500);
+        httpCommentRepository
+            .saveSubComment(
+              commentId: 1,
+              subComment: SubCommentModel(id: 1),
+            )
+            .catchError((e) => expect(e, isA<Exception>()));
+      });
     });
 
     group('deleteComment', () {
@@ -136,6 +175,16 @@ void main() {
             comment: CommentModel(id: 1),
           );
         } on Exception {}
+      });
+
+      test('throws exception when response is not ok', () async {
+        when(mockDio.delete(any)).thenAnswer((_) => Future.value(mockResponse));
+        when(mockResponse.statusCode).thenReturn(500);
+        httpCommentRepository
+            .deleteComment(
+              comment: CommentModel(id: 1),
+            )
+            .catchError((e) => expect(e, isA<Exception>()));
       });
     });
 
@@ -159,6 +208,17 @@ void main() {
           );
         } on Exception {}
       });
+
+      test('throws exception when response is not ok', () async {
+        when(mockDio.put(any, data: anyNamed('data')))
+            .thenAnswer((_) => Future.value(mockResponse));
+        when(mockResponse.statusCode).thenReturn(500);
+        httpCommentRepository
+            .editComment(
+              comment: CommentModel(id: 1),
+            )
+            .catchError((e) => expect(e, isA<Exception>()));
+      });
     });
 
     group('deleteSubComment', () {
@@ -177,6 +237,16 @@ void main() {
             subComment: SubCommentModel(id: 1),
           );
         } on Exception {}
+      });
+
+      test('throws exception when response is not ok', () async {
+        when(mockDio.delete(any)).thenAnswer((_) => Future.value(mockResponse));
+        when(mockResponse.statusCode).thenReturn(500);
+        httpCommentRepository
+            .deleteSubComment(
+              subComment: SubCommentModel(id: 1),
+            )
+            .catchError((e) => expect(e, isA<Exception>()));
       });
     });
 
@@ -199,6 +269,17 @@ void main() {
             subComment: SubCommentModel(id: 1),
           );
         } on Exception {}
+      });
+
+      test('throws exception when response is not ok', () async {
+        when(mockDio.put(any, data: anyNamed('data')))
+            .thenAnswer((_) => Future.value(mockResponse));
+        when(mockResponse.statusCode).thenReturn(500);
+        httpCommentRepository
+            .editSubComment(
+              subComment: SubCommentModel(id: 1),
+            )
+            .catchError((e) => expect(e, isA<Exception>()));
       });
     });
   });

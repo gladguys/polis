@@ -1,3 +1,4 @@
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -36,6 +37,27 @@ void main() {
           ),
         ),
       );
+    });
+
+    testWidgets('should try to pop route', (tester) async {
+      final mockUserProfileBloc = MockUserProfileBloc();
+      when(mockUserProfileBloc.user).thenReturn(
+        UserModel(
+          userId: '1',
+        ),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<UserProfileBloc>(
+            bloc: mockUserProfileBloc,
+            page: PageConnected<UserFollowingPoliticsBloc>(
+              bloc: mockUserFollowingPoliticsBloc,
+              page: UserFollowingPoliticsPage(),
+            ),
+          ),
+        ),
+      );
+      await BackButtonInterceptor.popRoute();
     });
 
     testWidgets('should build connected without exploding', (tester) async {
