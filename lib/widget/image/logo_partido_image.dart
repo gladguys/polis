@@ -14,7 +14,7 @@ class LogoPartidoImage extends FancyShimmerImage {
           width: size,
           boxFit: boxFit,
           errorWidget: Container(
-            child: Center(
+            child: const Center(
               child: Icon(
                 Icons.flag,
                 color: Colors.amber,
