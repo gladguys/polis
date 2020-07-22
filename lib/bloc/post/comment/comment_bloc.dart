@@ -72,6 +72,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
 
     final commentToSave = CommentModel(
       postId: getIdFromPost(post),
+      politicoId: getPoliticoIdFromPost(post),
       texto: event.text,
       usuarioId: user.userId,
       usuarioNome: user.name,

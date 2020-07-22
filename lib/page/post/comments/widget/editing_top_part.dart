@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:polis/core/keys.dart';
 
 import '../../../../core/i18n/i18n.dart';
+import '../../../../core/keys.dart';
 
 class EditingTopPart extends StatelessWidget {
   EditingTopPart(

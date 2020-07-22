@@ -203,7 +203,7 @@ class PropostaTile extends StatelessWidget {
                     iconColor: Theme.of(context).brightness == Brightness.light
                         ? Colors.grey[700]
                         : Colors.grey[500],
-                    text: '120',
+                    text: proposta.qntComentarios.toString(),
                     textColor: Theme.of(context).brightness == Brightness.light
                         ? Colors.grey[700]
                         : Colors.grey[500],

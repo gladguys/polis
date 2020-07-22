@@ -12,3 +12,12 @@ String getIdFromPost(dynamic post) {
   }
   return null;
 }
+
+String getPoliticoIdFromPost(dynamic post) {
+  if (post is PropostaModel) {
+    return post.idPoliticoAutor;
+  } else if (post is DespesaModel) {
+    return post.idPolitico;
+  }
+  return null;
+}

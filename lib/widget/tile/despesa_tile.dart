@@ -192,7 +192,7 @@ class DespesaTile extends StatelessWidget {
                   textColor: Theme.of(context).brightness == Brightness.light
                       ? Colors.grey[700]
                       : Colors.grey[500],
-                  text: '120',
+                  text: despesa.qntComentarios.toString(),
                   onTap: () {},
                 ),
                 const Spacer(),
