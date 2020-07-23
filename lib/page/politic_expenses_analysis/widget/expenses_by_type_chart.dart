@@ -31,7 +31,13 @@ class ExpensesByTypeChart extends StatelessWidget {
         const Color(0xFFFF8F50),
         const Color(0xFFFF5050),
       ],
-      legendTextSize: 12,
+      legendTextSize: 14,
+      legendPosition: LegendPosition.Bottom,
+      legendItemPadding: const EdgeInsets.only(left: 16),
+      legendIconShape: LegendIconShape.Circle,
+      legendTextColor: Theme.of(context).brightness == Brightness.light
+          ? Colors.grey[600]
+          : Colors.grey[300],
     );
   }
 }

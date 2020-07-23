@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smart_select/smart_select.dart';
 
 import '../../bloc/blocs.dart';
@@ -27,35 +28,84 @@ class PoliticExpensesAnalysisPage extends StatelessWidget {
             final year = state.year;
             final despesasPorTipo = state.despesasPorTipo;
             final totalDespesasAno = state.totalDespesasAnuais;
-            return Column(
-              children: <Widget>[
-                const SizedBox(height: 8),
-                TextTitle(EXPENSES_ANALYSIS),
-                const SizedBox(height: 18),
-                Expanded(
-                  child: ExpensesByTypeChart(
-                    despesasPorTipo: despesasPorTipo,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                SmartSelect<int>.single(
-                  title: EXPENSES_ON_YEAR,
-                  value: year,
-                  options: _getAllPossibleYears(context),
-                  onChange: (pickedYear) => context
-                      .bloc<PoliticExpensesAnalysisBloc>()
-                      .add(GetPoliticExpensesDataForYear(pickedYear)),
-                ),
-                const SizedBox(height: 8),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: ExpensesByMonth(
-                      despesasPorMes: totalDespesasAno.despesasPorMes,
+            return SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  const SizedBox(height: 8),
+                  TextTitle(EXPENSES_ANALYSIS),
+                  Container(
+                    height: 350,
+                    width: 400,
+                    child: ExpensesByTypeChart(
+                      despesasPorTipo: despesasPorTipo,
                     ),
                   ),
-                ),
-                SeeExpensesButton(politico),
-              ],
+                  Container(
+                    width: 195,
+                    child: SmartSelect<int>.single(
+                      title: '$EXPENSES_ON_YEAR:',
+                      value: year,
+                      options: _getAllPossibleYears(context),
+                      onChange: (pickedYear) => context
+                          .bloc<PoliticExpensesAnalysisBloc>()
+                          .add(GetPoliticExpensesDataForYear(pickedYear)),
+                      padding: EdgeInsets.zero,
+                      trailing: FaIcon(
+                        FontAwesomeIcons.chevronDown,
+                        size: 14,
+                      ),
+                      choiceConfig: SmartSelectChoiceConfig(
+                        style: SmartSelectChoiceStyle(
+                          activeColor: Theme.of(context).primaryColor,
+                          inactiveColor:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? null
+                                  : Colors.grey[300],
+                          titleStyle: TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Ubuntu',
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.grey[600]
+                                    : Colors.grey[300],
+                          ),
+                        ),
+                      ),
+                      modalType: SmartSelectModalType.popupDialog,
+                      modalConfig: SmartSelectModalConfig(
+                        style: SmartSelectModalStyle(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        headerStyle: SmartSelectModalHeaderStyle(
+                          backgroundColor:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? null
+                                  : Colors.grey[800],
+                          textStyle: TextStyle(
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.black
+                                    : Colors.grey[300],
+                          ),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  ExpensesByMonth(
+                    despesasPorMes: totalDespesasAno.despesasPorMes,
+                  ),
+                  const SizedBox(height: 16),
+                  SeeExpensesButton(politico),
+                ],
+              ),
             );
           } else if (state is LoadingPoliticExpensesData) {
             return const Loading();

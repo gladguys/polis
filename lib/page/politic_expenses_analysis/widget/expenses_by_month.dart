@@ -55,24 +55,29 @@ class _ExpensesByMonthState extends State<ExpensesByMonth>
   }
 
   List<Widget> _getMonthsWidgets(BuildContext context) {
-    final width = context.screenWidth;
-    final containerSize = width - 20;
+    final containerSize = 400.0;
     return widget.despesasPorMes.map(
       (despesa) {
         final ratio = despesa.valor / maxQuota;
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 3),
           child: Stack(
             children: <Widget>[
               Container(
-                color: Colors.grey[200],
                 height: 35,
                 width: containerSize,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(5),
+                ),
               ),
               AnimatedBuilder(
                 animation: _animation,
                 builder: (_, __) => Container(
-                  color: Colors.yellow,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColorLight,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                   height: 35,
                   width: _animation.value * (ratio * containerSize),
                 ),
@@ -88,13 +93,14 @@ class _ExpensesByMonthState extends State<ExpensesByMonth>
                       Text(
                         despesa.nomeMes,
                         style: const TextStyle(
-                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
                       ),
                       Text(
                         despesa.valor.toString().formatCurrency(),
                         style: const TextStyle(
-                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ],
