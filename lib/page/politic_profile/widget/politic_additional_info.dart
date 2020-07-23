@@ -24,178 +24,50 @@ class PoliticAdditionalInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
       children: <Widget>[
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              InkWell(
-                borderRadius: BorderRadius.circular(5),
-                onTap: () => SimpleRouter.forward(
-                  PoliticFollowersPageConnected(politic.id),
-                  name: POLITIC_FOLLOWERS_PAGE,
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      quantidadeSeguidores.toString(),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
-                    Text(
-                      quantidadeSeguidores == 1 ? FOLLOWER : FOLLOWERS,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Theme.of(context).brightness == Brightness.light
-                            ? Colors.grey[600]
-                            : Colors.grey[300],
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 8),
-              InkWell(
-                onTap: () => SimpleRouter.forward(
-                  PoliticProposalsPageConnected(politic),
-                  name: POLITIC_PROPOSALS_PAGE,
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      totalProposicoes.toString(),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
-                    Container(
-                      width: 120,
-                      child: Text(
-                        PROJECTS_PARTICIPATIONS,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color:
-                              Theme.of(context).brightness == Brightness.light
-                                  ? Colors.grey[600]
-                                  : Colors.grey[300],
-                          fontSize: 12,
-                          height: 1,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 8),
-              InkWell(
-                borderRadius: BorderRadius.circular(5),
-                onTap: () => SimpleRouter.forward(
-                  ComparativoRankingDespesasPageConnected(politic),
-                  name: RESULTADOS_RANKING_PAGE,
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      '$position',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
-                    Container(
-                      width: 70,
-                      child: Text(
-                        WITH_LESS_EXPENSES,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color:
-                              Theme.of(context).brightness == Brightness.light
-                                  ? Colors.grey[600]
-                                  : Colors.grey[300],
-                          fontSize: 12,
-                          height: 1,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+        _buildButton(
+          context: context,
+          onPressed: () => SimpleRouter.forward(
+            PoliticFollowersPageConnected(politic.id),
+            name: POLITIC_FOLLOWERS_PAGE,
           ),
+          value: quantidadeSeguidores.toString(),
+          label: quantidadeSeguidores == 1 ? FOLLOWER : FOLLOWERS,
         ),
-        const SizedBox(height: 8),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(5),
-            onTap: () => SimpleRouter.forward(
-              PoliticExpensesAnalysisPageConnected(politic),
-              name: POLITIC_EXPENSES_ANALYSIS_PAGE,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Text(
-                      totalDespesas.formatCurrency(),
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          EXPENSES,
-                          style: TextStyle(
-                            color:
-                                Theme.of(context).brightness == Brightness.light
-                                    ? Colors.grey[600]
-                                    : Colors.grey[300],
-                            fontSize: 12,
-                          ),
-                        ),
-                        const SizedBox(width: 6),
-                        Tooltip(
-                          key: tooltipKey,
-                          verticalOffset: 12,
-                          message: getMonthPhrase(),
-                          child: Container(
-                            width: 18,
-                            height: 20,
-                            child: FlatButton(
-                              key: expensesTooltipKey,
-                              padding: EdgeInsets.zero,
-                              child: FaIcon(
-                                FontAwesomeIcons.infoCircle,
-                                size: 18,
-                                color: Colors.grey[500],
-                              ),
-                              onPressed: () {
-                                final dynamic tooltip = tooltipKey.currentState;
-                                tooltip.ensureTooltipVisible();
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
+        _buildButton(
+          context: context,
+          onPressed: () => SimpleRouter.forward(
+            PoliticProposalsPageConnected(politic),
+            name: POLITIC_PROPOSALS_PAGE,
           ),
+          value: totalProposicoes.toString(),
+          label: PROJECTS_PARTICIPATIONS,
+        ),
+        _buildButton(
+          context: context,
+          onPressed: () => SimpleRouter.forward(
+            ComparativoRankingDespesasPageConnected(politic),
+            name: RESULTADOS_RANKING_PAGE,
+          ),
+          value: '$position',
+          label: WITH_LESS_EXPENSES,
+        ),
+        _buildButton(
+          context: context,
+          onPressed: () => SimpleRouter.forward(
+            PoliticExpensesAnalysisPageConnected(politic),
+            name: POLITIC_EXPENSES_ANALYSIS_PAGE,
+          ),
+          value: totalDespesas.formatCurrency(),
+          label: EXPENSES,
+          tooltipMsg: getMonthPhrase(),
+          onPressedTooltip: () {
+            final dynamic tooltip = tooltipKey.currentState;
+            tooltip.ensureTooltipVisible();
+          },
         ),
       ],
     );
@@ -204,5 +76,80 @@ class PoliticAdditionalInfo extends StatelessWidget {
   String getMonthPhrase() {
     final now = DateTime.now();
     return '''$EXPENSES_UNTIL_THE_DAY ${getLastDayOfLastMonth()} $OF ${getLastMonthName()} $OF ${now.year}''';
+  }
+
+  Widget _buildButton({
+    Function onPressed,
+    String value,
+    String label,
+    String tooltipMsg,
+    Function onPressedTooltip,
+    BuildContext context,
+  }) {
+    return OutlineButton(
+      onPressed: onPressed,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      highlightedBorderColor: Colors.grey,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 8,
+      ),
+      child: Container(
+        constraints: const BoxConstraints(minWidth: 160),
+        height: 60,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              value,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+              ),
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 150),
+                  child: Text(
+                    label,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    style: TextStyle(
+                      height: 1,
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.grey[600]
+                          : Colors.grey[300],
+                    ),
+                  ),
+                ),
+                if (tooltipMsg != null)
+                  Tooltip(
+                    key: tooltipKey,
+                    verticalOffset: 12,
+                    message: tooltipMsg,
+                    child: Container(
+                      width: 20,
+                      height: 20,
+                      margin: const EdgeInsets.only(left: 8),
+                      child: FlatButton(
+                        key: expensesTooltipKey,
+                        padding: EdgeInsets.zero,
+                        child: FaIcon(
+                          FontAwesomeIcons.infoCircle,
+                          size: 20,
+                          color: Colors.grey[500],
+                        ),
+                        onPressed: onPressedTooltip,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

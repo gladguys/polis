@@ -75,7 +75,7 @@ class _PoliticActivitiesState extends State<PoliticActivities> {
   Widget build(BuildContext context) {
     if (widget.lastActivities.isNotEmpty) {
       return Container(
-        height: context.screenHeight - 140,
+        height: context.screenHeight - 60,
         child: ListView.builder(
           controller: scrollController,
           shrinkWrap: true,
