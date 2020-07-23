@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/page_connected.dart';
@@ -25,12 +25,12 @@ void main() {
     initializeDateFormatting('pt_BR', null);
   });
 
-  MockPoliticExpensesBloc mockPoliticExpensesBloc;
+  MockPoliticExpensesCubit mockPoliticExpensesBloc;
   PoliticoModel politico;
 
   group('PoliticExpensesPage tests', () {
     setUp(() {
-      mockPoliticExpensesBloc = MockPoliticExpensesBloc();
+      mockPoliticExpensesBloc = MockPoliticExpensesCubit();
       politico = PoliticoModel(
         id: '1',
         urlFoto: 'foto',
@@ -41,7 +41,7 @@ void main() {
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticExpensesBloc>(
+          PageConnected<PoliticExpensesCubit>(
             bloc: mockPoliticExpensesBloc,
             page: PoliticExpensesPage(),
           ),
@@ -84,7 +84,7 @@ void main() {
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticExpensesBloc>(
+          PageConnected<PoliticExpensesCubit>(
             bloc: mockPoliticExpensesBloc,
             page: PoliticExpensesPage(),
           ),
@@ -99,7 +99,7 @@ void main() {
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticExpensesBloc>(
+          PageConnected<PoliticExpensesCubit>(
             bloc: mockPoliticExpensesBloc,
             page: PoliticExpensesPage(),
           ),
@@ -112,7 +112,7 @@ void main() {
       when(mockPoliticExpensesBloc.state).thenReturn(LoadingPoliticExpenses());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticExpensesBloc>(
+          PageConnected<PoliticExpensesCubit>(
             bloc: mockPoliticExpensesBloc,
             page: PoliticExpensesPage(),
           ),
@@ -126,7 +126,7 @@ void main() {
           .thenReturn(GetPoliticExpensesFailed());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticExpensesBloc>(
+          PageConnected<PoliticExpensesCubit>(
             bloc: mockPoliticExpensesBloc,
             page: PoliticExpensesPage(),
           ),

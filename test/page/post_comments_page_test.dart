@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/comment_model.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/keys.dart';
@@ -29,7 +29,7 @@ void main() {
   });
 
   List<CommentModel> postComments;
-  MockCommentBloc mockCommentBloc;
+  MockCommentCubit mockCommentCubit;
 
   group('PostCommentsPage tests', () {
     setUp(() {
@@ -47,11 +47,11 @@ void main() {
           diaHora: DateTime.now(),
         ),
       ];
-      mockCommentBloc = MockCommentBloc();
+      mockCommentCubit = MockCommentCubit();
     });
 
     testWidgets('should render proposta preview', (tester) async {
-      when(mockCommentBloc.post).thenReturn(
+      when(mockCommentCubit.post).thenReturn(
         PropostaModel(
           id: '1',
           nomePolitico: 'nome',
@@ -59,12 +59,12 @@ void main() {
           urlInteiroTeor: 'url',
         ),
       );
-      when(mockCommentBloc.state).thenReturn(InitialCommentState());
-      when(mockCommentBloc.postComments).thenReturn(postComments);
+      when(mockCommentCubit.state).thenReturn(InitialCommentState());
+      when(mockCommentCubit.postComments).thenReturn(postComments);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<CommentBloc>(
-            bloc: mockCommentBloc,
+          PageConnected<CommentCubit>(
+            bloc: mockCommentCubit,
             page: PostCommentsPage(),
           ),
         ),
@@ -73,7 +73,7 @@ void main() {
     });
 
     testWidgets('should render despesa preview', (tester) async {
-      when(mockCommentBloc.post).thenReturn(
+      when(mockCommentCubit.post).thenReturn(
         DespesaModel(
           id: '1',
           nomePolitico: 'nome',
@@ -85,12 +85,12 @@ void main() {
           visualizado: false,
         ),
       );
-      when(mockCommentBloc.state).thenReturn(InitialCommentState());
-      when(mockCommentBloc.postComments).thenReturn(postComments);
+      when(mockCommentCubit.state).thenReturn(InitialCommentState());
+      when(mockCommentCubit.postComments).thenReturn(postComments);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<CommentBloc>(
-            bloc: mockCommentBloc,
+          PageConnected<CommentCubit>(
+            bloc: mockCommentCubit,
             page: PostCommentsPage(),
           ),
         ),
@@ -101,8 +101,8 @@ void main() {
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<CommentBloc>(
-            bloc: mockCommentBloc,
+          PageConnected<CommentCubit>(
+            bloc: mockCommentCubit,
             page: PostCommentsPage(),
           ),
         ),
@@ -140,12 +140,12 @@ void main() {
 
     testWidgets('should show comments when state is InitialCommentState',
         (tester) async {
-      when(mockCommentBloc.state).thenReturn(InitialCommentState());
-      when(mockCommentBloc.postComments).thenReturn(postComments);
+      when(mockCommentCubit.state).thenReturn(InitialCommentState());
+      when(mockCommentCubit.postComments).thenReturn(postComments);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<CommentBloc>(
-            bloc: mockCommentBloc,
+          PageConnected<CommentCubit>(
+            bloc: mockCommentCubit,
             page: PostCommentsPage(),
           ),
         ),
@@ -154,16 +154,16 @@ void main() {
 
     testWidgets('should show comments when state is GetPostCommentsSuccess',
         (tester) async {
-      when(mockCommentBloc.state).thenReturn(
+      when(mockCommentCubit.state).thenReturn(
         GetPostCommentsSuccess(
           comments: postComments,
         ),
       );
-      when(mockCommentBloc.postComments).thenReturn(postComments);
+      when(mockCommentCubit.postComments).thenReturn(postComments);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<CommentBloc>(
-            bloc: mockCommentBloc,
+          PageConnected<CommentCubit>(
+            bloc: mockCommentCubit,
             page: PostCommentsPage(),
           ),
         ),
@@ -172,17 +172,17 @@ void main() {
 
     testWidgets('should show comments when state is NewCommentAdded',
         (tester) async {
-      when(mockCommentBloc.state).thenReturn(
+      when(mockCommentCubit.state).thenReturn(
         NewCommentAdded(
           comment: CommentModel(),
           numberOfComments: 1,
         ),
       );
-      when(mockCommentBloc.postComments).thenReturn(postComments);
+      when(mockCommentCubit.postComments).thenReturn(postComments);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<CommentBloc>(
-            bloc: mockCommentBloc,
+          PageConnected<CommentCubit>(
+            bloc: mockCommentCubit,
             page: PostCommentsPage(),
           ),
         ),
@@ -191,17 +191,17 @@ void main() {
 
     testWidgets('should show comments when state is CommentDeletedSuccess',
         (tester) async {
-      when(mockCommentBloc.state).thenReturn(
+      when(mockCommentCubit.state).thenReturn(
         CommentDeletedSuccess(
           comment: CommentModel(),
           numberOfComments: 0,
         ),
       );
-      when(mockCommentBloc.postComments).thenReturn(postComments);
+      when(mockCommentCubit.postComments).thenReturn(postComments);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<CommentBloc>(
-            bloc: mockCommentBloc,
+          PageConnected<CommentCubit>(
+            bloc: mockCommentCubit,
             page: PostCommentsPage(),
           ),
         ),
@@ -210,17 +210,17 @@ void main() {
 
     testWidgets('should show comments when state is NewSubCommentAdded',
         (tester) async {
-      when(mockCommentBloc.state).thenReturn(
+      when(mockCommentCubit.state).thenReturn(
         NewSubCommentAdded(
           comment: CommentModel(),
           numberOfSubComments: 1,
         ),
       );
-      when(mockCommentBloc.postComments).thenReturn(postComments);
+      when(mockCommentCubit.postComments).thenReturn(postComments);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<CommentBloc>(
-            bloc: mockCommentBloc,
+          PageConnected<CommentCubit>(
+            bloc: mockCommentCubit,
             page: PostCommentsPage(),
           ),
         ),
@@ -229,12 +229,12 @@ void main() {
 
     testWidgets('should show comments when state is InitialCommentState',
         (tester) async {
-      when(mockCommentBloc.state).thenReturn(InitialCommentState());
-      when(mockCommentBloc.postComments).thenReturn(postComments);
+      when(mockCommentCubit.state).thenReturn(InitialCommentState());
+      when(mockCommentCubit.postComments).thenReturn(postComments);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<CommentBloc>(
-            bloc: mockCommentBloc,
+          PageConnected<CommentCubit>(
+            bloc: mockCommentCubit,
             page: PostCommentsPage(),
           ),
         ),
@@ -244,7 +244,7 @@ void main() {
     testWidgets(
         '''should show comments and edit container when state is EditingCommentStarted''',
         (tester) async {
-      when(mockCommentBloc.state).thenReturn(
+      when(mockCommentCubit.state).thenReturn(
         EditingCommentStarted(
           CommentModel(
             usuarioNome: 'nome',
@@ -252,11 +252,11 @@ void main() {
           ),
         ),
       );
-      when(mockCommentBloc.postComments).thenReturn(postComments);
+      when(mockCommentCubit.postComments).thenReturn(postComments);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<CommentBloc>(
-            bloc: mockCommentBloc,
+          PageConnected<CommentCubit>(
+            bloc: mockCommentCubit,
             page: PostCommentsPage(),
           ),
         ),
@@ -265,7 +265,7 @@ void main() {
       final stopEditingBtn = find.byKey(stopEditingCommentKey);
       expect(stopEditingBtn, findsOneWidget);
       await tester.tap(stopEditingBtn);
-      verify(mockCommentBloc.add(StopEditingComment())).called(1);
+      verify(mockCommentCubit.stopEditingComment()).called(1);
     });
 
     testWidgets('should add a comment', (tester) async {
@@ -273,14 +273,14 @@ void main() {
         usuarioNome: 'nome',
         texto: 'texto',
       );
-      when(mockCommentBloc.state).thenReturn(
+      when(mockCommentCubit.state).thenReturn(
         EditingCommentStarted(comment),
       );
-      when(mockCommentBloc.postComments).thenReturn(postComments);
+      when(mockCommentCubit.postComments).thenReturn(postComments);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<CommentBloc>(
-            bloc: mockCommentBloc,
+          PageConnected<CommentCubit>(
+            bloc: mockCommentCubit,
             page: PostCommentsPage(),
           ),
         ),
@@ -289,27 +289,25 @@ void main() {
       expect(addCommentBtn, findsOneWidget);
       await tester.tap(addCommentBtn);
       verify(
-        mockCommentBloc.add(
-          EditComment(
-            comment: comment,
-            newText: 'texto',
-          ),
+        mockCommentCubit.editComment(
+          comment: comment,
+          newText: 'texto',
         ),
       ).called(1);
     });
 
     testWidgets('should show comments when state is CommentEditedSuccess',
         (tester) async {
-      when(mockCommentBloc.state).thenReturn(
+      when(mockCommentCubit.state).thenReturn(
         CommentEditedSuccess(
           comment: CommentModel(),
         ),
       );
-      when(mockCommentBloc.postComments).thenReturn(postComments);
+      when(mockCommentCubit.postComments).thenReturn(postComments);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<CommentBloc>(
-            bloc: mockCommentBloc,
+          PageConnected<CommentCubit>(
+            bloc: mockCommentCubit,
             page: PostCommentsPage(),
           ),
         ),

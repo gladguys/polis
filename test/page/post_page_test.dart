@@ -102,7 +102,7 @@ void main() {
 
     testWidgets('should call SetPostViewed from bloc when open despesa',
         (tester) async {
-      final mockTimelineBloc = MockTimelineBloc();
+      final mockTimelineCubit = MockTimelineCubit();
       await tester.pumpWidget(
         connectedWidget(
           RepositoryProvider<CommentRepository>(
@@ -121,7 +121,7 @@ void main() {
                 urlPartidoLogo: 'url',
               ),
               postType: PostType.DESPESA,
-              timelineBloc: mockTimelineBloc,
+              timelineCubit: mockTimelineCubit,
             ),
           ),
         ),
@@ -130,7 +130,7 @@ void main() {
 
     testWidgets('should call SetPostViewed from bloc when open proposta',
         (tester) async {
-      final mockTimelineBloc = MockTimelineBloc();
+      final mockTimelineCubit = MockTimelineCubit();
       await tester.pumpWidget(
         connectedWidget(
           RepositoryProvider<CommentRepository>(
@@ -147,7 +147,7 @@ void main() {
                 urlPartidoLogo: 'logo',
               ),
               postType: PostType.PROPOSICAO,
-              timelineBloc: mockTimelineBloc,
+              timelineCubit: mockTimelineCubit,
             ),
           ),
         ),

@@ -1,4 +1,4 @@
-part of 'favorite_posts_bloc.dart';
+part of 'favorite_posts_cubit.dart';
 
 abstract class FavoritePostsState extends Equatable {
   const FavoritePostsState();

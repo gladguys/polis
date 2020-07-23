@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/repository/concrete/repositories.dart';
 import '../page_connected.dart';
 import 'user_profile_page.dart';
@@ -13,10 +13,10 @@ class UserProfilePageConnected extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageConnected<UserProfileBloc>(
-      bloc: UserProfileBloc(
+    return PageConnected<UserProfileCubit>(
+      bloc: UserProfileCubit(
         repository: context.repository<FirebaseUserProfileRepository>(),
-      )..add(FetchUserRelatedInfo(userId)),
+      )..fetchUserRelatedInfo(userId),
       page: UserProfilePage(),
     );
   }

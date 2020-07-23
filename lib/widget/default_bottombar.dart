@@ -5,7 +5,7 @@ import 'package:flutter_bloc_monitor/flutter_bloc_monitor.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../bloc/blocs.dart';
+import '../bloc/cubits.dart';
 import '../core/i18n/i18n.dart';
 import '../core/keys.dart';
 import '../core/routing/route_names.dart';
@@ -110,7 +110,7 @@ class DefaultBottombar extends StatelessWidget {
   }
 
   Widget _buildUserButton(BuildContext context, String routeName) {
-    final user = context.bloc<UserBloc>().user;
+    final user = context.bloc<UserCubit>().user;
 
     return Padding(
       padding: const EdgeInsets.only(right: 4),
@@ -123,7 +123,7 @@ class DefaultBottombar extends StatelessWidget {
             key: profileImageBottombarKey,
             alignment: Alignment.center,
             padding: const EdgeInsets.all(2),
-            child: BlocBuilder<UserBloc, UserState>(
+            child: BlocBuilder<UserCubit, UserState>(
               builder: (_, state) => Photo(
                 url: state is CurrentUserUpdated
                     ? state.user.photoUrl
@@ -139,7 +139,7 @@ class DefaultBottombar extends StatelessWidget {
         onTap: () => routeName != USER_PROFILE_PAGE
             ? SimpleRouter.forward(
                 UserProfilePageConnected(
-                  userId: context.bloc<UserBloc>().user.userId,
+                  userId: context.bloc<UserCubit>().user.userId,
                 ),
                 name: USER_PROFILE_PAGE,
               )

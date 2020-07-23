@@ -1,4 +1,4 @@
-part of 'signin_bloc.dart';
+part of 'signin_cubit.dart';
 
 abstract class SigninState extends Equatable {
   const SigninState();

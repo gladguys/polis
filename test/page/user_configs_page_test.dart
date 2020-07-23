@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/enum/configuracao.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/keys.dart';
@@ -11,15 +11,15 @@ import '../mock.dart';
 import '../utils.dart';
 
 void main() {
-  MockUserBloc mockUserBloc;
+  MockUserCubit mockUserCubit;
 
   group('UserConfigsPage tests', () {
     setUp(() {
-      mockUserBloc = MockUserBloc();
+      mockUserCubit = MockUserCubit();
     });
 
     testWidgets('should build without exploding', (tester) async {
-      when(mockUserBloc.user).thenReturn(
+      when(mockUserCubit.user).thenReturn(
         UserModel(
           userId: '1',
           userConfigs: {
@@ -31,8 +31,8 @@ void main() {
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<UserBloc>(
-            bloc: mockUserBloc,
+          PageConnected<UserCubit>(
+            bloc: mockUserCubit,
             page: UserConfigsPage(),
           ),
         ),
@@ -48,11 +48,11 @@ void main() {
           'isDarkModeEnabled': true,
         },
       );
-      when(mockUserBloc.user).thenReturn(user);
+      when(mockUserCubit.user).thenReturn(user);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<UserBloc>(
-            bloc: mockUserBloc,
+          PageConnected<UserCubit>(
+            bloc: mockUserCubit,
             page: UserConfigsPage(),
           ),
         ),
@@ -61,12 +61,10 @@ void main() {
       await tester.tap(firstConfig);
       await tester.pumpAndSettle();
       verify(
-        mockUserBloc.add(
-          ChangeUserConfig(
-            user: user,
-            config: Configuracao.isNotificationEnabled,
-            value: false,
-          ),
+        mockUserCubit.changeUserConfig(
+          currentUser: user,
+          config: Configuracao.isNotificationEnabled,
+          configValue: false,
         ),
       );
     });

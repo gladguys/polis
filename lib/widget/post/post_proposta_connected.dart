@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:screenshot/screenshot.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/service/locator.dart';
 import '../../core/service/services.dart';
@@ -16,8 +16,8 @@ class PostPropostaConnected extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageConnected<DocumentBloc>(
-      bloc: DocumentBloc(
+    return PageConnected<DocumentCubit>(
+      bloc: DocumentCubit(
         urlLaunchService: G<UrlLauncherService>(),
       ),
       page: PostProposta(

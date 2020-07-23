@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/page_connected.dart';
@@ -35,14 +35,14 @@ void main() {
     });
 
     testWidgets('shoud display tramitacoes', (tester) async {
-      final mockTramitacaoPropostaBloc = MockTramitacaoPropostaBloc();
-      when(mockTramitacaoPropostaBloc.proposta).thenReturn(
+      final mockTramitacaoPropostaCubit = MockTramitacaoPropostaCubit();
+      when(mockTramitacaoPropostaCubit.proposta).thenReturn(
         PropostaModel(
           sequencia: 1,
           dataAtualizacao: '10-01-2020',
         ),
       );
-      when(mockTramitacaoPropostaBloc.orgaosMap).thenReturn({
+      when(mockTramitacaoPropostaCubit.orgaosMap).thenReturn({
         'T': OrgaoModel(
           id: '1',
           sigla: 'T',
@@ -50,7 +50,7 @@ void main() {
           apelido: 'Teste',
         )
       });
-      when(mockTramitacaoPropostaBloc.state).thenReturn(
+      when(mockTramitacaoPropostaCubit.state).thenReturn(
         GetTramitacaoPropostaSuccess(
           [
             TramitacaoPropostaModel(
@@ -70,8 +70,8 @@ void main() {
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<TramitacaoPropostaBloc>(
-            bloc: mockTramitacaoPropostaBloc,
+          PageConnected<TramitacaoPropostaCubit>(
+            bloc: mockTramitacaoPropostaCubit,
             page: TramitacaoPropostaPage(),
           ),
         ),
@@ -81,14 +81,14 @@ void main() {
 
     testWidgets('shoud not show tooltip when orgao is not mapped',
         (tester) async {
-      final mockTramitacaoPropostaBloc = MockTramitacaoPropostaBloc();
-      when(mockTramitacaoPropostaBloc.proposta).thenReturn(
+      final mockTramitacaoPropostaCubit = MockTramitacaoPropostaCubit();
+      when(mockTramitacaoPropostaCubit.proposta).thenReturn(
         PropostaModel(
           sequencia: 1,
           dataAtualizacao: '10-01-2020',
         ),
       );
-      when(mockTramitacaoPropostaBloc.orgaosMap).thenReturn({
+      when(mockTramitacaoPropostaCubit.orgaosMap).thenReturn({
         'T': OrgaoModel(
           id: '1',
           sigla: 'T',
@@ -96,7 +96,7 @@ void main() {
           apelido: 'Teste',
         )
       });
-      when(mockTramitacaoPropostaBloc.state).thenReturn(
+      when(mockTramitacaoPropostaCubit.state).thenReturn(
         GetTramitacaoPropostaSuccess(
           [
             TramitacaoPropostaModel(
@@ -116,8 +116,8 @@ void main() {
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<TramitacaoPropostaBloc>(
-            bloc: mockTramitacaoPropostaBloc,
+          PageConnected<TramitacaoPropostaCubit>(
+            bloc: mockTramitacaoPropostaCubit,
             page: TramitacaoPropostaPage(),
           ),
         ),

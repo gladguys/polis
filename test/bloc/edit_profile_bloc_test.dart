@@ -1,52 +1,52 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 
 import '../mock.dart';
 
 void main() {
   group('EditProfileBloc tests', () {
-    EditProfileBloc editProfileBloc;
+    EditProfileCubit editProfileCubit;
     MockEditProfileRepository mockEditProfileRepository;
-    MockUserBloc mockUserBloc;
+    MockUserCubit mockUserCubit;
 
     setUp(() {
       mockEditProfileRepository = MockEditProfileRepository();
-      mockUserBloc = MockUserBloc();
-      editProfileBloc = EditProfileBloc(
+      mockUserCubit = MockUserCubit();
+      editProfileCubit = EditProfileCubit(
         repository: mockEditProfileRepository,
-        userBloc: mockUserBloc,
+        userCubit: mockUserCubit,
       );
     });
 
     tearDown(() {
-      editProfileBloc?.close();
+      editProfileCubit?.close();
     });
 
     test('asserts', () {
       expect(
-          () => EditProfileBloc(
+          () => EditProfileCubit(
                 repository: null,
-                userBloc: mockUserBloc,
+                userCubit: mockUserCubit,
               ),
           throwsAssertionError);
       expect(
-          () => EditProfileBloc(
+          () => EditProfileCubit(
                 repository: mockEditProfileRepository,
-                userBloc: null,
+                userCubit: null,
               ),
           throwsAssertionError);
     });
 
     test('''Expects InitialEditProfileState to be the initial state''', () {
-      expect(editProfileBloc.state, equals(InitialEditProfileState()));
+      expect(editProfileCubit.state, equals(InitialEditProfileState()));
     });
 
     blocTest(
         'Expects [UpdatingUser, UserUpdateSuccess] when UpdateUserInfo called',
-        build: () async {
+        build: () {
           when(
             mockEditProfileRepository.updateUserInfo(
               name: anyNamed('name'),
@@ -59,21 +59,19 @@ void main() {
               UserModel(),
             ),
           );
-          return editProfileBloc;
+          return editProfileCubit;
         },
-        act: (editProfileBloc) async => editProfileBloc.add(
-              UpdateUserInfo(
-                name: 'name',
-                email: 'email',
-                currentUser: UserModel(),
-                pickedPhoto: null,
-              ),
+        act: (editProfileCubit) async => editProfileCubit.updateUserInfo(
+              name: 'name',
+              email: 'email',
+              currentUser: UserModel(),
+              pickedPhoto: null,
             ),
         expect: [
           UpdatingUser(),
           UserUpdateSuccess(),
         ],
-        verify: (editProfileBloc) async {
+        verify: (editProfileCubit) async {
           verify(
             mockEditProfileRepository.updateUserInfo(
               name: anyNamed('name'),
@@ -82,12 +80,12 @@ void main() {
               pickedPhoto: anyNamed('pickedPhoto'),
             ),
           ).called(1);
-          verify(mockUserBloc.add(UpdateCurrentUser(UserModel()))).called(1);
+          verify(mockUserCubit.updateCurrentUser(UserModel())).called(1);
         });
 
     blocTest(
         'Expects [UpdatingUser, UserUpdateFailed] when exceptions is thrown',
-        build: () async {
+        build: () {
           when(
             mockEditProfileRepository.updateUserInfo(
               name: anyNamed('name'),
@@ -96,21 +94,19 @@ void main() {
               pickedPhoto: anyNamed('pickedPhoto'),
             ),
           ).thenThrow(Exception());
-          return editProfileBloc;
+          return editProfileCubit;
         },
-        act: (editProfileBloc) async => editProfileBloc.add(
-              UpdateUserInfo(
-                name: 'name',
-                email: 'email',
-                currentUser: UserModel(),
-                pickedPhoto: null,
-              ),
+        act: (editProfileCubit) async => editProfileCubit.updateUserInfo(
+              name: 'name',
+              email: 'email',
+              currentUser: UserModel(),
+              pickedPhoto: null,
             ),
         expect: [
           UpdatingUser(),
           UserUpdateFailed(),
         ],
-        verify: (editProfileBloc) async {
+        verify: (editProfileCubit) async {
           verify(
             mockEditProfileRepository.updateUserInfo(
               name: anyNamed('name'),
@@ -119,7 +115,7 @@ void main() {
               pickedPhoto: anyNamed('pickedPhoto'),
             ),
           ).called(1);
-          verifyNever(mockUserBloc.add(UpdateCurrentUser(UserModel())));
+          verifyNever(mockUserCubit.updateCurrentUser(UserModel()));
         });
   });
 }

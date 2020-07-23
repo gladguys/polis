@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/dto/despesa_mensal.dart';
 import 'package:polis/core/domain/dto/despesa_por_tipo.dart';
 import 'package:polis/core/domain/dto/total_despesas_anuais.dart';
@@ -29,7 +29,7 @@ void main() {
   });
 
   PoliticoModel politico;
-  MockPoliticExpensesAnalysisBloc mockPoliticExpensesAnalysisBloc;
+  MockPoliticExpensesAnalysisCubit mockPoliticExpensesAnalysisCubit;
 
   group('PoliticExpensesAnalysisPage tests', () {
     setUp(() {
@@ -38,7 +38,7 @@ void main() {
         nomeEleitoral: 'nome',
         siglaUf: 'CE',
       );
-      mockPoliticExpensesAnalysisBloc = MockPoliticExpensesAnalysisBloc();
+      mockPoliticExpensesAnalysisCubit = MockPoliticExpensesAnalysisCubit();
     });
 
     testWidgets('should build connected without exploding', (tester) async {
@@ -60,8 +60,8 @@ void main() {
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticExpensesAnalysisBloc>(
-            bloc: mockPoliticExpensesAnalysisBloc,
+          PageConnected<PoliticExpensesAnalysisCubit>(
+            bloc: mockPoliticExpensesAnalysisCubit,
             page: PoliticExpensesAnalysisPage(politico),
           ),
         ),
@@ -69,12 +69,12 @@ void main() {
     });
 
     testWidgets('should show loading', (tester) async {
-      when(mockPoliticExpensesAnalysisBloc.state)
+      when(mockPoliticExpensesAnalysisCubit.state)
           .thenReturn(LoadingPoliticExpensesData());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticExpensesAnalysisBloc>(
-            bloc: mockPoliticExpensesAnalysisBloc,
+          PageConnected<PoliticExpensesAnalysisCubit>(
+            bloc: mockPoliticExpensesAnalysisCubit,
             page: PoliticExpensesAnalysisPage(politico),
           ),
         ),
@@ -83,10 +83,10 @@ void main() {
     });
 
     testWidgets('should load page with data and change year', (tester) async {
-      when(mockPoliticExpensesAnalysisBloc.beginYear).thenReturn(2019);
-      when(mockPoliticExpensesAnalysisBloc.maxQuotaForState)
+      when(mockPoliticExpensesAnalysisCubit.beginYear).thenReturn(2019);
+      when(mockPoliticExpensesAnalysisCubit.maxQuotaForState)
           .thenReturn(40000.0);
-      when(mockPoliticExpensesAnalysisBloc.state)
+      when(mockPoliticExpensesAnalysisCubit.state)
           .thenReturn(GetPoliticExpensesDataSuccess(
         year: 2019,
         despesasPorTipo: [
@@ -103,8 +103,8 @@ void main() {
       ));
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticExpensesAnalysisBloc>(
-            bloc: mockPoliticExpensesAnalysisBloc,
+          PageConnected<PoliticExpensesAnalysisCubit>(
+            bloc: mockPoliticExpensesAnalysisCubit,
             page: PoliticExpensesAnalysisPage(politico),
           ),
         ),

@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/model/proposta_model.dart';
 import '../../core/extension/extensions.dart';
 import '../../core/i18n/i18n.dart';
@@ -202,9 +202,9 @@ class PostProposta extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                         textColor: Colors.black,
                         padding: const EdgeInsets.symmetric(horizontal: 16),
-                        onPressed: () => context.bloc<DocumentBloc>().add(
-                              OpenDocumentImage(proposta.urlInteiroTeor),
-                            ),
+                        onPressed: () => context
+                            .bloc<DocumentCubit>()
+                            .openDocumentImage(proposta.urlInteiroTeor),
                       ),
                     ),
                 ],
@@ -217,7 +217,7 @@ class PostProposta extends StatelessWidget {
   }
 
   Widget _buildActions(BuildContext context) {
-    return BlocBuilder<PostBloc, PostState>(
+    return BlocBuilder<PostCubit, PostState>(
       builder: (_, state) => Container(
         decoration: const BoxDecoration(
           border: Border(
@@ -255,27 +255,23 @@ class PostProposta extends StatelessWidget {
                       : Colors.grey[500],
                   onTap: () async {
                     final postImage = await screenshotController.capture();
-                    context
-                        .bloc<PostBloc>()
-                        .add(SharePost(postImage: postImage));
+                    context.bloc<PostCubit>().sharePost(postImage);
                   },
                 ),
                 const SizedBox(width: 8),
                 ButtonActionCard(
                   isIconOnly: true,
-                  icon: context.bloc<PostBloc>().isPostFavorite
+                  icon: context.bloc<PostCubit>().isPostFavorite
                       ? FontAwesomeIcons.solidBookmark
                       : FontAwesomeIcons.bookmark,
-                  iconColor: context.bloc<PostBloc>().isPostFavorite
+                  iconColor: context.bloc<PostCubit>().isPostFavorite
                       ? Colors.yellow
                       : Theme.of(context).brightness == Brightness.light
                           ? Colors.grey[700]
                           : Colors.grey[500],
-                  onTap: () => context.bloc<PostBloc>().add(
-                        FavoritePostForUser(
-                          post: proposta.toJson(),
-                          user: context.bloc<UserBloc>().user,
-                        ),
+                  onTap: () => context.bloc<PostCubit>().favoritePostForUser(
+                        post: proposta.toJson(),
+                        user: context.bloc<UserCubit>().user,
                       ),
                 ),
               ],

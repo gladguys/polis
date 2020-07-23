@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/i18n/i18n.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/signin/widget/reset_password_form.dart';
@@ -12,11 +12,11 @@ import '../utils.dart';
 void main() {
   group('ResetPasswordForm tests', () {
     testWidgets('should validate and send bloc event', (tester) async {
-      final mockSigninBloc = MockSigninBloc();
+      final mockSigninCubit = MockSigninCubit();
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SigninBloc>(
-            bloc: mockSigninBloc,
+          PageConnected<SigninCubit>(
+            bloc: mockSigninCubit,
             page: Scaffold(
               body: ResetPasswordForm(),
             ),
@@ -34,7 +34,7 @@ void main() {
       final sendButton = find.text(CONFIRM);
       expect(sendButton, findsOneWidget);
       await tester.tap(sendButton);
-      verify(mockSigninBloc.add(SendResetPasswordEmail('test@gmail.com')))
+      verify(mockSigninCubit.sendResetPasswordEmail('test@gmail.com'))
           .called(1);
     });
   });

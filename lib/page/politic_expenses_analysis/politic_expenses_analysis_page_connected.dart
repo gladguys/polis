@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/politic_expenses_analysis/politic_expenses_analysis_bloc.dart';
+import '../../bloc/politic_expenses_analysis/politic_expenses_analysis_cubit.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/repository/abstract/repositories.dart';
 import '../../core/repository/concrete/repositories.dart';
@@ -16,8 +16,8 @@ class PoliticExpensesAnalysisPageConnected extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final year = DateTime.now().year;
-    return PageConnected<PoliticExpensesAnalysisBloc>(
-      bloc: PoliticExpensesAnalysisBloc(
+    return PageConnected<PoliticExpensesAnalysisCubit>(
+      bloc: PoliticExpensesAnalysisCubit(
         politicoId: politico.id,
         politicoUf: politico.siglaUf,
         politicExpensesAnalysisRepository:
@@ -28,7 +28,7 @@ class PoliticExpensesAnalysisPageConnected extends StatelessWidget {
             context.repository<PoliticExpensesAnalysisQuotaRepository>(),
         politicExpensesByTypeAnalysisRepository:
             context.repository<PoliticExpensesByTypeAnalysisRepository>(),
-      )..add(GetInitialInfo(year)),
+      )..getInitialInfo(year: year),
       page: PoliticExpensesAnalysisPage(politico),
     );
   }

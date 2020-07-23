@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../bloc/blocs.dart';
+import '../../../bloc/cubits.dart';
 import '../../../core/domain/dto/despesa_mensal.dart';
 import '../../../core/extension/extensions.dart';
 
@@ -23,7 +23,7 @@ class _ExpensesByMonthState extends State<ExpensesByMonth>
 
   @override
   void initState() {
-    maxQuota = context.bloc<PoliticExpensesAnalysisBloc>().maxQuotaForState;
+    maxQuota = context.bloc<PoliticExpensesAnalysisCubit>().maxQuotaForState;
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),

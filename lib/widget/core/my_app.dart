@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/enum/configuracao.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/i18n/i18n.dart';
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserBloc, UserState>(
+    return BlocBuilder<UserCubit, UserState>(
       buildWhen: (previous, current) =>
           current is InitialUser || current is CurrentUserConfigUpdated,
       builder: (_, state) {

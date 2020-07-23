@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/repository/concrete/repositories.dart';
 import '../../core/service/locator.dart';
@@ -35,14 +35,14 @@ class _MyAppConnectedState extends State<MyAppConnected> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<UserBloc>(
-      create: (_) => UserBloc(
+    return BlocProvider<UserCubit>(
+      create: (_) => UserCubit(
         user: user ?? UserModel(),
         repository: context.repository<FirebaseUserRepository>(),
         analyticsService: G<AnalyticsService>(),

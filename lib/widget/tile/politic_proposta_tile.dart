@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/enum/post_type.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/extension/extensions.dart';
@@ -152,7 +152,7 @@ class PoliticPropostaTile extends StatelessWidget {
   }
 
   Widget _buildActions(BuildContext context) {
-    return BlocBuilder<PostBloc, PostState>(
+    return BlocBuilder<PostCubit, PostState>(
       builder: (_, state) => Padding(
         padding: const EdgeInsets.only(right: 4, bottom: 16),
         child: Row(

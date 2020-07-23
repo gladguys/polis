@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/keys.dart';
 import 'package:polis/page/page_connected.dart';
@@ -12,11 +12,11 @@ import '../mock.dart';
 import '../utils.dart';
 
 void main() {
-  MockPoliticProfileBloc mockPoliticProfileBloc;
+  MockPoliticProfileCubit mockPoliticProfileCubit;
 
   group('PoliticAdditionalInfo tests', () {
     setUp(() {
-      mockPoliticProfileBloc = MockPoliticProfileBloc();
+      mockPoliticProfileCubit = MockPoliticProfileCubit();
     });
 
     test('assert', () {
@@ -33,8 +33,8 @@ void main() {
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProfileBloc>(
-            bloc: mockPoliticProfileBloc,
+          PageConnected<PoliticProfileCubit>(
+            bloc: mockPoliticProfileCubit,
             page: Scaffold(
               body: PoliticActionButtons(
                   politico: PoliticoModel(), isBeingFollowedByUser: true),
@@ -47,8 +47,8 @@ void main() {
     testWidgets('should follow politic when clicking', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProfileBloc>(
-            bloc: mockPoliticProfileBloc,
+          PageConnected<PoliticProfileCubit>(
+            bloc: mockPoliticProfileCubit,
             page: Scaffold(
               body: PoliticActionButtons(
                   politico: PoliticoModel(), isBeingFollowedByUser: true),
@@ -65,8 +65,8 @@ void main() {
     testWidgets('should send email when clicking', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProfileBloc>(
-            bloc: mockPoliticProfileBloc,
+          PageConnected<PoliticProfileCubit>(
+            bloc: mockPoliticProfileCubit,
             page: Scaffold(
               body: PoliticActionButtons(
                   politico: PoliticoModel(), isBeingFollowedByUser: true),
@@ -78,7 +78,7 @@ void main() {
       expect(sendEmailButton, findsOneWidget);
       await tester.tap(sendEmailButton);
       await tester.pump();
-      verify(mockPoliticProfileBloc.add(SendEmailToPolitic())).called(1);
+      verify(mockPoliticProfileCubit.sendEmailToPolitic()).called(1);
     });
 
     testWidgets('should call onUnfollowPolitic when is not null',
@@ -86,8 +86,8 @@ void main() {
       var calledOnUnfollowPolitic = false;
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProfileBloc>(
-            bloc: mockPoliticProfileBloc,
+          PageConnected<PoliticProfileCubit>(
+            bloc: mockPoliticProfileCubit,
             page: Scaffold(
               body: PoliticActionButtons(
                 politico: PoliticoModel(),

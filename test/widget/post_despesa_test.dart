@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/despesa_model.dart';
 import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
@@ -62,13 +62,13 @@ void main() {
     });
 
     testWidgets('should build without exploding', (tester) async {
-      final mockPostBloc = MockPostBloc();
-      when(mockPostBloc.isPostFavorite).thenReturn(false);
-      when(mockPostBloc.post).thenReturn(despesa.toJson());
+      final mockPostCubit = MockPostCubit();
+      when(mockPostCubit.isPostFavorite).thenReturn(false);
+      when(mockPostCubit.post).thenReturn(despesa.toJson());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PostBloc>(
-            bloc: mockPostBloc,
+          PageConnected<PostCubit>(
+            bloc: mockPostCubit,
             page: PostDespesa(
               despesa,
               screenshotController: MockScreenshotController(),
@@ -79,13 +79,13 @@ void main() {
     });
 
     testWidgets('should build dark mode without exploding', (tester) async {
-      final mockPostBloc = MockPostBloc();
-      when(mockPostBloc.isPostFavorite).thenReturn(false);
-      when(mockPostBloc.post).thenReturn(despesa.toJson());
+      final mockPostCubit = MockPostCubit();
+      when(mockPostCubit.isPostFavorite).thenReturn(false);
+      when(mockPostCubit.post).thenReturn(despesa.toJson());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PostBloc>(
-            bloc: mockPostBloc,
+          PageConnected<PostCubit>(
+            bloc: mockPostCubit,
             page: PostDespesa(
               despesa,
               screenshotController: MockScreenshotController(),
@@ -97,13 +97,13 @@ void main() {
     });
 
     testWidgets('should do something when click on card', (tester) async {
-      final mockPostBloc = MockPostBloc();
-      when(mockPostBloc.isPostFavorite).thenReturn(false);
-      when(mockPostBloc.post).thenReturn(despesa.toJson());
+      final mockPostCubit = MockPostCubit();
+      when(mockPostCubit.isPostFavorite).thenReturn(false);
+      when(mockPostCubit.post).thenReturn(despesa.toJson());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PostBloc>(
-            bloc: mockPostBloc,
+          PageConnected<PostCubit>(
+            bloc: mockPostCubit,
             page: PostDespesa(
               despesa,
               screenshotController: MockScreenshotController(),
@@ -121,13 +121,13 @@ void main() {
       final mockScreenshotController = MockScreenshotController();
       when(mockScreenshotController.capture())
           .thenAnswer((_) => Future.value(mockFile));
-      final mockPostBloc = MockPostBloc();
-      when(mockPostBloc.isPostFavorite).thenReturn(false);
-      when(mockPostBloc.post).thenReturn(despesa.toJson());
+      final mockPostCubit = MockPostCubit();
+      when(mockPostCubit.isPostFavorite).thenReturn(false);
+      when(mockPostCubit.post).thenReturn(despesa.toJson());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PostBloc>(
-            bloc: mockPostBloc,
+          PageConnected<PostCubit>(
+            bloc: mockPostCubit,
             page: PostDespesa(
               despesa,
               screenshotController: mockScreenshotController,
@@ -144,18 +144,18 @@ void main() {
       });
       expect(shareButton, findsOneWidget);
       await tester.tap(shareButton);
-      verify(mockPostBloc.add(SharePost(postImage: mockFile))).called(1);
+      verify(mockPostCubit.sharePost(mockFile)).called(1);
     });
 
     testWidgets('should do something when click on bookmark btn',
         (tester) async {
-      final mockPostBloc = MockPostBloc();
-      when(mockPostBloc.isPostFavorite).thenReturn(false);
-      when(mockPostBloc.post).thenReturn(despesa.toJson());
+      final mockPostCubit = MockPostCubit();
+      when(mockPostCubit.isPostFavorite).thenReturn(false);
+      when(mockPostCubit.post).thenReturn(despesa.toJson());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PostBloc>(
-            bloc: mockPostBloc,
+          PageConnected<PostCubit>(
+            bloc: mockPostCubit,
             page: PostDespesa(
               despesa,
               screenshotController: MockScreenshotController(),
@@ -176,13 +176,13 @@ void main() {
 
     testWidgets('should go to profile page when click on politic photo',
         (tester) async {
-      final mockPostBloc = MockPostBloc();
-      when(mockPostBloc.isPostFavorite).thenReturn(false);
-      when(mockPostBloc.post).thenReturn(despesa.toJson());
+      final mockPostCubit = MockPostCubit();
+      when(mockPostCubit.isPostFavorite).thenReturn(false);
+      when(mockPostCubit.post).thenReturn(despesa.toJson());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PostBloc>(
-            bloc: mockPostBloc,
+          PageConnected<PostCubit>(
+            bloc: mockPostCubit,
             page: PostDespesa(
               despesa,
               screenshotController: MockScreenshotController(),
@@ -198,16 +198,16 @@ void main() {
 
     testWidgets('should open despesa image when clicked document icon',
         (tester) async {
-      final mockDocumentBloc = MockDocumentBloc();
-      final mockPostBloc = MockPostBloc();
-      when(mockPostBloc.isPostFavorite).thenReturn(false);
-      when(mockPostBloc.post).thenReturn(despesa.toJson());
+      final mockDocumentCubit = MockDocumentCubit();
+      final mockPostCubit = MockPostCubit();
+      when(mockPostCubit.isPostFavorite).thenReturn(false);
+      when(mockPostCubit.post).thenReturn(despesa.toJson());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PostBloc>(
-            bloc: mockPostBloc,
-            page: PageConnected<DocumentBloc>(
-              bloc: mockDocumentBloc,
+          PageConnected<PostCubit>(
+            bloc: mockPostCubit,
+            page: PageConnected<DocumentCubit>(
+              bloc: mockDocumentCubit,
               page: PostDespesa(
                 despesa,
                 screenshotController: MockScreenshotController(),
@@ -219,7 +219,7 @@ void main() {
       final despesaIcon = find.byKey(despesaImageIconKey);
       expect(despesaIcon, findsOneWidget);
       await tester.tap(despesaIcon);
-      verify(mockDocumentBloc.add(OpenDocumentImage('urlDoc'))).called(1);
+      verify(mockDocumentCubit.openDocumentImage('urlDoc')).called(1);
     });
   });
 }

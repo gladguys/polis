@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/enum/auth_provider.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/extension/extensions.dart';
@@ -33,8 +33,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   String _email;
   File pickedPhoto;
 
-  EditProfileBloc get editProfileBloc => context.bloc<EditProfileBloc>();
-  UserModel get user => context.bloc<UserBloc>().user;
+  EditProfileCubit get editProfileCubit => context.bloc<EditProfileCubit>();
+  UserModel get user => context.bloc<UserCubit>().user;
 
   @override
   void initState() {
@@ -46,7 +46,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocConsumer<EditProfileBloc, EditProfileState>(
+        child: BlocConsumer<EditProfileCubit, EditProfileState>(
           listener: (_, state) {
             if (state is UserUpdateSuccess) {
               Snackbar.success(_, USER_UPDATED_WITH_SUCCESS);
@@ -99,13 +99,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         final formState = _formKey.currentState;
                         if (formState.validate()) {
                           formState.save();
-                          editProfileBloc.add(
-                            UpdateUserInfo(
-                              currentUser: user,
-                              name: _name,
-                              email: _email,
-                              pickedPhoto: pickedPhoto,
-                            ),
+                          editProfileCubit.updateUserInfo(
+                            currentUser: user,
+                            name: _name,
+                            email: _email,
+                            pickedPhoto: pickedPhoto,
                           );
                         }
                       },

@@ -1,47 +1,46 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 
 import '../mock.dart';
 
 void main() {
   group('DocumentBloc tests', () {
-    DocumentBloc documentBloc;
+    DocumentCubit documentCubit;
     MockUrlLauncherService mockUrlLauncherService;
 
     setUp(() {
       mockUrlLauncherService = MockUrlLauncherService();
-      documentBloc = DocumentBloc(
+      documentCubit = DocumentCubit(
         urlLaunchService: mockUrlLauncherService,
       );
     });
 
     tearDown(() {
-      documentBloc?.close();
+      documentCubit?.close();
     });
 
     test('asserts', () {
       expect(
-          () => DocumentBloc(
+          () => DocumentCubit(
                 urlLaunchService: null,
               ),
           throwsAssertionError);
     });
 
     test('''Expects InitialDespesaImageState to be the initial state''', () {
-      expect(documentBloc.state, equals(InitialDocumentState()));
+      expect(documentCubit.state, equals(InitialDocumentState()));
     });
 
     blocTest(
       'Expects to launch the url',
-      build: () async {
+      build: () {
         when(mockUrlLauncherService.launchUrl('url'))
             .thenAnswer((_) => Future.value(true));
-        return documentBloc;
+        return documentCubit;
       },
-      act: (despesaImageBloc) async =>
-          despesaImageBloc.add(OpenDocumentImage('url')),
+      act: (documentCubit) async => documentCubit.openDocumentImage('url'),
       expect: [],
       verify: (despesaImageBloc) async =>
           verify(mockUrlLauncherService.launchUrl('url')).called(1),
@@ -49,13 +48,14 @@ void main() {
 
     blocTest(
       '''Expects [LoadingFavoritesPosts, FetchUserFavoritePostsFailed] when fails''',
-      build: () async {
+      build: () {
         when(mockUrlLauncherService.launchUrl(any)).thenThrow(Exception());
-        return documentBloc;
+        return documentCubit;
       },
-      act: (despesaImageBloc) async =>
-          despesaImageBloc.add(OpenDocumentImage('url')),
-      expect: [LaunchUrlFailed()],
+      act: (documentCubit) async => documentCubit.openDocumentImage('url'),
+      expect: [
+        LaunchUrlFailed(),
+      ],
       verify: (favoritePostsBloc) async =>
           verify(mockUrlLauncherService.launchUrl('url')).called(1),
     );

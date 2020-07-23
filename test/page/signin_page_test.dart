@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/i18n/i18n.dart';
 import 'package:polis/core/keys.dart';
@@ -36,9 +36,9 @@ void main() {
     testWidgets(
         '''should navigate to PoliticSugestionPage when user auths and has not yet done signin''',
         (tester) async {
-      final mockSigninBloc = MockSigninBloc();
+      final mockSigninCubit = MockSigninCubit();
       whenListen(
-        mockSigninBloc,
+        mockSigninCubit,
         Stream<SigninState>.fromIterable([
           InitialSignin(),
           UserAuthenticated(
@@ -48,8 +48,8 @@ void main() {
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SigninBloc>(
-            bloc: mockSigninBloc,
+          PageConnected<SigninCubit>(
+            bloc: mockSigninCubit,
             page: Scaffold(
               body: SigninPage(),
             ),
@@ -61,23 +61,25 @@ void main() {
     testWidgets(
         'should navigate to Timeline when user auths and has yet done signin',
         (tester) async {
-      final mockSigninBloc = MockSigninBloc();
+      final mockSigninCubit = MockSigninCubit();
       whenListen(
-        mockSigninBloc,
-        Stream<SigninState>.fromIterable([
-          InitialSignin(),
-          UserAuthenticated(
-            UserModel(
-              userId: '1',
-              isFirstLoginDone: true,
-            ),
-          )
-        ]),
+        mockSigninCubit,
+        Stream<SigninState>.fromIterable(
+          [
+            InitialSignin(),
+            UserAuthenticated(
+              UserModel(
+                userId: '1',
+                isFirstLoginDone: true,
+              ),
+            )
+          ],
+        ),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SigninBloc>(
-            bloc: mockSigninBloc,
+          PageConnected<SigninCubit>(
+            bloc: mockSigninCubit,
             page: Scaffold(
               body: SigninPage(),
             ),
@@ -87,12 +89,12 @@ void main() {
     });
 
     testWidgets('should validate and save the form', (tester) async {
-      final mockSigninBloc = MockSigninBloc();
-      when(mockSigninBloc.state).thenReturn(InitialSignin());
+      final mockSigninCubit = MockSigninCubit();
+      when(mockSigninCubit.state).thenReturn(InitialSignin());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SigninBloc>(
-            bloc: mockSigninBloc,
+          PageConnected<SigninCubit>(
+            bloc: mockSigninCubit,
             page: Scaffold(
               body: SigninPage(),
             ),
@@ -113,19 +115,19 @@ void main() {
       await tester.tap(signinBtn);
       await tester.pumpAndSettle();
       expect(formKey.currentState.validate(), isTrue);
-      verify(mockSigninBloc
-              .add(SigninWithEmailAndPassword('test@gmail.com', 'secret')))
+      verify(mockSigninCubit.signinWithEmailAndPassword(
+              'test@gmail.com', 'secret'))
           .called(1);
     });
 
     testWidgets('''should validate and save the form when clicking keyboard''',
         (tester) async {
-      final mockSigninBloc = MockSigninBloc();
-      when(mockSigninBloc.state).thenReturn(InitialSignin());
+      final mockSigninCubit = MockSigninCubit();
+      when(mockSigninCubit.state).thenReturn(InitialSignin());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SigninBloc>(
-            bloc: mockSigninBloc,
+          PageConnected<SigninCubit>(
+            bloc: mockSigninCubit,
             page: Scaffold(
               body: SigninPage(),
             ),
@@ -145,22 +147,24 @@ void main() {
       await tester.pump();
 
       expect(formKey.currentState.validate(), isTrue);
-      verify(mockSigninBloc
-              .add(SigninWithEmailAndPassword('test@gmail.com', 'secret')))
+      verify(mockSigninCubit.signinWithEmailAndPassword(
+              'test@gmail.com', 'secret'))
           .called(1);
     });
 
     testWidgets('should show error message when signin failed', (tester) async {
-      final mockSigninBloc = MockSigninBloc();
+      final mockSigninCubit = MockSigninCubit();
       whenListen(
-        mockSigninBloc,
-        Stream<SigninState>.fromIterable(
-            [InitialSignin(), SigninFailed(ERROR_INVALID_CREDENTIALS)]),
+        mockSigninCubit,
+        Stream<SigninState>.fromIterable([
+          InitialSignin(),
+          SigninFailed(ERROR_INVALID_CREDENTIALS),
+        ]),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SigninBloc>(
-            bloc: mockSigninBloc,
+          PageConnected<SigninCubit>(
+            bloc: mockSigninCubit,
             page: Scaffold(
               body: SigninPage(),
             ),
@@ -172,15 +176,18 @@ void main() {
     });
 
     testWidgets('should show loading', (tester) async {
-      final mockSigninBloc = MockSigninBloc();
+      final mockSigninCubit = MockSigninCubit();
       whenListen(
-        mockSigninBloc,
-        Stream<SigninState>.fromIterable([InitialSignin(), SigninLoading()]),
+        mockSigninCubit,
+        Stream<SigninState>.fromIterable([
+          InitialSignin(),
+          SigninLoading(),
+        ]),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SigninBloc>(
-            bloc: mockSigninBloc,
+          PageConnected<SigninCubit>(
+            bloc: mockSigninCubit,
             page: Scaffold(
               body: SigninPage(),
             ),
@@ -193,16 +200,18 @@ void main() {
 
     testWidgets('should show error message when reset email failed',
         (tester) async {
-      final mockSigninBloc = MockSigninBloc();
+      final mockSigninCubit = MockSigninCubit();
       whenListen(
-        mockSigninBloc,
-        Stream<SigninState>.fromIterable(
-            [InitialSignin(), ResetEmailSentFailed()]),
+        mockSigninCubit,
+        Stream<SigninState>.fromIterable([
+          InitialSignin(),
+          ResetEmailSentFailed(),
+        ]),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SigninBloc>(
-            bloc: mockSigninBloc,
+          PageConnected<SigninCubit>(
+            bloc: mockSigninCubit,
             page: Scaffold(
               body: SigninPage(),
             ),
@@ -214,16 +223,18 @@ void main() {
     });
 
     testWidgets('should show message when reset email success', (tester) async {
-      final mockSigninBloc = MockSigninBloc();
+      final mockSigninCubit = MockSigninCubit();
       whenListen(
-        mockSigninBloc,
-        Stream<SigninState>.fromIterable(
-            [InitialSignin(), ResetEmailSentSuccess()]),
+        mockSigninCubit,
+        Stream<SigninState>.fromIterable([
+          InitialSignin(),
+          ResetEmailSentSuccess(),
+        ]),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SigninBloc>(
-            bloc: mockSigninBloc,
+          PageConnected<SigninCubit>(
+            bloc: mockSigninCubit,
             page: Scaffold(
               body: SigninPage(),
             ),
@@ -236,16 +247,18 @@ void main() {
 
     testWidgets('should show error message when signin auth failed',
         (tester) async {
-      final mockSigninBloc = MockSigninBloc();
+      final mockSigninCubit = MockSigninCubit();
       whenListen(
-        mockSigninBloc,
-        Stream<SigninState>.fromIterable(
-            [InitialSignin(), UserAuthenticationFailed('fail')]),
+        mockSigninCubit,
+        Stream<SigninState>.fromIterable([
+          InitialSignin(),
+          UserAuthenticationFailed('fail'),
+        ]),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SigninBloc>(
-            bloc: mockSigninBloc,
+          PageConnected<SigninCubit>(
+            bloc: mockSigninCubit,
             page: Scaffold(
               body: SigninPage(),
             ),
@@ -258,12 +271,12 @@ void main() {
 
     testWidgets('should do something when recover password is clicked',
         (tester) async {
-      final mockSigninBloc = MockSigninBloc();
-      when(mockSigninBloc.state).thenReturn(InitialSignin());
+      final mockSigninCubit = MockSigninCubit();
+      when(mockSigninCubit.state).thenReturn(InitialSignin());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SigninBloc>(
-            bloc: mockSigninBloc,
+          PageConnected<SigninCubit>(
+            bloc: mockSigninCubit,
             page: Scaffold(
               body: SigninPage(),
             ),

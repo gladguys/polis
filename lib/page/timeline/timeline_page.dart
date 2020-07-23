@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences_monitor/shared_preferences_monitor.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/enum/timeline_status.dart';
 import '../../core/extension/extensions.dart';
 import '../../core/i18n/i18n.dart';
@@ -24,7 +24,7 @@ class TimelinePage extends StatelessWidget {
       child: Scaffold(
         bottomNavigationBar: DefaultBottombar(TIMELINE_PAGE),
         body: SafeArea(
-          child: BlocBuilder<TimelineBloc, TimelineState>(
+          child: BlocBuilder<TimelineCubit, TimelineState>(
             builder: (_, state) {
               if (state is TimelineUpdated) {
                 return Timeline(

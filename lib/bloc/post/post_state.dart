@@ -1,4 +1,4 @@
-part of 'post_bloc.dart';
+part of 'post_cubit.dart';
 
 abstract class PostState extends Equatable {
   const PostState();

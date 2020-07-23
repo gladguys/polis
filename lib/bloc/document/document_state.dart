@@ -1,4 +1,4 @@
-part of 'document_bloc.dart';
+part of 'document_cubit.dart';
 
 abstract class DocumentState extends Equatable {
   const DocumentState();

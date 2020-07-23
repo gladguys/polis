@@ -2,7 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/constants.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:tuple/tuple.dart';
@@ -11,7 +11,7 @@ import '../mock.dart';
 
 void main() {
   group('PoliticProfileBloc tests', () {
-    PoliticProfileBloc politicProfileBloc;
+    PoliticProfileCubit politicProfileCubit;
     MockPoliticProfileRepository mockPoliticProfileRepository;
     MockFollowRepository mockFollowRepository;
     MockUrlLauncherService mockUrlLauncherService;
@@ -22,7 +22,7 @@ void main() {
       mockPoliticProfileRepository = MockPoliticProfileRepository();
       mockFollowRepository = MockFollowRepository();
       mockUrlLauncherService = MockUrlLauncherService();
-      politicProfileBloc = PoliticProfileBloc(
+      politicProfileCubit = PoliticProfileCubit(
         user: UserModel(),
         politicProfileRepository: mockPoliticProfileRepository,
         followRepository: mockFollowRepository,
@@ -31,12 +31,12 @@ void main() {
     });
 
     tearDown(() {
-      politicProfileBloc?.close();
+      politicProfileCubit?.close();
     });
 
     test('asserts', () {
       expect(
-          () => PoliticProfileBloc(
+          () => PoliticProfileCubit(
                 user: null,
                 politicProfileRepository: mockPoliticProfileRepository,
                 followRepository: mockFollowRepository,
@@ -44,7 +44,7 @@ void main() {
               ),
           throwsAssertionError);
       expect(
-          () => PoliticProfileBloc(
+          () => PoliticProfileCubit(
                 user: UserModel(),
                 politicProfileRepository: null,
                 followRepository: mockFollowRepository,
@@ -52,7 +52,7 @@ void main() {
               ),
           throwsAssertionError);
       expect(
-          () => PoliticProfileBloc(
+          () => PoliticProfileCubit(
                 user: UserModel(),
                 politicProfileRepository: mockPoliticProfileRepository,
                 followRepository: null,
@@ -60,7 +60,7 @@ void main() {
               ),
           throwsAssertionError);
       expect(
-          () => PoliticProfileBloc(
+          () => PoliticProfileCubit(
                 user: UserModel(),
                 politicProfileRepository: mockPoliticProfileRepository,
                 followRepository: mockFollowRepository,
@@ -70,13 +70,13 @@ void main() {
     });
 
     test('Expects InitialPoliticProfileState to be the initial state', () {
-      expect(politicProfileBloc.state, equals(InitialPoliticProfileState()));
+      expect(politicProfileCubit.state, equals(InitialPoliticProfileState()));
     });
 
     group('GetPoliticInfo event', () {
       blocTest(
         '''Expects [LoadingPoliticInfo, GetPoliticInfoSuccess] when success''',
-        build: () async {
+        build: () {
           when(mockPoliticProfileRepository.getInfoPolitic('1')).thenAnswer(
             (_) => Future.value(
               PoliticoModel(
@@ -98,13 +98,13 @@ void main() {
           when(mockFollowRepository.isPoliticBeingFollowed(
                   user: anyNamed('user'), politicId: anyNamed('politicId')))
               .thenAnswer((_) async => true);
-          return politicProfileBloc;
+          return politicProfileCubit;
         },
-        act: (politicProfileBloc) {
-          politicProfileBloc.add(GetPoliticInfo('1'));
+        act: (politicProfileCubit) {
+          politicProfileCubit.getPoliticInfo('1');
           return;
         },
-        verify: (politicProfileBloc) async {
+        verify: (politicProfileCubit) async {
           verify(mockPoliticProfileRepository.getInfoPolitic('1')).called(1);
           verify(mockPoliticProfileRepository.getLastActivities(
                   politicId: '1', count: kTimelinePageSize))
@@ -129,16 +129,16 @@ void main() {
 
       blocTest(
         '''Expects [LoadingPoliticInfo, GetPoliticInfoFailed] when fails''',
-        build: () async {
+        build: () {
           when(mockPoliticProfileRepository.getInfoPolitic('1'))
               .thenThrow(Exception());
-          return politicProfileBloc;
+          return politicProfileCubit;
         },
-        act: (politicProfileBloc) {
-          politicProfileBloc.add(GetPoliticInfo('1'));
+        act: (politicProfileCubit) {
+          politicProfileCubit.getPoliticInfo('1');
           return;
         },
-        verify: (politicProfileBloc) async {
+        verify: (politicProfileCubit) async {
           verify(mockPoliticProfileRepository.getInfoPolitic('1')).called(1);
         },
         expect: [
@@ -151,7 +151,7 @@ void main() {
     group('FollowUnfollowProfilePolitic event', () {
       blocTest(
         '''Expects [UserFollowingPoliticChanged, GetPoliticInfoSuccess, UserFollowingPoliticChanged] when politic followed and increments quantidadeSeguidores''',
-        build: () async {
+        build: () {
           when(mockPoliticProfileRepository.getInfoPolitic('1')).thenAnswer(
             (_) => Future.value(
               PoliticoModel(
@@ -174,15 +174,14 @@ void main() {
           when(mockFollowRepository.isPoliticBeingFollowed(
                   user: anyNamed('user'), politicId: anyNamed('politicId')))
               .thenAnswer((_) async => true);
-          return politicProfileBloc;
+          return politicProfileCubit;
         },
-        act: (politicProfileBloc) {
-          politicProfileBloc.add(GetPoliticInfo('1'));
-          politicProfileBloc
-              .add(FollowUnfollowProfilePolitic(isFollowing: false));
+        act: (politicProfileCubit) {
+          politicProfileCubit.getPoliticInfo('1');
+          politicProfileCubit.followUnfollowProfilePolitic(isFollowing: false);
           return;
         },
-        verify: (politicProfileBloc) async {
+        verify: (politicProfileCubit) async {
           verify(mockPoliticProfileRepository.getInfoPolitic('1')).called(1);
           verify(mockPoliticProfileRepository.getLastActivities(
                   politicId: '1', count: kTimelinePageSize))
@@ -218,7 +217,7 @@ void main() {
 
       blocTest(
         '''Expects [UserFollowingPoliticChanged, GetPoliticInfoSuccess, UserFollowingPoliticChanged] when politic followed and decrements quantidadeSeguidores''',
-        build: () async {
+        build: () {
           when(mockPoliticProfileRepository.getInfoPolitic('1')).thenAnswer(
             (_) => Future.value(
               PoliticoModel(
@@ -241,15 +240,14 @@ void main() {
           when(mockFollowRepository.isPoliticBeingFollowed(
                   user: anyNamed('user'), politicId: anyNamed('politicId')))
               .thenAnswer((_) async => true);
-          return politicProfileBloc;
+          return politicProfileCubit;
         },
-        act: (politicProfileBloc) {
-          politicProfileBloc.add(GetPoliticInfo('1'));
-          politicProfileBloc
-              .add(FollowUnfollowProfilePolitic(isFollowing: true));
+        act: (politicProfileCubit) {
+          politicProfileCubit.getPoliticInfo('1');
+          politicProfileCubit.followUnfollowProfilePolitic(isFollowing: true);
           return;
         },
-        verify: (politicProfileBloc) async {
+        verify: (politicProfileCubit) async {
           verify(mockPoliticProfileRepository.getInfoPolitic('1')).called(1);
           verify(mockPoliticProfileRepository.getLastActivities(
                   politicId: '1', count: kTimelinePageSize))
@@ -285,7 +283,7 @@ void main() {
 
       blocTest(
         '''Expects [UserFollowingPoliticChanged, GetPoliticInfoSuccess, UserFollowingPoliticChanged, FollowPoliticFailed] when politic followed and decrements quantidadeSeguidores''',
-        build: () async {
+        build: () {
           when(mockPoliticProfileRepository.getInfoPolitic('1')).thenAnswer(
             (_) => Future.value(
               PoliticoModel(
@@ -311,15 +309,14 @@ void main() {
           when(mockFollowRepository.unfollowPolitic(
                   user: anyNamed('user'), politico: anyNamed('politico')))
               .thenThrow(Exception());
-          return politicProfileBloc;
+          return politicProfileCubit;
         },
-        act: (politicProfileBloc) {
-          politicProfileBloc.add(GetPoliticInfo('1'));
-          politicProfileBloc
-              .add(FollowUnfollowProfilePolitic(isFollowing: true));
+        act: (politicProfileCubit) {
+          politicProfileCubit.getPoliticInfo('1');
+          politicProfileCubit.followUnfollowProfilePolitic(isFollowing: true);
           return;
         },
-        verify: (politicProfileBloc) async {
+        verify: (politicProfileCubit) async {
           verify(mockPoliticProfileRepository.getInfoPolitic('1')).called(1);
           verify(mockPoliticProfileRepository.getLastActivities(
                   politicId: '1', count: kTimelinePageSize))
@@ -358,7 +355,7 @@ void main() {
     group('SendEmailToPolitic event', () {
       blocTest(
         'should send email to politic when email is valid',
-        build: () async {
+        build: () {
           when(mockUrlLauncherService.canLaunchEmailUrl(any))
               .thenAnswer((_) => Future.value(true));
           when(mockUrlLauncherService.launchEmailUrl(any))
@@ -381,13 +378,13 @@ void main() {
           when(mockFollowRepository.isPoliticBeingFollowed(
                   user: anyNamed('user'), politicId: anyNamed('politicId')))
               .thenAnswer((_) async => true);
-          return politicProfileBloc;
+          return politicProfileCubit;
         },
-        act: (politicProfileBloc) async {
-          politicProfileBloc.add(GetPoliticInfo('1'));
-          politicProfileBloc.add(SendEmailToPolitic());
+        act: (politicProfileCubit) async {
+          politicProfileCubit.getPoliticInfo('1');
+          politicProfileCubit.sendEmailToPolitic();
         },
-        verify: (politicProfileBloc) async {
+        verify: (politicProfileCubit) async {
           verify(mockUrlLauncherService.canLaunchEmailUrl(any)).called(1);
           verify(mockUrlLauncherService.launchEmailUrl(any)).called(1);
         },
@@ -407,7 +404,7 @@ void main() {
 
       blocTest(
         'should yield OpenEmailIntentFailed when open intent failed',
-        build: () async {
+        build: () {
           when(mockUrlLauncherService.canLaunchEmailUrl(any))
               .thenAnswer((_) => Future.value(false));
           when(mockPoliticProfileRepository.getInfoPolitic('1')).thenAnswer(
@@ -428,13 +425,13 @@ void main() {
           when(mockFollowRepository.isPoliticBeingFollowed(
                   user: anyNamed('user'), politicId: anyNamed('politicId')))
               .thenAnswer((_) async => true);
-          return politicProfileBloc;
+          return politicProfileCubit;
         },
-        act: (politicProfileBloc) async {
-          politicProfileBloc.add(GetPoliticInfo('1'));
-          politicProfileBloc.add(SendEmailToPolitic());
+        act: (politicProfileCubit) async {
+          politicProfileCubit.getPoliticInfo('1');
+          politicProfileCubit.sendEmailToPolitic();
         },
-        verify: (politicProfileBloc) async {
+        verify: (politicProfileCubit) async {
           verify(mockUrlLauncherService.canLaunchEmailUrl(any)).called(1);
           verifyNever(mockUrlLauncherService.launchEmailUrl(any));
         },
@@ -455,7 +452,7 @@ void main() {
 
       blocTest(
         'should yield OpenEmailIntentFailed when open intent failed',
-        build: () async {
+        build: () {
           when(mockPoliticProfileRepository.getInfoPolitic('1')).thenAnswer(
             (_) => Future.value(
               PoliticoModel(id: '1', email: 'aNotValidEmail@gmail'),
@@ -474,13 +471,13 @@ void main() {
           when(mockFollowRepository.isPoliticBeingFollowed(
                   user: anyNamed('user'), politicId: anyNamed('politicId')))
               .thenAnswer((_) async => true);
-          return politicProfileBloc;
+          return politicProfileCubit;
         },
-        act: (politicProfileBloc) async {
-          politicProfileBloc.add(GetPoliticInfo('1'));
-          politicProfileBloc.add(SendEmailToPolitic());
+        act: (politicProfileCubit) async {
+          politicProfileCubit.getPoliticInfo('1');
+          politicProfileCubit.sendEmailToPolitic();
         },
-        verify: (politicProfileBloc) async {
+        verify: (politicProfileCubit) async {
           verifyNever(mockUrlLauncherService.canLaunchEmailUrl(any));
           verifyNever(mockUrlLauncherService.launchEmailUrl(any));
         },
@@ -503,7 +500,7 @@ void main() {
     group('GetMoreActivities', () {
       blocTest(
         'should yield GetPoliticInfoSuccess when get more activities',
-        build: () async {
+        build: () {
           when(mockPoliticProfileRepository.getInfoPolitic('1')).thenAnswer(
             (_) => Future.value(
               PoliticoModel(id: '1', email: 'aNotValidEmail@gmail'),
@@ -551,11 +548,11 @@ void main() {
               ),
             ),
           );
-          return politicProfileBloc;
+          return politicProfileCubit;
         },
-        act: (politicProfileBloc) async {
-          politicProfileBloc.add(GetPoliticInfo('1'));
-          politicProfileBloc.add(GetMoreActivities('1'));
+        act: (politicProfileCubit) async {
+          politicProfileCubit.getPoliticInfo('1');
+          politicProfileCubit.getMoreActivities('1');
         },
         expect: [
           LoadingPoliticInfo(),
@@ -585,16 +582,16 @@ void main() {
 
       blocTest(
         '''Expects [GetPoliticInfoFailed] when fails''',
-        build: () async {
+        build: () {
           when(mockPoliticProfileRepository.getMoreActivities(
                   politicId: anyNamed('politicId'),
                   count: anyNamed('count'),
                   lastDocument: anyNamed('lastDocument')))
               .thenThrow(Exception());
-          return politicProfileBloc;
+          return politicProfileCubit;
         },
-        act: (politicProfileBloc) {
-          politicProfileBloc.add(GetMoreActivities('1'));
+        act: (politicProfileCubit) {
+          politicProfileCubit.getMoreActivities('1');
           return;
         },
         expect: [

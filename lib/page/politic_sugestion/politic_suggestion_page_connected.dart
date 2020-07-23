@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/extension/extensions.dart';
 import '../../core/repository/concrete/repositories.dart';
 import '../page_connected.dart';
@@ -22,12 +22,12 @@ class PoliticSuggestionPageConnected extends StatelessWidget {
       ),
     );
 
-    return PageConnected<PoliticSuggestionBloc>(
-      bloc: PoliticSuggestionBloc(
+    return PageConnected<PoliticSuggestionCubit>(
+      bloc: PoliticSuggestionCubit(
         politicSuggestionRepository:
             context.repository<FirebasePoliticSuggestionRepository>(),
         userRepository: context.repository<FirebaseUserRepository>(),
-      )..add(FetchSuggestedPolitics(stateOption)),
+      )..fetchSuggestedPolitics(stateOption),
       page: PoliticSuggestionPage(),
     );
   }

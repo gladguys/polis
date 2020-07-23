@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/page/user_profile/widget/politics_following_quantity.dart';
 
@@ -17,11 +17,11 @@ void main() {
         connectedWidget(
           Scaffold(
             body: BlocProvider.value(
-              value: UserProfileBloc(
+              value: UserProfileCubit(
                 repository: MockUserProfileRepository(),
               ),
               child: BlocProvider.value(
-                value: UserBloc(
+                value: UserCubit(
                   user: UserModel(userId: '1'),
                   repository: MockUserRepository(),
                   analyticsService: MockAnalyticsService(),

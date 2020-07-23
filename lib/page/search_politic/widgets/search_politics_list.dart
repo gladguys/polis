@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../../bloc/blocs.dart';
+import '../../../bloc/cubits.dart';
 import '../../../core/domain/model/models.dart';
 import '../../../core/i18n/i18n.dart';
 import '../../../core/keys.dart';
@@ -41,7 +41,7 @@ class SearchPoliticsList extends StatelessWidget {
   }
 
   Widget _buildCard(BuildContext context, PoliticoModel politico) {
-    final bloc = context.bloc<SearchPoliticBloc>();
+    final cubit = context.bloc<SearchPoliticCubit>();
 
     return CardBase(
       key: ValueKey(politico.id),
@@ -49,25 +49,21 @@ class SearchPoliticsList extends StatelessWidget {
       slotLeft: _buildLeftContent(politico),
       slotCenter: _buildCardContent(context, politico),
       slotRight: ButtonFollowUnfollow(
-        isFollow: bloc.isPoliticBeingFollowed(politico),
+        isFollow: cubit.isPoliticBeingFollowed(politico),
         key: searchPoliticsFollowUnfollowButton,
-        onPressed: () => bloc.add(
-          FollowUnfollowSearchPolitic(
-            user: context.bloc<UserBloc>().user,
-            politico: politico,
-          ),
+        onPressed: () => cubit.followUnfollowSearchPolitic(
+          user: context.bloc<UserCubit>().user,
+          politico: politico,
         ),
       ),
       onTap: () => SimpleRouter.forward(
         BlocProvider.value(
-          value: context.bloc<SearchPoliticBloc>().politicProfileBloc
-            ..add(GetPoliticInfo(politico.id)),
+          value: context.bloc<SearchPoliticCubit>().politicProfileCubit
+            ..getPoliticInfo(politico.id),
           child: PoliticProfilePage(
-            onUnfollowPolitic: () => bloc.add(
-              FollowUnfollowSearchPolitic(
-                user: context.bloc<UserBloc>().user,
-                politico: politico,
-              ),
+            onUnfollowPolitic: () => cubit.followUnfollowSearchPolitic(
+              user: context.bloc<UserCubit>().user,
+              politico: politico,
             ),
           ),
         ),

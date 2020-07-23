@@ -1,4 +1,4 @@
-part of 'politic_profile_bloc.dart';
+part of 'politic_profile_cubit.dart';
 
 abstract class PoliticProfileState extends Equatable {
   const PoliticProfileState();

@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/repository/concrete/firebase/firebase.dart';
 import 'package:tuple/tuple.dart';
@@ -10,13 +10,13 @@ import '../mock.dart';
 
 void main() {
   group('PostBloc tests', () {
-    PostBloc postBloc;
+    PostCubit postCubit;
     MockPostRepository mockPostRepository;
     MockActionRepository mockActionRepository;
     MockShareService mockShareService;
     MockFile mockFile;
-    MockTimelineBloc mockTimelineBloc;
-    MockUserBloc mockUserBloc;
+    MockTimelineCubit mockTimelineCubit;
+    MockUserCubit mockUserCubit;
     DespesaModel despesa;
     PropostaModel proposta;
 
@@ -30,94 +30,96 @@ void main() {
         idPropostaPolitico: '1',
         favorito: true,
       );
-      mockUserBloc = MockUserBloc();
-      mockTimelineBloc = MockTimelineBloc();
+      mockUserCubit = MockUserCubit();
+      mockTimelineCubit = MockTimelineCubit();
       mockPostRepository = MockPostRepository();
       mockActionRepository = MockActionRepository();
       mockShareService = MockShareService();
       mockFile = MockFile();
-      postBloc = PostBloc(
+      postCubit = PostCubit(
         post: {},
         postRepository: mockPostRepository,
         actionRepository: mockActionRepository,
         shareService: mockShareService,
-        userBloc: mockUserBloc,
+        userCubit: mockUserCubit,
       );
     });
 
     tearDown(() {
-      postBloc?.close();
+      postCubit?.close();
     });
 
     test('asserts', () {
       expect(
-          () => PostBloc(
+          () => PostCubit(
                 post: null,
                 postRepository: mockPostRepository,
                 actionRepository: mockActionRepository,
                 shareService: mockShareService,
-                userBloc: mockUserBloc,
+                userCubit: mockUserCubit,
               ),
           throwsAssertionError);
 
       expect(
-          () => PostBloc(
+          () => PostCubit(
                 post: {},
                 postRepository: null,
                 actionRepository: mockActionRepository,
                 shareService: mockShareService,
-                userBloc: mockUserBloc,
+                userCubit: mockUserCubit,
               ),
           throwsAssertionError);
 
       expect(
-          () => PostBloc(
+          () => PostCubit(
                 post: {},
                 postRepository: mockPostRepository,
                 actionRepository: null,
                 shareService: mockShareService,
-                userBloc: mockUserBloc,
+                userCubit: mockUserCubit,
               ),
           throwsAssertionError);
 
       expect(
-          () => PostBloc(
+          () => PostCubit(
                 post: {},
                 postRepository: mockPostRepository,
                 actionRepository: mockActionRepository,
                 shareService: null,
-                userBloc: mockUserBloc,
+                userCubit: mockUserCubit,
               ),
           throwsAssertionError);
 
       expect(
-          () => PostBloc(
+          () => PostCubit(
                 post: {},
                 postRepository: mockPostRepository,
                 actionRepository: mockActionRepository,
                 shareService: mockShareService,
-                userBloc: null,
+                userCubit: null,
               ),
           throwsAssertionError);
     });
 
     test('''Expects InitialPostState to be the initial state''', () {
-      expect(postBloc.state, equals(InitialPostState()));
+      expect(postCubit.state, equals(InitialPostState()));
     });
 
     blocTest(
       '''Expects [PostFavoriteStatusChanged, PostFavoritedSuccess] when FavoritePostForUser added''',
-      build: () async => PostBloc(
+      build: () => PostCubit(
         post: {
           FAVORITO_FIELD: true,
         },
         postRepository: mockPostRepository,
         actionRepository: mockActionRepository,
         shareService: mockShareService,
-        userBloc: mockUserBloc,
+        userCubit: mockUserCubit,
       ),
-      act: (postBloc) async =>
-          postBloc.add(FavoritePostForUser(post: {}, user: UserModel())),
+      act: (postCubit) async => postCubit.favoritePostForUser(
+        post: <String, dynamic>{},
+        user: UserModel(),
+      ),
       expect: [
         PostFavoriteStatusChanged(
           post: {
@@ -127,14 +129,14 @@ void main() {
         ),
         PostFavoritedSuccess()
       ],
-      verify: (postBloc) async => verify(mockPostRepository.unfavoritePost(
+      verify: (postCubit) async => verify(mockPostRepository.unfavoritePost(
               post: anyNamed('post'), user: anyNamed('user')))
           .called(1),
     );
 
     blocTest(
       '''Expects [PostFavoriteStatusChanged, PostFavoritedFailed] when FavoritePostForUser added and failed''',
-      build: () async {
+      build: () {
         final mockPostRepository = MockPostRepository();
         when(
           mockPostRepository.unfavoritePost(
@@ -142,18 +144,20 @@ void main() {
             user: anyNamed('user'),
           ),
         ).thenThrow(Exception());
-        return PostBloc(
+        return PostCubit(
           post: {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           actionRepository: mockActionRepository,
           shareService: mockShareService,
-          userBloc: mockUserBloc,
+          userCubit: mockUserCubit,
         );
       },
-      act: (postBloc) async =>
-          postBloc.add(FavoritePostForUser(post: {}, user: UserModel())),
+      act: (postCubit) async => postCubit.favoritePostForUser(
+        post: <String, dynamic>{},
+        user: UserModel(),
+      ),
       expect: [
         PostFavoriteStatusChanged(
           post: {
@@ -167,11 +171,11 @@ void main() {
 
     blocTest(
       '''Expects [PostFavoriteStatusChanged, PostFavoritedSuccess] when FavoritePostForUser added for despesa and timelineBloc is not null''',
-      build: () async {
-        when(mockTimelineBloc.timelinePosts).thenReturn([
+      build: () {
+        when(mockTimelineCubit.timelinePosts).thenReturn([
           despesa,
         ]);
-        return PostBloc(
+        return PostCubit(
           post: {
             ID_FIELD: 1,
             FAVORITO_FIELD: true,
@@ -179,12 +183,14 @@ void main() {
           postRepository: mockPostRepository,
           actionRepository: mockActionRepository,
           shareService: mockShareService,
-          timelineBloc: mockTimelineBloc,
-          userBloc: mockUserBloc,
+          timelineCubit: mockTimelineCubit,
+          userCubit: mockUserCubit,
         );
       },
-      act: (postBloc) async => postBloc
-          .add(FavoritePostForUser(post: despesa.toJson(), user: UserModel())),
+      act: (postCubit) async => postCubit.favoritePostForUser(
+        post: despesa.toJson(),
+        user: UserModel(),
+      ),
       expect: [
         PostFavoriteStatusChanged(
           post: {
@@ -195,25 +201,25 @@ void main() {
         ),
         PostFavoritedSuccess()
       ],
-      verify: (postBloc) async {
+      verify: (postCubit) async {
         verify(mockPostRepository.unfavoritePost(
                 post: anyNamed('post'), user: anyNamed('user')))
             .called(1);
-        verify(mockTimelineBloc.add(RefreshTimeline())).called(1);
+        verify(mockTimelineCubit.refreshTimeline()).called(1);
       },
     );
 
     blocTest(
       '''Expects [PostFavoriteStatusChanged, PostFavoritedSuccess] when FavoritePostForUser added for proposta and timelineBloc is not null''',
-      build: () async {
-        when(mockTimelineBloc.timelinePosts).thenReturn([
+      build: () {
+        when(mockTimelineCubit.timelinePosts).thenReturn([
           PropostaModel(
             id: '1',
             idPropostaPolitico: '1',
             favorito: true,
           ),
         ]);
-        return PostBloc(
+        return PostCubit(
           post: {
             ID_FIELD: 1,
             ID_PROPOSTA_POLITICO_FIELD: '1',
@@ -222,12 +228,14 @@ void main() {
           postRepository: mockPostRepository,
           actionRepository: mockActionRepository,
           shareService: mockShareService,
-          timelineBloc: mockTimelineBloc,
-          userBloc: mockUserBloc,
+          timelineCubit: mockTimelineCubit,
+          userCubit: mockUserCubit,
         );
       },
-      act: (postBloc) async => postBloc
-          .add(FavoritePostForUser(post: proposta.toJson(), user: UserModel())),
+      act: (postCubit) async => postCubit.favoritePostForUser(
+        post: proposta.toJson(),
+        user: UserModel(),
+      ),
       expect: [
         PostFavoriteStatusChanged(
           post: {
@@ -239,32 +247,32 @@ void main() {
         ),
         PostFavoritedSuccess()
       ],
-      verify: (postBloc) async {
+      verify: (postCubit) async {
         verify(mockPostRepository.unfavoritePost(
                 post: anyNamed('post'), user: anyNamed('user')))
             .called(1);
-        verify(mockTimelineBloc.add(RefreshTimeline())).called(1);
+        verify(mockTimelineCubit.refreshTimeline()).called(1);
       },
     );
 
     blocTest(
       'Expects to share the image file',
-      build: () async {
+      build: () {
         when(mockShareService.shareFile(MockFile()))
             .thenAnswer((_) => Future.value());
-        return PostBloc(
+        return PostCubit(
           post: {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           actionRepository: mockActionRepository,
           shareService: mockShareService,
-          userBloc: mockUserBloc,
+          userCubit: mockUserCubit,
         );
       },
-      act: (postBloc) async => postBloc.add(SharePost(postImage: mockFile)),
+      act: (postCubit) async => postCubit.sharePost(mockFile),
       expect: [],
-      verify: (postBloc) async => verify(
+      verify: (postCubit) async => verify(
         mockShareService.shareFile(mockFile,
             title: anyNamed('title'), name: 'post.png', mimeType: 'image/png'),
       ).called(1),
@@ -272,9 +280,9 @@ void main() {
 
     blocTest(
       'Expects to set despesa post as viewed',
-      build: () async {
-        final mockTimelineBloc = MockTimelineBloc();
-        when(mockTimelineBloc.timelinePosts).thenReturn([
+      build: () {
+        final mockTimelineCubit = MockTimelineCubit();
+        when(mockTimelineCubit.timelinePosts).thenReturn([
           DespesaModel(id: '1'),
         ]);
         when(
@@ -284,34 +292,32 @@ void main() {
           ),
         ).thenAnswer((_) => Future.value());
 
-        return PostBloc(
+        return PostCubit(
           post: {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           actionRepository: mockActionRepository,
           shareService: mockShareService,
-          timelineBloc: mockTimelineBloc,
-          userBloc: mockUserBloc,
+          timelineCubit: mockTimelineCubit,
+          userCubit: mockUserCubit,
         );
       },
-      act: (postBloc) async => postBloc.add(
-        SetPostViewed(
-          userId: '1',
-          postId: '1',
-        ),
+      act: (postCubit) async => postCubit.setPostViewed(
+        userId: '1',
+        postId: '1',
       ),
       expect: [],
-      verify: (postBloc) async => verify(
+      verify: (postCubit) async => verify(
         mockPostRepository.setPostVisible(userId: '1', postId: '1'),
       ).called(1),
     );
 
     blocTest(
       'Expects to set proposta post as viewed',
-      build: () async {
-        final mockTimelineBloc = MockTimelineBloc();
-        when(mockTimelineBloc.timelinePosts).thenReturn([
+      build: () {
+        final mockTimelineCubit = MockTimelineCubit();
+        when(mockTimelineCubit.timelinePosts).thenReturn([
           PropostaModel(id: '1'),
         ]);
         when(
@@ -321,34 +327,32 @@ void main() {
           ),
         ).thenAnswer((_) => Future.value());
 
-        return PostBloc(
+        return PostCubit(
           post: {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           actionRepository: mockActionRepository,
           shareService: mockShareService,
-          timelineBloc: mockTimelineBloc,
-          userBloc: mockUserBloc,
+          timelineCubit: mockTimelineCubit,
+          userCubit: mockUserCubit,
         );
       },
-      act: (postBloc) async => postBloc.add(
-        SetPostViewed(
-          userId: '1',
-          postId: '1',
-        ),
+      act: (postCubit) async => postCubit.setPostViewed(
+        userId: '1',
+        postId: '1',
       ),
       expect: [],
-      verify: (postBloc) async => verify(
+      verify: (postCubit) async => verify(
         mockPostRepository.setPostVisible(userId: '1', postId: '1'),
       ).called(1),
     );
 
     blocTest(
       'Expects to yield PostViewedFailed when post as viewed failed',
-      build: () async {
-        final mockTimelineBloc = MockTimelineBloc();
-        when(mockTimelineBloc.timelinePosts).thenReturn([
+      build: () {
+        final mockTimelineCubit = MockTimelineCubit();
+        when(mockTimelineCubit.timelinePosts).thenReturn([
           DespesaModel(id: '1'),
         ]);
         when(
@@ -358,36 +362,34 @@ void main() {
           ),
         ).thenThrow(Exception());
 
-        return PostBloc(
+        return PostCubit(
           post: {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           actionRepository: mockActionRepository,
           shareService: mockShareService,
-          userBloc: mockUserBloc,
-          timelineBloc: mockTimelineBloc,
+          userCubit: mockUserCubit,
+          timelineCubit: mockTimelineCubit,
         );
       },
-      act: (postBloc) async => postBloc.add(
-        SetPostViewed(
-          userId: '1',
-          postId: '1',
-        ),
+      act: (postCubit) async => postCubit.setPostViewed(
+        userId: '1',
+        postId: '1',
       ),
       expect: [
         PostViewedFailed(),
       ],
-      verify: (postBloc) async => verify(
+      verify: (postCubit) async => verify(
         mockPostRepository.setPostVisible(userId: '1', postId: '1'),
       ).called(1),
     );
 
     blocTest(
       'Expects to set get isPostFavorite info',
-      build: () async {
-        final mockTimelineBloc = MockTimelineBloc();
-        when(mockTimelineBloc.timelinePosts).thenReturn([
+      build: () {
+        final mockTimelineCubit = MockTimelineCubit();
+        when(mockTimelineCubit.timelinePosts).thenReturn([
           DespesaModel(id: '1'),
         ]);
         when(
@@ -397,36 +399,34 @@ void main() {
           ),
         ).thenAnswer((_) => Future.value(true));
 
-        return PostBloc(
+        return PostCubit(
           post: {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           actionRepository: mockActionRepository,
           shareService: mockShareService,
-          userBloc: mockUserBloc,
-          timelineBloc: mockTimelineBloc,
+          userCubit: mockUserCubit,
+          timelineCubit: mockTimelineCubit,
         );
       },
-      act: (postBloc) async => postBloc.add(
-        SetPostFavorited(
-          userId: '1',
-          postId: '1',
-        ),
+      act: (postCubit) async => postCubit.setPostFavorited(
+        userId: '1',
+        postId: '1',
       ),
       expect: [
         PostFavoritedSuccess(),
       ],
-      verify: (postBloc) async => verify(
+      verify: (postCubit) async => verify(
         mockPostRepository.isPostFavorited(userId: '1', postId: '1'),
       ).called(1),
     );
 
     blocTest(
       'Expects to yield PostViewedFailed when getting isfavorite info',
-      build: () async {
-        final mockTimelineBloc = MockTimelineBloc();
-        when(mockTimelineBloc.timelinePosts).thenReturn([
+      build: () {
+        final mockTimelineCubit = MockTimelineCubit();
+        when(mockTimelineCubit.timelinePosts).thenReturn([
           DespesaModel(id: '1'),
         ]);
         when(
@@ -436,35 +436,33 @@ void main() {
           ),
         ).thenThrow(Exception());
 
-        return PostBloc(
+        return PostCubit(
           post: {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           actionRepository: mockActionRepository,
           shareService: mockShareService,
-          userBloc: mockUserBloc,
-          timelineBloc: mockTimelineBloc,
+          userCubit: mockUserCubit,
+          timelineCubit: mockTimelineCubit,
         );
       },
-      act: (postBloc) async => postBloc.add(
-        SetPostFavorited(
-          userId: '1',
-          postId: '1',
-        ),
+      act: (postCubit) async => postCubit.setPostFavorited(
+        userId: '1',
+        postId: '1',
       ),
       expect: [
         PostFavoritedFailed(),
       ],
-      verify: (postBloc) async => verify(
+      verify: (postCubit) async => verify(
         mockPostRepository.isPostFavorited(userId: '1', postId: '1'),
       ).called(1),
     );
 
     blocTest(
       'Expects to yield PostLikedSuccess when like is success',
-      build: () async {
-        when(mockUserBloc.user).thenReturn(UserModel());
+      build: () {
+        when(mockUserCubit.user).thenReturn(UserModel());
         when(mockPostRepository.likePost(
                 userId: '1', postId: '1', politicoId: '1', isUnliked: false))
             .thenAnswer(
@@ -475,7 +473,7 @@ void main() {
             ),
           ),
         );
-        final mockTimelineBloc = MockTimelineBloc();
+        final mockTimelineCubit = MockTimelineCubit();
         when(
           mockActionRepository.saveUserAction(
             user: anyNamed('user'),
@@ -484,37 +482,35 @@ void main() {
             ),
           ),
         ).thenAnswer((_) => Future.value());
-        when(mockTimelineBloc.timelinePosts).thenReturn([
+        when(mockTimelineCubit.timelinePosts).thenReturn([
           DespesaModel(id: '1'),
         ]);
 
-        return PostBloc(
+        return PostCubit(
           post: {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           actionRepository: mockActionRepository,
           shareService: mockShareService,
-          userBloc: mockUserBloc,
-          timelineBloc: mockTimelineBloc,
+          userCubit: mockUserCubit,
+          timelineCubit: mockTimelineCubit,
         );
       },
-      act: (postBloc) async => postBloc.add(
-        LikePost(
-          user: UserModel(
-            userId: '1',
-          ),
-          postId: '1',
-          politicoId: '1',
-          isUnliked: false,
+      act: (postCubit) async => postCubit.likePost(
+        user: UserModel(
+          userId: '1',
         ),
+        postId: '1',
+        politicoId: '1',
+        isUnliked: false,
       ),
       expect: [
         PostLikedSuccess(
           postId: '1',
         ),
       ],
-      verify: (postBloc) async {
+      verify: (postCubit) async {
         verify(
           mockPostRepository.likePost(
             userId: '1',
@@ -524,10 +520,8 @@ void main() {
           ),
         ).called(1);
         verify(
-          mockUserBloc.add(
-            UpdateCurrentUser(
-              UserModel(),
-            ),
+          mockUserCubit.updateCurrentUser(
+            UserModel(),
           ),
         ).called(1);
         verify(
@@ -541,36 +535,34 @@ void main() {
 
     blocTest(
       'Expects to yield PostLikedFailed when like is failed',
-      build: () async {
-        when(mockUserBloc.user).thenReturn(UserModel());
+      build: () {
+        when(mockUserCubit.user).thenReturn(UserModel());
         when(mockPostRepository.likePost(
                 userId: '1', postId: '1', politicoId: '1', isUnliked: false))
             .thenThrow(Exception());
-        final mockTimelineBloc = MockTimelineBloc();
-        when(mockTimelineBloc.timelinePosts).thenReturn([
+        final mockTimelineCubit = MockTimelineCubit();
+        when(mockTimelineCubit.timelinePosts).thenReturn([
           DespesaModel(id: '1'),
         ]);
 
-        return PostBloc(
+        return PostCubit(
           post: {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           actionRepository: mockActionRepository,
           shareService: mockShareService,
-          userBloc: mockUserBloc,
-          timelineBloc: mockTimelineBloc,
+          userCubit: mockUserCubit,
+          timelineCubit: mockTimelineCubit,
         );
       },
-      act: (postBloc) async => postBloc.add(
-        LikePost(
-          user: UserModel(
-            userId: '1',
-          ),
-          postId: '1',
-          politicoId: '1',
-          isUnliked: false,
+      act: (postCubit) async => postCubit.likePost(
+        user: UserModel(
+          userId: '1',
         ),
+        postId: '1',
+        politicoId: '1',
+        isUnliked: false,
       ),
       expect: [
         PostLikedSuccess(
@@ -582,8 +574,8 @@ void main() {
 
     blocTest(
       'Expects to yield PostUnlikedSuccess when like is success',
-      build: () async {
-        when(mockUserBloc.user).thenReturn(UserModel());
+      build: () {
+        when(mockUserCubit.user).thenReturn(UserModel());
         when(mockPostRepository.unlikePost(
                 userId: '1', postId: '1', politicoId: '1', isLiked: true))
             .thenAnswer(
@@ -594,7 +586,7 @@ void main() {
             ),
           ),
         );
-        final mockTimelineBloc = MockTimelineBloc();
+        final mockTimelineCubit = MockTimelineCubit();
         when(
           mockActionRepository.saveUserAction(
             user: anyNamed('user'),
@@ -603,37 +595,35 @@ void main() {
             ),
           ),
         ).thenAnswer((_) => Future.value());
-        when(mockTimelineBloc.timelinePosts).thenReturn([
+        when(mockTimelineCubit.timelinePosts).thenReturn([
           DespesaModel(id: '1'),
         ]);
 
-        return PostBloc(
+        return PostCubit(
           post: {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           actionRepository: mockActionRepository,
           shareService: mockShareService,
-          userBloc: mockUserBloc,
-          timelineBloc: mockTimelineBloc,
+          userCubit: mockUserCubit,
+          timelineCubit: mockTimelineCubit,
         );
       },
-      act: (postBloc) async => postBloc.add(
-        UnlikePost(
-          user: UserModel(
-            userId: '1',
-          ),
-          postId: '1',
-          politicoId: '1',
-          isLiked: true,
+      act: (postCubit) async => postCubit.unlikePost(
+        user: UserModel(
+          userId: '1',
         ),
+        postId: '1',
+        politicoId: '1',
+        isLiked: true,
       ),
       expect: [
         PostUnlikedSuccess(
           postId: '1',
         ),
       ],
-      verify: (postBloc) async {
+      verify: (postCubit) async {
         verify(
           mockPostRepository.unlikePost(
             userId: '1',
@@ -643,10 +633,8 @@ void main() {
           ),
         ).called(1);
         verify(
-          mockUserBloc.add(
-            UpdateCurrentUser(
-              UserModel(),
-            ),
+          mockUserCubit.updateCurrentUser(
+            UserModel(),
           ),
         ).called(1);
         verify(
@@ -660,36 +648,34 @@ void main() {
 
     blocTest(
       'Expects to yield PostUnlikedFailed when unlike is failed',
-      build: () async {
-        when(mockUserBloc.user).thenReturn(UserModel());
+      build: () {
+        when(mockUserCubit.user).thenReturn(UserModel());
         when(mockPostRepository.unlikePost(
                 userId: '1', postId: '1', politicoId: '1', isLiked: true))
             .thenThrow(Exception());
-        final mockTimelineBloc = MockTimelineBloc();
-        when(mockTimelineBloc.timelinePosts).thenReturn([
+        final mockTimelineCubit = MockTimelineCubit();
+        when(mockTimelineCubit.timelinePosts).thenReturn([
           DespesaModel(id: '1'),
         ]);
 
-        return PostBloc(
+        return PostCubit(
           post: {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           actionRepository: mockActionRepository,
           shareService: mockShareService,
-          userBloc: mockUserBloc,
-          timelineBloc: mockTimelineBloc,
+          userCubit: mockUserCubit,
+          timelineCubit: mockTimelineCubit,
         );
       },
-      act: (postBloc) async => postBloc.add(
-        UnlikePost(
-          user: UserModel(
-            userId: '1',
-          ),
-          postId: '1',
-          politicoId: '1',
-          isLiked: true,
+      act: (postCubit) async => postCubit.unlikePost(
+        user: UserModel(
+          userId: '1',
         ),
+        postId: '1',
+        politicoId: '1',
+        isLiked: true,
       ),
       expect: [
         PostUnlikedSuccess(
@@ -701,8 +687,8 @@ void main() {
 
     blocTest(
       'Expects to yield PostUnlikedFailed when unlike save action is failed',
-      build: () async {
-        when(mockUserBloc.user).thenReturn(UserModel());
+      build: () {
+        when(mockUserCubit.user).thenReturn(UserModel());
         when(mockPostRepository.unlikePost(
                 userId: '1', postId: '1', politicoId: '1', isLiked: true))
             .thenAnswer(
@@ -719,31 +705,29 @@ void main() {
             acao: anyNamed('acao'),
           ),
         ).thenThrow(Exception());
-        final mockTimelineBloc = MockTimelineBloc();
-        when(mockTimelineBloc.timelinePosts).thenReturn([
+        final mockTimelineCubit = MockTimelineCubit();
+        when(mockTimelineCubit.timelinePosts).thenReturn([
           DespesaModel(id: '1'),
         ]);
 
-        return PostBloc(
+        return PostCubit(
           post: {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           actionRepository: mockActionRepository,
           shareService: mockShareService,
-          userBloc: mockUserBloc,
-          timelineBloc: mockTimelineBloc,
+          userCubit: mockUserCubit,
+          timelineCubit: mockTimelineCubit,
         );
       },
-      act: (postBloc) async => postBloc.add(
-        UnlikePost(
-          user: UserModel(
-            userId: '1',
-          ),
-          postId: '1',
-          politicoId: '1',
-          isLiked: true,
+      act: (postCubit) async => postCubit.unlikePost(
+        user: UserModel(
+          userId: '1',
         ),
+        postId: '1',
+        politicoId: '1',
+        isLiked: true,
       ),
       expect: [
         PostUnlikedSuccess(
@@ -755,8 +739,8 @@ void main() {
 
     blocTest(
       'Expects to yield StoppedLikingPostSuccess when success',
-      build: () async {
-        when(mockUserBloc.user).thenReturn(
+      build: () {
+        when(mockUserCubit.user).thenReturn(
           UserModel(),
         );
         when(
@@ -770,30 +754,28 @@ void main() {
             '1': true,
           }),
         );
-        final mockTimelineBloc = MockTimelineBloc();
-        when(mockTimelineBloc.timelinePosts).thenReturn([
+        final mockTimelineCubit = MockTimelineCubit();
+        when(mockTimelineCubit.timelinePosts).thenReturn([
           DespesaModel(id: '1'),
         ]);
 
-        return PostBloc(
+        return PostCubit(
           post: {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           actionRepository: mockActionRepository,
           shareService: mockShareService,
-          userBloc: mockUserBloc,
-          timelineBloc: mockTimelineBloc,
+          userCubit: mockUserCubit,
+          timelineCubit: mockTimelineCubit,
         );
       },
-      act: (postBloc) async => postBloc.add(
-        StopLikingPost(
-          user: UserModel(
-            userId: '1',
-          ),
-          postId: '1',
-          politicoId: '1',
+      act: (postCubit) async => postCubit.stopLikingPost(
+        user: UserModel(
+          userId: '1',
         ),
+        postId: '1',
+        politicoId: '1',
       ),
       expect: [
         StoppedLikingPostSuccess(
@@ -804,8 +786,8 @@ void main() {
 
     blocTest(
       'Expects to yield StoppedLikingPostFailed when failed',
-      build: () async {
-        when(mockUserBloc.user).thenReturn(
+      build: () {
+        when(mockUserCubit.user).thenReturn(
           UserModel(),
         );
         when(
@@ -817,30 +799,28 @@ void main() {
         ).thenThrow(
           Exception(),
         );
-        final mockTimelineBloc = MockTimelineBloc();
-        when(mockTimelineBloc.timelinePosts).thenReturn([
+        final mockTimelineCubit = MockTimelineCubit();
+        when(mockTimelineCubit.timelinePosts).thenReturn([
           DespesaModel(id: '1'),
         ]);
 
-        return PostBloc(
+        return PostCubit(
           post: {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           actionRepository: mockActionRepository,
           shareService: mockShareService,
-          userBloc: mockUserBloc,
-          timelineBloc: mockTimelineBloc,
+          userCubit: mockUserCubit,
+          timelineCubit: mockTimelineCubit,
         );
       },
-      act: (postBloc) async => postBloc.add(
-        StopLikingPost(
-          user: UserModel(
-            userId: '1',
-          ),
-          postId: '1',
-          politicoId: '1',
+      act: (postCubit) async => postCubit.stopLikingPost(
+        user: UserModel(
+          userId: '1',
         ),
+        postId: '1',
+        politicoId: '1',
       ),
       expect: [
         StoppedLikingPostSuccess(
@@ -852,8 +832,8 @@ void main() {
 
     blocTest(
       'Expects to yield StoppedUnlikingPostSuccess when success',
-      build: () async {
-        when(mockUserBloc.user).thenReturn(
+      build: () {
+        when(mockUserCubit.user).thenReturn(
           UserModel(),
         );
         when(
@@ -867,30 +847,28 @@ void main() {
             '1': true,
           }),
         );
-        final mockTimelineBloc = MockTimelineBloc();
-        when(mockTimelineBloc.timelinePosts).thenReturn([
+        final mockTimelineCubit = MockTimelineCubit();
+        when(mockTimelineCubit.timelinePosts).thenReturn([
           DespesaModel(id: '1'),
         ]);
 
-        return PostBloc(
+        return PostCubit(
           post: {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           actionRepository: mockActionRepository,
           shareService: mockShareService,
-          userBloc: mockUserBloc,
-          timelineBloc: mockTimelineBloc,
+          userCubit: mockUserCubit,
+          timelineCubit: mockTimelineCubit,
         );
       },
-      act: (postBloc) async => postBloc.add(
-        StopUnlikingPost(
-          user: UserModel(
-            userId: '1',
-          ),
-          postId: '1',
-          politicoId: '1',
+      act: (postCubit) async => postCubit.stopUnlikingPost(
+        user: UserModel(
+          userId: '1',
         ),
+        postId: '1',
+        politicoId: '1',
       ),
       expect: [
         StoppedUnlikingPostSuccess(
@@ -901,8 +879,8 @@ void main() {
 
     blocTest(
       'Expects to yield StoppedUnlikingPostFailed when failed',
-      build: () async {
-        when(mockUserBloc.user).thenReturn(
+      build: () {
+        when(mockUserCubit.user).thenReturn(
           UserModel(),
         );
         when(
@@ -914,30 +892,28 @@ void main() {
         ).thenThrow(
           Exception(),
         );
-        final mockTimelineBloc = MockTimelineBloc();
-        when(mockTimelineBloc.timelinePosts).thenReturn([
+        final mockTimelineCubit = MockTimelineCubit();
+        when(mockTimelineCubit.timelinePosts).thenReturn([
           DespesaModel(id: '1'),
         ]);
 
-        return PostBloc(
+        return PostCubit(
           post: {
             FAVORITO_FIELD: true,
           },
           postRepository: mockPostRepository,
           actionRepository: mockActionRepository,
           shareService: mockShareService,
-          userBloc: mockUserBloc,
-          timelineBloc: mockTimelineBloc,
+          userCubit: mockUserCubit,
+          timelineCubit: mockTimelineCubit,
         );
       },
-      act: (postBloc) async => postBloc.add(
-        StopUnlikingPost(
-          user: UserModel(
-            userId: '1',
-          ),
-          postId: '1',
-          politicoId: '1',
+      act: (postCubit) async => postCubit.stopUnlikingPost(
+        user: UserModel(
+          userId: '1',
         ),
+        postId: '1',
+        politicoId: '1',
       ),
       expect: [
         StoppedUnlikingPostSuccess(

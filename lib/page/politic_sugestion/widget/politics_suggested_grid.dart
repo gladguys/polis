@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_grid_delegate_ext/rendering/grid_delegate.dart';
 
-import '../../../bloc/blocs.dart';
+import '../../../bloc/cubits.dart';
 import '../../../core/constants.dart';
 import '../../../core/domain/model/models.dart';
 import '../../../widget/politic_suggested.dart';
@@ -16,7 +16,7 @@ class PoliticsSuggestedGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _bloc = context.bloc<PoliticSuggestionBloc>();
+    final _bloc = context.bloc<PoliticSuggestionCubit>();
     return GridView.builder(
       shrinkWrap: true,
       gridDelegate: XSliverGridDelegate(
@@ -31,7 +31,7 @@ class PoliticsSuggestedGrid extends StatelessWidget {
           politico: politicos[i],
           isFollowing: _bloc.isPoliticBeenFollowed(politicos[i]),
           onClickFollowButton: () =>
-              _bloc.add(FollowOrUnfollowPolitic(politicos[i])),
+              _bloc.followOrUnfollowPolitic(politicos[i]),
         );
       },
       itemCount: min(kMaxNumberSuggestedPolitics, _bloc.politics.length),

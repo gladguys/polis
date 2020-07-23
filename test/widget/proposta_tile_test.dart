@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/i18n/i18n.dart';
 import 'package:polis/core/keys.dart';
@@ -45,11 +45,11 @@ void main() {
     });
 
     testWidgets('should build without exploding', (tester) async {
-      final mockTimelineBloc = MockTimelineBloc();
+      final mockTimelineCubit = MockTimelineCubit();
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<TimelineBloc>(
-            bloc: mockTimelineBloc,
+          PageConnected<TimelineCubit>(
+            bloc: mockTimelineCubit,
             page: PropostaTileConnected(proposta),
           ),
         ),
@@ -57,11 +57,11 @@ void main() {
     });
 
     testWidgets('should build dark mode without exploding', (tester) async {
-      final mockTimelineBloc = MockTimelineBloc();
+      final mockTimelineCubit = MockTimelineCubit();
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<TimelineBloc>(
-            bloc: mockTimelineBloc,
+          PageConnected<TimelineCubit>(
+            bloc: mockTimelineCubit,
             page: PropostaTileConnected(proposta),
           ),
           useDarkMode: true,
@@ -72,7 +72,7 @@ void main() {
     testWidgets(
         'should style diferent when descricaoTipo equals PLENARY_AMENDMENT',
         (tester) async {
-      final mockTimelineBloc = MockTimelineBloc();
+      final mockTimelineCubit = MockTimelineCubit();
       final propostaDesc = PropostaModel(
         fotoPolitico: 'foto',
         nomePolitico: 'nome',
@@ -88,8 +88,8 @@ void main() {
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<TimelineBloc>(
-            bloc: mockTimelineBloc,
+          PageConnected<TimelineCubit>(
+            bloc: mockTimelineCubit,
             page: PropostaTileConnected(propostaDesc),
           ),
         ),
@@ -99,11 +99,11 @@ void main() {
     });
 
     testWidgets('should go to post page when click', (tester) async {
-      final mockTimelineBloc = MockTimelineBloc();
+      final mockTimelineCubit = MockTimelineCubit();
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<TimelineBloc>(
-            bloc: mockTimelineBloc,
+          PageConnected<TimelineCubit>(
+            bloc: mockTimelineCubit,
             page: PropostaTileConnected(proposta),
           ),
         ),
@@ -111,15 +111,15 @@ void main() {
       final card = find.byKey(cardBaseKey).first;
       expect(card, findsOneWidget);
       await tester.tap(card);
-      verify(mockTimelineBloc.add(RefreshTimeline()));
+      verify(mockTimelineCubit.refreshTimeline());
     });
 
     testWidgets('should do something when click on card', (tester) async {
-      final mockTimelineBloc = MockTimelineBloc();
+      final mockTimelineCubit = MockTimelineCubit();
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<TimelineBloc>(
-            bloc: mockTimelineBloc,
+          PageConnected<TimelineCubit>(
+            bloc: mockTimelineCubit,
             page: PropostaTileConnected(proposta),
           ),
         ),
@@ -133,7 +133,7 @@ void main() {
         (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<TimelineBloc>(
+          PageConnected<TimelineCubit>(
             bloc: null,
             page: PropostaTileConnected(proposta),
           ),
@@ -152,11 +152,11 @@ void main() {
 
     testWidgets('should go to profile page when click on politic photo',
         (tester) async {
-      final mockTimelineBloc = MockTimelineBloc();
+      final mockTimelineCubit = MockTimelineCubit();
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<TimelineBloc>(
-            bloc: mockTimelineBloc,
+          PageConnected<TimelineCubit>(
+            bloc: mockTimelineCubit,
             page: PropostaTileConnected(proposta),
           ),
         ),

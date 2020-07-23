@@ -1,13 +1,13 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/tramitacao_proposta/tramitacao_proposta_cubit.dart';
 import 'package:polis/core/domain/model/models.dart';
 
 import '../mock.dart';
 
 void main() {
-  TramitacaoPropostaBloc tramitacaoPropostaBloc;
+  TramitacaoPropostaCubit tramitacaoPropostaCubit;
   MockTramitacaoPropostaRepository mockTramitacaoPropostaRepository;
   MockOrgaoService mockOrgaoService;
 
@@ -15,26 +15,26 @@ void main() {
     setUp(() {
       mockTramitacaoPropostaRepository = MockTramitacaoPropostaRepository();
       mockOrgaoService = MockOrgaoService();
-      tramitacaoPropostaBloc = TramitacaoPropostaBloc(
+      tramitacaoPropostaCubit = TramitacaoPropostaCubit(
         repository: mockTramitacaoPropostaRepository,
         orgaoService: mockOrgaoService,
       );
     });
 
     tearDown(() {
-      tramitacaoPropostaBloc?.close();
+      tramitacaoPropostaCubit?.close();
     });
 
     test('asserts', () {
       expect(
-          () => TramitacaoPropostaBloc(
+          () => TramitacaoPropostaCubit(
                 repository: null,
                 orgaoService: MockOrgaoService(),
               ),
           throwsAssertionError);
 
       expect(
-          () => TramitacaoPropostaBloc(
+          () => TramitacaoPropostaCubit(
                 repository: mockTramitacaoPropostaRepository,
                 orgaoService: null,
               ),
@@ -42,30 +42,28 @@ void main() {
     });
 
     test('''Expects InitialTimelineState to be the initial state''', () {
-      expect(tramitacaoPropostaBloc.state,
+      expect(tramitacaoPropostaCubit.state,
           equals(InitialTramitacaoPropostaState()));
     });
 
     blocTest(
       '''Expects [LoadingTramitacaoProposta, GetTramitacaoPropostaSuccess] success''',
-      build: () async {
+      build: () {
         when(mockTramitacaoPropostaRepository.getTramitacoesProposta('1'))
             .thenAnswer(
           (_) => Future.value([TramitacaoPropostaModel()]),
         );
-        return tramitacaoPropostaBloc;
+        return tramitacaoPropostaCubit;
       },
-      act: (tramitacaoPropostaBloc) {
-        tramitacaoPropostaBloc.add(
-          FetchTramitacoesProposicao(
-            PropostaModel(
-              id: '1',
-            ),
+      act: (tramitacaoPropostaCubit) {
+        tramitacaoPropostaCubit.fetchTramitacoesProposicao(
+          PropostaModel(
+            id: '1',
           ),
         );
         return;
       },
-      verify: (tramitacaoPropostaBloc) async {
+      verify: (tramitacaoPropostaCubit) async {
         verify(mockTramitacaoPropostaRepository.getTramitacoesProposta('1'))
             .called(1);
       },
@@ -77,22 +75,20 @@ void main() {
 
     blocTest(
       '''Expects [LoadingTramitacaoProposta, GetTramitacaoPropostaSuccess] when failed''',
-      build: () async {
+      build: () {
         when(mockTramitacaoPropostaRepository.getTramitacoesProposta('1'))
             .thenThrow(Exception());
-        return tramitacaoPropostaBloc;
+        return tramitacaoPropostaCubit;
       },
-      act: (tramitacaoPropostaBloc) {
-        tramitacaoPropostaBloc.add(
-          FetchTramitacoesProposicao(
-            PropostaModel(
-              id: '1',
-            ),
+      act: (tramitacaoPropostaCubit) {
+        tramitacaoPropostaCubit.fetchTramitacoesProposicao(
+          PropostaModel(
+            id: '1',
           ),
         );
         return;
       },
-      verify: (tramitacaoPropostaBloc) async {
+      verify: (tramitacaoPropostaCubit) async {
         verify(mockTramitacaoPropostaRepository.getTramitacoesProposta('1'))
             .called(1);
       },

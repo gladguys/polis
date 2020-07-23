@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_test_utils/image_test_utils.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/enum/auth_provider.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/i18n/i18n.dart';
@@ -29,11 +29,11 @@ void main() {
     });
 
     testWidgets('should build without exploding', (tester) async {
-      final mockEditProfileBloc = MockEditProfileBloc();
+      final mockEditProfileCubit = MockEditProfileCubit();
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<EditProfileBloc>(
-            bloc: mockEditProfileBloc,
+          PageConnected<EditProfileCubit>(
+            bloc: mockEditProfileCubit,
             page: EditProfilePage(
               imagePicker: MockImagePicker(),
             ),
@@ -43,9 +43,9 @@ void main() {
     });
 
     testWidgets('should show snackbar when success', (tester) async {
-      final mockEditProfileBloc = MockEditProfileBloc();
+      final mockEditProfileCubit = MockEditProfileCubit();
       whenListen(
-        mockEditProfileBloc,
+        mockEditProfileCubit,
         Stream.fromIterable(
           [
             UpdatingUser(),
@@ -55,8 +55,8 @@ void main() {
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<EditProfileBloc>(
-            bloc: mockEditProfileBloc,
+          PageConnected<EditProfileCubit>(
+            bloc: mockEditProfileCubit,
             page: EditProfilePage(
               imagePicker: MockImagePicker(),
             ),
@@ -69,9 +69,9 @@ void main() {
     });
 
     testWidgets('should show snackbar when fails', (tester) async {
-      final mockEditProfileBloc = MockEditProfileBloc();
+      final mockEditProfileCubit = MockEditProfileCubit();
       whenListen(
-        mockEditProfileBloc,
+        mockEditProfileCubit,
         Stream.fromIterable(
           [
             UpdatingUser(),
@@ -81,8 +81,8 @@ void main() {
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<EditProfileBloc>(
-            bloc: mockEditProfileBloc,
+          PageConnected<EditProfileCubit>(
+            bloc: mockEditProfileCubit,
             page: EditProfilePage(
               imagePicker: MockImagePicker(),
             ),
@@ -96,19 +96,19 @@ void main() {
 
     testWidgets('should show photo from user model', (tester) async {
       provideMockedNetworkImages(() async {
-        final mockUserBloc = MockUserBloc();
-        when(mockUserBloc.user).thenReturn(
+        final mockUserCubit = MockUserCubit();
+        when(mockUserCubit.user).thenReturn(
           UserModel(
             photoUrl: 'photo',
           ),
         );
-        final mockEditProfileBloc = MockEditProfileBloc();
+        final mockEditProfileCubit = MockEditProfileCubit();
         await tester.pumpWidget(
           connectedWidget(
-            PageConnected<UserBloc>(
-              bloc: mockUserBloc,
-              page: PageConnected<EditProfileBloc>(
-                bloc: mockEditProfileBloc,
+            PageConnected<UserCubit>(
+              bloc: mockUserCubit,
+              page: PageConnected<EditProfileCubit>(
+                bloc: mockEditProfileCubit,
                 page: EditProfilePage(
                   imagePicker: MockImagePicker(),
                 ),
@@ -122,12 +122,12 @@ void main() {
     });
 
     testWidgets('should show loading when updating', (tester) async {
-      final mockEditProfileBloc = MockEditProfileBloc();
-      when(mockEditProfileBloc.state).thenReturn(UpdatingUser());
+      final mockEditProfileCubit = MockEditProfileCubit();
+      when(mockEditProfileCubit.state).thenReturn(UpdatingUser());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<EditProfileBloc>(
-            bloc: mockEditProfileBloc,
+          PageConnected<EditProfileCubit>(
+            bloc: mockEditProfileCubit,
             page: EditProfilePage(
               imagePicker: MockImagePicker(),
             ),
@@ -139,15 +139,15 @@ void main() {
     });
 
     testWidgets('should change image when camera called', (tester) async {
-      final mockEditProfileBloc = MockEditProfileBloc();
+      final mockEditProfileCubit = MockEditProfileCubit();
       final mockPolisImagePicker = MockImagePicker();
       when(mockPolisImagePicker.getImage(source: ImageSource.camera))
           .thenAnswer(
               (_) => Future.value(PickedFile('assets/images/google.png')));
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<EditProfileBloc>(
-            bloc: mockEditProfileBloc,
+          PageConnected<EditProfileCubit>(
+            bloc: mockEditProfileCubit,
             page: EditProfilePage(
               imagePicker: mockPolisImagePicker,
             ),
@@ -162,11 +162,11 @@ void main() {
     });
 
     testWidgets('should validate and save the form', (tester) async {
-      final mockEditProfileBloc = MockEditProfileBloc();
+      final mockEditProfileCubit = MockEditProfileCubit();
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<EditProfileBloc>(
-            bloc: mockEditProfileBloc,
+          PageConnected<EditProfileCubit>(
+            bloc: mockEditProfileCubit,
             page: EditProfilePage(
               imagePicker: MockImagePicker(),
             ),
@@ -190,13 +190,11 @@ void main() {
       await tester.pumpAndSettle();
       expect(formKey.currentState.validate(), isTrue);
       verify(
-        mockEditProfileBloc.add(
-          UpdateUserInfo(
-            currentUser: UserModel(userId: '1'),
-            name: 'test',
-            email: 'test@gmail.com',
-            pickedPhoto: null,
-          ),
+        mockEditProfileCubit.updateUserInfo(
+          currentUser: UserModel(userId: '1'),
+          name: 'test',
+          email: 'test@gmail.com',
+          pickedPhoto: null,
         ),
       ).called(1);
     });
@@ -204,24 +202,24 @@ void main() {
     testWidgets(
         '''should go to ChangePasswordPage when user is not from google and click btn''',
         (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(
+      final mockUserCubit = MockUserCubit();
+      when(mockUserCubit.user).thenReturn(
         UserModel(
           userId: '1',
           authProvider: AuthProvider.emailAndPassword,
         ),
       );
-      final mockEditProfileBloc = MockEditProfileBloc();
+      final mockEditProfileCubit = MockEditProfileCubit();
       final mockPolisImagePicker = MockImagePicker();
       when(mockPolisImagePicker.getImage(source: ImageSource.camera))
           .thenAnswer(
               (_) => Future.value(PickedFile('assets/images/google.png')));
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<UserBloc>(
-            bloc: mockUserBloc,
-            page: PageConnected<EditProfileBloc>(
-              bloc: mockEditProfileBloc,
+          PageConnected<UserCubit>(
+            bloc: mockUserCubit,
+            page: PageConnected<EditProfileCubit>(
+              bloc: mockEditProfileCubit,
               page: EditProfilePage(
                 imagePicker: MockImagePicker(),
               ),
@@ -239,24 +237,24 @@ void main() {
     testWidgets(
         '''ChangePassword button should not appear when user from google''',
         (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(
+      final mockUserCubit = MockUserCubit();
+      when(mockUserCubit.user).thenReturn(
         UserModel(
           userId: '1',
           authProvider: AuthProvider.google,
         ),
       );
-      final mockEditProfileBloc = MockEditProfileBloc();
+      final mockEditProfileCubit = MockEditProfileCubit();
       final mockPolisImagePicker = MockImagePicker();
       when(mockPolisImagePicker.getImage(source: ImageSource.camera))
           .thenAnswer(
               (_) => Future.value(PickedFile('assets/images/google.png')));
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<UserBloc>(
-            bloc: mockUserBloc,
-            page: PageConnected<EditProfileBloc>(
-              bloc: mockEditProfileBloc,
+          PageConnected<UserCubit>(
+            bloc: mockUserCubit,
+            page: PageConnected<EditProfileCubit>(
+              bloc: mockEditProfileCubit,
               page: EditProfilePage(
                 imagePicker: MockImagePicker(),
               ),

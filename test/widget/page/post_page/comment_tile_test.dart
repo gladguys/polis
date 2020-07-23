@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/i18n/i18n.dart';
 import 'package:polis/core/keys.dart';
@@ -43,16 +43,16 @@ void main() {
 
     testWidgets('should go to sub comments page when click on comments',
         (tester) async {
-      final mockCommentBloc = MockCommentBloc();
-      when(mockCommentBloc.post).thenReturn(
+      final mockCommentCubit = MockCommentCubit();
+      when(mockCommentCubit.post).thenReturn(
         PropostaModel(
           id: '1',
         ),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<CommentBloc>(
-            bloc: mockCommentBloc,
+          PageConnected<CommentCubit>(
+            bloc: mockCommentCubit,
             page: CommentTile(
               CommentModel(
                 id: 1,
@@ -74,8 +74,8 @@ void main() {
   testWidgets('should be different when user owns comment', (tester) async {
     await tester.pumpWidget(
       connectedWidget(
-        PageConnected<UserBloc>(
-          bloc: UserBloc(
+        PageConnected<UserCubit>(
+          bloc: UserCubit(
             user: UserModel(
               userId: '1',
             ),
@@ -101,8 +101,8 @@ void main() {
       (tester) async {
     await tester.pumpWidget(
       connectedWidget(
-        PageConnected<UserBloc>(
-          bloc: UserBloc(
+        PageConnected<UserCubit>(
+          bloc: UserCubit(
             user: UserModel(
               userId: '1',
             ),
@@ -126,7 +126,7 @@ void main() {
   });
 
   testWidgets('should open menu and edit comment', (tester) async {
-    final mockCommentBloc = MockCommentBloc();
+    final mockCommentCubit = MockCommentCubit();
     final comment = CommentModel(
       id: 1,
       diaHora: DateTime.now(),
@@ -136,8 +136,8 @@ void main() {
     );
     await tester.pumpWidget(
       connectedWidget(
-        PageConnected<UserBloc>(
-          bloc: UserBloc(
+        PageConnected<UserCubit>(
+          bloc: UserCubit(
             user: UserModel(
               userId: '1',
             ),
@@ -145,8 +145,8 @@ void main() {
             analyticsService: MockAnalyticsService(),
             sharedPreferencesService: MockSharedPreferencesService(),
           ),
-          page: PageConnected<CommentBloc>(
-            bloc: mockCommentBloc,
+          page: PageConnected<CommentCubit>(
+            bloc: mockCommentCubit,
             page: CommentTile(comment),
           ),
         ),
@@ -160,11 +160,11 @@ void main() {
     final editOption = find.text(EDIT);
     expect(editOption, findsOneWidget);
     await tester.tap(editOption);
-    verify(mockCommentBloc.add(StartEditingComment(comment)));
+    verify(mockCommentCubit.startEditingComment(comment));
   });
 
   testWidgets('should open menu and delete comment', (tester) async {
-    final mockCommentBloc = MockCommentBloc();
+    final mockCommentCubit = MockCommentCubit();
     final comment = CommentModel(
       id: 1,
       diaHora: DateTime.now(),
@@ -174,8 +174,8 @@ void main() {
     );
     await tester.pumpWidget(
       connectedWidget(
-        PageConnected<UserBloc>(
-          bloc: UserBloc(
+        PageConnected<UserCubit>(
+          bloc: UserCubit(
             user: UserModel(
               userId: '1',
             ),
@@ -183,8 +183,8 @@ void main() {
             analyticsService: MockAnalyticsService(),
             sharedPreferencesService: MockSharedPreferencesService(),
           ),
-          page: PageConnected<CommentBloc>(
-            bloc: mockCommentBloc,
+          page: PageConnected<CommentCubit>(
+            bloc: mockCommentCubit,
             page: CommentTile(comment),
           ),
         ),
@@ -198,14 +198,14 @@ void main() {
     final deleteOption = find.text(DELETE);
     expect(deleteOption, findsOneWidget);
     await tester.tap(deleteOption);
-    verify(mockCommentBloc.add(DeleteComment(comment)));
+    verify(mockCommentCubit.deleteComment(comment));
   });
 
   testWidgets('should go to user profile when click on name', (tester) async {
     await tester.pumpWidget(
       connectedWidget(
-        PageConnected<UserBloc>(
-          bloc: UserBloc(
+        PageConnected<UserCubit>(
+          bloc: UserCubit(
             user: UserModel(
               userId: '1',
             ),

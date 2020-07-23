@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/comparativo_ranking_despesas/widget/resultados_ranking.dart';
@@ -16,7 +16,7 @@ import '../utils.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  MockComparativoRankingDespesasBloc mockComparativoRankingDespesasBloc;
+  MockComparativoRankingDespesasCubit mockComparativoRankingDespesasCubit;
   PoliticoModel politico;
   ResultadosRankingModel resultadosRanking;
 
@@ -29,7 +29,8 @@ void main() {
 
   group('ComparativoRankingDespesasPage tests', () {
     setUp(() {
-      mockComparativoRankingDespesasBloc = MockComparativoRankingDespesasBloc();
+      mockComparativoRankingDespesasCubit =
+          MockComparativoRankingDespesasCubit();
       politico = PoliticoModel(
         id: '1',
         urlPartidoLogo: 'logo_partido',
@@ -99,13 +100,13 @@ void main() {
     });
 
     testWidgets('should show ranking', (tester) async {
-      when(mockComparativoRankingDespesasBloc.state).thenReturn(
+      when(mockComparativoRankingDespesasCubit.state).thenReturn(
         GetRankingResultadosSuccess(resultadosRanking),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<ComparativoRankingDespesasBloc>(
-            bloc: mockComparativoRankingDespesasBloc,
+          PageConnected<ComparativoRankingDespesasCubit>(
+            bloc: mockComparativoRankingDespesasCubit,
             page: ComparativoRankingDespesasPage(politico),
           ),
         ),
@@ -114,13 +115,13 @@ void main() {
     });
 
     testWidgets('should show loading', (tester) async {
-      when(mockComparativoRankingDespesasBloc.state).thenReturn(
+      when(mockComparativoRankingDespesasCubit.state).thenReturn(
         LoadingResultadosRanking(),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<ComparativoRankingDespesasBloc>(
-            bloc: mockComparativoRankingDespesasBloc,
+          PageConnected<ComparativoRankingDespesasCubit>(
+            bloc: mockComparativoRankingDespesasCubit,
             page: ComparativoRankingDespesasPage(politico),
           ),
         ),
@@ -129,13 +130,13 @@ void main() {
     });
 
     testWidgets('should show error', (tester) async {
-      when(mockComparativoRankingDespesasBloc.state).thenReturn(
+      when(mockComparativoRankingDespesasCubit.state).thenReturn(
         GetRankingResultadosFailed(),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<ComparativoRankingDespesasBloc>(
-            bloc: mockComparativoRankingDespesasBloc,
+          PageConnected<ComparativoRankingDespesasCubit>(
+            bloc: mockComparativoRankingDespesasCubit,
             page: ComparativoRankingDespesasPage(politico),
           ),
         ),

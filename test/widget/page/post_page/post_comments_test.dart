@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/i18n/i18n.dart';
 import 'package:polis/page/page_connected.dart';
@@ -36,9 +36,9 @@ void main() {
           diaHora: DateTime.now(),
         ),
       ];
-      final mockCommentBloc = MockCommentBloc();
-      when(mockCommentBloc.postComments).thenReturn(mockComments);
-      when(mockCommentBloc.state).thenReturn(
+      final mockCommentCubit = MockCommentCubit();
+      when(mockCommentCubit.postComments).thenReturn(mockComments);
+      when(mockCommentCubit.state).thenReturn(
         GetPostCommentsSuccess(
           comments: mockComments,
         ),
@@ -46,8 +46,8 @@ void main() {
       await tester.pumpWidget(
         connectedWidget(
           Scaffold(
-              body: PageConnected<CommentBloc>(
-            bloc: mockCommentBloc,
+              body: PageConnected<CommentCubit>(
+            bloc: mockCommentCubit,
             page: PostCommentsPage(),
           )),
         ),
@@ -64,9 +64,9 @@ void main() {
           diaHora: DateTime.now(),
         ),
       ];
-      final mockCommentBloc = MockCommentBloc();
-      when(mockCommentBloc.postComments).thenReturn(mockComments);
-      when(mockCommentBloc.state).thenReturn(
+      final mockCommentCubit = MockCommentCubit();
+      when(mockCommentCubit.postComments).thenReturn(mockComments);
+      when(mockCommentCubit.state).thenReturn(
         GetPostCommentsSuccess(
           comments: mockComments,
         ),
@@ -74,8 +74,8 @@ void main() {
       await tester.pumpWidget(
         connectedWidget(
           Scaffold(
-            body: PageConnected<CommentBloc>(
-              bloc: mockCommentBloc,
+            body: PageConnected<CommentCubit>(
+              bloc: mockCommentCubit,
               page: PostCommentsPage(),
             ),
           ),
@@ -87,9 +87,7 @@ void main() {
       expect(commentBtn, findsOneWidget);
       await tester.tap(commentBtn);
       verify(
-        mockCommentBloc.add(
-          AddComment(text: ''),
-        ),
+        mockCommentCubit.addComment(text: ''),
       );
     });
   });

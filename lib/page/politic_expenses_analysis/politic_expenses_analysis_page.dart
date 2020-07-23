@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_select/smart_select.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/i18n/i18n.dart';
 import '../../widget/error_container.dart';
@@ -21,7 +21,7 @@ class PoliticExpensesAnalysisPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<PoliticExpensesAnalysisBloc,
+        child: BlocBuilder<PoliticExpensesAnalysisCubit,
             PoliticExpensesAnalysisState>(builder: (_, state) {
           if (state is GetPoliticExpensesDataSuccess) {
             final year = state.year;
@@ -43,8 +43,8 @@ class PoliticExpensesAnalysisPage extends StatelessWidget {
                   value: year,
                   options: _getAllPossibleYears(context),
                   onChange: (pickedYear) => context
-                      .bloc<PoliticExpensesAnalysisBloc>()
-                      .add(GetPoliticExpensesDataForYear(pickedYear)),
+                      .bloc<PoliticExpensesAnalysisCubit>()
+                      .getPoliticExpensesDataForYear(year: pickedYear),
                 ),
                 const SizedBox(height: 8),
                 Expanded(
@@ -68,7 +68,7 @@ class PoliticExpensesAnalysisPage extends StatelessWidget {
 
   List<SmartSelectOption<int>> _getAllPossibleYears(BuildContext context) {
     var yearOptions = <SmartSelectOption<int>>[];
-    final beginYear = context.bloc<PoliticExpensesAnalysisBloc>().beginYear;
+    final beginYear = context.bloc<PoliticExpensesAnalysisCubit>().beginYear;
     final currentYear = DateTime.now().year;
     for (var year = beginYear; year <= currentYear; year++) {
       yearOptions.add(

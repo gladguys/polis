@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
@@ -25,7 +25,7 @@ class _InitialPageState extends State<InitialPage> {
   bool _isSigninPanel = false;
   double _expandedHeight = 0.55;
 
-  SigninBloc get signinBloc => context.bloc<SigninBloc>();
+  SigninCubit get signinCubit => context.bloc<SigninCubit>();
 
   @override
   void initState() {
@@ -36,65 +36,68 @@ class _InitialPageState extends State<InitialPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<SigninBloc, SigninState>(listener: (_, state) {
-        if (state is UserAuthenticated) {
-          final user = state.user;
-          context.bloc<UserBloc>().add(StoreUser(user));
-          context.bloc<UserBloc>().add(SetUserPickedTheme(user));
-          if (user.isFirstLoginDone) {
-            SimpleRouter.forwardAndReplace(
-              TimelinePageConnected(
-                appUpdateService: G<AppUpdateService>(),
-              ),
-              name: TIMELINE_PAGE,
-            );
+      body: BlocConsumer<SigninCubit, SigninState>(
+        listener: (_, state) {
+          if (state is UserAuthenticated) {
+            final user = state.user;
+            context.bloc<UserCubit>().storeUser(user);
+            context.bloc<UserCubit>().setUserPickedTheme(user);
+            if (user.isFirstLoginDone) {
+              SimpleRouter.forwardAndReplace(
+                TimelinePageConnected(
+                  appUpdateService: G<AppUpdateService>(),
+                ),
+                name: TIMELINE_PAGE,
+              );
+            } else {
+              SimpleRouter.forwardAndReplace(
+                PolisInfoPage(),
+                name: POLIS_INFO_PAGE,
+              );
+            }
+          }
+          if (state is SigninFailed) {
+            Snackbar.error(context, state.errorMessage);
+          }
+          if (state is UserAuthenticationFailed) {
+            Snackbar.error(context, ERROR_AUTENTICATING_USER);
+          }
+        },
+        builder: (_, state) {
+          if (state is SigninLoading || state is UserAuthenticated) {
+            return const Loading();
           } else {
-            SimpleRouter.forwardAndReplace(
-              PolisInfoPage(),
-              name: POLIS_INFO_PAGE,
+            return SlidingPanel(
+              panelController: _panelController,
+              backPressBehavior: BackPressBehavior.CLOSE_PERSIST,
+              snapping: PanelSnapping.enabled,
+              decoration: PanelDecoration(
+                backgroundColor: Colors.white.withOpacity(.95),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  topRight: Radius.circular(24),
+                ),
+              ),
+              size: PanelSize(
+                closedHeight: 0,
+                collapsedHeight: 0,
+                expandedHeight: _expandedHeight,
+              ),
+              content: PanelContent(
+                panelContent: _panel(),
+                bodyContent: _body(context),
+              ),
+              onPanelStateChanged: (panelState) {
+                if (panelState == PanelState.animating) {
+                  setState(() {
+                    _expandedHeight = _isSigninPanel ? 0.55 : 0.85;
+                  });
+                }
+              },
             );
           }
-        }
-        if (state is SigninFailed) {
-          Snackbar.error(context, state.errorMessage);
-        }
-        if (state is UserAuthenticationFailed) {
-          Snackbar.error(context, ERROR_AUTENTICATING_USER);
-        }
-      }, builder: (_, state) {
-        if (state is SigninLoading || state is UserAuthenticated) {
-          return const Loading();
-        } else {
-          return SlidingPanel(
-            panelController: _panelController,
-            backPressBehavior: BackPressBehavior.CLOSE_PERSIST,
-            snapping: PanelSnapping.enabled,
-            decoration: PanelDecoration(
-              backgroundColor: Colors.white.withOpacity(.95),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(24),
-                topRight: Radius.circular(24),
-              ),
-            ),
-            size: PanelSize(
-              closedHeight: 0,
-              collapsedHeight: 0,
-              expandedHeight: _expandedHeight,
-            ),
-            content: PanelContent(
-              panelContent: _panel(),
-              bodyContent: _body(context),
-            ),
-            onPanelStateChanged: (panelState) {
-              if (panelState == PanelState.animating) {
-                setState(() {
-                  _expandedHeight = _isSigninPanel ? 0.55 : 0.85;
-                });
-              }
-            },
-          );
-        }
-      }),
+        },
+      ),
     );
   }
 
@@ -184,7 +187,7 @@ class _InitialPageState extends State<InitialPage> {
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     color: Colors.white,
-                    onPressed: () => signinBloc.add(SigninWithGoogle()),
+                    onPressed: () => signinCubit.signinWithGoogle(),
                   ),
                   const SizedBox(height: 12),
                   OutlineButton(

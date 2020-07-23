@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/model/usuario_seguindo_politico_model.dart';
 import '../../core/i18n/i18n.dart';
 import '../../widget/card_base.dart';
@@ -16,7 +16,7 @@ class PoliticFollowersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<PoliticFollowersBloc, PoliticFollowersState>(
+        child: BlocBuilder<PoliticFollowersCubit, PoliticFollowersState>(
           builder: (_, state) {
             if (state is GetPoliticFollowersSuccess) {
               return _buildList(state.followers);

@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
-import 'package:polis/bloc/user_following_politics/user_following_politics_bloc.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/user_following_politics/widget/following_politics_list.dart';
@@ -20,15 +19,15 @@ void main() {
 
     testWidgets('should go to politic profile when click on photo',
         (tester) async {
-      final mockUserProfileBloc = MockUserProfileBloc();
-      final mockUserFollowingPoliticsBloc = MockUserFollowingPoliticsBloc();
-      when(mockUserFollowingPoliticsBloc.isPoliticBeingFollowed(any))
+      final mockUserProfileCubit = MockUserProfileCubit();
+      final mockUserFollowingPoliticsCubit = MockUserFollowingPoliticsCubit();
+      when(mockUserFollowingPoliticsCubit.isPoliticBeingFollowed(any))
           .thenReturn(false);
       await tester.pumpWidget(connectedWidget(
-        PageConnected<UserProfileBloc>(
-          bloc: mockUserProfileBloc,
-          page: PageConnected<UserFollowingPoliticsBloc>(
-            bloc: mockUserFollowingPoliticsBloc,
+        PageConnected<UserProfileCubit>(
+          bloc: mockUserProfileCubit,
+          page: PageConnected<UserFollowingPoliticsCubit>(
+            bloc: mockUserFollowingPoliticsCubit,
             page: FollowingPoliticsList([
               PoliticoModel(
                 id: '1',

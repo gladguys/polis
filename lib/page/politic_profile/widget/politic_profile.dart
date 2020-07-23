@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../bloc/blocs.dart';
+import '../../../bloc/cubits.dart';
 import '../../../core/extension/extensions.dart';
 import '../../../core/extension/media_query_extensions.dart';
 import '../../../core/i18n/label.dart';
@@ -73,20 +73,20 @@ class _PoliticProfileState extends State<PoliticProfile> {
   }
 
   Widget _buildPanel(BuildContext context) {
-    final bloc = context.bloc<PoliticProfileBloc>();
+    final cubit = context.bloc<PoliticProfileCubit>();
     return Container(
       color: context.baseBackgroundColor,
-      child: PoliticActivities(bloc.lastActivities),
+      child: PoliticActivities(cubit.lastActivities),
     );
   }
 
   Widget _buildBody(BuildContext context) {
-    final bloc = context.bloc<PoliticProfileBloc>();
-    final politico = bloc.politico;
+    final cubit = context.bloc<PoliticProfileCubit>();
+    final politico = cubit.politico;
     final state = widget.politicProfileState;
     final isPoliticBeingFollowedByUser = state is UserFollowingPoliticChanged
         ? state.isUserFollowingPolitic
-        : bloc.isPoliticBeingFollowedByUser;
+        : cubit.isPoliticBeingFollowedByUser;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,

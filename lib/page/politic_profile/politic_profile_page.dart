@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../widget/error_container.dart';
 import 'widget/politic_profile.dart';
 import 'widget/politic_profile_skeleton.dart';
@@ -15,7 +15,7 @@ class PoliticProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<PoliticProfileBloc, PoliticProfileState>(
+        child: BlocBuilder<PoliticProfileCubit, PoliticProfileState>(
           builder: (_, state) {
             if (state is GetPoliticInfoSuccess ||
                 state is UserFollowingPoliticChanged) {

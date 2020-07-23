@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/model/tramitacao_proposta_model.dart';
 import '../../core/extension/extensions.dart';
 import '../../core/i18n/label.dart';
@@ -16,7 +16,7 @@ class TramitacaoPropostaPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<TramitacaoPropostaBloc, TramitacaoPropostaState>(
+        child: BlocBuilder<TramitacaoPropostaCubit, TramitacaoPropostaState>(
           builder: (_, state) {
             if (state is GetTramitacaoPropostaSuccess) {
               return _buildList(state.tramitacoes, context);
@@ -60,7 +60,7 @@ class TramitacaoPropostaPage extends StatelessWidget {
     bool isLast,
   }) {
     final orgao = context
-        .bloc<TramitacaoPropostaBloc>()
+        .bloc<TramitacaoPropostaCubit>()
         .orgaosMap[tramitacao.siglaOrgao]
         ?.nome;
 

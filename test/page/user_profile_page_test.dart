@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:image_test_utils/image_test_utils.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/enum/acao_type.dart';
 import 'package:polis/core/domain/enum/post_type.dart';
 import 'package:polis/core/domain/model/models.dart';
@@ -25,7 +25,7 @@ import '../utils.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  MockUserProfileBloc mockUserProfileBloc;
+  MockUserProfileCubit mockUserProfileCubit;
   List<PoliticoModel> politicsFollowing;
 
   setUpAll(() {
@@ -44,21 +44,21 @@ void main() {
           urlFoto: 'foto',
         )
       ];
-      mockUserProfileBloc = MockUserProfileBloc();
+      mockUserProfileCubit = MockUserProfileCubit();
     });
 
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<UserBloc>(
-            bloc: UserBloc(
+          PageConnected<UserCubit>(
+            bloc: UserCubit(
               repository: MockUserRepository(),
               user: UserModel(),
               analyticsService: MockAnalyticsService(),
               sharedPreferencesService: MockSharedPreferencesService(),
             ),
-            page: PageConnected<UserProfileBloc>(
-              bloc: mockUserProfileBloc,
+            page: PageConnected<UserProfileCubit>(
+              bloc: mockUserProfileCubit,
               page: UserProfilePage(),
             ),
           ),
@@ -70,7 +70,7 @@ void main() {
       await tester.pumpWidget(
         connectedWidget(
           BlocProvider(
-            create: (_) => UserBloc(
+            create: (_) => UserCubit(
               repository: MockUserRepository(),
               user: UserModel(
                 userId: '1',
@@ -94,27 +94,27 @@ void main() {
           email: 'email',
           photoUrl: 'photo',
         );
-        when(mockUserProfileBloc.user).thenReturn(user);
-        when(mockUserProfileBloc.state).thenReturn(
+        when(mockUserProfileCubit.user).thenReturn(user);
+        when(mockUserProfileCubit.state).thenReturn(
           FetchUserRelatedInfoSuccess(
             userActions: [],
             politicsFollowing: politicsFollowing,
           ),
         );
-        when(mockUserProfileBloc.userActions).thenReturn([]);
-        when(mockUserProfileBloc.politicsFollowing)
+        when(mockUserProfileCubit.userActions).thenReturn([]);
+        when(mockUserProfileCubit.politicsFollowing)
             .thenReturn(politicsFollowing);
         await tester.pumpWidget(
           connectedWidget(
             BlocProvider(
-              create: (_) => UserBloc(
+              create: (_) => UserCubit(
                 repository: MockUserRepository(),
                 user: user,
                 analyticsService: MockAnalyticsService(),
                 sharedPreferencesService: MockSharedPreferencesService(),
               ),
-              child: PageConnected<UserProfileBloc>(
-                bloc: mockUserProfileBloc,
+              child: PageConnected<UserProfileCubit>(
+                bloc: mockUserProfileCubit,
                 page: UserProfilePage(),
               ),
             ),
@@ -133,8 +133,8 @@ void main() {
           email: 'email',
           photoUrl: 'photo',
         );
-        when(mockUserProfileBloc.user).thenReturn(user);
-        when(mockUserProfileBloc.state).thenReturn(
+        when(mockUserProfileCubit.user).thenReturn(user);
+        when(mockUserProfileCubit.state).thenReturn(
           FetchUserRelatedInfoSuccess(
             userActions: [
               AcaoUsuarioModel(
@@ -157,7 +157,7 @@ void main() {
             politicsFollowing: politicsFollowing,
           ),
         );
-        when(mockUserProfileBloc.userActions).thenReturn(
+        when(mockUserProfileCubit.userActions).thenReturn(
           [
             AcaoUsuarioModel(
               idPolitico: '1',
@@ -193,19 +193,19 @@ void main() {
             ),
           ],
         );
-        when(mockUserProfileBloc.politicsFollowing)
+        when(mockUserProfileCubit.politicsFollowing)
             .thenReturn(politicsFollowing);
         await tester.pumpWidget(
           connectedWidget(
             BlocProvider(
-              create: (_) => UserBloc(
+              create: (_) => UserCubit(
                 repository: MockUserRepository(),
                 user: user,
                 analyticsService: MockAnalyticsService(),
                 sharedPreferencesService: MockSharedPreferencesService(),
               ),
-              child: PageConnected<UserProfileBloc>(
-                bloc: mockUserProfileBloc,
+              child: PageConnected<UserProfileCubit>(
+                bloc: mockUserProfileCubit,
                 page: UserProfilePage(),
               ),
             ),
@@ -220,11 +220,11 @@ void main() {
 
     testWidgets('should build loading', (tester) async {
       provideMockedNetworkImages(() async {
-        when(mockUserProfileBloc.state).thenReturn(LoadingFetchUserInfo());
+        when(mockUserProfileCubit.state).thenReturn(LoadingFetchUserInfo());
         await tester.pumpWidget(
           connectedWidget(
             BlocProvider(
-              create: (_) => UserBloc(
+              create: (_) => UserCubit(
                 repository: MockUserRepository(),
                 user: UserModel(
                   name: 'name',
@@ -234,8 +234,8 @@ void main() {
                 analyticsService: MockAnalyticsService(),
                 sharedPreferencesService: MockSharedPreferencesService(),
               ),
-              child: PageConnected<UserProfileBloc>(
-                bloc: mockUserProfileBloc,
+              child: PageConnected<UserProfileCubit>(
+                bloc: mockUserProfileCubit,
                 page: UserProfilePage(),
               ),
             ),
@@ -248,9 +248,9 @@ void main() {
     testWidgets('should navigate to post page when GetPostInfoSuccess',
         (tester) async {
       provideMockedNetworkImages(() async {
-        when(mockUserProfileBloc.state).thenReturn(InitialUserProfileState());
+        when(mockUserProfileCubit.state).thenReturn(InitialUserProfileState());
         whenListen(
-          mockUserProfileBloc,
+          mockUserProfileCubit,
           Stream.fromIterable(
             [
               InitialUserProfileState(),
@@ -277,7 +277,7 @@ void main() {
         await tester.pumpWidget(
           connectedWidget(
             BlocProvider(
-              create: (_) => UserBloc(
+              create: (_) => UserCubit(
                 repository: MockUserRepository(),
                 user: UserModel(
                   name: 'name',
@@ -287,8 +287,8 @@ void main() {
                 analyticsService: MockAnalyticsService(),
                 sharedPreferencesService: MockSharedPreferencesService(),
               ),
-              child: PageConnected<UserProfileBloc>(
-                bloc: mockUserProfileBloc,
+              child: PageConnected<UserProfileCubit>(
+                bloc: mockUserProfileCubit,
                 page: UserProfilePage(),
               ),
             ),
@@ -300,12 +300,12 @@ void main() {
 
     testWidgets('should build info when failed', (tester) async {
       provideMockedNetworkImages(() async {
-        when(mockUserProfileBloc.state)
+        when(mockUserProfileCubit.state)
             .thenReturn(FetchUserRelatedInfoFailed());
         await tester.pumpWidget(
           connectedWidget(
-            PageConnected<UserBloc>(
-              bloc: UserBloc(
+            PageConnected<UserCubit>(
+              bloc: UserCubit(
                 repository: MockUserRepository(),
                 user: UserModel(
                   name: 'name',
@@ -315,8 +315,8 @@ void main() {
                 analyticsService: MockAnalyticsService(),
                 sharedPreferencesService: MockSharedPreferencesService(),
               ),
-              page: PageConnected<UserProfileBloc>(
-                bloc: mockUserProfileBloc,
+              page: PageConnected<UserProfileCubit>(
+                bloc: mockUserProfileCubit,
                 page: UserProfilePage(),
               ),
             ),
@@ -332,11 +332,11 @@ void main() {
         email: 'email',
         photoUrl: 'photo',
       );
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(user);
-      final mockUserProfileBloc = MockUserProfileBloc();
-      when(mockUserProfileBloc.user).thenReturn(user);
-      when(mockUserProfileBloc.state).thenReturn(
+      final mockUserCubit = MockUserCubit();
+      when(mockUserCubit.user).thenReturn(user);
+      final mockUserProfileCubit = MockUserProfileCubit();
+      when(mockUserProfileCubit.user).thenReturn(user);
+      when(mockUserProfileCubit.state).thenReturn(
         FetchUserRelatedInfoSuccess(
           userActions: [
             AcaoUsuarioModel(
@@ -359,7 +359,7 @@ void main() {
           politicsFollowing: politicsFollowing,
         ),
       );
-      when(mockUserProfileBloc.userActions).thenReturn(
+      when(mockUserProfileCubit.userActions).thenReturn(
         [
           AcaoUsuarioModel(
             idPolitico: '1',
@@ -379,13 +379,14 @@ void main() {
           ),
         ],
       );
-      when(mockUserProfileBloc.politicsFollowing).thenReturn(politicsFollowing);
+      when(mockUserProfileCubit.politicsFollowing)
+          .thenReturn(politicsFollowing);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<UserBloc>(
-            bloc: mockUserBloc,
-            page: PageConnected<UserProfileBloc>(
-              bloc: mockUserProfileBloc,
+          PageConnected<UserCubit>(
+            bloc: mockUserCubit,
+            page: PageConnected<UserProfileCubit>(
+              bloc: mockUserProfileCubit,
               page: UserProfilePage(),
             ),
           ),

@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:in_app_update/in_app_update.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/i18n/i18n.dart';
 import 'package:polis/core/keys.dart';
@@ -130,8 +130,8 @@ void main() {
     });
 
     testWidgets('shoud build Timeline with activity', (tester) async {
-      final mockTimelineBloc = MockTimelineBloc();
-      when(mockTimelineBloc.state).thenReturn(
+      final mockTimelineCubit = MockTimelineCubit();
+      when(mockTimelineCubit.state).thenReturn(
         TimelineUpdated(activities: [
           DespesaModel(
             numDocumento: '1',
@@ -168,11 +168,11 @@ void main() {
           )
         ], postsCount: 3, updatesCount: 0),
       );
-      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
+      when(mockTimelineCubit.timelineCurrentPosition).thenReturn(0);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<TimelineBloc>(
-            bloc: mockTimelineBloc,
+          PageConnected<TimelineCubit>(
+            bloc: mockTimelineCubit,
             page: TimelinePage(),
           ),
         ),
@@ -185,8 +185,8 @@ void main() {
 
     testWidgets('shoud build Timeline with activity and loading',
         (tester) async {
-      final mockTimelineBloc = MockTimelineBloc();
-      when(mockTimelineBloc.state).thenReturn(
+      final mockTimelineCubit = MockTimelineCubit();
+      when(mockTimelineCubit.state).thenReturn(
         ReachedEndFetchingMore(
           activities: [
             DespesaModel(
@@ -225,11 +225,11 @@ void main() {
           ],
         ),
       );
-      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
+      when(mockTimelineCubit.timelineCurrentPosition).thenReturn(0);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<TimelineBloc>(
-            bloc: mockTimelineBloc,
+          PageConnected<TimelineCubit>(
+            bloc: mockTimelineCubit,
             page: TimelinePage(),
           ),
         ),
@@ -241,8 +241,8 @@ void main() {
     });
 
     testWidgets('shoud build Timeline when its refreshed', (tester) async {
-      final mockTimelineBloc = MockTimelineBloc();
-      when(mockTimelineBloc.state).thenReturn(
+      final mockTimelineCubit = MockTimelineCubit();
+      when(mockTimelineCubit.state).thenReturn(
         TimelineRefreshed(
           activities: [
             DespesaModel(
@@ -281,11 +281,11 @@ void main() {
           ],
         ),
       );
-      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
+      when(mockTimelineCubit.timelineCurrentPosition).thenReturn(0);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<TimelineBloc>(
-            bloc: mockTimelineBloc,
+          PageConnected<TimelineCubit>(
+            bloc: mockTimelineCubit,
             page: TimelinePage(),
           ),
         ),
@@ -297,8 +297,8 @@ void main() {
     });
 
     testWidgets('shoud show loading while fetching more', (tester) async {
-      final mockTimelineBloc = MockTimelineBloc();
-      when(mockTimelineBloc.state).thenReturn(
+      final mockTimelineCubit = MockTimelineCubit();
+      when(mockTimelineCubit.state).thenReturn(
         ReachedEndFetchingMore(
           activities: [
             DespesaModel(
@@ -337,11 +337,11 @@ void main() {
           ],
         ),
       );
-      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
+      when(mockTimelineCubit.timelineCurrentPosition).thenReturn(0);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<TimelineBloc>(
-            bloc: mockTimelineBloc,
+          PageConnected<TimelineCubit>(
+            bloc: mockTimelineCubit,
             page: TimelinePage(),
           ),
         ),
@@ -350,12 +350,12 @@ void main() {
     });
 
     testWidgets('shoud show TIMELINE_IS_EMPTY message', (tester) async {
-      final mockTimelineBloc = MockTimelineBloc();
-      when(mockTimelineBloc.state).thenReturn(NoPostsAvailable());
+      final mockTimelineCubit = MockTimelineCubit();
+      when(mockTimelineCubit.state).thenReturn(NoPostsAvailable());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<TimelineBloc>(
-            bloc: mockTimelineBloc,
+          PageConnected<TimelineCubit>(
+            bloc: mockTimelineCubit,
             page: TimelinePage(),
           ),
         ),
@@ -370,10 +370,10 @@ void main() {
     testWidgets(
         '''shoud build Timeline with update button when there are new updates''',
         (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(UserModel(userId: '1'));
-      final mockTimelineBloc = MockTimelineBloc();
-      when(mockTimelineBloc.state).thenReturn(
+      final mockUserCubit = MockUserCubit();
+      when(mockUserCubit.user).thenReturn(UserModel(userId: '1'));
+      final mockTimelineCubit = MockTimelineCubit();
+      when(mockTimelineCubit.state).thenReturn(
         TimelineUpdated(
           activities: [
             DespesaModel(
@@ -414,13 +414,13 @@ void main() {
           updatesCount: 3,
         ),
       );
-      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
+      when(mockTimelineCubit.timelineCurrentPosition).thenReturn(0);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<UserBloc>(
-            bloc: mockUserBloc,
-            page: PageConnected<TimelineBloc>(
-              bloc: mockTimelineBloc,
+          PageConnected<UserCubit>(
+            bloc: mockUserCubit,
+            page: PageConnected<TimelineCubit>(
+              bloc: mockTimelineCubit,
               page: TimelinePage(),
             ),
           ),
@@ -438,10 +438,10 @@ void main() {
     testWidgets(
         '''shoud build Timeline with string activity when only one update is pending''',
         (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(UserModel(userId: '1'));
-      final mockTimelineBloc = MockTimelineBloc();
-      when(mockTimelineBloc.state).thenReturn(
+      final mockUserCubit = MockUserCubit();
+      when(mockUserCubit.user).thenReturn(UserModel(userId: '1'));
+      final mockTimelineCubit = MockTimelineCubit();
+      when(mockTimelineCubit.state).thenReturn(
         TimelineUpdated(
           activities: [
             DespesaModel(
@@ -461,13 +461,13 @@ void main() {
           updatesCount: 1,
         ),
       );
-      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
+      when(mockTimelineCubit.timelineCurrentPosition).thenReturn(0);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<UserBloc>(
-            bloc: mockUserBloc,
-            page: PageConnected<TimelineBloc>(
-              bloc: mockTimelineBloc,
+          PageConnected<UserCubit>(
+            bloc: mockUserCubit,
+            page: PageConnected<TimelineCubit>(
+              bloc: mockTimelineCubit,
               page: TimelinePage(),
             ),
           ),
@@ -494,10 +494,10 @@ void main() {
     });
 
     testWidgets('should bring more posts on swipe down', (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(UserModel(userId: '1'));
-      final mockTimelineBloc = MockTimelineBloc();
-      when(mockTimelineBloc.state).thenReturn(
+      final mockUserCubit = MockUserCubit();
+      when(mockUserCubit.user).thenReturn(UserModel(userId: '1'));
+      final mockTimelineCubit = MockTimelineCubit();
+      when(mockTimelineCubit.state).thenReturn(
         TimelineUpdated(
           activities: [
             DespesaModel(
@@ -562,13 +562,13 @@ void main() {
           updatesCount: 0,
         ),
       );
-      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
+      when(mockTimelineCubit.timelineCurrentPosition).thenReturn(0);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<UserBloc>(
-            bloc: mockUserBloc,
-            page: PageConnected<TimelineBloc>(
-              bloc: mockTimelineBloc,
+          PageConnected<UserCubit>(
+            bloc: mockUserCubit,
+            page: PageConnected<TimelineCubit>(
+              bloc: mockTimelineCubit,
               page: TimelinePage(),
             ),
           ),
@@ -579,7 +579,7 @@ void main() {
       expect(listview, findsOneWidget);
       await tester.drag(listview, const Offset(0, -3000));
       await tester.pump();
-      verify(mockTimelineBloc.add(FetchMorePosts('1', 199.0))).called(1);
+      verify(mockTimelineCubit.fetchMorePosts('1', 199.0)).called(1);
     });
   });
 }

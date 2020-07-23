@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/pages.dart';
@@ -12,18 +12,18 @@ import '../mock.dart';
 import '../utils.dart';
 
 void main() {
-  MockPoliticFollowersBloc mockPoliticFollowersBloc;
+  MockPoliticFollowersCubit mockPoliticFollowersCubit;
 
   group('PoliticFollowersPage tests', () {
     setUp(() {
-      mockPoliticFollowersBloc = MockPoliticFollowersBloc();
+      mockPoliticFollowersCubit = MockPoliticFollowersCubit();
     });
 
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticFollowersBloc>(
-            bloc: mockPoliticFollowersBloc,
+          PageConnected<PoliticFollowersCubit>(
+            bloc: mockPoliticFollowersCubit,
             page: PoliticFollowersPage(),
           ),
         ),
@@ -39,7 +39,7 @@ void main() {
     });
 
     testWidgets('should show followers', (tester) async {
-      when(mockPoliticFollowersBloc.state).thenReturn(
+      when(mockPoliticFollowersCubit.state).thenReturn(
         GetPoliticFollowersSuccess(followers: [
           UsuarioSeguindoPolitico(
             userId: '1',
@@ -57,8 +57,8 @@ void main() {
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticFollowersBloc>(
-            bloc: mockPoliticFollowersBloc,
+          PageConnected<PoliticFollowersCubit>(
+            bloc: mockPoliticFollowersCubit,
             page: PoliticFollowersPage(),
           ),
         ),
@@ -67,13 +67,13 @@ void main() {
     });
 
     testWidgets('should EmptyInfo when there is not followers', (tester) async {
-      when(mockPoliticFollowersBloc.state).thenReturn(
+      when(mockPoliticFollowersCubit.state).thenReturn(
         GetPoliticFollowersSuccess(followers: []),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticFollowersBloc>(
-            bloc: mockPoliticFollowersBloc,
+          PageConnected<PoliticFollowersCubit>(
+            bloc: mockPoliticFollowersCubit,
             page: PoliticFollowersPage(),
           ),
         ),
@@ -82,12 +82,12 @@ void main() {
     });
 
     testWidgets('should show loading', (tester) async {
-      when(mockPoliticFollowersBloc.state)
+      when(mockPoliticFollowersCubit.state)
           .thenReturn(LoadingPoliticFollowers());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticFollowersBloc>(
-            bloc: mockPoliticFollowersBloc,
+          PageConnected<PoliticFollowersCubit>(
+            bloc: mockPoliticFollowersCubit,
             page: PoliticFollowersPage(),
           ),
         ),

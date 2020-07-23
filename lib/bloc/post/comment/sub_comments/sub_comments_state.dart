@@ -1,4 +1,4 @@
-part of 'sub_comments_bloc.dart';
+part of 'sub_comments_cubit.dart';
 
 abstract class SubCommentsState extends Equatable {
   const SubCommentsState();

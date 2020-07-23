@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../bloc/blocs.dart';
-import '../../../bloc/post/comment/comment_bloc.dart';
+import '../../../bloc/cubits.dart';
 import '../../../core/repository/abstract/repositories.dart';
 import '../../../core/repository/utils.dart';
 import '../../page_connected.dart';
@@ -15,12 +14,12 @@ class PostCommentsPageConnected extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageConnected<CommentBloc>(
-      bloc: CommentBloc(
+    return PageConnected<CommentCubit>(
+      bloc: CommentCubit(
         post: post,
         repository: context.repository<CommentRepository>(),
-        user: context.bloc<UserBloc>().user,
-      )..add(GetPostComments(postId: getIdFromPost(post))),
+        user: context.bloc<UserCubit>().user,
+      )..getPostComments(postId: getIdFromPost(post)),
       page: PostCommentsPage(),
     );
   }

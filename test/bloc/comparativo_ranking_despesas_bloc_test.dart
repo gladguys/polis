@@ -1,52 +1,52 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 
 import '../mock.dart';
 
 void main() {
   group('PoliticFollowersBloc tests', () {
-    ComparativoRankingDespesasBloc comparativoRankingDespesasBloc;
+    ComparativoRankingDespesasCubit comparativoRankingDespesasCubit;
     MockComparativoRankingDespesasRepository
         mockComparativoRankingDespesasRepository;
 
     setUp(() {
       mockComparativoRankingDespesasRepository =
           MockComparativoRankingDespesasRepository();
-      comparativoRankingDespesasBloc = ComparativoRankingDespesasBloc(
+      comparativoRankingDespesasCubit = ComparativoRankingDespesasCubit(
         repository: mockComparativoRankingDespesasRepository,
       );
     });
 
     tearDown(() {
-      comparativoRankingDespesasBloc?.close();
+      comparativoRankingDespesasCubit?.close();
     });
 
     test('asserts', () {
       expect(
-          () => ComparativoRankingDespesasBloc(
+          () => ComparativoRankingDespesasCubit(
                 repository: null,
               ),
           throwsAssertionError);
     });
 
     test('Expects InitialPoliticFollowersState to be the initial state', () {
-      expect(comparativoRankingDespesasBloc.state,
+      expect(comparativoRankingDespesasCubit.state,
           equals(InitialComparativoRankingDespesasState()));
     });
 
     group('GetPoliticFollowers event', () {
       blocTest(
         '''Expects [LoadingResultadosRanking, GetRankingResultadosSuccess] when success''',
-        build: () async {
+        build: () {
           when(mockComparativoRankingDespesasRepository.getRankingResults())
               .thenAnswer((_) => Future.value(ResultadosRankingModel()));
-          return comparativoRankingDespesasBloc;
+          return comparativoRankingDespesasCubit;
         },
         act: (comparativoRankingDespesasBloc) {
-          comparativoRankingDespesasBloc.add(GetRankingResultados());
+          comparativoRankingDespesasBloc.getRankingResultados();
           return;
         },
         verify: (comparativoRankingDespesasBloc) async {
@@ -61,13 +61,13 @@ void main() {
 
       blocTest(
         '''Expects [LoadingResultadosRanking, GetRankingResultadosFailed] when fails''',
-        build: () async {
+        build: () {
           when(mockComparativoRankingDespesasRepository.getRankingResults())
               .thenThrow(Exception());
-          return comparativoRankingDespesasBloc;
+          return comparativoRankingDespesasCubit;
         },
         act: (comparativoRankingDespesasBloc) {
-          comparativoRankingDespesasBloc.add(GetRankingResultados());
+          comparativoRankingDespesasBloc.getRankingResultados();
           return;
         },
         verify: (comparativoRankingDespesasBloc) async {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../../bloc/blocs.dart';
+import '../../../bloc/cubits.dart';
 import '../../../core/i18n/i18n.dart';
 import '../../../core/validators.dart';
 
@@ -12,12 +12,12 @@ class ResetPasswordForm extends StatefulWidget {
 }
 
 class _ResetPasswordFormState extends State<ResetPasswordForm> {
-  SigninBloc signinBloc;
+  SigninCubit signinCubit;
   GlobalKey<FormState> formKey;
 
   @override
   void initState() {
-    signinBloc = context.bloc<SigninBloc>();
+    signinCubit = context.bloc<SigninCubit>();
     formKey = GlobalKey<FormState>();
     super.initState();
   }
@@ -46,8 +46,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 ),
                 keyboardType: TextInputType.emailAddress,
                 validator: Validators.emailValidator,
-                onSaved: (email) =>
-                    signinBloc.add(SendResetPasswordEmail(email)),
+                onSaved: (email) => signinCubit.sendResetPasswordEmail(email),
               ),
               const SizedBox(height: 32),
               Container(

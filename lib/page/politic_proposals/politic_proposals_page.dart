@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/i18n/i18n.dart';
 import '../../widget/empty_info.dart';
@@ -20,7 +20,7 @@ class PoliticProposalsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<PoliticProposalsBloc, PoliticProposalsState>(
+        child: BlocBuilder<PoliticProposalsCubit, PoliticProposalsState>(
           builder: (_, state) {
             if (state is GetPoliticProposalsSuccess) {
               return _buildList(state.proposals);

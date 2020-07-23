@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/repository/concrete/repositories.dart';
 import '../../core/service/locator.dart';
@@ -20,14 +20,14 @@ class PropostaTileConnected extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageConnected<PostBloc>(
-      bloc: PostBloc(
+    return PageConnected<PostCubit>(
+      bloc: PostCubit(
         post: proposta.toJson(),
         postRepository: context.repository<FirebasePostRepository>(),
         actionRepository: context.repository<FirebaseActionRepository>(),
         shareService: G<ShareService>(),
-        userBloc: context.bloc<UserBloc>(),
-        timelineBloc: context.bloc<TimelineBloc>(),
+        userCubit: context.bloc<UserCubit>(),
+        timelineCubit: context.bloc<TimelineCubit>(),
       ),
       page: PropostaTile(proposta, clickableImage: clickableImage),
     );

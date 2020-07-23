@@ -1,30 +1,30 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 
 import '../mock.dart';
 
 void main() {
   group('PoliticProposalsBloc tests', () {
-    PoliticProposalsBloc politicProposalsBloc;
+    PoliticProposalsCubit politicProposalsCubit;
     MockPoliticProposalsRepository mockPoliticProposalsRepository;
 
     setUp(() {
       mockPoliticProposalsRepository = MockPoliticProposalsRepository();
-      politicProposalsBloc = PoliticProposalsBloc(
+      politicProposalsCubit = PoliticProposalsCubit(
         repository: mockPoliticProposalsRepository,
       );
     });
 
     tearDown(() {
-      politicProposalsBloc?.close();
+      politicProposalsCubit?.close();
     });
 
     test('asserts', () {
       expect(
-          () => PoliticProposalsBloc(
+          () => PoliticProposalsCubit(
                 repository: null,
               ),
           throwsAssertionError);
@@ -32,13 +32,13 @@ void main() {
 
     test('Expects InitialPoliticProposalsState to be the initial state', () {
       expect(
-          politicProposalsBloc.state, equals(InitialPoliticProposalsState()));
+          politicProposalsCubit.state, equals(InitialPoliticProposalsState()));
     });
 
     group('GetPoliticProposals event', () {
       blocTest(
         '''Expects [LoadingPoliticProposals, GetPoliticProposalsSuccess] when success''',
-        build: () async {
+        build: () {
           when(mockPoliticProposalsRepository.getPoliticProposals('1'))
               .thenAnswer(
             (_) => Future.value([
@@ -50,13 +50,13 @@ void main() {
               ),
             ]),
           );
-          return politicProposalsBloc;
+          return politicProposalsCubit;
         },
-        act: (politicProposalsBloc) {
-          politicProposalsBloc.add(GetPoliticProposals('1'));
+        act: (politicProposalsCubit) {
+          politicProposalsCubit.getPoliticProposals('1');
           return;
         },
-        verify: (politicProposalsBloc) async {
+        verify: (politicProposalsCubit) async {
           verify(mockPoliticProposalsRepository.getPoliticProposals('1'))
               .called(1);
         },
@@ -75,16 +75,16 @@ void main() {
 
       blocTest(
         '''Expects [LoadingPoliticProposals, GetPoliticProposalsFailed] when fails''',
-        build: () async {
+        build: () {
           when(mockPoliticProposalsRepository.getPoliticProposals('1'))
               .thenThrow(Exception());
-          return politicProposalsBloc;
+          return politicProposalsCubit;
         },
-        act: (politicProposalsBloc) {
-          politicProposalsBloc.add(GetPoliticProposals('1'));
+        act: (politicProposalsCubit) {
+          politicProposalsCubit.getPoliticProposals('1');
           return;
         },
-        verify: (politicProposalsBloc) async {
+        verify: (politicProposalsCubit) async {
           verify(mockPoliticProposalsRepository.getPoliticProposals('1'))
               .called(1);
         },

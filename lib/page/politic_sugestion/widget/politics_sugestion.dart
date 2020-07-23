@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../bloc/blocs.dart';
+import '../../../bloc/cubits.dart';
 import '../../../core/i18n/i18n.dart';
 import 'politics_suggested_grid.dart';
 
@@ -14,7 +14,7 @@ class PoliticsSuggestion extends StatelessWidget {
         children: <Widget>[
           const SizedBox(height: 16),
           Text(
-            '$WELCOME, ${context.bloc<UserBloc>().user.name}!',
+            '$WELCOME, ${context.bloc<UserCubit>().user.name}!',
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -28,17 +28,16 @@ class PoliticsSuggestion extends StatelessWidget {
           const SizedBox(height: 16),
           Expanded(
             child: PoliticsSuggestedGrid(
-              context.bloc<PoliticSuggestionBloc>().politics,
+              context.bloc<PoliticSuggestionCubit>().politics,
             ),
           ),
           const SizedBox(height: 4),
           RaisedButton(
             padding: const EdgeInsets.symmetric(horizontal: 32),
-            onPressed: () => context.bloc<PoliticSuggestionBloc>().add(
-                  SavePoliticsToFollow(
-                    user: context.bloc<UserBloc>().user,
-                  ),
-                ),
+            onPressed: () =>
+                context.bloc<PoliticSuggestionCubit>().savePoliticsToFollow(
+                      user: context.bloc<UserCubit>().user,
+                    ),
             child: Text(READY.toUpperCase()),
           ),
           const SizedBox(height: 16),

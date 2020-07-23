@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/page_connected.dart';
@@ -25,12 +25,12 @@ void main() {
     initializeDateFormatting('pt_BR', null);
   });
 
-  MockPoliticProposalsBloc mockPoliticProposalsBloc;
+  MockPoliticProposalsCubit mockPoliticProposalsCubit;
   PoliticoModel politico;
 
   group('PoliticProposalsPage tests', () {
     setUp(() {
-      mockPoliticProposalsBloc = MockPoliticProposalsBloc();
+      mockPoliticProposalsCubit = MockPoliticProposalsCubit();
       politico = PoliticoModel(
         id: '1',
         nomeEleitoral: 'nome',
@@ -42,8 +42,8 @@ void main() {
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProposalsBloc>(
-            bloc: mockPoliticProposalsBloc,
+          PageConnected<PoliticProposalsCubit>(
+            bloc: mockPoliticProposalsCubit,
             page: PoliticProposalsPage(politico),
           ),
         ),
@@ -59,7 +59,7 @@ void main() {
     });
 
     testWidgets('should show followers', (tester) async {
-      when(mockPoliticProposalsBloc.state).thenReturn(
+      when(mockPoliticProposalsCubit.state).thenReturn(
         GetPoliticProposalsSuccess(proposals: [
           PropostaModel(
             id: '1',
@@ -79,8 +79,8 @@ void main() {
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProposalsBloc>(
-            bloc: mockPoliticProposalsBloc,
+          PageConnected<PoliticProposalsCubit>(
+            bloc: mockPoliticProposalsCubit,
             page: PoliticProposalsPage(politico),
           ),
         ),
@@ -89,13 +89,13 @@ void main() {
     });
 
     testWidgets('should EmptyInfo when there is not followers', (tester) async {
-      when(mockPoliticProposalsBloc.state).thenReturn(
+      when(mockPoliticProposalsCubit.state).thenReturn(
         GetPoliticProposalsSuccess(proposals: []),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProposalsBloc>(
-            bloc: mockPoliticProposalsBloc,
+          PageConnected<PoliticProposalsCubit>(
+            bloc: mockPoliticProposalsCubit,
             page: PoliticProposalsPage(politico),
           ),
         ),
@@ -104,12 +104,12 @@ void main() {
     });
 
     testWidgets('should show loading', (tester) async {
-      when(mockPoliticProposalsBloc.state)
+      when(mockPoliticProposalsCubit.state)
           .thenReturn(LoadingPoliticProposals());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProposalsBloc>(
-            bloc: mockPoliticProposalsBloc,
+          PageConnected<PoliticProposalsCubit>(
+            bloc: mockPoliticProposalsCubit,
             page: PoliticProposalsPage(politico),
           ),
         ),
@@ -118,12 +118,12 @@ void main() {
     });
 
     testWidgets('should show error wiget', (tester) async {
-      when(mockPoliticProposalsBloc.state)
+      when(mockPoliticProposalsCubit.state)
           .thenReturn(GetPoliticProposalsFailed());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProposalsBloc>(
-            bloc: mockPoliticProposalsBloc,
+          PageConnected<PoliticProposalsCubit>(
+            bloc: mockPoliticProposalsCubit,
             page: PoliticProposalsPage(politico),
           ),
         ),

@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/dto/despesa_mensal.dart';
 import 'package:polis/core/domain/dto/despesa_por_tipo.dart';
 import 'package:polis/core/domain/dto/total_despesas_anuais.dart';
@@ -10,7 +10,7 @@ import '../mock.dart';
 
 void main() {
   group('PoliticExpensesAnalysisBloc tests', () {
-    PoliticExpensesAnalysisBloc politicExpensesAnalysisBloc;
+    PoliticExpensesAnalysisCubit politicExpensesAnalysisCubit;
     MockPoliticExpensesAnalysisRepository mockPoliticExpensesAnalysisRepository;
     MockPoliticExpensesByTypeAnalysisRepository
         mockPoliticExpensesByTypeAnalysisRepository;
@@ -28,7 +28,7 @@ void main() {
           MockPoliticExpensesAnalysisRepository();
       mockPoliticExpensesAnalysisConfigRepository =
           MockPoliticExpensesAnalysisConfigRepository();
-      politicExpensesAnalysisBloc = PoliticExpensesAnalysisBloc(
+      politicExpensesAnalysisCubit = PoliticExpensesAnalysisCubit(
         politicoId: '1',
         politicoUf: 'CE',
         politicExpensesAnalysisRepository:
@@ -43,12 +43,12 @@ void main() {
     });
 
     tearDown(() {
-      politicExpensesAnalysisBloc?.close();
+      politicExpensesAnalysisCubit?.close();
     });
 
     test('asserts', () {
       expect(
-          () => PoliticExpensesAnalysisBloc(
+          () => PoliticExpensesAnalysisCubit(
                 politicoId: null,
                 politicoUf: 'CE',
                 politicExpensesAnalysisConfigRepository:
@@ -62,7 +62,7 @@ void main() {
               ),
           throwsAssertionError);
       expect(
-          () => PoliticExpensesAnalysisBloc(
+          () => PoliticExpensesAnalysisCubit(
                 politicoId: '1',
                 politicoUf: null,
                 politicExpensesAnalysisConfigRepository:
@@ -76,7 +76,7 @@ void main() {
               ),
           throwsAssertionError);
       expect(
-          () => PoliticExpensesAnalysisBloc(
+          () => PoliticExpensesAnalysisCubit(
                 politicoId: '1',
                 politicoUf: 'CE',
                 politicExpensesAnalysisConfigRepository: null,
@@ -89,7 +89,7 @@ void main() {
               ),
           throwsAssertionError);
       expect(
-          () => PoliticExpensesAnalysisBloc(
+          () => PoliticExpensesAnalysisCubit(
                 politicoId: '1',
                 politicoUf: 'CE',
                 politicExpensesAnalysisConfigRepository:
@@ -102,7 +102,7 @@ void main() {
               ),
           throwsAssertionError);
       expect(
-          () => PoliticExpensesAnalysisBloc(
+          () => PoliticExpensesAnalysisCubit(
                 politicoId: '1',
                 politicoUf: 'CE',
                 politicExpensesAnalysisConfigRepository:
@@ -115,7 +115,7 @@ void main() {
               ),
           throwsAssertionError);
       expect(
-          () => PoliticExpensesAnalysisBloc(
+          () => PoliticExpensesAnalysisCubit(
                 politicoId: '1',
                 politicoUf: 'CE',
                 politicExpensesAnalysisConfigRepository:
@@ -128,7 +128,7 @@ void main() {
               ),
           throwsAssertionError);
       expect(
-          () => PoliticExpensesAnalysisBloc(
+          () => PoliticExpensesAnalysisCubit(
                 politicoId: null,
                 politicoUf: 'CE',
                 politicExpensesAnalysisConfigRepository:
@@ -144,14 +144,14 @@ void main() {
     });
 
     test('Expects PoliticExpensesAnalysisInitial to be the initial state', () {
-      expect(politicExpensesAnalysisBloc.state,
+      expect(politicExpensesAnalysisCubit.state,
           equals(PoliticExpensesAnalysisInitial()));
     });
 
     group('GetInitialInfo event', () {
       blocTest(
         '''Expects [LoadingPoliticExpensesData, LoadingPoliticExpensesData, GetPoliticExpensesDataSuccess] when success''',
-        build: () async {
+        build: () {
           when(mockPoliticExpensesAnalysisQuotaRepository
                   .getMaxQuotaForStateUf('CE'))
               .thenAnswer((_) => Future.value(1000));
@@ -182,11 +182,12 @@ void main() {
               ),
             ),
           );
-          return politicExpensesAnalysisBloc;
+          return politicExpensesAnalysisCubit;
         },
-        act: (politicExpensesAnalysisBloc) {
-          politicExpensesAnalysisBloc.add(GetInitialInfo(2020));
-          politicExpensesAnalysisBloc.add(GetPoliticExpensesDataForYear(2020));
+        act: (politicExpensesAnalysisCubit) {
+          politicExpensesAnalysisCubit.getInitialInfo(year: 2020);
+          politicExpensesAnalysisCubit.getPoliticExpensesDataForYear(
+              year: 2020);
           return;
         },
         expect: [
@@ -211,14 +212,14 @@ void main() {
 
       blocTest(
         '''Expects [LoadingPoliticExpensesData, GetPoliticExpensesDataFailed''',
-        build: () async {
+        build: () {
           when(mockPoliticExpensesAnalysisQuotaRepository
                   .getMaxQuotaForStateUf('CE'))
               .thenThrow(Exception());
-          return politicExpensesAnalysisBloc;
+          return politicExpensesAnalysisCubit;
         },
-        act: (politicExpensesAnalysisBloc) {
-          politicExpensesAnalysisBloc.add(GetInitialInfo(2020));
+        act: (politicExpensesAnalysisCubit) {
+          politicExpensesAnalysisCubit.getInitialInfo(year: 2020);
           return;
         },
         expect: [
@@ -229,7 +230,7 @@ void main() {
 
       blocTest(
         '''Expects [LoadingPoliticExpensesData, GetPoliticExpensesDataFailed] when failed getYearExpensesByType''',
-        build: () async {
+        build: () {
           when(mockPoliticExpensesAnalysisQuotaRepository
                   .getMaxQuotaForStateUf('CE'))
               .thenAnswer((_) => Future.value(1000));
@@ -239,11 +240,12 @@ void main() {
           when(mockPoliticExpensesByTypeAnalysisRepository
                   .getYearExpensesByType(politicoId: '1', ano: '2020'))
               .thenThrow(Exception());
-          return politicExpensesAnalysisBloc;
+          return politicExpensesAnalysisCubit;
         },
-        act: (politicExpensesAnalysisBloc) {
-          politicExpensesAnalysisBloc.add(GetInitialInfo(2020));
-          politicExpensesAnalysisBloc.add(GetPoliticExpensesDataForYear(2020));
+        act: (politicExpensesAnalysisCubit) {
+          politicExpensesAnalysisCubit.getInitialInfo(year: 2020);
+          politicExpensesAnalysisCubit.getPoliticExpensesDataForYear(
+              year: 2020);
           return;
         },
         expect: [

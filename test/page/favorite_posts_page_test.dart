@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/favorite_posts/widget/favorites_post_list.dart';
@@ -17,7 +17,7 @@ import '../utils.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  MockFavoritePostsBloc mockFavoritePostsBloc;
+  MockFavoritePostsCubit mockFavoritePostsCubit;
 
   setUpAll(() {
     const channel = MethodChannel('plugins.flutter.io/firebase_performance');
@@ -32,7 +32,7 @@ void main() {
 
   group('FavoritePostsPage tests', () {
     setUp(() {
-      mockFavoritePostsBloc = MockFavoritePostsBloc();
+      mockFavoritePostsCubit = MockFavoritePostsCubit();
     });
 
     testWidgets('shoud build without exploding', (tester) async {
@@ -41,12 +41,12 @@ void main() {
 
     testWidgets('shoud show EmptyInfo  when fetch success but theres no post',
         (tester) async {
-      when(mockFavoritePostsBloc.state)
+      when(mockFavoritePostsCubit.state)
           .thenReturn(FetchUserFavoritePostsSuccess([]));
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<FavoritePostsBloc>(
-            bloc: mockFavoritePostsBloc,
+          PageConnected<FavoritePostsCubit>(
+            bloc: mockFavoritePostsCubit,
             page: FavoritePostsPage(),
           ),
         ),
@@ -56,8 +56,8 @@ void main() {
 
     testWidgets('should show timeline of favorite posts when fetch success',
         (tester) async {
-      final mockTimelineBloc = MockTimelineBloc();
-      when(mockFavoritePostsBloc.state).thenReturn(
+      final mockTimelineCubit = MockTimelineCubit();
+      when(mockFavoritePostsCubit.state).thenReturn(
         FetchUserFavoritePostsSuccess(
           [
             PropostaModel(
@@ -81,13 +81,13 @@ void main() {
           ],
         ),
       );
-      when(mockTimelineBloc.timelineCurrentPosition).thenReturn(0);
+      when(mockTimelineCubit.timelineCurrentPosition).thenReturn(0);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<TimelineBloc>(
-            bloc: mockTimelineBloc,
-            page: PageConnected<FavoritePostsBloc>(
-              bloc: mockFavoritePostsBloc,
+          PageConnected<TimelineCubit>(
+            bloc: mockTimelineCubit,
+            page: PageConnected<FavoritePostsCubit>(
+              bloc: mockFavoritePostsCubit,
               page: FavoritePostsPage(),
             ),
           ),
@@ -97,11 +97,11 @@ void main() {
     });
 
     testWidgets('shoud show loading widget', (tester) async {
-      when(mockFavoritePostsBloc.state).thenReturn(LoadingFavoritesPosts());
+      when(mockFavoritePostsCubit.state).thenReturn(LoadingFavoritesPosts());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<FavoritePostsBloc>(
-            bloc: mockFavoritePostsBloc,
+          PageConnected<FavoritePostsCubit>(
+            bloc: mockFavoritePostsCubit,
             page: FavoritePostsPage(),
           ),
         ),

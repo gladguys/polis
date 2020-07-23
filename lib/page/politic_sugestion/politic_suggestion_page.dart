@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../widget/loading.dart';
 import '../pages.dart';
 import 'widget/politics_sugestion.dart';
@@ -13,7 +13,7 @@ class PoliticSuggestionPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: BlocConsumer(
-          bloc: context.bloc<PoliticSuggestionBloc>(),
+          cubit: context.bloc<PoliticSuggestionCubit>(),
           listener: (_, state) {
             if (state is SavedSuggestedPolitics) {
               SimpleRouter.forwardAndReplace(

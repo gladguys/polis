@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/enum/post_type.dart';
 import 'package:polis/core/domain/model/models.dart';
 
@@ -9,41 +9,42 @@ import '../mock.dart';
 
 void main() {
   group('UserProfileBloc tests', () {
-    UserProfileBloc userProfileBloc;
+    UserProfileCubit userProfileCubit;
     MockUserProfileRepository mockUserProfileRepository;
 
     setUp(() {
       mockUserProfileRepository = MockUserProfileRepository();
-      userProfileBloc = UserProfileBloc(repository: mockUserProfileRepository);
+      userProfileCubit =
+          UserProfileCubit(repository: mockUserProfileRepository);
     });
 
     tearDown(() {
-      userProfileBloc?.close();
+      userProfileCubit?.close();
     });
 
     test('asserts', () {
-      expect(() => UserProfileBloc(repository: null), throwsAssertionError);
+      expect(() => UserProfileCubit(repository: null), throwsAssertionError);
     });
 
     test('Expects InitialUserProfileState to be the initial state', () {
-      expect(userProfileBloc.state, equals(InitialUserProfileState()));
+      expect(userProfileCubit.state, equals(InitialUserProfileState()));
     });
 
     group('FetchUserRelatedInfo event', () {
       blocTest(
         '''Expects [LoadingFetchUserInfo, FetchUserRelatedInfoSuccess] when success''',
-        build: () async {
+        build: () {
           when(mockUserProfileRepository.getPoliticsFollowing('1'))
               .thenAnswer((_) => Future.value([]));
           when(mockUserProfileRepository.getUserActions('1'))
               .thenAnswer((_) => Future.value([]));
-          return userProfileBloc;
+          return userProfileCubit;
         },
-        act: (userProfileBloc) {
-          userProfileBloc.add(FetchUserRelatedInfo('1'));
+        act: (userProfileCubit) {
+          userProfileCubit.fetchUserRelatedInfo('1');
           return;
         },
-        verify: (userProfileBloc) async {
+        verify: (userProfileCubit) async {
           verify(mockUserProfileRepository.getPoliticsFollowing('1')).called(1);
           verify(mockUserProfileRepository.getUserActions('1')).called(1);
         },
@@ -58,18 +59,18 @@ void main() {
 
       blocTest(
         '''Expects [LoadingFetchUserInfo, FetchUserRelatedInfoFailed] when fail''',
-        build: () async {
+        build: () {
           when(mockUserProfileRepository.getPoliticsFollowing('1'))
               .thenAnswer((_) => Future.value([]));
           when(mockUserProfileRepository.getUserActions('1'))
               .thenThrow(Exception());
-          return userProfileBloc;
+          return userProfileCubit;
         },
-        act: (userProfileBloc) {
-          userProfileBloc.add(FetchUserRelatedInfo('1'));
+        act: (userProfileCubit) {
+          userProfileCubit.fetchUserRelatedInfo('1');
           return;
         },
-        verify: (userProfileBloc) async {
+        verify: (userProfileCubit) async {
           verify(mockUserProfileRepository.getPoliticsFollowing('1')).called(1);
           verify(mockUserProfileRepository.getUserActions('1')).called(1);
         },
@@ -81,7 +82,7 @@ void main() {
 
       blocTest(
         '''Expects [GetPostInfoSuccess] when success''',
-        build: () async {
+        build: () {
           when(
             mockUserProfileRepository.getPostInfo(
               postId: '1',
@@ -95,15 +96,13 @@ void main() {
               ),
             ),
           );
-          return userProfileBloc;
+          return userProfileCubit;
         },
-        act: (userProfileBloc) {
-          userProfileBloc.add(
-            GetPostInfo(
-              postId: '1',
-              politicId: '1',
-              postType: PostType.PROPOSICAO,
-            ),
+        act: (userProfileCubit) {
+          userProfileCubit.getPostInfo(
+            postId: '1',
+            politicId: '1',
+            postType: PostType.PROPOSICAO,
           );
           return;
         },
@@ -128,7 +127,7 @@ void main() {
 
       blocTest(
         '''Expects [GetPostInfoSuccess] when failed''',
-        build: () async {
+        build: () {
           when(
             mockUserProfileRepository.getPostInfo(
               postId: '1',
@@ -138,22 +137,20 @@ void main() {
           ).thenThrow(
             Exception(),
           );
-          return userProfileBloc;
+          return userProfileCubit;
         },
-        act: (userProfileBloc) {
-          userProfileBloc.add(
-            GetPostInfo(
-              postId: '1',
-              politicId: '1',
-              postType: PostType.PROPOSICAO,
-            ),
+        act: (userProfileCubit) {
+          userProfileCubit.getPostInfo(
+            postId: '1',
+            politicId: '1',
+            postType: PostType.PROPOSICAO,
           );
           return;
         },
         expect: [
           GetPostInfoFailed(),
         ],
-        verify: (userProfileBloc) async {
+        verify: (userProfileCubit) async {
           verify(
             mockUserProfileRepository.getPostInfo(
               postId: '1',

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/enum/acao_type.dart';
 import 'package:polis/core/domain/enum/post_type.dart';
 import 'package:polis/core/domain/model/acao_usuario_model.dart';
@@ -22,11 +22,11 @@ void main() {
 
   group('LikeUnlikeActionTile tests', () {
     testWidgets('should build without exploding', (tester) async {
-      final mockUserProfileBloc = MockUserProfileBloc();
+      final mockUserProfileCubit = MockUserProfileCubit();
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<UserBloc>(
-            bloc: mockUserProfileBloc,
+          PageConnected<UserCubit>(
+            bloc: mockUserProfileCubit,
             page: Scaffold(
               body: LikeUnlikeActionTile(
                 action: AcaoUsuarioModel(
@@ -48,11 +48,11 @@ void main() {
     });
 
     testWidgets('should add GetPostInfo when tap', (tester) async {
-      final mockUserProfileBloc = MockUserProfileBloc();
+      final mockUserProfileCubit = MockUserProfileCubit();
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<UserProfileBloc>(
-            bloc: mockUserProfileBloc,
+          PageConnected<UserProfileCubit>(
+            bloc: mockUserProfileCubit,
             page: Scaffold(
               body: LikeUnlikeActionTile(
                 action: AcaoUsuarioModel(
@@ -75,12 +75,10 @@ void main() {
       expect(card, findsOneWidget);
       await tester.tap(card);
       verify(
-        mockUserProfileBloc.add(
-          GetPostInfo(
-            postId: '1',
-            politicId: '1',
-            postType: PostType.PROPOSICAO,
-          ),
+        mockUserProfileCubit.getPostInfo(
+          postId: '1',
+          politicId: '1',
+          postType: PostType.PROPOSICAO,
         ),
       );
     });

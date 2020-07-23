@@ -1,4 +1,4 @@
-part of 'comment_bloc.dart';
+part of 'comment_cubit.dart';
 
 abstract class CommentState extends Equatable {
   const CommentState();

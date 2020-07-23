@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../../bloc/blocs.dart';
+import '../../../bloc/cubits.dart';
 import '../../../core/domain/model/models.dart';
 import '../../../core/extension/extensions.dart';
 import '../../../core/i18n/i18n.dart';
@@ -40,7 +40,7 @@ class _SubCommentsPageState extends State<SubCommentsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<SubCommentsBloc, SubCommentsState>(
+        child: BlocBuilder<SubCommentsCubit, SubCommentsState>(
           builder: (_, state) {
             if (shouldShowCommentsByState(state)) {
               return Stack(
@@ -60,10 +60,8 @@ class _SubCommentsPageState extends State<SubCommentsPage> {
                     AddCommentContainer(
                       commentInputController: commentInputController,
                       onAddComment: () {
-                        context.bloc<SubCommentsBloc>().add(
-                              AddSubComment(
-                                text: commentInputController.text,
-                              ),
+                        context.bloc<SubCommentsCubit>().addSubComment(
+                              text: commentInputController.text,
                             );
                         commentInputController.clear();
                       },
@@ -81,7 +79,7 @@ class _SubCommentsPageState extends State<SubCommentsPage> {
   }
 
   Widget _buildComment() {
-    final commentPai = context.bloc<SubCommentsBloc>().comment;
+    final commentPai = context.bloc<SubCommentsCubit>().comment;
     return SliverList(
       delegate: SliverChildListDelegate(
         [
@@ -146,7 +144,7 @@ class _SubCommentsPageState extends State<SubCommentsPage> {
   }
 
   Widget _buildSubcomments() {
-    final subComments = context.bloc<SubCommentsBloc>().subComments;
+    final subComments = context.bloc<SubCommentsCubit>().subComments;
     return subComments.isNotEmpty
         ? SubCommentsList(
             subComments: subComments,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/enum/post_type.dart';
 import '../../core/domain/model/despesa_model.dart';
 import '../../core/domain/model/models.dart';
@@ -12,41 +12,39 @@ import '../page_connected.dart';
 import '../pages.dart';
 
 class PostPageConnected extends StatelessWidget {
-  PostPageConnected(
-      {@required this.post, @required this.postType, this.timelineBloc})
-      : assert(post != null),
+  PostPageConnected({
+    @required this.post,
+    @required this.postType,
+    this.timelineCubit,
+  })  : assert(post != null),
         assert(postType != null);
 
   final dynamic post;
   final PostType postType;
-  final TimelineBloc timelineBloc;
+  final TimelineCubit timelineCubit;
 
   @override
   Widget build(BuildContext context) {
-    final postBloc = PostBloc(
+    final postCubit = PostCubit(
       post: getPostMap(post),
       postRepository: context.repository<FirebasePostRepository>(),
       actionRepository: context.repository<FirebaseActionRepository>(),
       shareService: G<ShareService>(),
-      userBloc: context.bloc<UserBloc>(),
-      timelineBloc: timelineBloc,
+      userCubit: context.bloc<UserCubit>(),
+      timelineCubit: timelineCubit,
     );
-    if (timelineBloc != null) {
-      postBloc.add(
-        SetPostViewed(
-          userId: context.bloc<UserBloc>().user.userId,
-          postId: getPostId(post),
-        ),
+    if (timelineCubit != null) {
+      postCubit.setPostViewed(
+        userId: context.bloc<UserCubit>().user.userId,
+        postId: getPostId(post),
       );
     }
-    postBloc.add(
-      SetPostFavorited(
-        userId: context.bloc<UserBloc>().user.userId,
-        postId: getPostId(post),
-      ),
+    postCubit.setPostFavorited(
+      userId: context.bloc<UserCubit>().user.userId,
+      postId: getPostId(post),
     );
-    return PageConnected<PostBloc>(
-      bloc: postBloc,
+    return PageConnected<PostCubit>(
+      bloc: postCubit,
       page: PostPage(post: post, postType: postType),
     );
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../../bloc/blocs.dart';
+import '../../../bloc/cubits.dart';
 import '../../../core/domain/model/models.dart';
 import '../../../core/i18n/i18n.dart';
 import '../../../core/keys.dart';
@@ -26,8 +26,8 @@ class FollowingPoliticsList extends StatelessWidget {
   }
 
   Widget _buildList(BuildContext context) {
-    final localUser = context.bloc<UserBloc>().user;
-    final pickedUser = context.bloc<UserProfileBloc>().user;
+    final localUser = context.bloc<UserCubit>().user;
+    final pickedUser = context.bloc<UserProfileCubit>().user;
     final isLocalUserThePickedOne = localUser == pickedUser;
     return ListView.separated(
       itemCount: politicos.length,
@@ -43,7 +43,7 @@ class FollowingPoliticsList extends StatelessWidget {
 
   Widget _buildListTile(BuildContext context, PoliticoModel politico,
       bool isLocalUserThePickedOne) {
-    final bloc = context.bloc<UserFollowingPoliticsBloc>();
+    final cubit = context.bloc<UserFollowingPoliticsCubit>();
     return CardBase(
       key: ValueKey(politico.id),
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,11 +52,9 @@ class FollowingPoliticsList extends StatelessWidget {
         onTap: () => SimpleRouter.forward(
           PoliticProfilePageConnected(
             politico.id,
-            onUnfollowPolitic: () => bloc.add(
-              FollowUnfollowPolitic(
-                user: context.bloc<UserBloc>().user,
-                politico: politico,
-              ),
+            onUnfollowPolitic: () => cubit.followUnfollowPolitic(
+              user: context.bloc<UserCubit>().user,
+              politico: politico,
             ),
           ),
           name: POLITIC_PROFILE_PAGE,
@@ -65,13 +63,11 @@ class FollowingPoliticsList extends StatelessWidget {
       slotCenter: _buildSlotCenter(politico, context),
       slotRight: isLocalUserThePickedOne
           ? ButtonFollowUnfollow(
-              isFollow: bloc.isPoliticBeingFollowed(politico),
+              isFollow: cubit.isPoliticBeingFollowed(politico),
               key: followUnfollowButtonKey,
-              onPressed: () => bloc.add(
-                FollowUnfollowPolitic(
-                  user: context.bloc<UserBloc>().user,
-                  politico: politico,
-                ),
+              onPressed: () => cubit.followUnfollowPolitic(
+                user: context.bloc<UserCubit>().user,
+                politico: politico,
               ),
             )
           : const SizedBox.shrink(),
@@ -95,8 +91,8 @@ class FollowingPoliticsList extends StatelessWidget {
           style: TextStyle(
             fontSize: 12,
             color: Theme.of(context).brightness == Brightness.light
-                        ? Colors.grey[600]
-                        : Colors.grey[300],
+                ? Colors.grey[600]
+                : Colors.grey[300],
           ),
         ),
       ],

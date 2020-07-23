@@ -4,7 +4,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/enum/post_type.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/extension/extensions.dart';
@@ -36,7 +36,7 @@ class DespesaTile extends StatelessWidget {
           withIndent: false,
           paddingSlotCenter: EdgeInsets.zero,
           slotLeft: _buildLeftContent(context),
-          slotCenter: BlocBuilder<PostBloc, PostState>(
+          slotCenter: BlocBuilder<PostCubit, PostState>(
             builder: (_, state) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -58,12 +58,12 @@ class DespesaTile extends StatelessWidget {
           slotBottom: _buildActions(context),
           key: cardBaseKey,
           onTap: () async {
-            context.bloc<TimelineBloc>().add(RefreshTimeline());
+            context.bloc<TimelineCubit>().refreshTimeline();
             await SimpleRouter.forward(
               PostPageConnected(
                 post: despesa,
                 postType: PostType.DESPESA,
-                timelineBloc: context.bloc<TimelineBloc>(),
+                timelineCubit: context.bloc<TimelineCubit>(),
               ),
               name: POST_PAGE,
             );
@@ -170,7 +170,7 @@ class DespesaTile extends StatelessWidget {
   }
 
   Widget _buildActions(BuildContext context) {
-    return BlocBuilder<PostBloc, PostState>(
+    return BlocBuilder<PostCubit, PostState>(
       builder: (_, state) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -206,15 +206,13 @@ class DespesaTile extends StatelessWidget {
                       : Theme.of(context).brightness == Brightness.light
                           ? Colors.grey[700]
                           : Colors.grey[500],
-                  onTap: () => context.bloc<PostBloc>().add(
-                        FavoritePostForUser(
-                          post: {
-                            'id': despesa.id,
-                            ...despesa.toJson(),
-                          },
-                          user: context.bloc<UserBloc>().user,
-                        ),
-                      ),
+                  onTap: () => context.bloc<PostCubit>().favoritePostForUser(
+                    post: {
+                      'id': despesa.id,
+                      ...despesa.toJson(),
+                    },
+                    user: context.bloc<UserCubit>().user,
+                  ),
                 ),
               ],
             ),

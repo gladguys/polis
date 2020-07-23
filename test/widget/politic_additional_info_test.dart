@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/i18n/i18n.dart';
 import 'package:polis/core/keys.dart';
@@ -12,18 +12,18 @@ import '../mock.dart';
 import '../utils.dart';
 
 void main() {
-  MockPoliticProfileBloc mockPoliticProfileBloc;
+  MockPoliticProfileCubit mockPoliticProfileCubit;
 
   group('PoliticAdditionalInfo tests', () {
     setUp(() {
-      mockPoliticProfileBloc = MockPoliticProfileBloc();
+      mockPoliticProfileCubit = MockPoliticProfileCubit();
     });
 
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProfileBloc>(
-            bloc: mockPoliticProfileBloc,
+          PageConnected<PoliticProfileCubit>(
+            bloc: mockPoliticProfileCubit,
             page: Scaffold(
               body: PoliticAdditionalInfo(
                 PoliticoModel(
@@ -40,8 +40,8 @@ void main() {
     testWidgets('should build dark mode without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProfileBloc>(
-            bloc: mockPoliticProfileBloc,
+          PageConnected<PoliticProfileCubit>(
+            bloc: mockPoliticProfileCubit,
             page: Scaffold(
               body: PoliticAdditionalInfo(
                 PoliticoModel(
@@ -60,8 +60,8 @@ void main() {
         (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProfileBloc>(
-            bloc: mockPoliticProfileBloc,
+          PageConnected<PoliticProfileCubit>(
+            bloc: mockPoliticProfileCubit,
             page: Scaffold(
               body: PoliticAdditionalInfo(
                 PoliticoModel(
@@ -84,8 +84,8 @@ void main() {
         (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProfileBloc>(
-            bloc: mockPoliticProfileBloc,
+          PageConnected<PoliticProfileCubit>(
+            bloc: mockPoliticProfileCubit,
             page: Scaffold(
               body: PoliticAdditionalInfo(
                 PoliticoModel(
@@ -108,8 +108,8 @@ void main() {
         (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProfileBloc>(
-            bloc: mockPoliticProfileBloc,
+          PageConnected<PoliticProfileCubit>(
+            bloc: mockPoliticProfileCubit,
             page: Scaffold(
               body: PoliticAdditionalInfo(
                 PoliticoModel(
@@ -134,8 +134,8 @@ void main() {
         (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProfileBloc>(
-            bloc: mockPoliticProfileBloc,
+          PageConnected<PoliticProfileCubit>(
+            bloc: mockPoliticProfileCubit,
             page: Scaffold(
               body: PoliticAdditionalInfo(
                 PoliticoModel(
@@ -159,8 +159,8 @@ void main() {
         (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProfileBloc>(
-            bloc: mockPoliticProfileBloc,
+          PageConnected<PoliticProfileCubit>(
+            bloc: mockPoliticProfileCubit,
             page: Scaffold(
               body: PoliticAdditionalInfo(
                 PoliticoModel(

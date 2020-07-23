@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/i18n/i18n.dart';
 import 'package:polis/core/service/locator.dart';
@@ -29,18 +29,18 @@ void main() {
     initializeDateFormatting('pt_BR', null);
   });
 
-  MockPoliticProfileBloc mockPoliticProfileBloc;
+  MockPoliticProfileCubit mockPoliticProfileCubit;
 
   group('PoliticProfilePage tests', () {
     setUp(() {
-      mockPoliticProfileBloc = MockPoliticProfileBloc();
+      mockPoliticProfileCubit = MockPoliticProfileCubit();
     });
 
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProfileBloc>(
-            bloc: mockPoliticProfileBloc,
+          PageConnected<PoliticProfileCubit>(
+            bloc: mockPoliticProfileCubit,
             page: PoliticProfilePage(),
           ),
         ),
@@ -50,8 +50,8 @@ void main() {
     testWidgets('should build dark mode without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProfileBloc>(
-            bloc: mockPoliticProfileBloc,
+          PageConnected<PoliticProfileCubit>(
+            bloc: mockPoliticProfileCubit,
             page: PoliticProfilePage(),
           ),
           useDarkMode: true,
@@ -68,7 +68,7 @@ void main() {
     });
 
     testWidgets('should bring info when success', (tester) async {
-      when(mockPoliticProfileBloc.politico).thenReturn(
+      when(mockPoliticProfileCubit.politico).thenReturn(
         PoliticoModel(
           id: '1',
           siglaPartido: 'PT',
@@ -78,7 +78,7 @@ void main() {
           urlPartidoLogo: 'logo',
         ),
       );
-      when(mockPoliticProfileBloc.lastActivities).thenReturn(
+      when(mockPoliticProfileCubit.lastActivities).thenReturn(
         [
           PropostaModel(
             ementa: 'ementa',
@@ -103,21 +103,21 @@ void main() {
           ),
         ],
       );
-      when(mockPoliticProfileBloc.isPoliticBeingFollowedByUser)
+      when(mockPoliticProfileCubit.isPoliticBeingFollowedByUser)
           .thenReturn(true);
-      when(mockPoliticProfileBloc.state).thenReturn(
+      when(mockPoliticProfileCubit.state).thenReturn(
         GetPoliticInfoSuccess(
-          politic: mockPoliticProfileBloc.politico,
-          lastActivities: mockPoliticProfileBloc.lastActivities,
-          activitiesCount: mockPoliticProfileBloc.lastActivities.length,
+          politic: mockPoliticProfileCubit.politico,
+          lastActivities: mockPoliticProfileCubit.lastActivities,
+          activitiesCount: mockPoliticProfileCubit.lastActivities.length,
           isBeingFollowedByUser:
-              mockPoliticProfileBloc.isPoliticBeingFollowedByUser,
+              mockPoliticProfileCubit.isPoliticBeingFollowedByUser,
         ),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProfileBloc>(
-            bloc: mockPoliticProfileBloc,
+          PageConnected<PoliticProfileCubit>(
+            bloc: mockPoliticProfileCubit,
             page: PoliticProfilePage(),
           ),
         ),
@@ -129,7 +129,7 @@ void main() {
     });
 
     testWidgets('should get more activities when paginate', (tester) async {
-      when(mockPoliticProfileBloc.politico).thenReturn(
+      when(mockPoliticProfileCubit.politico).thenReturn(
         PoliticoModel(
           id: '1',
           siglaPartido: 'PT',
@@ -139,7 +139,7 @@ void main() {
           urlPartidoLogo: 'logo',
         ),
       );
-      when(mockPoliticProfileBloc.lastActivities).thenReturn(
+      when(mockPoliticProfileCubit.lastActivities).thenReturn(
         [
           PropostaModel(
             ementa: 'ementa',
@@ -249,21 +249,21 @@ void main() {
           ),
         ],
       );
-      when(mockPoliticProfileBloc.isPoliticBeingFollowedByUser)
+      when(mockPoliticProfileCubit.isPoliticBeingFollowedByUser)
           .thenReturn(true);
-      when(mockPoliticProfileBloc.state).thenReturn(
+      when(mockPoliticProfileCubit.state).thenReturn(
         GetPoliticInfoSuccess(
-          politic: mockPoliticProfileBloc.politico,
-          lastActivities: mockPoliticProfileBloc.lastActivities,
-          activitiesCount: mockPoliticProfileBloc.lastActivities.length,
+          politic: mockPoliticProfileCubit.politico,
+          lastActivities: mockPoliticProfileCubit.lastActivities,
+          activitiesCount: mockPoliticProfileCubit.lastActivities.length,
           isBeingFollowedByUser:
-              mockPoliticProfileBloc.isPoliticBeingFollowedByUser,
+              mockPoliticProfileCubit.isPoliticBeingFollowedByUser,
         ),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProfileBloc>(
-            bloc: mockPoliticProfileBloc,
+          PageConnected<PoliticProfileCubit>(
+            bloc: mockPoliticProfileCubit,
             page: PoliticProfilePage(),
           ),
         ),
@@ -277,13 +277,13 @@ void main() {
       expect(listview, findsOneWidget);
       await tester.drag(listview, const Offset(0, -3000));
       await tester.pump();
-      verify(mockPoliticProfileBloc.add(GetMoreActivities('1'))).called(1);
+      verify(mockPoliticProfileCubit.getMoreActivities('1')).called(1);
     });
 
     testWidgets(
         '''should show NotFound widget with NO_ACTIVITY_FOR_POLITIC message''',
         (tester) async {
-      when(mockPoliticProfileBloc.politico).thenReturn(
+      when(mockPoliticProfileCubit.politico).thenReturn(
         PoliticoModel(
           id: '1',
           siglaPartido: 'PT',
@@ -293,22 +293,22 @@ void main() {
           urlPartidoLogo: 'logo',
         ),
       );
-      when(mockPoliticProfileBloc.lastActivities).thenReturn([]);
-      when(mockPoliticProfileBloc.isPoliticBeingFollowedByUser)
+      when(mockPoliticProfileCubit.lastActivities).thenReturn([]);
+      when(mockPoliticProfileCubit.isPoliticBeingFollowedByUser)
           .thenReturn(true);
-      when(mockPoliticProfileBloc.state).thenReturn(
+      when(mockPoliticProfileCubit.state).thenReturn(
         GetPoliticInfoSuccess(
-          politic: mockPoliticProfileBloc.politico,
-          lastActivities: mockPoliticProfileBloc.lastActivities,
-          activitiesCount: mockPoliticProfileBloc.lastActivities.length,
+          politic: mockPoliticProfileCubit.politico,
+          lastActivities: mockPoliticProfileCubit.lastActivities,
+          activitiesCount: mockPoliticProfileCubit.lastActivities.length,
           isBeingFollowedByUser:
-              mockPoliticProfileBloc.isPoliticBeingFollowedByUser,
+              mockPoliticProfileCubit.isPoliticBeingFollowedByUser,
         ),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProfileBloc>(
-            bloc: mockPoliticProfileBloc,
+          PageConnected<PoliticProfileCubit>(
+            bloc: mockPoliticProfileCubit,
             page: PoliticProfilePage(),
           ),
         ),
@@ -319,11 +319,11 @@ void main() {
     });
 
     testWidgets('should show error widget when fails', (tester) async {
-      when(mockPoliticProfileBloc.state).thenReturn(GetPoliticInfoFailed());
+      when(mockPoliticProfileCubit.state).thenReturn(GetPoliticInfoFailed());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProfileBloc>(
-            bloc: mockPoliticProfileBloc,
+          PageConnected<PoliticProfileCubit>(
+            bloc: mockPoliticProfileCubit,
             page: PoliticProfilePage(),
           ),
         ),
@@ -333,7 +333,7 @@ void main() {
 
     testWidgets('should show text FOLLOW when politic is being followed',
         (tester) async {
-      when(mockPoliticProfileBloc.politico).thenReturn(
+      when(mockPoliticProfileCubit.politico).thenReturn(
         PoliticoModel(
           id: '1',
           siglaPartido: 'PT',
@@ -343,7 +343,7 @@ void main() {
           urlPartidoLogo: 'logo',
         ),
       );
-      when(mockPoliticProfileBloc.lastActivities).thenReturn(
+      when(mockPoliticProfileCubit.lastActivities).thenReturn(
         [
           PropostaModel(
             ementa: 'ementa',
@@ -367,7 +367,7 @@ void main() {
           ),
         ],
       );
-      when(mockPoliticProfileBloc.state).thenReturn(
+      when(mockPoliticProfileCubit.state).thenReturn(
         UserFollowingPoliticChanged(
           politico: PoliticoModel(
             id: '1',
@@ -381,8 +381,8 @@ void main() {
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProfileBloc>(
-            bloc: mockPoliticProfileBloc,
+          PageConnected<PoliticProfileCubit>(
+            bloc: mockPoliticProfileCubit,
             page: PoliticProfilePage(),
           ),
         ),
@@ -392,7 +392,7 @@ void main() {
 
     testWidgets('should show text STOP_FOLLOW when politic is being followed',
         (tester) async {
-      when(mockPoliticProfileBloc.politico).thenReturn(
+      when(mockPoliticProfileCubit.politico).thenReturn(
         PoliticoModel(
           id: '1',
           siglaPartido: 'PT',
@@ -402,7 +402,7 @@ void main() {
           urlPartidoLogo: 'logo',
         ),
       );
-      when(mockPoliticProfileBloc.lastActivities).thenReturn(
+      when(mockPoliticProfileCubit.lastActivities).thenReturn(
         [
           PropostaModel(
             ementa: 'ementa',
@@ -427,7 +427,7 @@ void main() {
           ),
         ],
       );
-      when(mockPoliticProfileBloc.state).thenReturn(
+      when(mockPoliticProfileCubit.state).thenReturn(
         UserFollowingPoliticChanged(
           politico: PoliticoModel(
             id: '1',
@@ -441,8 +441,8 @@ void main() {
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticProfileBloc>(
-            bloc: mockPoliticProfileBloc,
+          PageConnected<PoliticProfileCubit>(
+            bloc: mockPoliticProfileCubit,
             page: PoliticProfilePage(),
           ),
         ),

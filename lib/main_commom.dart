@@ -28,7 +28,6 @@ void main() async {
   FlutterError.onError = G<CrashlyticsService>().crashlytics.recordFlutterError;
   Bloc.observer = FlutterBlocObserver(
     analyticsService: G<AnalyticsService>(),
-    performanceService: G<PerformanceService>(),
   );
   initializeDateFormatting('pt_BR', null);
 

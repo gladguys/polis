@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/keys.dart';
 import 'package:polis/core/repository/abstract/repositories.dart';
@@ -26,12 +26,12 @@ void main() {
   });
 
   List<SubCommentModel> subComments;
-  MockSubCommentsBloc mockSubCommentsBloc;
-  MockCommentBloc mockCommentBloc;
+  MockSubCommentsCubit mockSubCommentsCubit;
+  MockCommentCubit mockCommentCubit;
 
   group('PostCommentsPage tests', () {
     setUp(() {
-      mockCommentBloc = MockCommentBloc();
+      mockCommentCubit = MockCommentCubit();
       subComments = [
         SubCommentModel(
           id: 1,
@@ -48,14 +48,14 @@ void main() {
           comentarioPaiId: 1,
         ),
       ];
-      mockSubCommentsBloc = MockSubCommentsBloc();
+      mockSubCommentsCubit = MockSubCommentsCubit();
     });
 
     testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SubCommentsBloc>(
-            bloc: mockSubCommentsBloc,
+          PageConnected<SubCommentsCubit>(
+            bloc: mockSubCommentsCubit,
             page: SubCommentsPage(),
           ),
         ),
@@ -66,8 +66,8 @@ void main() {
         (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SubCommentsBloc>(
-            bloc: mockSubCommentsBloc,
+          PageConnected<SubCommentsCubit>(
+            bloc: mockSubCommentsCubit,
             page: SubCommentsPage(),
           ),
           useDarkMode: true,
@@ -103,7 +103,7 @@ void main() {
               usuarioNome: 'nome',
               diaHora: DateTime.now(),
             ),
-            commentBloc: mockCommentBloc,
+            commentCubit: mockCommentCubit,
           ),
           extraProviders: [
             RepositoryProvider<CommentRepository>(
@@ -117,7 +117,7 @@ void main() {
     testWidgets(
         '''should show sub comments and edit container when state is EditingSubCommentStarted''',
         (tester) async {
-      when(mockSubCommentsBloc.comment).thenReturn(
+      when(mockSubCommentsCubit.comment).thenReturn(
         CommentModel(
           id: 1,
           usuarioNome: 'nome',
@@ -125,7 +125,7 @@ void main() {
           diaHora: DateTime.now(),
         ),
       );
-      when(mockSubCommentsBloc.state).thenReturn(
+      when(mockSubCommentsCubit.state).thenReturn(
         EditingSubCommentStarted(
           SubCommentModel(
             usuarioNome: 'nome',
@@ -133,11 +133,11 @@ void main() {
           ),
         ),
       );
-      when(mockSubCommentsBloc.subComments).thenReturn(subComments);
+      when(mockSubCommentsCubit.subComments).thenReturn(subComments);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SubCommentsBloc>(
-            bloc: mockSubCommentsBloc,
+          PageConnected<SubCommentsCubit>(
+            bloc: mockSubCommentsCubit,
             page: SubCommentsPage(),
           ),
         ),
@@ -146,11 +146,11 @@ void main() {
       final stopEditingBtn = find.byKey(stopEditingCommentKey);
       expect(stopEditingBtn, findsOneWidget);
       await tester.tap(stopEditingBtn);
-      verify(mockSubCommentsBloc.add(StopEditingSubComment())).called(1);
+      verify(mockSubCommentsCubit.stopEditingSubComment()).called(1);
     });
 
     testWidgets('should add a sub comment', (tester) async {
-      when(mockSubCommentsBloc.comment).thenReturn(
+      when(mockSubCommentsCubit.comment).thenReturn(
         CommentModel(
           id: 1,
           usuarioNome: 'nome',
@@ -163,14 +163,14 @@ void main() {
         texto: 'texto',
         diaHora: DateTime.now(),
       );
-      when(mockSubCommentsBloc.state).thenReturn(
+      when(mockSubCommentsCubit.state).thenReturn(
         EditingSubCommentStarted(subComment),
       );
-      when(mockSubCommentsBloc.subComments).thenReturn(subComments);
+      when(mockSubCommentsCubit.subComments).thenReturn(subComments);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SubCommentsBloc>(
-            bloc: mockSubCommentsBloc,
+          PageConnected<SubCommentsCubit>(
+            bloc: mockSubCommentsCubit,
             page: SubCommentsPage(),
           ),
         ),
@@ -179,17 +179,15 @@ void main() {
       expect(addCommentBtn, findsOneWidget);
       await tester.tap(addCommentBtn);
       verify(
-        mockSubCommentsBloc.add(
-          EditSubComment(
-            subComment: subComment,
-            newText: 'texto',
-          ),
+        mockSubCommentsCubit.editSubComment(
+          subComment: subComment,
+          newText: 'texto',
         ),
       ).called(1);
     });
 
     testWidgets('should build editing container', (tester) async {
-      when(mockSubCommentsBloc.comment).thenReturn(
+      when(mockSubCommentsCubit.comment).thenReturn(
         CommentModel(
           id: 1,
           diaHora: DateTime.now(),
@@ -200,8 +198,8 @@ void main() {
           foiEditado: false,
         ),
       );
-      when(mockSubCommentsBloc.subComments).thenReturn(subComments);
-      when(mockSubCommentsBloc.state).thenReturn(
+      when(mockSubCommentsCubit.subComments).thenReturn(subComments);
+      when(mockSubCommentsCubit.state).thenReturn(
         EditingSubCommentStarted(
           SubCommentModel(
             id: 1,
@@ -214,8 +212,8 @@ void main() {
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SubCommentsBloc>(
-            bloc: mockSubCommentsBloc,
+          PageConnected<SubCommentsCubit>(
+            bloc: mockSubCommentsCubit,
             page: SubCommentsPage(),
           ),
         ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../bloc/blocs.dart';
+import '../../../bloc/cubits.dart';
 import '../../../core/domain/model/models.dart';
 import '../../../core/i18n/label.dart';
 import '../../../core/keys.dart';
@@ -31,8 +31,8 @@ class FollowingPoliticsSearch extends StatelessWidget {
             width: 300,
             iconPrefix: FontAwesomeIcons.search,
             onChanged: (term) => context
-                .bloc<UserFollowingPoliticsBloc>()
-                .add(SearchPoliticsByTerm(term)),
+                .bloc<UserFollowingPoliticsCubit>()
+                .searchPoliticsByTerm(term),
           ),
         ),
         const SizedBox(height: 12),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/routing/route_names.dart';
 import '../../widget/error_container.dart';
 import '../pages.dart';
@@ -16,7 +16,7 @@ class UserProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocConsumer<UserProfileBloc, UserProfileState>(
+        child: BlocConsumer<UserProfileCubit, UserProfileState>(
           listener: (_, state) {
             if (state is GetPostInfoSuccess) {
               SimpleRouter.forward(
@@ -32,10 +32,10 @@ class UserProfilePage extends StatelessWidget {
             if (state is FetchUserRelatedInfoSuccess ||
                 state is GetPostInfoSuccess) {
               final politicsFollowing =
-                  context.bloc<UserProfileBloc>().politicsFollowing;
-              final userActions = context.bloc<UserProfileBloc>().userActions;
+                  context.bloc<UserProfileCubit>().politicsFollowing;
+              final userActions = context.bloc<UserProfileCubit>().userActions;
               return UserProfile(
-                user: context.bloc<UserProfileBloc>().user,
+                user: context.bloc<UserProfileCubit>().user,
                 politicsFollowing: politicsFollowing,
                 userActions: userActions,
               );

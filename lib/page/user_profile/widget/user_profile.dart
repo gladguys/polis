@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../bloc/blocs.dart';
+import '../../../bloc/cubits.dart';
 import '../../../core/domain/model/models.dart';
 import '../../../core/extension/extensions.dart';
 import '../../../core/i18n/label.dart';
@@ -26,7 +26,8 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
-  bool get isUserPickedTheLocal => context.bloc<UserBloc>().user == widget.user;
+  bool get isUserPickedTheLocal =>
+      context.bloc<UserCubit>().user == widget.user;
 
   @override
   Widget build(BuildContext context) {

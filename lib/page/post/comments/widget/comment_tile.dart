@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../../../bloc/blocs.dart';
+import '../../../../bloc/cubits.dart';
 import '../../../../core/domain/model/comment_model.dart';
 import '../../../../core/extension/extensions.dart';
 import '../../../../core/keys.dart';
@@ -20,7 +20,7 @@ class CommentTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.bloc<UserBloc>().user;
+    final user = context.bloc<UserCubit>().user;
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
       child: Bubble(
@@ -60,11 +60,11 @@ class CommentTile extends StatelessWidget {
                   (comment.usuarioId == user.userId)
                       ? MenuEditDeleteComment(
                           onEdit: () => context
-                              .bloc<CommentBloc>()
-                              .add(StartEditingComment(comment)),
+                              .bloc<CommentCubit>()
+                              .startEditingComment(comment),
                           onDelete: () => context
-                              .bloc<CommentBloc>()
-                              .add(DeleteComment(comment)),
+                              .bloc<CommentCubit>()
+                              .deleteComment(comment),
                         )
                       : Container(),
                 ],
@@ -83,9 +83,9 @@ class CommentTile extends StatelessWidget {
               InkWell(
                 onTap: () => SimpleRouter.forward(
                   SubCommentsPageConnected(
-                    post: context.bloc<CommentBloc>().post,
+                    post: context.bloc<CommentCubit>().post,
                     comment: comment,
-                    commentBloc: context.bloc<CommentBloc>(),
+                    commentCubit: context.bloc<CommentCubit>(),
                   ),
                   name: SUB_COMMENTS_PAGE,
                 ),

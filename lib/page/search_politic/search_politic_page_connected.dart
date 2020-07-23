@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/repository/concrete/repositories.dart';
 import '../../core/service/locator.dart';
 import '../../core/service/services.dart';
@@ -11,8 +11,8 @@ import '../pages.dart';
 class SearchPoliticPageConnected extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return PageConnected<SearchPoliticBloc>(
-      bloc: SearchPoliticBloc(
+    return PageConnected<SearchPoliticCubit>(
+      bloc: SearchPoliticCubit(
         userFollowingPoliticsRepository:
             context.repository<FirebaseUserFollowingPoliticsRepository>(),
         followRepository: context.repository<FirebaseFollowRepository>(),
@@ -28,14 +28,14 @@ class SearchPoliticPageConnected extends StatelessWidget {
           syncLogRepository: context.repository<FirebaseSyncLogRepository>(),
           sharedPreferencesService: G<SharedPreferencesService>(),
         ),
-        politicProfileBloc: PoliticProfileBloc(
-          user: context.bloc<UserBloc>().user,
+        politicProfileCubit: PoliticProfileCubit(
+          user: context.bloc<UserCubit>().user,
           politicProfileRepository:
               context.repository<FirebasePoliticProfileRepository>(),
           followRepository: context.repository<FirebaseFollowRepository>(),
           urlLauncherService: G<UrlLauncherService>(),
         ),
-      )..add(FetchPolitics(context.bloc<UserBloc>().user.userId)),
+      )..fetchPolitics(context.bloc<UserCubit>().user.userId),
       page: SearchPoliticPage(),
     );
   }

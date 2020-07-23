@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/extension/extensions.dart';
 import '../../core/i18n/i18n.dart';
@@ -30,7 +30,7 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  SignupBloc _signupBloc;
+  SignupCubit _signupCubit;
   GlobalKey<FormState> _formKey;
   UserModel _signupUser;
   String _name;
@@ -46,7 +46,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   void initState() {
     super.initState();
-    _signupBloc = context.bloc<SignupBloc>();
+    _signupCubit = context.bloc<SignupCubit>();
     _formKey = GlobalKey<FormState>();
     _signupUser = UserModel();
     _emailFN = FocusNode();
@@ -56,7 +56,7 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   void dispose() {
-    _signupBloc.close();
+    _signupCubit.close();
     _emailFN.dispose();
     _passwordFN.dispose();
     _confirmPasswordFN.dispose();
@@ -66,7 +66,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return BlocListener(
-      bloc: _signupBloc,
+      cubit: _signupCubit,
       listener: (context, state) {
         if (state is UserCreated) {
           Snackbar.success(context, USER_CREATED_WITH_SUCCESS);
@@ -78,8 +78,8 @@ class _SignupPageState extends State<SignupPage> {
           Snackbar.error(context, state.errorMessage);
         }
       },
-      child: BlocBuilder<SignupBloc, SignupState>(
-        bloc: _signupBloc,
+      child: BlocBuilder<SignupCubit, SignupState>(
+        cubit: _signupCubit,
         builder: (_, state) {
           if (state is InitialSignup ||
               state is UserCreationFailed ||
@@ -112,10 +112,10 @@ class _SignupPageState extends State<SignupPage> {
           password: _password,
           photoUrl: _photoUrl,
         );
-        _signupBloc.add(Signup(
+        _signupCubit.signup(
           user: _signupUser,
           profilePhoto: _profilePhoto,
-        ));
+        );
       }
     }
 

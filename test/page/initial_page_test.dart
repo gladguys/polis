@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/i18n/i18n.dart';
 import 'package:polis/core/service/locator.dart';
@@ -39,28 +39,28 @@ void main() {
 
     testWidgets('''shuld call SigninBloc event when signin with google''',
         (tester) async {
-      final mockSigninBloc = MockSigninBloc();
-      when(mockSigninBloc.add(SigninWithGoogle()))
+      final mockSigninCubit = MockSigninCubit();
+      when(mockSigninCubit.signinWithGoogle())
           .thenAnswer((_) => Future.value());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SigninBloc>(
-            bloc: mockSigninBloc,
+          PageConnected<SigninCubit>(
+            bloc: mockSigninCubit,
             page: InitialPage(),
           ),
         ),
       );
       final signinWithGoogle = find.text(SIGNIN_WITH_GOOGLE);
       await tester.tap(signinWithGoogle);
-      verify(mockSigninBloc.add(SigninWithGoogle())).called(1);
+      verify(mockSigninCubit.signinWithGoogle()).called(1);
     });
 
     testWidgets(
         '''should navigate to PoliticSugestionPage when user auths and has not yet done signin''',
         (tester) async {
-      final mockSigninBloc = MockSigninBloc();
+      final mockSigninCubit = MockSigninCubit();
       whenListen(
-        mockSigninBloc,
+        mockSigninCubit,
         Stream<SigninState>.fromIterable([
           InitialSignin(),
           UserAuthenticated(
@@ -70,8 +70,8 @@ void main() {
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SigninBloc>(
-            bloc: mockSigninBloc,
+          PageConnected<SigninCubit>(
+            bloc: mockSigninCubit,
             page: Scaffold(
               body: InitialPage(),
             ),
@@ -83,9 +83,9 @@ void main() {
     testWidgets(
         'should navigate to Timeline when user auths and has yet done signin',
         (tester) async {
-      final mockSigninBloc = MockSigninBloc();
+      final mockSigninCubit = MockSigninCubit();
       whenListen(
-        mockSigninBloc,
+        mockSigninCubit,
         Stream<SigninState>.fromIterable([
           InitialSignin(),
           UserAuthenticated(
@@ -98,8 +98,8 @@ void main() {
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SigninBloc>(
-            bloc: mockSigninBloc,
+          PageConnected<SigninCubit>(
+            bloc: mockSigninCubit,
             page: Scaffold(
               body: InitialPage(),
             ),
@@ -110,16 +110,18 @@ void main() {
 
     testWidgets('should show error message when google signin failed',
         (tester) async {
-      final mockSigninBloc = MockSigninBloc();
+      final mockSigninCubit = MockSigninCubit();
       whenListen(
-        mockSigninBloc,
-        Stream<SigninState>.fromIterable(
-            [InitialSignin(), SigninFailed(ERROR_INVALID_CREDENTIALS)]),
+        mockSigninCubit,
+        Stream<SigninState>.fromIterable([
+          InitialSignin(),
+          SigninFailed(ERROR_INVALID_CREDENTIALS),
+        ]),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SigninBloc>(
-            bloc: mockSigninBloc,
+          PageConnected<SigninCubit>(
+            bloc: mockSigninCubit,
             page: Scaffold(
               body: InitialPage(),
             ),
@@ -132,9 +134,9 @@ void main() {
 
     testWidgets('should show error message when google user auth fails failed',
         (tester) async {
-      final mockSigninBloc = MockSigninBloc();
+      final mockSigninCubit = MockSigninCubit();
       whenListen(
-        mockSigninBloc,
+        mockSigninCubit,
         Stream<SigninState>.fromIterable([
           InitialSignin(),
           UserAuthenticationFailed(ERROR_INVALID_CREDENTIALS)
@@ -142,8 +144,8 @@ void main() {
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SigninBloc>(
-            bloc: mockSigninBloc,
+          PageConnected<SigninCubit>(
+            bloc: mockSigninCubit,
             page: Scaffold(
               body: InitialPage(),
             ),
@@ -155,15 +157,18 @@ void main() {
     });
 
     testWidgets('should show loading', (tester) async {
-      final mockSigninBloc = MockSigninBloc();
+      final mockSigninCubit = MockSigninCubit();
       whenListen(
-        mockSigninBloc,
-        Stream<SigninState>.fromIterable([InitialSignin(), SigninLoading()]),
+        mockSigninCubit,
+        Stream<SigninState>.fromIterable([
+          InitialSignin(),
+          SigninLoading(),
+        ]),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SigninBloc>(
-            bloc: mockSigninBloc,
+          PageConnected<SigninCubit>(
+            bloc: mockSigninCubit,
             page: Scaffold(
               body: InitialPage(),
             ),

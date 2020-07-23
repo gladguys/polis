@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../bloc/blocs.dart';
+import '../../../bloc/cubits.dart';
 import '../../../core/domain/model/models.dart';
 import '../../../core/extension/extensions.dart';
 import '../../../core/i18n/label.dart';
@@ -28,7 +28,7 @@ class SearchPolitics extends StatelessWidget {
         ),
         PopupFilterSearch(
           partidos: partidos,
-          searchPoliticBloc: context.bloc<SearchPoliticBloc>(),
+          searchPoliticCubit: context.bloc<SearchPoliticCubit>(),
         ),
       ],
     );
@@ -38,12 +38,12 @@ class SearchPolitics extends StatelessWidget {
 class PopupFilterSearch extends StatefulWidget {
   const PopupFilterSearch({
     @required this.partidos,
-    @required this.searchPoliticBloc,
+    @required this.searchPoliticCubit,
   })  : assert(partidos != null),
-        assert(searchPoliticBloc != null);
+        assert(searchPoliticCubit != null);
 
   final List<PartidoModel> partidos;
-  final SearchPoliticBloc searchPoliticBloc;
+  final SearchPoliticCubit searchPoliticCubit;
 
   @override
   State<StatefulWidget> createState() => _PopupFilterSearchState();
@@ -73,8 +73,8 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
               hintText: SEARCH_HERE,
               width: 240,
               iconPrefix: FontAwesomeIcons.search,
-              onChanged: (term) => widget.searchPoliticBloc
-                  .add(ChangeSearchPoliticFilter(term: term)),
+              onChanged: (term) => widget.searchPoliticCubit
+                  .changeSearchPoliticFilter(term: term),
             ),
             const SizedBox(width: 8),
             Container(
@@ -117,18 +117,18 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
             children: <Widget>[
               PartidoSelect(
                 partidos: widget.partidos,
-                initialValue: widget.searchPoliticBloc.partidoPicked,
-                onChange: (partido) => widget.searchPoliticBloc
-                    .add(ChangeSearchPoliticFilter(partido: partido)),
+                initialValue: widget.searchPoliticCubit.partidoPicked,
+                onChange: (partido) => widget.searchPoliticCubit
+                    .changeSearchPoliticFilter(partido: partido),
               ),
               VerticalDivider(
                 width: 1,
                 color: Colors.grey[350],
               ),
               EstadoSelect(
-                initialValue: widget.searchPoliticBloc.statePicked,
-                onChange: (estado) => widget.searchPoliticBloc
-                    .add(ChangeSearchPoliticFilter(estado: estado)),
+                initialValue: widget.searchPoliticCubit.statePicked,
+                onChange: (estado) => widget.searchPoliticCubit
+                    .changeSearchPoliticFilter(estado: estado),
               ),
             ],
           ),

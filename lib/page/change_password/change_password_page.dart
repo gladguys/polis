@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
 import '../../widget/loading.dart';
@@ -18,8 +18,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   String _currentPassword;
   String _newPassword;
 
-  ChangePasswordBloc get changePasswordBloc =>
-      context.bloc<ChangePasswordBloc>();
+  ChangePasswordCubit get changePasswordCubit =>
+      context.bloc<ChangePasswordCubit>();
 
   @override
   void initState() {
@@ -31,9 +31,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocConsumer<ChangePasswordBloc, ChangePasswordState>(
+        child: BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
             listener: (_, state) {
           if (state is UserPasswordChangeSuccess) {
+            print(USER_PASSWORD_UPDATED_WITH_SUCCESS);
             Snackbar.success(_, USER_PASSWORD_UPDATED_WITH_SUCCESS);
           }
           if (state is UserPasswordChangeFailed) {
@@ -69,11 +70,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       final formState = _formKey.currentState;
                       if (formState.validate()) {
                         formState.save();
-                        changePasswordBloc.add(
-                          ChangeUserPassword(
-                            currentPassword: _currentPassword,
-                            newPassword: _newPassword,
-                          ),
+                        changePasswordCubit.changeUserPassword(
+                          currentPassword: _currentPassword,
+                          newPassword: _newPassword,
                         );
                       }
                     },

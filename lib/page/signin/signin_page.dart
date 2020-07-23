@@ -4,8 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../bloc/blocs.dart';
-import '../../bloc/signin/signin_bloc.dart';
+import '../../bloc/cubits.dart';
 import '../../core/i18n/i18n.dart';
 import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
@@ -28,7 +27,7 @@ class _SigninPageState extends State<SigninPage> {
   String _password;
   FocusNode _passwordFN;
 
-  SigninBloc get signinBloc => context.bloc<SigninBloc>();
+  SigninCubit get signinCubit => context.bloc<SigninCubit>();
 
   @override
   void initState() {
@@ -45,12 +44,12 @@ class _SigninPageState extends State<SigninPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SigninBloc, SigninState>(
+    return BlocListener<SigninCubit, SigninState>(
       listener: (context, state) {
         if (state is UserAuthenticated) {
           final user = state.user;
-          context.bloc<UserBloc>().add(StoreUser(user));
-          context.bloc<UserBloc>().add(SetUserPickedTheme(user));
+          context.bloc<UserCubit>().storeUser(user);
+          context.bloc<UserCubit>().setUserPickedTheme(user);
           if (user.isFirstLoginDone) {
             SimpleRouter.forwardAndReplace(
               TimelinePageConnected(
@@ -78,7 +77,7 @@ class _SigninPageState extends State<SigninPage> {
           Snackbar.error(context, ERROR_SENTING_RESET_PASSWORD_EMAIL);
         }
       },
-      child: BlocBuilder<SigninBloc, SigninState>(
+      child: BlocBuilder<SigninCubit, SigninState>(
         builder: (_, state) {
           if (state is InitialSignin ||
               state is ResetEmailSentSuccess ||
@@ -113,7 +112,7 @@ class _SigninPageState extends State<SigninPage> {
       final formState = _formKey.currentState;
       if (formState.validate()) {
         formState.save();
-        signinBloc.add(SigninWithEmailAndPassword(_email, _password));
+        signinCubit.signinWithEmailAndPassword(_email, _password);
       }
     }
 
@@ -191,7 +190,7 @@ class _SigninPageState extends State<SigninPage> {
                   showDialog(
                     context: context,
                     builder: (_) => BlocProvider.value(
-                      value: signinBloc,
+                      value: signinCubit,
                       child: AlertDialog(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(24),

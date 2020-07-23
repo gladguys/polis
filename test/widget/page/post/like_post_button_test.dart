@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/repository/concrete/firebase/firebase.dart';
 import 'package:polis/page/page_connected.dart';
@@ -14,23 +14,23 @@ import '../../../utils.dart';
 void main() {
   group('LikePostButton tests', () {
     testWidgets('should build without exploding', (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(
+      final mockUserCubit = MockUserCubit();
+      when(mockUserCubit.user).thenReturn(
         UserModel(
           userId: '1',
         ),
       );
-      final mockPostBloc = MockPostBloc();
-      when(mockPostBloc.post).thenReturn({
+      final mockPostCubit = MockPostCubit();
+      when(mockPostCubit.post).thenReturn({
         'id': '1',
         QTD_CURTIDAS_FIELD: 0,
       });
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<UserBloc>(
-            bloc: mockUserBloc,
-            page: PageConnected<PostBloc>(
-              bloc: mockPostBloc,
+          PageConnected<UserCubit>(
+            bloc: mockUserCubit,
+            page: PageConnected<PostCubit>(
+              bloc: mockPostCubit,
               page: Scaffold(
                 body: LikePostButton(
                   post: PropostaModel(id: '1'),
@@ -43,23 +43,23 @@ void main() {
     });
 
     testWidgets('should build dark mode without exploding', (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(
+      final mockUserCubit = MockUserCubit();
+      when(mockUserCubit.user).thenReturn(
         UserModel(
           userId: '1',
         ),
       );
-      final mockPostBloc = MockPostBloc();
-      when(mockPostBloc.post).thenReturn({
+      final mockPostCubit = MockPostCubit();
+      when(mockPostCubit.post).thenReturn({
         'id': '1',
         QTD_CURTIDAS_FIELD: 0,
       });
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<UserBloc>(
-            bloc: mockUserBloc,
-            page: PageConnected<PostBloc>(
-              bloc: mockPostBloc,
+          PageConnected<UserCubit>(
+            bloc: mockUserCubit,
+            page: PageConnected<PostCubit>(
+              bloc: mockPostCubit,
               page: Scaffold(
                 body: LikePostButton(
                   post: PropostaModel(id: '1'),
@@ -73,24 +73,24 @@ void main() {
     });
 
     testWidgets('should like when tap', (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(
+      final mockUserCubit = MockUserCubit();
+      when(mockUserCubit.user).thenReturn(
         UserModel(
           userId: '1',
         ),
       );
-      final mockPostBloc = MockPostBloc();
-      when(mockPostBloc.post).thenReturn({
+      final mockPostCubit = MockPostCubit();
+      when(mockPostCubit.post).thenReturn({
         'id': '1',
         'idPropostaPolitico': '1',
         QTD_CURTIDAS_FIELD: 0,
       });
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<UserBloc>(
-            bloc: mockUserBloc,
-            page: PageConnected<PostBloc>(
-              bloc: mockPostBloc,
+          PageConnected<UserCubit>(
+            bloc: mockUserCubit,
+            page: PageConnected<PostCubit>(
+              bloc: mockPostCubit,
               page: Scaffold(
                 body: LikePostButton(
                   post: PropostaModel(
@@ -108,44 +108,42 @@ void main() {
       expect(button, findsOneWidget);
       await tester.tap(button);
       verify(
-        mockPostBloc.add(
-          LikePost(
-            user: UserModel(
-              userId: '1',
-            ),
-            postId: '1',
-            politicoId: '1',
-            isUnliked: false,
+        mockPostCubit.likePost(
+          user: UserModel(
+            userId: '1',
           ),
+          postId: '1',
+          politicoId: '1',
+          isUnliked: false,
         ),
       ).called(1);
     });
 
     testWidgets('should increment qtdCurtidas when PostLikedSuccess',
         (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(
+      final mockUserCubit = MockUserCubit();
+      when(mockUserCubit.user).thenReturn(
         UserModel(
           userId: '1',
         ),
       );
-      final mockPostBloc = MockPostBloc();
-      when(mockPostBloc.post).thenReturn({
+      final mockPostCubit = MockPostCubit();
+      when(mockPostCubit.post).thenReturn({
         'id': '1',
         'idPropostaPolitico': '1',
         QTD_CURTIDAS_FIELD: 0,
       });
-      when(mockPostBloc.state).thenReturn(
+      when(mockPostCubit.state).thenReturn(
         PostLikedSuccess(
           postId: '1',
         ),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<UserBloc>(
-            bloc: mockUserBloc,
-            page: PageConnected<PostBloc>(
-              bloc: mockPostBloc,
+          PageConnected<UserCubit>(
+            bloc: mockUserCubit,
+            page: PageConnected<PostCubit>(
+              bloc: mockPostCubit,
               page: Scaffold(
                 body: LikePostButton(
                   post: PropostaModel(
@@ -163,29 +161,29 @@ void main() {
 
     testWidgets('should decrement qtdCurtidas when PostLikedSuccess',
         (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(
+      final mockUserCubit = MockUserCubit();
+      when(mockUserCubit.user).thenReturn(
         UserModel(
           userId: '1',
         ),
       );
-      final mockPostBloc = MockPostBloc();
-      when(mockPostBloc.post).thenReturn({
+      final mockPostCubit = MockPostCubit();
+      when(mockPostCubit.post).thenReturn({
         'id': '1',
         'idPropostaPolitico': '1',
         QTD_CURTIDAS_FIELD: 1,
       });
-      when(mockPostBloc.state).thenReturn(
+      when(mockPostCubit.state).thenReturn(
         PostUnlikedSuccess(
           postId: '1',
         ),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<UserBloc>(
-            bloc: mockUserBloc,
-            page: PageConnected<PostBloc>(
-              bloc: mockPostBloc,
+          PageConnected<UserCubit>(
+            bloc: mockUserCubit,
+            page: PageConnected<PostCubit>(
+              bloc: mockPostCubit,
               page: Scaffold(
                 body: LikePostButton(
                   post: PropostaModel(
@@ -203,24 +201,24 @@ void main() {
 
     testWidgets('should stop liking already liked post when tap',
         (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(
+      final mockUserCubit = MockUserCubit();
+      when(mockUserCubit.user).thenReturn(
         UserModel(userId: '1', userLikes: {
           '1': true,
         }),
       );
-      final mockPostBloc = MockPostBloc();
-      when(mockPostBloc.post).thenReturn({
+      final mockPostCubit = MockPostCubit();
+      when(mockPostCubit.post).thenReturn({
         'id': '1',
         'idPropostaPolitico': '1',
         QTD_CURTIDAS_FIELD: 1,
       });
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<UserBloc>(
-            bloc: mockUserBloc,
-            page: PageConnected<PostBloc>(
-              bloc: mockPostBloc,
+          PageConnected<UserCubit>(
+            bloc: mockUserCubit,
+            page: PageConnected<PostCubit>(
+              bloc: mockPostCubit,
               page: Scaffold(
                 body: LikePostButton(
                   post: PropostaModel(
@@ -238,14 +236,12 @@ void main() {
       expect(button, findsOneWidget);
       await tester.tap(button);
       verify(
-        mockPostBloc.add(
-          StopLikingPost(
-            user: UserModel(
-              userId: '1',
-            ),
-            postId: '1',
-            politicoId: '1',
+        mockPostCubit.stopLikingPost(
+          user: UserModel(
+            userId: '1',
           ),
+          postId: '1',
+          politicoId: '1',
         ),
       ).called(1);
     });

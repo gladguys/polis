@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../widget/error_container.dart';
 import '../pages.dart';
 import 'widget/following_politics_search.dart';
@@ -29,8 +29,8 @@ class _UserFollowingPoliticsPageState extends State<UserFollowingPoliticsPage> {
   }
 
   bool onBackButtonPressed() {
-    final localUser = context.bloc<UserBloc>().user;
-    final pickedUser = context.bloc<UserProfileBloc>().user;
+    final localUser = context.bloc<UserCubit>().user;
+    final pickedUser = context.bloc<UserProfileCubit>().user;
     final isLocalUserThePickedOne = localUser == pickedUser;
 
     SimpleRouter.forwardAndReplace(
@@ -45,8 +45,8 @@ class _UserFollowingPoliticsPageState extends State<UserFollowingPoliticsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child:
-            BlocConsumer<UserFollowingPoliticsBloc, UserFollowingPoliticsState>(
+        child: BlocConsumer<UserFollowingPoliticsCubit,
+            UserFollowingPoliticsState>(
           listener: (_, state) {},
           builder: (_, state) {
             if (state is FetchPoliticsSuccess) {

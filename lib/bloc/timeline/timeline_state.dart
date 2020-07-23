@@ -1,4 +1,4 @@
-part of 'timeline_bloc.dart';
+part of 'timeline_cubit.dart';
 
 abstract class TimelineState extends Equatable {
   const TimelineState();

@@ -4,7 +4,7 @@ import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../bloc/blocs.dart';
+import '../../../bloc/cubits.dart';
 import '../../../core/constants.dart';
 import '../../../core/domain/enum/timeline_status.dart';
 import '../../../core/domain/model/models.dart';
@@ -41,9 +41,9 @@ class _TimelineState extends State<Timeline> {
   bool get scrollPositionPassedLimit =>
       currentPosition >= maxScrollPosition - kBottomOffsetToLoadMore;
   int get updatesCount => widget.updatesCount;
-  TimelineBloc get timelineBloc => context.bloc<TimelineBloc>();
-  double get timelineCurrentPosition => timelineBloc.timelineCurrentPosition;
-  String get userId => context.bloc<UserBloc>().user.userId;
+  TimelineCubit get timelineCubit => context.bloc<TimelineCubit>();
+  double get timelineCurrentPosition => timelineCubit.timelineCurrentPosition;
+  String get userId => context.bloc<UserCubit>().user.userId;
 
   bool hasLoadedAlready;
   int currentActivitiesLength;
@@ -51,7 +51,7 @@ class _TimelineState extends State<Timeline> {
 
   void _onScrollListener() {
     if (scrollPositionPassedLimit && isPositionInRange && !hasLoadedAlready) {
-      timelineBloc.add(FetchMorePosts(userId, currentPosition));
+      timelineCubit.fetchMorePosts(userId, currentPosition);
       hasLoadedAlready = true;
     }
   }
@@ -160,7 +160,7 @@ class _TimelineState extends State<Timeline> {
           ),
         ],
       ),
-      onPressed: () => timelineBloc.add(ReloadTimeline(userId)),
+      onPressed: () => timelineCubit.reloadTimeline(userId),
     );
   }
 }

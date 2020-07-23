@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/extension/extensions.dart';
 import 'package:polis/core/keys.dart';
@@ -65,12 +65,12 @@ void main() {
     });
 
     testWidgets('should validate and save the form', (tester) async {
-      final mockSignupBloc = MockSignupBloc();
-      when(mockSignupBloc.state).thenReturn(InitialSignup());
+      final mockSignupCubit = MockSignupCubit();
+      when(mockSignupCubit.state).thenReturn(InitialSignup());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SignupBloc>(
-            bloc: mockSignupBloc,
+          PageConnected<SignupCubit>(
+            bloc: mockSignupCubit,
             page: Scaffold(
               body: SignupPage(
                 panelController: mockPanelController,
@@ -106,18 +106,18 @@ void main() {
       await tester.tap(signupBtn);
       await tester.pumpAndSettle();
       expect(formKey.currentState.validate(), isTrue);
-      verify(mockSignupBloc.add(Signup(user: signupUser, profilePhoto: null)))
+      verify(mockSignupCubit.signup(user: signupUser, profilePhoto: null))
           .called(1);
     });
 
     testWidgets('''should validate and save the form whn click on keyboard''',
         (tester) async {
-      final mockSignupBloc = MockSignupBloc();
-      when(mockSignupBloc.state).thenReturn(InitialSignup());
+      final mockSignupCubit = MockSignupCubit();
+      when(mockSignupCubit.state).thenReturn(InitialSignup());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SignupBloc>(
-            bloc: mockSignupBloc,
+          PageConnected<SignupCubit>(
+            bloc: mockSignupCubit,
             page: Scaffold(
               body: SignupPage(
                 panelController: mockPanelController,
@@ -150,20 +150,20 @@ void main() {
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pumpAndSettle();
       expect(formKey.currentState.validate(), isTrue);
-      verify(mockSignupBloc.add(Signup(user: signupUser, profilePhoto: null)))
+      verify(mockSignupCubit.signup(user: signupUser, profilePhoto: null))
           .called(1);
     });
 
     testWidgets('should go to InitialPage when user created', (tester) async {
-      final mockSignupBloc = MockSignupBloc();
+      final mockSignupCubit = MockSignupCubit();
       whenListen(
-        mockSignupBloc,
+        mockSignupCubit,
         Stream<SignupState>.fromIterable([InitialSignup(), UserCreated()]),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SignupBloc>(
-            bloc: mockSignupBloc,
+          PageConnected<SignupCubit>(
+            bloc: mockSignupCubit,
             page: Scaffold(
               body: SignupPage(
                 panelController: mockPanelController,
@@ -180,12 +180,12 @@ void main() {
     });
 
     testWidgets('should show loading indicator', (tester) async {
-      final mockSignupBloc = MockSignupBloc();
-      when(mockSignupBloc.state).thenReturn(SignupLoading());
+      final mockSignupCubit = MockSignupCubit();
+      when(mockSignupCubit.state).thenReturn(SignupLoading());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SignupBloc>(
-            bloc: mockSignupBloc,
+          PageConnected<SignupCubit>(
+            bloc: mockSignupCubit,
             page: Scaffold(
               body: SignupPage(
                 panelController: mockPanelController,
@@ -199,16 +199,18 @@ void main() {
     });
 
     testWidgets('should show error when signup failed', (tester) async {
-      final mockSignupBloc = MockSignupBloc();
+      final mockSignupCubit = MockSignupCubit();
       whenListen(
-        mockSignupBloc,
-        Stream<SignupState>.fromIterable(
-            [InitialSignup(), SignupFailed('fail')]),
+        mockSignupCubit,
+        Stream<SignupState>.fromIterable([
+          InitialSignup(),
+          SignupFailed('fail'),
+        ]),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SignupBloc>(
-            bloc: mockSignupBloc,
+          PageConnected<SignupCubit>(
+            bloc: mockSignupCubit,
             page: Scaffold(
               body: SignupPage(
                 panelController: mockPanelController,
@@ -223,16 +225,18 @@ void main() {
     });
 
     testWidgets('should show error when user creation failed', (tester) async {
-      final mockSignupBloc = MockSignupBloc();
+      final mockSignupCubit = MockSignupCubit();
       whenListen(
-        mockSignupBloc,
-        Stream<SignupState>.fromIterable(
-            [InitialSignup(), UserCreationFailed('fail create')]),
+        mockSignupCubit,
+        Stream<SignupState>.fromIterable([
+          InitialSignup(),
+          UserCreationFailed('fail create'),
+        ]),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SignupBloc>(
-            bloc: mockSignupBloc,
+          PageConnected<SignupCubit>(
+            bloc: mockSignupCubit,
             page: Scaffold(
               body: SignupPage(
                 panelController: mockPanelController,
@@ -247,16 +251,16 @@ void main() {
     });
 
     testWidgets('should change image when camera called', (tester) async {
-      final mockSignupBloc = MockSignupBloc();
-      when(mockSignupBloc.state).thenReturn(InitialSignup());
+      final mockSignupCubit = MockSignupCubit();
+      when(mockSignupCubit.state).thenReturn(InitialSignup());
       final mockPolisImagePicker = MockImagePicker();
       when(mockPolisImagePicker.getImage(source: ImageSource.camera))
           .thenAnswer(
               (_) => Future.value(PickedFile('assets/images/google.png')));
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SignupBloc>(
-            bloc: mockSignupBloc,
+          PageConnected<SignupCubit>(
+            bloc: mockSignupCubit,
             page: Scaffold(
               body: SignupPage(
                 panelController: mockPanelController,

@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/exception/exceptions.dart';
 import 'package:polis/core/i18n/i18n.dart';
@@ -12,7 +12,7 @@ void main() {
   UserModel user;
 
   group('SignupBloc tests', () {
-    SignupBloc signupBloc;
+    SignupCubit signupCubit;
     MockSignupRepository mockSignupRepository;
     MockAnalyticsService mockAnalyticsService;
     user =
@@ -21,45 +21,45 @@ void main() {
     setUp(() {
       mockSignupRepository = MockSignupRepository();
       mockAnalyticsService = MockAnalyticsService();
-      signupBloc = SignupBloc(
+      signupCubit = SignupCubit(
           repository: mockSignupRepository,
           analyticsService: mockAnalyticsService);
     });
 
     tearDown(() {
-      signupBloc?.close();
+      signupCubit?.close();
     });
 
     test('asserts', () {
       expect(
-          () => SignupBloc(
+          () => SignupCubit(
               repository: mockSignupRepository, analyticsService: null),
           throwsAssertionError);
       expect(
-          () => SignupBloc(
+          () => SignupCubit(
               repository: null, analyticsService: mockAnalyticsService),
           throwsAssertionError);
     });
 
     test('Expects InitialSignup to be the initial state', () {
-      expect(signupBloc.state, equals(InitialSignup()));
+      expect(signupCubit.state, equals(InitialSignup()));
     });
 
     blocTest(
       'Expects [SignupLoading, UserCreated] when '
       'SignupTriedEvent added',
-      build: () async {
+      build: () {
         when(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .thenAnswer((_) => Future.value(user));
         when(mockAnalyticsService.logSignup())
             .thenAnswer((_) => Future.value());
-        return signupBloc;
+        return signupCubit;
       },
-      act: (signupBloc) {
-        signupBloc.add(Signup(user: UserModel(), profilePhoto: null));
+      act: (signupCubit) {
+        signupCubit.signup(user: UserModel(), profilePhoto: null);
         return;
       },
-      verify: (signupBloc) async {
+      verify: (signupCubit) async {
         verify(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .called(1);
         verify(mockAnalyticsService.logSignup()).called(1);
@@ -73,16 +73,16 @@ void main() {
     blocTest(
       '''Expects [SignupLoading, UserCreationFailed] with 
       EMAIL_ALREADY_IN_USE message when SignupTried added and email already token''',
-      build: () async {
+      build: () {
         when(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .thenThrow(EmailAlreadyInUseException());
-        return signupBloc;
+        return signupCubit;
       },
-      act: (signupBloc) {
-        signupBloc.add(Signup(user: UserModel(), profilePhoto: null));
+      act: (signupCubit) {
+        signupCubit.signup(user: UserModel(), profilePhoto: null);
         return;
       },
-      verify: (signupBloc) async {
+      verify: (signupCubit) async {
         verify(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .called(1);
       },
@@ -95,16 +95,16 @@ void main() {
     blocTest(
       '''Expects [SignupLoading, UserCreationFailed] with 
       PASSWORD_IS_WEAK message when SignupTried added and email already token''',
-      build: () async {
+      build: () {
         when(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .thenThrow(WeakPasswordException());
-        return signupBloc;
+        return signupCubit;
       },
-      act: (signupBloc) {
-        signupBloc.add(Signup(user: UserModel(), profilePhoto: null));
+      act: (signupCubit) {
+        signupCubit.signup(user: UserModel(), profilePhoto: null);
         return;
       },
-      verify: (signupBloc) async {
+      verify: (signupCubit) async {
         verify(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .called(1);
       },
@@ -117,16 +117,16 @@ void main() {
     blocTest(
       '''Expects [SignupLoading, UserCreationFailed] with 
       EMAIL_IS_INVALID message when SignupTried added and email with invalid format''',
-      build: () async {
+      build: () {
         when(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .thenThrow(InvalidEmailException());
-        return signupBloc;
+        return signupCubit;
       },
-      act: (signupBloc) {
-        signupBloc.add(Signup(user: UserModel(), profilePhoto: null));
+      act: (signupCubit) {
+        signupCubit.signup(user: UserModel(), profilePhoto: null);
         return;
       },
-      verify: (signupBloc) async {
+      verify: (signupCubit) async {
         verify(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .called(1);
       },
@@ -139,16 +139,16 @@ void main() {
     blocTest(
       'Expects [SignupLoading, SignupFailed] when signup '
       'failled somehow',
-      build: () async {
+      build: () {
         when(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .thenThrow(Exception());
-        return signupBloc;
+        return signupCubit;
       },
-      act: (signupBloc) {
-        signupBloc.add(Signup(user: UserModel(), profilePhoto: null));
+      act: (signupCubit) {
+        signupCubit.signup(user: UserModel(), profilePhoto: null);
         return;
       },
-      verify: (signupBloc) async {
+      verify: (signupCubit) async {
         verify(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .called(1);
       },

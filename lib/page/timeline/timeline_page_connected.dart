@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/blocs.dart';
-import '../../bloc/timeline/timeline_bloc.dart';
+import '../../bloc/cubits.dart';
 import '../../core/repository/concrete/repositories.dart';
 import '../../core/service/locator.dart';
 import '../../core/service/services.dart';
@@ -40,10 +39,10 @@ class _TimelinePageConnectedState extends State<TimelinePageConnected> {
 
   @override
   Widget build(BuildContext context) {
-    return PageConnected<TimelineBloc>(
-      bloc: TimelineBloc(
+    return PageConnected<TimelineCubit>(
+      bloc: TimelineCubit(
         repository: context.repository<FirebaseTimelineRepository>(),
-      )..add(FetchUserTimeline(context.bloc<UserBloc>().user.userId)),
+      )..fetchUserTimeline(context.bloc<UserCubit>().user.userId),
       page: TimelinePage(),
     );
   }

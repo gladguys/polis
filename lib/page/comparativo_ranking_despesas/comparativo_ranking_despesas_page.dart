@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/model/models.dart';
 import '../../widget/error_container.dart';
 import '../../widget/loading.dart';
@@ -16,7 +16,7 @@ class ComparativoRankingDespesasPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<ComparativoRankingDespesasBloc,
+        child: BlocBuilder<ComparativoRankingDespesasCubit,
             ComparativoRankingDespesasState>(
           builder: (_, state) {
             if (state is GetRankingResultadosSuccess) {

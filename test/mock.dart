@@ -8,14 +8,15 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_performance/firebase_performance.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
+import 'package:polis/bloc/timeline/timeline_cubit.dart';
+import 'package:polis/bloc/tramitacao_proposta/tramitacao_proposta_cubit.dart';
 import 'package:polis/core/abstract/polis_google_auth_provider.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/repository/abstract/repositories.dart';
@@ -26,81 +27,69 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
 // Bloc
-class MockSigninBloc extends MockBloc<SigninEvent, SigninState>
-    implements SigninBloc {}
+class MockSigninCubit extends MockBloc<SigninState> implements SigninCubit {}
 
-class MockSubCommentsBloc extends MockBloc<SubCommentsEvent, SubCommentsState>
-    implements SubCommentsBloc {}
+class MockSubCommentsCubit extends MockBloc<SubCommentsState>
+    implements SubCommentsCubit {}
 
-class MockCommentBloc extends MockBloc<CommentEvent, CommentState>
-    implements CommentBloc {}
+class MockCommentCubit extends MockBloc<CommentState> implements CommentCubit {}
 
-class MockPoliticExpensesAnalysisBloc
-    extends MockBloc<PoliticExpensesAnalysisEvent, PoliticExpensesAnalysisState>
-    implements PoliticExpensesAnalysisBloc {}
+class MockPoliticExpensesAnalysisCubit
+    extends MockBloc<PoliticExpensesAnalysisState>
+    implements PoliticExpensesAnalysisCubit {}
 
-class MockEditProfileBloc extends MockBloc<EditProfileEvent, EditProfileState>
-    implements EditProfileBloc {}
+class MockEditProfileCubit extends MockBloc<EditProfileState>
+    implements EditProfileCubit {}
 
-class MockComparativoRankingDespesasBloc extends MockBloc<
-        ComparativoRankingDespesasEvent, ComparativoRankingDespesasState>
-    implements ComparativoRankingDespesasBloc {}
+class MockComparativoRankingDespesasCubit
+    extends MockBloc<ComparativoRankingDespesasState>
+    implements ComparativoRankingDespesasCubit {}
 
-class MockChangePasswordBloc
-    extends MockBloc<ChangePasswordEvent, ChangePasswordState>
-    implements ChangePasswordBloc {}
+class MockChangePasswordCubit extends MockBloc<ChangePasswordState>
+    implements ChangePasswordCubit {}
 
-class MockPostBloc extends MockBloc<PostEvent, PostState> implements PostBloc {}
+class MockPostCubit extends MockBloc<PostState> implements PostCubit {}
 
-class MockFavoritePostsBloc
-    extends MockBloc<FavoritePostsEvent, FavoritePostsState>
-    implements FavoritePostsBloc {}
+class MockFavoritePostsCubit extends MockBloc<FavoritePostsState>
+    implements FavoritePostsCubit {}
 
-class MockPoliticExpensesBloc
-    extends MockBloc<PoliticExpensesEvent, PoliticExpensesState>
-    implements PoliticExpensesBloc {}
+class MockPoliticExpensesCubit extends MockBloc<PoliticExpensesState>
+    implements PoliticExpensesCubit {}
 
-class MockUserFollowingPoliticsBloc
-    extends MockBloc<UserFollowingPoliticsEvent, UserFollowingPoliticsState>
-    implements UserFollowingPoliticsBloc {}
+class MockUserFollowingPoliticsCubit
+    extends MockBloc<UserFollowingPoliticsState>
+    implements UserFollowingPoliticsCubit {}
 
-class MockPoliticSuggestionBloc
-    extends MockBloc<PoliticSuggestionEvent, PoliticSuggestionState>
-    implements PoliticSuggestionBloc {}
+class MockPoliticSuggestionCubit extends MockBloc<PoliticSuggestionState>
+    implements PoliticSuggestionCubit {}
 
-class MockSignupBloc extends MockBloc<SignupEvent, SignupState>
-    implements SignupBloc {}
+class MockSignupCubit extends MockBloc<SignupState> implements SignupCubit {}
 
-class MockUserBloc extends MockBloc<UserEvent, UserState> implements UserBloc {}
+class MockUserCubit extends MockBloc<UserState> implements UserCubit {}
 
-class MockTramitacaoPropostaBloc
-    extends MockBloc<TramitacaoPropostaEvent, TramitacaoPropostaState>
-    implements TramitacaoPropostaBloc {}
+class MockTramitacaoPropostaCubit extends MockBloc<TramitacaoPropostaState>
+    implements TramitacaoPropostaCubit {}
 
-class MockTimelineBloc extends MockBloc<TimelineEvent, TimelineState>
-    implements TimelineBloc {}
+class MockTimelineCubit extends MockBloc<TimelineState>
+    implements TimelineCubit {}
 
-class MockPoliticProposalsBloc
-    extends MockBloc<PoliticProposalsEvent, PoliticProposalsState>
-    implements PoliticProposalsBloc {}
+class MockPoliticProposalsCubit extends MockBloc<PoliticProposalsState>
+    implements PoliticProposalsCubit {}
 
-class MockUserProfileBloc extends MockBloc<UserProfileEvent, UserProfileState>
-    implements UserProfileBloc {}
+class MockUserProfileCubit extends MockBloc<UserProfileState>
+    implements UserProfileCubit {}
 
-class MockDocumentBloc extends MockBloc<DocumentEvent, DocumentState>
-    implements DocumentBloc {}
+class MockDocumentCubit extends MockBloc<DocumentState>
+    implements DocumentCubit {}
 
-class MockPoliticProfileBloc
-    extends MockBloc<PoliticProfileEvent, PoliticProfileState>
-    implements PoliticProfileBloc {}
+class MockPoliticProfileCubit extends MockBloc<PoliticProfileState>
+    implements PoliticProfileCubit {}
 
-class MockPoliticFollowersBloc
-    extends MockBloc<PoliticFollowersEvent, PoliticFollowersState>
-    implements PoliticFollowersBloc {}
+class MockPoliticFollowersCubit extends MockBloc<PoliticFollowersState>
+    implements PoliticFollowersCubit {}
 
-class MockSearchPoliticBloc
-    extends MockBloc<SearchPoliticEvent, SearchPoliticState>
-    implements SearchPoliticBloc {}
+class MockSearchPoliticCubit extends MockBloc<SearchPoliticState>
+    implements SearchPoliticCubit {}
 
 // Repository
 class MockSigninRepository extends Mock implements SigninRepository {}
@@ -232,8 +221,6 @@ class MockFirebaseMessaging extends Mock implements FirebaseMessaging {}
 
 class MockCrashlytics extends Mock implements Crashlytics {}
 
-class MockFirebasePerformance extends Mock implements FirebasePerformance {}
-
 // Hive
 class MockHive extends Mock implements HiveInterface {}
 
@@ -245,8 +232,6 @@ class MockOrgaoBox extends Mock implements Box<OrgaoModel> {}
 
 // Service
 class MockAnalyticsService extends Mock implements AnalyticsService {}
-
-class MockPerformanceService extends Mock implements PerformanceService {}
 
 class MockShareService extends Mock implements ShareService {}
 
@@ -267,8 +252,6 @@ class MockUrlLauncherService extends Mock implements UrlLauncherService {}
 
 // Other
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
-
-class MockTrace extends Mock implements Trace {}
 
 class MockScreenshotController extends Mock implements ScreenshotController {}
 

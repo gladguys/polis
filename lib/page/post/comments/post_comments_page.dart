@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../bloc/post/comment/comment_bloc.dart';
+import '../../../bloc/cubits.dart';
 import '../../../core/domain/model/comment_model.dart';
 import '../../../core/utils/general_utils.dart';
 import '../../../widget/error_container.dart';
@@ -21,7 +21,7 @@ class PostCommentsPage extends StatefulWidget {
 class _PostCommentsPageState extends State<PostCommentsPage> {
   TextEditingController commentInputController;
 
-  dynamic get post => context.bloc<CommentBloc>().post;
+  dynamic get post => context.bloc<CommentCubit>().post;
   bool get isPostProposta => isPostProposal(post);
   bool get isPostDespesa => isPostExpense(post);
 
@@ -41,10 +41,10 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<CommentBloc, CommentState>(
+        child: BlocBuilder<CommentCubit, CommentState>(
           builder: (_, state) {
             if (shouldShowCommentsByState(state)) {
-              final comments = context.bloc<CommentBloc>().postComments;
+              final comments = context.bloc<CommentCubit>().postComments;
               return Stack(
                 children: <Widget>[
                   Container(
@@ -79,10 +79,8 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                     AddCommentContainer(
                       commentInputController: commentInputController,
                       onAddComment: () {
-                        context.bloc<CommentBloc>().add(
-                              AddComment(
-                                text: commentInputController.text,
-                              ),
+                        context.bloc<CommentCubit>().addComment(
+                              text: commentInputController.text,
                             );
                         commentInputController.clear();
                       },

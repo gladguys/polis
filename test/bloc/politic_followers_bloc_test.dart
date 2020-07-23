@@ -1,29 +1,29 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 
 import '../mock.dart';
 
 void main() {
   group('PoliticFollowersBloc tests', () {
-    PoliticFollowersBloc politicFollowersBloc;
+    PoliticFollowersCubit politicFollowersCubit;
     MockPoliticFollowersRepository mockPoliticFollowersRepository;
 
     setUp(() {
       mockPoliticFollowersRepository = MockPoliticFollowersRepository();
-      politicFollowersBloc = PoliticFollowersBloc(
+      politicFollowersCubit = PoliticFollowersCubit(
         repository: mockPoliticFollowersRepository,
       );
     });
 
     tearDown(() {
-      politicFollowersBloc?.close();
+      politicFollowersCubit?.close();
     });
 
     test('asserts', () {
       expect(
-          () => PoliticFollowersBloc(
+          () => PoliticFollowersCubit(
                 repository: null,
               ),
           throwsAssertionError);
@@ -31,22 +31,22 @@ void main() {
 
     test('Expects InitialPoliticFollowersState to be the initial state', () {
       expect(
-          politicFollowersBloc.state, equals(InitialPoliticFollowersState()));
+          politicFollowersCubit.state, equals(InitialPoliticFollowersState()));
     });
 
     group('GetPoliticFollowers event', () {
       blocTest(
         '''Expects [LoadingPoliticFollowers, GetPoliticFollowersSuccess] when success''',
-        build: () async {
+        build: () {
           when(mockPoliticFollowersRepository.getUsersFollowingPolitic('1'))
               .thenAnswer((_) => Future.value([]));
-          return politicFollowersBloc;
+          return politicFollowersCubit;
         },
-        act: (politicSuggestionBloc) {
-          politicSuggestionBloc.add(GetPoliticFollowers('1'));
+        act: (politicFollowersCubit) {
+          politicFollowersCubit.getPoliticFollowers('1');
           return;
         },
-        verify: (politicSuggestionBloc) async {
+        verify: (politicFollowersCubit) async {
           verify(mockPoliticFollowersRepository.getUsersFollowingPolitic('1'))
               .called(1);
         },
@@ -58,16 +58,16 @@ void main() {
 
       blocTest(
         '''Expects [LoadingPoliticFollowers, GetPoliticFollowersFailed] when fails''',
-        build: () async {
+        build: () {
           when(mockPoliticFollowersRepository.getUsersFollowingPolitic('1'))
               .thenThrow(Exception());
-          return politicFollowersBloc;
+          return politicFollowersCubit;
         },
-        act: (politicFollowersBloc) {
-          politicFollowersBloc.add(GetPoliticFollowers('1'));
+        act: (politicFollowersCubit) {
+          politicFollowersCubit.getPoliticFollowers('1');
           return;
         },
-        verify: (politicFollowersBloc) async {
+        verify: (politicFollowersCubit) async {
           verify(mockPoliticFollowersRepository.getUsersFollowingPolitic('1'))
               .called(1);
         },

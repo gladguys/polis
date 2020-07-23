@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/enum/post_type.dart';
 import '../../core/domain/model/proposta_model.dart';
 import '../../core/extension/extensions.dart';
@@ -24,7 +24,7 @@ class FavoritePropostaTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final proposta = PropostaModel.fromJson(context.bloc<PostBloc>().post);
+    final proposta = PropostaModel.fromJson(context.bloc<PostCubit>().post);
     return Stack(children: [
       CardBase(
         slotLeft: _buildLeftContent(context),
@@ -56,7 +56,7 @@ class FavoritePropostaTile extends StatelessWidget {
   }
 
   Widget _buildLeftContent(BuildContext context) {
-    final proposta = PropostaModel.fromJson(context.bloc<PostBloc>().post);
+    final proposta = PropostaModel.fromJson(context.bloc<PostCubit>().post);
     return Stack(
       overflow: Overflow.visible,
       children: <Widget>[
@@ -85,7 +85,7 @@ class FavoritePropostaTile extends StatelessWidget {
   }
 
   Widget _buildTopContent(BuildContext context) {
-    final proposta = PropostaModel.fromJson(context.bloc<PostBloc>().post);
+    final proposta = PropostaModel.fromJson(context.bloc<PostCubit>().post);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,7 +118,7 @@ class FavoritePropostaTile extends StatelessWidget {
   }
 
   Widget _buildCenterContent(BuildContext context) {
-    final proposta = PropostaModel.fromJson(context.bloc<PostBloc>().post);
+    final proposta = PropostaModel.fromJson(context.bloc<PostCubit>().post);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -141,9 +141,9 @@ class FavoritePropostaTile extends StatelessWidget {
   }
 
   Widget _buildActions(BuildContext context) {
-    return BlocBuilder<PostBloc, PostState>(
+    return BlocBuilder<PostCubit, PostState>(
       builder: (_, state) {
-        final proposta = PropostaModel.fromJson(context.bloc<PostBloc>().post);
+        final proposta = PropostaModel.fromJson(context.bloc<PostCubit>().post);
         return Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -167,11 +167,9 @@ class FavoritePropostaTile extends StatelessWidget {
                   : Theme.of(context).brightness == Brightness.light
                       ? Colors.grey[700]
                       : Colors.grey[500],
-              onTap: () => context.bloc<PostBloc>().add(
-                    FavoritePostForUser(
-                      post: proposta.toJson(),
-                      user: context.bloc<UserBloc>().user,
-                    ),
+              onTap: () => context.bloc<PostCubit>().favoritePostForUser(
+                    post: proposta.toJson(),
+                    user: context.bloc<UserCubit>().user,
                   ),
             ),
           ],

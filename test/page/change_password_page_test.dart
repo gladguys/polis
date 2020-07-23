@@ -2,7 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/i18n/i18n.dart';
 import 'package:polis/core/keys.dart';
 import 'package:polis/page/page_connected.dart';
@@ -17,11 +17,11 @@ void main() {
 
   group('ChangePasswordPage tests', () {
     testWidgets('should build without exploding', (tester) async {
-      final mockChangePasswordBloc = MockChangePasswordBloc();
+      final mockChangePasswordCubit = MockChangePasswordCubit();
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<MockChangePasswordBloc>(
-            bloc: mockChangePasswordBloc,
+          PageConnected<MockChangePasswordCubit>(
+            bloc: mockChangePasswordCubit,
             page: ChangePasswordPageConnected(),
           ),
         ),
@@ -29,11 +29,11 @@ void main() {
     });
 
     testWidgets('should show loading', (tester) async {
-      final mockChangePasswordBloc = MockChangePasswordBloc();
+      final mockChangePasswordBloc = MockChangePasswordCubit();
       when(mockChangePasswordBloc.state).thenReturn(UserPasswordChanging());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<ChangePasswordBloc>(
+          PageConnected<ChangePasswordCubit>(
             bloc: mockChangePasswordBloc,
             page: ChangePasswordPage(),
           ),
@@ -43,44 +43,47 @@ void main() {
     });
 
     testWidgets('should show snackbar when success', (tester) async {
-      final mockChangePasswordBloc = MockChangePasswordBloc();
+      final mockChangePasswordCubit = MockChangePasswordCubit();
+      when(mockChangePasswordCubit.state)
+          .thenReturn(InitialChangePasswordState());
       whenListen(
-        mockChangePasswordBloc,
+        mockChangePasswordCubit,
         Stream.fromIterable(
           [
-            UserWrongPasswordInformed(),
             UserPasswordChangeSuccess(),
           ],
         ),
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<ChangePasswordBloc>(
-            bloc: mockChangePasswordBloc,
+          PageConnected<ChangePasswordCubit>(
+            bloc: mockChangePasswordCubit,
             page: ChangePasswordPage(),
           ),
         ),
       );
-      await tester.pumpAndSettle();
+      await tester.pump();
       final snackSuccess = find.text(USER_PASSWORD_UPDATED_WITH_SUCCESS);
       expect(snackSuccess, findsOneWidget);
     });
 
     testWidgets('should show snackbar when fail', (tester) async {
-      final mockChangePasswordBloc = MockChangePasswordBloc();
+      final mockChangePasswordCubit = MockChangePasswordCubit();
+      when(mockChangePasswordCubit.state)
+          .thenReturn(InitialChangePasswordState());
       whenListen(
-        mockChangePasswordBloc,
+        mockChangePasswordCubit,
         Stream.fromIterable(
           [
-            UserWrongPasswordInformed(),
             UserPasswordChangeFailed(),
           ],
         ),
       );
+
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<ChangePasswordBloc>(
-            bloc: mockChangePasswordBloc,
+          PageConnected<ChangePasswordCubit>(
+            bloc: mockChangePasswordCubit,
             page: ChangePasswordPage(),
           ),
         ),
@@ -92,20 +95,22 @@ void main() {
 
     testWidgets('should show snackbar when wrong password is given',
         (tester) async {
-      final mockChangePasswordBloc = MockChangePasswordBloc();
+      final mockChangePasswordCubit = MockChangePasswordCubit();
+      when(mockChangePasswordCubit.state)
+          .thenReturn(InitialChangePasswordState());
       whenListen(
-        mockChangePasswordBloc,
+        mockChangePasswordCubit,
         Stream.fromIterable(
           [
-            UserPasswordChangeFailed(),
             UserWrongPasswordInformed(),
           ],
         ),
       );
+
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<ChangePasswordBloc>(
-            bloc: mockChangePasswordBloc,
+          PageConnected<ChangePasswordCubit>(
+            bloc: mockChangePasswordCubit,
             page: ChangePasswordPage(),
           ),
         ),
@@ -116,11 +121,11 @@ void main() {
     });
 
     testWidgets('should validate and save the form', (tester) async {
-      final mockChangePasswordBloc = MockChangePasswordBloc();
+      final mockChangePasswordCubit = MockChangePasswordCubit();
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<ChangePasswordBloc>(
-            bloc: mockChangePasswordBloc,
+          PageConnected<ChangePasswordCubit>(
+            bloc: mockChangePasswordCubit,
             page: ChangePasswordPage(),
           ),
         ),
@@ -145,11 +150,9 @@ void main() {
       await tester.pumpAndSettle();
       expect(formKey.currentState.validate(), isTrue);
       verify(
-        mockChangePasswordBloc.add(
-          ChangeUserPassword(
-            currentPassword: '123456',
-            newPassword: '12345678',
-          ),
+        mockChangePasswordCubit.changeUserPassword(
+          currentPassword: '123456',
+          newPassword: '12345678',
         ),
       ).called(1);
     });
@@ -157,11 +160,11 @@ void main() {
     testWidgets(
         'should validate form when passwords confirmations are not equal',
         (tester) async {
-      final mockChangePasswordBloc = MockChangePasswordBloc();
+      final mockChangePasswordCubit = MockChangePasswordCubit();
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<ChangePasswordBloc>(
-            bloc: mockChangePasswordBloc,
+          PageConnected<ChangePasswordCubit>(
+            bloc: mockChangePasswordCubit,
             page: ChangePasswordPage(),
           ),
         ),
@@ -186,22 +189,20 @@ void main() {
       await tester.pumpAndSettle();
       expect(formKey.currentState.validate(), isFalse);
       verifyNever(
-        mockChangePasswordBloc.add(
-          ChangeUserPassword(
-            currentPassword: '123456',
-            newPassword: '12345678',
-          ),
+        mockChangePasswordCubit.changeUserPassword(
+          currentPassword: '123456',
+          newPassword: '12345678',
         ),
       );
     });
 
     testWidgets('should validate form when passwords is not 6 caracters long',
         (tester) async {
-      final mockChangePasswordBloc = MockChangePasswordBloc();
+      final mockChangePasswordCubit = MockChangePasswordCubit();
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<ChangePasswordBloc>(
-            bloc: mockChangePasswordBloc,
+          PageConnected<ChangePasswordCubit>(
+            bloc: mockChangePasswordCubit,
             page: ChangePasswordPage(),
           ),
         ),
@@ -226,11 +227,9 @@ void main() {
       await tester.pumpAndSettle();
       expect(formKey.currentState.validate(), isFalse);
       verifyNever(
-        mockChangePasswordBloc.add(
-          ChangeUserPassword(
-            currentPassword: '123456',
-            newPassword: '12345678',
-          ),
+        mockChangePasswordCubit.changeUserPassword(
+          currentPassword: '123456',
+          newPassword: '12345678',
         ),
       );
     });

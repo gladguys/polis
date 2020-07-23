@@ -1,4 +1,4 @@
-part of 'user_following_politics_bloc.dart';
+part of 'user_following_politics_cubit.dart';
 
 abstract class UserFollowingPoliticsState extends Equatable {
   const UserFollowingPoliticsState();

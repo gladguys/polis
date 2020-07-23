@@ -1,4 +1,4 @@
-part of 'politic_expenses_analysis_bloc.dart';
+part of 'politic_expenses_analysis_cubit.dart';
 
 abstract class PoliticExpensesAnalysisState extends Equatable {
   const PoliticExpensesAnalysisState();

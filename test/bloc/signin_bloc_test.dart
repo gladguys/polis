@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/exception/exceptions.dart';
 import 'package:polis/core/i18n/i18n.dart';
@@ -12,7 +12,7 @@ void main() {
   UserModel user;
 
   group('SigninBloc tests', () {
-    SigninBloc signinBloc;
+    SigninCubit signinCubit;
     MockSigninRepository mockSigninRepository;
     MockAnalyticsService mockAnalyticsService;
     MockSharedPreferencesService mockSharedPreferencesService;
@@ -29,7 +29,7 @@ void main() {
       mockAnalyticsService = MockAnalyticsService();
       mockSharedPreferencesService = MockSharedPreferencesService();
       mockMessageService = MockMessageService();
-      signinBloc = SigninBloc(
+      signinCubit = SigninCubit(
         repository: mockSigninRepository,
         analyticsService: mockAnalyticsService,
         sharedPreferencesService: mockSharedPreferencesService,
@@ -38,12 +38,12 @@ void main() {
     });
 
     tearDown(() {
-      signinBloc?.close();
+      signinCubit?.close();
     });
 
     test('asserts', () {
       expect(
-          () => SigninBloc(
+          () => SigninCubit(
                 repository: mockSigninRepository,
                 analyticsService: null,
                 sharedPreferencesService: null,
@@ -51,7 +51,7 @@ void main() {
               ),
           throwsAssertionError);
       expect(
-          () => SigninBloc(
+          () => SigninCubit(
                 repository: null,
                 analyticsService: mockAnalyticsService,
                 sharedPreferencesService: null,
@@ -59,7 +59,7 @@ void main() {
               ),
           throwsAssertionError);
       expect(
-          () => SigninBloc(
+          () => SigninCubit(
                 repository: mockSigninRepository,
                 analyticsService: mockAnalyticsService,
                 sharedPreferencesService: null,
@@ -67,7 +67,7 @@ void main() {
               ),
           throwsAssertionError);
       expect(
-          () => SigninBloc(
+          () => SigninCubit(
                 repository: mockSigninRepository,
                 analyticsService: mockAnalyticsService,
                 sharedPreferencesService: mockSharedPreferencesService,
@@ -77,24 +77,24 @@ void main() {
     });
 
     test('Expects InitialSignin to be the initial state', () {
-      expect(signinBloc.state, equals(InitialSignin()));
+      expect(signinCubit.state, equals(InitialSignin()));
     });
 
     blocTest(
       'Expects [SigninLoading, UserAuthenticated]'
       ' when SigninWithEmailAndPassword added',
-      build: () async {
+      build: () {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .thenAnswer((_) => Future.value(user));
         when(mockAnalyticsService.logSignin(method: anyNamed('method')))
             .thenAnswer((_) => Future.value());
-        return signinBloc;
+        return signinCubit;
       },
-      act: (signinBloc) {
-        signinBloc.add(SigninWithEmailAndPassword('', ''));
+      act: (signinCubit) {
+        signinCubit.signinWithEmailAndPassword('', '');
         return;
       },
-      verify: (signinBloc) async {
+      verify: (signinCubit) async {
         verify(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .called(1);
         verify(mockAnalyticsService.logSignin(method: 'EMAIL_AND_PASSWORD'))
@@ -111,16 +111,16 @@ void main() {
     blocTest(
       'Expects [SentingResetEmail, ResetEmailSentSuccess]'
       ' when SendResetPasswordEmail added',
-      build: () async {
+      build: () {
         when(mockSigninRepository.sendResetEmail('email@email.com'))
             .thenAnswer((_) => Future.value());
-        return signinBloc;
+        return signinCubit;
       },
-      act: (signinBloc) {
-        signinBloc.add(SendResetPasswordEmail('email@email.com'));
+      act: (signinCubit) {
+        signinCubit.sendResetPasswordEmail('email@email.com');
         return;
       },
-      verify: (signinBloc) async {
+      verify: (signinCubit) async {
         verify(mockSigninRepository.sendResetEmail('email@email.com'))
             .called(1);
       },
@@ -132,13 +132,13 @@ void main() {
 
     blocTest(
       'Expects [SentingResetEmail, ResetEmailSentFailed] when email send fails',
-      build: () async {
+      build: () {
         when(mockSigninRepository.sendResetEmail('email@email.com'))
             .thenThrow(Exception());
-        return signinBloc;
+        return signinCubit;
       },
-      act: (signinBloc) {
-        signinBloc.add(SendResetPasswordEmail('email@email.com'));
+      act: (signinCubit) {
+        signinCubit.sendResetPasswordEmail('email@email.com');
         return;
       },
       verify: (signinBloc) async {
@@ -154,18 +154,18 @@ void main() {
     blocTest(
       'Expects [SigninLoading, UserAuthenticated]'
       ' when SigninWithGoogle added',
-      build: () async {
+      build: () {
         when(mockSigninRepository.signInWithGoogle())
             .thenAnswer((_) => Future.value(user));
         when(mockAnalyticsService.logSignin(method: anyNamed('method')))
             .thenAnswer((_) => Future.value());
-        return signinBloc;
+        return signinCubit;
       },
-      act: (signinBloc) {
-        signinBloc.add(SigninWithGoogle());
+      act: (signinCubit) {
+        signinCubit.signinWithGoogle();
         return;
       },
-      verify: (signinBloc) async {
+      verify: (signinCubit) async {
         verify(mockSigninRepository.signInWithGoogle()).called(1);
         verify(mockAnalyticsService.logSignin(method: 'GOOGLE')).called(1);
         verify(mockSharedPreferencesService.setUser(user)).called(1);
@@ -180,16 +180,16 @@ void main() {
       '''Expects [SigninLoading, SigninFailed] with 
       ERROR_INVALID_CREDENTIALS when SigninWithEmailAndPassword added and theres an error with 
       credentials''',
-      build: () async {
+      build: () {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .thenThrow(InvalidCredentialsException());
-        return signinBloc;
+        return signinCubit;
       },
-      act: (signinBloc) {
-        signinBloc.add(SigninWithEmailAndPassword('', ''));
+      act: (signinCubit) {
+        signinCubit.signinWithEmailAndPassword('', '');
         return;
       },
-      verify: (signinBloc) async {
+      verify: (signinCubit) async {
         verify(mockSigninRepository.signInWithEmailAndPassword('', ''))
             .called(1);
       },
@@ -202,16 +202,16 @@ void main() {
     blocTest(
       'Expects [SigninLoading, SigninFailed] with '
       'ERROR_SIGNIN when SigninWithEmailAndPassword added and theres an error',
-      build: () async {
+      build: () {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .thenThrow(ComunicationException());
-        return signinBloc;
+        return signinCubit;
       },
-      act: (signinBloc) {
-        signinBloc.add(SigninWithEmailAndPassword('', ''));
+      act: (signinCubit) {
+        signinCubit.signinWithEmailAndPassword('', '');
         return;
       },
-      verify: (signinBloc) async {
+      verify: (signinCubit) async {
         verify(mockSigninRepository.signInWithEmailAndPassword('', ''))
             .called(1);
       },
@@ -225,16 +225,16 @@ void main() {
       '''Expects [SigninLoading, SigninFailed] with 
       ERROR_INVALID_CREDENTIALS when SigninWithGoogle added and theres an error with 
       credentials''',
-      build: () async {
+      build: () {
         when(mockSigninRepository.signInWithGoogle())
             .thenThrow(InvalidCredentialsException());
-        return signinBloc;
+        return signinCubit;
       },
-      act: (signinBloc) {
-        signinBloc.add(SigninWithGoogle());
+      act: (signinCubit) {
+        signinCubit.signinWithGoogle();
         return;
       },
-      verify: (signinBloc) async {
+      verify: (signinCubit) async {
         verify(mockSigninRepository.signInWithGoogle()).called(1);
       },
       expect: [
@@ -246,16 +246,16 @@ void main() {
     blocTest(
       '''Expects [SigninLoading, UserAuthenticationFailed] with 
       ERROR_AUTENTICATING_USER when SigninWithEmailAndPassword added and theres an error''',
-      build: () async {
+      build: () {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .thenAnswer((_) => Future.value(null));
-        return signinBloc;
+        return signinCubit;
       },
-      act: (signinBloc) {
-        signinBloc.add(SigninWithEmailAndPassword('', ''));
+      act: (signinCubit) {
+        signinCubit.signinWithEmailAndPassword('', '');
         return;
       },
-      verify: (signinBloc) async {
+      verify: (signinCubit) async {
         verify(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .called(1);
       },
@@ -268,16 +268,16 @@ void main() {
     blocTest(
       '''Expects [SigninLoading, UserAuthenticationFailed] with 
       ERROR_AUTENTICATING_USER when SigninWithGoogle added and theres an error''',
-      build: () async {
+      build: () {
         when(mockSigninRepository.signInWithGoogle())
             .thenAnswer((_) => Future.value(null));
-        return signinBloc;
+        return signinCubit;
       },
-      act: (signinBloc) {
-        signinBloc.add(SigninWithGoogle());
+      act: (signinCubit) {
+        signinCubit.signinWithGoogle();
         return;
       },
-      verify: (signinBloc) async {
+      verify: (signinCubit) async {
         verify(mockSigninRepository.signInWithGoogle()).called(1);
       },
       expect: [
@@ -289,15 +289,15 @@ void main() {
     blocTest(
       '''Expects [SigninLoading, SigninFailed] with 
       ERROR_SIGNIN when SigninWithGoogle added and theres an error''',
-      build: () async {
+      build: () {
         when(mockSigninRepository.signInWithGoogle()).thenThrow(Exception());
-        return signinBloc;
+        return signinCubit;
       },
-      act: (signinBloc) {
-        signinBloc.add(SigninWithGoogle());
+      act: (signinCubit) {
+        signinCubit.signinWithGoogle();
         return;
       },
-      verify: (signinBloc) async {
+      verify: (signinCubit) async {
         verify(mockSigninRepository.signInWithGoogle()).called(1);
       },
       expect: [

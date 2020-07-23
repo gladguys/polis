@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/service/locator.dart';
 import 'package:polis/page/pages.dart';
@@ -48,7 +48,7 @@ void main() async {
       );
       final context = tester.element(find.byType(InitialPage));
       expect(find.byType(MyApp), findsOneWidget);
-      expect(context.bloc<UserBloc>(), isNotNull);
+      expect(context.bloc<UserCubit>(), isNotNull);
     });
 
     testWidgets('Should go to timeline when user is logged', (tester) async {

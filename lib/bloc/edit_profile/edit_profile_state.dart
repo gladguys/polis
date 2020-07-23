@@ -1,4 +1,4 @@
-part of 'edit_profile_bloc.dart';
+part of 'edit_profile_cubit.dart';
 
 abstract class EditProfileState extends Equatable {
   const EditProfileState();

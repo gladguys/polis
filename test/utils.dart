@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/page/theme/dark_theme.dart';
 import 'package:polis/page/theme/light_theme.dart';
@@ -17,8 +17,8 @@ Widget connectedWidget(Widget widget,
     bool useDarkMode = false}) {
   SimpleRouter.setKey(GlobalKey<NavigatorState>());
   return MyAppInjections(
-    child: BlocProvider<UserBloc>(
-      create: (_) => UserBloc(
+    child: BlocProvider<UserCubit>(
+      create: (_) => UserCubit(
         user: UserModel(
           userId: '1',
         ),

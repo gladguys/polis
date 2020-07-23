@@ -1,4 +1,4 @@
-part of 'comparativo_ranking_despesas_bloc.dart';
+part of 'comparativo_ranking_despesas_cubit.dart';
 
 abstract class ComparativoRankingDespesasState extends Equatable {
   const ComparativoRankingDespesasState();

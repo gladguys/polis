@@ -1,26 +1,26 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 
 import '../mock.dart';
 
 void main() {
   group('EditProfileBloc tests', () {
-    SubCommentsBloc subCommentsBloc;
-    MockCommentBloc mockCommentBloc;
+    SubCommentsCubit subCommentsCubit;
+    MockCommentCubit mockCommentCubit;
     MockCommentRepository mockCommentRepository;
 
     setUp(() {
-      mockCommentBloc = MockCommentBloc();
-      when(mockCommentBloc.user).thenReturn(
+      mockCommentCubit = MockCommentCubit();
+      when(mockCommentCubit.user).thenReturn(
         UserModel(
           userId: '1',
         ),
       );
       mockCommentRepository = MockCommentRepository();
-      subCommentsBloc = SubCommentsBloc(
+      subCommentsCubit = SubCommentsCubit(
         post: PropostaModel(
           id: '1',
           idPropostaPolitico: '1',
@@ -28,57 +28,57 @@ void main() {
         comment: CommentModel(
           id: 1,
         ),
-        commentBloc: mockCommentBloc,
+        commentCubit: mockCommentCubit,
         repository: mockCommentRepository,
       );
     });
 
     tearDown(() {
-      subCommentsBloc?.close();
+      subCommentsCubit?.close();
     });
 
     test('asserts', () {
       expect(
-          () => SubCommentsBloc(
+          () => SubCommentsCubit(
                 post: null,
                 comment: CommentModel(),
-                commentBloc: mockCommentBloc,
+                commentCubit: mockCommentCubit,
                 repository: mockCommentRepository,
               ),
           throwsAssertionError);
       expect(
-          () => SubCommentsBloc(
+          () => SubCommentsCubit(
                 post: PropostaModel(),
                 comment: null,
-                commentBloc: mockCommentBloc,
+                commentCubit: mockCommentCubit,
                 repository: mockCommentRepository,
               ),
           throwsAssertionError);
       expect(
-          () => SubCommentsBloc(
+          () => SubCommentsCubit(
                 post: PropostaModel(),
                 comment: CommentModel(),
-                commentBloc: null,
+                commentCubit: null,
                 repository: mockCommentRepository,
               ),
           throwsAssertionError);
       expect(
-          () => SubCommentsBloc(
+          () => SubCommentsCubit(
                 post: PropostaModel(),
                 comment: CommentModel(),
-                commentBloc: mockCommentBloc,
+                commentCubit: mockCommentCubit,
                 repository: null,
               ),
           throwsAssertionError);
     });
 
     test('''Expects InitialCommentRepliesState to be the initial state''', () {
-      expect(subCommentsBloc.state, equals(InitialSubCommentsState()));
+      expect(subCommentsCubit.state, equals(InitialSubCommentsState()));
     });
 
     blocTest(
       '''Expects [AddedSubCommentSuccess] when AddSubComment called''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.saveSubComment(
                 commentId: anyNamed('commentId'),
                 subComment: anyNamed('subComment')))
@@ -89,12 +89,10 @@ void main() {
             ),
           ),
         );
-        return subCommentsBloc;
+        return subCommentsCubit;
       },
-      act: (subCommentsBloc) async => subCommentsBloc.add(
-        AddSubComment(
-          text: 'a reply',
-        ),
+      act: (subCommentsCubit) async => subCommentsCubit.addSubComment(
+        text: 'a reply',
       ),
       expect: [
         AddedSubCommentSuccess(
@@ -104,17 +102,15 @@ void main() {
           numberOfReplies: 1,
         ),
       ],
-      verify: (subCommentsBloc) async {
+      verify: (subCommentsCubit) async {
         verify(
-          mockCommentBloc.add(
-            UpdateCommentReplies(
-              comment: CommentModel(
-                id: 1,
-              ),
-              subComments: [
-                SubCommentModel(texto: 'a reply'),
-              ],
+          mockCommentCubit.updateSubCommentsCount(
+            updatedComment: CommentModel(
+              id: 1,
             ),
+            subComments: [
+              SubCommentModel(texto: 'a reply'),
+            ],
           ),
         );
       },
@@ -122,7 +118,7 @@ void main() {
 
     blocTest(
       '''Expects [GetCommentSubCommentsSuccess] when GetCommentSubComments called''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.getCommentSubComments(commentId: 1))
             .thenAnswer(
           (_) => Future.value(
@@ -136,12 +132,10 @@ void main() {
             ],
           ),
         );
-        return subCommentsBloc;
+        return subCommentsCubit;
       },
-      act: (subCommentsBloc) async => subCommentsBloc.add(
-        GetCommentSubComments(
-          commentId: 1,
-        ),
+      act: (subCommentsCubit) async => subCommentsCubit.getCommentSubComments(
+        commentId: 1,
       ),
       expect: [
         CommentSubCommentsLoading(),
@@ -156,7 +150,7 @@ void main() {
           ],
         ),
       ],
-      verify: (subCommentsBloc) async {
+      verify: (subCommentsCubit) async {
         verify(mockCommentRepository.getCommentSubComments(commentId: 1))
             .called(1);
       },
@@ -164,15 +158,14 @@ void main() {
 
     blocTest(
       '''Expects [LoadingPostComments, GetPostCommentsSuccess] when GetPostComments failed''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.getCommentSubComments(
           commentId: 1,
         )).thenThrow(Exception());
-        return subCommentsBloc;
+        return subCommentsCubit;
       },
-      act: (subCommentsBloc) async => subCommentsBloc.add(
-        GetCommentSubComments(commentId: 1),
-      ),
+      act: (subCommentsCubit) async =>
+          subCommentsCubit.getCommentSubComments(commentId: 1),
       expect: [
         CommentSubCommentsLoading(),
         GetCommentSubCommentsFailed(),
@@ -181,7 +174,7 @@ void main() {
 
     blocTest(
       '''Expects [AddedSubCommentSuccess] when AddSubComment called''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.saveSubComment(
           subComment: anyNamed('subComment'),
           commentId: 1,
@@ -193,12 +186,10 @@ void main() {
             ),
           ),
         );
-        return subCommentsBloc;
+        return subCommentsCubit;
       },
-      act: (subCommentsBloc) async => subCommentsBloc.add(
-        AddSubComment(
-          text: 'texto',
-        ),
+      act: (subCommentsCubit) async => subCommentsCubit.addSubComment(
+        text: 'texto',
       ),
       expect: [
         AddedSubCommentSuccess(
@@ -206,20 +197,18 @@ void main() {
           numberOfReplies: 1,
         ),
       ],
-      verify: (subCommentsBloc) async {
+      verify: (subCommentsCubit) async {
         verify(
-          mockCommentBloc.add(
-            UpdateCommentReplies(
-              comment: CommentModel(
-                id: 1,
-              ),
-              subComments: [
-                SubCommentModel(
-                  id: 1,
-                  texto: 'texto',
-                ),
-              ],
+          mockCommentCubit.updateSubCommentsCount(
+            updatedComment: CommentModel(
+              id: 1,
             ),
+            subComments: [
+              SubCommentModel(
+                id: 1,
+                texto: 'texto',
+              ),
+            ],
           ),
         );
       },
@@ -227,17 +216,15 @@ void main() {
 
     blocTest(
       '''Expects [AddedSubCommentFailed] when AddSubComment failed''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.saveSubComment(
           subComment: anyNamed('subComment'),
           commentId: 1,
         )).thenThrow(Exception());
-        return subCommentsBloc;
+        return subCommentsCubit;
       },
-      act: (subCommentsBloc) async => subCommentsBloc.add(
-        AddSubComment(
-          text: 'texto',
-        ),
+      act: (subCommentsCubit) async => subCommentsCubit.addSubComment(
+        text: 'texto',
       ),
       expect: [
         AddedSubCommentFailed(),
@@ -246,19 +233,17 @@ void main() {
 
     blocTest(
       '''Expects [DeletedSubCommentSuccess] when DeleteSubComment called''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.deleteSubComment(
           subComment: anyNamed('subComment'),
         )).thenAnswer(
           (_) => Future.value(),
         );
-        return subCommentsBloc;
+        return subCommentsCubit;
       },
-      act: (subCommentsBloc) async => subCommentsBloc.add(
-        DeleteSubComment(
-          subComment: SubCommentModel(
-            id: 1,
-          ),
+      act: (subCommentsCubit) async => subCommentsCubit.deleteSubComment(
+        subComment: SubCommentModel(
+          id: 1,
         ),
       ),
       expect: [
@@ -269,15 +254,13 @@ void main() {
           numberOfReplies: 0,
         ),
       ],
-      verify: (subCommentsBloc) async {
+      verify: (subCommentsCubit) async {
         verify(
-          mockCommentBloc.add(
-            UpdateCommentReplies(
-              comment: CommentModel(
-                id: 1,
-              ),
-              subComments: [],
+          mockCommentCubit.updateSubCommentsCount(
+            updatedComment: CommentModel(
+              id: 1,
             ),
+            subComments: [],
           ),
         );
       },
@@ -285,17 +268,15 @@ void main() {
 
     blocTest(
       '''Expects [DeletedSubCommentFailed] when DeleteSubComment failed''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.deleteSubComment(
           subComment: anyNamed('subComment'),
         )).thenThrow(Exception());
-        return subCommentsBloc;
+        return subCommentsCubit;
       },
-      act: (subCommentsBloc) async => subCommentsBloc.add(
-        DeleteSubComment(
-          subComment: SubCommentModel(
-            id: 1,
-          ),
+      act: (subCommentsCubit) async => subCommentsCubit.deleteSubComment(
+        subComment: SubCommentModel(
+          id: 1,
         ),
       ),
       expect: [
@@ -305,12 +286,10 @@ void main() {
 
     blocTest(
       '''Expects [EditingSubCommentStarted] when starting edition of  a sub comment''',
-      build: () async => subCommentsBloc,
-      act: (subCommentsBloc) async => subCommentsBloc.add(
-        StartEditingSubComment(
-          SubCommentModel(
-            id: 1,
-          ),
+      build: () => subCommentsCubit,
+      act: (subCommentsCubit) async => subCommentsCubit.startEditingSubComment(
+        SubCommentModel(
+          id: 1,
         ),
       ),
       expect: [
@@ -324,18 +303,14 @@ void main() {
 
     blocTest(
       'Expects [InitialSubCommentsState] when stops editing',
-      build: () async => subCommentsBloc,
-      act: (subCommentsBloc) async {
-        subCommentsBloc.add(
-          StartEditingSubComment(
-            SubCommentModel(
-              id: 1,
-            ),
+      build: () => subCommentsCubit,
+      act: (subCommentsCubit) async {
+        subCommentsCubit.startEditingSubComment(
+          SubCommentModel(
+            id: 1,
           ),
         );
-        subCommentsBloc.add(
-          StopEditingSubComment(),
-        );
+        subCommentsCubit.stopEditingSubComment();
       },
       expect: [
         EditingSubCommentStarted(
@@ -349,8 +324,8 @@ void main() {
 
     blocTest(
       'Expects [SubCommentEditedSuccess] when EditSubComment added',
-      build: () async {
-        subCommentsBloc.subComments = [
+      build: () {
+        subCommentsCubit.subComments = [
           SubCommentModel(
             id: 1,
           ),
@@ -361,15 +336,13 @@ void main() {
         when(mockCommentRepository.editSubComment(
                 commentId: 1, subComment: anyNamed('subComment')))
             .thenAnswer((_) => Future.value());
-        return subCommentsBloc;
+        return subCommentsCubit;
       },
-      act: (subCommentsBloc) async => subCommentsBloc.add(
-        EditSubComment(
-          subComment: SubCommentModel(
-            id: 1,
-          ),
-          newText: 'novo',
+      act: (subCommentsCubit) async => subCommentsCubit.editSubComment(
+        subComment: SubCommentModel(
+          id: 1,
         ),
+        newText: 'novo',
       ),
       expect: [
         SubCommentEditedSuccess(
@@ -378,7 +351,7 @@ void main() {
           ),
         ),
       ],
-      verify: (subCommentsBloc) async {
+      verify: (subCommentsCubit) async {
         verify(
           mockCommentRepository.editSubComment(
             subComment: SubCommentModel(
@@ -393,8 +366,8 @@ void main() {
 
     blocTest(
       'Expects [CommentEditedFailed] when fails',
-      build: () async {
-        subCommentsBloc.subComments = [
+      build: () {
+        subCommentsCubit.subComments = [
           SubCommentModel(
             id: 1,
           ),
@@ -405,15 +378,13 @@ void main() {
         when(mockCommentRepository.editSubComment(
                 commentId: 1, subComment: anyNamed('subComment')))
             .thenThrow(Exception());
-        return subCommentsBloc;
+        return subCommentsCubit;
       },
-      act: (subCommentsBloc) async => subCommentsBloc.add(
-        EditSubComment(
-          subComment: SubCommentModel(
-            id: 1,
-          ),
-          newText: 'novo',
+      act: (subCommentsCubit) async => subCommentsCubit.editSubComment(
+        subComment: SubCommentModel(
+          id: 1,
         ),
+        newText: 'novo',
       ),
       expect: [
         SubCommentEditedFailed(),

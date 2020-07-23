@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/enum/post_type.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/extension/extensions.dart';
@@ -25,12 +25,12 @@ class FavoriteDespesaTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final despesa = DespesaModel.fromJson(context.bloc<PostBloc>().post);
+    final despesa = DespesaModel.fromJson(context.bloc<PostCubit>().post);
     return Stack(
       children: <Widget>[
         CardBase(
           slotLeft: _buildLeftContent(context),
-          slotCenter: BlocBuilder<PostBloc, PostState>(
+          slotCenter: BlocBuilder<PostCubit, PostState>(
             builder: (_, state) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -58,7 +58,7 @@ class FavoriteDespesaTile extends StatelessWidget {
   }
 
   Widget _buildLeftContent(BuildContext context) {
-    final despesa = DespesaModel.fromJson(context.bloc<PostBloc>().post);
+    final despesa = DespesaModel.fromJson(context.bloc<PostCubit>().post);
     return Stack(
       overflow: Overflow.visible,
       children: <Widget>[
@@ -89,7 +89,7 @@ class FavoriteDespesaTile extends StatelessWidget {
   }
 
   Widget _buildTopContent(BuildContext context) {
-    final despesa = DespesaModel.fromJson(context.bloc<PostBloc>().post);
+    final despesa = DespesaModel.fromJson(context.bloc<PostCubit>().post);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,7 +120,7 @@ class FavoriteDespesaTile extends StatelessWidget {
   }
 
   Widget _buildCenterContent(BuildContext context) {
-    final despesa = DespesaModel.fromJson(context.bloc<PostBloc>().post);
+    final despesa = DespesaModel.fromJson(context.bloc<PostCubit>().post);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -144,9 +144,9 @@ class FavoriteDespesaTile extends StatelessWidget {
   }
 
   Widget _buildActions(BuildContext context) {
-    return BlocBuilder<PostBloc, PostState>(
+    return BlocBuilder<PostCubit, PostState>(
       builder: (_, state) {
-        final despesa = DespesaModel.fromJson(context.bloc<PostBloc>().post);
+        final despesa = DespesaModel.fromJson(context.bloc<PostCubit>().post);
         return Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -170,15 +170,13 @@ class FavoriteDespesaTile extends StatelessWidget {
                   : Theme.of(context).brightness == Brightness.light
                       ? Colors.grey[700]
                       : Colors.grey[500],
-              onTap: () => context.bloc<PostBloc>().add(
-                    FavoritePostForUser(
-                      post: {
-                        ID_FIELD: despesa.id,
-                        ...despesa.toJson(),
-                      },
-                      user: context.bloc<UserBloc>().user,
-                    ),
-                  ),
+              onTap: () => context.bloc<PostCubit>().favoritePostForUser(
+                post: {
+                  ID_FIELD: despesa.id,
+                  ...despesa.toJson(),
+                },
+                user: context.bloc<UserCubit>().user,
+              ),
             ),
           ],
         );

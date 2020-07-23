@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../../bloc/blocs.dart';
+import '../../../../bloc/cubits.dart';
 import '../../../../core/domain/model/models.dart';
 import '../../../../core/extension/extensions.dart';
 import '../../../../core/i18n/i18n.dart';
@@ -34,7 +34,7 @@ class EditSubCommentContainer extends StatelessWidget {
               text: subComment.texto,
               commentInputController: commentInputController,
               onCancelEditing: () {
-                context.bloc<SubCommentsBloc>().add(StopEditingSubComment());
+                context.bloc<SubCommentsCubit>().stopEditingSubComment();
                 commentInputController.clear();
               },
             ),
@@ -51,11 +51,9 @@ class EditSubCommentContainer extends StatelessWidget {
                 initialValue: commentInputController.text,
                 onChanged: (text) => commentInputController.text = text,
                 onPressedSuffix: () {
-                  context.bloc<SubCommentsBloc>().add(
-                        EditSubComment(
-                          subComment: subComment,
-                          newText: commentInputController.text,
-                        ),
+                  context.bloc<SubCommentsCubit>().editSubComment(
+                        subComment: subComment,
+                        newText: commentInputController.text,
                       );
                   commentInputController.clear();
                 },

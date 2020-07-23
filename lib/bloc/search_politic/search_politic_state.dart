@@ -1,4 +1,4 @@
-part of 'search_politic_bloc.dart';
+part of 'search_politic_cubit.dart';
 
 abstract class SearchPoliticState extends Equatable {
   const SearchPoliticState();

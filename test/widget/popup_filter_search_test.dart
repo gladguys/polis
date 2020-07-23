@@ -9,13 +9,13 @@ void main() {
       expect(
           () => PopupFilterSearch(
                 partidos: null,
-                searchPoliticBloc: MockSearchPoliticBloc(),
+                searchPoliticCubit: MockSearchPoliticCubit(),
               ),
           throwsAssertionError);
       expect(
           () => PopupFilterSearch(
                 partidos: [],
-                searchPoliticBloc: null,
+                searchPoliticCubit: null,
               ),
           throwsAssertionError);
     });

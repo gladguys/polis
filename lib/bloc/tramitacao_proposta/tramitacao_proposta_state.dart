@@ -1,4 +1,4 @@
-part of 'tramitacao_proposta_bloc.dart';
+part of 'tramitacao_proposta_cubit.dart';
 
 abstract class TramitacaoPropostaState extends Equatable {
   const TramitacaoPropostaState();

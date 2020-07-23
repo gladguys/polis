@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import '../../../bloc/blocs.dart';
+import '../../../bloc/cubits.dart';
 import '../../../core/constants.dart';
 import '../../../core/domain/model/despesa_model.dart';
 import '../../../core/domain/model/models.dart';
@@ -29,8 +29,8 @@ class _PoliticActivitiesState extends State<PoliticActivities> {
   bool get isPositionInRange => !scrollController.position.outOfRange;
   bool get scrollPositionPassedLimit =>
       currentPosition >= maxScrollPosition - kBottomOffsetToLoadMore;
-  PoliticProfileBloc get politicProfileBloc =>
-      context.bloc<PoliticProfileBloc>();
+  PoliticProfileCubit get politicProfileCubit =>
+      context.bloc<PoliticProfileCubit>();
 
   bool hasLoadedAlready;
   int currentActivitiesLength;
@@ -38,7 +38,7 @@ class _PoliticActivitiesState extends State<PoliticActivities> {
 
   void _onScrollListener() {
     if (scrollPositionPassedLimit && isPositionInRange && !hasLoadedAlready) {
-      politicProfileBloc.add(GetMoreActivities(politicProfileBloc.politico.id));
+      politicProfileCubit.getMoreActivities(politicProfileCubit.politico.id);
       hasLoadedAlready = true;
     }
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/repository/concrete/repositories.dart';
 import '../page_connected.dart';
@@ -15,14 +15,12 @@ class UserFollowingPoliticsPageConnected extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageConnected<UserFollowingPoliticsBloc>(
-      bloc: UserFollowingPoliticsBloc(
+    return PageConnected<UserFollowingPoliticsCubit>(
+      bloc: UserFollowingPoliticsCubit(
         userFollowingPoliticsRepository:
             context.repository<FirebaseUserFollowingPoliticsRepository>(),
         followRepository: context.repository<FirebaseFollowRepository>(),
-      )..add(
-          FetchFollowingPolitics(userId: user.userId),
-        ),
+      )..fetchFollowingPolitics(userId: user.userId),
       page: UserFollowingPoliticsPage(),
     );
   }

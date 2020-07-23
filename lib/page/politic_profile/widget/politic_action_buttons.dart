@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../bloc/blocs.dart';
+import '../../../bloc/cubits.dart';
 import '../../../core/domain/model/models.dart';
 import '../../../core/i18n/i18n.dart';
 import '../../../core/keys.dart';
@@ -32,10 +32,8 @@ class PoliticActionButtons extends StatelessWidget {
           fontSize: 14,
           isFollow: isBeingFollowedByUser,
           onPressed: () {
-            context.bloc<PoliticProfileBloc>().add(
-                  FollowUnfollowProfilePolitic(
-                    isFollowing: isBeingFollowedByUser,
-                  ),
+            context.bloc<PoliticProfileCubit>().followUnfollowProfilePolitic(
+                  isFollowing: isBeingFollowedByUser,
                 );
             if (onUnfollowPolitic != null) {
               onUnfollowPolitic();
@@ -49,7 +47,7 @@ class PoliticActionButtons extends StatelessWidget {
           child: OutlineButton(
             key: sendEmailButtonKey,
             onPressed: () =>
-                context.bloc<PoliticProfileBloc>().add(SendEmailToPolitic()),
+                context.bloc<PoliticProfileCubit>().sendEmailToPolitic(),
             padding: EdgeInsets.zero,
             highlightedBorderColor: Colors.grey[600],
             child: const Text(

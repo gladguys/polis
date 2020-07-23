@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:in_app_update/in_app_update.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/keys.dart';
 import 'package:polis/core/service/locator.dart';
@@ -35,12 +35,12 @@ void main() {
 
   group('DefaultBottombar tests', () {
     testWidgets('shoud build without exploding', (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(UserModel());
+      final mockUserCubit = MockUserCubit();
+      when(mockUserCubit.user).thenReturn(UserModel());
       await tester.pumpWidget(
         connectedWidget(
           BlocProvider(
-            create: (_) => mockUserBloc,
+            create: (_) => mockUserCubit,
             child: TimelinePageConnected(
               appUpdateService: mockAppUpdateService,
             ),
@@ -53,7 +53,7 @@ void main() {
       await tester.pumpWidget(
         connectedWidget(
           BlocProvider(
-            create: (_) => UserBloc(
+            create: (_) => UserCubit(
               repository: MockUserRepository(),
               user: UserModel(
                 photoUrl: 'photo',
@@ -95,7 +95,7 @@ void main() {
       await tester.pumpWidget(
         connectedWidget(
           BlocProvider(
-            create: (_) => UserBloc(
+            create: (_) => UserCubit(
               repository: MockUserRepository(),
               user: UserModel(
                 photoUrl: 'photo',
@@ -117,7 +117,7 @@ void main() {
       await tester.pumpWidget(
         connectedWidget(
           BlocProvider(
-            create: (_) => UserBloc(
+            create: (_) => UserCubit(
               repository: MockUserRepository(),
               user: UserModel(),
               analyticsService: MockAnalyticsService(),
@@ -134,12 +134,12 @@ void main() {
 
     testWidgets('shoud go to TimelinePage when clicking home icon',
         (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(UserModel());
+      final mockUserCubit = MockUserCubit();
+      when(mockUserCubit.user).thenReturn(UserModel());
       await tester.pumpWidget(
         connectedWidget(
           BlocProvider(
-            create: (_) => mockUserBloc,
+            create: (_) => mockUserCubit,
             child: TimelinePageConnected(
               appUpdateService: mockAppUpdateService,
             ),
@@ -159,12 +159,12 @@ void main() {
     testWidgets(
         '''shoud go to TimelinePage when clicking home icon and not on TimelinePage yet''',
         (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(UserModel());
+      final mockUserCubit = MockUserCubit();
+      when(mockUserCubit.user).thenReturn(UserModel());
       await tester.pumpWidget(
         connectedWidget(
           BlocProvider(
-            create: (_) => mockUserBloc,
+            create: (_) => mockUserCubit,
             child: FavoritePostsPageConnected(),
           ),
         ),
@@ -181,12 +181,12 @@ void main() {
 
     testWidgets('shoud go to SearchPoliticPage when clicking search icon',
         (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(UserModel());
+      final mockUserCubit = MockUserCubit();
+      when(mockUserCubit.user).thenReturn(UserModel());
       await tester.pumpWidget(
         connectedWidget(
           BlocProvider(
-            create: (_) => mockUserBloc,
+            create: (_) => mockUserCubit,
             child: TimelinePageConnected(
               appUpdateService: mockAppUpdateService,
             ),
@@ -205,12 +205,12 @@ void main() {
 
     testWidgets('shoud go to FavoritePostsPage when clicking bookmark icon',
         (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(UserModel());
+      final mockUserCubit = MockUserCubit();
+      when(mockUserCubit.user).thenReturn(UserModel());
       await tester.pumpWidget(
         connectedWidget(
           BlocProvider(
-            create: (_) => mockUserBloc,
+            create: (_) => mockUserCubit,
             child: TimelinePageConnected(
               appUpdateService: mockAppUpdateService,
             ),
@@ -230,12 +230,12 @@ void main() {
 
     testWidgets('shoud go to UserProfilePage page when clicking on photo',
         (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(UserModel());
+      final mockUserCubit = MockUserCubit();
+      when(mockUserCubit.user).thenReturn(UserModel());
       await tester.pumpWidget(
         connectedWidget(
           BlocProvider(
-            create: (_) => mockUserBloc,
+            create: (_) => mockUserCubit,
             child: TimelinePageConnected(
               appUpdateService: mockAppUpdateService,
             ),
@@ -251,9 +251,9 @@ void main() {
     });
 
     testWidgets('shoud update user photo when state change', (tester) async {
-      final mockUserBloc = MockUserBloc();
+      final mockUserCubit = MockUserCubit();
       whenListen(
-        mockUserBloc,
+        mockUserCubit,
         Stream.fromIterable(
           [
             InitialUser(),
@@ -269,7 +269,7 @@ void main() {
       await tester.pumpWidget(
         connectedWidget(
           BlocProvider(
-            create: (_) => mockUserBloc,
+            create: (_) => mockUserCubit,
             child: TimelinePageConnected(
               appUpdateService: mockAppUpdateService,
             ),
@@ -279,13 +279,13 @@ void main() {
     });
 
     testWidgets('shoud show photo from the state when changed', (tester) async {
-      final mockUserBloc = MockUserBloc();
-      when(mockUserBloc.user).thenReturn(
+      final mockUserCubit = MockUserCubit();
+      when(mockUserCubit.user).thenReturn(
         UserModel(
           userId: '1',
         ),
       );
-      when(mockUserBloc.state).thenReturn(
+      when(mockUserCubit.state).thenReturn(
         CurrentUserUpdated(
           UserModel(
             photoUrl: 'photourl',
@@ -294,8 +294,8 @@ void main() {
       );
       await tester.pumpWidget(
         MyAppInjections(
-          child: BlocProvider<UserBloc>(
-            create: (_) => mockUserBloc,
+          child: BlocProvider<UserCubit>(
+            create: (_) => mockUserCubit,
             child: MaterialApp(
               navigatorObservers: [
                 mockObserver,

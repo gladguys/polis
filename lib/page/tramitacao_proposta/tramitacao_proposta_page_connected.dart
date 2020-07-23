@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/blocs.dart';
+import '../../bloc/cubits.dart';
 import '../../core/domain/model/models.dart';
 import '../../core/repository/concrete/repositories.dart';
 import '../../core/service/locator.dart';
@@ -16,8 +16,8 @@ class TramitacaoPropostaPageConnected extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageConnected<TramitacaoPropostaBloc>(
-      bloc: TramitacaoPropostaBloc(
+    return PageConnected<TramitacaoPropostaCubit>(
+      bloc: TramitacaoPropostaCubit(
         repository: context.repository<FirebaseTramitacaoPropostaRepository>(),
         orgaoService: OrgaoService(
           firebaseRepository: context.repository<FirebaseOrgaoRepository>(),
@@ -25,7 +25,7 @@ class TramitacaoPropostaPageConnected extends StatelessWidget {
           syncLogRepository: context.repository<FirebaseSyncLogRepository>(),
           sharedPreferencesService: G<SharedPreferencesService>(),
         ),
-      )..add(FetchTramitacoesProposicao(proposta)),
+      )..fetchTramitacoesProposicao(proposta),
       page: TramitacaoPropostaPage(),
     );
   }

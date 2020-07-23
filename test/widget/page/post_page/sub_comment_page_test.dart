@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/i18n/i18n.dart';
 import 'package:polis/page/page_connected.dart';
@@ -20,17 +20,18 @@ void main() {
 
   group('CommentRepliesPage tests', () {
     testWidgets('should show replies', (tester) async {
-      final mockSubCommentsBloc = MockSubCommentsBloc();
-      final mockCommentBloc = MockCommentBloc();
-      when(mockSubCommentsBloc.commentBloc).thenAnswer((_) => mockCommentBloc);
-      when(mockSubCommentsBloc.comment).thenReturn(
+      final mockSubCommentsCubit = MockSubCommentsCubit();
+      final mockCommentCubit = MockCommentCubit();
+      when(mockSubCommentsCubit.commentCubit)
+          .thenAnswer((_) => mockCommentCubit);
+      when(mockSubCommentsCubit.comment).thenReturn(
         CommentModel(
           postId: '1',
           texto: '1111',
           usuarioNome: 'nome',
         ),
       );
-      when(mockSubCommentsBloc.subComments).thenReturn([
+      when(mockSubCommentsCubit.subComments).thenReturn([
         SubCommentModel(
           id: 1,
           texto: 'a reply',
@@ -38,8 +39,8 @@ void main() {
       ]);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SubCommentsBloc>(
-            bloc: mockSubCommentsBloc,
+          PageConnected<SubCommentsCubit>(
+            bloc: mockSubCommentsCubit,
             page: SubCommentsPage(),
           ),
         ),
@@ -47,9 +48,9 @@ void main() {
     });
 
     testWidgets('should write a comment on the textfield', (tester) async {
-      final mockSubCommentsBloc = MockSubCommentsBloc();
-      final mockCommentBloc = MockCommentBloc();
-      when(mockSubCommentsBloc.state).thenReturn(
+      final mockSubCommentsCubit = MockSubCommentsCubit();
+      final mockCommentCubit = MockCommentCubit();
+      when(mockSubCommentsCubit.state).thenReturn(
         GetCommentSubCommentsSuccess(
           [
             SubCommentModel(
@@ -61,8 +62,9 @@ void main() {
           ],
         ),
       );
-      when(mockSubCommentsBloc.commentBloc).thenAnswer((_) => mockCommentBloc);
-      when(mockSubCommentsBloc.comment).thenReturn(
+      when(mockSubCommentsCubit.commentCubit)
+          .thenAnswer((_) => mockCommentCubit);
+      when(mockSubCommentsCubit.comment).thenReturn(
         CommentModel(
           id: 1,
           texto: 'a comment',
@@ -70,7 +72,7 @@ void main() {
           diaHora: DateTime.now(),
         ),
       );
-      when(mockSubCommentsBloc.subComments).thenReturn(
+      when(mockSubCommentsCubit.subComments).thenReturn(
         [
           SubCommentModel(
             id: 2,
@@ -82,8 +84,8 @@ void main() {
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<SubCommentsBloc>(
-            bloc: mockSubCommentsBloc,
+          PageConnected<SubCommentsCubit>(
+            bloc: mockSubCommentsCubit,
             page: SubCommentsPage(),
           ),
         ),
@@ -95,10 +97,8 @@ void main() {
       expect(commentBtn, findsOneWidget);
       await tester.tap(commentBtn);
       verify(
-        mockSubCommentsBloc.add(
-          AddSubComment(
-            text: '',
-          ),
+        mockSubCommentsCubit.addSubComment(
+          text: '',
         ),
       );
     });

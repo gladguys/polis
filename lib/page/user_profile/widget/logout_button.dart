@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../../bloc/blocs.dart';
+import '../../../bloc/cubits.dart';
 import '../../../core/i18n/i18n.dart';
 import '../../../core/keys.dart';
 import '../../../core/routing/route_names.dart';
@@ -26,7 +26,7 @@ class LogoutButton extends StatelessWidget {
         textColor: Colors.red,
         highlightedBorderColor: Colors.red,
         onPressed: () {
-          context.bloc<UserBloc>().add(Logout());
+          context.bloc<UserCubit>().logout();
           SimpleRouter.forwardAndRemoveAll(
             InitialPageConnected(),
             name: INITIAL_PAGE,

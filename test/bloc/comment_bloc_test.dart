@@ -1,19 +1,19 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 
 import '../mock.dart';
 
 void main() {
   group('EditProfileBloc tests', () {
-    CommentBloc commentBloc;
+    CommentCubit commentCubit;
     MockCommentRepository mockCommentRepository;
 
     setUp(() {
       mockCommentRepository = MockCommentRepository();
-      commentBloc = CommentBloc(
+      commentCubit = CommentCubit(
         post: PropostaModel(
           id: '1',
           idPropostaPolitico: '1',
@@ -24,26 +24,26 @@ void main() {
     });
 
     tearDown(() {
-      commentBloc?.close();
+      commentCubit?.close();
     });
 
     test('asserts', () {
       expect(
-          () => CommentBloc(
+          () => CommentCubit(
                 post: null,
                 user: UserModel(),
                 repository: mockCommentRepository,
               ),
           throwsAssertionError);
       expect(
-          () => CommentBloc(
+          () => CommentCubit(
                 post: PropostaModel(),
                 user: null,
                 repository: mockCommentRepository,
               ),
           throwsAssertionError);
       expect(
-          () => CommentBloc(
+          () => CommentCubit(
                 post: PropostaModel(),
                 user: UserModel(),
                 repository: null,
@@ -52,19 +52,17 @@ void main() {
     });
 
     test('''Expects InitialCommentState to be the initial state''', () {
-      expect(commentBloc.state, equals(InitialCommentState()));
+      expect(commentCubit.state, equals(InitialCommentState()));
     });
 
     blocTest(
       '''Expects [LoadingPostComments, GetPostCommentsSuccess] when GetPostComments called''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.getPostComments(postId: '1'))
             .thenAnswer((_) => Future.value([]));
-        return commentBloc;
+        return commentCubit;
       },
-      act: (commentBloc) async => commentBloc.add(
-        GetPostComments(postId: '1'),
-      ),
+      act: (commentCubit) async => commentCubit.getPostComments(postId: '1'),
       expect: [
         LoadingPostComments(),
         GetPostCommentsSuccess(
@@ -75,14 +73,12 @@ void main() {
 
     blocTest(
       '''Expects [LoadingPostComments, GetPostCommentsFailed] when fails''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.getPostComments(postId: '1'))
             .thenThrow(Exception());
-        return commentBloc;
+        return commentCubit;
       },
-      act: (commentBloc) async => commentBloc.add(
-        GetPostComments(postId: '1'),
-      ),
+      act: (commentCubit) async => commentCubit.getPostComments(postId: '1'),
       expect: [
         LoadingPostComments(),
         GetPostCommentsFailed(),
@@ -92,7 +88,7 @@ void main() {
 
     blocTest(
       'Expects [NewCommentAdded] when added a comment',
-      build: () async {
+      build: () {
         when(mockCommentRepository.saveComment(any)).thenAnswer(
           (_) => Future.value(
             CommentModel(
@@ -101,12 +97,10 @@ void main() {
             ),
           ),
         );
-        return commentBloc;
+        return commentCubit;
       },
-      act: (commentBloc) async => commentBloc.add(
-        AddComment(
-          text: 'a new comment arrive',
-        ),
+      act: (commentCubit) async => commentCubit.addComment(
+        text: 'a new comment arrive',
       ),
       expect: [
         NewCommentAdded(
@@ -117,24 +111,21 @@ void main() {
           numberOfComments: 1,
         ),
       ],
-      verify: (commentBloc) async {},
     );
 
     blocTest(
-      'Expects [NewCommentAdded] when added a comment',
-      build: () async {
-        commentBloc.postComments = [
+      'Expects to update sub comments count',
+      build: () {
+        commentCubit.postComments = [
           CommentModel(),
         ];
-        return commentBloc;
+        return commentCubit;
       },
-      act: (commentBloc) async => commentBloc.add(
-        UpdateCommentReplies(
-          comment: CommentModel(),
-          subComments: [
-            SubCommentModel(),
-          ],
-        ),
+      act: (commentCubit) async => commentCubit.updateSubCommentsCount(
+        updatedComment: CommentModel(),
+        subComments: [
+          SubCommentModel(),
+        ],
       ),
       expect: [
         NewSubCommentAdded(
@@ -146,19 +137,17 @@ void main() {
 
     blocTest(
       'Expects [CommentDeletedSuccess] when deleted a comment',
-      build: () async {
-        commentBloc.postComments = [
+      build: () {
+        commentCubit.postComments = [
           CommentModel(
             id: 1,
           ),
         ];
-        return commentBloc;
+        return commentCubit;
       },
-      act: (commentBloc) async => commentBloc.add(
-        DeleteComment(
-          CommentModel(
-            id: 1,
-          ),
+      act: (commentCubit) async => commentCubit.deleteComment(
+        CommentModel(
+          id: 1,
         ),
       ),
       expect: [
@@ -173,12 +162,10 @@ void main() {
 
     blocTest(
       'Expects [EditingCommentStarted] when starting edition of  a comment',
-      build: () async => commentBloc,
-      act: (commentBloc) async => commentBloc.add(
-        StartEditingComment(
-          CommentModel(
-            id: 1,
-          ),
+      build: () => commentCubit,
+      act: (commentCubit) async => commentCubit.startEditingComment(
+        CommentModel(
+          id: 1,
         ),
       ),
       expect: [
@@ -192,18 +179,14 @@ void main() {
 
     blocTest(
       'Expects [InitialCommentState] when stops editing',
-      build: () async => commentBloc,
-      act: (commentBloc) async {
-        commentBloc.add(
-          StartEditingComment(
-            CommentModel(
-              id: 1,
-            ),
+      build: () => commentCubit,
+      act: (commentCubit) async {
+        commentCubit.startEditingComment(
+          CommentModel(
+            id: 1,
           ),
         );
-        commentBloc.add(
-          StopEditingComment(),
-        );
+        commentCubit.stopEditingComment();
       },
       expect: [
         EditingCommentStarted(
@@ -217,8 +200,8 @@ void main() {
 
     blocTest(
       'Expects [CommentEditedSuccess] when EditComment added',
-      build: () async {
-        commentBloc.postComments = [
+      build: () {
+        commentCubit.postComments = [
           CommentModel(
             id: 1,
           ),
@@ -228,15 +211,13 @@ void main() {
         ];
         when(mockCommentRepository.editComment(comment: anyNamed('comment')))
             .thenAnswer((_) => Future.value());
-        return commentBloc;
+        return commentCubit;
       },
-      act: (commentBloc) async => commentBloc.add(
-        EditComment(
-          comment: CommentModel(
-            id: 1,
-          ),
-          newText: 'novo',
+      act: (commentCubit) async => commentCubit.editComment(
+        comment: CommentModel(
+          id: 1,
         ),
+        newText: 'novo',
       ),
       expect: [
         CommentEditedSuccess(
@@ -259,8 +240,8 @@ void main() {
 
     blocTest(
       'Expects [CommentEditedFailed] when fails',
-      build: () async {
-        commentBloc.postComments = [
+      build: () {
+        commentCubit.postComments = [
           CommentModel(
             id: 1,
           ),
@@ -270,15 +251,13 @@ void main() {
         ];
         when(mockCommentRepository.editComment(comment: anyNamed('comment')))
             .thenThrow(Exception());
-        return commentBloc;
+        return commentCubit;
       },
-      act: (commentBloc) async => commentBloc.add(
-        EditComment(
-          comment: CommentModel(
-            id: 1,
-          ),
-          newText: 'novo',
+      act: (commentCubit) async => commentCubit.editComment(
+        comment: CommentModel(
+          id: 1,
         ),
+        newText: 'novo',
       ),
       expect: [
         CommentEditedFailed(),

@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_test_utils/image_test_utils.dart';
 import 'package:mockito/mockito.dart';
-import 'package:polis/bloc/blocs.dart';
+import 'package:polis/bloc/cubits.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/i18n/i18n.dart';
 import 'package:polis/core/service/locator.dart';
@@ -34,12 +34,12 @@ void main() {
     });
 
     testWidgets('should show loading when loading state', (tester) async {
-      final mockPoliticSuggestionBloc = MockPoliticSuggestionBloc();
-      when(mockPoliticSuggestionBloc.state).thenReturn(LoadingFetch());
+      final mockPoliticSuggestionCubit = MockPoliticSuggestionCubit();
+      when(mockPoliticSuggestionCubit.state).thenReturn(LoadingFetch());
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticSuggestionBloc>(
-            bloc: mockPoliticSuggestionBloc,
+          PageConnected<PoliticSuggestionCubit>(
+            bloc: mockPoliticSuggestionCubit,
             page: PoliticSuggestionPage(),
           ),
         ),
@@ -64,20 +64,20 @@ void main() {
                 'https://smalltotall.info/wp-content/uploads/2017/04/google-favicon-vector-400x400.png',
           ),
         ];
-        final mockPoliticSuggestionBloc = MockPoliticSuggestionBloc();
-        when(mockPoliticSuggestionBloc.politics).thenReturn(politicos);
-        when(mockPoliticSuggestionBloc.state)
+        final mockPoliticSuggestionCubit = MockPoliticSuggestionCubit();
+        when(mockPoliticSuggestionCubit.politics).thenReturn(politicos);
+        when(mockPoliticSuggestionCubit.state)
             .thenReturn(FetchSuggestedPoliticsSuccess(politicos));
-        when(mockPoliticSuggestionBloc.isPoliticBeenFollowed(any))
+        when(mockPoliticSuggestionCubit.isPoliticBeenFollowed(any))
             .thenReturn(true);
-        final mockUserBloc = MockUserBloc();
-        when(mockUserBloc.user).thenReturn(UserModel(userId: '1'));
+        final mockUserCubit = MockUserCubit();
+        when(mockUserCubit.user).thenReturn(UserModel(userId: '1'));
         await tester.pumpWidget(
           connectedWidget(
-            PageConnected<UserBloc>(
-              bloc: mockUserBloc,
-              page: PageConnected<PoliticSuggestionBloc>(
-                bloc: mockPoliticSuggestionBloc,
+            PageConnected<UserCubit>(
+              bloc: mockUserCubit,
+              page: PageConnected<PoliticSuggestionCubit>(
+                bloc: mockPoliticSuggestionCubit,
                 page: PoliticSuggestionPage(),
               ),
             ),
@@ -87,10 +87,8 @@ void main() {
         expect(readyButton, findsOneWidget);
         await tester.tap(readyButton);
         verify(
-          mockPoliticSuggestionBloc.add(
-            SavePoliticsToFollow(
-              user: UserModel(userId: '1'),
-            ),
+          mockPoliticSuggestionCubit.savePoliticsToFollow(
+            user: UserModel(userId: '1'),
           ),
         ).called(1);
       });
@@ -98,16 +96,16 @@ void main() {
 
     testWidgets('should show PoliticsSuggestedGrid when fetch success',
         (tester) async {
-      final mockPoliticSuggestionBloc = MockPoliticSuggestionBloc();
-      when(mockPoliticSuggestionBloc.politics).thenReturn([]);
-      when(mockPoliticSuggestionBloc.state)
+      final mockPoliticSuggestionCubit = MockPoliticSuggestionCubit();
+      when(mockPoliticSuggestionCubit.politics).thenReturn([]);
+      when(mockPoliticSuggestionCubit.state)
           .thenReturn(FetchSuggestedPoliticsSuccess([]));
-      when(mockPoliticSuggestionBloc.isPoliticBeenFollowed(any))
+      when(mockPoliticSuggestionCubit.isPoliticBeenFollowed(any))
           .thenReturn(true);
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<PoliticSuggestionBloc>(
-            bloc: mockPoliticSuggestionBloc,
+          PageConnected<PoliticSuggestionCubit>(
+            bloc: mockPoliticSuggestionCubit,
             page: PoliticSuggestionPage(),
           ),
         ),
@@ -130,16 +128,16 @@ void main() {
             urlFoto: 'bb',
           ),
         ];
-        final mockPoliticSuggestionBloc = MockPoliticSuggestionBloc();
-        when(mockPoliticSuggestionBloc.politics).thenReturn(politicos);
-        when(mockPoliticSuggestionBloc.state)
+        final mockPoliticSuggestionCubit = MockPoliticSuggestionCubit();
+        when(mockPoliticSuggestionCubit.politics).thenReturn(politicos);
+        when(mockPoliticSuggestionCubit.state)
             .thenReturn(FetchSuggestedPoliticsSuccess(politicos));
-        when(mockPoliticSuggestionBloc.isPoliticBeenFollowed(any))
+        when(mockPoliticSuggestionCubit.isPoliticBeenFollowed(any))
             .thenReturn(true);
         await tester.pumpWidget(
           connectedWidget(
-            PageConnected<PoliticSuggestionBloc>(
-              bloc: mockPoliticSuggestionBloc,
+            PageConnected<PoliticSuggestionCubit>(
+              bloc: mockPoliticSuggestionCubit,
               page: PoliticSuggestionPage(),
             ),
           ),
@@ -159,16 +157,16 @@ void main() {
             urlFoto: '',
           ),
         ];
-        final mockPoliticSuggestionBloc = MockPoliticSuggestionBloc();
-        when(mockPoliticSuggestionBloc.politics).thenReturn(politicos);
-        when(mockPoliticSuggestionBloc.state)
+        final mockPoliticSuggestionCubit = MockPoliticSuggestionCubit();
+        when(mockPoliticSuggestionCubit.politics).thenReturn(politicos);
+        when(mockPoliticSuggestionCubit.state)
             .thenReturn(FetchSuggestedPoliticsSuccess(politicos));
-        when(mockPoliticSuggestionBloc.isPoliticBeenFollowed(any))
+        when(mockPoliticSuggestionCubit.isPoliticBeenFollowed(any))
             .thenReturn(true);
         await tester.pumpWidget(
           connectedWidget(
-            PageConnected<PoliticSuggestionBloc>(
-              bloc: mockPoliticSuggestionBloc,
+            PageConnected<PoliticSuggestionCubit>(
+              bloc: mockPoliticSuggestionCubit,
               page: PoliticSuggestionPage(),
             ),
           ),
@@ -180,13 +178,11 @@ void main() {
         expect(find.text(STOP_FOLLOWING), findsOneWidget);
         await tester.tap(followButton);
         verify(
-          mockPoliticSuggestionBloc.add(
-            FollowOrUnfollowPolitic(
-              PoliticoModel(
-                id: '1',
-                nomeEleitoral: 'nome',
-                urlFoto: '',
-              ),
+          mockPoliticSuggestionCubit.followOrUnfollowPolitic(
+            PoliticoModel(
+              id: '1',
+              nomeEleitoral: 'nome',
+              urlFoto: '',
             ),
           ),
         ).called(1);
@@ -195,9 +191,9 @@ void main() {
 
     testWidgets('should go to timeline when SavedSuggestedPolitics state',
         (tester) async {
-      final mockPoliticSuggestionBloc = MockPoliticSuggestionBloc();
+      final mockPoliticSuggestionCubit = MockPoliticSuggestionCubit();
       whenListen(
-        mockPoliticSuggestionBloc,
+        mockPoliticSuggestionCubit,
         Stream.fromIterable(
           [
             InitialPoliticSuggestionState(),
@@ -207,10 +203,10 @@ void main() {
       );
       await tester.pumpWidget(
         connectedWidget(
-          PageConnected<UserBloc>(
-            bloc: MockUserBloc(),
-            page: PageConnected<PoliticSuggestionBloc>(
-              bloc: mockPoliticSuggestionBloc,
+          PageConnected<UserCubit>(
+            bloc: MockUserCubit(),
+            page: PageConnected<PoliticSuggestionCubit>(
+              bloc: mockPoliticSuggestionCubit,
               page: PoliticSuggestionPage(),
             ),
           ),
@@ -229,16 +225,16 @@ void main() {
             urlFoto: '',
           ),
         ];
-        final mockPoliticSuggestionBloc = MockPoliticSuggestionBloc();
-        when(mockPoliticSuggestionBloc.politics).thenReturn(politicos);
-        when(mockPoliticSuggestionBloc.state)
+        final mockPoliticSuggestionCubit = MockPoliticSuggestionCubit();
+        when(mockPoliticSuggestionCubit.politics).thenReturn(politicos);
+        when(mockPoliticSuggestionCubit.state)
             .thenReturn(FetchSuggestedPoliticsSuccess(politicos));
-        when(mockPoliticSuggestionBloc.isPoliticBeenFollowed(any))
+        when(mockPoliticSuggestionCubit.isPoliticBeenFollowed(any))
             .thenReturn(false);
         await tester.pumpWidget(
           connectedWidget(
-            PageConnected<PoliticSuggestionBloc>(
-              bloc: mockPoliticSuggestionBloc,
+            PageConnected<PoliticSuggestionCubit>(
+              bloc: mockPoliticSuggestionCubit,
               page: PoliticSuggestionPage(),
             ),
           ),
@@ -250,13 +246,11 @@ void main() {
         expect(find.text(FOLLOW), findsOneWidget);
         await tester.tap(followButton);
         verify(
-          mockPoliticSuggestionBloc.add(
-            FollowOrUnfollowPolitic(
-              PoliticoModel(
-                id: '1',
-                nomeEleitoral: 'nome',
-                urlFoto: '',
-              ),
+          mockPoliticSuggestionCubit.followOrUnfollowPolitic(
+            PoliticoModel(
+              id: '1',
+              nomeEleitoral: 'nome',
+              urlFoto: '',
             ),
           ),
         ).called(1);

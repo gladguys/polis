@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
-import '../../../../bloc/blocs.dart';
+import '../../../../bloc/cubits.dart';
 import '../../../../core/domain/model/models.dart';
 import '../../../../core/extension/extensions.dart';
 import '../../../../widget/card_base.dart';
@@ -17,7 +17,7 @@ class SubCommentTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.bloc<UserBloc>().user;
+    final user = context.bloc<UserCubit>().user;
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
       child: Bubble(
@@ -56,12 +56,12 @@ class SubCommentTile extends StatelessWidget {
                   ),
                   (subComment.usuarioId == user.userId)
                       ? MenuEditDeleteComment(
-                          onEdit: () => context.bloc<SubCommentsBloc>().add(
-                                StartEditingSubComment(subComment),
-                              ),
-                          onDelete: () => context.bloc<SubCommentsBloc>().add(
-                                DeleteSubComment(subComment: subComment),
-                              ),
+                          onEdit: () => context
+                              .bloc<SubCommentsCubit>()
+                              .startEditingSubComment(subComment),
+                          onDelete: () => context
+                              .bloc<SubCommentsCubit>()
+                              .deleteSubComment(subComment: subComment),
                         )
                       : Container(),
                 ],
