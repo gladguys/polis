@@ -109,7 +109,7 @@ void main() {
           ),
         ),
       );
-      final yearSelect = find.text(EXPENSES_ON_YEAR);
+      final yearSelect = find.text('$EXPENSES_ON_YEAR:');
       expect(yearSelect, findsOneWidget);
       await tester.tap(yearSelect);
       await tester.pumpAndSettle();
