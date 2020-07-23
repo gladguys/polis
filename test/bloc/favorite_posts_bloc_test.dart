@@ -35,7 +35,7 @@ void main() {
 
     blocTest(
       '''Expects [LoadingFavoritesPosts, FetchUserFavoritePostsSuccess] when success''',
-      build: () async {
+      build: () {
         when(mockFavoritePostsRepository.getUserFavoritePosts('1'))
             .thenAnswer((_) => Future.value([]));
         return favoritePostsBloc;
@@ -53,7 +53,7 @@ void main() {
 
     blocTest(
       '''Expects [LoadingFavoritesPosts, FetchUserFavoritePostsFailed] when fails''',
-      build: () async {
+      build: () {
         when(mockFavoritePostsRepository.getUserFavoritePosts('1'))
             .thenThrow(Exception());
         return favoritePostsBloc;

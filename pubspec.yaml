@@ -12,14 +12,14 @@ dependencies:
 
   # Core
   intl: ^0.16.1
-  flutter_bloc: ^5.0.1
-  bloc: ^5.0.1
+  flutter_bloc: ^6.0.1
+  bloc: ^6.0.1
   simple_router: ^0.1.0+1
   equatable: ^1.2.2
   json_serializable: ^3.3.0
   hive: ^1.4.1+1
   hive_flutter: ^0.3.0+2
-  get_it: ^4.0.2
+  get_it: ^4.0.4
   shared_preferences: ^0.5.8
   image_picker: ^0.6.7+4
   url_launcher: ^5.5.0
@@ -33,7 +33,7 @@ dependencies:
   screenshot: ^0.2.0
   esys_flutter_share: ^1.0.2
   in_app_update: ^1.1.11
-  flutter_bloc_monitor: ^1.0.1
+  flutter_bloc_monitor: ^1.0.3
   flutter_dotenv: ^2.1.0
   shared_preferences_monitor: ^1.0.1+2
   back_button_interceptor: ^4.2.4
@@ -64,7 +64,7 @@ dependencies:
   multi_charts: ^0.2.0
 
 dependency_overrides:
-  dartx: ^0.4.2
+  dartx: ^0.5.0
 
 dev_dependencies:
   flutter_test:
@@ -78,13 +78,13 @@ dev_dependencies:
 
   # Tests
   test: ^1.14.4
-  bloc_test: ^6.0.1
+  bloc_test: ^7.0.0
   mockito: ^4.1.1
   image_test_utils:
     git: 'https://github.com/MarcinusX/image_test_utils'
 
   # Linting
-  effective_dart: ^1.2.3
+  effective_dart: ^1.2.4
 
   # Helper
   flutter_native_splash: ^0.1.9

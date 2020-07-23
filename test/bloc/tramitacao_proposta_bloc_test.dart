@@ -48,7 +48,7 @@ void main() {
 
     blocTest(
       '''Expects [LoadingTramitacaoProposta, GetTramitacaoPropostaSuccess] success''',
-      build: () async {
+      build: () {
         when(mockTramitacaoPropostaRepository.getTramitacoesProposta('1'))
             .thenAnswer(
           (_) => Future.value([TramitacaoPropostaModel()]),
@@ -77,7 +77,7 @@ void main() {
 
     blocTest(
       '''Expects [LoadingTramitacaoProposta, GetTramitacaoPropostaSuccess] when failed''',
-      build: () async {
+      build: () {
         when(mockTramitacaoPropostaRepository.getTramitacoesProposta('1'))
             .thenThrow(Exception());
         return tramitacaoPropostaBloc;

@@ -26,80 +26,67 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_panel/sliding_panel.dart';
 
 // Bloc
-class MockSigninBloc extends MockBloc<SigninEvent, SigninState>
-    implements SigninBloc {}
+class MockSigninBloc extends MockBloc<SigninState> implements SigninBloc {}
 
-class MockSubCommentsBloc extends MockBloc<SubCommentsEvent, SubCommentsState>
+class MockSubCommentsBloc extends MockBloc<SubCommentsState>
     implements SubCommentsBloc {}
 
-class MockCommentBloc extends MockBloc<CommentEvent, CommentState>
-    implements CommentBloc {}
+class MockCommentBloc extends MockBloc<CommentState> implements CommentBloc {}
 
 class MockPoliticExpensesAnalysisBloc
-    extends MockBloc<PoliticExpensesAnalysisEvent, PoliticExpensesAnalysisState>
+    extends MockBloc<PoliticExpensesAnalysisState>
     implements PoliticExpensesAnalysisBloc {}
 
-class MockEditProfileBloc extends MockBloc<EditProfileEvent, EditProfileState>
+class MockEditProfileBloc extends MockBloc<EditProfileState>
     implements EditProfileBloc {}
 
-class MockComparativoRankingDespesasBloc extends MockBloc<
-        ComparativoRankingDespesasEvent, ComparativoRankingDespesasState>
+class MockComparativoRankingDespesasBloc
+    extends MockBloc<ComparativoRankingDespesasState>
     implements ComparativoRankingDespesasBloc {}
 
-class MockChangePasswordBloc
-    extends MockBloc<ChangePasswordEvent, ChangePasswordState>
+class MockChangePasswordBloc extends MockBloc<ChangePasswordState>
     implements ChangePasswordBloc {}
 
-class MockPostBloc extends MockBloc<PostEvent, PostState> implements PostBloc {}
+class MockPostBloc extends MockBloc<PostState> implements PostBloc {}
 
-class MockFavoritePostsBloc
-    extends MockBloc<FavoritePostsEvent, FavoritePostsState>
+class MockFavoritePostsBloc extends MockBloc<FavoritePostsState>
     implements FavoritePostsBloc {}
 
-class MockPoliticExpensesBloc
-    extends MockBloc<PoliticExpensesEvent, PoliticExpensesState>
+class MockPoliticExpensesBloc extends MockBloc<PoliticExpensesState>
     implements PoliticExpensesBloc {}
 
-class MockUserFollowingPoliticsBloc
-    extends MockBloc<UserFollowingPoliticsEvent, UserFollowingPoliticsState>
+class MockUserFollowingPoliticsBloc extends MockBloc<UserFollowingPoliticsState>
     implements UserFollowingPoliticsBloc {}
 
-class MockPoliticSuggestionBloc
-    extends MockBloc<PoliticSuggestionEvent, PoliticSuggestionState>
+class MockPoliticSuggestionBloc extends MockBloc<PoliticSuggestionState>
     implements PoliticSuggestionBloc {}
 
-class MockSignupBloc extends MockBloc<SignupEvent, SignupState>
-    implements SignupBloc {}
+class MockSignupBloc extends MockBloc<SignupState> implements SignupBloc {}
 
-class MockUserBloc extends MockBloc<UserEvent, UserState> implements UserBloc {}
+class MockUserBloc extends MockBloc<UserState> implements UserBloc {}
 
-class MockTramitacaoPropostaBloc
-    extends MockBloc<TramitacaoPropostaEvent, TramitacaoPropostaState>
+class MockTramitacaoPropostaBloc extends MockBloc<TramitacaoPropostaState>
     implements TramitacaoPropostaBloc {}
 
-class MockTimelineBloc extends MockBloc<TimelineEvent, TimelineState>
-    implements TimelineBloc {}
+class MockTimelineBloc extends MockBloc<TimelineState> implements TimelineBloc {
+}
 
-class MockPoliticProposalsBloc
-    extends MockBloc<PoliticProposalsEvent, PoliticProposalsState>
+class MockPoliticProposalsBloc extends MockBloc<PoliticProposalsState>
     implements PoliticProposalsBloc {}
 
-class MockUserProfileBloc extends MockBloc<UserProfileEvent, UserProfileState>
+class MockUserProfileBloc extends MockBloc<UserProfileState>
     implements UserProfileBloc {}
 
-class MockDocumentBloc extends MockBloc<DocumentEvent, DocumentState>
-    implements DocumentBloc {}
+class MockDocumentBloc extends MockBloc<DocumentState> implements DocumentBloc {
+}
 
-class MockPoliticProfileBloc
-    extends MockBloc<PoliticProfileEvent, PoliticProfileState>
+class MockPoliticProfileBloc extends MockBloc<PoliticProfileState>
     implements PoliticProfileBloc {}
 
-class MockPoliticFollowersBloc
-    extends MockBloc<PoliticFollowersEvent, PoliticFollowersState>
+class MockPoliticFollowersBloc extends MockBloc<PoliticFollowersState>
     implements PoliticFollowersBloc {}
 
-class MockSearchPoliticBloc
-    extends MockBloc<SearchPoliticEvent, SearchPoliticState>
+class MockSearchPoliticBloc extends MockBloc<SearchPoliticState>
     implements SearchPoliticBloc {}
 
 // Repository

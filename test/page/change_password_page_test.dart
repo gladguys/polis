@@ -44,11 +44,12 @@ void main() {
 
     testWidgets('should show snackbar when success', (tester) async {
       final mockChangePasswordBloc = MockChangePasswordBloc();
+      when(mockChangePasswordBloc.state)
+          .thenReturn(InitialChangePasswordState());
       whenListen(
         mockChangePasswordBloc,
         Stream.fromIterable(
           [
-            UserWrongPasswordInformed(),
             UserPasswordChangeSuccess(),
           ],
         ),
@@ -68,11 +69,12 @@ void main() {
 
     testWidgets('should show snackbar when fail', (tester) async {
       final mockChangePasswordBloc = MockChangePasswordBloc();
+      when(mockChangePasswordBloc.state)
+          .thenReturn(InitialChangePasswordState());
       whenListen(
         mockChangePasswordBloc,
         Stream.fromIterable(
           [
-            UserWrongPasswordInformed(),
             UserPasswordChangeFailed(),
           ],
         ),
@@ -93,11 +95,12 @@ void main() {
     testWidgets('should show snackbar when wrong password is given',
         (tester) async {
       final mockChangePasswordBloc = MockChangePasswordBloc();
+      when(mockChangePasswordBloc.state)
+          .thenReturn(InitialChangePasswordState());
       whenListen(
         mockChangePasswordBloc,
         Stream.fromIterable(
           [
-            UserPasswordChangeFailed(),
             UserWrongPasswordInformed(),
           ],
         ),

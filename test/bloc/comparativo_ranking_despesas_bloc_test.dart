@@ -40,7 +40,7 @@ void main() {
     group('GetPoliticFollowers event', () {
       blocTest(
         '''Expects [LoadingResultadosRanking, GetRankingResultadosSuccess] when success''',
-        build: () async {
+        build: () {
           when(mockComparativoRankingDespesasRepository.getRankingResults())
               .thenAnswer((_) => Future.value(ResultadosRankingModel()));
           return comparativoRankingDespesasBloc;
@@ -61,7 +61,7 @@ void main() {
 
       blocTest(
         '''Expects [LoadingResultadosRanking, GetRankingResultadosFailed] when fails''',
-        build: () async {
+        build: () {
           when(mockComparativoRankingDespesasRepository.getRankingResults())
               .thenThrow(Exception());
           return comparativoRankingDespesasBloc;

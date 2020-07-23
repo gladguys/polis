@@ -83,7 +83,7 @@ void main() {
     blocTest(
       'Expects [SigninLoading, UserAuthenticated]'
       ' when SigninWithEmailAndPassword added',
-      build: () async {
+      build: () {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .thenAnswer((_) => Future.value(user));
         when(mockAnalyticsService.logSignin(method: anyNamed('method')))
@@ -111,7 +111,7 @@ void main() {
     blocTest(
       'Expects [SentingResetEmail, ResetEmailSentSuccess]'
       ' when SendResetPasswordEmail added',
-      build: () async {
+      build: () {
         when(mockSigninRepository.sendResetEmail('email@email.com'))
             .thenAnswer((_) => Future.value());
         return signinBloc;
@@ -132,7 +132,7 @@ void main() {
 
     blocTest(
       'Expects [SentingResetEmail, ResetEmailSentFailed] when email send fails',
-      build: () async {
+      build: () {
         when(mockSigninRepository.sendResetEmail('email@email.com'))
             .thenThrow(Exception());
         return signinBloc;
@@ -154,7 +154,7 @@ void main() {
     blocTest(
       'Expects [SigninLoading, UserAuthenticated]'
       ' when SigninWithGoogle added',
-      build: () async {
+      build: () {
         when(mockSigninRepository.signInWithGoogle())
             .thenAnswer((_) => Future.value(user));
         when(mockAnalyticsService.logSignin(method: anyNamed('method')))
@@ -180,7 +180,7 @@ void main() {
       '''Expects [SigninLoading, SigninFailed] with 
       ERROR_INVALID_CREDENTIALS when SigninWithEmailAndPassword added and theres an error with 
       credentials''',
-      build: () async {
+      build: () {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .thenThrow(InvalidCredentialsException());
         return signinBloc;
@@ -202,7 +202,7 @@ void main() {
     blocTest(
       'Expects [SigninLoading, SigninFailed] with '
       'ERROR_SIGNIN when SigninWithEmailAndPassword added and theres an error',
-      build: () async {
+      build: () {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .thenThrow(ComunicationException());
         return signinBloc;
@@ -225,7 +225,7 @@ void main() {
       '''Expects [SigninLoading, SigninFailed] with 
       ERROR_INVALID_CREDENTIALS when SigninWithGoogle added and theres an error with 
       credentials''',
-      build: () async {
+      build: () {
         when(mockSigninRepository.signInWithGoogle())
             .thenThrow(InvalidCredentialsException());
         return signinBloc;
@@ -246,7 +246,7 @@ void main() {
     blocTest(
       '''Expects [SigninLoading, UserAuthenticationFailed] with 
       ERROR_AUTENTICATING_USER when SigninWithEmailAndPassword added and theres an error''',
-      build: () async {
+      build: () {
         when(mockSigninRepository.signInWithEmailAndPassword(any, any))
             .thenAnswer((_) => Future.value(null));
         return signinBloc;
@@ -268,7 +268,7 @@ void main() {
     blocTest(
       '''Expects [SigninLoading, UserAuthenticationFailed] with 
       ERROR_AUTENTICATING_USER when SigninWithGoogle added and theres an error''',
-      build: () async {
+      build: () {
         when(mockSigninRepository.signInWithGoogle())
             .thenAnswer((_) => Future.value(null));
         return signinBloc;
@@ -289,7 +289,7 @@ void main() {
     blocTest(
       '''Expects [SigninLoading, SigninFailed] with 
       ERROR_SIGNIN when SigninWithGoogle added and theres an error''',
-      build: () async {
+      build: () {
         when(mockSigninRepository.signInWithGoogle()).thenThrow(Exception());
         return signinBloc;
       },

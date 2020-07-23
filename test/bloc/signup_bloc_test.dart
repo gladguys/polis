@@ -48,7 +48,7 @@ void main() {
     blocTest(
       'Expects [SignupLoading, UserCreated] when '
       'SignupTriedEvent added',
-      build: () async {
+      build: () {
         when(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .thenAnswer((_) => Future.value(user));
         when(mockAnalyticsService.logSignup())
@@ -73,7 +73,7 @@ void main() {
     blocTest(
       '''Expects [SignupLoading, UserCreationFailed] with 
       EMAIL_ALREADY_IN_USE message when SignupTried added and email already token''',
-      build: () async {
+      build: () {
         when(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .thenThrow(EmailAlreadyInUseException());
         return signupBloc;
@@ -95,7 +95,7 @@ void main() {
     blocTest(
       '''Expects [SignupLoading, UserCreationFailed] with 
       PASSWORD_IS_WEAK message when SignupTried added and email already token''',
-      build: () async {
+      build: () {
         when(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .thenThrow(WeakPasswordException());
         return signupBloc;
@@ -117,7 +117,7 @@ void main() {
     blocTest(
       '''Expects [SignupLoading, UserCreationFailed] with 
       EMAIL_IS_INVALID message when SignupTried added and email with invalid format''',
-      build: () async {
+      build: () {
         when(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .thenThrow(InvalidEmailException());
         return signupBloc;
@@ -139,7 +139,7 @@ void main() {
     blocTest(
       'Expects [SignupLoading, SignupFailed] when signup '
       'failled somehow',
-      build: () async {
+      build: () {
         when(mockSignupRepository.createUserWithEmailAndPassword(any, any))
             .thenThrow(Exception());
         return signupBloc;

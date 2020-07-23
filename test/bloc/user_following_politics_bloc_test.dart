@@ -51,7 +51,7 @@ void main() {
 
     blocTest(
       '''Expects [LoadingPolitics, FetchPoliticsSuccess] when FetchFollowingPolitics added''',
-      build: () async {
+      build: () {
         when(mockUserFollowingPoliticsRepository.getFollowingPolitics('1'))
             .thenAnswer((_) => Future.value([PoliticoModel()]));
         return userFollowingPoliticsBloc;
@@ -72,7 +72,7 @@ void main() {
 
     blocTest(
       'Expects [LoadingPolitics, FetchPoliticsFailed] when fails',
-      build: () async {
+      build: () {
         when(mockUserFollowingPoliticsRepository.getFollowingPolitics('1'))
             .thenThrow(Exception());
         return userFollowingPoliticsBloc;
@@ -93,18 +93,20 @@ void main() {
 
     blocTest(
       '''Expects filter return filtered politics''',
-      build: () async {
+      build: () {
         when(mockUserFollowingPoliticsRepository.getFollowingPolitics('1'))
-            .thenAnswer((_) => Future.value(
-                  [
-                    PoliticoModel(
-                      nomeEleitoral: 'aaa',
-                    ),
-                    PoliticoModel(
-                      nomeEleitoral: 'bbb',
-                    ),
-                  ],
-                ));
+            .thenAnswer(
+          (_) => Future.value(
+            [
+              PoliticoModel(
+                nomeEleitoral: 'aaa',
+              ),
+              PoliticoModel(
+                nomeEleitoral: 'bbb',
+              ),
+            ],
+          ),
+        );
         return userFollowingPoliticsBloc;
       },
       act: (userFollowingPoliticsBloc) {
@@ -128,28 +130,32 @@ void main() {
             ),
           ],
         ),
-        PoliticsFilteredByTerm(filteredPolitics: [
-          PoliticoModel(
-            nomeEleitoral: 'aaa',
-          ),
-        ])
+        PoliticsFilteredByTerm(
+          filteredPolitics: [
+            PoliticoModel(
+              nomeEleitoral: 'aaa',
+            ),
+          ],
+        )
       ],
     );
 
     blocTest(
       'Expects filter return all when term isEmpty',
-      build: () async {
+      build: () {
         when(mockUserFollowingPoliticsRepository.getFollowingPolitics('1'))
-            .thenAnswer((_) => Future.value(
-                  [
-                    PoliticoModel(
-                      nomeEleitoral: 'aaa',
-                    ),
-                    PoliticoModel(
-                      nomeEleitoral: 'bbb',
-                    ),
-                  ],
-                ));
+            .thenAnswer(
+          (_) => Future.value(
+            [
+              PoliticoModel(
+                nomeEleitoral: 'aaa',
+              ),
+              PoliticoModel(
+                nomeEleitoral: 'bbb',
+              ),
+            ],
+          ),
+        );
         return userFollowingPoliticsBloc;
       },
       act: (userFollowingPoliticsBloc) {
@@ -188,20 +194,22 @@ void main() {
 
     blocTest(
       '''Expects [LoadingPolitics, FetchPoliticsSuccess, FollowedPoliticsUpdated] when fails''',
-      build: () async {
+      build: () {
         when(mockUserFollowingPoliticsRepository.getFollowingPolitics('1'))
-            .thenAnswer((_) => Future.value(
-                  [
-                    PoliticoModel(
-                      id: '1',
-                      nomeEleitoral: 'aaa',
-                    ),
-                    PoliticoModel(
-                      id: '2',
-                      nomeEleitoral: 'bbb',
-                    ),
-                  ],
-                ));
+            .thenAnswer(
+          (_) => Future.value(
+            [
+              PoliticoModel(
+                id: '1',
+                nomeEleitoral: 'aaa',
+              ),
+              PoliticoModel(
+                id: '2',
+                nomeEleitoral: 'bbb',
+              ),
+            ],
+          ),
+        );
         return userFollowingPoliticsBloc;
       },
       act: (userFollowingPoliticsBloc) {
@@ -266,20 +274,22 @@ void main() {
 
     blocTest(
       '''Expects [LoadingPolitics, FetchPoliticsSuccess, FollowedPoliticsUpdated, FollowedPoliticsUpdated] when fails''',
-      build: () async {
+      build: () {
         when(mockUserFollowingPoliticsRepository.getFollowingPolitics('1'))
-            .thenAnswer((_) => Future.value(
-                  [
-                    PoliticoModel(
-                      id: '1',
-                      nomeEleitoral: 'aaa',
-                    ),
-                    PoliticoModel(
-                      id: '2',
-                      nomeEleitoral: 'bbb',
-                    ),
-                  ],
-                ));
+            .thenAnswer(
+          (_) => Future.value(
+            [
+              PoliticoModel(
+                id: '1',
+                nomeEleitoral: 'aaa',
+              ),
+              PoliticoModel(
+                id: '2',
+                nomeEleitoral: 'bbb',
+              ),
+            ],
+          ),
+        );
         return userFollowingPoliticsBloc;
       },
       act: (userFollowingPoliticsBloc) {
@@ -379,20 +389,22 @@ void main() {
 
     blocTest(
       '''Expects [LoadingPolitics, FetchPoliticsSuccess, FollowUnfollowFailed] when fails''',
-      build: () async {
+      build: () {
         when(mockUserFollowingPoliticsRepository.getFollowingPolitics('1'))
-            .thenAnswer((_) => Future.value(
-                  [
-                    PoliticoModel(
-                      id: '1',
-                      nomeEleitoral: 'aaa',
-                    ),
-                    PoliticoModel(
-                      id: '2',
-                      nomeEleitoral: 'bbb',
-                    ),
-                  ],
-                ));
+            .thenAnswer(
+          (_) => Future.value(
+            [
+              PoliticoModel(
+                id: '1',
+                nomeEleitoral: 'aaa',
+              ),
+              PoliticoModel(
+                id: '2',
+                nomeEleitoral: 'bbb',
+              ),
+            ],
+          ),
+        );
         when(mockFollowRepository.followPolitic(
                 user: anyNamed('user'), politico: anyNamed('politico')))
             .thenThrow(Exception());

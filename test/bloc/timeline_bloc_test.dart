@@ -42,7 +42,7 @@ void main() {
 
     blocTest(
       '''should emit NoPostsAvailable state when no post is found on users timeline ''',
-      build: () async {
+      build: () {
         timelineBloc = TimelineBloc(
           repository: mockTimelineRepository,
         );
@@ -77,7 +77,7 @@ void main() {
 
     blocTest(
       '''Expects [LoadingTimeline, TimelineUpdated]''',
-      build: () async {
+      build: () {
         timelineBloc = TimelineBloc(
           repository: mockTimelineRepository,
         );
@@ -117,7 +117,7 @@ void main() {
 
     blocTest(
       'set isTimelineFetchedOnce flag to true after the first run',
-      build: () async {
+      build: () {
         timelineBloc = TimelineBloc(
           repository: mockTimelineRepository,
         );
@@ -154,7 +154,7 @@ void main() {
 
     blocTest(
       'set isTimelineFetchedOnce flag to true before the first run',
-      build: () async {
+      build: () {
         timelineBloc = TimelineBloc(
           repository: mockTimelineRepository,
         );
@@ -188,7 +188,7 @@ void main() {
 
     blocTest(
       '''Expects [FetchTimelineFailed] when getUserTimeline failed''',
-      build: () async {
+      build: () {
         timelineBloc = TimelineBloc(
           repository: mockTimelineRepository,
         );
@@ -211,7 +211,7 @@ void main() {
 
     blocTest(
       '''Expects [FetchTimelineFailed] when getTimelineFirstPosts failed''',
-      build: () async {
+      build: () {
         timelineBloc = TimelineBloc(
           repository: mockTimelineRepository,
         );
@@ -240,7 +240,7 @@ void main() {
 
     blocTest(
       '''Expects [LoadingTimeline, TimelineUpdated, ReachedEndFetchingMore, UpdateTimeline] when fetch more posts''',
-      build: () async {
+      build: () {
         timelineBloc = TimelineBloc(
           repository: mockTimelineRepository,
         );
@@ -302,7 +302,7 @@ void main() {
 
     blocTest(
       '''Expects [LoadingTimeline, TimelineUpdated, FetchTimelineFailed] when fetch more posts failed''',
-      build: () async {
+      build: () {
         timelineBloc = TimelineBloc(
           repository: mockTimelineRepository,
         );
@@ -349,7 +349,7 @@ void main() {
 
     blocTest(
       '''Expects [LoadingTimeline, TimelineUpdated] when reload timeline is added''',
-      build: () async {
+      build: () {
         when(mockTimelineRepository.getTimelineFirstPosts(
                 '1', kTimelinePageSize))
             .thenAnswer(
@@ -382,7 +382,7 @@ void main() {
 
     blocTest(
       '''Expects [LoadingTimeline, FetchTimelineFailed] when reload timeline throws exception''',
-      build: () async {
+      build: () {
         when(mockTimelineRepository.getTimelineFirstPosts(
                 '1', kTimelinePageSize))
             .thenThrow(Exception());
@@ -405,7 +405,7 @@ void main() {
 
     blocTest(
       '''Expects [TimelineRefreshed] when RefreshTimeline added''',
-      build: () async => timelineBloc,
+      build: () => timelineBloc,
       act: (timelineBloc) {
         timelineBloc.add(RefreshTimeline());
         return;

@@ -46,7 +46,7 @@ void main() {
 
     blocTest(
         'Expects [UpdatingUser, UserUpdateSuccess] when UpdateUserInfo called',
-        build: () async {
+        build: () {
           when(
             mockEditProfileRepository.updateUserInfo(
               name: anyNamed('name'),
@@ -87,7 +87,7 @@ void main() {
 
     blocTest(
         'Expects [UpdatingUser, UserUpdateFailed] when exceptions is thrown',
-        build: () async {
+        build: () {
           when(
             mockEditProfileRepository.updateUserInfo(
               name: anyNamed('name'),

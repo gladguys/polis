@@ -38,7 +38,7 @@ void main() {
     group('GetPoliticProposals event', () {
       blocTest(
         '''Expects [LoadingPoliticProposals, GetPoliticProposalsSuccess] when success''',
-        build: () async {
+        build: () {
           when(mockPoliticProposalsRepository.getPoliticProposals('1'))
               .thenAnswer(
             (_) => Future.value([
@@ -75,7 +75,7 @@ void main() {
 
       blocTest(
         '''Expects [LoadingPoliticProposals, GetPoliticProposalsFailed] when fails''',
-        build: () async {
+        build: () {
           when(mockPoliticProposalsRepository.getPoliticProposals('1'))
               .thenThrow(Exception());
           return politicProposalsBloc;

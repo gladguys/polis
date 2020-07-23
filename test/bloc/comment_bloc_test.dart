@@ -57,7 +57,7 @@ void main() {
 
     blocTest(
       '''Expects [LoadingPostComments, GetPostCommentsSuccess] when GetPostComments called''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.getPostComments(postId: '1'))
             .thenAnswer((_) => Future.value([]));
         return commentBloc;
@@ -75,7 +75,7 @@ void main() {
 
     blocTest(
       '''Expects [LoadingPostComments, GetPostCommentsFailed] when fails''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.getPostComments(postId: '1'))
             .thenThrow(Exception());
         return commentBloc;
@@ -92,7 +92,7 @@ void main() {
 
     blocTest(
       'Expects [NewCommentAdded] when added a comment',
-      build: () async {
+      build: () {
         when(mockCommentRepository.saveComment(any)).thenAnswer(
           (_) => Future.value(
             CommentModel(
@@ -122,7 +122,7 @@ void main() {
 
     blocTest(
       'Expects [NewCommentAdded] when added a comment',
-      build: () async {
+      build: () {
         commentBloc.postComments = [
           CommentModel(),
         ];
@@ -146,7 +146,7 @@ void main() {
 
     blocTest(
       'Expects [CommentDeletedSuccess] when deleted a comment',
-      build: () async {
+      build: () {
         commentBloc.postComments = [
           CommentModel(
             id: 1,
@@ -173,7 +173,7 @@ void main() {
 
     blocTest(
       'Expects [EditingCommentStarted] when starting edition of  a comment',
-      build: () async => commentBloc,
+      build: () => commentBloc,
       act: (commentBloc) async => commentBloc.add(
         StartEditingComment(
           CommentModel(
@@ -192,7 +192,7 @@ void main() {
 
     blocTest(
       'Expects [InitialCommentState] when stops editing',
-      build: () async => commentBloc,
+      build: () => commentBloc,
       act: (commentBloc) async {
         commentBloc.add(
           StartEditingComment(
@@ -217,7 +217,7 @@ void main() {
 
     blocTest(
       'Expects [CommentEditedSuccess] when EditComment added',
-      build: () async {
+      build: () {
         commentBloc.postComments = [
           CommentModel(
             id: 1,
@@ -259,7 +259,7 @@ void main() {
 
     blocTest(
       'Expects [CommentEditedFailed] when fails',
-      build: () async {
+      build: () {
         commentBloc.postComments = [
           CommentModel(
             id: 1,

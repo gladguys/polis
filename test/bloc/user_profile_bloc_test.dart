@@ -32,7 +32,7 @@ void main() {
     group('FetchUserRelatedInfo event', () {
       blocTest(
         '''Expects [LoadingFetchUserInfo, FetchUserRelatedInfoSuccess] when success''',
-        build: () async {
+        build: () {
           when(mockUserProfileRepository.getPoliticsFollowing('1'))
               .thenAnswer((_) => Future.value([]));
           when(mockUserProfileRepository.getUserActions('1'))
@@ -58,7 +58,7 @@ void main() {
 
       blocTest(
         '''Expects [LoadingFetchUserInfo, FetchUserRelatedInfoFailed] when fail''',
-        build: () async {
+        build: () {
           when(mockUserProfileRepository.getPoliticsFollowing('1'))
               .thenAnswer((_) => Future.value([]));
           when(mockUserProfileRepository.getUserActions('1'))
@@ -81,7 +81,7 @@ void main() {
 
       blocTest(
         '''Expects [GetPostInfoSuccess] when success''',
-        build: () async {
+        build: () {
           when(
             mockUserProfileRepository.getPostInfo(
               postId: '1',
@@ -128,7 +128,7 @@ void main() {
 
       blocTest(
         '''Expects [GetPostInfoSuccess] when failed''',
-        build: () async {
+        build: () {
           when(
             mockUserProfileRepository.getPostInfo(
               postId: '1',

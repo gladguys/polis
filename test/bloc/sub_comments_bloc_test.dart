@@ -78,7 +78,7 @@ void main() {
 
     blocTest(
       '''Expects [AddedSubCommentSuccess] when AddSubComment called''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.saveSubComment(
                 commentId: anyNamed('commentId'),
                 subComment: anyNamed('subComment')))
@@ -122,7 +122,7 @@ void main() {
 
     blocTest(
       '''Expects [GetCommentSubCommentsSuccess] when GetCommentSubComments called''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.getCommentSubComments(commentId: 1))
             .thenAnswer(
           (_) => Future.value(
@@ -164,7 +164,7 @@ void main() {
 
     blocTest(
       '''Expects [LoadingPostComments, GetPostCommentsSuccess] when GetPostComments failed''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.getCommentSubComments(
           commentId: 1,
         )).thenThrow(Exception());
@@ -181,7 +181,7 @@ void main() {
 
     blocTest(
       '''Expects [AddedSubCommentSuccess] when AddSubComment called''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.saveSubComment(
           subComment: anyNamed('subComment'),
           commentId: 1,
@@ -227,7 +227,7 @@ void main() {
 
     blocTest(
       '''Expects [AddedSubCommentFailed] when AddSubComment failed''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.saveSubComment(
           subComment: anyNamed('subComment'),
           commentId: 1,
@@ -246,7 +246,7 @@ void main() {
 
     blocTest(
       '''Expects [DeletedSubCommentSuccess] when DeleteSubComment called''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.deleteSubComment(
           subComment: anyNamed('subComment'),
         )).thenAnswer(
@@ -285,7 +285,7 @@ void main() {
 
     blocTest(
       '''Expects [DeletedSubCommentFailed] when DeleteSubComment failed''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.deleteSubComment(
           subComment: anyNamed('subComment'),
         )).thenThrow(Exception());
@@ -305,7 +305,7 @@ void main() {
 
     blocTest(
       '''Expects [EditingSubCommentStarted] when starting edition of  a sub comment''',
-      build: () async => subCommentsBloc,
+      build: () => subCommentsBloc,
       act: (subCommentsBloc) async => subCommentsBloc.add(
         StartEditingSubComment(
           SubCommentModel(
@@ -324,7 +324,7 @@ void main() {
 
     blocTest(
       'Expects [InitialSubCommentsState] when stops editing',
-      build: () async => subCommentsBloc,
+      build: () => subCommentsBloc,
       act: (subCommentsBloc) async {
         subCommentsBloc.add(
           StartEditingSubComment(
@@ -349,7 +349,7 @@ void main() {
 
     blocTest(
       'Expects [SubCommentEditedSuccess] when EditSubComment added',
-      build: () async {
+      build: () {
         subCommentsBloc.subComments = [
           SubCommentModel(
             id: 1,
@@ -393,7 +393,7 @@ void main() {
 
     blocTest(
       'Expects [CommentEditedFailed] when fails',
-      build: () async {
+      build: () {
         subCommentsBloc.subComments = [
           SubCommentModel(
             id: 1,

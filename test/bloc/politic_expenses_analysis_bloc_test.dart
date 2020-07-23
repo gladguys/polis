@@ -151,7 +151,7 @@ void main() {
     group('GetInitialInfo event', () {
       blocTest(
         '''Expects [LoadingPoliticExpensesData, LoadingPoliticExpensesData, GetPoliticExpensesDataSuccess] when success''',
-        build: () async {
+        build: () {
           when(mockPoliticExpensesAnalysisQuotaRepository
                   .getMaxQuotaForStateUf('CE'))
               .thenAnswer((_) => Future.value(1000));
@@ -206,12 +206,28 @@ void main() {
               ],
             ),
           ),
+          LoadingPoliticExpensesData(),
+          GetPoliticExpensesDataSuccess(
+            year: 2020,
+            despesasPorTipo: [
+              DespesaPorTipo(valor: '100', percentual: '10', tipoCota: 'A'),
+              DespesaPorTipo(valor: '200', percentual: '20', tipoCota: 'B'),
+            ],
+            totalDespesasAnuais: TotalDespesasAnuais(
+              ano: '2020',
+              despesasPorMes: [
+                DespesaMensal(mes: '1', valor: 10),
+                DespesaMensal(mes: '2', valor: 20),
+                DespesaMensal(mes: '3', valor: 30),
+              ],
+            ),
+          ),
         ],
       );
 
       blocTest(
         '''Expects [LoadingPoliticExpensesData, GetPoliticExpensesDataFailed''',
-        build: () async {
+        build: () {
           when(mockPoliticExpensesAnalysisQuotaRepository
                   .getMaxQuotaForStateUf('CE'))
               .thenThrow(Exception());
@@ -229,7 +245,7 @@ void main() {
 
       blocTest(
         '''Expects [LoadingPoliticExpensesData, GetPoliticExpensesDataFailed] when failed getYearExpensesByType''',
-        build: () async {
+        build: () {
           when(mockPoliticExpensesAnalysisQuotaRepository
                   .getMaxQuotaForStateUf('CE'))
               .thenAnswer((_) => Future.value(1000));
@@ -247,6 +263,8 @@ void main() {
           return;
         },
         expect: [
+          LoadingPoliticExpensesData(),
+          GetPoliticExpensesDataFailed(),
           LoadingPoliticExpensesData(),
           GetPoliticExpensesDataFailed(),
         ],

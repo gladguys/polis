@@ -75,7 +75,7 @@ void main() {
 
     blocTest(
       '''Expects to logout user, send analytics metrics and set shared preferences user to null when Logout added''',
-      build: () async {
+      build: () {
         when(mockUserRepository.signOut()).thenAnswer((_) => Future.value());
         return userBloc;
       },
@@ -97,7 +97,7 @@ void main() {
 
     blocTest(
       'Expects [CurrentUserUpdated] when UpdateCurrentUser added',
-      build: () async => userBloc,
+      build: () => userBloc,
       act: (userBloc) {
         userBloc.add(UpdateCurrentUser(UserModel()));
         return;
@@ -112,7 +112,7 @@ void main() {
 
     blocTest(
       'Expects [SignoutLoading, SignoutFailed] when Logout fails',
-      build: () async {
+      build: () {
         when(mockUserRepository.signOut()).thenThrow(SignOutException());
         return userBloc;
       },
@@ -131,7 +131,7 @@ void main() {
 
     blocTest(
       'Expects [CurrentUserConfigUpdated] when updates config',
-      build: () async {
+      build: () {
         when(mockSharedPreferencesService.setUser(any))
             .thenAnswer((_) => Future.value());
         when(mockUserRepository.updateUserConfigs(any))
@@ -159,7 +159,7 @@ void main() {
 
     blocTest(
       'Expects [CurrentUserConfigUpdated] when updates config',
-      build: () async {
+      build: () {
         when(mockSharedPreferencesService.setUser(any))
             .thenAnswer((_) => Future.value());
         when(mockUserRepository.updateUserConfigs(any)).thenThrow(Exception());
@@ -182,7 +182,7 @@ void main() {
 
     blocTest(
       'Expects [CurrentUserConfigUpdated] when updates theme',
-      build: () async => userBloc,
+      build: () => userBloc,
       act: (userBloc) {
         userBloc.add(
           SetUserPickedTheme(
