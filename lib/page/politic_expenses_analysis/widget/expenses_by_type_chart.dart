@@ -19,25 +19,63 @@ class ExpensesByTypeChart extends StatelessWidget {
           .map((despesa) => despesa.percentual.sanitizePercentageToDouble())
           .toList(),
     ];
-    return PieChart(
-      labels: labels,
-      values: values,
-      animationDuration: const Duration(milliseconds: 500),
-      sliceFillColors: [
-        const Color(0xFF63B95C),
-        const Color(0xFF5D66B7),
-        const Color(0xFFCA56A6),
-        const Color(0xFFFFD850),
-        const Color(0xFFFF8F50),
-        const Color(0xFFFF5050),
+    return Column(
+      children: <Widget>[
+        PieChart(
+          size: const Size(150, 150),
+          labels: labels,
+          values: values,
+          animationDuration: const Duration(milliseconds: 500),
+          showLegend: false,
+          sliceFillColors: [
+            const Color(0xFF63B95C),
+            const Color(0xFF5D66B7),
+            const Color(0xFFCA56A6),
+            const Color(0xFFFFD850),
+            const Color(0xFFFF8F50),
+            const Color(0xFFFF5050),
+          ],
+        ),
+        ListView(
+          shrinkWrap: true,
+          children: _buildLegendTiles(labels),
+        ),
       ],
-      legendTextSize: 14,
-      legendPosition: LegendPosition.Bottom,
-      legendItemPadding: const EdgeInsets.only(left: 16),
-      legendIconShape: LegendIconShape.Circle,
-      legendTextColor: Theme.of(context).brightness == Brightness.light
-          ? Colors.grey[600]
-          : Colors.grey[300],
     );
+  }
+
+  List<ListTile> _buildLegendTiles(List<String> labels) {
+    final tiles = <ListTile>[];
+    for (var i = 0; i < labels.length; i++) {
+      tiles.add(
+        ListTile(
+          dense: true,
+          leading: CircleAvatar(
+            backgroundColor: _getColorByIndex(i),
+          ),
+          title: Text(labels[i]),
+        ),
+      );
+    }
+    return tiles;
+  }
+
+  Color _getColorByIndex(int index) {
+    switch (index) {
+      case 0:
+        return const Color(0xFF63B95C);
+      case 1:
+        return const Color(0xFF5D66B7);
+      case 2:
+        return const Color(0xFFCA56A6);
+      case 3:
+        return const Color(0xFFFFD850);
+      case 4:
+        return const Color(0xFFFF8F50);
+      case 5:
+        return const Color(0xFFFF5050);
+      default:
+        return const Color(0xFF63B95C);
+    }
   }
 }

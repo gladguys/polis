@@ -33,12 +33,8 @@ class PoliticExpensesAnalysisPage extends StatelessWidget {
                 children: <Widget>[
                   const SizedBox(height: 8),
                   TextTitle(EXPENSES_ANALYSIS),
-                  Container(
-                    height: 350,
-                    width: 400,
-                    child: ExpensesByTypeChart(
-                      despesasPorTipo: despesasPorTipo,
-                    ),
+                  ExpensesByTypeChart(
+                    despesasPorTipo: despesasPorTipo,
                   ),
                   Container(
                     width: 195,

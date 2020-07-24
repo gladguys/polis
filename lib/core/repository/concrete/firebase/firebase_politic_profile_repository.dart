@@ -71,7 +71,7 @@ class FirebasePoliticProfileRepository implements PoliticProfileRepository {
 
       return Tuple2<List<dynamic>, DocumentSnapshot>(
         activities,
-        querySnapshot.documents?.last,
+        querySnapshot.documents.isEmpty ? null : querySnapshot.documents?.last,
       );
     } on Exception {
       throw ComunicationException();

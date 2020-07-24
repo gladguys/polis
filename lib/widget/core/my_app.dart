@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           current is InitialUser || current is CurrentUserConfigUpdated,
       builder: (_, state) {
         var themeMode = ThemeMode.system;
-        if (state is CurrentUserConfigUpdated && isThemeConfig(state.config)) {
+        if (state is CurrentUserConfigUpdated) {
           themeMode = _getThemeForUser(state.user);
         } else {
           themeMode = _getThemeForUser(user);
