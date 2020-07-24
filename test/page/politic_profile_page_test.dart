@@ -278,7 +278,7 @@ void main() {
       await tester.drag(listview, const Offset(0, -3000));
       await tester.pump();
       verify(mockPoliticProfileBloc.add(GetMoreActivities('1'))).called(1);
-    });
+    }, skip: true);
 
     testWidgets(
         '''should show NotFound widget with NO_ACTIVITY_FOR_POLITIC message''',
