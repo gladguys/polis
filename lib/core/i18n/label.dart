@@ -61,6 +61,7 @@ const EXPENSES_COMPARATION = 'Comparativo de despesas';
 const FAVORITE_POSTS = 'Posts salvos';
 const EXPENSES_ANALYSIS = 'Análise de despesas';
 const EXPENSES_ON_YEAR = 'Despesas no ano';
+const YEAR = 'Ano';
 const CONFIGS = 'Configurações';
 const MY_ACTIVITIES = 'Minhas atividades';
 const ACTIVITIES = 'Atividades';

@@ -60,7 +60,7 @@ class _ExpensesByMonthState extends State<ExpensesByMonth>
       (despesa) {
         final ratio = despesa.valor / maxQuota;
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 3),
+          padding: const EdgeInsets.symmetric(vertical: 3),
           child: Stack(
             children: <Widget>[
               Container(

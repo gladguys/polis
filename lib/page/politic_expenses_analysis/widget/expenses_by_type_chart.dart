@@ -20,9 +20,11 @@ class ExpensesByTypeChart extends StatelessWidget {
           .toList(),
     ];
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         PieChart(
-          size: const Size(150, 150),
+          size: const Size(250, 250),
+          maxHeight: 250,
           labels: labels,
           values: values,
           animationDuration: const Duration(milliseconds: 500),
@@ -36,24 +38,52 @@ class ExpensesByTypeChart extends StatelessWidget {
             const Color(0xFFFF5050),
           ],
         ),
-        ListView(
-          shrinkWrap: true,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: _buildLegendTiles(labels),
         ),
+        const SizedBox(height: 16),
       ],
     );
   }
 
-  List<ListTile> _buildLegendTiles(List<String> labels) {
-    final tiles = <ListTile>[];
+  List<Column> _buildLegendTiles(List<String> labels) {
+    final tiles = <Column>[];
     for (var i = 0; i < labels.length; i++) {
       tiles.add(
-        ListTile(
-          dense: true,
-          leading: CircleAvatar(
-            backgroundColor: _getColorByIndex(i),
-          ),
-          title: Text(labels[i]),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: <Widget>[
+                Container(
+                  width: 14,
+                  height: 14,
+                  decoration: BoxDecoration(
+                    color: _getColorByIndex(i),
+                    borderRadius: BorderRadius.circular(7),
+                  ),
+                ),
+                const SizedBox(width: 4),
+                Flexible(
+                  child: Container(
+                    width: 400,
+                    constraints: const BoxConstraints(minHeight: 14),
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      labels[i],
+                      style: const TextStyle(fontSize: 12, height: 1),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
+          ],
         ),
       );
     }
