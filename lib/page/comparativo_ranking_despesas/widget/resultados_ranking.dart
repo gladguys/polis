@@ -18,10 +18,11 @@ class ResultadosRanking extends StatelessWidget {
     final theme = Theme.of(context);
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            const SizedBox(height: 8),
             Center(
               child: TextTitle(EXPENSES_COMPARATION),
             ),

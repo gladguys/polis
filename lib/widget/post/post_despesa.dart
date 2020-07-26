@@ -37,6 +37,7 @@ class PostDespesa extends StatelessWidget {
     return Screenshot(
       controller: screenshotController,
       child: Container(
+        margin: const EdgeInsets.only(top: 8),
         color: context.baseBackgroundColor,
         child: CardBase(
           slotLeft: _buildLeftContent(),

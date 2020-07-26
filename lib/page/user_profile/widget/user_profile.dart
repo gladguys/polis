@@ -69,7 +69,7 @@ class _UserProfileState extends State<UserProfile> {
             color: Theme.of(context).accentColor.withOpacity(.25),
           ),
           const SizedBox(height: 4),
-          TextTitle(MY_ACTIVITIES, fontSize: 15),
+          TextTitle(MY_ACTIVITIES, fontSize: 16),
           const SizedBox(height: 4),
         ],
       ),

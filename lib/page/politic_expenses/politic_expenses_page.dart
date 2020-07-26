@@ -36,11 +36,17 @@ class PoliticExpensesPage extends StatelessWidget {
       children: <Widget>[
         const SizedBox(height: 8),
         TextTitle(POLITIC_EXPENSES),
+        const SizedBox(height: 8),
         despesas.isNotEmpty
             ? Expanded(
-                child: ListView.builder(
+                child: ListView.separated(
                   itemBuilder: (_, i) => PoliticExpenseTile(despesas[i]),
                   itemCount: despesas.length,
+                  separatorBuilder: (_, i) => const Divider(
+                    height: 16,
+                    indent: 8,
+                    endIndent: 8,
+                  ),
                 ),
               )
             : Expanded(

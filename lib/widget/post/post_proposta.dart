@@ -41,8 +41,8 @@ class PostProposta extends StatelessWidget {
         color: context.baseBackgroundColor,
         child: Column(
           children: <Widget>[
+            const SizedBox(height: 8),
             if (isPostPreview) ...[
-              const SizedBox(height: 8),
               TextTitle(COMMENTS),
               const SizedBox(height: 8),
             ],

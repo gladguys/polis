@@ -34,6 +34,7 @@ class PoliticFollowersPage extends StatelessWidget {
       children: <Widget>[
         const SizedBox(height: 8),
         TextTitle(FOLLOWERS),
+        const SizedBox(height: 8),
         followers.isNotEmpty
             ? Expanded(
                 child: ListView.builder(

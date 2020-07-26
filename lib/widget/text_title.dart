@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TextTitle extends StatelessWidget {
-  TextTitle(this.text, {this.fontSize = 18});
+  TextTitle(this.text, {this.fontSize = 24});
 
   final String text;
   final double fontSize;

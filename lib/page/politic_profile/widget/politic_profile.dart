@@ -72,7 +72,7 @@ class _PoliticProfileState extends State<PoliticProfile> {
         PoliticAdditionalInfo(politico),
         const SizedBox(height: 24),
         const SizedBox(height: 8),
-        TextTitle(ACTIVITIES),
+        TextTitle(ACTIVITIES, fontSize: 18),
         const SizedBox(height: 8),
         PoliticActivities(bloc.lastActivities),
       ],

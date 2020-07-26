@@ -19,14 +19,11 @@ class UserConfigsPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               const SizedBox(height: 8),
-              Center(
-                child: TextTitle(PREFERENCES),
-              ),
+              TextTitle(PREFERENCES),
               const SizedBox(height: 8),
               ListView.separated(
                 shrinkWrap: true,

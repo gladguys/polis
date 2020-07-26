@@ -9,6 +9,7 @@ import '../../../core/keys.dart';
 import '../../../core/routing/route_names.dart';
 import '../../../widget/button_follow_unfollow.dart';
 import '../../../widget/card_base.dart';
+import '../../../widget/image/photo_image.dart';
 import '../../../widget/not_found.dart';
 import '../../../widget/photo.dart';
 import '../../pages.dart';
@@ -48,7 +49,20 @@ class FollowingPoliticsList extends StatelessWidget {
       key: ValueKey(politico.id),
       crossAxisAlignment: CrossAxisAlignment.center,
       slotLeft: GestureDetector(
-        child: Photo(url: politico.urlFoto),
+        child: Stack(
+          overflow: Overflow.visible,
+          children: <Widget>[
+            Photo(url: politico.urlFoto),
+            Positioned(
+              right: 0,
+              bottom: 0,
+              child: PhotoImage(
+                url: politico.urlPartidoLogo,
+                size: 18,
+              ),
+            ),
+          ],
+        ),
         onTap: () => SimpleRouter.forward(
           PoliticProfilePageConnected(
             politico.id,
@@ -95,8 +109,8 @@ class FollowingPoliticsList extends StatelessWidget {
           style: TextStyle(
             fontSize: 12,
             color: Theme.of(context).brightness == Brightness.light
-                        ? Colors.grey[600]
-                        : Colors.grey[300],
+                ? Colors.grey[600]
+                : Colors.grey[300],
           ),
         ),
       ],

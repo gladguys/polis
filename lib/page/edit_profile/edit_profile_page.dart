@@ -61,11 +61,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
             } else {
               return Column(
                 children: <Widget>[
-                  const SizedBox(height: 12),
-                  Center(
-                    child: TextTitle(EDIT_YOUR_PROFILE),
-                  ),
-                  const SizedBox(height: 22),
+                  const SizedBox(height: 8),
+                  TextTitle(EDIT_YOUR_PROFILE),
+                  const SizedBox(height: 16),
                   Container(
                     height: 120,
                     width: 120,
