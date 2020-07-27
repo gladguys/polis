@@ -14,9 +14,9 @@ class SeeExpensesButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlineButton(
-      child: Text(
+      child: const Text(
         SEE_EXPENSES,
-        style: const TextStyle(fontSize: 16),
+        style: TextStyle(fontSize: 16),
       ),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
       highlightedBorderColor: Colors.grey,

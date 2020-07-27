@@ -15,10 +15,10 @@ dependencies:
   flutter_bloc: ^6.0.1
   bloc: ^6.0.1
   simple_router: ^0.1.0+1
-  equatable: ^1.2.2
+  equatable: ^1.2.3
   json_serializable: ^3.3.0
-  hive: ^1.4.1+1
-  hive_flutter: ^0.3.0+2
+  hive: ^1.4.2
+  hive_flutter: ^0.3.1
   get_it: ^4.0.4
   shared_preferences: ^0.5.8
   image_picker: ^0.6.7+4
@@ -33,7 +33,7 @@ dependencies:
   screenshot: ^0.2.0
   esys_flutter_share: ^1.0.2
   in_app_update: ^1.1.11
-  flutter_bloc_monitor: ^1.0.3
+  flutter_bloc_monitor: ^1.0.3+1
   flutter_dotenv: ^2.1.0
   shared_preferences_monitor: ^1.0.1+2
   back_button_interceptor: ^4.2.4
@@ -49,7 +49,7 @@ dependencies:
   firebase_messaging: ^6.0.16
 
   # UI
-  fancy_shimmer_image: ^1.0.1
+  fancy_shimmer_image: ^1.2.0
   flutter_icons: ^1.1.0
   font_awesome_flutter: ^8.8.1
   smart_select: ^3.0.3
@@ -60,11 +60,8 @@ dependencies:
   flutter_spinkit: ^4.1.2+1
   expandable_bottom_sheet: ^0.2.1+1
   bubble: ^1.1.9+1
-  abouttoclose: ^1.0.0+1
+  abouttoclose: ^1.0.0+2
   multi_charts: ^0.2.0
-
-dependency_overrides:
-  dartx: ^0.5.0
 
 dev_dependencies:
   flutter_test:
@@ -74,7 +71,7 @@ dev_dependencies:
 
   # Generators
   build_runner:
-  hive_generator: ^0.7.0+2
+  hive_generator: ^0.7.1
 
   # Tests
   test: ^1.14.4

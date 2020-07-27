@@ -14,7 +14,7 @@ class ConfigsButton extends StatelessWidget {
       child: OutlineButton.icon(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
         highlightedBorderColor: Colors.grey,
-        label: Text(PREFERENCES),
+        label: const Text(PREFERENCES),
         icon: FaIcon(
           FontAwesomeIcons.cog,
           size: 18,

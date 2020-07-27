@@ -41,7 +41,9 @@ class PoliticExpensesAnalysisPage extends StatelessWidget {
                     const SizedBox(height: 16),
                     Row(
                       children: <Widget>[
-                        Expanded(child: _buildPolitico(context)),
+                        Expanded(
+                          child: _buildPolitico(context),
+                        ),
                         const SizedBox(width: 4),
                         _buildSelectYear(year, context),
                       ],

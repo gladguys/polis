@@ -27,7 +27,12 @@ void main() {
               child: Scaffold(
                 body: FollowingPoliticsSearch(
                   [
-                    PoliticoModel(id: '1', nomeEleitoral: 'nome'),
+                    PoliticoModel(
+                      id: '1',
+                      nomeEleitoral: 'nome',
+                      urlPartidoLogo: 'logo',
+                      urlFoto: 'url',
+                    ),
                   ],
                 ),
               ),
@@ -50,7 +55,12 @@ void main() {
               child: Scaffold(
                 body: FollowingPoliticsSearch(
                   [
-                    PoliticoModel(id: '1', nomeEleitoral: 'nome'),
+                    PoliticoModel(
+                      id: '1',
+                      nomeEleitoral: 'nome',
+                      urlPartidoLogo: 'logo',
+                      urlFoto: 'url',
+                    ),
                   ],
                 ),
               ),

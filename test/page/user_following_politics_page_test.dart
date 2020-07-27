@@ -92,6 +92,7 @@ void main() {
             PoliticoModel(
               id: '1',
               nomeEleitoral: 'nome',
+              urlPartidoLogo: 'logo',
             )
           ],
         ),
@@ -157,6 +158,7 @@ void main() {
             PoliticoModel(
               id: '1',
               nomeEleitoral: 'nome',
+              urlPartidoLogo: 'logo',
             )
           ],
         ),
@@ -192,8 +194,18 @@ void main() {
       when(mockUserFollowingPoliticsBloc.state).thenReturn(
         FetchPoliticsSuccess(
           [
-            PoliticoModel(id: '1', nomeEleitoral: 'nome', urlFoto: 'photo'),
-            PoliticoModel(id: '2', nomeEleitoral: 'nome2', urlFoto: 'photo2'),
+            PoliticoModel(
+              id: '1',
+              nomeEleitoral: 'nome',
+              urlFoto: 'photo',
+              urlPartidoLogo: 'logo',
+            ),
+            PoliticoModel(
+              id: '2',
+              nomeEleitoral: 'nome2',
+              urlFoto: 'photo2',
+              urlPartidoLogo: 'logo2',
+            ),
           ],
         ),
       );
@@ -234,7 +246,12 @@ void main() {
       when(mockUserFollowingPoliticsBloc.state).thenReturn(
         FetchPoliticsSuccess(
           [
-            PoliticoModel(id: '1', nomeEleitoral: 'nome', urlFoto: 'photo'),
+            PoliticoModel(
+              id: '1',
+              nomeEleitoral: 'nome',
+              urlFoto: 'photo',
+              urlPartidoLogo: 'logo',
+            ),
           ],
         ),
       );
@@ -269,8 +286,12 @@ void main() {
             user: UserModel(
               userId: '1',
             ),
-            politico:
-                PoliticoModel(id: '1', nomeEleitoral: 'nome', urlFoto: 'photo'),
+            politico: PoliticoModel(
+              id: '1',
+              nomeEleitoral: 'nome',
+              urlFoto: 'photo',
+              urlPartidoLogo: 'logo',
+            ),
           ),
         ),
       );

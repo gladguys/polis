@@ -37,6 +37,7 @@ void main() {
         id: '1',
         nomeEleitoral: 'nome',
         siglaUf: 'CE',
+        urlPartidoLogo: 'logo',
       );
       mockPoliticExpensesAnalysisBloc = MockPoliticExpensesAnalysisBloc();
     });
@@ -86,21 +87,25 @@ void main() {
       when(mockPoliticExpensesAnalysisBloc.beginYear).thenReturn(2019);
       when(mockPoliticExpensesAnalysisBloc.maxQuotaForState)
           .thenReturn(40000.0);
-      when(mockPoliticExpensesAnalysisBloc.state)
-          .thenReturn(GetPoliticExpensesDataSuccess(
-        year: 2019,
-        despesasPorTipo: [
-          DespesaPorTipo(
-            tipoCota: 'tipo cota 1',
-            valor: '100',
-            percentual: '1%',
-          )
-        ],
-        totalDespesasAnuais: TotalDespesasAnuais(ano: '2019', despesasPorMes: [
-          DespesaMensal(mes: '01', valor: 10000.0),
-          DespesaMensal(mes: '02', valor: 20000.0),
-        ]),
-      ));
+      when(mockPoliticExpensesAnalysisBloc.state).thenReturn(
+        GetPoliticExpensesDataSuccess(
+          year: 2019,
+          despesasPorTipo: [
+            DespesaPorTipo(
+              tipoCota: 'tipo cota 1',
+              valor: '100',
+              percentual: '1%',
+            )
+          ],
+          totalDespesasAnuais: TotalDespesasAnuais(
+            ano: '2019',
+            despesasPorMes: [
+              DespesaMensal(mes: '01', valor: 10000.0),
+              DespesaMensal(mes: '02', valor: 20000.0),
+            ],
+          ),
+        ),
+      );
       await tester.pumpWidget(
         connectedWidget(
           PageConnected<PoliticExpensesAnalysisBloc>(
@@ -109,14 +114,14 @@ void main() {
           ),
         ),
       );
-      final yearSelect = find.text('$EXPENSES_ON_YEAR:');
+      final yearSelect = find.text('$YEAR:');
       expect(yearSelect, findsOneWidget);
       await tester.tap(yearSelect);
-      await tester.pumpAndSettle();
+      await tester.pump();
       final year = find.text('2020');
       expect(year, findsOneWidget);
       await tester.tap(year);
-      await tester.pumpAndSettle();
+      await tester.pump();
     });
   });
 }

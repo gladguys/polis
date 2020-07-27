@@ -5,7 +5,7 @@ void main() {
   group('TextTitle tests', () {
     test('default font size', () {
       final textTile = TextTitle('text');
-      expect(textTile.fontSize, 18.0);
+      expect(textTile.fontSize, 24.0);
     });
 
     test('customised font size', () {

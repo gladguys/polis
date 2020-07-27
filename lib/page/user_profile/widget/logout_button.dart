@@ -17,7 +17,7 @@ class LogoutButton extends StatelessWidget {
       height: 30,
       child: OutlineButton.icon(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-        label: Text(LOGOUT),
+        label: const Text(LOGOUT),
         icon: FaIcon(
           FontAwesomeIcons.signOutAlt,
           size: 18,
