@@ -63,6 +63,9 @@ dependencies:
   abouttoclose: ^1.0.0+2
   multi_charts: ^0.2.0
 
+dependency_overrides:
+  dartx: ^0.5.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -71,7 +74,7 @@ dev_dependencies:
 
   # Generators
   build_runner:
-  hive_generator: ^0.7.1
+  hive_generator: 0.7.0+2
 
   # Tests
   test: ^1.14.4
