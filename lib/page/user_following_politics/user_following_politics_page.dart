@@ -19,12 +19,12 @@ class _UserFollowingPoliticsPageState extends State<UserFollowingPoliticsPage> {
   @override
   void initState() {
     super.initState();
-    BackButtonInterceptor.add((_) => onBackButtonPressed());
+    BackButtonInterceptor.add((_, __) => onBackButtonPressed());
   }
 
   @override
   void dispose() {
-    BackButtonInterceptor.remove((_) => onBackButtonPressed());
+    BackButtonInterceptor.remove((_, __) => onBackButtonPressed());
     super.dispose();
   }
 

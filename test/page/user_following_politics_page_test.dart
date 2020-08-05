@@ -19,6 +19,7 @@ void main() {
   group('UserFollowingPoliticsPage tests', () {
     setUp(() {
       mockUserFollowingPoliticsBloc = MockUserFollowingPoliticsBloc();
+      BackButtonInterceptor.removeAll();
     });
 
     test('asserts', () {

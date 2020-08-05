@@ -23,7 +23,7 @@ dependencies:
   shared_preferences: ^0.5.8
   image_picker: ^0.6.7+4
   url_launcher: ^5.5.0
-  flutter_native_admob: ^2.1.0
+  flutter_native_admob: ^2.1.0+3
   dio: ^3.0.9
 
   # Utils
@@ -36,7 +36,7 @@ dependencies:
   flutter_bloc_monitor: ^1.0.3+1
   flutter_dotenv: ^2.1.0
   shared_preferences_monitor: ^1.0.1+2
-  back_button_interceptor: ^4.2.4
+  back_button_interceptor: ^4.3.0
 
   # Firebase
   cloud_firestore: ^0.13.7
@@ -44,7 +44,7 @@ dependencies:
   firebase_auth: ^0.16.1
   firebase_storage: ^3.1.6
   firebase_analytics: ^5.0.16
-  firebase_crashlytics: ^0.1.3+3
+  firebase_crashlytics: ^0.1.4+1
   firebase_performance: ^0.3.2
   firebase_messaging: ^6.0.16
 
