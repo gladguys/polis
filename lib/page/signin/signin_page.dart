@@ -126,7 +126,7 @@ class _SigninPageState extends State<SigninPage> {
             const SizedBox(height: 16),
             TextFormField(
               key: emailFieldKey,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: EMAIL,
                 prefixIcon: Center(
                   widthFactor: 1,
@@ -148,7 +148,7 @@ class _SigninPageState extends State<SigninPage> {
               focusNode: _passwordFN,
               obscureText: true,
               onEditingComplete: _validateAndSendForm,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: PASSWORD,
                 prefixIcon: Center(
                   widthFactor: 1,

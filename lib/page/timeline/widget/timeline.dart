@@ -139,7 +139,7 @@ class _TimelineState extends State<Timeline> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          FaIcon(
+          const FaIcon(
             FontAwesomeIcons.syncAlt,
             size: 18,
           ),

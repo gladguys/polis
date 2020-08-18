@@ -172,7 +172,8 @@ class PostProposta extends StatelessWidget {
                     height: 30,
                     child: OutlineButton.icon(
                       key: tramitationsIconKey,
-                      icon: FaIcon(FontAwesomeIcons.exchangeAlt, size: 18),
+                      icon:
+                          const FaIcon(FontAwesomeIcons.exchangeAlt, size: 18),
                       label: Text(
                         TRAMITATIONS.toUpperCase(),
                         style: const TextStyle(fontSize: 13),
@@ -194,7 +195,7 @@ class PostProposta extends StatelessWidget {
                       height: 30,
                       child: FlatButton.icon(
                         key: seePropostaDocumentKey,
-                        icon: FaIcon(FontAwesomeIcons.file, size: 18),
+                        icon: const FaIcon(FontAwesomeIcons.file, size: 18),
                         label: Text(
                           DOCUMENT.toUpperCase(),
                           style: const TextStyle(fontSize: 13),

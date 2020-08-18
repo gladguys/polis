@@ -18,7 +18,7 @@ final darkTheme = ThemeData(
       borderRadius: BorderRadius.circular(32),
     ),
   ),
-  floatingActionButtonTheme: FloatingActionButtonThemeData(
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
     backgroundColor: Colors.amber,
     foregroundColor: Colors.white,
     splashColor: Colors.white38,

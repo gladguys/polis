@@ -15,7 +15,7 @@ class ConfigsButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
         highlightedBorderColor: Colors.grey,
         label: const Text(PREFERENCES),
-        icon: FaIcon(
+        icon: const FaIcon(
           FontAwesomeIcons.cog,
           size: 18,
         ),

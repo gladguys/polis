@@ -163,7 +163,7 @@ class PostDespesa extends StatelessWidget {
                     margin: const EdgeInsets.only(top: 8),
                     child: FlatButton.icon(
                       key: despesaImageIconKey,
-                      icon: FaIcon(FontAwesomeIcons.file, size: 18),
+                      icon: const FaIcon(FontAwesomeIcons.file, size: 18),
                       label: Text(
                         DOCUMENT.toUpperCase(),
                         style: const TextStyle(fontSize: 13),

@@ -15,7 +15,7 @@ class GoToPostCommentsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlineButton.icon(
-      icon: FaIcon(FontAwesomeIcons.comments, size: 18),
+      icon: const FaIcon(FontAwesomeIcons.comments, size: 18),
       label: Text(
         FOLLOW_COMMENTS.toUpperCase(),
         style: const TextStyle(fontSize: 13),

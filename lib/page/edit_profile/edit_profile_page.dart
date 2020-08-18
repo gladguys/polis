@@ -116,7 +116,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           width: 220,
                           child: OutlineButton.icon(
                             padding: EdgeInsets.zero,
-                            icon: Icon(Icons.lock, size: 18),
+                            icon: const Icon(Icons.lock, size: 18),
                             label: const Text(CHANGE_PASSWORD),
                             highlightedBorderColor: Colors.grey,
                             onPressed: () => SimpleRouter.forward(

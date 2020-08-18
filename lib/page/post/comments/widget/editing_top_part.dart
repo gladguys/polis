@@ -28,7 +28,7 @@ class EditingTopPart extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              FaIcon(
+              const FaIcon(
                 FontAwesomeIcons.pen,
                 size: 16,
               ),
@@ -49,7 +49,7 @@ class EditingTopPart extends StatelessWidget {
                     width: 22,
                     height: 22,
                     alignment: Alignment.center,
-                    child: FaIcon(
+                    child: const FaIcon(
                       FontAwesomeIcons.times,
                       key: stopEditingCommentKey,
                       size: 20,
