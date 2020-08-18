@@ -12,7 +12,7 @@ class FirebasePoliticExpensesAnalysisRepository
   FirebasePoliticExpensesAnalysisRepository({@required this.firestore})
       : assert(firestore != null);
 
-  final Firestore firestore;
+  final FirebaseFirestore firestore;
 
   CollectionReference get totalizadorDespesasRef =>
       firestore.collection(TOTALIZADOR_DESPESAS_COLLECTION);
@@ -22,17 +22,17 @@ class FirebasePoliticExpensesAnalysisRepository
       {String politicoId, String ano}) async {
     try {
       final doc = totalizadorDespesasRef
-          .document(politicoId)
+          .doc(politicoId)
           .collection(TOTAIS_ANO_SUBCOLLECTION)
-          .document(ano)
+          .doc(ano)
           .collection(TOTAL_MES_SUBCOLLECTION);
-      final querySnapshot = await doc.getDocuments();
-      final documents = querySnapshot.documents;
+      final querySnapshot = await doc.get();
+      final documents = querySnapshot.docs;
 
       final despesasPorMes = List.generate(
         documents.length,
         (i) => DespesaMensal(
-            mes: documents[i].documentID, valor: documents[i].data['total']),
+            mes: documents[i].id, valor: documents[i].data()['total']),
       );
 
       return TotalDespesasAnuais(

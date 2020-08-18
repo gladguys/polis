@@ -11,7 +11,7 @@ class FirebaseFavoritePostsRepository implements FavoritePostsRepository {
   FirebaseFavoritePostsRepository({@required this.firestore})
       : assert(firestore != null);
 
-  final Firestore firestore;
+  final FirebaseFirestore firestore;
 
   CollectionReference get postsFavoritosRef =>
       firestore.collection(POSTS_FAVORITOS_COLLECTION);
@@ -20,22 +20,22 @@ class FirebaseFavoritePostsRepository implements FavoritePostsRepository {
   Future<List<dynamic>> getUserFavoritePosts(String userId) async {
     try {
       final querySnapshot = await postsFavoritosRef
-          .document(userId)
+          .doc(userId)
           .collection(POSTS_FAVORITOS_USUARIO_SUBCOLLECTION)
           .orderBy(DATA_FAVORITADO_FIELD, descending: true)
-          .getDocuments();
-      final documents = querySnapshot.documents;
+          .get();
+      final documents = querySnapshot.docs;
       final posts = [];
       for (var document in documents) {
-        if (isDocumentDespesa(document.data)) {
-          final despesa = DespesaModel.fromJson(document.data);
+        if (isDocumentDespesa(document.data())) {
+          final despesa = DespesaModel.fromJson(document.data());
           posts.add(
             despesa.copyWith(
               favorito: true,
             ),
           );
         } else {
-          final proposta = PropostaModel.fromJson(document.data);
+          final proposta = PropostaModel.fromJson(document.data());
           posts.add(
             proposta.copyWith(
               favorito: true,

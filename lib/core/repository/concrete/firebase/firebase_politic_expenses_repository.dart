@@ -10,7 +10,7 @@ class FirebasePoliticExpensesRepository implements PoliticExpensesRepository {
   FirebasePoliticExpensesRepository({@required this.firestore})
       : assert(firestore != null);
 
-  final Firestore firestore;
+  final FirebaseFirestore firestore;
 
   CollectionReference get atividadesRef =>
       firestore.collection(ATIVIDADES_COLLECTION);
@@ -19,14 +19,14 @@ class FirebasePoliticExpensesRepository implements PoliticExpensesRepository {
   Future<List<DespesaModel>> getPoliticExpenses(String politicId) async {
     try {
       final query = atividadesRef
-          .document(politicId)
+          .doc(politicId)
           .collection(ATIVIDADES_POLITICO_SUBCOLLECTION)
           .where(TIPO_ATIVIDADE_FIELD, isEqualTo: 'DESPESA')
           .orderBy(DATA_DOCUMENTO_FIELD, descending: true);
-      final querySnapshot = await query.getDocuments();
-      final documents = querySnapshot.documents;
+      final querySnapshot = await query.get();
+      final documents = querySnapshot.docs;
       return List.generate(
-          documents.length, (i) => DespesaModel.fromJson(documents[i].data));
+          documents.length, (i) => DespesaModel.fromJson(documents[i].data()));
     } on Exception {
       throw ComunicationException();
     }

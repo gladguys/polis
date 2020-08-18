@@ -12,7 +12,7 @@ class FirebasePostRepository implements PostRepository {
   FirebasePostRepository({@required this.firestore})
       : assert(firestore != null);
 
-  final Firestore firestore;
+  final FirebaseFirestore firestore;
 
   CollectionReference get postsFavoritosRef =>
       firestore.collection(POSTS_FAVORITOS_COLLECTION);
@@ -30,10 +30,10 @@ class FirebasePostRepository implements PostRepository {
     };
     try {
       await postsFavoritosRef
-          .document(user.userId)
+          .doc(user.userId)
           .collection(POSTS_FAVORITOS_USUARIO_SUBCOLLECTION)
-          .document(getPostIdFromJson(post))
-          .setData(postWithTimestamp);
+          .doc(getPostIdFromJson(post))
+          .set(postWithTimestamp);
     } on Exception {
       throw ComunicationException();
     }
@@ -44,9 +44,9 @@ class FirebasePostRepository implements PostRepository {
       {Map<String, dynamic> post, UserModel user}) async {
     try {
       await postsFavoritosRef
-          .document(user.userId)
+          .doc(user.userId)
           .collection(POSTS_FAVORITOS_USUARIO_SUBCOLLECTION)
-          .document(getPostIdFromJson(post))
+          .doc(getPostIdFromJson(post))
           .delete();
     } on Exception {
       throw ComunicationException();
@@ -57,10 +57,10 @@ class FirebasePostRepository implements PostRepository {
   Future<void> setPostVisible({String userId, String postId}) async {
     try {
       await timelineRef
-          .document(userId)
+          .doc(userId)
           .collection(ATIVIDADES_TIMELINE_SUBCOLLECTION)
-          .document(postId)
-          .updateData({VISUALIZADO_FIELD: true});
+          .doc(postId)
+          .update({VISUALIZADO_FIELD: true});
     } on Exception {
       throw ComunicationException();
     }
@@ -70,9 +70,9 @@ class FirebasePostRepository implements PostRepository {
   Future<bool> isPostFavorited({String userId, String postId}) async {
     try {
       final documentReference = await postsFavoritosRef
-          .document(userId)
+          .doc(userId)
           .collection(POSTS_FAVORITOS_USUARIO_SUBCOLLECTION)
-          .document(postId);
+          .doc(postId);
       final documentSnapshot = await documentReference.get();
       return documentSnapshot.exists;
     } on Exception {
@@ -187,12 +187,12 @@ class FirebasePostRepository implements PostRepository {
 
       final docPost = postInfo.item2;
       if (isLiking) {
-        await docPost.updateData({
+        await docPost.update({
           QTD_CURTIDAS_FIELD: actualLikesCount + 1,
           QTD_NAO_CURTIDAS_FIELD: actualUnlikesCount - (isUnliked ? 1 : 0)
         });
       } else {
-        await docPost.updateData({
+        await docPost.update({
           QTD_CURTIDAS_FIELD: actualLikesCount - (isLiked ? 1 : 0),
           QTD_NAO_CURTIDAS_FIELD: actualUnlikesCount + 1,
         });
@@ -216,12 +216,12 @@ class FirebasePostRepository implements PostRepository {
 
       if (isLiking) {
         final actualLikesCount = postData[QTD_CURTIDAS_FIELD] ?? 0;
-        await postDoc.updateData({
+        await postDoc.update({
           QTD_CURTIDAS_FIELD: actualLikesCount - 1,
         });
       } else {
         final actualUnlikesCount = postData[QTD_NAO_CURTIDAS_FIELD] ?? 0;
-        await postDoc.updateData({
+        await postDoc.update({
           QTD_NAO_CURTIDAS_FIELD: actualUnlikesCount - 1,
         });
       }
@@ -247,7 +247,7 @@ class FirebasePostRepository implements PostRepository {
       userUnlikes[postId] = !isLiking;
 
       final userDoc = userInfo.item2;
-      await userDoc.updateData({
+      await userDoc.update({
         USER_LIKES_FIELD: {
           ...userLikes,
         },
@@ -279,7 +279,7 @@ class FirebasePostRepository implements PostRepository {
         final userLikes =
             Map<String, bool>.from(userData[USER_LIKES_FIELD] ?? {});
         userLikes[postId] = false;
-        await userDoc.updateData({
+        await userDoc.update({
           USER_LIKES_FIELD: {
             ...userLikes,
           }
@@ -290,7 +290,7 @@ class FirebasePostRepository implements PostRepository {
             Map<String, bool>.from(userData[USER_UNLIKES_FIELD] ?? {});
         userUnlikes[postId] = false;
 
-        await userDoc.updateData({
+        await userDoc.update({
           USER_UNLIKES_FIELD: userUnlikes,
         });
         return userUnlikes;
@@ -306,11 +306,11 @@ class FirebasePostRepository implements PostRepository {
   }) async {
     try {
       final documentReference = await atividadesRef
-          .document(politicoId)
+          .doc(politicoId)
           .collection(ATIVIDADES_POLITICO_SUBCOLLECTION)
-          .document(postId);
+          .doc(postId);
       final documentSnapshot = await documentReference.get();
-      return Tuple2(documentSnapshot.data, documentReference);
+      return Tuple2(documentSnapshot.data(), documentReference);
     } on Exception {
       rethrow;
     }
@@ -320,9 +320,9 @@ class FirebasePostRepository implements PostRepository {
     String userId,
   }) async {
     try {
-      final userDocumentReference = usersRef.document(userId);
+      final userDocumentReference = usersRef.doc(userId);
       final userDocumentSnapshot = await userDocumentReference.get();
-      return Tuple2(userDocumentSnapshot.data, userDocumentReference);
+      return Tuple2(userDocumentSnapshot.data(), userDocumentReference);
     } on Exception {
       throw ComunicationException();
     }

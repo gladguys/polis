@@ -11,7 +11,7 @@ class FirebaseTramitacaoPropostaRepository
   FirebaseTramitacaoPropostaRepository({@required this.firestore})
       : assert(firestore != null);
 
-  final Firestore firestore;
+  final FirebaseFirestore firestore;
 
   CollectionReference get tramitacoesRef =>
       firestore.collection(TRAMITACOES_COLLECTION);
@@ -21,13 +21,13 @@ class FirebaseTramitacaoPropostaRepository
       String propostaId) async {
     try {
       final querySnapshot = await tramitacoesRef
-          .document(propostaId)
+          .doc(propostaId)
           .collection(TRAMITACOES_PROPOSICAO_SUBCOLLECTION)
           .orderBy(SEQUENCIA_FIELD, descending: true)
-          .getDocuments();
-      final documents = querySnapshot.documents;
+          .get();
+      final documents = querySnapshot.docs;
       return List.generate(documents.length,
-          (i) => TramitacaoPropostaModel.fromJson(documents[i].data));
+          (i) => TramitacaoPropostaModel.fromJson(documents[i].data()));
     } on Exception {
       throw ComunicationException();
     }

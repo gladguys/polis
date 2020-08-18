@@ -11,7 +11,7 @@ class FirebasePoliticoRepository implements PoliticoRepository {
   FirebasePoliticoRepository({@required this.firestore})
       : assert(firestore != null);
 
-  final Firestore firestore;
+  final FirebaseFirestore firestore;
 
   CollectionReference get politicosRef =>
       firestore.collection(POLITICOS_COLLECTION);
@@ -19,10 +19,10 @@ class FirebasePoliticoRepository implements PoliticoRepository {
   @override
   Future<List<PoliticoModel>> getAllPoliticos() async {
     try {
-      final querySnapshot = await politicosRef.getDocuments();
-      final documents = querySnapshot.documents;
+      final querySnapshot = await politicosRef.get();
+      final documents = querySnapshot.docs;
       final politicos = List.generate(
-          documents.length, (i) => PoliticoModel.fromJson(documents[i].data));
+          documents.length, (i) => PoliticoModel.fromJson(documents[i].data()));
       politicos.sort((p1, p2) => removeDiacritics(p1.nomeEleitoral)
           .compareTo(removeDiacritics(p2.nomeEleitoral)));
       return politicos;

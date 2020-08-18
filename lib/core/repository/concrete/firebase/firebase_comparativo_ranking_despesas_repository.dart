@@ -11,7 +11,7 @@ class FirebaseComparativoRankingDespesasRepository
   FirebaseComparativoRankingDespesasRepository({@required this.firestore})
       : assert(firestore != null);
 
-  final Firestore firestore;
+  final FirebaseFirestore firestore;
 
   CollectionReference get resultadosRankingRef =>
       firestore.collection(RESULTADOS_RANKING_COLLECTION);
@@ -19,9 +19,9 @@ class FirebaseComparativoRankingDespesasRepository
   @override
   Future<ResultadosRankingModel> getRankingResults() async {
     try {
-      final documentRef = resultadosRankingRef.document(RANKING);
+      final documentRef = resultadosRankingRef.doc(RANKING);
       final documentSnapshot = await documentRef.get();
-      return ResultadosRankingModel.fromJson(documentSnapshot.data);
+      return ResultadosRankingModel.fromJson(documentSnapshot.data());
     } on Exception {
       throw ComunicationException();
     }

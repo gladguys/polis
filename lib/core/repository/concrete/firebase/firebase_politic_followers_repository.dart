@@ -10,7 +10,7 @@ class FirebasePoliticFollowersRepository implements PoliticFollowersRepository {
   FirebasePoliticFollowersRepository({@required this.firestore})
       : assert(firestore != null);
 
-  final Firestore firestore;
+  final FirebaseFirestore firestore;
 
   CollectionReference get usuariosSeguindoRef =>
       firestore.collection(USUARIOS_SEGUINDO_COLLECTION);
@@ -20,12 +20,12 @@ class FirebasePoliticFollowersRepository implements PoliticFollowersRepository {
       String politicId) async {
     try {
       final usuariosSeguindoCollectionRef = usuariosSeguindoRef
-          .document(politicId)
+          .doc(politicId)
           .collection(USUARIOS_SEGUINDO_SUBCOLLECTION);
-      final querySnapshot = await usuariosSeguindoCollectionRef.getDocuments();
-      final documents = querySnapshot.documents;
+      final querySnapshot = await usuariosSeguindoCollectionRef.get();
+      final documents = querySnapshot.docs;
       return List.generate(documents.length,
-          (i) => UsuarioSeguindoPolitico.fromJson(documents[i].data));
+          (i) => UsuarioSeguindoPolitico.fromJson(documents[i].data()));
     } on Exception {
       throw ComunicationException();
     }

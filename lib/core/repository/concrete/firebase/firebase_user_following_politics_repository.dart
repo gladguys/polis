@@ -11,7 +11,7 @@ class FirebaseUserFollowingPoliticsRepository
   FirebaseUserFollowingPoliticsRepository({@required this.firestore})
       : assert(firestore != null);
 
-  final Firestore firestore;
+  final FirebaseFirestore firestore;
   CollectionReference get politicosSeguindoRef =>
       firestore.collection(POLITICOS_SEGUIDOS_COLLECTION);
 
@@ -19,12 +19,12 @@ class FirebaseUserFollowingPoliticsRepository
   Future<List<PoliticoModel>> getFollowingPolitics(String userId) async {
     try {
       final collection = politicosSeguindoRef
-          .document(userId)
+          .doc(userId)
           .collection(POLITICOS_SEGUIDOS_SUBCOLLECTION);
-      final querySnapshot = await collection.getDocuments();
-      final documents = querySnapshot.documents;
+      final querySnapshot = await collection.get();
+      final documents = querySnapshot.docs;
       return List.generate(
-          documents.length, (i) => PoliticoModel.fromJson(documents[i].data));
+          documents.length, (i) => PoliticoModel.fromJson(documents[i].data()));
     } on Exception {
       throw ComunicationException();
     }

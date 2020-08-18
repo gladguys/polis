@@ -16,15 +16,15 @@ dependencies:
   bloc: ^6.0.1
   simple_router: ^0.1.0+1
   equatable: ^1.2.3
-  json_serializable: ^3.3.0
-  hive: ^1.4.2
+  json_serializable: ^3.4.0
+  hive: ^1.4.3
   hive_flutter: ^0.3.1
   get_it: ^4.0.4
   shared_preferences: ^0.5.8
   image_picker: ^0.6.7+4
   url_launcher: ^5.5.0
   flutter_native_admob: ^2.1.0+3
-  dio: ^3.0.9
+  dio: ^3.0.10
 
   # Utils
   diacritic: ^0.1.1
@@ -39,14 +39,15 @@ dependencies:
   back_button_interceptor: ^4.3.0
 
   # Firebase
-  cloud_firestore: ^0.13.7
+  firebase_core: ^0.5.0
+  cloud_firestore: ^0.14.0
   google_sign_in: ^4.5.1
-  firebase_auth: ^0.16.1
-  firebase_storage: ^3.1.6
-  firebase_analytics: ^5.0.16
+  firebase_auth: ^0.18.0
+  firebase_storage: ^4.0.0
+  firebase_analytics: ^6.0.0
   firebase_crashlytics: ^0.1.4+1
-  firebase_performance: ^0.3.2
-  firebase_messaging: ^6.0.16
+  firebase_performance: ^0.4.0
+  firebase_messaging: ^7.0.0
 
   # UI
   fancy_shimmer_image: ^1.2.0
@@ -56,7 +57,7 @@ dependencies:
   flutter_grid_delegate_ext: ^0.0.2
   sliding_panel: ^1.0.3
   skeleton_text: ^1.0.0
-  flare_flutter: ^2.0.5
+  flare_flutter: ^2.0.6
   flutter_spinkit: ^4.1.2+1
   expandable_bottom_sheet: ^0.2.1+1
   bubble: ^1.1.9+1

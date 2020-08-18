@@ -10,7 +10,7 @@ class FirebasePoliticExpensesAnalysisConfigRepository
   FirebasePoliticExpensesAnalysisConfigRepository({@required this.firestore})
       : assert(firestore != null);
 
-  final Firestore firestore;
+  final FirebaseFirestore firestore;
 
   CollectionReference get syncLogRef =>
       firestore.collection(SYNC_LOG_COLLECTION);
@@ -18,9 +18,8 @@ class FirebasePoliticExpensesAnalysisConfigRepository
   @override
   Future<int> getExpensesBeginYear() async {
     try {
-      final documentSnapshot =
-          await syncLogRef.document(INICIO_ANO_DESPESAS).get();
-      return documentSnapshot.data[VALUE];
+      final documentSnapshot = await syncLogRef.doc(INICIO_ANO_DESPESAS).get();
+      return documentSnapshot.data()[VALUE];
     } on Exception {
       throw ComunicationException();
     }

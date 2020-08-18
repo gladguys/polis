@@ -10,7 +10,7 @@ class FirebasePoliticProposalsRepository implements PoliticProposalsRepository {
   FirebasePoliticProposalsRepository({@required this.firestore})
       : assert(firestore != null);
 
-  final Firestore firestore;
+  final FirebaseFirestore firestore;
 
   CollectionReference get atividadesRef =>
       firestore.collection(ATIVIDADES_COLLECTION);
@@ -19,14 +19,14 @@ class FirebasePoliticProposalsRepository implements PoliticProposalsRepository {
   Future<List<PropostaModel>> getPoliticProposals(String politicId) async {
     try {
       final query = atividadesRef
-          .document(politicId)
+          .doc(politicId)
           .collection(ATIVIDADES_POLITICO_SUBCOLLECTION)
           .where(TIPO_ATIVIDADE_FIELD, isEqualTo: 'PROPOSICAO')
           .where(DESCRICAO_TIPO_FIELD, isEqualTo: 'Projeto de Lei');
-      final querySnapshot = await query.getDocuments();
-      final documents = querySnapshot.documents;
+      final querySnapshot = await query.get();
+      final documents = querySnapshot.docs;
       return List.generate(
-          documents.length, (i) => PropostaModel.fromJson(documents[i].data));
+          documents.length, (i) => PropostaModel.fromJson(documents[i].data()));
     } on Exception {
       throw ComunicationException();
     }

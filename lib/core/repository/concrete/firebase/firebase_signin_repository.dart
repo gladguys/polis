@@ -24,7 +24,7 @@ class FirebaseSigninRepository extends SigninRepository {
         assert(polisGoogleAuthProvider != null);
 
   final FirebaseAuth firebaseAuth;
-  final Firestore firestore;
+  final FirebaseFirestore firestore;
   final GoogleSignIn googleSignin;
   final PolisGoogleAuthProvider polisGoogleAuthProvider;
 
@@ -58,8 +58,10 @@ class FirebaseSigninRepository extends SigninRepository {
   @override
   Future<UserModel> getUserById(String userId) async {
     try {
-      final userDocument = await userRef.document(userId).get();
-      return userDocument.exists ? UserModel.fromJson(userDocument.data) : null;
+      final userDocument = await userRef.doc(userId).get();
+      return userDocument.exists
+          ? UserModel.fromJson(userDocument.data())
+          : null;
     } on Exception {
       throw ComunicationException();
     }
@@ -74,7 +76,7 @@ class FirebaseSigninRepository extends SigninRepository {
         final googleSignInAuthentication =
             await googleSignInAccount.authentication;
 
-        final credential = GoogleAuthProvider.getCredential(
+        final credential = GoogleAuthProvider.credential(
           accessToken: googleSignInAuthentication.accessToken,
           idToken: googleSignInAuthentication.idToken,
         );
@@ -107,7 +109,7 @@ class FirebaseSigninRepository extends SigninRepository {
 
   Future<UserModel> _createUserOnFirestore(UserModel user) async {
     try {
-      await userRef.document(user.userId).setData(user.toJson());
+      await userRef.doc(user.userId).set(user.toJson());
       return user;
     } on Exception {
       throw ComunicationException();
@@ -118,11 +120,11 @@ class FirebaseSigninRepository extends SigninRepository {
   Future<UserModel> getUserByEmail(String email) async {
     try {
       final query = await userRef.where('email', isEqualTo: email);
-      final querySnapshot = await query.getDocuments();
-      final documents = querySnapshot.documents;
+      final querySnapshot = await query.get();
+      final documents = querySnapshot.docs;
 
       return documents.isNotEmpty
-          ? UserModel.fromJson(documents[0].data)
+          ? UserModel.fromJson(documents[0].data())
           : null;
     } on Exception {
       throw ComunicationException();

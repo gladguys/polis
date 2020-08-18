@@ -11,7 +11,7 @@ class FirebasePoliticSuggestionRepository
   FirebasePoliticSuggestionRepository({@required this.firestore})
       : assert(firestore != null);
 
-  final Firestore firestore;
+  final FirebaseFirestore firestore;
 
   CollectionReference get politicosRef =>
       firestore.collection(POLITICOS_COLLECTION);
@@ -24,14 +24,14 @@ class FirebasePoliticSuggestionRepository
   Future<List<PoliticoModel>> getSuggestedPolitics(String stateOption) async {
     try {
       final querySnapshot = stateOption == 'T'
-          ? await politicosRef.getDocuments()
+          ? await politicosRef.get()
           : await politicosRef
               .where(SIGLA_UF_FIELD, isEqualTo: stateOption)
-              .getDocuments();
+              .get();
 
-      final documents = querySnapshot.documents;
+      final documents = querySnapshot.docs;
       return List.generate(
-          documents.length, (i) => PoliticoModel.fromJson(documents[i].data));
+          documents.length, (i) => PoliticoModel.fromJson(documents[i].data()));
     } on Exception {
       throw ComunicationException();
     }
@@ -46,10 +46,10 @@ class FirebasePoliticSuggestionRepository
 
       for (var politic in listPoliticsToFollow) {
         await politicosSeguidosRef
-            .document(userId)
+            .doc(userId)
             .collection(POLITICOS_SEGUIDOS_SUBCOLLECTION)
-            .document(politic[ID_FIELD])
-            .setData(politic);
+            .doc(politic[ID_FIELD])
+            .set(politic);
       }
     } on Exception {
       throw ComunicationException();
@@ -62,10 +62,10 @@ class FirebasePoliticSuggestionRepository
     try {
       for (var politic in politics) {
         await usuariosSeguindoRef
-            .document(politic.id)
+            .doc(politic.id)
             .collection(USUARIOS_SEGUINDO_SUBCOLLECTION)
-            .document(user.userId)
-            .setData(user.toJson());
+            .doc(user.userId)
+            .set(user.toJson());
       }
     } on Exception {
       throw ComunicationException();

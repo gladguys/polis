@@ -9,7 +9,7 @@ class FirebaseSyncLogRepository implements SyncLogRepository {
   FirebaseSyncLogRepository({@required this.firestore})
       : assert(firestore != null);
 
-  final Firestore firestore;
+  final FirebaseFirestore firestore;
 
   CollectionReference get syncLogRef =>
       firestore.collection(SYNC_LOG_COLLECTION);
@@ -17,8 +17,8 @@ class FirebaseSyncLogRepository implements SyncLogRepository {
   @override
   Future<String> getPartidoHash() async {
     try {
-      final documentSnapshot = await syncLogRef.document(PARTIDO_SYNC).get();
-      return documentSnapshot.data[HASH];
+      final documentSnapshot = await syncLogRef.doc(PARTIDO_SYNC).get();
+      return documentSnapshot.data()[HASH];
     } on Exception {
       throw ComunicationException();
     }
@@ -27,8 +27,8 @@ class FirebaseSyncLogRepository implements SyncLogRepository {
   @override
   Future<String> getPoliticoHash() async {
     try {
-      final documentSnapshot = await syncLogRef.document(POLITICO_SYNC).get();
-      return documentSnapshot.data[HASH];
+      final documentSnapshot = await syncLogRef.doc(POLITICO_SYNC).get();
+      return documentSnapshot.data()[HASH];
     } on Exception {
       throw ComunicationException();
     }
@@ -37,8 +37,8 @@ class FirebaseSyncLogRepository implements SyncLogRepository {
   @override
   Future<String> getOrgaoHash() async {
     try {
-      final documentSnapshot = await syncLogRef.document(ORGAO_SYNC).get();
-      return documentSnapshot.data[HASH];
+      final documentSnapshot = await syncLogRef.doc(ORGAO_SYNC).get();
+      return documentSnapshot.data()[HASH];
     } on Exception {
       throw ComunicationException();
     }

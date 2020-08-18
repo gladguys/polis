@@ -11,7 +11,7 @@ class FirebaseUserProfileRepository implements UserProfileRepository {
   FirebaseUserProfileRepository({@required this.firestore})
       : assert(firestore != null);
 
-  final Firestore firestore;
+  final FirebaseFirestore firestore;
 
   CollectionReference get usersRef => firestore.collection(USERS_COLLECTION);
   CollectionReference get politicosSeguidosRef =>
@@ -23,9 +23,9 @@ class FirebaseUserProfileRepository implements UserProfileRepository {
   @override
   Future<UserModel> getUserInfo(String userId) async {
     try {
-      final userDocumentReference = await usersRef.document(userId);
+      final userDocumentReference = await usersRef.doc(userId);
       final documentSnapshot = await userDocumentReference.get();
-      return UserModel.fromJson(documentSnapshot.data);
+      return UserModel.fromJson(documentSnapshot.data());
     } on Exception {
       throw ComunicationException();
     }
@@ -35,12 +35,12 @@ class FirebaseUserProfileRepository implements UserProfileRepository {
   Future<List<PoliticoModel>> getPoliticsFollowing(String userId) async {
     try {
       final collectionRef = await politicosSeguidosRef
-          .document(userId)
+          .doc(userId)
           .collection(POLITICOS_SEGUIDOS_SUBCOLLECTION);
-      final querySnapshot = await collectionRef.getDocuments();
-      final documents = querySnapshot.documents;
+      final querySnapshot = await collectionRef.get();
+      final documents = querySnapshot.docs;
       return List.generate(
-          documents.length, (i) => PoliticoModel.fromJson(documents[i].data));
+          documents.length, (i) => PoliticoModel.fromJson(documents[i].data()));
     } on Exception {
       throw ComunicationException();
     }
@@ -50,13 +50,13 @@ class FirebaseUserProfileRepository implements UserProfileRepository {
   Future<List<AcaoUsuarioModel>> getUserActions(String userId) async {
     try {
       final collectionRef = await acoesRef
-          .document(userId)
+          .doc(userId)
           .collection(ACOES_USUARIO_SUBCOLLECTION)
           .orderBy(DATA_ACAO, descending: true);
-      final querySnapshot = await collectionRef.getDocuments();
-      final documents = querySnapshot.documents;
+      final querySnapshot = await collectionRef.get();
+      final documents = querySnapshot.docs;
       return List.generate(documents.length,
-          (i) => AcaoUsuarioModel.fromJson(documents[i].data));
+          (i) => AcaoUsuarioModel.fromJson(documents[i].data()));
     } on Exception {
       throw ComunicationException();
     }
@@ -67,15 +67,15 @@ class FirebaseUserProfileRepository implements UserProfileRepository {
       {String postId, String politicoId, PostType postType}) async {
     try {
       final docReference = await atividadesRef
-          .document(politicoId)
+          .doc(politicoId)
           .collection(ATIVIDADES_POLITICO_SUBCOLLECTION)
-          .document(postId)
+          .doc(postId)
           .get();
 
       if (postType == PostType.PROPOSICAO) {
-        return PropostaModel.fromJson(docReference.data);
+        return PropostaModel.fromJson(docReference.data());
       } else {
-        return DespesaModel.fromJson(docReference.data);
+        return DespesaModel.fromJson(docReference.data());
       }
     } on Exception {
       throw ComunicationException();

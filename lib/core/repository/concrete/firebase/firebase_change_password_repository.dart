@@ -14,7 +14,7 @@ class FirebaseChangePasswordRepository implements ChangePasswordRepository {
   @override
   Future<void> changeUserPassword(
       {String currentPassword, String newPassword}) async {
-    final authUser = await firebaseAuth.currentUser();
+    final authUser = await firebaseAuth.currentUser;
     try {
       await firebaseAuth.signInWithEmailAndPassword(
           email: authUser.email, password: currentPassword);

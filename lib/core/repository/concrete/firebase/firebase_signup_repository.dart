@@ -23,7 +23,7 @@ class FirebaseSignupRepository extends SignupRepository {
         assert(storage != null);
 
   final FirebaseAuth firebaseAuth;
-  final Firestore firestore;
+  final FirebaseFirestore firestore;
   final FirebaseStorage storage;
 
   CollectionReference get userRef => firestore.collection(USERS_COLLECTION);
@@ -31,19 +31,20 @@ class FirebaseSignupRepository extends SignupRepository {
   @override
   Future<void> createUserWithEmailAndPassword(
       UserModel user, File profileImage) async {
-    AuthResult authResult;
+    UserCredential userCredential;
     try {
-      authResult = await firebaseAuth.createUserWithEmailAndPassword(
+      userCredential = await firebaseAuth.createUserWithEmailAndPassword(
           email: user.email, password: user.password);
 
-      if (authResult != null && !await userExists(authResult.user.uid)) {
+      if (userCredential != null &&
+          !await userExists(userCredential.user.uid)) {
         String imageUrl;
         if (profileImage != null) {
           try {
             final storageReference = storage
                 .ref()
                 .child(USERS_COLLECTION)
-                .child(authResult.user.uid)
+                .child(userCredential.user.uid)
                 .child(Uuid().v1());
             await storageReference.putFile(profileImage).onComplete;
             imageUrl = await storageReference.getDownloadURL();
@@ -53,7 +54,7 @@ class FirebaseSignupRepository extends SignupRepository {
         }
 
         await createFirestoreUser(
-          authResult.user.uid,
+          userCredential.user.uid,
           user.copyWith(
             photoUrl: imageUrl,
             authProvider: AuthProvider.emailAndPassword,
@@ -62,7 +63,7 @@ class FirebaseSignupRepository extends SignupRepository {
         return;
       }
     } on Exception catch (e) {
-      await authResult?.user?.delete();
+      await userCredential?.user?.delete();
       if (e.toString().contains(ERROR_EMAIL_ALREADY_IN_USE)) {
         throw EmailAlreadyInUseException();
       } else if (e.toString().contains(ERROR_WEAK_PASSWORD)) {
@@ -77,7 +78,7 @@ class FirebaseSignupRepository extends SignupRepository {
   @override
   Future<bool> userExists(String uid) async {
     try {
-      final doc = await userRef.document(uid).get();
+      final doc = await userRef.doc(uid).get();
       return doc.exists;
     } on Exception {
       throw ComunicationException();
@@ -95,7 +96,7 @@ class FirebaseSignupRepository extends SignupRepository {
     );
 
     try {
-      await userRef.document(userToSave.userId).setData(userToSave.toJson());
+      await userRef.doc(userToSave.userId).set(userToSave.toJson());
       return user;
     } on Exception {
       throw ComunicationException();

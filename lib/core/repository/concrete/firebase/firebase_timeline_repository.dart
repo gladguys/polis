@@ -12,7 +12,7 @@ class FirebaseTimelineRepository implements TimelineRepository {
   FirebaseTimelineRepository({@required this.firestore})
       : assert(firestore != null);
 
-  final Firestore firestore;
+  final FirebaseFirestore firestore;
 
   CollectionReference get timelineRef =>
       firestore.collection(TIMELINE_COLLECTION);
@@ -21,13 +21,13 @@ class FirebaseTimelineRepository implements TimelineRepository {
   Stream<int> getNewActivitiesCounter(String userId) {
     try {
       return timelineRef
-          .document(userId)
+          .doc(userId)
           .collection(ATIVIDADES_TIMELINE_SUBCOLLECTION)
           .orderBy(DATA_PUBLICACAO_FIELD, descending: true)
           .snapshots()
           .map((snapshot) {
         var changes = 0;
-        final documentChanges = snapshot.documentChanges;
+        final documentChanges = snapshot.docChanges;
         for (var change in documentChanges) {
           if (change.type == DocumentChangeType.added) {
             changes += 1;
@@ -45,18 +45,18 @@ class FirebaseTimelineRepository implements TimelineRepository {
       String userId, int count) async {
     try {
       final query = await timelineRef
-          .document(userId)
+          .doc(userId)
           .collection(ATIVIDADES_TIMELINE_SUBCOLLECTION)
           .orderBy(DATA_PUBLICACAO_FIELD, descending: true)
           .limit(count);
 
-      final querySnapshot = await query.getDocuments();
+      final querySnapshot = await query.get();
       final activities = getActivitiesFromSnapshot(querySnapshot);
-      final documentsSnapshot = querySnapshot.documents;
+      final documentsSnapshot = querySnapshot.docs;
 
       return Tuple2<List<dynamic>, DocumentSnapshot>(
         activities,
-        documentsSnapshot.isNotEmpty ? querySnapshot.documents.last : null,
+        documentsSnapshot.isNotEmpty ? querySnapshot.docs.last : null,
       );
     } on Exception {
       throw ComunicationException();
@@ -68,21 +68,19 @@ class FirebaseTimelineRepository implements TimelineRepository {
       String userId, int count, DocumentSnapshot lastDocument) async {
     try {
       final query = await timelineRef
-          .document(userId)
+          .doc(userId)
           .collection(ATIVIDADES_TIMELINE_SUBCOLLECTION)
           .orderBy(DATA_PUBLICACAO_FIELD, descending: true)
           .startAfterDocument(lastDocument)
           .limit(count);
 
-      final querySnapshot = await query.getDocuments();
+      final querySnapshot = await query.get();
       final activities = getActivitiesFromSnapshot(querySnapshot);
-      final documentsSnapshot = querySnapshot.documents;
+      final documentsSnapshot = querySnapshot.docs;
 
       return Tuple2<List<dynamic>, DocumentSnapshot>(
         activities,
-        documentsSnapshot.isNotEmpty
-            ? querySnapshot.documents.last
-            : lastDocument,
+        documentsSnapshot.isNotEmpty ? querySnapshot.docs.last : lastDocument,
       );
     } on Exception {
       throw ComunicationException();
@@ -92,15 +90,15 @@ class FirebaseTimelineRepository implements TimelineRepository {
   List<dynamic> getActivitiesFromSnapshot(QuerySnapshot querySnapshot) {
     final activities = <dynamic>[];
 
-    final documents = querySnapshot.documents;
+    final documents = querySnapshot.docs;
     for (var document in documents) {
-      if (isDocumentDespesa(document.data)) {
-        final despesaModel = DespesaModel.fromJson(document.data);
-        activities.add(despesaModel.copyWith(id: document.documentID));
+      if (isDocumentDespesa(document.data())) {
+        final despesaModel = DespesaModel.fromJson(document.data());
+        activities.add(despesaModel.copyWith(id: document.id));
       } else {
-        final propostaModel = PropostaModel.fromJson(document.data);
+        final propostaModel = PropostaModel.fromJson(document.data());
         activities.add(
-          propostaModel.copyWith(idPropostaPolitico: document.documentID),
+          propostaModel.copyWith(idPropostaPolitico: document.id),
         );
       }
     }
