@@ -57,7 +57,7 @@ void main() {
 
     blocTest(
       '''Expects [LoadingPostComments, GetPostCommentsSuccess] when GetPostComments called''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.getPostComments(postId: '1'))
             .thenAnswer((_) => Future.value([]));
         return commentBloc;
@@ -75,7 +75,7 @@ void main() {
 
     blocTest(
       '''Expects [LoadingPostComments, GetPostCommentsFailed] when fails''',
-      build: () async {
+      build: () {
         when(mockCommentRepository.getPostComments(postId: '1'))
             .thenThrow(Exception());
         return commentBloc;
@@ -92,7 +92,7 @@ void main() {
 
     blocTest(
       'Expects [NewCommentAdded] when added a comment',
-      build: () async {
+      build: () {
         when(mockCommentRepository.saveComment(any)).thenAnswer(
           (_) => Future.value(
             CommentModel(
@@ -122,7 +122,7 @@ void main() {
 
     blocTest(
       'Expects [NewCommentAdded] when added a comment',
-      build: () async {
+      build: () {
         commentBloc.postComments = [
           CommentModel(),
         ];
@@ -137,10 +137,151 @@ void main() {
         ),
       ),
       expect: [
-        NewReplyCommentAdded(
+        NewSubCommentAdded(
           comment: CommentModel(),
-          numberOfReplies: 1,
+          numberOfSubComments: 1,
         ),
+      ],
+    );
+
+    blocTest(
+      'Expects [CommentDeletedSuccess] when deleted a comment',
+      build: () {
+        commentBloc.postComments = [
+          CommentModel(
+            id: 1,
+          ),
+        ];
+        return commentBloc;
+      },
+      act: (commentBloc) async => commentBloc.add(
+        DeleteComment(
+          CommentModel(
+            id: 1,
+          ),
+        ),
+      ),
+      expect: [
+        CommentDeletedSuccess(
+          comment: CommentModel(
+            id: 1,
+          ),
+          numberOfComments: 0,
+        ),
+      ],
+    );
+
+    blocTest(
+      'Expects [EditingCommentStarted] when starting edition of  a comment',
+      build: () => commentBloc,
+      act: (commentBloc) async => commentBloc.add(
+        StartEditingComment(
+          CommentModel(
+            id: 1,
+          ),
+        ),
+      ),
+      expect: [
+        EditingCommentStarted(
+          CommentModel(
+            id: 1,
+          ),
+        ),
+      ],
+    );
+
+    blocTest(
+      'Expects [InitialCommentState] when stops editing',
+      build: () => commentBloc,
+      act: (commentBloc) async {
+        commentBloc.add(
+          StartEditingComment(
+            CommentModel(
+              id: 1,
+            ),
+          ),
+        );
+        commentBloc.add(
+          StopEditingComment(),
+        );
+      },
+      expect: [
+        EditingCommentStarted(
+          CommentModel(
+            id: 1,
+          ),
+        ),
+        InitialCommentState(),
+      ],
+    );
+
+    blocTest(
+      'Expects [CommentEditedSuccess] when EditComment added',
+      build: () {
+        commentBloc.postComments = [
+          CommentModel(
+            id: 1,
+          ),
+          CommentModel(
+            id: 2,
+          ),
+        ];
+        when(mockCommentRepository.editComment(comment: anyNamed('comment')))
+            .thenAnswer((_) => Future.value());
+        return commentBloc;
+      },
+      act: (commentBloc) async => commentBloc.add(
+        EditComment(
+          comment: CommentModel(
+            id: 1,
+          ),
+          newText: 'novo',
+        ),
+      ),
+      expect: [
+        CommentEditedSuccess(
+          comment: CommentModel(
+            id: 1,
+          ),
+        ),
+      ],
+      verify: (commentBloc) async {
+        verify(
+          mockCommentRepository.editComment(
+            comment: CommentModel(
+              id: 1,
+              texto: 'novo',
+            ),
+          ),
+        ).called(1);
+      },
+    );
+
+    blocTest(
+      'Expects [CommentEditedFailed] when fails',
+      build: () {
+        commentBloc.postComments = [
+          CommentModel(
+            id: 1,
+          ),
+          CommentModel(
+            id: 2,
+          ),
+        ];
+        when(mockCommentRepository.editComment(comment: anyNamed('comment')))
+            .thenThrow(Exception());
+        return commentBloc;
+      },
+      act: (commentBloc) async => commentBloc.add(
+        EditComment(
+          comment: CommentModel(
+            id: 1,
+          ),
+          newText: 'novo',
+        ),
+      ),
+      expect: [
+        CommentEditedFailed(),
       ],
     );
   });

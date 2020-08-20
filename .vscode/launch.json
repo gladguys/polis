@@ -5,28 +5,39 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "run mock",
+            "request": "launch",
+            "type": "dart",
+            "args": ["--flavor", "dev"],
+            "program": "lib/main_mock.dart"
+        },
+        {
             "name": "run dev",
             "request": "launch",
             "type": "dart",
             "args": ["--flavor", "dev"],
+            "program": "lib/main_dev.dart"
         },
         {
             "name": "run dev release",
             "request": "launch",
             "type": "dart",
             "args": ["--flavor", "dev", "--release"],
+            "program": "lib/main_dev.dart"
         },
         {
             "name": "run prod",
             "request": "launch",
             "type": "dart",
             "args": ["--flavor", "prod"],
+            "program": "lib/main_prod.dart"
         },
         {
             "name": "run prod release",
             "request": "launch",
             "type": "dart",
             "args": ["--flavor", "prod", "--release"],
+            "program": "lib/main_prod.dart"
         },
     ]
 }

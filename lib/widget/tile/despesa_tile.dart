@@ -40,14 +40,16 @@ class DespesaTile extends StatelessWidget {
             builder: (_, state) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                _buildTopContent(),
+                _buildTopContent(context),
                 _buildCenterContent(),
                 const SizedBox(height: 8),
                 Text(
                   '${despesa.dataDocumento.formatDate()}',
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.grey[600],
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Colors.grey[600]
+                        : Colors.grey[300],
                   ),
                 ),
               ],
@@ -56,6 +58,7 @@ class DespesaTile extends StatelessWidget {
           slotBottom: _buildActions(context),
           key: cardBaseKey,
           onTap: () async {
+            context.bloc<TimelineBloc>().add(RefreshTimeline());
             await SimpleRouter.forward(
               PostPageConnected(
                 post: despesa,
@@ -64,7 +67,6 @@ class DespesaTile extends StatelessWidget {
               ),
               name: POST_PAGE,
             );
-            context.bloc<TimelineBloc>().add(RefreshTimeline());
           },
         ),
         Positioned(
@@ -115,7 +117,7 @@ class DespesaTile extends StatelessWidget {
     );
   }
 
-  Widget _buildTopContent() {
+  Widget _buildTopContent(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -131,7 +133,9 @@ class DespesaTile extends StatelessWidget {
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.normal,
-            color: Colors.grey[600],
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey[600]
+                : Colors.grey[300],
           ),
         ),
       ],
@@ -182,9 +186,13 @@ class DespesaTile extends StatelessWidget {
                 const SizedBox(width: 24),
                 ButtonActionCard(
                   icon: FontAwesomeIcons.comment,
-                  iconColor: Colors.grey[700],
-                  textColor: Colors.grey[700],
-                  text: '120',
+                  iconColor: Theme.of(context).brightness == Brightness.light
+                      ? Colors.grey[700]
+                      : Colors.grey[500],
+                  textColor: Theme.of(context).brightness == Brightness.light
+                      ? Colors.grey[700]
+                      : Colors.grey[500],
+                  text: despesa.qntComentarios.toString(),
                   onTap: () {},
                 ),
                 const Spacer(),
@@ -195,7 +203,9 @@ class DespesaTile extends StatelessWidget {
                       : FontAwesomeIcons.bookmark,
                   iconColor: (despesa.favorito ?? false)
                       ? Colors.yellow
-                      : Colors.grey[700],
+                      : Theme.of(context).brightness == Brightness.light
+                          ? Colors.grey[700]
+                          : Colors.grey[500],
                   onTap: () => context.bloc<PostBloc>().add(
                         FavoritePostForUser(
                           post: {

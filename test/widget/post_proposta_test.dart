@@ -70,6 +70,24 @@ void main() {
       );
     });
 
+    testWidgets('should build dark mode without exploding', (tester) async {
+      final mockPostBloc = MockPostBloc();
+      when(mockPostBloc.isPostFavorite).thenReturn(true);
+      when(mockPostBloc.post).thenReturn(proposta.toJson());
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<PostBloc>(
+            bloc: mockPostBloc,
+            page: PostProposta(
+              proposta,
+              screenshotController: MockScreenshotController(),
+            ),
+          ),
+          useDarkMode: true,
+        ),
+      );
+    });
+
     testWidgets(
         'should style diferent when descricaoTipo equals PLENARY_AMENDMENT',
         (tester) async {

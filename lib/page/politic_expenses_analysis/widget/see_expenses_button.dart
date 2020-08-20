@@ -14,15 +14,12 @@ class SeeExpensesButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlineButton(
-      child: Text(
+      child: const Text(
         SEE_EXPENSES,
-        style: const TextStyle(fontSize: 16),
+        style: TextStyle(fontSize: 16),
       ),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
-      color: Colors.black,
-      textColor: Colors.black,
-      borderSide: const BorderSide(color: Colors.black),
-      highlightedBorderColor: Colors.black,
+      highlightedBorderColor: Colors.grey,
       onPressed: () => SimpleRouter.forward(
         PoliticExpensesPageConnected(politico),
         name: RANKING_EXPENSES_COMPARE_PAGE,

@@ -189,7 +189,7 @@ class _InitialPageState extends State<InitialPage> {
                   const SizedBox(height: 12),
                   OutlineButton(
                     key: noAccountButtonKey,
-                    child: Text(
+                    child: const Text(
                       NO_ACCOUNT,
                       style: TextStyle(
                         fontSize: 18,

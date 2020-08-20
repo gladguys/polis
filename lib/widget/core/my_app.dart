@@ -1,5 +1,6 @@
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
@@ -24,34 +25,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(
       buildWhen: (previous, current) =>
-          current is InitialUser ||
-          current is CurrentUserConfigUpdated ||
-          current is UserStoredLocally ||
-          current is CurrentUserConfigUpdated,
+          current is InitialUser || current is CurrentUserConfigUpdated,
       builder: (_, state) {
-        var choosedTheme = lightTheme;
-        if (state is CurrentUserConfigUpdated &&
-            stringToConfig(state.config) == Configuracao.isDarkModeEnabled) {
-          if (state.value) {
-            choosedTheme = darkTheme;
-          }
-        }
-        if (state is UserStoredLocally) {
-          choosedTheme = state.user.userConfigs[
-                  configToStringKey(Configuracao.isDarkModeEnabled)]
-              ? darkTheme
-              : lightTheme;
-        }
+        var themeMode = ThemeMode.system;
         if (state is CurrentUserConfigUpdated) {
-          choosedTheme = state.user.userConfigs[
-                  configToStringKey(Configuracao.isDarkModeEnabled)]
-              ? darkTheme
-              : lightTheme;
+          themeMode = _getThemeForUser(state.user);
+        } else {
+          themeMode = _getThemeForUser(user);
         }
+        _setSystemBarColor(themeMode);
         return MaterialApp(
           title: POLIS,
           debugShowCheckedModeBanner: false,
-          theme: choosedTheme,
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: themeMode,
           navigatorKey: SimpleRouter.getKey(),
           home: isUserLogged
               ? TimelinePageConnected(
@@ -66,6 +54,33 @@ class MyApp extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+
+  ThemeMode _getThemeForUser(UserModel user) {
+    if (user == null || user.hasNoConfigsSet) {
+      return ThemeMode.system;
+    }
+    return isConfigEnabledForUser(
+      user: user,
+      configuracao: Configuracao.isDarkModeEnabled,
+    )
+        ? ThemeMode.dark
+        : ThemeMode.system;
+  }
+
+  void _setSystemBarColor(ThemeMode themeMode) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        systemNavigationBarColor: isUserLogged
+            ? themeMode == ThemeMode.dark
+                ? darkTheme.scaffoldBackgroundColor
+                : lightTheme.scaffoldBackgroundColor
+            : Colors.black,
+        systemNavigationBarIconBrightness: isUserLogged
+            ? themeMode == ThemeMode.dark ? Brightness.light : Brightness.dark
+            : Brightness.light,
+      ),
     );
   }
 }

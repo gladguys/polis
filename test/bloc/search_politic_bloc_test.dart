@@ -93,7 +93,7 @@ void main() {
 
     blocTest(
       '''Expects [LoadingFetchPolitics, FetchSearchPoliticsSuccess] when FetchPolitics added''',
-      build: () async {
+      build: () {
         when(mockPoliticoService.getAllPoliticos()).thenAnswer(
           (_) => Future.value([
             PoliticoModel(id: '1'),
@@ -127,7 +127,7 @@ void main() {
 
     blocTest(
       '''Expects [LoadingFetchPolitics, FetchSearchPoliticsFailed] when FetchPolitics failed''',
-      build: () async {
+      build: () {
         when(mockPoliticoService.getAllPoliticos()).thenThrow(Exception());
         return searchPoliticBloc;
       },
@@ -146,7 +146,7 @@ void main() {
 
     blocTest(
       'Expects [SearchPoliticFilterChanged] when state filter',
-      build: () async {
+      build: () {
         when(mockPoliticoService.getAllPoliticos()).thenAnswer(
           (_) => Future.value([
             PoliticoModel(id: '1', siglaUf: 'CE'),
@@ -186,7 +186,7 @@ void main() {
 
     blocTest(
       'Expects [SearchPoliticFilterChanged] when partido filter',
-      build: () async {
+      build: () {
         when(mockPoliticoService.getAllPoliticos()).thenAnswer(
           (_) => Future.value([
             PoliticoModel(id: '1', siglaPartido: 'PT'),
@@ -226,7 +226,7 @@ void main() {
 
     blocTest(
       'Expects [SearchPoliticFilterChanged] when filtered by term',
-      build: () async {
+      build: () {
         when(mockPoliticoService.getAllPoliticos()).thenAnswer(
           (_) => Future.value([
             PoliticoModel(id: '1', nomeEleitoral: 'Joao'),
@@ -264,7 +264,7 @@ void main() {
 
     blocTest(
       '#139 - https://github.com/gladguys/polis/issues/139',
-      build: () async {
+      build: () {
         when(mockPoliticoService.getAllPoliticos()).thenAnswer(
           (_) => Future.value([
             PoliticoModel(id: '1', nomeEleitoral: 'João'),
@@ -297,7 +297,7 @@ void main() {
 
     blocTest(
       '#123 - https://github.com/gladguys/polis/issues/123',
-      build: () async {
+      build: () {
         when(mockPoliticoService.getAllPoliticos()).thenAnswer(
           (_) => Future.value([
             PoliticoModel(id: '1', nomeEleitoral: 'Joao'),
@@ -349,7 +349,7 @@ void main() {
 
     blocTest(
       '''Expects to follow the politic when FollowUnfollowSearchPolitic added and politic not been followed''',
-      build: () async {
+      build: () {
         when(mockPoliticoService.getAllPoliticos()).thenAnswer(
           (_) => Future.value([
             PoliticoModel(id: '1', nomeEleitoral: 'Joao'),
@@ -414,7 +414,7 @@ void main() {
 
     blocTest(
       '''Expects to unfollow the politic when FollowUnfollowSearchPolitic added and politic is been followed''',
-      build: () async {
+      build: () {
         when(mockPoliticoService.getAllPoliticos()).thenAnswer(
           (_) => Future.value([
             PoliticoModel(id: '1', nomeEleitoral: 'Joao'),
@@ -482,7 +482,7 @@ void main() {
 
     blocTest(
       'Expects to yield FollowUnfollowPoliticsFailed when exception occurs',
-      build: () async {
+      build: () {
         when(mockFollowRepository.followPolitic(
                 user: anyNamed('user'), politico: anyNamed('politico')))
             .thenThrow(Exception());
@@ -511,7 +511,7 @@ void main() {
     blocTest(
       '''Expects to yield [LoadingFetchPolitics, FetchSearchPoliticsSuccess, FollowedSearchPoliticsUpdated] when ChangeFollowPoliticStatus
       added''',
-      build: () async {
+      build: () {
         final mockPoliticProfileBloc = MockPoliticProfileBloc();
         final bloc = SearchPoliticBloc(
           userFollowingPoliticsRepository: mockUserFollowingPoliticsRepository,
@@ -571,7 +571,7 @@ void main() {
 
     blocTest(
       '''Expects to add ChangeFollowPoliticStatus when UserFollowingPoliticChanged changed''',
-      build: () async {
+      build: () {
         final mockPoliticProfileBloc = MockPoliticProfileBloc();
         whenListen(
           mockPoliticProfileBloc,

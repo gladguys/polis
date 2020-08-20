@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_router/simple_router.dart';
 
+import '../../../bloc/blocs.dart';
 import '../../../core/domain/model/models.dart';
 import '../../../core/i18n/i18n.dart';
 import '../../../core/routing/route_names.dart';
@@ -17,8 +19,11 @@ class PoliticsFollowingQuantity extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(5),
       onTap: () => SimpleRouter.forwardAndReplace(
-        UserFollowingPoliticsPageConnected(
-          user: user,
+        BlocProvider.value(
+          value: context.bloc<UserProfileBloc>(),
+          child: UserFollowingPoliticsPageConnected(
+            user: user,
+          ),
         ),
         name: USER_FOLLOWING_POLITICS_PAGE,
       ),
@@ -34,7 +39,9 @@ class PoliticsFollowingQuantity extends StatelessWidget {
           Text(
             FOLLOWING,
             style: TextStyle(
-              color: Colors.grey[600],
+              color: Theme.of(context).brightness == Brightness.light
+                  ? Colors.grey[600]
+                  : Colors.grey[300],
               fontSize: 12,
             ),
           ),

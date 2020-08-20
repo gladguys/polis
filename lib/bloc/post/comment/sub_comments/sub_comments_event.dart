@@ -30,3 +30,27 @@ class DeleteSubComment extends SubCommentsEvent {
   @override
   List<Object> get props => [subComment];
 }
+
+class StartEditingSubComment extends SubCommentsEvent {
+  StartEditingSubComment(this.subComment);
+
+  final SubCommentModel subComment;
+
+  @override
+  List<Object> get props => [subComment];
+}
+
+class EditSubComment extends SubCommentsEvent {
+  EditSubComment({this.subComment, this.newText});
+
+  final SubCommentModel subComment;
+  final String newText;
+
+  @override
+  List<Object> get props => [subComment, newText];
+}
+
+class StopEditingSubComment extends SubCommentsEvent {
+  @override
+  List<Object> get props => [];
+}

@@ -8,9 +8,10 @@ import '../../../widget/photo.dart';
 import '../../pages.dart';
 
 class PersonalUserInfo extends StatelessWidget {
-  PersonalUserInfo({this.user});
+  PersonalUserInfo({this.user, this.isUserPickedTheLocal = true});
 
   final UserModel user;
+  final bool isUserPickedTheLocal;
 
   @override
   Widget build(BuildContext context) {
@@ -34,26 +35,31 @@ class PersonalUserInfo extends StatelessWidget {
           user.email,
           style: TextStyle(
             fontSize: 12,
-            color: Colors.grey[600],
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey[600]
+                : Colors.grey[300],
           ),
         ),
         const SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
-              height: 30,
-              width: 130,
-              child: FlatButton(
-                padding: EdgeInsets.zero,
-                child: const Text(EDIT_PROFILE),
-                color: Colors.amber,
-                onPressed: () => SimpleRouter.forward(
-                  EditProfilePageConnected(),
-                  name: EDIT_PROFILE_PAGE,
-                ),
-              ),
-            ),
+            isUserPickedTheLocal
+                ? Container(
+                    height: 30,
+                    width: 130,
+                    child: FlatButton(
+                      padding: EdgeInsets.zero,
+                      child: const Text(EDIT_PROFILE),
+                      color: Colors.amber,
+                      textColor: Colors.black,
+                      onPressed: () => SimpleRouter.forward(
+                        EditProfilePageConnected(),
+                        name: EDIT_PROFILE_PAGE,
+                      ),
+                    ),
+                  )
+                : const SizedBox.shrink(),
           ],
         )
       ],

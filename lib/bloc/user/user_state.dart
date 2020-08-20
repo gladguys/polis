@@ -53,12 +53,3 @@ class UpdateUserConfigFailed extends UserState {
   @override
   List<Object> get props => [];
 }
-
-class UserStoredLocally extends UserState {
-  UserStoredLocally({this.user});
-
-  final UserModel user;
-
-  @override
-  List<Object> get props => [user];
-}

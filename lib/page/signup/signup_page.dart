@@ -66,7 +66,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return BlocListener(
-      bloc: _signupBloc,
+      cubit: _signupBloc,
       listener: (context, state) {
         if (state is UserCreated) {
           Snackbar.success(context, USER_CREATED_WITH_SUCCESS);
@@ -79,7 +79,7 @@ class _SignupPageState extends State<SignupPage> {
         }
       },
       child: BlocBuilder<SignupBloc, SignupState>(
-        bloc: _signupBloc,
+        cubit: _signupBloc,
         builder: (_, state) {
           if (state is InitialSignup ||
               state is UserCreationFailed ||

@@ -46,7 +46,9 @@ class PoliticPersonalInfo extends StatelessWidget {
           politic.sexo == MALE ? POLITIC_MALE : POLITIC_FEMALE,
           style: TextStyle(
             fontSize: 12,
-            color: Colors.grey[600],
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey[600]
+                : Colors.grey[300],
           ),
         ),
       ],

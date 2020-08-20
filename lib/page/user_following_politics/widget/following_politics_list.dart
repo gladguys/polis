@@ -9,6 +9,7 @@ import '../../../core/keys.dart';
 import '../../../core/routing/route_names.dart';
 import '../../../widget/button_follow_unfollow.dart';
 import '../../../widget/card_base.dart';
+import '../../../widget/image/photo_image.dart';
 import '../../../widget/not_found.dart';
 import '../../../widget/photo.dart';
 import '../../pages.dart';
@@ -26,9 +27,13 @@ class FollowingPoliticsList extends StatelessWidget {
   }
 
   Widget _buildList(BuildContext context) {
+    final localUser = context.bloc<UserBloc>().user;
+    final pickedUser = context.bloc<UserProfileBloc>().user;
+    final isLocalUserThePickedOne = localUser == pickedUser;
     return ListView.separated(
       itemCount: politicos.length,
-      itemBuilder: (_, i) => _buildListTile(context, politicos[i]),
+      itemBuilder: (_, i) =>
+          _buildListTile(context, politicos[i], isLocalUserThePickedOne),
       separatorBuilder: (_, i) => const Divider(
         height: 1,
         indent: 8,
@@ -37,13 +42,27 @@ class FollowingPoliticsList extends StatelessWidget {
     );
   }
 
-  Widget _buildListTile(BuildContext context, PoliticoModel politico) {
+  Widget _buildListTile(BuildContext context, PoliticoModel politico,
+      bool isLocalUserThePickedOne) {
     final bloc = context.bloc<UserFollowingPoliticsBloc>();
     return CardBase(
       key: ValueKey(politico.id),
       crossAxisAlignment: CrossAxisAlignment.center,
       slotLeft: GestureDetector(
-        child: Photo(url: politico.urlFoto),
+        child: Stack(
+          overflow: Overflow.visible,
+          children: <Widget>[
+            Photo(url: politico.urlFoto),
+            Positioned(
+              right: 0,
+              bottom: 0,
+              child: PhotoImage(
+                url: politico.urlPartidoLogo,
+                size: 18,
+              ),
+            ),
+          ],
+        ),
         onTap: () => SimpleRouter.forward(
           PoliticProfilePageConnected(
             politico.id,
@@ -57,21 +76,23 @@ class FollowingPoliticsList extends StatelessWidget {
           name: POLITIC_PROFILE_PAGE,
         ),
       ),
-      slotCenter: _buildSlotCenter(politico),
-      slotRight: ButtonFollowUnfollow(
-        isFollow: bloc.isPoliticBeingFollowed(politico),
-        key: followUnfollowButtonKey,
-        onPressed: () => bloc.add(
-          FollowUnfollowPolitic(
-            user: context.bloc<UserBloc>().user,
-            politico: politico,
-          ),
-        ),
-      ),
+      slotCenter: _buildSlotCenter(politico, context),
+      slotRight: isLocalUserThePickedOne
+          ? ButtonFollowUnfollow(
+              isFollow: bloc.isPoliticBeingFollowed(politico),
+              key: followUnfollowButtonKey,
+              onPressed: () => bloc.add(
+                FollowUnfollowPolitic(
+                  user: context.bloc<UserBloc>().user,
+                  politico: politico,
+                ),
+              ),
+            )
+          : const SizedBox.shrink(),
     );
   }
 
-  Widget _buildSlotCenter(PoliticoModel politico) {
+  Widget _buildSlotCenter(PoliticoModel politico, BuildContext context) {
     return Wrap(
       direction: Axis.vertical,
       spacing: 2,
@@ -87,7 +108,9 @@ class FollowingPoliticsList extends StatelessWidget {
           ' · ${politico.siglaUf}',
           style: TextStyle(
             fontSize: 12,
-            color: Colors.grey[600],
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey[600]
+                : Colors.grey[300],
           ),
         ),
       ],

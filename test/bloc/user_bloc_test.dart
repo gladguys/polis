@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
+import 'package:polis/core/domain/enum/configuracao.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/exception/exceptions.dart';
 
@@ -74,7 +75,7 @@ void main() {
 
     blocTest(
       '''Expects to logout user, send analytics metrics and set shared preferences user to null when Logout added''',
-      build: () async {
+      build: () {
         when(mockUserRepository.signOut()).thenAnswer((_) => Future.value());
         return userBloc;
       },
@@ -82,20 +83,21 @@ void main() {
         userBloc.add(Logout());
         return;
       },
+      expect: [
+        SignoutLoading(),
+        SignoutSucceded(),
+        InitialUser(),
+      ],
       verify: (userBloc) async {
         verify(mockUserRepository.signOut()).called(1);
         verify(mockAnalyticsService.logLogout(any)).called(1);
         verify(mockSharedPreferencesService.setUser(null)).called(1);
       },
-      expect: [
-        SignoutLoading(),
-        SignoutSucceded(),
-      ],
     );
 
     blocTest(
       'Expects [CurrentUserUpdated] when UpdateCurrentUser added',
-      build: () async => userBloc,
+      build: () => userBloc,
       act: (userBloc) {
         userBloc.add(UpdateCurrentUser(UserModel()));
         return;
@@ -110,7 +112,7 @@ void main() {
 
     blocTest(
       'Expects [SignoutLoading, SignoutFailed] when Logout fails',
-      build: () async {
+      build: () {
         when(mockUserRepository.signOut()).thenThrow(SignOutException());
         return userBloc;
       },
@@ -124,6 +126,79 @@ void main() {
       expect: [
         SignoutLoading(),
         SignoutFailed(),
+      ],
+    );
+
+    blocTest(
+      'Expects [CurrentUserConfigUpdated] when updates config',
+      build: () {
+        when(mockSharedPreferencesService.setUser(any))
+            .thenAnswer((_) => Future.value());
+        when(mockUserRepository.updateUserConfigs(any))
+            .thenAnswer((_) => Future.value());
+        return userBloc;
+      },
+      act: (userBloc) {
+        userBloc.add(
+          ChangeUserConfig(
+            config: Configuracao.isActivityInfoEnabled,
+            value: true,
+            user: UserModel(userId: '1'),
+          ),
+        );
+        return;
+      },
+      expect: [
+        CurrentUserConfigUpdated(
+          user: UserModel(userId: '1'),
+          config: 'isActivityInfoEnabled',
+          value: true,
+        ),
+      ],
+    );
+
+    blocTest(
+      'Expects [CurrentUserConfigUpdated] when updates config',
+      build: () {
+        when(mockSharedPreferencesService.setUser(any))
+            .thenAnswer((_) => Future.value());
+        when(mockUserRepository.updateUserConfigs(any)).thenThrow(Exception());
+        return userBloc;
+      },
+      act: (userBloc) {
+        userBloc.add(
+          ChangeUserConfig(
+            config: Configuracao.isActivityInfoEnabled,
+            value: true,
+            user: UserModel(userId: '1'),
+          ),
+        );
+        return;
+      },
+      expect: [
+        UpdateUserConfigFailed(),
+      ],
+    );
+
+    blocTest(
+      'Expects [CurrentUserConfigUpdated] when updates theme',
+      build: () => userBloc,
+      act: (userBloc) {
+        userBloc.add(
+          SetUserPickedTheme(
+            UserModel(
+              userId: '1',
+            ),
+          ),
+        );
+        return;
+      },
+      expect: [
+        CurrentUserConfigUpdated(
+          user: UserModel(
+            userId: '1',
+          ),
+        ),
       ],
     );
   });

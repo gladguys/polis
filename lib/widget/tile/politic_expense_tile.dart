@@ -24,7 +24,7 @@ class PoliticExpenseTile extends StatelessWidget {
       slotCenter: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          _buildTopContent(),
+          _buildTopContent(context),
           _buildCenterContent(),
         ],
       ),
@@ -40,49 +40,41 @@ class PoliticExpenseTile extends StatelessWidget {
   }
 
   Widget _buildLeftContent() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 16),
-      child: Stack(
-        overflow: Overflow.visible,
-        children: <Widget>[
-          Photo(url: despesa.fotoPolitico),
-          Positioned(
-            right: 0,
-            bottom: -10,
-            child: PhotoImage(
-              url: despesa.urlPartidoLogo,
-              size: 22,
-            ),
+    return Stack(
+      overflow: Overflow.visible,
+      children: <Widget>[
+        Photo(url: despesa.fotoPolitico),
+        Positioned(
+          right: 0,
+          bottom: -10,
+          child: PhotoImage(
+            url: despesa.urlPartidoLogo,
+            size: 22,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  Widget _buildTopContent() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget _buildTopContent(BuildContext context) {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const SizedBox(height: 14),
-            Text(
-              despesa.nomePolitico,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              '$POLITIC · ${despesa.siglaPartido} · ${despesa.estadoPolitico}',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.normal,
-                color: Colors.grey[600],
-              ),
-            ),
-          ],
+        Text(
+          despesa.nomePolitico,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          '$POLITIC · ${despesa.siglaPartido} · ${despesa.estadoPolitico}',
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.normal,
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey[600]
+                : Colors.grey[300],
+          ),
         ),
       ],
     );
@@ -112,21 +104,18 @@ class PoliticExpenseTile extends StatelessWidget {
   }
 
   Widget _buildActions(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 4, bottom: 16),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
-            '${despesa.dataDocumento.formatDate()}',
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey[600],
-            ),
+    return Row(
+      children: <Widget>[
+        Text(
+          '${despesa.dataDocumento.formatDate()}',
+          style: TextStyle(
+            fontSize: 12,
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey[600]
+                : Colors.grey[300],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

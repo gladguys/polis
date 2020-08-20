@@ -43,6 +43,15 @@ class SubCommentsBloc extends Bloc<SubCommentsEvent, SubCommentsState> {
     if (event is DeleteSubComment) {
       yield* _mapDeleteSubCommentToState(event);
     }
+    if (event is StartEditingSubComment) {
+      yield* _mapStartEditingSubCommentToState(event);
+    }
+    if (event is StopEditingSubComment) {
+      yield* _mapStopEditingSubCommentToState(event);
+    }
+    if (event is EditSubComment) {
+      yield* _mapEditSubCommentToState(event);
+    }
   }
 
   Stream<SubCommentsState> _mapGetCommentSubCommentsToState(
@@ -120,6 +129,13 @@ class SubCommentsBloc extends Bloc<SubCommentsEvent, SubCommentsState> {
         ...oldSubComments,
       ];
 
+      commentBloc.add(
+        UpdateCommentReplies(
+          comment: comment,
+          subComments: subComments,
+        ),
+      );
+
       yield DeletedSubCommentSuccess(
         subCommentDeleted: subCommentToDelete,
         numberOfReplies: subComments.length,
@@ -127,5 +143,50 @@ class SubCommentsBloc extends Bloc<SubCommentsEvent, SubCommentsState> {
     } on Exception {
       yield DeletedSubCommentFailed();
     }
+  }
+
+  Stream<SubCommentsState> _mapStartEditingSubCommentToState(
+      StartEditingSubComment event) async* {
+    yield EditingSubCommentStarted(
+      event.subComment,
+    );
+  }
+
+  Stream<SubCommentsState> _mapEditSubCommentToState(
+      EditSubComment event) async* {
+    try {
+      final subCommentToBeEdited = event.subComment;
+      final currentSubComments = [
+        ...subComments,
+      ];
+
+      final subCommentIndex = currentSubComments
+          .indexWhere((subComment) => subComment.id == subCommentToBeEdited.id);
+
+      currentSubComments[subCommentIndex] =
+          currentSubComments[subCommentIndex].copyWith(
+        texto: event.newText,
+      );
+
+      await repository.editSubComment(
+        commentId: comment.id,
+        subComment: currentSubComments[subCommentIndex],
+      );
+
+      subComments = [
+        ...currentSubComments,
+      ];
+
+      yield SubCommentEditedSuccess(
+        subComment: event.subComment,
+      );
+    } on Exception {
+      yield SubCommentEditedFailed();
+    }
+  }
+
+  Stream<SubCommentsState> _mapStopEditingSubCommentToState(
+      StopEditingSubComment event) async* {
+    yield InitialSubCommentsState();
   }
 }

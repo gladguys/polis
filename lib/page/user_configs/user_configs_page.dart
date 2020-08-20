@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../bloc/blocs.dart';
 import '../../core/domain/enum/configuracao.dart';
@@ -14,18 +15,15 @@ class UserConfigsPage extends StatelessWidget {
     final user = userBloc.user;
     final userConfigs = user.userConfigs ?? {};
     final allConfigs = Configuracao.values;
-    print(Theme.of(context).primaryColor);
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               const SizedBox(height: 8),
-              Center(
-                child: TextTitle(CONFIGS),
-              ),
+              TextTitle(PREFERENCES),
               const SizedBox(height: 8),
               ListView.separated(
                 shrinkWrap: true,
@@ -38,8 +36,8 @@ class UserConfigsPage extends StatelessWidget {
                     textOff: NO,
                     colorOn: Colors.greenAccent[700],
                     colorOff: Colors.redAccent[700],
-                    iconOn: Icons.done,
-                    iconOff: Icons.remove,
+                    iconOn: FontAwesomeIcons.check,
+                    iconOff: FontAwesomeIcons.times,
                     textSize: 16.0,
                     onChanged: (value) => userBloc.add(
                       ChangeUserConfig(
@@ -50,7 +48,7 @@ class UserConfigsPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                separatorBuilder: (_, i) => const Divider(),
+                separatorBuilder: (_, i) => const Divider(height: 8),
                 itemCount: allConfigs.length,
               ),
             ],

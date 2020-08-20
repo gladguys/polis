@@ -10,6 +10,7 @@ class CommentModel extends Equatable {
     this.usuarioId,
     this.usuarioNome,
     this.postId,
+    this.politicoId,
     this.texto,
     this.diaHora,
     this.foiEditado,
@@ -20,6 +21,7 @@ class CommentModel extends Equatable {
   final String usuarioId;
   final String usuarioNome;
   final String postId;
+  final String politicoId;
   final String texto;
   final DateTime diaHora;
   final bool foiEditado;
@@ -32,6 +34,7 @@ class CommentModel extends Equatable {
     String usuarioNome,
     String postId,
     String texto,
+    String politicoId,
     String diaHora,
     bool foiEditado,
     int qntSubComentarios,
@@ -42,6 +45,7 @@ class CommentModel extends Equatable {
       usuarioNome: usuarioNome ?? this.usuarioNome,
       postId: postId ?? this.postId,
       texto: texto ?? this.texto,
+      politicoId: politicoId ?? this.politicoId,
       diaHora: diaHora ?? this.diaHora,
       foiEditado: foiEditado ?? this.foiEditado,
       qntSubComentarios: qntSubComentarios ?? this.qntSubComentarios,
@@ -55,7 +59,7 @@ class CommentModel extends Equatable {
 
   @override
   String toString() {
-    return '''CommentModel{id: $id, usuarioId: $usuarioId, usuarioNome: $usuarioNome, postId: $postId, texto: $texto, diaHora: $diaHora, foiEditado: $foiEditado, qntSubComentarios: $qntSubComentarios}''';
+    return '''CommentModel{id: $id, usuarioId: $usuarioId, usuarioNome: $usuarioNome, postId: $postId, politicoId: $politicoId, texto: $texto, diaHora: $diaHora, foiEditado: $foiEditado, qntSubComentarios: $qntSubComentarios}''';
   }
 
   @override

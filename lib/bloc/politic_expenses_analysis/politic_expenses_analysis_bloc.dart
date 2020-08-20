@@ -22,6 +22,10 @@ class PoliticExpensesAnalysisBloc
     @required this.politicoUf,
   })  : assert(politicExpensesAnalysisRepository != null),
         assert(politicExpensesAnalysisConfigRepository != null),
+        assert(politicExpensesAnalysisQuotaRepository != null),
+        assert(politicExpensesByTypeAnalysisRepository != null),
+        assert(politicoId != null),
+        assert(politicoUf != null),
         super(PoliticExpensesAnalysisInitial());
 
   final PoliticExpensesAnalysisRepository politicExpensesAnalysisRepository;

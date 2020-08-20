@@ -86,7 +86,7 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
                 highlightedBorderColor: Theme.of(context).primaryColorDark,
                 borderSide: BorderSide(color: Theme.of(context).primaryColor),
                 padding: EdgeInsets.zero,
-                child: FaIcon(
+                child: const FaIcon(
                   FontAwesomeIcons.slidersH,
                   size: 18,
                 ),
@@ -110,7 +110,6 @@ class _PopupFilterSearchState extends State<PopupFilterSearch> {
       child: Material(
         borderRadius: BorderRadius.circular(10),
         elevation: 3,
-        color: Colors.white,
         clipBehavior: Clip.antiAlias,
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,

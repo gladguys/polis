@@ -6,6 +6,15 @@ enum Configuracao {
   isDarkModeEnabled,
 }
 
+bool isConfigEnabledForUser({UserModel user, Configuracao configuracao}) {
+  return user.userConfigs[configToStringKey(configuracao)] ??
+      getConfigDefaultValue(configuracao);
+}
+
+bool isThemeConfig(String config) {
+  return stringToConfig(config) == Configuracao.isDarkModeEnabled;
+}
+
 Configuracao stringToConfig(String configString) {
   switch (configString) {
     case 'isNotificationEnabled':
@@ -42,7 +51,7 @@ dynamic getConfigDefaultValue(Configuracao configuracao) {
   return null;
 }
 
-String getConfigValueForUser({Configuracao configuracao, UserModel user}) {
+dynamic getConfigValueForUser({Configuracao configuracao, UserModel user}) {
   final configString = configToStringKey(configuracao);
   final userConfigs = user.userConfigs ?? {};
   return userConfigs[configString];

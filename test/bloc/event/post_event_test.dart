@@ -45,6 +45,12 @@ void main() {
       });
     });
 
+    group('SharePost', () {
+      test('props', () {
+        expect(SharePost(postImage: null), SharePost(postImage: null));
+      });
+    });
+
     group('SetPostFavorited', () {
       test('props', () {
         final ev1 = SetPostFavorited(userId: '1', postId: '1');

@@ -35,7 +35,7 @@ void main() {
 
     blocTest(
       'Expects to launch the url',
-      build: () async {
+      build: () {
         when(mockUrlLauncherService.launchUrl('url'))
             .thenAnswer((_) => Future.value(true));
         return documentBloc;
@@ -49,7 +49,7 @@ void main() {
 
     blocTest(
       '''Expects [LoadingFavoritesPosts, FetchUserFavoritePostsFailed] when fails''',
-      build: () async {
+      build: () {
         when(mockUrlLauncherService.launchUrl(any)).thenThrow(Exception());
         return documentBloc;
       },

@@ -42,9 +42,17 @@ class LikePostButton extends StatelessWidget {
           icon: postLiked
               ? FontAwesomeIcons.solidThumbsUp
               : FontAwesomeIcons.thumbsUp,
-          iconColor: postLiked ? Colors.green : Colors.grey[700],
+          iconColor: postLiked
+              ? Colors.green
+              : Theme.of(context).brightness == Brightness.light
+                  ? Colors.grey[700]
+                  : Colors.grey[500],
           text: qtdCurtidas.toString(),
-          textColor: postLiked ? Colors.green : Colors.grey[700],
+          textColor: postLiked
+              ? Colors.green
+              : Theme.of(context).brightness == Brightness.light
+                  ? Colors.grey[700]
+                  : Colors.grey[500],
           onTap: () => context.bloc<PostBloc>().add(
                 postLiked
                     ? StopLikingPost(

@@ -28,18 +28,22 @@ class LabelValue extends StatelessWidget {
               value,
               maxLines: maxLines,
               overflow: TextOverflow.ellipsis,
-              style: isDotted ? TextStyle(
-                decoration: TextDecoration.underline,
-                decorationStyle: TextDecorationStyle.dotted,
-              ) : null,
+              style: isDotted
+                  ? const TextStyle(
+                      decoration: TextDecoration.underline,
+                      decorationStyle: TextDecorationStyle.dotted,
+                    )
+                  : null,
             )
           else
             Text(
               value,
-              style: isDotted ? TextStyle(
-                decoration: TextDecoration.underline,
-                decorationStyle: TextDecorationStyle.dotted,
-              ) : null,
+              style: isDotted
+                  ? const TextStyle(
+                      decoration: TextDecoration.underline,
+                      decorationStyle: TextDecorationStyle.dotted,
+                    )
+                  : null,
             )
         else
           Text(

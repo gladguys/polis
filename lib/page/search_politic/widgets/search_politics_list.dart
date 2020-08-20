@@ -111,7 +111,9 @@ class SearchPoliticsList extends StatelessWidget {
             ' · ${politico.siglaUf}',
             style: TextStyle(
               fontSize: 11,
-              color: Colors.grey[600],
+              color: Theme.of(context).brightness == Brightness.light
+                  ? Colors.grey[600]
+                  : Colors.grey[300],
             ),
           ),
         ],

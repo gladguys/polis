@@ -93,7 +93,7 @@ class TimelinePage extends StatelessWidget {
             ? FloatingActionButton(
                 backgroundColor: context.primaryColorLight,
                 onPressed: SharedPreferencesMonitor.showPage,
-                child: Icon(Entypo.info),
+                child: const Icon(Entypo.info),
               )
             : null,
       ),

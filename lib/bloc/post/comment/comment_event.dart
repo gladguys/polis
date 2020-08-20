@@ -40,3 +40,27 @@ class UpdateCommentReplies extends CommentEvent {
   @override
   List<Object> get props => [comment, subComments];
 }
+
+class StartEditingComment extends CommentEvent {
+  StartEditingComment(this.comment);
+
+  final CommentModel comment;
+
+  @override
+  List<Object> get props => [comment];
+}
+
+class EditComment extends CommentEvent {
+  EditComment({this.comment, this.newText});
+
+  final CommentModel comment;
+  final String newText;
+
+  @override
+  List<Object> get props => [comment, newText];
+}
+
+class StopEditingComment extends CommentEvent {
+  @override
+  List<Object> get props => [];
+}

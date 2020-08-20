@@ -9,9 +9,10 @@ import '../../page/page_connected.dart';
 import 'post_proposta.dart';
 
 class PostPropostaConnected extends StatelessWidget {
-  PostPropostaConnected(this.proposta);
+  PostPropostaConnected(this.proposta, {this.isPostPreview = false});
 
   final PropostaModel proposta;
+  final bool isPostPreview;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,7 @@ class PostPropostaConnected extends StatelessWidget {
       page: PostProposta(
         proposta,
         screenshotController: ScreenshotController(),
+        isPostPreview: isPostPreview,
       ),
     );
   }

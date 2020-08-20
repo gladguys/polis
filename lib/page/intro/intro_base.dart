@@ -47,8 +47,8 @@ class IntroBase extends StatelessWidget {
           key: keyButton,
           elevation: 2,
           highlightElevation: 2,
-          icon: Padding(
-            padding: const EdgeInsets.only(left: 4),
+          icon: const Padding(
+            padding: EdgeInsets.only(left: 4),
             child: FaIcon(
               FontAwesomeIcons.chevronRight,
               size: 18,

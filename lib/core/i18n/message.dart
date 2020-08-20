@@ -27,6 +27,8 @@ const FOLLOW = 'Seguir';
 const STOP_FOLLOW = 'Deixar de seguir';
 const YOU_DONT_FOLLOW_ANYONE_YET = 'Você ainda não segue nenhum político!';
 const LEAVE_APP_WARN = 'Você irá sair do aplicativo. Deseja prosseguir?';
+const USER_OPTED_TO_NOT_SHARE_INFO =
+    'Este usuário optou por não compartilhar suas atividades';
 
 const POLIS_INFO_MESSAGE =
     '''Siga Deputados Federais e receba notificações quando eles tiverem novas Propostas de Lei ou Despesas...''';
@@ -63,8 +65,7 @@ const ERROR_FETCHING_POLITIC_INFO = 'Erro ao buscar informações do político';
 const UNEXPECTED_ERROR_HAPPENED =
     'Um erro inesperado ocorreu. Por favor tente novamente mais tarde.';
 const THIS_POST_HAS_NO_COMMENTS = 'Esse post não tem nenhum comentário.';
-const THIS_COMMENT_HAS_NO_SUB_COMMENTS =
-    'Ninguem fez nenhum comentário desse comentário.';
+const THIS_COMMENT_HAS_NO_SUB_COMMENTS = 'Ninguém respondeu este comentário.';
 
 const ASSERT_ATLEAST_IMAGE_OR_ICON =
     'You have to pass at least an image or an icon';

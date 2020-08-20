@@ -62,6 +62,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       await sharedPreferencesService.setUser(null);
       await repository.signOut();
       yield SignoutSucceded();
+      yield InitialUser();
     } on SignOutException {
       yield SignoutFailed();
     }
@@ -106,12 +107,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   Stream<UserState> _mapSetUserPickedThemeToState(
       SetUserPickedTheme event) async* {
-    try {
-      yield CurrentUserConfigUpdated(
-        user: event.user,
-      );
-    } on Exception {
-      yield UpdateUserConfigFailed();
-    }
+    yield CurrentUserConfigUpdated(
+      user: event.user,
+    );
   }
 }

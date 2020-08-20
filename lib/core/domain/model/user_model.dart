@@ -28,13 +28,18 @@ class UserModel extends Equatable {
   final bool isFirstLoginDone;
   @JsonKey(fromJson: _fromJsonAuth, toJson: _toJsonAuth)
   final AuthProvider authProvider;
+  @JsonKey(defaultValue: {})
   final Map<String, dynamic> userConfigs;
 
   @JsonKey(ignore: true)
   final String password;
   final String fcmToken;
+  @JsonKey(defaultValue: {})
   final Map<String, bool> userLikes;
+  @JsonKey(defaultValue: {})
   final Map<String, bool> userUnlikes;
+
+  bool get hasNoConfigsSet => userConfigs == {} || userConfigs == null;
 
   static AuthProvider _fromJsonAuth(String authProvider) =>
       authProvider == 'GOOGLE'

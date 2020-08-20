@@ -56,6 +56,19 @@ void main() {
       );
     });
 
+    testWidgets('should build dark mode without exploding', (tester) async {
+      final mockTimelineBloc = MockTimelineBloc();
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<TimelineBloc>(
+            bloc: mockTimelineBloc,
+            page: PropostaTileConnected(proposta),
+          ),
+          useDarkMode: true,
+        ),
+      );
+    });
+
     testWidgets(
         'should style diferent when descricaoTipo equals PLENARY_AMENDMENT',
         (tester) async {
@@ -83,6 +96,22 @@ void main() {
       );
       final text = find.text(PLENARY_AMENDMENT);
       expect(text, findsOneWidget);
+    });
+
+    testWidgets('should go to post page when click', (tester) async {
+      final mockTimelineBloc = MockTimelineBloc();
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<TimelineBloc>(
+            bloc: mockTimelineBloc,
+            page: PropostaTileConnected(proposta),
+          ),
+        ),
+      );
+      final card = find.byKey(cardBaseKey).first;
+      expect(card, findsOneWidget);
+      await tester.tap(card);
+      verify(mockTimelineBloc.add(RefreshTimeline()));
     });
 
     testWidgets('should do something when click on card', (tester) async {

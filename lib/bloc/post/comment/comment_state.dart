@@ -48,12 +48,35 @@ class CommentDeletedSuccess extends CommentState {
   List<Object> get props => [comment, numberOfComments];
 }
 
-class NewReplyCommentAdded extends CommentState {
-  NewReplyCommentAdded({this.comment, this.numberOfReplies});
+class NewSubCommentAdded extends CommentState {
+  NewSubCommentAdded({this.comment, this.numberOfSubComments});
 
   final CommentModel comment;
-  final int numberOfReplies;
+  final int numberOfSubComments;
 
   @override
-  List<Object> get props => [comment, numberOfReplies];
+  List<Object> get props => [comment, numberOfSubComments];
+}
+
+class EditingCommentStarted extends CommentState {
+  EditingCommentStarted(this.comment);
+
+  final CommentModel comment;
+
+  @override
+  List<Object> get props => [comment];
+}
+
+class CommentEditedSuccess extends CommentState {
+  CommentEditedSuccess({this.comment});
+
+  final CommentModel comment;
+
+  @override
+  List<Object> get props => [comment];
+}
+
+class CommentEditedFailed extends CommentState {
+  @override
+  List<Object> get props => [];
 }

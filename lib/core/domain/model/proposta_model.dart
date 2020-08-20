@@ -35,6 +35,7 @@ class PropostaModel extends Equatable {
     this.nomesAutores,
     this.qtdCurtidas,
     this.qtdNaoCurtidas,
+    this.qntComentarios,
   });
 
   final String id;
@@ -64,8 +65,12 @@ class PropostaModel extends Equatable {
   final String urlPartidoLogo;
   final String urlInteiroTeor;
   final List<String> nomesAutores;
+  @JsonKey(defaultValue: 0)
   final int qtdCurtidas;
+  @JsonKey(defaultValue: 0)
   final int qtdNaoCurtidas;
+  @JsonKey(defaultValue: 0)
+  final int qntComentarios;
 
   factory PropostaModel.fromJson(Map<String, dynamic> json) =>
       _$PropostaModelFromJson(json);
@@ -102,6 +107,7 @@ class PropostaModel extends Equatable {
     String nomesAutores,
     int qtdCurtidas,
     int qtdNaoCurtidas,
+    int qntComentarios,
   }) {
     return PropostaModel(
       id: id ?? this.id,
@@ -133,6 +139,7 @@ class PropostaModel extends Equatable {
       nomesAutores: nomesAutores ?? this.nomesAutores,
       qtdCurtidas: qtdCurtidas ?? this.qtdCurtidas,
       qtdNaoCurtidas: qtdNaoCurtidas ?? this.qtdNaoCurtidas,
+      qntComentarios: qntComentarios ?? this.qntComentarios,
     );
   }
 
@@ -141,6 +148,6 @@ class PropostaModel extends Equatable {
 
   @override
   String toString() {
-    return '''PropostaModel{id: $id, idPropostaPolitico: $idPropostaPolitico, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, ementaDetalhada: $ementaDetalhada, despacho: $despacho, nomePolitico: $nomePolitico, idPoliticoAutor: $idPoliticoAutor, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataAtualizacao: $dataAtualizacao, status: $status, visualizado: $visualizado, sequencia: $sequencia, favorito: $favorito, foiAtualizada: $foiAtualizada, urlPartidoLogo: $urlPartidoLogo, urlInteiroTeor: $urlInteiroTeor, nomesAutores: $nomesAutores, qtdCurtidas: $qtdCurtidas, qtdNaoCurtidas: $qtdNaoCurtidas}''';
+    return '''PropostaModel{id: $id, idPropostaPolitico: $idPropostaPolitico, siglaTipo: $siglaTipo, descricaoTipo: $descricaoTipo, numero: $numero, ano: $ano, ementa: $ementa, ementaDetalhada: $ementaDetalhada, despacho: $despacho, nomePolitico: $nomePolitico, idPoliticoAutor: $idPoliticoAutor, fotoPolitico: $fotoPolitico, estadoPolitico: $estadoPolitico, siglaPartido: $siglaPartido, tipoDocumento: $tipoDocumento, descricaoSituacao: $descricaoSituacao, descricaoTramitacao: $descricaoTramitacao, dataAtualizacao: $dataAtualizacao, status: $status, visualizado: $visualizado, sequencia: $sequencia, favorito: $favorito, foiAtualizada: $foiAtualizada, urlPartidoLogo: $urlPartidoLogo, urlInteiroTeor: $urlInteiroTeor, nomesAutores: $nomesAutores, qtdCurtidas: $qtdCurtidas, qtdNaoCurtidas: $qtdNaoCurtidas, qntComentarios: $qntComentarios}''';
   }
 }

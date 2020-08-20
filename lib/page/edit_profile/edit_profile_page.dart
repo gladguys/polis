@@ -61,11 +61,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
             } else {
               return Column(
                 children: <Widget>[
-                  const SizedBox(height: 12),
-                  Center(
-                    child: TextTitle(EDIT_YOUR_PROFILE),
-                  ),
-                  const SizedBox(height: 22),
+                  const SizedBox(height: 8),
+                  TextTitle(EDIT_YOUR_PROFILE),
+                  const SizedBox(height: 16),
                   Container(
                     height: 120,
                     width: 120,
@@ -93,7 +91,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     child: FlatButton(
                       padding: EdgeInsets.zero,
                       child: const Text(CONFIRM),
-                      color: Colors.amber,
+                      color: Theme.of(context).primaryColor,
+                      textColor: Colors.black,
                       onPressed: () {
                         final formState = _formKey.currentState;
                         if (formState.validate()) {
@@ -117,7 +116,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           width: 220,
                           child: OutlineButton.icon(
                             padding: EdgeInsets.zero,
-                            icon: Icon(Icons.lock, size: 18),
+                            icon: const Icon(Icons.lock, size: 18),
                             label: const Text(CHANGE_PASSWORD),
                             highlightedBorderColor: Colors.grey,
                             onPressed: () => SimpleRouter.forward(

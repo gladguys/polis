@@ -18,10 +18,11 @@ class ResultadosRanking extends StatelessWidget {
     final theme = Theme.of(context);
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            const SizedBox(height: 8),
             Center(
               child: TextTitle(EXPENSES_COMPARATION),
             ),
@@ -116,7 +117,9 @@ class ResultadosRanking extends StatelessWidget {
                 horizontal: 12,
               ),
               decoration: BoxDecoration(
-                color: theme.primaryColorLight.withOpacity(.2),
+                color: Theme.of(context).brightness == Brightness.light
+                    ? theme.primaryColorLight.withOpacity(.2)
+                    : theme.primaryColorLight.withOpacity(.6),
                 border: Border.all(
                   width: 1,
                   color: theme.primaryColorLight,
@@ -126,12 +129,16 @@ class ResultadosRanking extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const Text('$EXPENSES_AVERAGE_BETWEEN_POLITICIS:'),
+                  const Text(
+                    '$EXPENSES_AVERAGE_BETWEEN_POLITICIS:',
+                    style: TextStyle(color: Colors.black),
+                  ),
                   Text(
                     '${resultadosRanking.despesaMedia.formatCurrency()}',
                     style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
+                      color: Colors.black,
                     ),
                   ),
                 ],

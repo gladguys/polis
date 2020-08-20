@@ -76,7 +76,7 @@ void main() {
     group('GetPoliticInfo event', () {
       blocTest(
         '''Expects [LoadingPoliticInfo, GetPoliticInfoSuccess] when success''',
-        build: () async {
+        build: () {
           when(mockPoliticProfileRepository.getInfoPolitic('1')).thenAnswer(
             (_) => Future.value(
               PoliticoModel(
@@ -129,7 +129,7 @@ void main() {
 
       blocTest(
         '''Expects [LoadingPoliticInfo, GetPoliticInfoFailed] when fails''',
-        build: () async {
+        build: () {
           when(mockPoliticProfileRepository.getInfoPolitic('1'))
               .thenThrow(Exception());
           return politicProfileBloc;
@@ -151,7 +151,7 @@ void main() {
     group('FollowUnfollowProfilePolitic event', () {
       blocTest(
         '''Expects [UserFollowingPoliticChanged, GetPoliticInfoSuccess, UserFollowingPoliticChanged] when politic followed and increments quantidadeSeguidores''',
-        build: () async {
+        build: () {
           when(mockPoliticProfileRepository.getInfoPolitic('1')).thenAnswer(
             (_) => Future.value(
               PoliticoModel(
@@ -218,7 +218,7 @@ void main() {
 
       blocTest(
         '''Expects [UserFollowingPoliticChanged, GetPoliticInfoSuccess, UserFollowingPoliticChanged] when politic followed and decrements quantidadeSeguidores''',
-        build: () async {
+        build: () {
           when(mockPoliticProfileRepository.getInfoPolitic('1')).thenAnswer(
             (_) => Future.value(
               PoliticoModel(
@@ -285,7 +285,7 @@ void main() {
 
       blocTest(
         '''Expects [UserFollowingPoliticChanged, GetPoliticInfoSuccess, UserFollowingPoliticChanged, FollowPoliticFailed] when politic followed and decrements quantidadeSeguidores''',
-        build: () async {
+        build: () {
           when(mockPoliticProfileRepository.getInfoPolitic('1')).thenAnswer(
             (_) => Future.value(
               PoliticoModel(
@@ -358,7 +358,7 @@ void main() {
     group('SendEmailToPolitic event', () {
       blocTest(
         'should send email to politic when email is valid',
-        build: () async {
+        build: () {
           when(mockUrlLauncherService.canLaunchEmailUrl(any))
               .thenAnswer((_) => Future.value(true));
           when(mockUrlLauncherService.launchEmailUrl(any))
@@ -407,7 +407,7 @@ void main() {
 
       blocTest(
         'should yield OpenEmailIntentFailed when open intent failed',
-        build: () async {
+        build: () {
           when(mockUrlLauncherService.canLaunchEmailUrl(any))
               .thenAnswer((_) => Future.value(false));
           when(mockPoliticProfileRepository.getInfoPolitic('1')).thenAnswer(
@@ -455,7 +455,7 @@ void main() {
 
       blocTest(
         'should yield OpenEmailIntentFailed when open intent failed',
-        build: () async {
+        build: () {
           when(mockPoliticProfileRepository.getInfoPolitic('1')).thenAnswer(
             (_) => Future.value(
               PoliticoModel(id: '1', email: 'aNotValidEmail@gmail'),
@@ -503,7 +503,7 @@ void main() {
     group('GetMoreActivities', () {
       blocTest(
         'should yield GetPoliticInfoSuccess when get more activities',
-        build: () async {
+        build: () {
           when(mockPoliticProfileRepository.getInfoPolitic('1')).thenAnswer(
             (_) => Future.value(
               PoliticoModel(id: '1', email: 'aNotValidEmail@gmail'),
@@ -585,7 +585,7 @@ void main() {
 
       blocTest(
         '''Expects [GetPoliticInfoFailed] when fails''',
-        build: () async {
+        build: () {
           when(mockPoliticProfileRepository.getMoreActivities(
                   politicId: anyNamed('politicId'),
                   count: anyNamed('count'),

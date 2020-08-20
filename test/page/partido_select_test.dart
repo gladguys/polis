@@ -7,7 +7,7 @@ import '../utils.dart';
 
 void main() {
   group('PartidoSelect tests', () {
-    testWidgets('should build withou exploding', (tester) async {
+    testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
           Scaffold(
@@ -22,6 +22,33 @@ void main() {
               onChange: (_) {},
             ),
           ),
+        ),
+      );
+      final partido = find.text('Partido');
+      expect(partido, findsOneWidget);
+      await tester.tap(partido);
+      await tester.pumpAndSettle();
+      final todos = find.text('Todos');
+      expect(todos, findsOneWidget);
+      await tester.tap(todos);
+    });
+
+    testWidgets('should build dark mode without exploding', (tester) async {
+      await tester.pumpWidget(
+        connectedWidget(
+          Scaffold(
+            body: PartidoSelect(
+              partidos: [
+                PartidoModel(
+                  id: '1',
+                  nome: 'nome',
+                  sigla: 'sigla',
+                )
+              ],
+              onChange: (_) {},
+            ),
+          ),
+          useDarkMode: true,
         ),
       );
       final partido = find.text('Partido');

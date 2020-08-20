@@ -42,8 +42,8 @@ class PoliticWithExpensesInfo extends StatelessWidget {
               ? _buildPosicao(context)
               : const SizedBox(height: 10),
         ),
-        const SizedBox(width: 4),
-        _buildPolitico(),
+        const SizedBox(width: 8),
+        _buildPolitico(context),
       ],
     );
   }
@@ -63,12 +63,13 @@ class PoliticWithExpensesInfo extends StatelessWidget {
         style: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
+          color: Colors.black,
         ),
       ),
     );
   }
 
-  Widget _buildPolitico() {
+  Widget _buildPolitico(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -95,8 +96,10 @@ class PoliticWithExpensesInfo extends StatelessWidget {
             ),
             Text(
               '$FEDERAL_DEPUTY - $partido - $estado',
-              style: const TextStyle(
-                color: Colors.grey,
+              style: TextStyle(
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.grey[600]
+                    : Colors.grey[300],
                 fontSize: 12,
               ),
             ),

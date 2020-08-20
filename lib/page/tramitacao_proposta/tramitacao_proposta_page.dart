@@ -96,6 +96,7 @@ class TramitacaoPropostaPage extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w500,
+                      color: Colors.black,
                     ),
                   ),
                 )
@@ -114,6 +115,7 @@ class TramitacaoPropostaPage extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w500,
+                      color: Colors.black,
                     ),
                   ),
                 )

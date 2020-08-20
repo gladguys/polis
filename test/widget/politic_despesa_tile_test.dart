@@ -49,6 +49,15 @@ void main() {
       );
     });
 
+    testWidgets('should build dark mode without exploding', (tester) async {
+      await tester.pumpWidget(
+        connectedWidget(
+          PoliticDespesaTileConnected(despesa),
+          useDarkMode: true,
+        ),
+      );
+    });
+
     testWidgets('should do something when click on card', (tester) async {
       await tester.pumpWidget(
         connectedWidget(

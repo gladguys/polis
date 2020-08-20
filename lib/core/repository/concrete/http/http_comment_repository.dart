@@ -47,7 +47,7 @@ class HttpCommentRepository implements CommentRepository {
       }
       throw Exception();
     } on Exception {
-      rethrow;
+      throw Exception();
     }
   }
 

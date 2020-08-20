@@ -24,10 +24,14 @@ class CommentTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
       child: Bubble(
-        color: context.primaryColorLight,
+        color: user.userId == comment.usuarioId
+            ? Colors.grey[200]
+            : context.primaryColorLight,
         padding: const BubbleEdges.all(8),
         radius: const Radius.circular(15),
-        nip: BubbleNip.leftTop,
+        nip: user.userId == comment.usuarioId
+            ? BubbleNip.rightBottom
+            : BubbleNip.leftTop,
         nipHeight: 12,
         child: CardBase(
           slotBottomWithIndent: false,
@@ -35,32 +39,40 @@ class CommentTile extends StatelessWidget {
           slotCenter: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              GestureDetector(
-                onTap: () => SimpleRouter.forward(
-                  UserProfilePageConnected(
-                    userId: comment.usuarioId,
-                  ),
-                ),
-                child: Text(
-                  comment.usuarioNome,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(comment.texto),
+                  InkWell(
+                    onTap: () => SimpleRouter.forward(
+                      UserProfilePageConnected(
+                        userId: comment.usuarioId,
+                      ),
+                    ),
+                    child: Text(
+                      comment.usuarioNome,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
                   (comment.usuarioId == user.userId)
                       ? MenuEditDeleteComment(
-                          onEdit: () => {},
-                          onDelete: () => context.bloc<CommentBloc>().add(
-                                DeleteComment(comment),
-                              ),
+                          onEdit: () => context
+                              .bloc<CommentBloc>()
+                              .add(StartEditingComment(comment)),
+                          onDelete: () => context
+                              .bloc<CommentBloc>()
+                              .add(DeleteComment(comment)),
                         )
-                      : const SizedBox.shrink(),
+                      : Container(),
                 ],
+              ),
+              const SizedBox(height: 4),
+              Text(
+                comment.texto,
+                style: const TextStyle(color: Colors.black),
               ),
             ],
           ),
@@ -68,40 +80,37 @@ class CommentTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
-              Container(
-                width: 80,
-                child: GestureDetector(
-                  onTap: () => SimpleRouter.forward(
-                    SubCommentsPageConnected(
-                      post: context.bloc<CommentBloc>().post,
-                      comment: comment,
-                      commentBloc: context.bloc<CommentBloc>(),
-                    ),
-                    name: COMMENT_REPLIES_PAGE,
+              InkWell(
+                onTap: () => SimpleRouter.forward(
+                  SubCommentsPageConnected(
+                    post: context.bloc<CommentBloc>().post,
+                    comment: comment,
+                    commentBloc: context.bloc<CommentBloc>(),
                   ),
-                  child: Row(
-                    key: commentsKey,
-                    children: <Widget>[
-                      FaIcon(
-                        FontAwesomeIcons.comment,
-                        size: 16,
+                  name: SUB_COMMENTS_PAGE,
+                ),
+                child: Row(
+                  key: commentsKey,
+                  children: <Widget>[
+                    FaIcon(
+                      FontAwesomeIcons.comment,
+                      size: 16,
+                      color: Colors.grey[600],
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      comment.qntSubComentarios.toString(),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
                         color: Colors.grey[600],
                       ),
-                      const SizedBox(width: 4),
-                      Text(
-                        comment.qntSubComentarios.toString(),
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey[600],
-                        ),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ),
               Text(
-                '${DateTime.now().toString().formatDateTime()}',
+                comment.diaHora.toString().formatDateTime(),
                 style: TextStyle(
                   fontSize: 11,
                   color: Colors.grey[600],

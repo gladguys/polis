@@ -13,7 +13,7 @@ class PoliticSuggestionPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: BlocConsumer(
-          bloc: context.bloc<PoliticSuggestionBloc>(),
+          cubit: context.bloc<PoliticSuggestionBloc>(),
           listener: (_, state) {
             if (state is SavedSuggestedPolitics) {
               SimpleRouter.forwardAndReplace(

@@ -12,33 +12,27 @@ import '../../pages.dart';
 class LogoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        Container(
-          key: logoutButtonKey,
-          height: 30,
-          child: OutlineButton.icon(
-            padding: EdgeInsets.zero,
-            label: Text(LOGOUT.toUpperCase()),
-            icon: FaIcon(
-              FontAwesomeIcons.signOutAlt,
-              size: 18,
-            ),
-            color: Colors.red,
-            textColor: Colors.red,
-            highlightedBorderColor: Colors.red,
-            onPressed: () {
-              context.bloc<UserBloc>().add(Logout());
-              SimpleRouter.forwardAndRemoveAll(
-                InitialPageConnected(),
-                name: INITIAL_PAGE,
-              );
-            },
-          ),
+    return Container(
+      key: logoutButtonKey,
+      height: 30,
+      child: OutlineButton.icon(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+        label: const Text(LOGOUT),
+        icon: const FaIcon(
+          FontAwesomeIcons.signOutAlt,
+          size: 18,
         ),
-        const SizedBox(width: 8),
-      ],
+        color: Colors.red,
+        textColor: Colors.red,
+        highlightedBorderColor: Colors.red,
+        onPressed: () {
+          context.bloc<UserBloc>().add(Logout());
+          SimpleRouter.forwardAndRemoveAll(
+            InitialPageConnected(),
+            name: INITIAL_PAGE,
+          );
+        },
+      ),
     );
   }
 }

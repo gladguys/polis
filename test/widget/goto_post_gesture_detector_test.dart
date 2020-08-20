@@ -51,30 +51,31 @@ void main() {
     testWidgets('should go to PostPage when click', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-            Scaffold(
-              body: GoToPostGestureDetector(
-                tile: const Text('Tap me'),
-                postType: PostType.DESPESA,
-                post: DespesaModel(
-                  tipoAtividade: 'T',
-                  tipoDespesa: 'D',
-                  nomePolitico: 'pol',
-                  nomeFornecedor: 'forn',
-                  dataDocumento: '20-10-2020',
-                  valorLiquido: '2.33',
-                  valorDocumento: '2.33',
-                  valorGlosa: '2.33',
-                  numDocumento: '1',
-                  fotoPolitico: 'foto',
-                  urlPartidoLogo: 'logo',
-                ),
+          Scaffold(
+            body: GoToPostGestureDetector(
+              tile: const Text('Tap me'),
+              postType: PostType.DESPESA,
+              post: DespesaModel(
+                tipoAtividade: 'T',
+                tipoDespesa: 'D',
+                nomePolitico: 'pol',
+                nomeFornecedor: 'forn',
+                dataDocumento: '20-10-2020',
+                valorLiquido: '2.33',
+                valorDocumento: '2.33',
+                valorGlosa: '2.33',
+                numDocumento: '1',
+                fotoPolitico: 'foto',
+                urlPartidoLogo: 'logo',
               ),
             ),
-            extraProviders: [
-              RepositoryProvider<CommentRepository>(
-                create: (_) => MockCommentRepository(),
-              )
-            ]),
+          ),
+          extraProviders: [
+            RepositoryProvider<CommentRepository>(
+              create: (_) => MockCommentRepository(),
+            )
+          ],
+        ),
       );
       final child = find.text('Tap me');
       expect(child, findsOneWidget);

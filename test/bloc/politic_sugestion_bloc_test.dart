@@ -61,7 +61,7 @@ void main() {
     group('FetchSuggestedPolitics event', () {
       blocTest(
         'Expects [LoadingFetch, FetchSuggestedPoliticsSuccess] when success',
-        build: () async {
+        build: () {
           when(mockPoliticSugestionRepository.getSuggestedPolitics(any))
               .thenAnswer((_) => Future.value([]));
           return politicSuggestionBloc;
@@ -82,7 +82,7 @@ void main() {
 
       blocTest(
         'Expects [LoadingFetch, FetchSuggestedPoliticsFailed] when fails',
-        build: () async {
+        build: () {
           when(mockPoliticSugestionRepository.getSuggestedPolitics(any))
               .thenThrow(Exception());
           return politicSuggestionBloc;
@@ -105,7 +105,7 @@ void main() {
     group('FollowOrUnfollowPolitic event', () {
       blocTest(
         'Expects followedPolitics size to be 1 after adding 1',
-        build: () async => politicSuggestionBloc,
+        build: () => politicSuggestionBloc,
         act: (politicSuggestionBloc) {
           politicSuggestionBloc
               .add(FollowOrUnfollowPolitic(PoliticoModel(id: '1')));
@@ -122,7 +122,7 @@ void main() {
 
       blocTest(
         'Expects followedPolitics size to be 0 after adding and removing',
-        build: () async => politicSuggestionBloc,
+        build: () => politicSuggestionBloc,
         act: (politicSuggestionBloc) {
           politicSuggestionBloc
               .add(FollowOrUnfollowPolitic(PoliticoModel(id: '1')));
@@ -145,7 +145,7 @@ void main() {
     group('SavePoliticsToFollow event', () {
       blocTest(
         '''Expects [LoadingSaveFollowPolitics, SavedSuggestedPolitics] when success''',
-        build: () async => politicSuggestionBloc,
+        build: () => politicSuggestionBloc,
         act: (politicSuggestionBloc) {
           politicSuggestionBloc.add(
             SavePoliticsToFollow(
@@ -172,7 +172,7 @@ void main() {
 
       blocTest(
         '''Expects [LoadingSaveFollowPolitics, SaveSuggestedPoliticsFailed] when fails''',
-        build: () async {
+        build: () {
           when(mockPoliticSugestionRepository.savePoliticsToFollow(
                   userId: anyNamed('userId'), politics: anyNamed('politics')))
               .thenThrow(Exception());

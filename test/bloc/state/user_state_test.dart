@@ -9,6 +9,7 @@ void main() {
       expect(SignoutLoading(), SignoutLoading());
       expect(SignoutSucceded(), SignoutSucceded());
       expect(SignoutFailed(), SignoutFailed());
+      expect(UpdateCurrentUserFailed(), UpdateCurrentUserFailed());
       expect(CurrentUserUpdated(UserModel()), CurrentUserUpdated(UserModel()));
     });
   });

@@ -5,7 +5,7 @@ class TextRich extends StatelessWidget {
     @required this.children,
     this.maxLines,
     this.fontSize = 14,
-    this.color = Colors.black,
+    this.color,
   })  : assert(children != null),
         assert(children.isNotEmpty);
 
@@ -23,7 +23,9 @@ class TextRich extends StatelessWidget {
         style: TextStyle(
           fontFamily: 'Ubuntu',
           fontSize: fontSize,
-          color: color,
+          color: color ?? Theme.of(context).brightness == Brightness.light
+              ? Colors.black
+              : Colors.white,
         ),
         children: children,
       ),

@@ -12,19 +12,19 @@ dependencies:
 
   # Core
   intl: ^0.16.1
-  flutter_bloc: ^5.0.0
-  bloc: ^5.0.0
+  flutter_bloc: ^6.0.1
+  bloc: ^6.0.2
   simple_router: ^0.1.0+1
-  equatable: ^1.2.0
-  json_serializable: ^3.3.0
-  hive: ^1.4.1+1
-  hive_flutter: ^0.3.0+2
-  get_it: ^4.0.2
-  shared_preferences: ^0.5.7+3
-  image_picker: ^0.6.7+3
-  url_launcher: ^5.4.11
-  flutter_native_admob: ^2.1.0
-  dio: ^3.0.9
+  equatable: ^1.2.3
+  json_serializable: ^3.4.0
+  hive: ^1.4.3
+  hive_flutter: ^0.3.1
+  get_it: ^4.0.4
+  shared_preferences: ^0.5.8
+  image_picker: ^0.6.7+4
+  url_launcher: ^5.5.0
+  flutter_native_admob: ^2.1.0+3
+  dio: ^3.0.10
 
   # Utils
   diacritic: ^0.1.1
@@ -33,9 +33,10 @@ dependencies:
   screenshot: ^0.2.0
   esys_flutter_share: ^1.0.2
   in_app_update: ^1.1.11
-  flutter_bloc_monitor: ^1.0.1
+  flutter_bloc_monitor: ^1.0.3+1
   flutter_dotenv: ^2.1.0
   shared_preferences_monitor: ^1.0.1+2
+  back_button_interceptor: ^4.3.0
 
   # Firebase
   cloud_firestore: ^0.13.7
@@ -43,27 +44,29 @@ dependencies:
   firebase_auth: ^0.16.1
   firebase_storage: ^3.1.6
   firebase_analytics: ^5.0.16
-  firebase_crashlytics: ^0.1.3+3
+  firebase_crashlytics: ^0.1.4+1
   firebase_performance: ^0.3.2
   firebase_messaging: ^6.0.16
 
   # UI
-  fancy_shimmer_image: ^1.0.1
+  fancy_shimmer_image: ^1.2.0
   flutter_icons: ^1.1.0
   font_awesome_flutter: ^8.8.1
   smart_select: ^3.0.3
   flutter_grid_delegate_ext: ^0.0.2
   sliding_panel: ^1.0.3
   skeleton_text: ^1.0.0
-  flare_flutter: ^2.0.4
+  flare_flutter: ^2.0.6
   flutter_spinkit: ^4.1.2+1
   expandable_bottom_sheet: ^0.2.1+1
   bubble: ^1.1.9+1
-  abouttoclose: ^1.0.0+1
+  abouttoclose: ^1.0.0+2
   multi_charts: ^0.2.0
 
 dependency_overrides:
-  dartx: ^0.4.2
+  dartx: ^0.5.0
+  analyzer: 0.39.14
+  build_resolvers: 1.3.10
 
 dev_dependencies:
   flutter_test:
@@ -73,17 +76,17 @@ dev_dependencies:
 
   # Generators
   build_runner:
-  hive_generator: ^0.7.0+2
+  hive_generator: 0.7.0+2
 
   # Tests
   test: ^1.14.4
-  bloc_test: ^6.0.0
+  bloc_test: ^7.0.2
   mockito: ^4.1.1
   image_test_utils:
     git: 'https://github.com/MarcinusX/image_test_utils'
 
   # Linting
-  effective_dart: ^1.2.3
+  effective_dart: ^1.2.4
 
   # Helper
   flutter_native_splash: ^0.1.9

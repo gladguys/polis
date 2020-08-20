@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/blocs.dart';
+import '../../core/extension/extensions.dart';
 import '../../core/repository/concrete/repositories.dart';
 import '../page_connected.dart';
 import '../pages.dart';
@@ -16,7 +17,7 @@ class PoliticSuggestionPageConnected extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
+        systemNavigationBarColor: context.baseBackgroundColor,
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );

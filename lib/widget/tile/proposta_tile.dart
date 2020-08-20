@@ -11,6 +11,7 @@ import '../../core/domain/model/models.dart';
 import '../../core/domain/model/proposta_model.dart';
 import '../../core/extension/extensions.dart';
 import '../../core/i18n/i18n.dart';
+import '../../core/keys.dart';
 import '../../core/routing/route_names.dart';
 import '../../page/pages.dart';
 import '../../page/post/widget/like_post_button.dart';
@@ -40,20 +41,24 @@ class PropostaTile extends StatelessWidget {
           slotCenter: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              _buildTopContent(),
+              _buildTopContent(context),
               _buildCenterContent(),
               const SizedBox(height: 8),
               Text(
                 proposta.dataAtualizacao.formatDate() ?? NOT_INFORMED_FEMALE,
                 style: TextStyle(
                   fontSize: 12,
-                  color: Colors.grey[600],
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? Colors.grey[600]
+                      : Colors.grey[300],
                 ),
               ),
             ],
           ),
           slotBottom: _buildActions(context),
+          key: cardBaseKey,
           onTap: () async {
+            context.bloc<TimelineBloc>().add(RefreshTimeline());
             await SimpleRouter.forward(
               PostPageConnected(
                 post: proposta,
@@ -62,7 +67,6 @@ class PropostaTile extends StatelessWidget {
               ),
               name: POST_PAGE,
             );
-            context.bloc<TimelineBloc>().add(RefreshTimeline());
           },
         ),
         Positioned(
@@ -113,7 +117,7 @@ class PropostaTile extends StatelessWidget {
     );
   }
 
-  Widget _buildTopContent() {
+  Widget _buildTopContent(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -131,7 +135,9 @@ class PropostaTile extends StatelessWidget {
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.normal,
-            color: Colors.grey[600],
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey[600]
+                : Colors.grey[300],
           ),
         ),
       ],
@@ -194,9 +200,13 @@ class PropostaTile extends StatelessWidget {
                   const SizedBox(width: 24),
                   ButtonActionCard(
                     icon: FontAwesomeIcons.comment,
-                    iconColor: Colors.grey[700],
-                    text: '120',
-                    textColor: Colors.grey[700],
+                    iconColor: Theme.of(context).brightness == Brightness.light
+                        ? Colors.grey[700]
+                        : Colors.grey[500],
+                    text: proposta.qntComentarios.toString(),
+                    textColor: Theme.of(context).brightness == Brightness.light
+                        ? Colors.grey[700]
+                        : Colors.grey[500],
                     onTap: () {},
                   ),
                   const Spacer(),
@@ -207,7 +217,9 @@ class PropostaTile extends StatelessWidget {
                         : FontAwesomeIcons.bookmark,
                     iconColor: (proposta.favorito ?? false)
                         ? Colors.yellow
-                        : Colors.grey[700],
+                        : Theme.of(context).brightness == Brightness.light
+                            ? Colors.grey[700]
+                            : Colors.grey[500],
                     onTap: () => context.bloc<PostBloc>().add(
                           FavoritePostForUser(
                             post: proposta.toJson(),

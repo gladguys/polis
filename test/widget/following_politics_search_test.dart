@@ -5,6 +5,7 @@ import 'package:mockito/mockito.dart';
 import 'package:polis/bloc/blocs.dart';
 import 'package:polis/core/domain/model/models.dart';
 import 'package:polis/core/keys.dart';
+import 'package:polis/page/page_connected.dart';
 import 'package:polis/page/user_following_politics/widget/following_politics_search.dart';
 
 import '../mock.dart';
@@ -15,17 +16,25 @@ void main() {
     testWidgets('build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
-          BlocProvider.value(
-            value: UserFollowingPoliticsBloc(
-              userFollowingPoliticsRepository:
-                  MockUserFollowingPoliticsRepository(),
-              followRepository: MockFollowRepository(),
-            ),
-            child: Scaffold(
-              body: FollowingPoliticsSearch(
-                [
-                  PoliticoModel(id: '1', nomeEleitoral: 'nome'),
-                ],
+          PageConnected<UserProfileBloc>(
+            bloc: MockUserProfileBloc(),
+            page: BlocProvider.value(
+              value: UserFollowingPoliticsBloc(
+                userFollowingPoliticsRepository:
+                    MockUserFollowingPoliticsRepository(),
+                followRepository: MockFollowRepository(),
+              ),
+              child: Scaffold(
+                body: FollowingPoliticsSearch(
+                  [
+                    PoliticoModel(
+                      id: '1',
+                      nomeEleitoral: 'nome',
+                      urlPartidoLogo: 'logo',
+                      urlFoto: 'url',
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -39,13 +48,21 @@ void main() {
           .thenReturn(false);
       await tester.pumpWidget(
         connectedWidget(
-          BlocProvider<UserFollowingPoliticsBloc>(
-            create: (_) => mockUserFollowingPoliticsBloc,
-            child: Scaffold(
-              body: FollowingPoliticsSearch(
-                [
-                  PoliticoModel(id: '1', nomeEleitoral: 'nome'),
-                ],
+          PageConnected<UserProfileBloc>(
+            bloc: MockUserProfileBloc(),
+            page: BlocProvider<UserFollowingPoliticsBloc>(
+              create: (_) => mockUserFollowingPoliticsBloc,
+              child: Scaffold(
+                body: FollowingPoliticsSearch(
+                  [
+                    PoliticoModel(
+                      id: '1',
+                      nomeEleitoral: 'nome',
+                      urlPartidoLogo: 'logo',
+                      urlFoto: 'url',
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

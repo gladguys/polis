@@ -1,17 +1,19 @@
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_router/simple_router.dart';
 
 import '../../../../bloc/blocs.dart';
 import '../../../../core/domain/model/models.dart';
 import '../../../../core/extension/extensions.dart';
 import '../../../../widget/card_base.dart';
+import '../../../user_profile/user_profile_page_connected.dart';
 import 'menu_edit_delete_comment.dart';
 
 class SubCommentTile extends StatelessWidget {
-  SubCommentTile(this.comment);
+  SubCommentTile(this.subComment);
 
-  final SubCommentModel comment;
+  final SubCommentModel subComment;
 
   @override
   Widget build(BuildContext context) {
@@ -19,30 +21,60 @@ class SubCommentTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 4, bottom: 8),
       child: Bubble(
-        color: context.primaryColorLight,
+        color: user.userId == subComment.usuarioId
+            ? Colors.grey[200]
+            : context.primaryColorLight,
         padding: const BubbleEdges.all(8),
         radius: const Radius.circular(15),
-        nip: BubbleNip.leftTop,
+        nip: user.userId == subComment.usuarioId
+            ? BubbleNip.rightBottom
+            : BubbleNip.leftTop,
         nipHeight: 12,
         child: CardBase(
           slotBottomWithIndent: false,
           paddingSlotCenter: const EdgeInsets.only(bottom: 4),
-          slotCenter: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          slotCenter: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(comment.texto),
-              (comment.usuarioId == user.userId)
-                  ? MenuEditDeleteComment(
-                      onEdit: () => {},
-                      onDelete: () => context.bloc<SubCommentsBloc>().add(
-                            DeleteSubComment(subComment: comment),
-                          ),
-                    )
-                  : const SizedBox.shrink(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  InkWell(
+                    onTap: () => SimpleRouter.forward(
+                      UserProfilePageConnected(
+                        userId: subComment.usuarioId,
+                      ),
+                    ),
+                    child: Text(
+                      subComment.usuarioNome,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  (subComment.usuarioId == user.userId)
+                      ? MenuEditDeleteComment(
+                          onEdit: () => context.bloc<SubCommentsBloc>().add(
+                                StartEditingSubComment(subComment),
+                              ),
+                          onDelete: () => context.bloc<SubCommentsBloc>().add(
+                                DeleteSubComment(subComment: subComment),
+                              ),
+                        )
+                      : Container(),
+                ],
+              ),
+              const SizedBox(height: 4),
+              Text(
+                subComment.texto,
+                style: const TextStyle(color: Colors.black),
+              ),
             ],
           ),
           slotBottom: Text(
-            '${DateTime.now().toString().formatDateTime()}',
+            subComment.diaHora.toString().formatDateTime(),
             textAlign: TextAlign.end,
             style: TextStyle(
               fontSize: 11,

@@ -1,3 +1,4 @@
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -18,6 +19,14 @@ void main() {
   group('UserFollowingPoliticsPage tests', () {
     setUp(() {
       mockUserFollowingPoliticsBloc = MockUserFollowingPoliticsBloc();
+      BackButtonInterceptor.removeAll();
+    });
+
+    test('asserts', () {
+      expect(
+        () => UserFollowingPoliticsPageConnected(user: null),
+        throwsAssertionError,
+      );
     });
 
     testWidgets('should build without exploding', (tester) async {
@@ -29,6 +38,27 @@ void main() {
           ),
         ),
       );
+    });
+
+    testWidgets('should try to pop route', (tester) async {
+      final mockUserProfileBloc = MockUserProfileBloc();
+      when(mockUserProfileBloc.user).thenReturn(
+        UserModel(
+          userId: '1',
+        ),
+      );
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<UserProfileBloc>(
+            bloc: mockUserProfileBloc,
+            page: PageConnected<UserFollowingPoliticsBloc>(
+              bloc: mockUserFollowingPoliticsBloc,
+              page: UserFollowingPoliticsPage(),
+            ),
+          ),
+        ),
+      );
+      await BackButtonInterceptor.popRoute();
     });
 
     testWidgets('should build connected without exploding', (tester) async {
@@ -63,6 +93,7 @@ void main() {
             PoliticoModel(
               id: '1',
               nomeEleitoral: 'nome',
+              urlPartidoLogo: 'logo',
             )
           ],
         ),
@@ -78,9 +109,12 @@ void main() {
               analyticsService: MockAnalyticsService(),
               sharedPreferencesService: MockSharedPreferencesService(),
             ),
-            child: PageConnected<UserFollowingPoliticsBloc>(
-              bloc: mockUserFollowingPoliticsBloc,
-              page: UserFollowingPoliticsPage(),
+            child: PageConnected<UserProfileBloc>(
+              bloc: MockUserProfileBloc(),
+              page: PageConnected<UserFollowingPoliticsBloc>(
+                bloc: mockUserFollowingPoliticsBloc,
+                page: UserFollowingPoliticsPage(),
+              ),
             ),
           ),
         ),
@@ -125,6 +159,7 @@ void main() {
             PoliticoModel(
               id: '1',
               nomeEleitoral: 'nome',
+              urlPartidoLogo: 'logo',
             )
           ],
         ),
@@ -140,9 +175,12 @@ void main() {
               analyticsService: MockAnalyticsService(),
               sharedPreferencesService: MockSharedPreferencesService(),
             ),
-            child: PageConnected<UserFollowingPoliticsBloc>(
-              bloc: mockUserFollowingPoliticsBloc,
-              page: UserFollowingPoliticsPage(),
+            child: PageConnected<UserProfileBloc>(
+              bloc: MockUserProfileBloc(),
+              page: PageConnected<UserFollowingPoliticsBloc>(
+                bloc: mockUserFollowingPoliticsBloc,
+                page: UserFollowingPoliticsPage(),
+              ),
             ),
           ),
         ),
@@ -157,8 +195,18 @@ void main() {
       when(mockUserFollowingPoliticsBloc.state).thenReturn(
         FetchPoliticsSuccess(
           [
-            PoliticoModel(id: '1', nomeEleitoral: 'nome', urlFoto: 'photo'),
-            PoliticoModel(id: '2', nomeEleitoral: 'nome2', urlFoto: 'photo2'),
+            PoliticoModel(
+              id: '1',
+              nomeEleitoral: 'nome',
+              urlFoto: 'photo',
+              urlPartidoLogo: 'logo',
+            ),
+            PoliticoModel(
+              id: '2',
+              nomeEleitoral: 'nome2',
+              urlFoto: 'photo2',
+              urlPartidoLogo: 'logo2',
+            ),
           ],
         ),
       );
@@ -173,9 +221,12 @@ void main() {
               analyticsService: MockAnalyticsService(),
               sharedPreferencesService: MockSharedPreferencesService(),
             ),
-            child: PageConnected<UserFollowingPoliticsBloc>(
-              bloc: mockUserFollowingPoliticsBloc,
-              page: UserFollowingPoliticsPage(),
+            child: PageConnected<UserProfileBloc>(
+              bloc: MockUserProfileBloc(),
+              page: PageConnected<UserFollowingPoliticsBloc>(
+                bloc: mockUserFollowingPoliticsBloc,
+                page: UserFollowingPoliticsPage(),
+              ),
             ),
           ),
         ),
@@ -185,11 +236,24 @@ void main() {
 
     testWidgets('''should call bloc when clicked follow button''',
         (tester) async {
+      final mockUserProfileBloc = MockUserProfileBloc();
+      when(mockUserProfileBloc.user).thenReturn(
+        UserModel(
+          userId: '1',
+        ),
+      );
       when(mockUserFollowingPoliticsBloc.isPoliticBeingFollowed(any))
           .thenReturn(true);
       when(mockUserFollowingPoliticsBloc.state).thenReturn(
         FetchPoliticsSuccess(
-          [PoliticoModel(id: '1', nomeEleitoral: 'nome', urlFoto: 'photo')],
+          [
+            PoliticoModel(
+              id: '1',
+              nomeEleitoral: 'nome',
+              urlFoto: 'photo',
+              urlPartidoLogo: 'logo',
+            ),
+          ],
         ),
       );
       await tester.pumpWidget(
@@ -203,9 +267,12 @@ void main() {
               analyticsService: MockAnalyticsService(),
               sharedPreferencesService: MockSharedPreferencesService(),
             ),
-            child: PageConnected<UserFollowingPoliticsBloc>(
-              bloc: mockUserFollowingPoliticsBloc,
-              page: UserFollowingPoliticsPage(),
+            child: PageConnected<UserProfileBloc>(
+              bloc: mockUserProfileBloc,
+              page: PageConnected<UserFollowingPoliticsBloc>(
+                bloc: mockUserFollowingPoliticsBloc,
+                page: UserFollowingPoliticsPage(),
+              ),
             ),
           ),
         ),
@@ -220,8 +287,12 @@ void main() {
             user: UserModel(
               userId: '1',
             ),
-            politico:
-                PoliticoModel(id: '1', nomeEleitoral: 'nome', urlFoto: 'photo'),
+            politico: PoliticoModel(
+              id: '1',
+              nomeEleitoral: 'nome',
+              urlFoto: 'photo',
+              urlPartidoLogo: 'logo',
+            ),
           ),
         ),
       );

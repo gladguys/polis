@@ -27,11 +27,13 @@ void main() {
           id: 1,
           texto: 'first text',
           usuarioNome: 'user',
+          diaHora: DateTime.now(),
         ),
         CommentModel(
           id: 2,
           texto: 'second text',
           usuarioNome: 'user2',
+          diaHora: DateTime.now(),
         ),
       ];
       final mockCommentBloc = MockCommentBloc();
@@ -46,7 +48,7 @@ void main() {
           Scaffold(
               body: PageConnected<CommentBloc>(
             bloc: mockCommentBloc,
-            page: PostComments(),
+            page: PostCommentsPage(),
           )),
         ),
       );
@@ -59,6 +61,7 @@ void main() {
           id: 1,
           texto: 'first text',
           usuarioNome: 'user',
+          diaHora: DateTime.now(),
         ),
       ];
       final mockCommentBloc = MockCommentBloc();
@@ -73,7 +76,7 @@ void main() {
           Scaffold(
             body: PageConnected<CommentBloc>(
               bloc: mockCommentBloc,
-              page: PostComments(),
+              page: PostCommentsPage(),
             ),
           ),
         ),

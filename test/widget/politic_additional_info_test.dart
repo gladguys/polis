@@ -37,6 +37,25 @@ void main() {
       );
     });
 
+    testWidgets('should build dark mode without exploding', (tester) async {
+      await tester.pumpWidget(
+        connectedWidget(
+          PageConnected<PoliticProfileBloc>(
+            bloc: mockPoliticProfileBloc,
+            page: Scaffold(
+              body: PoliticAdditionalInfo(
+                PoliticoModel(
+                  id: '1',
+                  quantidadeSeguidores: 8.0,
+                ),
+              ),
+            ),
+          ),
+          useDarkMode: true,
+        ),
+      );
+    });
+
     testWidgets('should show tooltip when clicking on info expenses',
         (tester) async {
       await tester.pumpWidget(

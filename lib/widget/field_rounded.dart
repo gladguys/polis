@@ -11,10 +11,12 @@ class FieldRounded extends StatelessWidget {
     this.textSuffix,
     this.widthSuffix,
     this.backgroundColorSuffix,
+    this.fontColorSuffix,
     this.hintText,
     this.onChanged,
     this.onPressedSuffix,
     this.controller,
+    this.initialValue,
   });
 
   final double width;
@@ -25,24 +27,27 @@ class FieldRounded extends StatelessWidget {
   final String textSuffix;
   final double widthSuffix;
   final Color backgroundColorSuffix;
+  final Color fontColorSuffix;
   final String hintText;
   final Function onChanged;
   final Function onPressedSuffix;
   final TextEditingController controller;
+  final String initialValue;
 
   @override
   Widget build(BuildContext context) {
     final paddingLeft = iconPrefix != null ? 36.0 : 16.0;
-    final paddingRight = iconSuffix != null ? 48.0 : 16.0;
+    final paddingRight = iconSuffix != null ? 54.0 : 16.0;
 
     return Stack(
       children: <Widget>[
         Container(
           height: 40,
           width: width,
-          child: TextField(
+          child: TextFormField(
             controller: controller,
             key: key,
+            initialValue: initialValue,
             style: const TextStyle(fontSize: 14),
             decoration: InputDecoration(
               hintText: hintText,
@@ -103,7 +108,7 @@ class FieldRounded extends StatelessWidget {
             right: 5,
             top: 5,
             child: Container(
-              width: 48,
+              width: 44,
               height: 30,
               alignment: Alignment.center,
               child: FlatButton(
@@ -113,7 +118,7 @@ class FieldRounded extends StatelessWidget {
                   iconSuffix,
                   key: keySuffix,
                   size: 16,
-                  color: Colors.black,
+                  color: fontColorSuffix,
                 ),
                 onPressed: onPressedSuffix,
               ),

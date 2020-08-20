@@ -108,7 +108,9 @@ class FavoriteDespesaTile extends StatelessWidget {
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.normal,
-                color: Colors.grey[600],
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.grey[600]
+                    : Colors.grey[300],
               ),
             ),
           ],
@@ -153,7 +155,9 @@ class FavoriteDespesaTile extends StatelessWidget {
               '${despesa.dataDocumento.formatDate()}',
               style: TextStyle(
                 fontSize: 12,
-                color: Colors.grey[600],
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.grey[600]
+                    : Colors.grey[300],
               ),
             ),
             ButtonActionCard(
@@ -161,7 +165,11 @@ class FavoriteDespesaTile extends StatelessWidget {
               icon: (despesa.favorito ?? false)
                   ? FontAwesomeIcons.solidBookmark
                   : FontAwesomeIcons.bookmark,
-              iconColor: (despesa.favorito ?? false) ? Colors.yellow : null,
+              iconColor: (despesa.favorito ?? false)
+                  ? Colors.yellow
+                  : Theme.of(context).brightness == Brightness.light
+                      ? Colors.grey[700]
+                      : Colors.grey[500],
               onTap: () => context.bloc<PostBloc>().add(
                     FavoritePostForUser(
                       post: {

@@ -5,14 +5,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../bloc/blocs.dart';
 import '../../../core/domain/model/models.dart';
-import '../../../core/extension/media_query_extensions.dart';
+import '../../../core/extension/extensions.dart';
 import '../../../core/i18n/label.dart';
 import '../../../widget/text_title.dart';
 import 'configs_button.dart';
 import 'logout_button.dart';
 import 'personal_user_info.dart';
 import 'politics_following_quantity.dart';
-import 'user_activities.dart';
+import 'user_actions.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({this.user, this.politicsFollowing, this.userActions});
@@ -26,6 +26,8 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
+  bool get isUserPickedTheLocal => context.bloc<UserBloc>().user == widget.user;
+
   @override
   Widget build(BuildContext context) {
     var persistentContentHeight = context.screenHeight * 0.40;
@@ -45,7 +47,7 @@ class _UserProfileState extends State<UserProfile> {
     return Container(
       width: double.maxFinite,
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: context.baseBackgroundColor,
         boxShadow: [
           const BoxShadow(
             color: Colors.black12,
@@ -67,7 +69,7 @@ class _UserProfileState extends State<UserProfile> {
             color: Theme.of(context).accentColor.withOpacity(.25),
           ),
           const SizedBox(height: 4),
-          TextTitle(MY_ACTIVITIES, fontSize: 15),
+          TextTitle(MY_ACTIVITIES, fontSize: 16),
           const SizedBox(height: 4),
         ],
       ),
@@ -76,8 +78,12 @@ class _UserProfileState extends State<UserProfile> {
 
   Widget _buildPanel(BuildContext context) {
     return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: UserActions(actions: widget.userActions),
+      color: context.baseBackgroundColor,
+      child: UserActions(
+        user: widget.user,
+        actions: widget.userActions,
+        isUserPickedTheLocal: isUserPickedTheLocal,
+      ),
     );
   }
 
@@ -85,9 +91,21 @@ class _UserProfileState extends State<UserProfile> {
     return Column(
       children: <Widget>[
         const SizedBox(height: 8),
-        LogoutButton(),
-        ConfigsButton(),
-        PersonalUserInfo(user: context.bloc<UserBloc>().user),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            const SizedBox(width: 8),
+            isUserPickedTheLocal ? ConfigsButton() : const SizedBox.shrink(),
+            const Spacer(),
+            isUserPickedTheLocal ? LogoutButton() : const SizedBox.shrink(),
+            const SizedBox(width: 8),
+          ],
+        ),
+        const SizedBox(height: 8),
+        PersonalUserInfo(
+          user: widget.user,
+          isUserPickedTheLocal: isUserPickedTheLocal,
+        ),
         const SizedBox(height: 16),
         PoliticsFollowingQuantity(
           user: widget.user,

@@ -48,7 +48,6 @@ class DefaultBottombar extends StatelessWidget {
                           fontFamily: 'Philosopher',
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -164,9 +163,16 @@ class DefaultBottombar extends StatelessWidget {
       child: FlatButton(
         key: key,
         color: isSelected
-            ? Theme.of(context).primaryColorLight.withOpacity(.7)
+            ? Theme.of(context).brightness == Brightness.light
+                ? Theme.of(context).primaryColorLight.withOpacity(.7)
+                : Theme.of(context).primaryColorDark.withOpacity(.5)
             : null,
-        child: icon != null ? FaIcon(icon, size: iconSize) : child,
+        child: icon != null
+            ? FaIcon(
+                icon,
+                size: iconSize,
+              )
+            : child,
         padding: EdgeInsets.zero,
         onPressed: onPressed,
       ),

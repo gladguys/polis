@@ -6,7 +6,7 @@ import '../utils.dart';
 
 void main() {
   group('EstadoSelect tests', () {
-    testWidgets('should build withou exploding', (tester) async {
+    testWidgets('should build without exploding', (tester) async {
       await tester.pumpWidget(
         connectedWidget(
           Scaffold(
@@ -14,6 +14,26 @@ void main() {
               onChange: (_) {},
             ),
           ),
+        ),
+      );
+      final estado = find.text('Estado');
+      expect(estado, findsOneWidget);
+      await tester.tap(estado);
+      await tester.pumpAndSettle();
+      final todos = find.text('Todos');
+      expect(todos, findsOneWidget);
+      await tester.tap(todos);
+    });
+
+    testWidgets('should build dark mode without exploding', (tester) async {
+      await tester.pumpWidget(
+        connectedWidget(
+          Scaffold(
+            body: EstadoSelect(
+              onChange: (_) {},
+            ),
+          ),
+          useDarkMode: true,
         ),
       );
       final estado = find.text('Estado');

@@ -48,16 +48,14 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           } else {
             return Column(
               children: <Widget>[
-                const SizedBox(height: 12),
-                Center(
-                  child: TextTitle(CHANGE_YOUR_PROFILE),
-                ),
-                const SizedBox(height: 22),
+                const SizedBox(height: 8),
+                TextTitle(CHANGE_YOUR_PROFILE),
+                const SizedBox(height: 16),
                 Padding(
-                  padding: const EdgeInsets.all(32),
+                  padding: const EdgeInsets.symmetric(horizontal: 32),
                   child: _getForm(),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 24),
                 Container(
                   height: 40,
                   width: 160,

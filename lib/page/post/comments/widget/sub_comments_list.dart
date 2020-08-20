@@ -10,10 +10,13 @@ class SubCommentsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemBuilder: (_, i) => SubCommentTile(subComments[i]),
-      itemCount: subComments.length,
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (context, i) {
+          if (i > subComments.length-1) return null;
+          return SubCommentTile(subComments[i]);
+        },
+      ),
     );
   }
 }

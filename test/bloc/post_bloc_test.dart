@@ -107,7 +107,7 @@ void main() {
 
     blocTest(
       '''Expects [PostFavoriteStatusChanged, PostFavoritedSuccess] when FavoritePostForUser added''',
-      build: () async => PostBloc(
+      build: () => PostBloc(
         post: {
           FAVORITO_FIELD: true,
         },
@@ -134,7 +134,7 @@ void main() {
 
     blocTest(
       '''Expects [PostFavoriteStatusChanged, PostFavoritedFailed] when FavoritePostForUser added and failed''',
-      build: () async {
+      build: () {
         final mockPostRepository = MockPostRepository();
         when(
           mockPostRepository.unfavoritePost(
@@ -167,7 +167,7 @@ void main() {
 
     blocTest(
       '''Expects [PostFavoriteStatusChanged, PostFavoritedSuccess] when FavoritePostForUser added for despesa and timelineBloc is not null''',
-      build: () async {
+      build: () {
         when(mockTimelineBloc.timelinePosts).thenReturn([
           despesa,
         ]);
@@ -205,7 +205,7 @@ void main() {
 
     blocTest(
       '''Expects [PostFavoriteStatusChanged, PostFavoritedSuccess] when FavoritePostForUser added for proposta and timelineBloc is not null''',
-      build: () async {
+      build: () {
         when(mockTimelineBloc.timelinePosts).thenReturn([
           PropostaModel(
             id: '1',
@@ -249,7 +249,7 @@ void main() {
 
     blocTest(
       'Expects to share the image file',
-      build: () async {
+      build: () {
         when(mockShareService.shareFile(MockFile()))
             .thenAnswer((_) => Future.value());
         return PostBloc(
@@ -272,7 +272,7 @@ void main() {
 
     blocTest(
       'Expects to set despesa post as viewed',
-      build: () async {
+      build: () {
         final mockTimelineBloc = MockTimelineBloc();
         when(mockTimelineBloc.timelinePosts).thenReturn([
           DespesaModel(id: '1'),
@@ -309,7 +309,7 @@ void main() {
 
     blocTest(
       'Expects to set proposta post as viewed',
-      build: () async {
+      build: () {
         final mockTimelineBloc = MockTimelineBloc();
         when(mockTimelineBloc.timelinePosts).thenReturn([
           PropostaModel(id: '1'),
@@ -346,7 +346,7 @@ void main() {
 
     blocTest(
       'Expects to yield PostViewedFailed when post as viewed failed',
-      build: () async {
+      build: () {
         final mockTimelineBloc = MockTimelineBloc();
         when(mockTimelineBloc.timelinePosts).thenReturn([
           DespesaModel(id: '1'),
@@ -385,7 +385,7 @@ void main() {
 
     blocTest(
       'Expects to set get isPostFavorite info',
-      build: () async {
+      build: () {
         final mockTimelineBloc = MockTimelineBloc();
         when(mockTimelineBloc.timelinePosts).thenReturn([
           DespesaModel(id: '1'),
@@ -424,7 +424,7 @@ void main() {
 
     blocTest(
       'Expects to yield PostViewedFailed when getting isfavorite info',
-      build: () async {
+      build: () {
         final mockTimelineBloc = MockTimelineBloc();
         when(mockTimelineBloc.timelinePosts).thenReturn([
           DespesaModel(id: '1'),
@@ -463,7 +463,7 @@ void main() {
 
     blocTest(
       'Expects to yield PostLikedSuccess when like is success',
-      build: () async {
+      build: () {
         when(mockUserBloc.user).thenReturn(UserModel());
         when(mockPostRepository.likePost(
                 userId: '1', postId: '1', politicoId: '1', isUnliked: false))
@@ -541,7 +541,7 @@ void main() {
 
     blocTest(
       'Expects to yield PostLikedFailed when like is failed',
-      build: () async {
+      build: () {
         when(mockUserBloc.user).thenReturn(UserModel());
         when(mockPostRepository.likePost(
                 userId: '1', postId: '1', politicoId: '1', isUnliked: false))
@@ -582,7 +582,7 @@ void main() {
 
     blocTest(
       'Expects to yield PostUnlikedSuccess when like is success',
-      build: () async {
+      build: () {
         when(mockUserBloc.user).thenReturn(UserModel());
         when(mockPostRepository.unlikePost(
                 userId: '1', postId: '1', politicoId: '1', isLiked: true))
@@ -660,7 +660,7 @@ void main() {
 
     blocTest(
       'Expects to yield PostUnlikedFailed when unlike is failed',
-      build: () async {
+      build: () {
         when(mockUserBloc.user).thenReturn(UserModel());
         when(mockPostRepository.unlikePost(
                 userId: '1', postId: '1', politicoId: '1', isLiked: true))
@@ -701,7 +701,7 @@ void main() {
 
     blocTest(
       'Expects to yield PostUnlikedFailed when unlike save action is failed',
-      build: () async {
+      build: () {
         when(mockUserBloc.user).thenReturn(UserModel());
         when(mockPostRepository.unlikePost(
                 userId: '1', postId: '1', politicoId: '1', isLiked: true))
@@ -755,7 +755,7 @@ void main() {
 
     blocTest(
       'Expects to yield StoppedLikingPostSuccess when success',
-      build: () async {
+      build: () {
         when(mockUserBloc.user).thenReturn(
           UserModel(),
         );
@@ -804,7 +804,7 @@ void main() {
 
     blocTest(
       'Expects to yield StoppedLikingPostFailed when failed',
-      build: () async {
+      build: () {
         when(mockUserBloc.user).thenReturn(
           UserModel(),
         );
@@ -852,7 +852,7 @@ void main() {
 
     blocTest(
       'Expects to yield StoppedUnlikingPostSuccess when success',
-      build: () async {
+      build: () {
         when(mockUserBloc.user).thenReturn(
           UserModel(),
         );
@@ -901,7 +901,7 @@ void main() {
 
     blocTest(
       'Expects to yield StoppedUnlikingPostFailed when failed',
-      build: () async {
+      build: () {
         when(mockUserBloc.user).thenReturn(
           UserModel(),
         );

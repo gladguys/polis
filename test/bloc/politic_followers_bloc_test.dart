@@ -37,7 +37,7 @@ void main() {
     group('GetPoliticFollowers event', () {
       blocTest(
         '''Expects [LoadingPoliticFollowers, GetPoliticFollowersSuccess] when success''',
-        build: () async {
+        build: () {
           when(mockPoliticFollowersRepository.getUsersFollowingPolitic('1'))
               .thenAnswer((_) => Future.value([]));
           return politicFollowersBloc;
@@ -58,7 +58,7 @@ void main() {
 
       blocTest(
         '''Expects [LoadingPoliticFollowers, GetPoliticFollowersFailed] when fails''',
-        build: () async {
+        build: () {
           when(mockPoliticFollowersRepository.getUsersFollowingPolitic('1'))
               .thenThrow(Exception());
           return politicFollowersBloc;
